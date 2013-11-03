@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="module" version="1.6.0" client="site">
+	<name>Blank Module</name>
+	<author>Bob Galway</author>
+	<creationDate>August 2013</creationDate>
+	<copyright>Copyright  Bob Galway. All rights reserved.</copyright>
+	<license>GNU General Public License version 3</license>
+	<authorEmail>reply@blackdale.com</authorEmail>
+	<authorUrl>www.blackdale.com</authorUrl>
+	<version>5.0.2</version>
+	<description>BLANKMODULE250</description>
+	<languages>
+		<language tag="en-GB">language/en-GB/en-GB.mod_blank250.ini</language>
+		<language tag="fr-FR">language/fr-FR/fr-FR.mod_blank250.ini</language>
+		<language tag="de-DE">language/de-DE/de-DE.mod_blank250.ini</language>
+	</languages>
+	<files>
+		<filename module="mod_blank250">mod_blank250.php</filename>
+		<filename>index.html</filename>
+		<filename>gpl3.txt</filename>
+		<filename>helper.php</filename>
+		<folder>tmpl</folder>
+		<filename>mod_blank250.xml</filename>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="HTML">
+				<field name="codeeditor" type="textarea" filter="raw" default="" label="BM15_HTML" description="BM15_HTML_DESC" cols="50" rows="12" />
+				<field name="textareause" type="list" default="1" label="BM15_TEXT_AREA_USE_LABEL" description="BM15_TEXT_AREA_USE_LABEL">
+					<option value="1">JYES</option>
+					<option value="2">JNO</option>
+				</field>
+			</fieldset>
+			<fieldset name="PHP">
+				<field name="phpcode" type="textarea" filter="raw" default="" label="BM15_PLACE_CODE_LABEL" description="BM15_PLACE_CODE_DESC" cols="50" rows="12" />
+				<field name="phpuse" type="list" default="1" label="PHPUSE" description="PHPUSE_DESC">
+					<option value="1">JYES</option>
+					<option value="2">JNO</option>
+				</field>
+			</fieldset>
+			<fieldset name="SCRIPTS">
+				<field name="script" type="textarea" filter="raw" default="" label="CUSTOM_TAGS_LABEL" rows="12" cols="50" description="CUSTOM_TAGS_DESC" />
+				<field name="scriptuse" type="list" default="1" label="BM15_SCRIPT" description="BM15_SCRIPT">
+					<option value="1">JYES</option>
+					<option value="2">JNO</option>
+				</field>
+			</fieldset>
+			<fieldset name="ARTICLE">
+				<field name="itemid" type="sql" default="a" label="BM15_ARTICLE_LABEL" query="SELECT id, title FROM #__content" key_field="id" value_field="title">
+					<option value="a">BM15_SELECT</option>
+				</field>
+				<field name="contenttitleuse" type="list" default="1" label="BM15_ARTICLE_TITLE" description="BM15_ARTICLE_TITLE">
+					<option value="1">JYES</option>
+					<option value="2">JNO</option>
+				</field>
+				<field name="contentuse" type="list" default="1" label="BM15_ARTICLE_CONTENT" description="BM15_ARTICLE_CONTENT">
+					<option value="1">JYES</option>
+					<option value="2">JNO</option>
+				</field>
+			</fieldset>
+			<fieldset name="ORDER">
+				<field name="content1" type="list" default="1" label="BM15_SELECTION1" description="BM15_SELECTION1">
+					<option value="0">BM15_SELECT</option>
+					<option value="1">BM15_HTML_CONTENT</option>
+					<option value="2">BM15_PHP_CONTENT</option>
+					<option value="3">BM15_ARTICLE_CONTENT</option>
+				</field>
+				<field name="content2" type="list" default="2" label="BM15_SELECTION2" description="BM15_SELECTION2">
+					<option value="0">BM15_SELECT</option>
+					<option value="1">BM15_HTML_CONTENT</option>
+					<option value="2">BM15_PHP_CONTENT</option>
+					<option value="3">BM15_ARTICLE_CONTENT</option>
+				</field>
+				<field name="content3" type="list" default="3" label="BM15_SELECTION3" description="BM15_SELECTION3">
+					<option value="0">BM15_SELECT</option>
+					<option value="1">BM15_HTML_CONTENT</option>
+					<option value="2">BM15_PHP_CONTENT</option>
+					<option value="3">BM15_ARTICLE_CONTENT</option>
+				</field>
+			</fieldset>
+			<fieldset name="BM15_GRAPHICS">
+				<field name="graphics" type="list" default="1" label="BM15_GRAPHICS_LABEL" description="BM15_GRAPHICS_DESC">
+					<option value="1">JYES</option>
+					<option value="2">JNO</option>
+				</field>
+				<field name="bgpattern" type="imagelist" default="TinySquare2" label="BM15_BG_PATTERN" directory="modules/mod_blank250/tmpl/images/backgrounds/" description="BM15_BG_PATTERN_DESC" stripext="1" />
+				<field name="colour1" type="text" default="9CA5FF" label="BM15_MODULE_COLOUR1_BACKGROUND" />
+				<field name="trans1" type="list" default="1" label="BM15_MODULE_COLOUR1_BACKGROUND">
+					<option value="1">BM_COLOUR</option>
+					<option value="2">BM_TRANS</option>
+				</field>
+				<field name="bordercol" type="text" default="ACB5FF" label="BM15_MODULE_COLOUR_BORDER" />
+                <field name="bordersz" type="list" default="4" label="BM15_BORDERSZ" >
+					<option value="0">0</option>
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+                    <option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+                    <option value="8">8</option>
+					<option value="9">9</option>
+					<option value="10">10</option>
+                    <option value="11">11</option>
+					<option value="12">12</option>
+					<option value="13">14</option>
+					<option value="15">15</option>
+					<option value="16">16</option>
+					<option value="17">17</option>
+                    <option value="18">18</option>
+					<option value="19">19</option>
+					<option value="10">20</option>
+				</field>
+                <field name="shadcol" type="text" default="444444" label="BM15_SHAD_COLOUR" />
+                <field name="shadsz" type="list" default="4" label="BM15_SHADSZ" >
+					<option value="0">0</option>
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+                    <option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+                    <option value="8">8</option>
+					<option value="9">9</option>
+					<option value="10">10</option>
+                    <option value="11">11</option>
+					<option value="12">12</option>
+					<option value="13">14</option>
+					<option value="15">15</option>
+					<option value="16">16</option>
+					<option value="17">17</option>
+                    <option value="18">18</option>
+					<option value="19">19</option>
+					<option value="10">20</option>
+				</field>
+			</fieldset>
+			<fieldset name="BM15_ADMIN">
+				<field name="spacer1" type="radio" label="BM15_STYLES_SPACER" />
+				<field name="margin-leftmodule" type="text" default="" label="BM15_LEFT_MARGIN_LABEL" description="BM15_LEFT_MARGIN_DESC" />
+				<field name="paddingleft" type="text" default="" label="BM15_PADDING_LEFT" description="BM15_PADDING_LEFT_DESC" />
+				<field name="paddingright" type="text" default="" label="BM15_PADDING_RIGHT" description="BM15_PADDING_RIGHT_DESC" />
+				<field name="paddingtop" type="text" default="" label="BM15_PADDING_TOP" description="BM15_PADDING_TOP_DESC" />
+				<field name="paddingbottom" type="text" default="" label="BM15_PADDING_BOTTOM" description="BM15_PADDING_BOTTOM_DESC" />
+				<field name="margin-top" type="text" default="" label="BM15_TOP_MARGIN" description="BM15_TOP_MARGIN_DESC" />
+				<field name="margin-bottom" type="text" default="" label="BM15_BOTTOM_MARGIN" description="BM15_BOTTOM_MARGIN_DESC" />
+				<field name="width" type="text" default="100" label="BM15_WIDTH" description="BM15_MODULE_WIDTH" />
+				<field name="widthunit" type="list" default="%" label="BM15_WIDTH_UNIT" description="BM15_WIDTH_UNIT">
+					<option value="px">BM15_WIDTH_UNIT_OPT1</option>
+					<option value="%">BM15_WIDTH_UNIT_OPT2</option>
+				</field>
+				<field name="colour2" type="text" default="" label="BM15_MODULE_COLOUR_BACKGROUND" description="BM15_MODULE_COLOUR_BACKGROUND_DESC" />
+				<field name="trans2" type="list" default="1" label="BM15_MODULE_COLOUR_BACKGROUND">
+					<option value="1">BM_COLOUR</option>
+					<option value="2">BM_TRANS</option>
+				</field>
+				<field name="spacer2" type="radio" label="BM15_ADMIN_SPACER" />
+				<field name="moduleclass_sfx" type="text" default="" label="BM15_MODULE_CLASS_SUFFIX_LABEL" description="BM15_MODULE_CLASS_SUFFIX_DESC" />
+				<field name="modno_bm" type="list" default="0" label="BM15_MODNO_LABEL" description="BM15_MODNO_DESC">
+					<option value="0">BM15_AUTO_ID</option>
+					<option value="1BM">1</option>
+					<option value="2BM">2</option>
+					<option value="3BM">3</option>
+					<option value="4BM">4</option>
+					<option value="5BM">5</option>
+					<option value="6BM">6</option>
+					<option value="7BM">7</option>
+					<option value="8BM">8</option>
+					<option value="9BM">9</option>
+					<option value="10BM">10</option>
+					<option value="11BM">11</option>
+					<option value="12BM">12</option>
+					<option value="13BM">13</option>
+					<option value="14BM">14</option>
+					<option value="15BM">15</option>
+					<option value="16BM">16</option>
+					<option value="17BM">17</option>
+					<option value="18BM">18</option>
+					<option value="19BM">19</option>
+					<option value="20BM">20</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+    <updateservers>
+		<server type="extension" name="Blackdale" priority="1"><![CDATA[http://updates.blackdale.com/update/modblank250/modblank250.xml]]></server>
+	</updateservers>
+</extension>

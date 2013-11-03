@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension
+	type="module"
+	version="1.0"
+	client="site"
+	method="upgrade">
+	<name>mod_barradogoverno</name>
+	<author>Comunidade Joomla Calango e Grupo de Trabalho de Ministérios</author>
+	<creationDate>Outubro 2013</creationDate>
+	<copyright>Copyright (C) 2013 Comunidade Joomla Calango e Grupo de Trabalho de Ministérios</copyright>
+	<license>GNU General Public License version 2</license>
+	<authorEmail>joomlagovbr@gmail.com</authorEmail>
+	<authorUrl>https://github.com/joomlagovbr</authorUrl>
+	<version>1.0</version>
+	<description>Mais informacoes na url do github.</description>
+	<files>
+		<filename module="mod_barradogoverno">mod_barradogoverno.php</filename>
+		<folder>assets</folder>
+		<folder>tmpl</folder>
+		<filename>helper.php</filename>
+		<filename>index.html</filename>
+		<filename>mod_barradogoverno.xml</filename>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">	
+				<field
+					name="layout"
+					type="modulelayout"
+					label="Modelo da barra do governo"
+					description="Escolher versão 2012 ou 2014 da barra. Nova barra possui dados provenientes diretamente do SERPRO."
+					default="default" />
+			</fieldset>
+			<fieldset name="opcoes_barra_2014" label="Opções de configuração da barra padrão">
+				<field name="anexar_js_2014" type="list" default="1" label="Anexar arquivo JS" description="Anexa arquivo JS, se disponível para a versão da barra.">
+					<option value="2">dentro da chamada de scripts do Joomla</option>
+					<option value="1">dentro do DIV da barra</option>
+					<option value="0">não anexar</option>		
+		  		</field>
+		  		<field name="endereco_js_2014" type="text" default="http://barra.brasil.gov.br/barra.js?cor=verde" label="Endereço do script externo" description="Dados provenientes de externamente." size="35" />
+		  		<field type="spacer" hr="true" />		  		
+				<field name="mensagem_ie6_2014" type="textarea" cols="40" rows="3" default="Seu navegador é incompatível com os novos padrões de tecnologia e por isso você não pode visualizar a nova barra do Governo Federal. Atualize ou troque seu navegador." label="Mensagem de incompatibilidade com IE 6" description="Deixe vazio para não exibir" />				
+				<field name="correcoes_ie8_2014" type="list" default="show_css" label="Correções para IE 7 e IE8" description="Decide o que fazer quando o navegador do usuário for IE7 ou IE8, casos em que o css da barra do governo não é carregado corretamente.">
+					<option value="hide">Não exibir a barra</option>
+					<option value="show">Exibir a barra sem realizar correções</option>
+					<option value="show_css">Exibir barra utilizando css mencionado abaixo</option>							
+		  		</field>
+		  		<field name="link_css_ie8_2014" type="text" default="{URL_SITE}/modules/mod_barradogoverno/assets/2014/css/ie8.css" label="Link CSS para IE inferior a 9" description="Utilizar {URL_SITE} como referência à URL base do site" size="60" />
+			</fieldset>
+			<fieldset name="opcoes_barra_2012" label="Opções da barra 2012">
+				<field name="anexar_css_2012" type="list" default="1" label="Anexar arquivos CSS" description="Anexa arquivo css padrão da barra.">
+					<option value="1">SIM</option>
+					<option value="0">NÃO</option>		
+		  		</field>	
+		  		<field type="spacer" hr="true" />
+				<field name="cor_2012" type="list" default="" label="Cor da barra 2012" description="Disponível somente para versão 2012 da barra.">
+					<option value="">Padrão</option>
+					<option value="barraGovernoAzul">Azul</option>
+					<option value="barraGovernoCinza">Cinza</option>
+					<option value="barraGovernoPreto">Preto</option>
+					<option value="barraGovernoVerde">Verde</option>			
+		  		</field>
+				<field name="acesso_a_informacao_2012" type="list" default="1" label="Exibir acesso à informação" description="Exibe link para acesso à informação. Somente barra 2012">
+					<option value="1">SIM</option>
+					<option value="0">NÃO</option>		
+		  		</field>
+		  		<field name="largura_barra_2012" type="text" default="970" label="Lagura da barra 2012" description="Lagura da barra 2012, para alinhamento (em pixels, não é necessário informar a unidade 'px')" />
+				<field name="alinhamento_barra_2012" type="list" default="" label="Alinhamento da barra 2012" description="Alinhamento da barra 2012">
+					<option value="">Padrão (centralizado)</option>
+					<option value="barraGovernoEsquerda">A esquerda</option>		
+		  		</field>
+		  		<field type="spacer" hr="true" />
+				<field name="link_acesso_a_informacao_2012" type="text" default="http://www.acessoainformacao.gov.br/acessoainformacaogov/" label="Link para imagem de acesso à informação" description="Disponível somente para versão 2012 da barra." size="35" />
+				<field name="link_portal_brasil_2012" type="text" default="http://www.brasil.gov.br/" label="Link para Portal Brasil" description="Disponível somente para versão 2012 da barra." />
+				<field name="target_links_2012" type="list" default="_blank" label="Target" description="Target dos links.">
+					<option value="none">nenhum</option>
+					<option value="_self">_self</option>		
+					<option value="_parent">_parent</option>		
+					<option value="_blank">_blank</option>		
+		  		</field>	  		
+			</fieldset>
+			<fieldset name="opcoes_barra_manual" label="Opções da barra configurada manualmente">
+				<field name="head_manual" type="textarea" cols="50" rows="20" default="" filter="raw" label="Código personalizado para o head da página" description="" />
+				<field name="html_manual" type="textarea" cols="50" rows="20" default="" filter="raw" label="Código personalizado para a barra" description="" />
+			</fieldset>
+			<fieldset
+				name="advanced">
+		  		<field name="anexar_head" type="textarea" cols="50" rows="20" default="" filter="raw" label="Anexar custom code no HEAD da página" description="" />
+				<field
+					name="moduleclass_sfx"
+					type="textarea" rows="3"
+					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
+					description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
+
+				<field
+					name="cache"
+					type="list"
+					default="1"
+					label="COM_MODULES_FIELD_CACHING_LABEL"
+					description="COM_MODULES_FIELD_CACHING_DESC">
+					<option
+						value="1">JGLOBAL_USE_GLOBAL</option>
+					<option
+						value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+				</field>
+
+				<field
+					name="cache_time"
+					type="text"
+					default="900"
+					label="COM_MODULES_FIELD_CACHE_TIME_LABEL"
+					description="COM_MODULES_FIELD_CACHE_TIME_DESC" />
+			</fieldset>
+		</fields>
+	</config>
+</extension>

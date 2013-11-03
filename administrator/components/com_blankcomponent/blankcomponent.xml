@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="3.0" client="site" method="upgrade">
+	<name>Blank Component</name>
+	<author>Omar Muhammad</author>
+	<creationDate>03/11/2012</creationDate>
+	<copyright>Copyright © 2012, Omar's Site, All Rights Reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>admin@omar84.com</authorEmail>
+	<authorUrl>http://omar84.com</authorUrl>
+	<version>3.0.0</version>
+	<description>Blank Component was made to make it possible to create a menu item page that contains only modules and no component.</description>
+	<files>
+		<filename component="com_blankcomponent">blankcomponent.php</filename>
+		<filename>controller.php</filename>
+		<filename>index.html</filename>
+		<folder>views/</folder>
+	</files>
+	<administration>
+		<menu link="option=com_blankcomponent">Blank Component</menu>
+	    <files>
+	    	<filename component="com_blankcomponent">blankcomponent.php</filename>
+	    </files>
+	</administration>
+</extension>

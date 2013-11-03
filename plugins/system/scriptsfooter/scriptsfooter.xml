@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="2.5" type="plugin" group="system">
+	<name>plg_system_scriptsfooter</name>
+	<author>Comunidade Joomla Calango e Grupo de Trabalho de Ministérios</author>
+	<creationDate>Outubro 2013</creationDate>
+	<copyright>Copyright (C) 2013 Comunidade Joomla Calango e Grupo de Trabalho de Ministérios</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<authorEmail>joomlagovbr@gmail.com</authorEmail>
+	<authorUrl>https://github.com/joomlagovbr</authorUrl>
+	<version>1.0</version>
+	<description>Mais informacoes na url do github.</description>
+	<files>
+		<filename plugin="scriptsfooter">scriptsfooter.php</filename>
+		<filename>index.html</filename>
+	</files>	
+	<config />
+</extension>

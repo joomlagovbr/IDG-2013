@@ -1,0 +1,107 @@
+main div.container {
+    .module { padding-bottom:20px;
+        h1 { font-size:2.5em; line-height:1.2em; margin:0 0 10px 0; letter-spacing:-0.05em; font-weight:600;
+            a { color:@cor-preto; }
+        }
+        .outstanding-header { border-top:4px solid @cor-module-title-padrao; background:@cor-module-title-bkg-padrao; height:57px; margin:0 0 22px 0; position:relative;
+            a.outstanding-link { position:absolute; right:3px; bottom:8px; }
+        }
+        .outstanding-title { line-height:1em; margin:11px 8px 14px 8px; font-size:1.45em; font-weight:400; color: @cor-module-title-padrao;  }
+        .subtitle { text-transform:uppercase; font-weight:400; color: @cor-module-subtitle-padrao; font-size:0.9em; line-height:1em; margin:0 0 10px 0 }
+        p { font-size:0.9em; line-height:1.35em }
+        h2, h3 { font-size:1.1em; line-height:1em; margin-bottom:5px; font-weight:400;
+            a { color:@cor-module-header-links }
+        }
+        .img-rounded { .rounded-corners(8px) !important; display:block; width:230px; height:136px; overflow:hidden; margin-bottom:10px; }
+        //.span4 .img-rounded { .rounded-corners(8px) !important; display:block; width:230px; height:136px; overflow:hidden; margin-bottom:10px; }
+        .outstanding-footer { border-top:2px solid @cor-module-title-padrao; background:@cor-module-title-bkg-padrao; height:22px; margin:26px 0 0 0; padding:10px; clear:both; }
+        a.outstanding-link { font-size:0.7em; color:@cor-module-outstanding-link-padrao; text-transform:uppercase; line-height:1em; float:right; margin-right:7px;
+            .text { display:block; padding:5px; float:left; }
+            .icon-box {  display:block; float:right; width:12px; height:16px; padding:0px 4px 4px 6px; .rounded-corners(2px); .linear-gradient( @cor-module-title-padrao, lighten(@cor-module-title-padrao, 10%), darken(@cor-module-title-padrao, 10%) ); text-align:center;      }
+            .icon-angle-right { font-size:18px; }
+        }
+    }
+    //variacoes de cores de modulos, mais informacoes nos arquivos principais de cores
+    .variacao-module-01 {
+        .outstanding-header { border-color:@cor-module-title-variacao-01; background:@cor-module-title-bkg-variacao-01; }
+        .outstanding-title { color: @cor-module-title-variacao-01;  }
+        .subtitle { color: @cor-module-subtitle-variacao-01; }
+        .outstanding-footer { border-color:@cor-module-title-variacao-01; background:@cor-module-title-bkg-variacao-01; }
+        a.outstanding-link {
+            .icon-box { .linear-gradient( @cor-module-title-variacao-01, lighten(@cor-module-title-variacao-01, 10%), darken(@cor-module-title-variacao-01, 10%) ) !important; }            
+        }
+    }
+    .variacao-module-02 {
+        .outstanding-header { border-color:@cor-module-title-variacao-02; background:@cor-module-title-bkg-variacao-02; }
+        .outstanding-title { color: @cor-module-title-variacao-02;  }
+        .subtitle { color: @cor-module-subtitle-variacao-02; }
+        .outstanding-footer { border-color:@cor-module-title-variacao-02; background:@cor-module-title-bkg-variacao-02; }
+        a.outstanding-link {
+            .icon-box { .linear-gradient( @cor-module-title-variacao-02, lighten(@cor-module-title-variacao-02, 10%), darken(@cor-module-title-variacao-02, 10%) ) !important; }            
+        }
+    }
+    .variacao-module-03 {
+        .outstanding-header { border-color:@cor-module-title-variacao-03; background:@cor-module-title-bkg-variacao-03; }
+        .outstanding-title { color: @cor-module-title-variacao-03;  }
+        .subtitle { color: @cor-module-subtitle-variacao-03; }
+        .outstanding-footer { border-color:@cor-module-title-variacao-03; background:@cor-module-title-bkg-variacao-03; }
+        a.outstanding-link {
+            .icon-box { .linear-gradient( @cor-module-title-variacao-03, lighten(@cor-module-title-variacao-03, 10%), darken(@cor-module-title-variacao-03, 10%) ) !important; }            
+        }
+    }
+    .module-box-01 {
+        @border-color:darken(@cor-cinza-medio, 15%);
+        padding-bottom:0; background:@cor-cinza-claro; border:1px solid @border-color; .rounded-corners(8px); margin-bottom:20px !important;
+        .header { border-bottom:1px solid @border-color; padding:10px 12px 2px 12px;
+            h2, h3, h4, h4, h6 { text-transform:uppercase; }
+        }
+        .lista { margin:0 !important;
+            h2, h3, h4, h5, h6 {
+                a { color:#355075; font-size:1em;
+                    &:hover { text-decoration:underline; }
+                }
+            }
+        }
+        li { margin-left:0 !important; padding:7px 5px 5px 15px; border-left:1px dotted @border-color; }
+        .outstanding-link { display:block; padding:4px 0 }
+        .footer { border-top:1px solid @border-color; padding:3px 12px 6px 12px; text-align:right;
+            a { font-size:0.85em; color:@cor-module-outstanding-link-padrao; text-transform:uppercase; line-height:1em;  }
+        }
+        .gallery-pane {
+            .carousel { margin-bottom:0 }
+            .carousel-control { border:none; line-height:1em; font-size:35px; }
+            .item img { width: 100%; height: auto; }
+            .galleria-info { padding:10px }
+            h3, h4, h5, h6 {
+                a { color:@cor-module-outstanding-link-padrao; font-size:0.85em; font-weight:700 }
+            }
+            .galleria-info-description { display:block; margin-bottom:5px; font-size:0.85em }
+            .rights { display:block; margin-bottom:5px; font-size:0.85em; font-style:italic }
+        }
+        
+     }
+     .module-twitter-facebook {
+        @border-color:darken(@cor-cinza-medio, 15%);
+        .header { padding-bottom:0 !important;
+            h2 { display:block; padding:6px 10px 0 10px; border-top:1px solid @border-color; border-left:1px solid @border-color; border-right:1px solid @border-color; .rounded-corners(8px 8px 0 0); margin:0 !important; text-align:center; font-size:0.9em; }
+            h2.active { background:@cor-cinza-claro; }
+            h2.hide { display:none !important; }
+        }
+        .pane {
+            padding-bottom:0; background:@cor-cinza-claro; border:1px solid @border-color; margin:-1px 0 20px 0 !important; .rounded-corners(0 8px 8px 8px); 
+        }
+        .twitter-content { min-height:350px; }
+     }
+     .module-box-01-top-adjust { margin-top:29px; }
+}
+//formatacoes especificas joomla
+#system-message-container {
+   margin-bottom:10px;
+    dl, ul, li { margin:0 !important; }
+    dd { margin:0 0 10px 0 !important; padding:10px; text-align:center; }
+    li { display:block; padding:4px 4px 0 4px; }
+    dt { display:none !important; }
+    dd.message { background:@cor-module-title-padrao; color:@cor-branco; }
+    dd.notice { background:@cor-cinza-escuro !important; color:@cor-branco; }
+    dd.error { background:@cor-module-title-variacao-02 !important; color:@cor-branco; border:none !important; }
+}

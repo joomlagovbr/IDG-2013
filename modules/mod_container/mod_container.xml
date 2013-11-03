@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension
+	type="module"
+	version="1.0"
+	client="site"
+	method="upgrade">
+	<name>mod_container</name>
+	<author>Comunidade Joomla Calango e Grupo de Trabalho de Ministérios</author>
+	<creationDate>Outubro 2013</creationDate>
+	<copyright>Copyright (C) 2013 Comunidade Joomla Calango e Grupo de Trabalho de Ministérios</copyright>
+	<license>GNU General Public License version 2</license>
+	<authorEmail>joomlagovbr@gmail.com</authorEmail>
+	<authorUrl>https://github.com/joomlagovbr</authorUrl>
+	<version>1.0</version>
+	<description>Mais informacoes na url do github.</description>
+	<files>
+		<filename module="mod_container">mod_container.php</filename>		
+		<folder>tmpl</folder>
+		<filename>helper.php</filename>
+		<filename>index.html</filename>
+		<filename>mod_container.xml</filename>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">	
+				<field name="posicao" type="text" default="" label="Posição a ser lida" description="Nome da posição de módulo de onde os dados serão carregados." size="35" />
+
+				<field
+					name="moduleclass_sfx"
+					type="textarea" rows="3"
+					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" default="row-fluid"
+					description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
+				
+				<field type="spacer" hr="true" />
+
+				<field name="alternative_title" type="text" default="" label="Título alternativo" description="Sobrescreve o título do módulo, permitindo um título diferente do utilizado na área administrativa, para fins de controle" size="35" />
+
+				<field
+					name="title_outstanding"
+					type="list"
+					default="1"
+					label="Estilo de título 'Outstanding'"
+					description="Determina apresentação de título com caixa e borda superior, conforme layout do template padraogoverno01">
+					<option
+						value="1">SIM</option>
+					<option
+						value="0">NÃO</option>
+				</field>
+
+				<field name="text_link_title" type="text" default="" label="Texto link de título" description="Link de título que ficará à direita" size="35" />
+				
+				<field name="url_link_title" type="text" default="" size="45" label="link de título" description="Link de título que ficará à direita. Utilize {SITE} para referenciar a url do site." />
+
+				<field type="spacer" hr="true" />
+
+				<field
+					name="show_footer"
+					type="list"
+					default="0"
+					label="Mostrar footer para container principal"
+					description="Determina se o footer dos módulos será exibido ou não">
+					<option
+						value="1">SIM</option>
+					<option
+						value="0">NÃO</option>
+				</field>
+
+				<field name="text_link_footer" type="text" default="" label="Texto link de footer" description="Link de footer que ficará à direita" size="35" />
+				
+				<field name="url_link_footer" type="text" default="" size="45" label="link de footer" description="Link de footer que ficará à direita. Utilize {SITE} para referenciar a url do site." />
+
+				<field type="spacer" hr="true" />
+
+
+				<field
+					name="disposicao"
+					type="list"
+					default="linhas"
+					label="Disposição"
+					description="Determinar se módulos serão carregados em linhas ou colunas.">
+					<option
+						value="colunas">COLUNAS</option>
+					<option
+						value="linhas">LINHAS</option>
+				</field>
+
+				<field
+					name="auto_divisor"
+					type="list"
+					default="1"
+					label="Divisão automática de colunas"
+					description="Divide em até 3 colunas iguais.">
+					<option
+						value="1">SIM</option>
+					<option
+						value="0">NÃO</option>
+				</field>
+
+			</fieldset>
+			<fieldset name="opcoes_coluna_1" label="Opções da coluna 1">
+				<field
+					name="title_outstanding_column1"
+					type="list"
+					default="1"
+					label="Estilo de título 'Outstanding' para coluna 1"
+					description="Determina apresentação de título com caixa e borda superior, conforme layout do template padraogoverno01">
+					<option
+						value="1">SIM</option>
+					<option
+						value="0">NÃO</option>
+				</field>
+				<field name="text_link_title_column1" type="text" default="" label="Texto link de título" description="Link de título que ficará à direita" size="35" />
+				
+				<field name="url_link_title_column1" type="text" default="" size="45" label="link de título" description="Link de título que ficará à direita" />
+				<field
+					name="footer_outstanding_column1"
+					type="list"
+					default="0"
+					label="Estilo de footer 'Outstanding'"
+					description="Determina apresentação de footer com caixa e borda superior, conforme layout do template padraogoverno01">
+					<option
+						value="1">SIM</option>
+					<option
+						value="0">NÃO</option>
+				</field>
+				<field name="text_link_footer_column1" type="text" default="" label="Texto link de rodapé do módulo" description="Link de rodapé do módulo que ficará à direita" size="35" />
+				
+				<field name="url_link_footer_column1" type="text" default="" size="45" label="link de rodapé do módulo" description="Link de rodapé do módulo que ficará à direita" />
+			</fieldset>
+			<fieldset name="opcoes_coluna_2" label="Opções da coluna 2">
+				<field
+					name="title_outstanding_column2"
+					type="list"
+					default="1"
+					label="Estilo de título 'Outstanding' para coluna 2"
+					description="Determina apresentação de título com caixa e borda superior, conforme layout do template padraogoverno01">
+					<option
+						value="1">SIM</option>
+					<option
+						value="0">NÃO</option>
+				</field>
+				<field name="text_link_title_column2" type="text" default="" label="Texto link de título" description="Link de título que ficará à direita" size="35" />
+				
+				<field name="url_link_title_column2" type="text" default="" size="45" label="link de título" description="Link de título que ficará à direita" />
+				<field
+					name="footer_outstanding_column2"
+					type="list"
+					default="0"
+					label="Estilo de footer 'Outstanding'"
+					description="Determina apresentação de footer com caixa e borda superior, conforme layout do template padraogoverno01">
+					<option
+						value="1">SIM</option>
+					<option
+						value="0">NÃO</option>
+				</field>
+				<field name="text_link_footer_column2" type="text" default="" label="Texto link de rodapé do módulo" description="Link de rodapé do módulo que ficará à direita" size="35" />
+				
+				<field name="url_link_footer_column2" type="text" default="" size="45" label="link de rodapé do módulo" description="Link de rodapé do módulo que ficará à direita" />
+			</fieldset>
+			<fieldset name="opcoes_coluna_3" label="Opções da coluna 3">
+				<field
+					name="title_outstanding_column3"
+					type="list"
+					default="1"
+					label="Estilo de título 'Outstanding' para coluna 3"
+					description="Determina apresentação de título com caixa e borda superior, conforme layout do template padraogoverno01">
+					<option
+						value="1">SIM</option>
+					<option
+						value="0">NÃO</option>
+				</field>
+				<field name="text_link_title_column3" type="text" default="" label="Texto link de título" description="Link de título que ficará à direita" size="35" />
+				
+				<field name="url_link_title_column3" type="text" default="" size="45" label="link de título" description="Link de título que ficará à direita" />
+				<field
+					name="footer_outstanding_column3"
+					type="list"
+					default="0"
+					label="Estilo de footer 'Outstanding'"
+					description="Determina apresentação de footer com caixa e borda superior, conforme layout do template padraogoverno01">
+					<option
+						value="1">SIM</option>
+					<option
+						value="0">NÃO</option>
+				</field>
+				<field name="text_link_footer_column3" type="text" default="" label="Texto link de rodapé do módulo" description="Link de rodapé do módulo que ficará à direita" size="35" />
+				
+				<field name="url_link_footer_column3" type="text" default="" size="45" label="link de rodapé do módulo" description="Link de rodapé do módulo que ficará à direita" />
+			</fieldset>
+			<fieldset
+				name="advanced">
+
+				<field name="container_level1" type="text" default="div" label="HTML container nível 1" description="Escolha tag que cercará todos os elementos." />
+				
+				<field name="container_level2" type="text" default="div" size="45" label="HTML container nível 2" description="Escolha tag que cercará cada módulo carregado" />
+
+				<field
+					name="layout"
+					type="modulelayout"
+					label="JFIELD_ALT_LAYOUT_LABEL"
+					description="JFIELD_ALT_MODULE_LAYOUT_DESC" />							  		
+
+
+				<field
+					name="cache"
+					type="list"
+					default="1"
+					label="COM_MODULES_FIELD_CACHING_LABEL"
+					description="COM_MODULES_FIELD_CACHING_DESC">
+					<option
+						value="1">JGLOBAL_USE_GLOBAL</option>
+					<option
+						value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+				</field>
+
+				<field
+					name="cache_time"
+					type="text"
+					default="900"
+					label="COM_MODULES_FIELD_CACHE_TIME_LABEL"
+					description="COM_MODULES_FIELD_CACHE_TIME_DESC" />
+				
+				<field
+					name="numero_limite_colunas"
+					type="hidden"
+					value="3"
+				/>
+			</fieldset>
+		</fields>
+	</config>
+</extension>
