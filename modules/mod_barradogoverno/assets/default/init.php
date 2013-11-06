@@ -6,7 +6,7 @@ $correcoes_ie8 = $params->get("correcoes_ie8_2014", "");
 $mensagem_ie_6 = $params->get("mensagem_ie6_2014", "");
 $anexar_js     = $params->get("anexar_js_2014", "");
 $endereco_js   = $params->get("endereco_js_2014", "");
-$document      =& JFactory::getDocument();
+$document      = JFactory::getDocument();
 
 if( $anexar_js == 2) {
 	$script = '<script type="text/javascript" src="'.$endereco_js.'"></script><noscript>&nbsp;<!-- item para fins de acessibilidade --></noscript>';

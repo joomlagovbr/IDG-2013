@@ -11,7 +11,7 @@ defined('_JEXEC') or die;
 
 class TmplPadraoGoverno01Helper
 {
-	function getScripts( &$tmpl )
+	static function getScripts( &$tmpl )
 	{
 		$javascript_on_footer     = $tmpl->params->get('javascript_on_footer', 0);
 		$clear_default_javascript = $tmpl->params->get('clear_default_javascript', 0);
@@ -28,7 +28,7 @@ class TmplPadraoGoverno01Helper
 		return array('scripts'=> array(), 'script'=> array());
 	}
 
-	function clearDefaultScripts( &$tmpl, $return = false )
+	static function clearDefaultScripts( &$tmpl, $return = false )
 	{
 		$clear_default_javascript = $tmpl->params->get('clear_default_javascript', 0);
 		$new_scripts = $scripts = $tmpl->_scripts; 		
@@ -62,7 +62,7 @@ class TmplPadraoGoverno01Helper
 	/*
 	* coloca scripts no rodape. Codigo base original do joomla que renderiza o head está em /libraries/joomla/document/html/renderer/head.php
 	*/
-	function writeScripts($javascript, &$tmpl )
+	static function writeScripts($javascript, &$tmpl )
 	{
 		$document =& JFactory::getDocument();
 		$lnEnd    = $document->_getLineEnd();
@@ -99,7 +99,7 @@ class TmplPadraoGoverno01Helper
 		echo $buffer;
 	}
 
-	function getJqueryScripts( &$tmpl )
+	static function getJqueryScripts( &$tmpl )
 	{
 		?>
 		<script src="<?php echo $tmpl->baseurl; ?>/templates/<?php echo $tmpl->template; ?>/js/jquery.min.js" type="text/javascript"></script><noscript>&nbsp;<!-- item para fins de acessibilidade --></noscript>
@@ -107,7 +107,7 @@ class TmplPadraoGoverno01Helper
 		<?php
 	}
 
-	function jqueryBeforeHead( &$tmpl )
+	static function jqueryBeforeHead( &$tmpl )
 	{
 		if ($tmpl->params->get('local_jquery', 'footer') == 'before_head') {
 			return true;
@@ -115,7 +115,7 @@ class TmplPadraoGoverno01Helper
 		return false;
 	}
 
-	function jqueryAfterHead( &$tmpl )
+	static function jqueryAfterHead( &$tmpl )
 	{
 		if ($tmpl->params->get('local_jquery', 'footer') == 'after_head') {
 			return true;
@@ -123,7 +123,7 @@ class TmplPadraoGoverno01Helper
 		return false;
 	}
 
-	function jqueryInFooter( &$tmpl )
+	static function jqueryInFooter( &$tmpl )
 	{
 		if ($tmpl->params->get('local_jquery', 'footer') == 'footer') {
 			return true;
@@ -131,14 +131,14 @@ class TmplPadraoGoverno01Helper
 		return false;
 	}
 
-	function getBarra2014Script( &$tmpl )
+	static function getBarra2014Script( &$tmpl )
 	{
 		?>
 		<script src="<?php echo $tmpl->params->get('endereco_js_barra2014'); ?>" type="text/javascript"></script><noscript>&nbsp;<!-- item para fins de acessibilidade --></noscript>
 		<?php
 	}
 
-	function getFontStyle( &$tmpl )
+	static function getFontStyle( &$tmpl )
 	{
 		if($tmpl->params->get('font_style_url', '') != 'NENHUM'):
 		?>
@@ -147,19 +147,19 @@ class TmplPadraoGoverno01Helper
 		endif;
 	}
 
-	function getActiveItemid()
+	static function getActiveItemid()
 	{
-		$jinput = JFactory::getApplication()->input;
+		$app = JFactory::getApplication();
+		$jinput = $app->input;
 		$itemid = $jinput->get('Itemid', 0, 'integer');
-		$menu =& JSite::getMenu();
+		$menu = $app->getMenu();
 		return $menu->getItem($itemid);		
-		//$params = $menu->getParams( $active->id );
-		//$pageclass = $params->get( 'pageclass_sfx' );
 	}
 
-	function getItemidParam( $activeItemid, $param )
+	static function getItemidParam( $activeItemid, $param )
 	{
-		$menu   =& JSite::getMenu();
+		$app = JFactory::getApplication();
+		$menu = $app->getMenu();
 		
 		if(!$activeItemid)
 			return '';
@@ -168,7 +168,7 @@ class TmplPadraoGoverno01Helper
 		return $params->get( $param );
 	}
 
-	function getPageClass( $activeItemid, $only_class = false )
+	static function getPageClass( $activeItemid, $only_class = false )
 	{
 		$class = TmplPadraoGoverno01Helper::getItemidParam($activeItemid, 'pageclass_sfx');
 
@@ -183,7 +183,7 @@ class TmplPadraoGoverno01Helper
 		return $class;
 	}
 
-	function getPagePositionPreffix($activeItemid)
+	static function getPagePositionPreffix($activeItemid)
 	{
 		$pos_preffix = TmplPadraoGoverno01Helper::getPageClass($activeItemid, true);
 		if(empty($pos_preffix))
@@ -196,7 +196,7 @@ class TmplPadraoGoverno01Helper
 		return $pos_preffix;
 	}
 
-	function hasMessage()
+	static function hasMessage()
 	{
         if (count(JFactory::getApplication()->getMessageQueue()) > 0)
         	return true;

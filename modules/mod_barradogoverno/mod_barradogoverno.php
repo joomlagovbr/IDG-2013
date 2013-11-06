@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 $require_layout = str_replace('_:', '', $params->get('layout', 2012));
 $anexar_head = $params->get('anexar_head', '');
 if($anexar_head != '') {
-	$document =& JFactory::getDocument();
+	$document = JFactory::getDocument();
 	$document->addCustomTag($anexar_head);
 }
 require JPATH_SITE . '/modules/mod_barradogoverno/assets/'.$require_layout.'/init.php';

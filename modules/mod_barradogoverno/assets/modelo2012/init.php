@@ -16,14 +16,13 @@ if($target_links != "none")
 else
 	$target = "";
 
-$document =& JFactory::getDocument();
+$document = JFactory::getDocument();
 if( $anexar_css == 1)
 {
 	$document->addStyleSheet( JURI::root() . 'modules/mod_barradogoverno/assets/modelo2012/css/barradogoverno.css' );
 	if( $largura_barra != 970 )
 	{
 		$style = '#barra-brasil-container { width:'.$largura_barra.'px }';
-		$document =& JFactory::getDocument();
 		$document->addStyleDeclaration($style);
 	}
 }
