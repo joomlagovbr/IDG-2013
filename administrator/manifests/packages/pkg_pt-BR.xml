@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="package" version="3.0" method="upgrade">
+	<name>Portuguese Brazil Language Pack</name>
+	<packagename>pt-BR</packagename>
+	<version>3.2.0.1</version>
+	<description>
+		<![CDATA[<h3><strong>Instalação do pacote de idioma Português (Brasil) para o CMS Joomla! 3.x e o editor TinyMCE 3.5.6 foram concluídos com sucesso.</strong></h3>
+		<p>Copyright 2005 - 2013 Open Source Matters. Todos os Direitos Reservados. Copyright Translation 2005 - 2013 Joomla Brasil. Todos os Direitos Reservados.<br/>
+		De acordo com termo de licenciamento de <a href="http://www.opensourcematters.org" target="_blank">OpenSourceMatters</a> e <a href="http://www.joomla.org" target="_blank">Joomla!</a> todos os arquivos de idioma devem ser licenciados sob a <a href="http://www.gnu.org/licenses/gpl-2.0.html" target="_blank">licença GNU/GPL (v.2.0)</a>. Esta tradução está licenciada sob esta licença. Se você encontrar algum erro de digitação, traduções incorretas ou se deseja sugerir melhorias, entre em contato com o <a href="mailto:traducao@joomla.com.br"><strong>coordenador</strong></a> da tradução.</p>
+		<p>Não se esqueça de selecionar o idioma para PT <a href="index.php?option=com_plugins&amp;view=plugins&amp;filter_search=TinyMCE"><strong>Gerenciamento de plug-in TinyMCE</strong></a><br />
+		Se você usar a detecção automática, certifique-se de que estão instalados os pacotes de idiomas diferentes para TinyMCE correspondentes aos instalado para o Joomla !</p>]]>
+	</description>
+	<creationDate>Jan 2013</creationDate>
+	<copyright>Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<author>Joomla Brasil</author>
+	<authorEmail>traducao@joomla.com.br</authorEmail>
+	<authorUrl>http://www.joomla.com.br</authorUrl>
+	<packager>Ariadne Duvessa</packager>
+	<packagerurl>http://www.joomla.com.br</packagerurl>
+	<files>
+		<file type="language" id="site_pt-BR" client="site">site_pt-BR</file>
+		<file type="language" id="admin_pt-BR" client="administrator">admin_pt-BR</file>
+		<file type="file" id="TinyMCE_pt-BR" client="site">TinyMCE_pt-BR</file>
+	</files>
+	<updateservers>
+		<server type="collection" priority="1" name="Accredited Joomla! Translations">http://update.joomla.org/language/translationlist_3.xml</server>
+	</updateservers>
+</extension>

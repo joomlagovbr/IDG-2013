@@ -1,16 +1,17 @@
 <?php
 /**
- * @version		$Id: language.php
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
- */
+ * @package    Joomla.Language
+ *
+ * @copyright  Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE.txt
+*/
 
 defined('_JEXEC') or die;
 
 /**
  * pt-BR localise class
  *
- * @package		Joomla.Site
+ * @package		Joomla.Language
  * @since		1.6
  */
 abstract class pt_BRLocalise {

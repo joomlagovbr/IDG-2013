@@ -1,16 +1,16 @@
 <?php
 /**
- * @version		$Id: fr-FR.localise.php
- * @copyright	Copyright (C) 2005 - 2010 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
- */
+ @package Joomla.Language
+ @copyright  Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
+ @license GNU General Public License version 2 or later; see LICENSE.txt
+  */
 
- defined('_JEXEC') or die;
- 
+defined('_JEXEC') or die;
+
 /**
  * pt-BR localise class
  *
- * @package		Joomla.Site
+ * @package		Joomla.Language
  * @since		1.6
  */
 abstract class pt_BRLocalise {
@@ -23,10 +23,10 @@ abstract class pt_BRLocalise {
 	 */
 	public static function getPluralSuffixes($count) {
 		if ($count == 0) {
-			$return =  array('0');
+			$return = array('0');
 		}
 		elseif($count == 1) {
-			$return =  array('1');
+			$return = array('1');
 		}
 		else {
 			$return = array('MORE');
