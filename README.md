@@ -1,4 +1,4 @@
-portal padrão em CMS Joomla 3.1
+portal padrão em CMS Joomla 3.2
 ================
 
 Dados de acesso à área administrativa:
