@@ -34,7 +34,7 @@ $script .= "	Joomla.submitform(task, document.getElementById('module-form'));
 					window.top.setTimeout('window.parent.SqueezeBox.close()', 1000);
 				}
 			}
-	}";
+	};";
 
 JFactory::getDocument()->addScriptDeclaration($script);
 
@@ -158,7 +158,7 @@ JFactory::getDocument()->addScriptDeclaration($script);
 
 		<?php
 		$this->fieldsets = array();
-		$this->ignore_fieldsets = array('basic');
+		$this->ignore_fieldsets = array('basic', 'description');
 		echo JLayoutHelper::render('joomla.edit.params', $this);
 		?>
 
