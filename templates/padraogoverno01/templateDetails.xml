@@ -69,7 +69,7 @@
 				</field>
 				<field name="font_style_url" type="text" default="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600,800,700"
 					label="URL de estilo de fonte"
-					description="URL interna ou externa onde se encontra o estilo de fonte utilizado. Para não utilizar, informar 'NENHUM'."
+					description="URL interna ou externa onde se encontra o estilo de fonte utilizado. Para não utilizar, informar 'NENHUM'. Para utilizar as fontes locais que fazem parte do padrão e já estão instaladas e configuradas para este template, informe simplesmente {LOCALFONT}. Para utilizar outra referência de endereço local, utilize {SITE} para indicar o endereço raiz deste site, a partir do qual o arquivo css deverá estar refernciado."
 					filter="string" size="70" />
 				<field name="denominacao" type="text" default=""
 					label="Denominação do órgão"
@@ -83,6 +83,15 @@
 					label="Subordinação"
 					description="Informar subordinação do órgão, quando não se tratar do site do órgão principal."
 					filter="string" />
+				<field name="classe_nome_principal" type="list" default=""
+					label="Classe de ajuste de nome principal"
+					description="Ajuste do nome principal do órgão, aumentando a fonte para o caso de palavras curtas ou restringindo o tamanho para o caso de nomes de órgãos que sejam mais longos."
+					filter="string"
+				>
+					<option value="">Padrão</option>
+					<option value="small">small - diminuir fonte</option>					
+					<option value="big">big - aumentar fonte</option>					
+				</field>
 				<field name="rodape_acesso_informacao" type="list" default="1"
 					label="Exibir logo acesso à informação"
 					description="Logo no rodapé do acesso à informação"
@@ -120,7 +129,16 @@
 					<option value="before_head">Antes do jmodule HEAD</option>
 					<option value="after_head">Depois do jmodule HEAD</option>					
 					<option value="footer">no final da página</option>					
-				</field>				
+				</field>
+				<field name="local_mainscript" type="list" default="footer"
+					label="Local dos arquivos javascript principais"
+					description="De acordo com as possíveis incompatibilidades decorrentes do local de utilização, alterar local das chamadas jquery e do local do script principal do template, onde podem constar funções de apoio do template."
+					filter="string"
+				>
+					<option value="before_head">Antes do jmodule HEAD</option>
+					<option value="after_head">Depois do jmodule HEAD</option>					
+					<option value="footer">no final da página</option>					
+				</field>
 				<field type="spacer" hr="true" />
 				<field name="anexar_js_barra2014" type="list" default="0" label="Anexar arquivo JS da barra do governo 2014" description="Anexa arquivo JS, se disponível para a versão da barra.">					
 					<option value="1">SIM</option>

@@ -107,25 +107,34 @@ class TmplPadraoGoverno01Helper
 		<?php
 	}
 
-	static function jqueryBeforeHead( &$tmpl )
+	static function getTemplateMainScripts( &$tmpl )
 	{
-		if ($tmpl->params->get('local_jquery', 'footer') == 'before_head') {
+		?>
+		<script src="<?php echo $tmpl->baseurl; ?>/templates/<?php echo $tmpl->template; ?>/bootstrap/js/bootstrap.min.js" type="text/javascript"></script><noscript>&nbsp;<!-- item para fins de acessibilidade --></noscript>
+	    <script src="<?php echo $tmpl->baseurl; ?>/templates/<?php echo $tmpl->template; ?>/js/jquery.cookie.js" type="text/javascript"></script><noscript>&nbsp;<!-- item para fins de acessibilidade --></noscript>
+	    <script src="<?php echo $tmpl->baseurl; ?>/templates/<?php echo $tmpl->template; ?>/js/template.js" type="text/javascript"></script><noscript>&nbsp;<!-- item para fins de acessibilidade --></noscript>
+		<?php
+	}
+
+	static function beforeHead( $param='', &$tmpl )
+	{
+		if ($tmpl->params->get( $param, 'footer') == 'before_head') {
 			return true;
 		}
 		return false;
 	}
 
-	static function jqueryAfterHead( &$tmpl )
+	static function afterHead( $param='', &$tmpl )
 	{
-		if ($tmpl->params->get('local_jquery', 'footer') == 'after_head') {
+		if ($tmpl->params->get( $param, 'footer') == 'after_head') {
 			return true;
 		}
 		return false;
 	}
 
-	static function jqueryInFooter( &$tmpl )
+	static function inFooter( $param='', &$tmpl )
 	{
-		if ($tmpl->params->get('local_jquery', 'footer') == 'footer') {
+		if ($tmpl->params->get( $param, 'footer') == 'footer') {
 			return true;
 		}
 		return false;
@@ -142,7 +151,7 @@ class TmplPadraoGoverno01Helper
 	{
 		if($tmpl->params->get('font_style_url', '') != 'NENHUM'):
 		?>
-		<link href='<?php echo $tmpl->params->get('font_style_url', 'http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600,800,700'); ?>'  rel='stylesheet' type='text/css'>
+		<link href='<?php echo str_replace(array('{SITE}', '{LOCALFONT}'), array(substr(JURI::root(),0,-1), JURI::root().'templates/'.$tmpl->template.'/css/fontes.css'), $tmpl->params->get('font_style_url', 'http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600,800,700') ); ?>'  rel='stylesheet' type='text/css'>
 		<?php
 		endif;
 	}
@@ -168,12 +177,15 @@ class TmplPadraoGoverno01Helper
 		return $params->get( $param );
 	}
 
-	static function getPageClass( $activeItemid, $only_class = false )
+	static function getPageClass( $activeItemid, $only_class = false, $pageclass = false )
 	{
 		$class = TmplPadraoGoverno01Helper::getItemidParam($activeItemid, 'pageclass_sfx');
 
 		if($only_class)
 			return $class;
+
+		if(!empty($class) && $pageclass)
+			$class = 'pagina-'.$class;
 
 		if(! empty($class))
 			$class = 'class="'.$class.'"';
@@ -185,7 +197,7 @@ class TmplPadraoGoverno01Helper
 
 	static function getPagePositionPreffix($activeItemid)
 	{
-		$pos_preffix = TmplPadraoGoverno01Helper::getPageClass($activeItemid, true);
+		$pos_preffix = TmplPadraoGoverno01Helper::getPageClass($activeItemid, true);		
 		if(empty($pos_preffix))
 		{
 			$jinput = JFactory::getApplication()->input;
@@ -193,7 +205,61 @@ class TmplPadraoGoverno01Helper
 			$view   = $jinput->get('view', '', 'string');
 			$pos_preffix = $option . '-' . $view;
 		}
+		else
+		{
+			$pos_preffix = explode(' ',$pos_preffix);
+			$pos_preffix = $pos_preffix[0];
+		}
 		return $pos_preffix;
+	}
+
+	static function isOnlyModulesPage()
+	{
+		$jinput = JFactory::getApplication()->input;
+		$option = $jinput->get('option', '', 'string');
+		
+		//informar aqui componentes que desejar utilizar para páginas internas de capa, que exibirão somente modulos:
+		$onlyModules = array('com_blankcomponent','NOME_OUTRO_COMPONENTE');
+
+		if(in_array($option, $onlyModules))
+			return true;
+
+		return false;
+	}
+
+	static function loadModuleByPosition($position = NULL, $attribs = array(), $modules = NULL) //TmplPadraoGoverno01Helper::loadModuleByPosition('')
+	{
+		if(is_null($modules))
+			$modules = JModuleHelper::getModules( $position );
+		else if(is_null($position))
+			return;
+
+		foreach ($modules as $k => $mod):
+			if(count($attribs) > 0)
+			{
+				//correcoes utilizadas para menu de redes sociais, no rodape, por exemplo
+				if(@$attribs['replaceHTMLentities']=='1')
+				{
+					$mod = JModuleHelper::renderModule($mod, $attribs);
+					$mod = str_replace(array('&lt;', '&gt;','<i', 'i>'), array('<','>', '<span', 'span>'), $mod);
+					echo $mod;
+				}
+				else
+					echo JModuleHelper::renderModule($mod, $attribs);							
+			}
+			else
+				echo JModuleHelper::renderModule($mod);
+
+		endforeach;
+	}
+
+	static function getModules($position = NULL)
+	{
+		if(is_null($position))
+			return array();
+
+		$modules = JModuleHelper::getModules( $position );
+		return $modules;
 	}
 
 	static function hasMessage()
@@ -202,5 +268,17 @@ class TmplPadraoGoverno01Helper
         	return true;
 
         return false;
+	}
+
+	static function debug( $preffix = '', $active_item = 0 )
+	{
+		if(JApplication::getCfg('debug')==1)
+		{
+			// var_dump($active_item);
+			echo '<strong>Debug de template</strong><br />';
+			echo '<strong>Prefixo de posicoes de modulo:</strong> '.$preffix.'<br />';
+			echo '<strong>ID Item de menu ativo:</strong> '.$active_item->id.'<br />';
+			echo '<strong>LINK Item de menu ativo:</strong> '.$active_item->link.'<br />';
+		}
 	}
 }

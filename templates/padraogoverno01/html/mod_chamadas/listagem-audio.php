@@ -8,47 +8,89 @@
  */
 
 defined('_JEXEC') or die;
-//preencher link quando categoria for unica
-if (empty($link_saiba_mais) && count($params->get('catid'))==1 && $params->get('buscar_cat_tag')==1) {
-	$catid = $params->get('catid');
-	$link_saiba_mais = JRoute::_('index.php?option=com_content&view=category&id='.$catid[0]);
-}
-?>
-<div id="daf6a33c36c54df8a2f8e6b91e619aff" data-tile="@@audio/daf6a33c36c54df8a2f8e6b91e619aff" class="tile tile-default">
-  <div id="audio-daf6a33c36c54df8a2f8e6b91e619aff" class="audio-tile">
-    <h3 class="title"></h3>
-    <!-- Audio item player -->
-    <div id="audio_jplayer_daf6a33c36c54df8a2f8e6b91e619aff" data-audio-description="Espaço para inserir a legenda do áudio 1" data-audio-url="http://tv1-lnx-04.grupotv1.com/portalmodelo/conteudos-de-marcacao/audio-1-titulo-do-audio-1/audio-1-nome-do-audio.mp3" class="jp-jplayer" style="width: 0px; height: 0px;"><img id="jp_poster_0" style="width: 0px; height: 0px; display: none;"><object width="1" height="1" id="jp_flash_0" data="/++resource++brasil.gov.tiles/Jplayer.swf" type="application/x-shockwave-flash" tabindex="-1" style="width: 0px; height: 0px;"><param name="flashvars" value="jQuery=jQuery&amp;id=audio_jplayer_daf6a33c36c54df8a2f8e6b91e619aff&amp;vol=0.8&amp;muted=false"><param name="allowscriptaccess" value="always"><param name="bgcolor" value="#000000"><param name="wmode" value="window"></object></div>
-    <div id="audio_jpcontainer_daf6a33c36c54df8a2f8e6b91e619aff" class="jp-audio">
+
+if($params->get('modelo') != 'manual' && $params->get('modelo') != 'article_k2'):
+  echo '<h3>Atenção</h3><p>Somente as fontes de dados manual e article_k2 encontram-se preparadas para adquirir dados do módulo de áudios. Acesse a área administrativa e mude a fonte de dados do módulo.</p>';
+else:
+  // //preencher link quando categoria for unica
+  // if (empty($link_saiba_mais) && count($params->get('catid'))==1 && $params->get('buscar_cat_tag')==1) {
+  // 	$catid = $params->get('catid');
+  // 	$link_saiba_mais = JRoute::_('index.php?option=com_content&view=category&id='.$catid[0]);
+  // }
+  $document = JFactory::getDocument();
+  $document->addStyleSheet(JURI::root().'templates/padraogoverno01/jplayer/skin/portalpadrao01/jplayer.css');
+  $script = '<script type="text/javascript" src="'.JURI::root().'templates/padraogoverno01/jplayer/js/jquery.jplayer.min.js"></script><noscript>A exibição do player de áudio desta página depende de javascript.</noscript>';
+  $document->addCustomTag($script);
+  foreach ($lista_chamadas as $k => $lista):
+
+    $media_url = $lista->image_url;
+    $extension = substr($media_url, strrpos($media_url, '.')+1);
+  ?>
+    <?php if ($params->get('exibir_title') && !empty($lista->title)): ?>
+    <h3><?php echo $lista->title; ?></h3>
+    <?php endif; ?>
+  <!-- inicio jplayer -->
+  <div class="jp-audio-slim">    
+    <div id="jplayer_<?php echo $module->id.'_'.$k; ?>" class="jp-jplayer"></div>
+    <div id="jp_container_jplayer_<?php echo $module->id.'_'.$k; ?>" class="jp-audio">
       <div class="jp-type-single">
         <div class="jp-gui jp-interface">
-          <ul class="jp-controls"><li><a tabindex="1" class="jp-play" href="javascript:;" style="display: block;">play</a></li>
-            <li><a tabindex="1" class="jp-pause" href="javascript:;" style="display: none;">pause</a></li>
-            <li><a title="mute" tabindex="1" class="jp-mute" href="javascript:;">mute</a></li>
-            <li><a title="unmute" tabindex="1" class="jp-unmute" href="javascript:;" style="display: none;">unmute</a></li>
-            <li class="last-item"><a title="max volume" tabindex="1" class="jp-volume-max" href="javascript:;">max volume</a></li>
-          </ul><div class="jp-progress-time-wrapper">
-            <div class="jp-progress">
-              <div class="jp-seek-bar" style="width: 100%;">
-                <div class="jp-play-bar" style="width: 22.692%;"></div>
-              </div>
-            </div>
-            <div class="jp-time-holder">
-              <span class="jp-current-time">00:07</span>/
-              <span class="jp-duration">00:32</span>
+          <ul class="jp-controls">
+            <li><a href="javascript:;" class="jp-play" tabindex="1">play</a></li>
+            <li><a href="javascript:;" class="jp-pause" tabindex="1">pause</a></li>
+            <li><a href="javascript:;" class="jp-stop" tabindex="1">stop</a></li>
+            <li><a href="javascript:;" class="jp-mute" tabindex="1" title="mute">mute</a></li>
+            <li><a href="javascript:;" class="jp-unmute" tabindex="1" title="unmute">unmute</a></li>
+            <li><a href="javascript:;" class="jp-volume-max" tabindex="1" title="max volume">max volume</a></li>
+          </ul>
+          <div class="jp-progress">
+            <div class="jp-seek-bar">
+              <div class="jp-play-bar"></div>
             </div>
           </div>
           <div class="jp-volume-bar">
-            <div class="jp-volume-bar-value" style="width: 80%;"></div>
+            <div class="jp-volume-bar-value"></div>
+          </div>
+          <div class="jp-time-holder">
+            <div class="jp-current-time"></div>
+            <div class="jp-duration"></div>            
           </div>
         </div>
-        <div class="jp-no-solution" style="display: none;">
-          <span>Update Required</span>
-          To play the media you will need to either update your browser to a recent version or update your <a target="_blank" href="http://get.adobe.com/flashplayer/">Flash plugin</a>.
+        <div class="jp-no-solution">
+          <span>Necessário plugin</span>
+          Para habilitar o áudio, é necessário que você tenha instalado em seu computador o <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
         </div>
       </div>
     </div>
-    <p class="description">Espaço para inserir a legenda do áudio 1</p>
-    
   </div>
-</div>
+  <script type="text/javascript">
+  //<![CDATA[
+  jQuery(document).ready(function(){
+      urls = {<?php echo $extension ?>:"<?php echo $media_url; ?>"};   
+      playAudio("jplayer_<?php echo $module->id.'_'.$k; ?>", urls, "<?php echo $extension ?>", "<?php echo JURI::root().'templates/padraogoverno01/jplayer/'; ?>");
+  });
+  //]]>
+  </script><noscript>&nbsp;<!-- item para fins de acessibilidade --></noscript>
+    <?php if ($params->get('exibir_introtext') && $lista->introtext): ?>
+      <div class="formated-description">
+      <?php echo $lista->introtext; ?>
+      </div>
+    <?php endif; ?>
+  <?php endforeach; ?>
+  
+  <?php if (! empty($link_saiba_mais) ): ?>
+    <div class="outstanding-footer">
+      <a href="<?php echo $link_saiba_mais; ?>" class="outstanding-link">
+        <?php if ($params->get('texto_saiba_mais')): ?>
+          <span class="text"><?php echo $params->get('texto_saiba_mais')?></span>
+        <?php else: ?>
+          <span class="text">saiba mais</span>
+        <?php endif;?>
+        <span class="icon-box">                                          
+            <i class="icon-angle-right icon-light"><span class="hide">&nbsp;</span></i>
+          </span>
+      </a>  
+    </div>
+  <?php endif; ?>
+
+<?php endif; ?>

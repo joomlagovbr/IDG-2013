@@ -16,6 +16,7 @@ elseif( $lista_chamadas_counter > 2 )
 else
 	$class_container = '';
 ?>
+<div class="chamadas-secundarias">
 <?php foreach ($lista_chamadas as $k => $lista): ?>
 	<?php if ($lista_chamadas_counter > 1) {
 		if($k==0 || $k % 3 == 0)
@@ -70,3 +71,4 @@ else
 		</a>	
 	</div>
 <?php endif; ?>
+</div>

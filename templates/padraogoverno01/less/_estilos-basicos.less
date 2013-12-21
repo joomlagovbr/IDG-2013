@@ -42,7 +42,11 @@
 /****************** Estilos basicos ******************/
 
 @basic-font-family: Arial,Helvetica,sans-serif;
-@font-family: 'Open Sans', @basic-font-family;
+@font-family: "open_sansregular", 'Open Sans', @basic-font-family;
+@font-family-light: "open_sanslight", 'Open Sans', @basic-font-family;
+@font-family-semibold: "open_sanssemibold", 'Open Sans', @basic-font-family;
+@font-family-bold: "open_sansbold", 'Open Sans', @basic-font-family;
+@font-family-extrabold: "open_sansextrabold", 'Open Sans', @basic-font-family;
 
 body {
 	background-color: @cor-background;
@@ -51,7 +55,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-	font-family: @font-family; font-weight:700; margin:0;
+	font-family: @font-family-semibold; font-weight:700; margin:0;
 }
 
 #content h1 {

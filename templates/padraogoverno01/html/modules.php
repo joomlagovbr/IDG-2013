@@ -26,7 +26,7 @@ function modChrome_rowfluid_section01($module, &$params, &$attribs)
 	if(! empty($content)):
 	?>
 	<div class="row-fluid">
-		<section id="<?php echo $params->get('tag_id'); ?>"<?php if ($params->get('class_sfx', '')  != ''): ?> class="<?php echo $params->get('class_sfx'); ?>"<?php endif; ?>>
+		<section<?php if ($params->get('tag_id', '')  != ''): ?> id="<?php echo $params->get('tag_id'); ?>"<?php endif; ?><?php if ($params->get('class_sfx', '')  != ''): ?> class="<?php echo trim($params->get('class_sfx', '')); ?>"<?php endif; ?>>
 			<?php if ($module->showtitle): ?> 
 			 <h<?php echo $headerLevel; ?> class="span2"><span><?php echo $module->title; ?></span></h<?php echo $headerLevel; ?>>
 			<?php endif; ?>
@@ -136,6 +136,8 @@ function modChrome_container($module, &$params, &$attribs)
 		}
 
 		$title = ( $params->get('titulo_alternativo', '') != '' )? $params->get('titulo_alternativo') : $module->title;
+		$layout = explode(':', $params->get('layout'));				
+		$module->showtitle = ($layout[1]!='manchete-principal')? $module->showtitle : '';
 		?>
 		<div class="row-fluid module <?php echo $class; ?>">
 			<?php if ($module->showtitle): ?>

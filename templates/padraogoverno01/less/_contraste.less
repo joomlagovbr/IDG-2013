@@ -152,19 +152,54 @@
 }
 //pagina interna
 .contraste {
-    .module {
-        background:transparent !important;
-        div, .active { background:transparent !important; }
-        a { color:yellow !important; }
-        h1, h2, h3, h4, h5, h6 { color:white !important; font-weight:700; }
-        .outstanding-header, .outstanding-footer { background:lighten(#000, 11%) !important; color:white !important; border-color:white !important;
-            a { color:yellow !important; }
-        }
-        .outstanding-link {
-            .icon-box { .header-main-gradient( yellow, yellow, yellow ) !important; }
-            .icon-light { color:black !important; }
-        }
-        .subtitle { color:white !important; }   
-        .carousel-control { opacity:1 !important; }
+  .module {
+      background:transparent !important;
+      div, .active { background:transparent !important; }
+      a { color:yellow !important; }
+      h1, h2, h3, h4, h5, h6 { color:white !important; font-weight:700; }
+      .outstanding-header, .outstanding-footer { background:lighten(#000, 11%) !important; color:white !important; border-color:white !important;
+          a { color:yellow !important; }
+      }
+      .outstanding-link {
+          .icon-box { .header-main-gradient( yellow, yellow, yellow ) !important; }
+          .icon-light { color:black !important; }
+      }
+      .subtitle { color:white !important; }   
+      .carousel-control { opacity:1 !important; }
+  }
+  main div.rastro-navegacao {
+    color:#FFF
+  }
+  #content.internas {
+    color: #FFF;
+    h1, .documentFirstHeading, .secondaryHeading, .borderHeading { color:#FFF;
+      a { color:yellow }
     }
+    .content-header-options-1 .documentByLine { color: #FFF }
+    .description, .documentCategory, .subtitle, .documentByLine ul li { color:#FFF }
+    .below-content { border-color:#FFF; color:#FFF;
+      .line { color:#FFF }
+      a.link-categoria, span.selectedTag { background:#000; color:yellow;
+        &:hover { color:#000; background:yellow; border-color:#FFF }
+      }
+    }
+    blockquote { border-color:#FFF }
+    .tile-list-1 {
+      .tileItem {
+        border-color:#FFF;
+        .subtitle { color:#FFF }
+        .tileHeadline, .tileHeadline a { color:yellow }
+        .description { color: #FFF }
+        .keywords { color:#FFF;
+          a { color:yellow;
+            &:hover { color:yellow; text-decoration: underline }
+          }
+        }
+      }
+      .tileInfo {
+        ul li { color:#FFF }
+        i { color:yellow }
+      }
+    }
+  }
 }

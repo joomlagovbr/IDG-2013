@@ -23,19 +23,31 @@ $active_item = TmplPadraoGoverno01Helper::getActiveItemid();
 <!--[if IE 8]>         <html class="no-js lt-ie9" lang="pt-br" dir="ltr"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang="pt-br" dir="ltr"> <!--<![endif]-->
 <head>    
-    <!--[if lt IE 9]><script src="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/js/html5shiv.js"></script><![endif]-->
+    <!--[if lt IE 9]>
+    <script src="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/js/html5shiv.js"></script>
+    <![endif]-->
     <link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/bootstrap/css/bootstrap.min.css" type='text/css'/>
     <link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/css/template-<?php echo $this->params->get('cor', 'verde'); ?>.css" type='text/css'/>      
     <link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/font-awesome/css/font-awesome.min.css" type='text/css'/>
-    <!--[if lt IE 10]><link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/css/ie.css" /><![endif]-->
-    <!--[if lt IE 9]><link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/css/ie8.css" /><![endif]-->
-    <!--[if lt IE 8]><link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/css/ie7.css" /><link rel="stylesheet" href="font-awesome/css/font-awesome-ie7.min.css" /><![endif]-->        
-    <?php if(TmplPadraoGoverno01Helper::jqueryBeforeHead($this)) TmplPadraoGoverno01Helper::getJqueryScripts( $this ); ?>
+    <!--[if lt IE 10]>
+    <link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/css/ie.css" />
+    <![endif]-->
+    <!--[if lt IE 9]>
+    <link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/css/ie8.css" />
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/css/ie7.css" />
+    <link rel="stylesheet" href="font-awesome/css/font-awesome-ie7.min.css" />
+    <![endif]-->        
+    <?php if(TmplPadraoGoverno01Helper::beforeHead('local_jquery', $this)) TmplPadraoGoverno01Helper::getJqueryScripts( $this ); ?>
+    <?php if(TmplPadraoGoverno01Helper::beforeHead('local_mainscript', $this)) TmplPadraoGoverno01Helper::getTemplateMainScripts( $this ); ?>
     <jdoc:include type="head" />
-    <?php if(TmplPadraoGoverno01Helper::jqueryAfterHead($this)) TmplPadraoGoverno01Helper::getJqueryScripts( $this ); ?>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">    
+    <?php if(TmplPadraoGoverno01Helper::afterHead('local_jquery', $this)) TmplPadraoGoverno01Helper::getJqueryScripts( $this ); ?>
+    <?php if(TmplPadraoGoverno01Helper::afterHead('local_mainscript', $this)) TmplPadraoGoverno01Helper::getTemplateMainScripts( $this ); ?>
     <?php TmplPadraoGoverno01Helper::getFontStyle( $this ); ?>
 </head>
-<body <?php TmplPadraoGoverno01Helper::getPageClass( $active_item ); ?> >
+<body <?php echo TmplPadraoGoverno01Helper::getPageClass( $active_item, false, true ); ?>>
     <a class="hide" id="topo" href="#accessibility">Ir direto para menu de acessibilidade.</a>
     <noscript>
       <div class="error minor-font">
@@ -47,7 +59,7 @@ $active_item = TmplPadraoGoverno01Helper::getActiveItemid();
     <div class="layout">
         <header>
             <div class="container"> 
-                <div class="row-fluid">                         
+                <div class="row-fluid accessibility-language-actions-container">                         
                     <div class="span6 accessibility-container">
                         <ul id="accessibility">
                             <li>
@@ -84,7 +96,7 @@ $active_item = TmplPadraoGoverno01Helper::getActiveItemid();
                 </div>
                 <!-- fim .row-fluid -->
                 <div class="row-fluid">
-                    <div id="logo" class="span8">
+                    <div id="logo" class="span8<?php if($this->params->get('classe_nome_principal', '') != '') echo ' '.$this->params->get('classe_nome_principal'); ?>">
                         <a href="<?php echo JURI::root(); ?>" title="<?php echo $this->params->get('nome_principal', 'Nome principal'); ?>">
                             <span class="portal-title-1"><?php echo $this->params->get('denominacao', ''); ?></span>
                             <h1 class="portal-title corto"><?php echo $this->params->get('nome_principal', 'Nome principal'); ?></h1>
@@ -112,6 +124,7 @@ $active_item = TmplPadraoGoverno01Helper::getActiveItemid();
             <div class="container">
                 <jdoc:include type="modules" name="topo-main" style="rowfluid_section01" headerLevel="2" />  
                 <div class="row-fluid">
+                    <?php if($this->countModules("menu-principal")): ?>
                     <div id="navigation" class="span3">
                         <a href="#" class="visible-phone visible-tablet mainmenu-toggle btn"><i class="icon-list"></i>&nbsp;Menu</a>
                         <section id="navigation-section">                           
@@ -120,8 +133,9 @@ $active_item = TmplPadraoGoverno01Helper::getActiveItemid();
                             <span class="hide">Fim do menu principal</span>
                         </section>                  
                     </div>
-                    <!-- fim #navigation.span3 -->
-                    <div id="content" class="span9">
+                    <!-- fim #navigation.span3 --> 
+                    <?php endif; ?>                   
+                    <div id="content" class="<?php if($this->countModules("menu-principal")): ?>span9<?php else: ?>span12 full<?php endif; ?><?php if( !TmplPadraoGoverno01Helper::isOnlyModulesPage() || @$active_item->home != 1 ): ?> internas<?php endif; ?>">
                         <section id="content-section">                          
                             <span class="hide">Início do conteúdo da página</span> 
                             
@@ -131,10 +145,12 @@ $active_item = TmplPadraoGoverno01Helper::getActiveItemid();
                             </div>
                             <?php endif; ?>
 
-                            <?php if(@$active_item->home == 1): //pagina inicial ?>
+                            <?php if(@$active_item->home == 1 ): //pagina inicial ?>
                             
                                 <jdoc:include type="modules" name="pagina-inicial" style="container" headerLevel="2" />                            
+                           
                             <?php else:
+                                
                                 $preffix = TmplPadraoGoverno01Helper::getPagePositionPreffix($active_item);
                                 $posicao_topo = $preffix. '-topo';
                                 $posicao_rodape = $preffix. '-rodape';
@@ -151,7 +167,12 @@ $active_item = TmplPadraoGoverno01Helper::getActiveItemid();
                                 <?php if($this->countModules($posicao_direita) || $this->countModules("internas-direita")): ?>
                                 <div class="row-fluid">
                                     <div class="span9">
-                                        <jdoc:include type="component" />
+                                        <?php if(  TmplPadraoGoverno01Helper::isOnlyModulesPage() ): ?>
+                                             <jdoc:include type="modules" name="pagina-interna-capa" style="container" headerLevel="2" />  
+                                             <jdoc:include type="modules" name="pagina-interna-capa-<?php echo $preffix ?>" style="container" headerLevel="2" />
+                                        <?php else: ?>
+                                            <jdoc:include type="component" />
+                                        <?php endif; ?>
                                     </div>
                                     <div class="span3">
                                         <jdoc:include type="modules" name="internas-direita" headerLevel="2" style="container" />                                     
@@ -160,7 +181,12 @@ $active_item = TmplPadraoGoverno01Helper::getActiveItemid();
                                 </div>
                                 <?php else: ?>
                                 <div class="row-fluid">
-                                    <jdoc:include type="component" />
+                                    <?php if(  TmplPadraoGoverno01Helper::isOnlyModulesPage() ): ?>
+                                         <jdoc:include type="modules" name="pagina-interna-capa" style="container" headerLevel="2" />  
+                                         <jdoc:include type="modules" name="pagina-interna-capa-<?php echo $preffix ?>" style="container" headerLevel="2" />
+                                    <?php else: ?>
+                                        <jdoc:include type="component" />
+                                    <?php endif; ?>
                                 </div>
                                 <?php endif; ?>
 
@@ -223,10 +249,8 @@ $active_item = TmplPadraoGoverno01Helper::getActiveItemid();
     </div>
     <!-- fim div#wrapper -->    
     <!-- scripts principais do template --> 
-    <?php if(TmplPadraoGoverno01Helper::jqueryInFooter($this)) TmplPadraoGoverno01Helper::getJqueryScripts( $this ); ?>
-    <script src="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/bootstrap/js/bootstrap.min.js" type="text/javascript"></script><noscript>&nbsp;<!-- item para fins de acessibilidade --></noscript>
-    <script src="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/js/jquery.cookie.js" type="text/javascript"></script><noscript>&nbsp;<!-- item para fins de acessibilidade --></noscript>
-    <script src="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/js/template.js" type="text/javascript"></script><noscript>&nbsp;<!-- item para fins de acessibilidade --></noscript>
+    <?php if(TmplPadraoGoverno01Helper::inFooter('local_jquery', $this)) TmplPadraoGoverno01Helper::getJqueryScripts( $this ); ?>
+    <?php if(TmplPadraoGoverno01Helper::inFooter('local_mainscript', $this)) TmplPadraoGoverno01Helper::getTemplateMainScripts( $this ); ?>
     <?php if($this->countModules('barra-do-governo') && $this->params->get('anexar_js_barra2014')) TmplPadraoGoverno01Helper::getBarra2014Script( $this ); ?>
     <?php if($this->params->get('google_analytics_id', '') != ''): ?>
         <script type="text/javascript">
@@ -248,5 +272,6 @@ $active_item = TmplPadraoGoverno01Helper::getActiveItemid();
     <?php endif; ?>
     <!-- debug -->
     <jdoc:include type="modules" name="debug" />
+    <?php TmplPadraoGoverno01Helper::debug( @$preffix, @$active_item); ?>
 </body>
 </html>
