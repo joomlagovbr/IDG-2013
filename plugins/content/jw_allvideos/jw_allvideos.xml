@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="2.5" type="plugin" group="content" method="upgrade">
+	<name>AllVideos (by JoomlaWorks)</name>
+	<author>JoomlaWorks</author>
+	<authorEmail>contact@joomlaworks.net</authorEmail>
+	<authorUrl>www.joomlaworks.net</authorUrl>
+	<copyright>Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.</copyright>
+	<creationDate>February 27th, 2013</creationDate>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<version>4.5.0</version>
+	<description>JW_PLG_AV_XML_DESC</description>
+	<!-- Parameters -->
+	<config>
+		<fields name="params">
+			<fieldset name="basic" addfieldpath="/plugins/content/jw_allvideos/jw_allvideos/includes/elements">
+				<field name="" type="header" default="JW_PLG_AV_VIDEO_PARAMETERS" label="" description="" />
+				<field name="playerTemplate" type="template" directory="/plugins/content/jw_allvideos/jw_allvideos/tmpl" default="Classic" hide_default="1" hide_none="1" label="JW_PLG_AV_TEMPLATE" description="JW_PLG_AV_TEMPLATE_DESC" />
+				<field name="vfolder" type="text" default="images/videos" size="40" label="JW_PLG_AV_LOCAL_VIDEO_FOLDER" description="JW_PLG_AV_THIS_IS_THE_FOLDER_WHERE_YOU_STORE_ALL_THE_VIDEO_FILES_THAT_YOU_WANT_TO_STREAMPLAY_FROM_YOUR_WEBSITE_IT_IS_BETTER_IF_THIS_FOLDER_IS_INSIDE_THE_IMAGESSTORIES_FOLDER_SO_THAT_YOU_WONT_STUMBLE_INTO_ANY_PERMISSION_ISSUES_IN_THIS_LOCAL_VIDEO_FOLDER_YOU_CAN_THEN_UPLOAD_VIDEO_FILES_OF_THE_FOLLOWING_TYPE_FLV_SWF_MOV_MP4_WMV_DIVX" />
+				<field name="vwidth" type="text" default="400" size="4" label="JW_PLG_AV_DEFAULT_WIDTH_IN_PX_FOR_VIDEOS" description="JW_PLG_AV_THE_PRESELECTED_WIDTH_OF_THE_VIDEO_IN_PIXELS_TO_SHOW_INSIDE_YOUR_CONTENT_IT_SHOULD_BE_SMALLER_THAN_THE_WIDTH_OF_THE_SURROUNDING_BOX_IF_ANY_IN_ORDER_NOT_TO_BREAK_YOUR_LAYOUT" />
+				<field name="vheight" type="text" default="300" size="4" label="JW_PLG_AV_DEFAULT_HEIGHT_IN_PX_FOR_VIDEOS" description="JW_PLG_AV_THE_PRESELECTED_HEIGHT_OF_THE_VIDEO_IN_PIXELS_TO_SHOW_INSIDE_YOUR_CONTENT" />
+				<field name="transparency" type="radio" default="transparent" label="JW_PLG_AV_FLASHMP4WEBMOGG_THEORA_VIDEO_PLAYER_TRANSPARENCY" description="JW_PLG_AV_SHOULD_FLASHMP4WEBMOGG_THEORA_BASED_MEDIA_BE_REPRODUCED_IN_A_TRANSPARENT_MODE_OR_NOT_IF_YOU_USE_ANY_LIGHTBOX_GALLERIES_OR_PLUGINS_LIKE_SIMPLE_IMAGE_GALLERY_FREE_OR_PRO_ITS_BEST_TO_LEAVE_THIS_OPTION_SET_TO_YES">
+					<option value="opaque">JW_PLG_AV_NO</option>
+					<option value="transparent">JW_PLG_AV_YES</option>
+				</field>
+				<field name="background" type="text" default="#010101" size="6" label="JW_PLG_AV_FLASHMP4WEBMOGG_THEORA_VIDEO_PLAYER_BACKGROUND_COLOR" description="JW_PLG_AV_SET_THE_BACKGROUND_COLOR_OF_THE_PLAYER_ONLY_IF_THE_TRANSPARENCY_IS_SET_TO_NO_VALUES_SHOULD_BE_GIVEN_IN_HEXADECIMAL_FORMAT_EG_000000_FOR_BLACK" />
+				<field name="controlBarLocation" type="list" default="bottom" label="JW_PLG_AV_FLASHMP4WEBMOGG_THEORA_VIDEO_PLAYER_CONTROL_BAR_LOCATION" description="JW_PLG_AV_DEFINE_WHERE_YOU_WANT_THE_CONTROLBAR_OF_THE_PLAYER_TO_APPEAR">
+					<option value="bottom">JW_PLG_AV_BOTTOM_DEFAULT</option>
+					<option value="top">JW_PLG_AV_TOP</option>
+					<option value="over">JW_PLG_AV_OVER</option>
+					<option value="none">JW_PLG_AV_NONE</option>
+				</field>
+				<field name="backgroundQT" type="list" default="black" label="JW_PLG_AV_PLAYER_BACKGROUND_COLOR_FOR_MEDIA_REPRODUCED_BY_THE_QUICKTIME_PLAYER" description="JW_PLG_AV_SET_THE_BACKGROUND_COLOR_OF_THE_PLAYER_FOR_ALL_MEDIA_TYPES_REPRODUCED_BY_THE_QUICKTIME_PLAYER_MOV_3GP_3G2_MPEG_MPG_AND_AVI">
+					<option value="black">JW_PLG_AV_BLACK_000000</option>
+					<option value="green">JW_PLG_AV_GREEN_008000</option>
+					<option value="silver">JW_PLG_AV_SILVER_C0C0C0</option>
+					<option value="lime">JW_PLG_AV_LIME_00FF00</option>
+					<option value="gray">JW_PLG_AV_GRAY_808080</option>
+					<option value="olive">JW_PLG_AV_OLIVE_808000</option>
+					<option value="white">JW_PLG_AV_WHITE_FFFFFF</option>
+					<option value="yellow">JW_PLG_AV_YELLOW_FFFF00</option>
+					<option value="maroon">JW_PLG_AV_MAROON_800000</option>
+					<option value="navy">JW_PLG_AV_NAVY_000080</option>
+					<option value="red">JW_PLG_AV_RED_FF0000</option>
+					<option value="blue">JW_PLG_AV_BLUE_0000FF</option>
+					<option value="purple">JW_PLG_AV_PURPLE_800080</option>
+					<option value="teal">JW_PLG_AV_TEAL_008080</option>
+					<option value="fuchsia">JW_PLG_AV_FUCHSIA_FF00FF</option>
+					<option value="aqua">JW_PLG_AV_AQUA_00FFFF</option>
+				</field>
+				<field name="" type="header" default="JW_PLG_AV_AUDIO_PARAMETERS" label="" description="" />
+				<field name="afolder" type="text" default="images/audio" size="40" label="JW_PLG_AV_LOCAL_AUDIO_FOLDER" description="JW_PLG_AV_THIS_IS_THE_FOLDER_WHERE_YOU_STORE_ALL_THE_AUDIO_SOUND_FILES_THAT_YOU_WANT_TO_STREAMPLAY_FROM_YOUR_WEBSITE_IT_IS_BETTER_IF_THIS_FOLDER_IS_INSIDE_THE_IMAGESSTORIES_FOLDER_SO_THAT_YOU_WONT_STUMBLE_INTO_ANY_PERMISSION_ISSUES_IN_THIS_LOCAL_AUDIO_FOLDER_YOU_CAN_THEN_UPLOAD_MP3_AND_WMA_AUDIO_FILE_TYPES" />
+				<field name="awidth" type="text" default="480" size="4" label="JW_PLG_AV_DEFAULT_WIDTH_IN_PX_FOR_AUDIO_PLAYER" description="JW_PLG_AV_THE_PRESELECTED_WIDTH_OF_THE_AUDIO_PLAYER_IN_PIXELS_TO_SHOW_INSIDE_YOUR_CONTENT_IT_SHOULD_BE_SMALLER_THAN_THE_WIDTH_OF_THE_SURROUNDING_BOX_IF_ANY_IN_ORDER_NOT_TO_BREAK_YOUR_LAYOUT" />
+				<field name="aheight" type="text" default="24" size="4" label="JW_PLG_AV_DEFAULT_HEIGHT_IN_PX_FOR_AUDIO_PLAYER" description="JW_PLG_AV_THE_PRESELECTED_HEIGHT_OF_THE_AUDIO_PLAYER_IN_PIXELS_TO_SHOW_INSIDE_YOUR_CONTENT" />
+				<field name="abackground" type="text" default="#010101" size="6" label="JW_PLG_AV_FLASH_HTML5_AUDIO_PLAYER_BACKGROUND_COLOR" description="JW_PLG_AV_FLASH_HTML5_AUDIO_PLAYER_BACKGROUND_COLOR_DESC" />
+				<field name="afrontcolor" type="text" default="#FFFFFF" size="6" label="JW_PLG_AV_FLASH_HTML5_AUDIO_PLAYER_FRONT_COLOR" description="JW_PLG_AV_FLASH_HTML5_AUDIO_PLAYER_FRONT_COLOR_DESC" />
+				<field name="alightcolor" type="text" default="#00ADE3" size="6" label="JW_PLG_AV_FLASH_HTML5_AUDIO_PLAYER_LIGHT_COLOR" description="JW_PLG_AV_FLASH_HTML5_AUDIO_PLAYER_LIGHT_COLOR_DESC" />
+				<field name="allowAudioDownloading" type="radio" default="0" label="JW_PLG_AV_ALLOW_AUDIO_DOWNLOADING" description="JW_PLG_AV_ALLOW_AUDIO_DOWNLOADING_DESC">
+					<option value="0">JW_PLG_AV_NO</option>
+					<option value="1">JW_PLG_AV_YES</option>
+				</field>
+				<field name="" type="header" default="JW_PLG_AV_GLOBAL_PARAMETERS" label="" description="" />
+				<field name="autoplay" type="radio" default="0" label="JW_PLG_AV_AUTOPLAY" description="JW_PLG_AV_CONTROL_AUDIOVIDEO_AUTOPLAY_WHEN_THE_PAGE_LOADS">
+					<option value="0">JW_PLG_AV_NO</option>
+					<option value="1">JW_PLG_AV_YES</option>
+				</field>
+			</fieldset>
+			<fieldset addfieldpath="/plugins/content/jw_allvideos/jw_allvideos/includes/elements" name="advanced">
+				<field name="" type="header" default="JW_PLG_AV_PERFORMANCE_PARAMETERS" label="" description="" />
+				<field name="gzipScripts" type="radio" default="0" label="JW_PLG_AV_COMPRESS_PLAYER_JS_SCRIPTS_USING_PHP" description="JW_PLG_AV_IMPROVE_YOUR_SITES_PERFORMANCE_WHEN_USING_ALLVIDEOS_BY_ENABLING_THIS_OPTION_IT_WILL_COMPRESS_AND_COMBINE_THE_JAVASCRIPT_CODE_REQUIRED_BY_THE_VARIOUS_MEDIA_PLAYERS_TO_WORK_PROPERLY_THIS_OPTION_MAY_NOT_BE_SUPPORTED_BY_YOUR_SERVER_SO_IN_CASE_YOU_STUMBLE_ONTO_ANY_ISSUES_YOU_CAN_SAFELY_TURN_IT_BACK_TO_NO">
+					<option value="0">JW_PLG_AV_NO</option>
+					<option value="1">JW_PLG_AV_YES</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+	<!-- Files -->
+	<files folder="plugin" destination="jw_allvideos">
+		<filename plugin="jw_allvideos">jw_allvideos.php</filename>
+		<filename plugin="jw_allvideos">jw_allvideos.xml</filename>
+		<folder>jw_allvideos</folder>
+	</files>
+	<media folder="plugin/media" destination="jw_allvideos">
+		<filename>AllVideos_300x119_24.png</filename>
+	</media>
+	<languages folder="plugin">
+		<language tag="en-GB">language/en-GB/en-GB.plg_content_jw_allvideos.ini</language>
+		<language tag="en-GB">language/en-GB/en-GB.plg_content_jw_allvideos.sys.ini</language>
+	</languages>
+	<updateservers>
+		<server type="extension" priority="1" name="AllVideos">http://www.joomlaworks.net/updates/jw_allvideos.xml</server>
+	</updateservers>
+</extension>
