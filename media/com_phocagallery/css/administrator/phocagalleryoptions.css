@@ -1,0 +1,28 @@
+label {
+	width: 20em;
+	
+}
+
+hr {
+	border-bottom: 1px solid #cce6ff;
+	
+	display: block;
+	margin: 0; padding: 0;
+}
+
+.ph-options-head {
+	background: #E5F3FF;
+	color: #0069CC;
+	border-bottom: 1px solid #B3DBFF;
+	border-top: 1px solid #B3DBFF;
+	padding:5px 10px;
+	margin:5px 0;
+	display:block;
+	text-shadow: 0 1px 0 #ffffff;
+	margin-left: -160px;
+}
+
+.ph-options-head div{
+	white-space: nowrap;
+	
+}

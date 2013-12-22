@@ -264,8 +264,15 @@ class TmplPadraoGoverno01Helper
 
 	static function hasMessage()
 	{
-        if (count(JFactory::getApplication()->getMessageQueue()) > 0)
+		$message = JFactory::getApplication()->getMessageQueue();
+
+        if (count($message) > 0)
+        {
+        	if(count($message)==1 && is_null($message[0]['message']))
+        		return false;
+
         	return true;
+        }
 
         return false;
 	}

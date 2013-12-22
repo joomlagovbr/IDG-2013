@@ -1,0 +1,941 @@
+/* Phoca Gallery http://www.phoca.cz */
+
+
+#phocagallery-pane .pg-box1,
+#phocagallery .pg-box1,
+.pg-box1 {
+  /*overflow: hidden;*/
+  display: table;
+  vertical-align:middle;
+}
+#phocagallery-pane .pg-box2,
+#phocagallery .pg-box2,
+.pg-box2 {
+  display: table-cell;
+  vertical-align: middle;
+}
+#phocagallery-pane .pg-box3,
+#phocagallery .pg-box3,
+.pg-box3 {
+  text-align:center;
+}
+
+
+
+.ph-tabs-iefix {
+  font-size:1px;
+  height:1px;
+  margin:0px;
+  padding:0px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+#phocagallery {
+  padding:0;
+  margin:0;
+  width: auto;
+}
+
+#phocagallery a img {
+  padding:0;
+  margin:0;
+  border:0px;
+}
+
+#phocagallery .phocagallery-cat-desc {
+  margin: 10px 0 10px 0;
+}
+#phocagallery .category {
+  margin: 5px;
+}
+#phocagallery.pg-detail-view {
+  margin:0px;
+  padding:0px;
+}
+
+
+
+#phocagallery .pg-detail-tags,
+#phocagallery .pg-cat-tags {
+  text-align: right;
+  font-size: x-small;
+}
+
+#phocagallery-pane .phocagallery-box-file,
+#phocagallery .phocagallery-box-file,
+.phocagallery-box-file {
+  position:relative;
+  float:left;
+  text-align:center;
+  /*overflow:visible;*/
+  /*
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  */
+}
+#phocagallery-pane .phocagallery-box-file-first,
+#phocagallery .phocagallery-box-file-first,
+.phocagallery-box-file-first {
+  
+  /*overflow: hidden;*/
+  display: table;
+  vertical-align:middle;
+}
+#phocagallery-pane .phocagallery-box-file-second,
+#phocagallery .phocagallery-box-file-second,
+.phocagallery-box-file-second {
+  display: table-cell;
+  vertical-align: middle;
+}
+#phocagallery-pane .phocagallery-box-file-third,
+#phocagallery .phocagallery-box-file-third,
+.phocagallery-box-file-third {
+  text-align:center;
+}
+
+#phocagallery-pane a img,
+#phocagallery a img,
+#phocagallery-statistics a img,
+#phocagallery-pane a img:hover,
+#phocagallery a img:hover,
+#phocagallery-statistics a img:hover{
+  border: 0px;
+}
+
+#phocagallery a:hover, #phocagallery a:active, #phocagallery a:focus,
+#phocagallery-statistics a:hover, #phocagallery-statistics a:active, #phocagallery-statistics a:focus {
+  background: none;
+  
+  text-decoration:none;
+}
+
+#phocagallery .pg-name,
+#phocagallery-statistics .pg-name{ 
+  margin:0px;
+  padding:0px;
+  margin-top:2px;
+  color:#135cae;
+  text-align:center;
+}
+#phocagallery .detail,
+#phocagallery-statistics .detail {
+  text-align:right;
+  margin:0px;
+  padding:0px;
+}
+
+#phocagallery .phocagallery-box-file:hover,
+#phocagallery .phocagallery-box-file.hover,
+#phocagallery-pane .phocagallery-box-file:hover,
+#phocagallery-pane .phocagallery-box-file.hover,
+.phocagallery-box-file:hover, 
+.phocagallery-box-file.hover  {
+  /*border:1px solid #135cae;
+  background:#f5f5f5;*/
+  text-decoration:none;
+  /*
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  */
+}
+
+/*hotnew*/
+#phocagallery div.pg-box1 img.pg-img-ovr1 {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+}
+
+#phocagallery div.pg-box1 img.pg-img-ovr2 {
+  position: absolute;
+  top: 3px;
+  left: 35px;
+}
+
+#phocagallery .pg-cat-img-detail {
+  padding:0;
+  margin:0;
+  margin-top:10px;
+  margin-bottom:5px;
+}
+#phocagallery .pg-cat-img-detail-box {
+  position:relative;
+  float:left;
+  margin:0;
+  padding:0;
+}
+
+.pg-cats-box-float {
+  position: relative;
+  float: left;
+}
+
+
+/*detail*/
+.phocagallery-box-file-d  {
+  position:relative;
+  float:left;
+  border:1px solid #E8E8E8;
+  background:#fcfcfc;
+  text-align:center;
+  overflow:visible;
+  width:640px;
+  height:480px;
+}
+
+.phocagallery-box-file-first-d {
+  background:#f5f5f5;
+  width:640px;
+  height:480px;
+  overflow: hidden;
+  display: table;
+  vertical-align:middle;
+}
+
+/*download message*/
+#download-msg{
+  font-family:sans-serif;
+  font-size:83%;
+  position:absolute;
+  left: 10%;
+  top:10%;
+  background-color: #ebecff;
+  border: 5px solid #cccccc;
+  filter:alpha(opacity=80);
+  opacity: 0.8;
+  -moz-opacity:0.8;
+  z-index:1000;
+}
+  
+/*download message text*/ 
+#download-msg div table{ 
+  padding: 10px; 
+  filter:alpha(opacity=100); 
+  opacity: 0.8; 
+  -moz-opacity:0.8; 
+  position: relative; 
+  z-index:1000; 
+  background-color:#ebecff; 
+} 
+#download-msg div table tr td, 
+#download-msg div table tr td small, 
+#download-msg a { 
+  color:#000000; 
+  font-weight: bold; 
+}
+
+#phocagallery .main-switch-image {
+  margin:0px;
+  padding:7px 5px 7px 5px;
+  margin-bottom:15px;
+}
+#phocagallery .main-switch-image-table {
+  /*border:1px solid #c2c2c2;*/
+}
+#loading-label-ytb,
+#loading-label,
+#loading-label-user{
+  text-align:center;
+  display:none;
+}
+
+#phocaGalleryImageBox,
+#image-box {
+  position:relative;
+}
+#description-msg{
+  font-size:83%;
+  text-align:left;
+  margin:0;padding:0;
+  position:absolute;
+  bottom: 0px;
+  left:0px;
+  right:0px;
+  background-color: #000;
+  filter:alpha(opacity=60);
+  opacity: 0.6;
+  -moz-opacity:0.6;
+  z-index:1000;
+  width:100%;
+}
+
+#description-text{
+  color:#fff;
+  padding:10px;
+/*  filter:alpha(opacity=100); 
+  opacity: 0.8; 
+  -moz-opacity:0.8; */
+  position: relative; 
+  z-index:1000; 
+  background-color:#000;
+}
+
+
+
+#phocagallery-categories-detail {
+clear: both;
+}
+/* Pane*/
+
+#phocagallery-votes,
+#phocagallery-comments,
+#phocagallery-upload,
+#phocagallery-ytbupload,
+#phocagallery-javaupload ,
+#phocagallery-multipleupload ,
+#phocagallery-category-creating,
+#phocagallery-subcategory-creating,
+#phocagallery-statistics,
+#phocagallery-user{
+  margin-top:0px;/*IE bug*/
+  margin-bottom:15px;
+}
+
+#phocagallery-votes a img,
+#phocagallery-comments a img,
+#phocagallery-upload a img,
+#phocagallery-ytbupload a img,
+#phocagallery-javaupload  a img,
+#phocagallery-multipleupload  a img,
+#phocagallery-category-creating a img,
+#phocagallery-subcategory-creating a img,
+#phocagallery-user a img,
+#phocagallery-statistics a img{
+  border: 0px;
+}
+#phocagallery-categories-detail fieldset, 
+#phocagallery-votes fieldset,
+#phocagallery-comments fieldset,
+#phocagallery-upload fieldset,
+#phocagallery-ytbupload fieldset,
+#phocagallery-javaupload  fieldset,
+#phocagallery-multipleupload fieldset,
+#phocagallery-category-creating fieldset,
+#phocagallery-subcategory-creating fieldset,
+#phocagallery-user fieldset,
+#phocagallery-statistics fieldset {
+  border:1px solid #ccc;
+  padding:10px;
+  margin:5px;
+}
+#phocagallery-categories-detail legend, 
+#phocagallery-votes legend,
+#phocagallery-comments legend,
+#phocagallery-upload legend,
+#phocagallery-ytbupload legend,
+#phocagallery-javaupload legend,
+#phocagallery-multipleupload legend,
+#phocagallery-category-creating legend,
+#phocagallery-subcategory-creating legend, 
+#phocagallery-user legend,
+#phocagallery-statistics legend {
+  font-weight:bold;
+  color:#aa0000;
+  padding:10px;
+}
+#phocagallery-votes small, 
+#phocagallery-comments small, 
+#phocagallery-upload small ,
+#phocagallery-ytbupload small,
+#phocagallery-javaupload small,
+#phocagallery-multipleupload  small,
+#phocagallery-statistics small,
+#phocagallery-category-creating small,
+#phocagallery-subcategory-creating small, 
+#phocagallery-user small {
+  color:#ccc;
+}
+
+#phocagallery-votes form,
+#phocagallery-comments form,
+#phocagallery-upload form,
+#phocagallery-ytbupload form,
+#phocagallery-javaupload form,
+#phocagallery-multipleupload form,
+#phocagallery-category-creating form,
+#phocagallery-subcategory-creating form,
+#phocagallery-user form {
+  margin:0;
+  padding:0;
+}
+
+
+#phocagallery-comments .comment-input,
+#phocagallery-upload .comment-input,
+#phocagallery-ytbupload .comment-input,
+#phocagallery-javaupload .comment-input,
+#phocagallery-multipleupload .comment-input,
+#phocagallery-category-creating .comment-input,
+#phocagallery-subcategory-creating .comment-input,
+#phocagallery-user .comment-input {
+  width: 98%;
+}
+
+#phocagallery-comments .comment-input2,
+#phocagallery-upload .comment-input2,
+#phocagallery-ytbupload .comment-input2,
+#phocagallery-javaupload .comment-input2,
+#phocagallery-multipleupload .comment-inpu2t,
+#phocagallery-category-creating .comment-input2,
+#phocagallery-subcategory-creating .comment-input2,
+#phocagallery-user .comment-input {
+  width: 40px;
+  border:0px;
+  font-weight:bold;
+}
+
+
+/* tabs */
+form {
+  margin: 0;
+  padding: 0;
+}
+
+
+dl.tabs {
+  float: left;
+  margin: 10px 0 -1px 2px;
+  z-index: 50;
+  
+}
+
+dl.tabs dt {
+  float: left;
+  padding: 4px 10px;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+  margin-left: 3px;
+  background: #f0f0f0;
+  color: #666;
+  
+}
+
+dl.tabs dt.open {
+  background: #ffffff;
+  border-bottom: 1px solid #ffffff;
+  z-index: 100;
+  color: #000;
+  
+}
+
+dl.tabs a {
+  text-decoration: none;
+  font-weight: normal;
+}
+dl.tabs a:hover {
+  background: transparent !important;
+}
+
+div.current {
+  clear: both;
+  border: 1px solid #ccc;
+  padding: 10px 10px;
+  background: #ffffff;
+  
+}
+
+div.current dd {
+  padding: 0;
+  margin: 0;
+}
+
+#uploadForm {
+  margin:0;
+  padding:0;
+}
+
+#phocagallery-comments-form{
+  margin:0;
+  padding:0;
+}
+
+#phoca-exif{
+  padding:10px;
+
+}
+
+#phoca-exif h2.phocaexif {
+  font-size:130%;
+  background: url(../../images/icon-info.gif) left center no-repeat;
+  padding-left: 20px;
+}
+
+#phoca-exif table{
+  border-collapse:collapse;
+
+}
+#phoca-exif table tr.first{
+  background:#fdfdfd;
+  border-bottom:1px dotted #ccc;
+  border-collapse:collapse;
+
+}
+#phoca-exif table tr.second{
+  background:#fff;
+  border-bottom:1px dotted #ccc;
+  border-collapse:collapse;
+
+}
+#phoca-exif table tr td{
+  padding:5px;
+  border-collapse:collapse;
+
+}
+
+
+/* IE Shadowbox */
+#shadowbox_title,
+#shadowbox_info {
+  border: 0px;
+}
+
+#phocagallery-img-votes {
+  margin:0;
+  padding:0;
+  margin-left:10px;
+  margin-right:10px;
+}
+
+/** Table styles **/
+
+#phocagallery-subcategory-creating  table.adminlist,
+#phocagallery-upload  table.adminlist {
+  width: 100%;
+  border-spacing: 1px;
+  background-color: #e7e7e7;
+  color: #666;
+}
+
+#phocagallery-subcategory-creating  table.adminlist td,
+#phocagallery-subcategory-creating  table.adminlist th,
+#phocagallery-upload  table.adminlist td,
+#phocagallery-upload  table.adminlist th { 
+  padding: 4px;
+}
+
+#phocagallery-subcategory-creating  table.adminlist thead th,
+#phocagallery-upload  table.adminlist thead th {
+  text-align: center;
+  background: #f0f0f0;
+  color: #666;
+  border-bottom: 1px solid #999;
+  border-left: 1px solid #fff;
+}
+
+#phocagallery-subcategory-creating  table.adminlist thead a:hover,
+#phocagallery-upload  table.adminlist thead a:hover { text-decoration: none; }
+
+#phocagallery-subcategory-creating  table.adminlist thead th img,
+#phocagallery-upload  table.adminlist thead th img { vertical-align: middle; }
+
+#phocagallery-subcategory-creating  table.adminlist tbody th,
+#phocagallery-upload  table.adminlist tbody th { font-weight: bold; }
+
+#phocagallery-subcategory-creating  table.adminlist tbody tr,
+#phocagallery-upload  table.adminlist tbody tr            { background-color: #fff;  text-align: left; }
+#phocagallery-subcategory-creating  table.adminlist tbody tr.row1,
+#phocagallery-upload  table.adminlist tbody tr.row1           { background: #f9f9f9; border-top: 1px solid #fff; }
+
+#phocagallery-subcategory-creating  table.adminlist tbody tr.row0:hover td,
+#phocagallery-subcategory-creating  table.adminlist tbody tr.row1:hover td,
+#phocagallery-upload  table.adminlist tbody tr.row0:hover td,
+#phocagallery-upload  table.adminlist tbody tr.row1:hover td { background-color: #ffd ; }
+
+#phocagallery-subcategory-creating  table.adminlist tbody tr td,
+#phocagallery-upload  table.adminlist tbody tr td      { height: 25px; background: #fff; border: 1px solid #fff; }
+
+#phocagallery-subcategory-creating  table.adminlist tbody tr.row1 td,
+#phocagallery-upload  table.adminlist tbody tr.row1 td { background: #f9f9f9; border-top: 1px solid #FFF; }
+
+#phocagallery-subcategory-creating  table.adminlist tfoot tr,
+#phocagallery-upload  table.adminlist tfoot tr { text-align: center;  color: #333; }
+ 
+#phocagallery-subcategory-creating  table.adminlist tfoot td,
+#phocagallery-subcategory-creating  table.adminlist tfoot th,
+#phocagallery-upload  table.adminlist tfoot td,
+#phocagallery-upload  table.adminlist tfoot th { background-color: #f3f3f3; border-top: 1px solid #999; text-align: center; }
+
+#phocagallery-subcategory-creating  table.adminlist td.order,
+#phocagallery-upload  table.adminlist td.order    { text-align: center; white-space: nowrap; }
+
+#phocagallery-subcategory-creating  table.adminlist td.order span,
+#phocagallery-upload  table.adminlist td.order span { float: left; display: block; width: 20px; text-align: center; }
+
+
+#phocagallery .pg-center,
+#phocagallery-upload .pg-center,
+#phocagallery-subcategory-creating .pg-center {
+  text-align:center;
+  vertical-align:middle;
+}
+#phocagallery .pg-inline,
+#phocagallery-upload .pg-inline,
+#phocagallery-subcategory-creating .pg-inline {
+  margin:0 10px 0 10px;
+  display:inline;
+}
+
+.bgPhocaClass {
+  padding:10px;
+  /*border:1px solid #d2d2d2;*/
+}
+
+/* 1.6*/ 
+
+#phocagallery table,
+#phocagallery tr,
+#phocagallery td {
+  border-style: none;
+  border: 0px;
+}
+
+#phocagallery table tr td div.pg-imgbg a,
+#phocagallery table tr td div.pg-imgbg a img,
+#phocagallery table tr td div.pg-imgbg {
+  margin:0 auto;
+  padding:0;
+  text-align: center;
+}
+
+#phocagallery table tr td div.pg-imgbgd a,
+#phocagallery table tr td div.pg-imgbgd a img,
+#phocagallery table tr td div.pg-imgbgd {
+  margin:0 auto;
+  padding:0;
+}
+
+
+/*
+ * If Beez template is not used, the following code
+ * can be removed
+ * Because of using !important methods in Beez
+ */
+
+#phocagallery-comments table,
+#phocagallery-comments table tr td,
+#phocagallery-comments table tr,
+#phocagallery table,
+#phocagallery-pane table,
+#phocagallery-pane table tr,
+#phocagallery-pane table tr td{
+  border-style: none !important;
+  
+}
+
+#phocagallery-pane table tr td {
+  padding:3px;
+}
+#phocagallery-multipleupload form fieldset{
+  text-align:left;
+  padding:5px;
+}
+
+#phocagallery-pane .actions
+{
+       text-align:left;
+     width: auto;
+       padding:10px 5px !important;
+     margin:10px 0 !important;
+}
+
+#phocagallery-pane ul#flash_uploader_filelist
+{
+        margin:0px;
+}
+
+
+#phocagallery div.phocagallery-box-file-third a:hover,
+#phocagallery div.phocagallery-box-file-third a:active,
+#phocagallery div.phocagallery-box-file-third a:focus,
+#phocagallery table tr td div#phocaGalleryImageBox a:hover,
+#phocagallery table tr td div#phocaGalleryImageBox a:active,
+#phocagallery table tr td div#phocaGalleryImageBox a:focus,
+#phocagallery table tr td div.pg-imgbg a:hover,
+#phocagallery table tr td div.pg-imgbg a:active,
+#phocagallery table tr td div.pg-imgbg a:focus,
+#phocagallery table tr td a:hover img,
+#phocagallery table tr td a:active img,
+#phocagallery table tr td a:focus img,
+#phocagallery a:hover img,
+#phocagallery a:active img,
+#phocagallery a:focus img,
+#main #phocagallery a:hover img,
+#main #phocagallery a:active img,
+#main #phocagallery a:focus img {
+     background-color: transparent;
+     background: none;
+}
+
+/* Plugin */
+
+#main div.phocagallery div.phocagallery-box-file-first a,
+#main div.phocagallery div.phocagallery-box-file-second a,
+#main div.phocagallery div.phocagallery-box-file-third a,
+#main div.phocagallery a img,
+#main div.phocagallery div.detail a img,
+#main div.phocagallery div.detail a ,
+#main div.phocagallery div.detail a:hover img,
+#main div.phocagallery div.detail a:active img,
+#main div.phocagallery div.detail a:focus img,
+#main div.phocagallery a:hover img,
+#main div.phocagallery a:active img,
+#main div.phocagallery a:focus img {
+     background-color: transparent;
+     background: none;
+     border: none;
+     padding:0;margin:0;
+}
+
+
+#main div.phocagallery a img,
+#main div.phocagallery a:hover img,
+#main div.phocagallery a:active img,
+#main div.phocagallery a:focus img {
+  vertical-align:middle;
+}
+
+
+
+.bgPhocaClass {
+  padding:10px;
+  /*border:1px solid #d2d2d2;*/
+}
+.bgPhocaClass {
+  border-collapse: separate;
+}
+
+.bgPhocaClass tr,
+.bgPhocaClass tr td {
+  border: none;
+}
+
+/*
+ * End of specific code for Beez template
+ */
+
+
+.pgerrormsg {
+  background:#FFC2C2;
+  border:1px solid #bf3030;
+  color: #a60000;
+  padding:10px;
+  margin-top:5px;
+  margin-bottom:5px;
+}
+.pgsuccessmsg {
+  background:#ceffc1;
+  border:1px solid #4ebd30;
+  color: #23a600;
+  padding:10px;
+  margin-top:5px;
+  margin-bottom:5px;
+}
+.pgunsetmsg {
+  background:#fff2c1;
+  border:1px solid #bda130;
+  color: #a68400;
+  padding:10px;
+  margin-top:5px;
+  margin-bottom:5px;
+}
+
+#phocagallery table #image-box{
+   margin: 0 auto;
+}
+
+
+
+
+/*icons - buttons*/
+#phocagallery #pg-icons{
+  float:right;
+  margin-right:5px;
+}
+
+/* Multibox */
+#phocagallery.pg-detail-view-multibox {
+  margin:  0px;
+  padding:0px;
+  border: 0px;
+  overflow:hidden;
+  text-align: left;
+}
+
+#phocagallery.pg-detail-view-multibox table.pg-multibox-table {
+  width: auto;
+  padding:0px;
+  margin:0px;
+  border: 0px;
+  text-align: left;
+}
+
+#phocagallery.pg-detail-view-multibox table tr td.pg-multibox-lefttd{
+  padding: 0px;
+  margin:0px;
+}
+#phocagallery.pg-detail-view-multibox table tr td.pg-multibox-righttd{
+  text-align: left;
+  padding: 0px;
+  margin:0px;
+}
+
+#phocagallery.pg-detail-view-multibox table .pg-multibox-left {
+  margin: 0px 5px;
+  font-size: small;
+  position: relative;
+}
+
+#phocagallery.pg-detail-view-multibox table .pg-multibox-right {
+  padding: 5px 5px;
+  margin: 0px;
+
+  overflow: -moz-scrollbars-vertical;
+    -ms-overflow-y: scroll;
+    overflow-y: scroll;
+}
+#phocagallery.pg-detail-view-multibox .pg-multibox-desc,
+#phocagallery.pg-detail-view-multibox .pg-multibox-user,
+#phocagallery.pg-detail-view-multibox  table tr td {
+  font-size: small;
+}
+
+#phocagallery.pg-detail-view-multibox .pg-rating-msg {
+  font-size: xx-small;
+}
+#phocagallery.pg-detail-view-multibox .pg-multibox-tags-box,
+#phocagallery.pg-detail-view-multibox .pg-multibox-desc {
+  padding: 5px 0px;
+}
+#phocagallery.pg-detail-view-multibox .pg-multibox-tags,
+#phocagallery.pg-detail-view-multibox .pg-multibox-user {
+  font-weight: bold;
+}
+#phocagallery.pg-detail-view-multibox .pg-multibox-username,
+#phocagallery.pg-detail-view-multibox .pg-multibox-avatar {
+  float: left;
+}
+#phocagallery.pg-detail-view-multibox .pg-multibox-thumbs-box,
+#phocagallery.pg-detail-view-multibox .pg-multibox-comments {
+  padding: 5px 0px;
+}
+
+#phocagallery.pg-detail-view-multibox .pg-multibox-thumbs-box .pg-multibox-thumbs-item {
+  margin: 3px;
+  padding: 2px;
+  float: left;
+  border: 1px solid #dfdfdf;
+}
+
+#phocagallery.pg-detail-view-multibox .pg-multibox-comments-iframe {
+  border:none;
+  padding:0px;
+  margin:0px;
+  /*overflow: -moz-scrollbars-vertical;
+    -ms-overflow-y: scroll;
+    overflow-y: scroll;*/
+  overflow: auto;
+}
+
+
+#phocagallery .pg-multibox-title {
+  font-weight: bold;
+}
+
+#phocagallerymultiboxnext {
+  position: absolute;
+  right: 20px;
+  top: 45%;
+  display:none;
+}
+
+
+
+#phocagallerymultiboxprev {
+  position: absolute;
+  left: 20px;
+  top: 45%;
+  display:none;
+}
+
+
+/* To not be in coflict with beez */
+
+#phocagallery.pg-detail-view-multibox table .pg-multibox-left a,
+#phocagallery.pg-detail-view-multibox table .pg-multibox-left a img,
+#phocagallery.pg-detail-view-multibox table .pg-multibox-left a:hover img,
+#phocagallery.pg-detail-view-multibox table .pg-multibox-left a:active img,
+#phocagallery.pg-detail-view-multibox table .pg-multibox-left a:focus img,
+
+#phocagallerymultiboxprev a,
+#phocagallerymultiboxprev a img,
+#phocagallerymultiboxprev a:hover img,
+#phocagallerymultiboxprev a:active img,
+#phocagallerymultiboxprev a:focus img,
+
+#phocagallerymultiboxnext a,
+#phocagallerymultiboxnext a img,
+#phocagallerymultiboxnext a:hover img,
+#phocagallerymultiboxnext a:active img,
+#phocagallerymultiboxnext a:focus img {
+     background-color: transparent !important;
+     background: none !important;
+     border: none !important;
+     text-decoration: none !important;
+}
+
+/* JAK no borders*/
+div.window-container table,
+div.window-container table tr,
+div.window-container table tr td {
+  border: 0px;
+}
+
+#phocagallery .pg-multi-img {
+   position: 	relative;
+   float:		left;
+   max-width: 	100%;
+}
+#phocagallery .pg-multi-img::before {
+	content: 	"";
+	position: 	absolute;
+	top: 		0;
+	bottom: 	0;
+	left: 		0;
+	right: 		0;
+	-webkit-box-shadow: inset 0px 0px 0px 1px #fff;
+	box-shadow: inset 0px 0px 0px 1px #fff;
+}
+#phocagallery .pg-multi-img img{
+	float:left;
+}  
+#pg-msnr-container {
+	padding: 0;
+	margin: 0;
+}
+
+#phocaMap img,
+#phocagallery img {
+	max-width: none;
+}
+
+
+.ph-cb {
+	clear:both
+}
+
+.highslide img {
+	border: 0px;
+}

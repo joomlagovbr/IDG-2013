@@ -1,0 +1,1 @@
+ALTER TABLE `#__youtubegallery_themes` ADD COLUMN `changepagetitle` smallint(6) NOT NULL default 0;

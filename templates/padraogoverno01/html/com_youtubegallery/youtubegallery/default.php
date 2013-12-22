@@ -17,7 +17,7 @@ $itemmenu = $menu->getItem($itemid);
 // var_dump($teste);
 ?>
 <div class="youtubegallery-list<?php echo $itemmenu->pageclass_sfx;?>">
-<?php if($jinput->get('videoid', '', 'string')== ''): ?>
+<?php if($jinput->get->get('videoid', '', 'string')== ''): ?>
 <h1 class="borderHeading">
 		<?php echo $itemmenu->title; ?>
 </h1>

@@ -8,6 +8,10 @@
 
 // No direct access.
 defined('_JEXEC') or die;
+
+//inclusao de cabecalho
+header('Content-Type: text/html; charset=utf-8');
+
 require JPATH_SITE .'/templates/'.$this->template.'/helper.php';
 if(!@isset($this->params))
 {

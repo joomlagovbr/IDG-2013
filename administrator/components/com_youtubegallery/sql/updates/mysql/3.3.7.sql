@@ -1,0 +1,1 @@
+ALTER TABLE `#__youtubegallery_videos` CHANGE `imageurl` `imageurl` varchar(1024) NOT NULL;

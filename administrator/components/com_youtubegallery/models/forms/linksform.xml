@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form
+         addrulepath="administrator/components/com_youtubegallery/models/rules"
+         
+      >
+
+        <fieldset  addfieldpath="administrator/components/com_youtubegallery/models/fields">
+                <field
+                        name="id"
+                        type="hidden"
+                />
+                
+                <field
+                        name="listname"
+                        type="text"
+                        label="COM_YOUTUBEGALLERY_FIELD_LISTNAME_LABEL"
+                        description="COM_YOUTUBEGALLERY_FIELD_LISTNAME_DESC"
+                        size="40"
+                        class="inputbox validate-greeting"
+                        validate="listname"
+                        required="true"
+                        default=""
+                />
+                
+                <field
+                        name="catid"
+                        type="ygcategory"
+                        label="COM_YOUTUBEGALLERY_FIELD_CATEGORY_LABEL"
+                        description="COM_YOUTUBEGALLERY_FIELD_CATEGORY_DESC"
+                        class="inputbox"
+                        required="false"
+                        default=""
+                />
+                
+                <field
+                        name="videolist"
+                        type="textarea"
+                        label="COM_YOUTUBEGALLERY_FIELD_VIDEOLIST_LABEL"
+                        description="COM_YOUTUBEGALLERY_FIELD_VIDEOLIST_DESC"
+                        class="inputbox"
+                        default=""
+                        cols="50"
+                        rows="28"
+                />
+                
+                <field
+                        name="updateperiod"
+                        type="list"
+                        label="COM_YOUTUBEGALLERY_FIELD_UPDATEPERIOD_LABEL"
+                        description="COM_YOUTUBEGALLERY_FIELD_UPDATEPERIOD_DESC"
+                        class="inputbox"
+                        default="7"
+                >
+                        <option value="0.041">Every hour</option>
+                        <option value="0.125">Every 3 hours</option>
+                        <option value="0.25">Every 6 hours</option>
+                        <option value="0.33">Every 8 hours</option>
+                        <option value="0.5">Every 12 hours</option>
+                        <option value="1">Every Day</option>
+                        <option value="3">Every 3 Days</option>
+                        <option value="7">Every Week</option>
+                        <option value="10">Every 10 Days</option>
+                        <option value="30">Every Month</option>
+                        <option value="365">Every Year</option>
+
+                </field>
+
+        </fieldset>
+
+</form>

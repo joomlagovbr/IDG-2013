@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+
+	<fieldset addfieldpath="/administrator/components/com_phocagallery/models/fields">
+
+<field name="id" type="text" default="0" label="JGLOBAL_FIELD_ID_LABEL" required="true" readonly="true" class="readonly" />
+
+<field name="title" type="text" class="inputbox" size="40" label="COM_PHOCAGALLERY_FIELD_TITLE_LABEL" description="COM_PHOCAGALLERY_FIELD_TITLE_DESC" required="true" />
+
+<field name="usertitle" type="phocainfotext" class="inputbox" size="40" label="COM_PHOCAGALLERY_FIELD_USER_LABEL" description="COM_PHOCAGALLERY_FIELD_USER_DESC"  />
+
+<field name="alias" type="text" class="inputbox" size="40" label="COM_PHOCAGALLERY_FIELD_ALIAS_LABEL" description="COM_PHOCAGALLERY_FIELD_ALIAS_DESC" />
+
+<field name="cattitle" type="phocainfotext" label="COM_PHOCAGALLERY_FIELD_CATEGORY_LABEL" description="COM_PHOCAGALLERY_FIELD_CATEGORY_DESC" class="inputbox" />
+
+
+<field name="ordering" type="PhocaGalleryOrdering" table="comment" class="inputbox" label="COM_PHOCAGALLERY_FIELD_ORDERING_LABEL" description="COM_PHOCAGALLERY_FIELD_ORDERING_DESC" />
+
+<field name="catid" type="hidden" filter="unset" />
+			
+<field name="comment" type="editor" buttons="true" hide="pagebreak,readmore" class="inputbox" label="COM_PHOCAGALLERY_FIELD_COMMENT_LABEL" description="COM_PHOCAGALLERY_FIELD_COMMENT_DESC" filter="safehtml" />
+	</fieldset>
+	
+	<fieldset name="publish" label="COM_PHOCAGALLERY_GROUP_LABEL_PUBLISHING_DETAILS" >
+
+<field name="published" type="list" label="COM_PHOCAGALLERY_FIELD_PUBLISHED_LABEL" description="COM_PHOCAGALLERY_FIELD_PUBLISHED_DESC" class="inputbox" size="1" default="1">
+	<option value="1">JPUBLISHED</option>
+	<option	value="0">JUNPUBLISHED</option>
+</field>
+
+
+<field name="date" type="Calendar" class="inputbox" label="COM_PHOCAGALLERY_FIELD_DATE_LABEL" description="COM_PHOCAGALLERY_FIELD_DATE_DESC" filter="safehtml" />
+
+
+	</fieldset>
+
+	
+</form>

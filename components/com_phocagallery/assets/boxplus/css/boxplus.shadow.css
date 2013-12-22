@@ -1,0 +1,82 @@
+/**
+* @file
+* @brief    boxplus: a lightweight pop-up window engine shipped with sigplus
+* @author   Levente Hunyadi
+* @version  0.9.2
+* @remarks  Copyright (C) 2009-2010 Levente Hunyadi
+* @remarks  Licensed under GNU/GPLv3, see http://www.gnu.org/licenses/gpl-3.0.html
+* @see      http://hunyadi.info.hu/projects/boxplus
+*/
+
+#boxplus .boxplus-background {
+background-color:black;
+background-color:rgba(0,0,0,0.6);
+}
+
+#boxplus .boxplus-dialog {
+color:white;
+margin:40px;
+}
+
+#boxplus .boxplus-center {
+background:black url('shadow/loading.gif') no-repeat center center;
+border:1px solid #303030 !important;
+position:relative;
+}
+
+#boxplus .boxplus-dialog a:link {
+color:red
+}
+
+#boxplus .boxplus-dialog a:visited {
+color:red
+}
+
+#boxplus .boxplus-dialog a:hover {
+color:red
+}
+
+#boxplus .boxplus-dialog a:active {
+color:red
+}
+
+#boxplus .boxplus-content {
+background:black none;
+}
+
+#boxplus .boxplus-controls {
+float:right;
+}
+
+#boxplus .boxplus-controls > div {
+background-position:0 0 !important;
+display:inline-block;
+height:16px;
+width:16px;
+margin:2px;
+}
+
+#boxplus .boxplus-controls > .boxplus-next {
+background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAJpJREFUeNpi/P//PwMlgJFSAxhABkCxLhKbGHEwRuYsBeIoLIpwiWM14CcQO2ExAJs4GDOh+YgNiNcBsS6R4hgGgAA/EG8HYjlixJlwhK00EO8FYlFC4kx4IkgFiC0JieMzoBKINxEURwttGJhGhDjWaASBjUDMTIQ4VgNOAjEnlnSATRwjHVwGYjcg/o7mZ1zi1MlMFBsAEGAANUZLsB23Wh4AAAAASUVORK5CYII=");
+}
+
+#boxplus .boxplus-controls > .boxplus-prev {
+background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAI9JREFUeNpi/P//PwMlgJFSAxhABuDBKoTE8WlOAOJphMRxafYD4j9YDMAQx6bZDIi//YeAaYTEmdCCRAWItwAxJ5HiKAaIAvF2KM1AhDiGAa5Qm9ABLnGs0dj+HxVMIyCONRDnY1OISxybAcxAvBGLAVjFcaUDTiA+iSUdYIjjS4miQFxESJxxwHMjQIABABQT4TRLh+gpAAAAAElFTkSuQmCC");
+}
+
+#boxplus .boxplus-controls > .boxplus-close {
+background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAKFJREFUeNpi/P//PwMlgHHADWAAGYCGo4CYDYs4CMcCMTOyGLqCov8QsB2LIROgcovwGaAFxM+xGALT/A2IPfAZgM2Qybg04zIAZsir/wiAVTM+A0B4KZIBp4GYkxQDYM7+BcQfkLzDSYwB06AafkKdrYvkHQxD0DU3ommGiSMbshqfAXJAfBtHgOlC5SyRxbElZWYg/osj4WLIDXxmAggwAHTlHTWidTHeAAAAAElFTkSuQmCC");
+}
+
+#boxplus .boxplus-controls > .boxplus-start {
+background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAHVJREFUeNpi/P//PwMlgJFSAxhABmDBZjjEMTAuFyyF0ilA/J0cFyz9DwEngVgCnwsIGQACD4FYlxIDQOAzEHtQYgAI/AHiUkoMgHlHmlwDjmELUGINmA/EbOSGQQW50fgNiEMIpURcEu1AbEBJUqZfbgQIMAD4AkaDGWpXMQAAAABJRU5ErkJggg==");
+}
+
+#boxplus .boxplus-controls > .boxplus-stop {
+background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAD1JREFUeNpi/P//PwMlgHHADWBC40cB8X8krItDDKcBFLtg1ICRaQB6UhYCYkUk/jUg5sQi9n3wZCaAAAMA2eIcETbPY8gAAAAASUVORK5CYII=");
+}
+
+#boxplus .boxplus-controls > .boxplus-download,
+#boxplus .boxplus-controls > .boxplus-metadata {
+display:none !important;
+}

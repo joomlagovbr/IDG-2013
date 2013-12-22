@@ -1,0 +1,202 @@
+/* Voting - style by http://www.jluvip.com/works/css/starvote/index2-1.html*/
+#phocagallery ul.star-rating li,
+#phocagallery-pane ul.star-rating li,
+#phocagallery ul.star-rating-small li{
+  background: none;
+  list-style-type:none;
+}
+
+#phocagallery .star-rating,
+#phocagallery-pane .star-rating,
+.star-rating{
+  list-style:none;
+  margin: 0px;
+  margin-top:5px;
+  margin-bottom:5px;
+  padding:0px;
+  width: 110px;
+  height: 22px;
+  position: relative;
+  background: url(../../images/icon-voting.png) top left repeat-x;
+}
+#phocagallery .star-rating li,
+#phocagallery-pane .star-rating li,
+.star-rating li{
+  list-style-type:none;
+  padding:0px;
+  margin:0px;
+  /*\*/
+  float: left;
+  /* */
+}
+#phocagallery .star-rating li a,
+#phocagallery-pane .star-rating li a,
+.star-rating li a{
+  display:block;
+  width:22px;
+  height: 22px;
+  text-decoration: none;
+  text-indent: -9000px;
+  z-index: 20;
+  position: absolute;
+  padding: 0px;
+}
+#phocagallery .star-rating li a:hover,
+#phocagallery-pane .star-rating li a:hover,
+.star-rating li a:hover{
+  background: url(../../images/icon-voting.png) left center;
+  z-index: 2;
+  left: 0px;
+}
+#phocagallery .star-rating a.star1,
+#phocagallery-pane .star-rating a.star1,
+.star-rating a.star1{
+  left: 0px;
+}
+#phocagallery .star-rating a.star1:hover,
+#phocagallery-pane .star-rating a.star1:hover,
+.star-rating a.star1:hover{
+  width:22px;
+}
+#phocagallery .star-rating a.stars2,
+#phocagallery-pane .star-rating a.stars2,
+.star-rating a.stars2{
+  left:22px;
+}
+#phocagallery .star-rating a.stars2:hover,
+#phocagallery-pane .star-rating a.stars2:hover,
+.star-rating a.stars2:hover{
+  width: 44px;
+}
+#phocagallery .star-rating a.stars3,
+#phocagallery-pane .star-rating a.stars3,
+.star-rating a.stars3{
+  left: 44px;
+}
+#phocagallery .star-rating a.stars3:hover,
+#phocagallery-pane .star-rating a.stars3:hover,
+.star-rating a.stars3:hover{
+  width: 66px;
+}
+#phocagallery .star-rating a.stars4,
+#phocagallery-pane .star-rating a.stars4,
+.star-rating a.stars4{
+  left: 66px;
+}
+#phocagallery .star-rating a.stars4:hover,
+#phocagallery-pane .star-rating a.stars4:hover,
+.star-rating a.stars4:hover{
+  width: 88px;
+}
+#phocagallery .star-rating a.stars5,
+#phocagallery-pane .star-rating a.stars5,
+.star-rating a.stars5{
+  left: 88px;
+}
+#phocagallery .star-rating a.stars5:hover,
+#phocagallery-pane .star-rating a.stars5:hover,
+.star-rating a.stars5:hover{
+  width: 110px;
+}
+#phocagallery .star-rating li.current-rating,
+#phocagallery-pane .star-rating li.current-rating,
+.star-rating li.current-rating{
+  background: url(../../images/icon-voting.png) left bottom;
+  position: absolute;
+  height: 22px;
+  /*width:77px;*/
+  display: block;
+  text-indent: -9000px;
+  z-index: 1;
+}
+
+/* Voting small */
+#phocagallery .star-rating-small,
+.star-rating-small{
+  list-style:none;
+  margin: 0px;
+  margin-top:5px;
+  margin-bottom:5px;
+  padding:0px;
+  width: 80px;
+  height: 16px;
+  position: relative;
+  background: url(../../images/icon-voting-small.png) top left repeat-x;
+}
+#phocagallery .star-rating-small li,
+.star-rating-small li{
+  list-style-type:none;
+  padding:0px;
+  margin:0px;
+  /*\*/
+  float: left;
+  /* */
+}
+
+#phocagallery .star-rating-small li a,
+.star-rating-small li a{
+  display:block;
+  width:16px;
+  height: 16px;
+  text-decoration: none;
+  text-indent: -9000px;
+  z-index: 20;
+  position: absolute;
+  padding: 0px;
+}
+#phocagallery .star-rating-small li a:hover,
+.star-rating-small li a:hover{
+  background: url(../../images/icon-voting-small.png) left center;
+  z-index: 2;
+  left: 0px;
+}
+#phocagallery .star-rating-small a.star1,
+.star-rating-small a.star1{
+  left: 0px;
+}
+#phocagallery .star-rating-small a.star1:hover,
+.star-rating-small a.star1:hover{
+  width:16px;
+}
+#phocagallery .star-rating-small a.stars2,
+.star-rating-small a.stars2{
+  left:16px;
+}
+#phocagallery .star-rating-small a.stars2:hover,
+.star-rating-small a.stars2:hover{
+  width: 32px;
+}
+#phocagallery .star-rating-small a.stars3,
+.star-rating-small a.stars3{
+  left: 32px;
+}
+#phocagallery .star-rating-small a.stars3:hover,
+.star-rating-small a.stars3:hover{
+  width: 48px;
+}
+#phocagallery .star-rating-small a.stars4,
+.star-rating-small a.stars4{
+  left: 48px;
+}
+#phocagallery .star-rating-small a.stars4:hover,
+.star-rating-small a.stars4:hover{
+  width: 64px;
+}
+#phocagallery  .star-rating-small a.stars5,
+.star-rating-small a.stars5{
+  left: 64px;
+} 
+#phocagallery  .star-rating-small a.stars5:hover,
+.star-rating-small a.stars5:hover{
+  width: 80px;
+}
+#phocagallery .star-rating-small li.current-rating,
+.star-rating-small li.current-rating{
+  background: url(../../images/icon-voting-small.png) left bottom;
+  position: absolute;
+  height: 16px;
+  /*width:77px;*/
+  display: block;
+  text-indent: -9000px;
+  z-index: 1;
+}

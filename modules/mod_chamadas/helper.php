@@ -76,7 +76,7 @@ class ModChamadasHelper
 		endif;
 	}
 
-	public static function getLink($params, $fields = array('simple', 'menu', 'article'), $content_item = false )
+	public static function getLink($params, $fields = array('simple', 'menu', 'article'), $content_item = false, $isJoomlaArticle = true )
 	{
 		$simple  = $fields[0];
 		$menu    = $fields[1];
@@ -105,7 +105,7 @@ class ModChamadasHelper
 				$link = JRoute::_(ContentHelperRoute::getArticleRoute( $params->get($article, '')));
 			}
 		}
-		elseif($content_item)
+		elseif($content_item && $isJoomlaArticle )
 		{
 			if(ModChamadasHelper::getjVersion() > 2)
 			{
@@ -116,6 +116,11 @@ class ModChamadasHelper
 				$link = JRoute::_(ContentHelperRoute::getArticleRoute( $content_item->id, $content_item->catid ));
 			}
 
+		}
+		elseif($content_item)
+		{
+			if(@isset($content_item->link))
+				$link = $content_item->link;
 		}
 
 		return $link;

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+
+	<fieldset addfieldpath="/administrator/components/com_phocagallery/models/fields">
+
+<field name="id" type="text" default="0" label="JGLOBAL_FIELD_ID_LABEL" required="true" readonly="true" class="readonly" />
+
+<field name="title" type="text" class="inputbox" size="40" label="COM_PHOCAGALLERY_FIELD_TITLE_LABEL" description="COM_PHOCAGALLERY_FIELD_TITLE_DESC" required="true" />
+
+<field name="alias" type="text" class="inputbox" size="40" label="COM_PHOCAGALLERY_FIELD_ALIAS_LABEL" description="COM_PHOCAGALLERY_FIELD_ALIAS_DESC" />
+
+<field name="parent_id" type="phocagallerycategory" label="COM_PHOCAGALLERY_FIELD_PARENT_CATEGORY_LABEL" description="COM_PHOCAGALLERY_FIELD_CATEGORY_CATEGORY_DESC"  class="inputbox" />
+
+
+
+<field name="ordering" type="PhocaGalleryOrdering" table="category" class="inputbox" label="COM_PHOCAGALLERY_FIELD_ORDERING_LABEL" description="COM_PHOCAGALLERY_FIELD_ORDERING_DESC" />
+
+<field name="access" type="accesslevel" label="JFIELD_ACCESS_LABEL" description="JFIELD_ACCESS_DESC" class="inputbox" size="1" />
+
+<field name="accessuserid" type="phocausers" multiple="1" label="COM_PHOCAGALLERY_FIELD_ACCESS_RIGHTS_LABEL" description="COM_PHOCAGALLERY_FIELD_ACCESS_RIGHTS_DESC" class="inputbox" size="1" />
+
+<field name="uploaduserid" type="phocausers" multiple="1" label="COM_PHOCAGALLERY_FIELD_UPLOAD_RIGHTS_LABEL" description="COM_PHOCAGALLERY_FIELD_UPLOAD_RIGHTS_DESC" class="inputbox" size="1" />
+
+<field name="deleteuserid" type="phocausers" multiple="1" label="COM_PHOCAGALLERY_FIELD_DELETE_RIGHTS_LABEL" description="COM_PHOCAGALLERY_FIELD_DELETE_RIGHTS_DESC" class="inputbox" size="1" />
+
+<field name="owner_id" type="phocausers" typeowner="1"  label="COM_PHOCAGALLERY_FIELD_OWNER_LABEL" description="COM_PHOCAGALLERY_FIELD_OWNER_DESC" class="inputbox" size="1" />
+
+<field name="userfolder" type="phocaselectfolder"  label="COM_PHOCAGALLERY_FIELD_OWNER_FOLDER_LABEL" description="COM_PHOCAGALLERY_FIELD_OWNER_FOLDER_DESC" class="inputbox" size="40" />
+
+<field name="latitude" type="phocaselectmap"  label="COM_PHOCAGALLERY_FIELD_LATITUDE_LABEL" description="COM_PHOCAGALLERY_FIELD_LATITUDE_DESC" class="inputbox" size="40" />
+<field name="longitude" type="phocaselectmap"  label="COM_PHOCAGALLERY_FIELD_LONGITUDE_LABEL" description="COM_PHOCAGALLERY_FIELD_LONGITUDE_DESC" class="inputbox" size="40" />
+<field name="zoom" type="phocaselectmap"  label="COM_PHOCAGALLERY_FIELD_ZOOM_LABEL" description="COM_PHOCAGALLERY_FIELD_ZOOM_DESC" class="inputbox" size="40" />
+<field name="geotitle" type="Text" class="inputbox" size="40" label="COM_PHOCAGALLERY_FIELD_GEOTITLE_LABEL" description="COM_PHOCAGALLERY_FIELD_GEOTITLE_DESC"  />
+	
+<field name="description" type="editor" buttons="true" hide="pagebreak,readmore" class="inputbox" label="COM_PHOCAGALLERY_FIELD_DESCRIPTION_LABEL" filter="safehtml" description="COM_PHOCAGALLERY_FIELD_DESCRIPTION_DESC" /> 
+
+<field name="extu" type="Text" class="inputbox" size="40" label="COM_PHOCAGALLERY_FIELD_PICASA_USER_LABEL" description="COM_PHOCAGALLERY_FIELD_PICASA_USER_DESC"  />
+<field name="exta" type="Text" class="inputbox" size="40" label="COM_PHOCAGALLERY_FIELD_PICASA_ALBUM_LABEL" description="COM_PHOCAGALLERY_FIELD_PICASA_ALBUM_DESC"  />
+<field name="extauth" type="Text" class="inputbox" size="40" label="COM_PHOCAGALLERY_FIELD_PICASA_AUTHKEY_LABEL" description="COM_PHOCAGALLERY_FIELD_PICASA_AUTHKEY_DESC"  />
+
+
+<field name="extfbuid" type="phocaselectfbuser" class="inputbox"  label="COM_PHOCAGALLERY_FIELD_FB_USER_LABEL" description="COM_PHOCAGALLERY_FIELD_FB_USER_DESC" fieldid="extfbcatid" />
+<field name="extfbcatid" type="PhocaSelectFbAlbum" class="inputbox" size="40" label="COM_PHOCAGALLERY_FIELD_FB_ALBUM_LABEL" description="COM_PHOCAGALLERY_FIELD_FB_ALBUM_DESC"  />
+
+
+<field name="metakey" type="textarea"
+			label="JField_Meta_Keywords_Label" description="JField_Meta_Keywords_Desc"
+			class="inputbox" rows="3" cols="30" />
+
+<field name="metadesc" type="textarea"
+	label="JField_Meta_Description_Label" description="JField_Meta_Description_Desc"
+	class="inputbox" rows="3" cols="30" />
+			
+
+	</fieldset>
+	
+	<fieldset name="publish" label="COM_PHOCAGALLERY_GROUP_LABEL_PUBLISHING_DETAILS" >
+
+<field name="published" type="list" label="COM_PHOCAGALLERY_FIELD_PUBLISHED_LABEL" description="COM_PHOCAGALLERY_FIELD_PUBLISHED_DESC" class="inputbox" size="1" default="1">
+	<option value="1">JPUBLISHED</option>
+	<option	value="0">JUNPUBLISHED</option>
+</field>
+
+<field name="approved" type="list" label="COM_PHOCAGALLERY_FIELD_APPROVED_LABEL" description="COM_PHOCAGALLERY_FIELD_APPROVED_DESC" class="inputbox" size="1" default="1">
+	<option value="1">COM_PHOCAGALLERY_APPROVED</option>
+	<option	value="0">COM_PHOCAGALLERY_NOT_APPROVED</option>
+</field>
+
+<field name="date" type="Calendar" class="inputbox" label="COM_PHOCAGALLERY_FIELD_DATE_LABEL" description="COM_PHOCAGALLERY_FIELD_DATE_DESC" filter="safehtml" />
+
+<field name="hits" type="Text" class="inputbox" size="6" label="COM_PHOCAGALLERY_FIELD_HITS" description="COM_PHOCAGALLERY_FIELD_HITS_DESC" />
+
+<field name="language" type="contentlanguage" label="JFIELD_LANGUAGE_LABEL" description="COM_PHOCAGALLERY_FIELD_LANGUAGE_CATEGORY_DESC" class="inputbox">
+	<option value="*">JALL</option>
+</field>
+	
+	</fieldset>
+	
+<fields name="metadata">
+<fieldset name="metadata" label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
+<!--
+	<field name="robots" type="list"
+		label="JField_Metadata_Robots_Label" description="JField_Metadata_Robots_Desc"
+	>
+		<option value="">JGLOBAL_USE_GLOBAL</option>
+		<option value="0">JGLOBAL_INDEX_FOLLOW</option>
+		<option value="1">JGLOBAL_NOINDEX_FOLLOW</option>
+		<option value="2">JGLOBAL_INDEX_NOFOLLOW</option>
+		<option value="3">JGLOBAL_NOINDEX_NOFOLLOW</option>
+		<option value="4">JGLOBAL_NO_ROBOTS_TAG</option>
+	</field>
+
+	<field name="author" type="text" label="JAUTHOR"
+		description="JField_Metadata_Author_Desc" size="20" />
+
+	<field name="rights" type="text"
+		label="JFIELD_META_RIGHTS_LABEL" description="JFIELD_META_RIGHTS_DESC"
+		required="" filter="string" cols="30" rows="2" -->
+</fieldset>
+</fields>
+
+	
+</form>

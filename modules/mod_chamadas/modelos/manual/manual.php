@@ -3,7 +3,7 @@ defined('_JEXEC') or die;
 
 class ModeloManual
 {
-	public function getListaModelo($params)
+	public function getListaModelo($params) 
 	{
 		//Permissão de acesso
 		$user	= JFactory::getUser();
@@ -13,7 +13,7 @@ class ModeloManual
 
 		$limite = (intval($params->get('limite_campos_preenchimento_manual', $default)) <= intval($params->get('quantidade', $default)))? intval($params->get('limite_campos_preenchimento_manual', $default)) : intval($params->get('quantidade', $default));
 
-		for ($i=0; $i < $limite; $i++) {
+		for ($i=0; $i < $limite; $i++) { 
 
 			$lista[$i] = new StdClass;
 
@@ -23,7 +23,7 @@ class ModeloManual
 
 			// DESCRICAO DO ARTIGO
 			if($params->get('desc_item'.($i+1), '') != ''){
-				$lista[$i]->introtext = $params->get('desc_item'.($i+1));
+				$lista[$i]->introtext = $params->get('desc_item'.($i+1));								
 			}
 			else{
 				$lista[$i]->introtext = '';
@@ -34,21 +34,21 @@ class ModeloManual
 				$lista[$i]->image_url = $params->get('image_item'.($i+1) );
 			}
 			else {
-				$lista[$i]->image_url = '';
+				$lista[$i]->image_url = '';				
 			}
 
 			if( $params->get('image_item'.($i+1).'_align', '') != '') {
 				$lista[$i]->image_align = $params->get('image_item'.($i+1).'_align' );
 			}
 			else {
-				$lista[$i]->image_align = '';
+				$lista[$i]->image_align = '';				
 			}
 
 			if( $params->get('image_item'.($i+1).'_alt', '') != '') {
 				$lista[$i]->image_alt = $params->get('image_item'.($i+1).'_alt' );
 			}
 			else {
-				$lista[$i]->image_alt = '';
+				$lista[$i]->image_alt = '';				
 			}
 
 			// LINK DO ARTIGO

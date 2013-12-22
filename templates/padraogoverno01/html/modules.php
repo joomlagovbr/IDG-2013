@@ -137,7 +137,7 @@ function modChrome_container($module, &$params, &$attribs)
 
 		$title = ( $params->get('titulo_alternativo', '') != '' )? $params->get('titulo_alternativo') : $module->title;
 		$layout = explode(':', $params->get('layout'));				
-		$module->showtitle = ($layout[1]!='manchete-principal')? $module->showtitle : '';
+		$module->showtitle = (@$layout[1]!='manchete-principal')? $module->showtitle : '';
 		?>
 		<div class="row-fluid module <?php echo $class; ?>">
 			<?php if ($module->showtitle): ?>

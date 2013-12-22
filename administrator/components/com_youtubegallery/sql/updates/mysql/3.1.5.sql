@@ -1,0 +1,1 @@
+ALTER TABLE `#__youtubegallery_videos` ADD COLUMN `startsecond` smallint(6) NOT NULL default 0;

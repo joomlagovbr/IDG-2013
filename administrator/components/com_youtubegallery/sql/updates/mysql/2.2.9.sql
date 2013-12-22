@@ -1,0 +1,1 @@
+ALTER TABLE `#__youtubegallery_categories` ADD COLUMN `parentid` int(11) NOT NULL;

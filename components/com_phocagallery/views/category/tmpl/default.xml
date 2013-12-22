@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_PHOCAGALLERY_CATEGORY_LIST_LAYOUT">
+		<message>
+			<![CDATA[COM_PHOCAGALLERY_CATEGORY_LIST_LAYOUT_DESC]]>
+		</message>
+	</layout>
+	
+	<name>COM_PHOCAGALLERY_CATEGORY_LIST_LAYOUT</name>
+		<description>COM_PHOCAGALLERY_CATEGORY_LIST_LAYOUT_DESC</description>
+	<fields name="request">
+		<fieldset name="request" addfieldpath="/administrator/components/com_phocagallery/models/fields">
+			<field name="id" type="phocagallerycategory" section="com_phocagallery" default="0" label="COM_PHOCAGALLERY_FIELD_SELECT_CATEGORY_LABEL" description="COM_PHOCAGALLERY_FIELD_SELECT_CATEGORY_DESC" required="true" />
+		</fieldset>
+	</fields>
+	
+	
+<fields name="params">
+<fieldset name="basic" addfieldpath="/administrator/components/com_phocagallery/models/fields" >
+
+	<field name="show_pagination_categories" type="list" default="0" label="COM_PHOCAGALLERY_FIELD_DISPLAY_PAGINATION_CATEGORIES_VIEW_LABEL" description="COM_PHOCAGALLERY_FIELD_DISPLAY_PAGINATION_CATEGORIES_VIEW_DESC">
+		<option value="0">COM_PHOCAGALLERY_HIDE</option>
+		<option value="1">COM_PHOCAGALLERY_DISPLAY</option>
+	</field>
+	
+	<field name="show_pagination_category" type="list" default="1" label="COM_PHOCAGALLERY_FIELD_DISPLAY_PAGINATION_CATEGORY_VIEW_LABEL" description="COM_PHOCAGALLERY_FIELD_DISPLAY_PAGINATION_CATEGORY_VIEW_DESC">
+		<option value="0">COM_PHOCAGALLERY_HIDE</option>
+		<option value="1">COM_PHOCAGALLERY_DISPLAY</option>
+	</field>
+	
+	<field name="show_pagination_limit_categories" type="list" default="0" label="COM_PHOCAGALLERY_FIELD_DISPLAY_SELECT_CATEGORIES_VIEW_LABEL" description="COM_PHOCAGALLERY_FIELD_DISPLAY_SELECT_CATEGORIES_VIEW_DESC">
+		<option value="0">COM_PHOCAGALLERY_HIDE</option>
+		<option value="1">COM_PHOCAGALLERY_DISPLAY</option>
+	</field>
+	<field name="show_pagination_limit_category" type="list" default="1" label="COM_PHOCAGALLERY_FIELD_DISPLAY_SELECT_CATEGORY_VIEW_LABEL" description="COM_PHOCAGALLERY_FIELD_DISPLAY_SELECT_CATEGORY_VIEW_DESC">
+		<option value="0">COM_PHOCAGALLERY_HIDE</option>
+		<option value="1">COM_PHOCAGALLERY_DISPLAY</option>
+	</field>
+	
+	<field name="show_ordering_categories" type="list" default="0" label="COM_PHOCAGALLERY_FIELD_DISPLAY_ORDERING_CATEGORIES_VIEW_LABEL" description="COM_PHOCAGALLERY_FIELD_DISPLAY_ORDERING_CATEGORIES_VIEW_DESC">
+		<option value="0">COM_PHOCAGALLERY_HIDE</option>
+		<option value="1">COM_PHOCAGALLERY_DISPLAY</option>
+	</field>
+	<field name="show_ordering_images" type="list" default="1" label="COM_PHOCAGALLERY_FIELD_DISPLAY_ORDERING_CATEGORY_VIEW_LABEL" description="COM_PHOCAGALLERY_FIELD_DISPLAY_ORDERING_CATEGORY_VIEW_DESC">
+		<option value="0">COM_PHOCAGALLERY_HIDE</option>
+		<option value="1">COM_PHOCAGALLERY_DISPLAY</option>
+	</field>
+	
+	
+	<field name="@spacer" type="spacer" default="" label="" description="" />
+	<field name="display_cat_name_title" type="list" default="1" label="COM_PHOCAGALLERY_FIELD_DISPLAY_CAT_NAME_IN_PAGE_TITLE_LABEL" description="COM_PHOCAGALLERY_FIELD_DISPLAY_CAT_NAME_IN_PAGE_TITLE_DESC">
+		<option value="0">COM_PHOCAGALLERY_HIDE</option>
+		<option value="1">COM_PHOCAGALLERY_DISPLAY</option>
+	</field>
+	
+	<field name="display_cat_name_breadcrumbs" type="list" default="0" label="COM_PHOCAGALLERY_FIELD_DISPLAY_CAT_NAME_IN_BREADCRUMBS_LABEL" description="COM_PHOCAGALLERY_FIELD_DISPLAY_CAT_NAME_IN_BREADCRUMBS_DESC">
+		<option value="0">COM_PHOCAGALLERY_MENU_ITEM_TITLE</option>
+		<option value="1">COM_PHOCAGALLERY_MENU_ITEM_TITLE_CAT_TITLE</option>
+		<option value="2">COM_PHOCAGALLERY_MENU_CAT_TITLE</option>
+	</field>
+			
+</fieldset>
+</fields>
+</metadata>

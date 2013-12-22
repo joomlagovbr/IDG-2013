@@ -20,7 +20,7 @@ class ModeloArticle_content
 		//Consulta
 		$query	= $db->getQuery(true);
 		$query->clear();
-		$query->select('cont.id, cont.catid, cont.alias');
+		$query->select('cont.id, cont.catid, cont.alias, cont.created AS created_date, cont.modified AS modify_date, cont.publish_up AS publish_date');
 		$query->from('#__content cont');
 		$query->from('#__categories cat');
 
@@ -53,10 +53,10 @@ class ModeloArticle_content
 			$query->select('cont.title');
 		}
 
-		//Traz o resultado da imagem ou não
-		if($params->get('exibir_imagem')){
+		//Traz o resultado da imagem ou não: comentado para permitir overwrite.
+		// if($params->get('exibir_imagem')){
 			$query->select('cont.images');
-		}
+		// }
 
 		//Traz o resultado do introtext ou não
 		if($params->get('exibir_introtext')){
@@ -87,6 +87,8 @@ class ModeloArticle_content
 					$subQuery->where('pai.id IN ('.$cat.')');
 					$subQuery->where('filho.lft >= pai.lft');
 					$subQuery->where('filho.rgt <= pai.rgt');
+					$subQuery->where('filho.published = 1');
+					$subQuery->where('pai.published = 1');
 		
 					//Define o nível máximo da categoria
 					if($params->get('nivel') && count($params->get('catid')) == 1){
@@ -145,9 +147,16 @@ class ModeloArticle_content
 		for ($i=0; $i < $lista_counter; $i++) { 
 
 			//chapeu e title
-			$lista[$i]->chapeu = ($params->get('chapeu_item'.($i+1), '') != '')? $params->get('chapeu_item'.($i+1) ) : @$lista[$i]->chapeu;
-			$lista[$i]->title = ($params->get('title_item'.($i+1), '') != '')? $params->get('title_item'.($i+1) ) : $lista[$i]->title;
+			if($params->get('chapeu') && $params->get('chapeu') != '0'  && $params->get('chapeu') != 'nenhum')			
+				$lista[$i]->chapeu = ($params->get('chapeu_item'.($i+1), '') != '')? $params->get('chapeu_item'.($i+1) ) : @$lista[$i]->chapeu;
+			else
+				$lista[$i]->chapeu = NULL;
 
+			if($params->get('exibir_title'))
+				$lista[$i]->title = ($params->get('title_item'.($i+1), '') != '')? $params->get('title_item'.($i+1) ) : $lista[$i]->title;
+			else
+				$lista[$i]->title = NULL;
+			
 			// DESCRICAO DO ARTIGO
 			if($params->get('desc_item'.($i+1), '') != ''){
 				$lista[$i]->introtext = $params->get('desc_item'.($i+1));								
@@ -160,14 +169,16 @@ class ModeloArticle_content
 			}
 
 			// OPCOES DE IMAGEM DO ARTIGO
-			if ($params->get('exibir_imagem')) {
+			
+
+			if ((($params->get('exibir_imagem') && $params->get('show_image_item'.($i+1))=='') || $params->get('show_image_item'.($i+1))==1)) {
 				$lista[$i]->images = json_decode($lista[$i]->images);				
 			}
 
 			if( $params->get('image_item'.($i+1), '') != '') {
 				$lista[$i]->image_url = $params->get('image_item'.($i+1) );
 			}
-			elseif($params->get('exibir_imagem')) {
+			elseif((($params->get('exibir_imagem') && $params->get('show_image_item'.($i+1))=='') || $params->get('show_image_item'.($i+1))==1)) {
 				$lista[$i]->image_url = @$lista[$i]->images->image_intro;
 			}
 			else {

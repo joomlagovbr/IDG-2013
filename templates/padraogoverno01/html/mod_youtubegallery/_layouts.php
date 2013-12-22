@@ -38,7 +38,7 @@ class YoutubeGalleryLayoutsPortal
 		{
 			$result.='[if:videodescription]';
 			
-			$result.='[videodescription]';
+			$result.='<p class="description">[videodescription]</p>';
 			
 			$result.='[endif:videodescription]';
 		}

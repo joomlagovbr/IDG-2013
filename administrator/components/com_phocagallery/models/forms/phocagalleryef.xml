@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+
+	<fieldset addfieldpath="/administrator/components/com_phocagallery/models/fields">
+
+<field name="id" type="text" default="0" label="JGLOBAL_FIELD_ID_LABEL" required="true" readonly="true" class="readonly" />
+
+<field name="title" type="text" class="inputbox" size="40" label="COM_PHOCAGALLERY_FIELD_TITLE_LABEL" description="COM_PHOCAGALLERY_FIELD_TITLE_DESC" required="true"  />
+
+<field name="alias" type="text" class="inputbox" size="40" label="COM_PHOCAGALLERY_FIELD_ALIAS_LABEL" description="COM_PHOCAGALLERY_FIELD_ALIAS_DESC" />
+
+<field name="type" type="hidden" default="0" label="COM_PHOCAGALLERY_FIELD_TYPE_LABEL" required="true" readonly="true" class="readonly" />
+<field name="typeoutput" type="text" default="COM_PHOCAGALLERY_CUSTOM_CSS" label="COM_PHOCAGALLERY_FIELD_TYPE_LABEL" required="true" readonly="true" class="readonly" />
+
+<field name="filename" type="text" default="" label="COM_PHOCAGALLERY_FIELD_FILENAME_LABEL"  readonly="true" class="readonly" />
+
+<field name="ordering" type="phocagalleryOrdering" table="styles" class="inputbox" label="COM_PHOCAGALLERY_FIELD_ORDERING_LABEL" description="COM_PHOCAGALLERY_FIELD_ORDERING_DESC" />
+
+<field name="source" type="editor" editor="codemirror|none" buttons="no" label="COM_PHOCAGALLERY_FIELD_CSS_LABEL" description="COM_PHOCAGALLERY_FIELD_CSS_DESC"  filter="raw" height="400" />
+
+	</fieldset>
+	
+	
+	<fieldset name="publish" label="COM_PHOCAGALLERY_GROUP_LABEL_PUBLISHING_DETAILS" >
+<field name="published" type="list" label="COM_PHOCAGALLERY_FIELD_PUBLISHED_LABEL" description="COM_PHOCAGALLERY_FIELD_PUBLISHED_DESC" class="inputbox" size="1" default="1">
+	<option value="1">JPUBLISHED</option>
+	<option	value="0">JUNPUBLISHED</option>
+</field>
+
+<field name="menulink" type="text" default="" label="COM_PHOCAGALLERY_FIELD_CSS_MENULINK_ID_LABEL" description="COM_PHOCAGALLERY_FIELD_CSS_MENULINK_ID_DESC"   />
+	</fieldset>
+</form>
