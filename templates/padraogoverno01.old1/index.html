@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="pt-br" dir="ltr"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang="pt-br" dir="ltr"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang="pt-br" dir="ltr"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="pt-br" dir="ltr"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+	<title>Portal Modelo - interface 1.0</title>
+	<!-- <base href="" /> -->
+	<meta name="keywords" content="" />
+	<meta name="author" content="Joomla Calango - Joomla User Group Oficial" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="description" content="" />
+	<meta name="generator" content="Joomla! - Open Source Content Management" />
+	<!--[if lt IE 9]><script src="js/html5shiv.js"></script><![endif]-->
+	<link href="img/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type='text/css'/>
+	<link rel="stylesheet" href="css/template-verde.css" type='text/css'/>		
+	<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css" type='text/css'/>
+	<!--[if lt IE 10]><link rel="stylesheet" href="css/ie.css" /><![endif]-->
+	<!--[if lt IE 9]><link rel="stylesheet" href="css/ie8.css" /><![endif]-->
+	<!--[if lt IE 8]><link rel="stylesheet" href="css/ie7.css" /><link rel="stylesheet" href="font-awesome/css/font-awesome-ie7.min.css" /><![endif]-->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600,800,700' rel='stylesheet' type='text/css'>
+</head>
+<body>
+	<a class="hide" id="topo" href="#accessibility">Ir direto para menu de acessibilidade.</a>
+	<noscript>
+	  <div class="error minor-font">
+        Seu navegador de internet está sem suporte à JavaScript. Por esse motivo algumas funcionalidades do site podem não estar acessíveis.
+      </div>
+	</noscript>
+	<!--[if lt IE 7]><center><strong>Atenção, a versão de seu navegador não é compatível com este sítio. Atualize seu navegador.</strong></center><![endif]-->
+	<!-- barra do governo -->
+	<div id="barra-brasil">
+		<a href="http://brasil.gov.br" title="Acesse para conhecer todos os serviços e informações do Governo Brasileiro na Internet.">Portal do Governo Brasileiro</a>		
+    </div>
+    <!-- fim barra do governo -->
+    <div class="layout">
+    	<header>
+    		<div class="container"> 
+	    		<div class="row-fluid">    			   			
+					<div class="span6 accessibility-container">
+						<ul id="accessibility">
+							<li>
+								<a accesskey="1" href="#content" id="link-conteudo">
+									Ir para o conte&uacute;do
+									<span>1</span>
+								</a>
+							</li>
+							<li>
+								<a accesskey="2" href="#navigation" id="link-navegacao">
+									Ir para o menu
+									<span>2</span>
+								</a>
+							</li>
+							<li>
+								<a accesskey="3" href="#portal-searchbox" id="link-buscar">
+									Ir para a busca
+									<span>3</span>
+								</a>
+							</li>
+							<li>
+								<a accesskey="4" href="#footer" id="link-rodape">
+									Ir para o rodap&eacute;
+									<span>4</span>
+								</a>
+							</li>
+						</ul>						
+					</div>
+					<!-- fim div.span6 -->
+					<div class="span6 language-and-actions-container">
+						<!-- Descomente para inserir menu de exemplo de idiomas no topo -->
+						<!-- <ul id="language" class="pull-right">
+							<li class="language-en">
+								<a href="#">EN</a>
+							</li>
+							<li class="language-es">
+								<a href="#">ES</a>
+							</li>
+						</ul>	 -->				
+						<ul id="portal-siteactions" class="pull-right">
+							<li>
+								<a accesskey="5" href="acessibilidade.html">Acessibilidade</a>
+							</li>
+							<li>
+								<a accesskey="6" href="#" class="toggle-contraste">Alto Contraste</a>
+							</li>
+							<li>
+								<a accesskey="7" href="#">Mapa do Site</a>
+							</li>
+						</ul>
+					</div>
+					<!-- fim div.span6 -->    
+				</div>
+				<!-- fim .row-fluid -->
+				<div class="row-fluid">
+					<div id="logo" class="span8">
+						<a href="index.html" title="Descrição do Portal Padrão">
+							<span class="portal-title-1">Denominação do órgão</span>
+							<h1 class="portal-title corto">Nome principal</h1>
+							<span class="portal-description">Subordinação</span>
+						</a>
+					</div>
+					<!-- fim .span8 -->
+					<div class="span4">					
+						<div id="portal-searchbox" class="row">
+							<form action="#" class="pull-right">
+								<fieldset>
+									<legend class="hide">Busca</legend>
+									<h2 class="hidden">Buscar no portal</h2>
+									<div class="input-append">
+										<label for="portal-searchbox-field" class="hide">Busca: </label>
+										<input type="text" id="portal-searchbox-field" class="searchField" placeholder="Buscar no portal" title="Buscar no portal" name="searchterm">		
+										<button type="button" class="btn searchButton"><span class="hide">Buscar</span><i class="icon-search"></i></button>
+									</div>									
+								</fieldset>
+							</form>
+						</div>
+						<!-- fim div#portal-searchbox.row -->
+						<div id="social-icons" class="row">
+							<h2 class="hidden">Redes Sociais</h2>
+							<ul class="pull-right">
+								<li class="portalredes-item"><a title="Twitter" href="https://twitter.com/twitter">
+									<i class="icon-twitter-sign"><span>Twitter</span></i></a>
+	    						</li>
+	    						<li class="portalredes-item"><a title="YouTube" href="http://youtube.com/youtube">
+	    							<i class="icon-youtube"><span>Youtube</span></i></a>
+	    						</li>
+	    						<li class="portalredes-item"><a title="Facebook" href="http://facebook.com/facebook">
+	    							<i class="icon-facebook-sign"><span>Facebook</span></i></a>
+	    						</li>
+	    						<li class="portalredes-item"><a title="Flickr" href="http://flickr.com/flickr">
+	    							<i class="icon-flickr"><span>Flickr</span></i></a>
+	    						</li>
+							</ul>
+						</div>
+						<!-- fim div#social-icons.row -->
+					</div>
+					<!-- fim .span4 -->
+				</div>
+				<!-- fim .row-fluid -->
+			</div>
+			<!-- fim div.container -->
+			<div class="sobre">
+				<div class="container">
+					<nav class="menu-servicos pull-right">
+						<h2 class="hide">Serviços</h2>
+						<ul>
+							<li class="portalservicos-item">
+								<a title="Perguntas frequentes" href="#">Perguntas frequentes</a>
+							</li>
+							<li class="portalservicos-item">
+								<a title="Contato" href="#">Contato</a>
+							</li>
+							<li class="portalservicos-item">
+								<a title="Serviços da [Denominação]" href="#">Serviços da [Denominação]</a>
+							</li>
+							<li class="portalservicos-item">
+								<a title="Dados abertos" href="#">Dados abertos</a>
+							</li>
+							<li class="portalservicos-item">
+								<a title="Área de imprensa" href="#">Área de imprensa</a>
+							</li>
+						</ul>
+						<span class="hide">Fim do menu de serviços</span>
+					</nav>
+					<!-- fim #menu-servicos.pull-right -->
+				</div>
+				<!-- .container -->
+			</div>
+			<!-- fim .sobre -->			
+    	</header>
+		<main> 
+    		<div class="container">
+				<div class="row-fluid">
+					<section id="em-destaque">
+						<!-- class="duas-linhas" -->
+						<h2 class="span2"><span>Em Destaque</span></h2>
+						<ul class="span10 n5">    						
+							<li>
+								<a href="index.html" title="">Padrão na cor verde</a>
+							</li>
+							<li>
+								<a href="index-amarelo.html" title="">Padrão na cor amarelo</a>
+							</li>
+							<li>
+								<a href="index-azul.html" title="">Padrão na cor azul</a>
+							</li>
+							<li>
+								<a href="index-branco.html" title="">Padrão na cor branco</a>
+							</li>
+							<li>
+								<a href="index-estrutura-c.html" title="">Estrutura em C</a>
+							</li>							
+						</ul>	
+						<!-- <li class="ajuste-duas-linhas">Destaque 5</li> -->						
+					</section>
+				</div>
+				<!-- fim .row-fluid -->
+				<div class="row-fluid">
+					<div id="navigation" class="span3">
+						<a href="#" class="visible-phone visible-tablet mainmenu-toggle btn"><i class="icon-list"></i>&nbsp;Menu</a>
+						<section id="navigation-section">							
+							<span class="hide">Início do menu principal</span>
+							<nav class="menu-de-apoio span9">
+								<h2 class="hide">Temas relevantes</h2>
+								<ul>
+									<li><a href="#" title="Conheça a identidade digital do governo">Conheça a identidade digital do governo</a></li>									
+								</ul>							
+							</nav>
+							<nav class="span9 assuntos">
+								<h2>Assuntos <i class="icon-chevron-down visible-phone visible-tablet pull-right"></i></h2>
+								<ul>
+									<li><a href="#" title="Editoria A">Editoria A</a></li>
+									<li><a href="#" title="Editoria B">Editoria B</a></li>
+									<li><a href="#" title="Editoria C">Editoria C</a></li>								
+									<li class="active parent"><a href="#" title="Editoria D">Editoria D</a>
+										<ul>
+											<li class="active parent"><a href="#">Subnível 1 - link 1</a>
+												<ul>
+													<li><a href="#">Subnível 2 - link 1</a></li>
+													<li class="active parent"><a href="#">Subnível 2 - link 2</a>
+														<ul>
+															<li class="active parent"><a href="#">Subnível 3 - link 1</a>
+																<ul>
+																	<li class="current"><a href="#">Subnível 4 - link 1</a></li>
+																	<li><a href="#">Subnível 4 - link 2</a></li>
+																</ul>
+															</li>
+															<li><a href="#">Subnível 3 - link 2</a></li>
+														</ul>
+													</li>
+												</ul>
+											</li>
+											<li><a href="#">Subnível 1 - link 2</a></li>
+											<li><a href="#">Subnível 1 - link 3</a></li>
+											<li><a href="#">Subnível 1 - link 4</a></li>
+											<li><a href="#">Subnível 1 - link 5</a></li>
+										</ul>
+									</li>								
+									<li><a href="#" title="Editoria E">Editoria E</a></li>								
+									<li><a href="#" title="Editoria F">Editoria F</a></li>								
+									<li><a href="#" title="Editoria G">Editoria G</a></li>								
+									<li><a href="#" title="Editoria H">Editoria H</a></li>								
+									<li><a href="#" title="Editoria I">Editoria I</a></li>								
+									<li><a href="#" title="Editoria J">Editoria J</a></li>								
+								</ul>
+							</nav>
+							<nav class="span9 sobre">
+								<h2>Sobre <i class="icon-chevron-down visible-phone visible-tablet pull-right"></i></h2>
+								<ul>
+									<li><a href="#" title="Institucional">Institucional</a></li>
+									<li><a href="#" title="Ações e Programas">Ações e Programas</a></li>
+									<li><a href="#" title="Auditorias">Auditorias</a></li>
+									<li><a href="#" title="Convênios">Convênios</a></li>								
+									<li><a href="#" title="Despesas">Despesas</a></li>								
+									<li><a href="#" title="Licitações e Contratos">Licitações e Contratos</a></li>							
+									<li><a href="#" title="Servidores">Servidores</a></li>								
+									<li><a href="#" title="Informações classificadas">Informações classificadas</a></li>
+									<li><a href="#" title="Serviço de Informação ao Cidadão - SIC">Serviço de Informação ao Cidadão - SIC</a></li>
+								</ul>
+							</nav>	
+							<nav class="span9 central-conteudos">
+								<h2>Central de Conteúdos <i class="icon-chevron-down visible-phone visible-tablet pull-right"></i></h2>
+								<ul>
+									<li><a href="#" class="imagens" title="Imagens">
+										<span class="icon-li icon-stack">
+										  <i class="icon-circle icon-stack-base"><span class="hide">&nbsp;</span></i>
+										  <i class="icon-picture icon-light"><span class="hide">&nbsp;</span></i>
+										</span>
+										Imagens</a>
+									</li>
+									<li><a href="#" class="videos" title="Vídeos">
+										<span class="icon-li icon-stack">
+										  <i class="icon-circle icon-stack-base"><span class="hide">&nbsp;</span></i>
+										  <i class="icon-play icon-light"><span class="hide">&nbsp;</span></i>
+										</span>
+										Vídeos</a>
+									</li>
+									<li><a href="#" class="audios" title="Áudios">
+										<span class="icon-li icon-stack">
+										  <i class="icon-circle icon-stack-base"><span class="hide">&nbsp;</span></i>
+										  <i class="icon-volume-up icon-light"><span class="hide">&nbsp;</span></i>
+										</span>
+										Áudios</a>
+									</li>
+									<li><a href="#" class="publicacoes" title="Publicações">
+										<span class="icon-li icon-stack">
+										  <i class="icon-circle icon-stack-base"><span class="hide">&nbsp;</span></i>
+										  <i class="icon-file-text icon-light"><span class="hide">&nbsp;</span></i>
+										</span>
+										Publicações</a>
+									</li>
+									<li><a href="#" class="aplicativos" title="Aplicativos">
+										<span class="icon-li icon-stack">
+										  <i class="icon-circle icon-stack-base"><span class="hide">&nbsp;</span></i>
+										  <i class="icon-mobile-phone icon-light"><span class="hide">&nbsp;</span></i>
+										</span>
+										Aplicativos</a>
+									</li>
+									<!-- descomentar de acordo com necessidade do orgao -->
+									<!-- <li><a href="#" class="infograficos" title="Imagens">
+										<span class="icon-li icon-stack">
+										  <i class="icon-circle icon-stack-base"><span class="hide">&nbsp;</span></i>
+										  <i class="icon-columns icon-light"><span class="hide">&nbsp;</span></i>
+										</span>
+										Infográficos</a>
+									</li>
+									<li><a href="#" class="estatisticas" title="Estatísticas">
+										<span class="icon-li icon-stack">
+										  <i class="icon-circle icon-stack-base"><span class="hide">&nbsp;</span></i>
+										  <i class="icon-bar-chart icon-light"><span class="hide">&nbsp;</span></i>
+										</span>
+										Estatísticas</a>
+									</li>			 -->													
+								</ul>
+							</nav>	
+							<span class="hide">Início do menu principal</span>
+						</section>					
+					</div>
+					<!-- fim #navigation.span3 -->
+					<div id="content" class="span9">
+						<section id="content-section">							
+							<span class="hide">Início do conteúdo da página</span>							
+							<div class="row-fluid module">							
+    							<div class="outstanding-header">
+									<h2 class="outstanding-title">Portal Padrão</h2>
+    							</div>
+    							<section class="module-section">
+	    							<div class="span4 no-margin">    								
+										<p class="subtitle">Identidade Digital de Governo</p>
+										<h1>
+								            <a title="Estrutura reúne o que há de mais adequado em soluções digitais de acessibilidade e de divulgação de informações nos mais variados formatos; conheça os detalhes deste novo modelo e acesse os manuais de identidade digital, estilo, instalação e gestão de conteúdo" href="#">Conheça o novo modelo de plataforma digital</a>
+								        </h1>
+										<p>Estrutura reúne o que há de mais adequado em soluções digitais de acessibilidade e de divulgação de informações nos mais variados formatos; conheça os detalhes deste novo modelo e acesse os manuais de identidade digital, estilo, instalação e gestão de conteúdo</p>											
+	    							</div>
+	    							<!-- fim .span4 -->
+	    							<div class="span8">
+	    								<object width="480" height="246"><param value="//www.youtube.com/v/BGzfIhIUF68?version=3&amp;hl=pt_BR&amp;rel=0" name="movie"><param value="true" name="allowFullScreen"><param value="always" name="allowscriptaccess"><embed width="480" height="368" allowfullscreen="true" allowscriptaccess="always" type="application/x-shockwave-flash" src="//www.youtube.com/v/BGzfIhIUF68?version=3&amp;hl=pt_BR&amp;rel=0"></object>
+	    							</div>
+	    							<!-- fim .span8 -->
+    							</section>
+							</div>
+							<!-- fim .row-fluid -->
+							<div class="row-fluid">
+								<div class="span4 module variacao-module-01">
+									<div class="outstanding-header">
+										<h2 class="outstanding-title">Planejamento</h2>
+									</div>
+									<h3><a href="#">Conheça as etapas para o desenvolvimento de portais</a></h3>
+									<p>Apresentação mostra como desenvolver um site de acordo com a Identidade digital do governo federal</p>
+			    				</div>
+			    				<div class="span4 module variacao-module-02">
+									<div class="outstanding-header">
+										<h2 class="outstanding-title">Lei de acesso à informação</h2>
+									</div>
+									<h3><a href="#">Saiba como montar o menu da Lei de Acesso à Informação</a></h3>
+		    						<p>Órgãos do governo federal devem disponibilizar em seu site um menu especificado pela legislação</p>
+			    				</div>
+			    				<div class="span4 module variacao-module-03">
+									<div class="outstanding-header">
+										<h2 class="outstanding-title">Agenda</h2>
+									</div>
+									<p>O módulo agenda, que ocupará este espaço está em desenvolvimento e ficará disponível até o fim do mês de outubro.</p>
+			    				</div>
+							</div>
+							<!-- fim .row-fluid -->
+							<div class="row-fluid">
+								<div class="span4 module">									
+									<div class="outstanding-header">
+										<h2 class="outstanding-title">Áudio do órgão</h2>
+									</div>
+									<img src="images/fake-player-audio.png" alt="Player ainda será desenvolvido ou adaptado.">
+									<p>Espaço para inserir a legenda do áudio 1</p>
+									<div class="outstanding-footer">
+										<a href="#" class="outstanding-link">
+											<span class="text">Mais áudios</span>
+											<span class="icon-box">											 
+											  <i class="icon-angle-right icon-light"><span class="hide">&nbsp;</span></i>
+											</span>
+										</a>
+								    </div>									
+								</div>
+								<!-- fim .span4 .module -->
+								<div class="span8 module module-box-01">									
+									<div class="header">
+										<h2 class="title">Últimas notícias</h2>
+									</div>
+									<ul class="lista row-fluid">
+										<li class="span4">
+											<h3><a href="#" title="Subtítulo do texto 1. Se em uma linha, usar 90 caracteres. Se em duas linhas usar 190 caracteres">Subtítulo do texto 1. Se em uma linha, usar 90 caracteres. Se em duas linhas usar 190 caracteres</a></h3>
+										</li>
+										<li class="span4">
+											<h3><a href="#" title="Subtítulo do texto 2. Se em uma linha, usar 90 caracteres. Se em duas linhas usar 190 caracteres">Subtítulo do texto 2. Se em uma linha, usar 90 caracteres. Se em duas linhas usar 190 caracteres</a></h3>
+										</li>
+										<li class="span4">
+											<h3><a href="#" title="Subtítulo do texto 3. Se em uma linha, usar 90 caracteres. Se em duas linhas usar 190 caracteres">Subtítulo do texto 3. Se em uma linha, usar 90 caracteres. Se em duas linhas usar 190 caracteres</a></h3>
+										</li>
+										<li class="span4">
+											<h3><a href="#" title="Subtítulo do texto 4. Se em uma linha, usar 90 caracteres. Se em duas linhas usar 190 caracteres">Subtítulo do texto 4. Se em uma linha, usar 90 caracteres. Se em duas linhas usar 190 caracteres</a></h3>
+										</li>
+										<li class="span4">
+											<h3><a href="#" title="Subtítulo do texto 5. Se em uma linha, usar 90 caracteres. Se em duas linhas usar 190 caracteres">Subtítulo do texto 5. Se em uma linha, usar 90 caracteres. Se em duas linhas usar 190 caracteres</a></h3>
+										</li>
+										<li class="span4">
+											<h3><a href="#" title="Subtítulo do texto 6. Se em uma linha, usar 90 caracteres. Se em duas linhas usar 190 caracteres">Subtítulo do texto 6. Se em uma linha, usar 90 caracteres. Se em duas linhas usar 190 caracteres</a></h3>
+										</li>
+										<li class="span4">
+											<h3><a href="#" title="Subtítulo do texto 7. Se em uma linha, usar 90 caracteres. Se em duas linhas usar 190 caracteres">Subtítulo do texto 7. Se em uma linha, usar 90 caracteres. Se em duas linhas usar 190 caracteres</a></h3>
+										</li>
+										<li class="span4">
+											<h3><a href="#" title="Subtítulo do texto 8. Se em uma linha, usar 90 caracteres. Se em duas linhas usar 190 caracteres">Subtítulo do texto 8. Se em uma linha, usar 90 caracteres. Se em duas linhas usar 190 caracteres</a></h3>
+										</li>
+									</ul>
+									<div class="footer">
+										<a href="#" class="link">Acesse a lista completa</a>
+									</div>									
+								</div>
+								<!-- fim .span8 .module -->
+							</div>
+							<!-- fim .row-fluid -->
+							<div class="row-fluid">
+								<div class="span4 module module-twitter-facebook">
+									<div class="header tabs row-fluid">
+										<h2 class="title active span6">Twitter</h2>
+										<h2 class="title span6 hide">Facebook</h2>
+									</div>
+									<div class="pane">
+										<div class="twitter-content">
+								            <a height="350" data-widget-id="388035310119964672" href="https://twitter.com/Portal%20Brasil" class="twitter-timeline"><br />Tweets do Portal Brasil</a>
+								            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script><noscript>
+								                <div class="error">
+								                  <p>Javascript desativado.</p>
+								                  <p><a href="https://twitter.com/portalbrasil">Micro-blog Twitter do Portal Brasil</a></p>
+								                </div>
+								            </noscript>
+								        </div>								       
+									</div>
+								</div>
+								<!-- fim .span4 .module -->
+								<div class="span8 module module-box-01 module-box-01-top-adjust">
+									<div class="header">
+										<h2 class="title">Galeria de imagens</h2>
+									</div>
+									<div class="gallery-pane">
+										<!-- inicio galeria -->
+										<div class="carousel slide" id="gallery-carousel">
+									      <div class="carousel-inner">
+									        <div class="item">
+									          <img alt="Foto de paisagem de montanhas" src="images/image.jpg">
+									          
+									          <div class="galleria-info">
+									          	<div class="galleria-info-text">
+									          		<div class="galleria-info-title">
+									          			<h3><a href="http://portalpadrao.plone.org.br/conteudos-de-marcacao/imagem-1-titulo-com-ate-45-caracteres/view">Imagem 1: título com até 45 caracteres</a></h3>
+									          		</div>
+									          		<div class="galleria-info-description">Espaço para incluir a legenda/descrição da imagem</div>
+									          		<div data-index="0" style="display: block;" class="rights">Nome do autor da imagem</div>
+									          	</div>
+									          </div>
+
+									        </div>
+									        <div class="item active">
+									          <img alt="Foto de flor delicada cercada de folhas verdes" src="images/image2.jpg">
+									          
+									          <div class="galleria-info">
+									          	<div class="galleria-info-text">
+									          		<div class="galleria-info-title">
+									          			<h3><a href="http://portalpadrao.plone.org.br/conteudos-de-marcacao/imagem-1-titulo-com-ate-45-caracteres/view">Imagem 2: título com até 45 caracteres</a></h3>
+									          		</div>
+									          		<div class="galleria-info-description">Espaço para incluir a legenda/descrição da imagem</div>
+									          		<div data-index="0" style="display: block;" class="rights">Nome do autor da imagem</div>
+									          	</div>
+									          </div>
+									          
+									        </div>
+									        <div class="item">
+									          <img alt="Foto de 3 pinguins" src="images/image3.jpg">
+									          
+									          <div class="galleria-info">
+									          	<div class="galleria-info-text">
+									          		<div class="galleria-info-title">
+									          			<h3><a href="http://portalpadrao.plone.org.br/conteudos-de-marcacao/imagem-1-titulo-com-ate-45-caracteres/view">Imagem 3: título com até 45 caracteres</a></h3>
+									          		</div>
+									          		<div class="galleria-info-description">Espaço para incluir a legenda/descrição da imagem</div>
+									          		<div data-index="0" style="display: block;" class="rights">Nome do autor da imagem</div>
+									          	</div>
+									          </div>
+									          
+									        </div>
+									        <div class="item">
+									          <img alt="Foto de várias flores" src="images/image4.jpg">
+									          
+									          <div class="galleria-info">
+									          	<div class="galleria-info-text">
+									          		<div class="galleria-info-title">
+									          			<h3><a href="http://portalpadrao.plone.org.br/conteudos-de-marcacao/imagem-1-titulo-com-ate-45-caracteres/view">Imagem 4: título com até 45 caracteres</a></h3>
+									          		</div>
+									          		<div class="galleria-info-description">Espaço para incluir a legenda/descrição da imagem</div>
+									          		<div data-index="0" style="display: block;" class="rights">Nome do autor da imagem</div>
+									          	</div>
+									          </div>
+									          
+									        </div>
+									      </div>
+									      <a data-slide="prev" href="#gallery-carousel" class="left carousel-control"><i class="icon-angle-left"></i><span class="hide">Mover foto esquerda</span></a>
+									      <!-- separador para fins de acessibilidade <--><span class="hide">&nbsp;</span></--><!-- fim separador para fins de acessibilidade -->
+									      <a data-slide="next" href="#gallery-carousel" class="right carousel-control"><i class="icon-angle-right"></i><span class="hide">Mover foto esquerda</span></a>
+									    </div>
+										<!-- fim galeria -->
+									</div>
+									<div class="footer">
+										<a href="#" class="outstanding-link"><span class="text">Acesse a lista completa</span>
+											<span class="icon-box">											 
+											  <i class="icon-angle-right icon-light"><span class="hide">&nbsp;</span></i>
+											</span>
+										</a>
+									</div>
+								</div>
+								<!-- fim .span8 .module -->
+							</div>
+							<!-- fim .row-fluid -->
+							<div class="row-fluid">
+								<div class="span12 module">
+									<div class="outstanding-header">
+										<h2 class="outstanding-title">Programas</h2>
+									</div>
+									<div class="span4 no-margin">
+										<a href="#" class="img-rounded"><img src="images/8309509b-fd4a-4c6c-be30-e8ce75642bcc.jpeg" alt="imagem decorativa"></a>
+										<h2><a href="#">Texto 1: Título da manchete em até 55 caracteres com espaço</a></h2>
+										<p>Subtítulo do texto 1. Escrever texto do subtítulo da chamada em até 130 caracteres com espaço</p>
+				    				</div>
+				    				<!-- fim .span4 .no-margin -->
+				    				<div class="span4">
+										<a href="#" class="img-rounded"><img src="images/4ae7baa4-f707-4b34-a01e-9c5fe45f00b9.jpeg" alt="imagem decorativa"></a>
+										<h2><a href="#">Texto 2: Título da manchete em até 55 caracteres com espaço</a></h2>
+			    						<p>Subtítulo do texto 2. Escrever texto do subtítulo da chamada em até 130 caracteres com espaço</p>
+				    				</div>
+				    				<!-- fim .span4 -->
+				    				<div class="span4">
+										<a href="#" class="img-rounded"><img src="images/c11b62ec-4a89-4707-a39e-9413b20cf235.jpeg" alt="imagem decorativa"></a>
+										<h2><a href="#">Texto 3: Título da manchete em até 55 caracteres com espaço</a></h2>
+			    						<p>Subtítulo do texto 3. Escrever texto do subtítulo da chamada em até 130 caracteres com espaço</p>
+				    				</div>
+				    				<!-- fim .span4 -->
+								</div>
+								<!-- fim .span12 .module -->
+							</div>
+							<!-- fim .row-fluid -->
+							<span class="hide">Fim do conteúdo da página</span>							
+						</section>
+					</div>
+					<!-- fim #content.span9 -->
+				</div>
+				<!-- fim .row-fluid -->
+			</div>
+			<!-- fim .container -->
+		</main>
+    	<footer>
+    		<div class="footer-atalhos">
+    			<div class="container">
+    				<div class="pull-right voltar-ao-topo"><a href="#portal-siteactions"><i class="icon-chevron-up"></i>&nbsp;Voltar para o topo</a></div>
+    			</div>
+    		</div>
+    		<div class="container container-menus">
+    			<div id="footer" class="row footer-menus">
+    				<span class="hide">Início da navegação de rodapé</span>
+    				<div class="span3">
+						<nav class="row assuntos nav">
+							<h2>Assuntos</h2>
+							<ul>
+								<li><a href="#" title="Editoria A">Editoria A</a></li>
+								<li><a href="#" title="Editoria B">Editoria B</a></li>
+								<li><a href="#" title="Editoria C">Editoria C</a></li>								
+							</ul>
+						</nav>    					
+    				</div>
+					<div class="span3">
+						<nav class="row servicos nav">
+							<h2>Serviços</h2>
+							<ul>
+								<li class="portalservicos-item">
+									<a title="Perguntas frequentes" href="#">Perguntas frequentes</a>
+								</li>
+								<li class="portalservicos-item">
+									<a title="Contato" href="#">Contato</a>
+								</li>
+								<li class="portalservicos-item">
+									<a title="Serviços da [Denominação]" href="#">Serviços da [Denominação]</a>
+								</li>
+								<li class="portalservicos-item">
+									<a title="Dados abertos" href="#">Dados abertos</a>
+								</li>
+								<li class="portalservicos-item">
+									<a title="Área de imprensa" href="#">Área de imprensa</a>
+								</li>
+							</ul>
+						</nav>							
+					</div>
+					<div class="span3">
+						<nav class="row redes-sociais nav">
+							<h2>Redes Sociais</h2>
+							<ul>
+								<li class="portalredes-item"><a title="Twitter" href="https://twitter.com/twitter">
+	    							Twitter</a>
+	    						</li>
+	    						<li class="portalredes-item"><a title="YouTube" href="http://youtube.com/youtube">
+	    							Youtube</a>
+	    						</li>
+	    						<li class="portalredes-item"><a title="Facebook" href="http://facebook.com/facebook">
+	    							Facebook</a>
+	    						</li>
+	    						<li class="portalredes-item"><a title="Flickr" href="http://flickr.com/flickr">
+	    							Flickr</a>
+	    						</li>
+							</ul>
+						</nav>						
+					</div>
+					<div class="span3">
+						<nav class="row rss nav">
+							<h2>RSS</h2>
+							<ul>
+								<li><a href="#" title="O que é?">O que é?</a></li>
+								<li><a href="#" title="Assine">Assine</a></li>
+							</ul>
+						</nav>
+						<nav class="row sobre nav">
+							<h2>Sobre o site</h2>
+							<ul>
+								<li><a href="#">Acessibilidade</a></li>
+								<li><a href="#">Mapa do site</a></li>
+								<li><a href="#">Versión en Español - Versão em Espanhol</a></li>
+								<li><a href="#">English version - Versão em Inglês</a></li>
+							</ul>
+						</nav>
+					</div>
+					<span class="hide">Fim da navegação de rodapé</span>					
+    			</div>
+    			<!-- fim .row -->
+    		</div>
+    		<!-- fim .container -->
+			<div class="footer-logos">
+				<div class="container">
+					<a href="http://www.acessoainformacao.gov.br/" class="logo-acesso pull-left"><img src="images/acesso-a-informacao.png" alt="Acesso a Informação"></a>
+					<!-- separador para fins de acessibilidade <--><span class="hide">&nbsp;</span></--><!-- fim separador para fins de acessibilidade -->
+					<a href="http://www.brasil.gov.br/" class="brasil pull-right"><img src="images/brasil.png" alt="Brasil - Governo Federal"></a>
+				</div>				
+			</div>
+			<div class="footer-ferramenta">
+				<div class="container">
+					<p>Interface preparada para desenvolvimento com o CMS <a href="http://www.joomla.org">Joomla</a></p>		
+				</div>				
+			</div>
+    		<div class="footer-atalhos visible-phone">
+    			<div class="container">
+    				<span class="hide">Fim do conteúdo da página</span>
+    				<div class="pull-right voltar-ao-topo"><a href="#portal-siteactions"><i class="icon-chevron-up"></i>&nbsp;Voltar para o topo</a></div>
+    			</div>
+    		</div>
+    	</footer>		
+    </div>
+	<!-- fim div#wrapper -->	
+	<!-- scripts principais -->	
+	<script src="js/jquery.min.js" type="text/javascript"></script><noscript>&nbsp;<!-- item para fins de acessibilidade --></noscript>
+	<script src="js/jquery-noconflict.js" type="text/javascript"></script><noscript>&nbsp;<!-- item para fins de acessibilidade --></noscript>
+	<script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script><noscript>&nbsp;<!-- item para fins de acessibilidade --></noscript>
+	<script src="js/jquery.cookie.js" type="text/javascript"></script><noscript>&nbsp;<!-- item para fins de acessibilidade --></noscript>
+	<script src="js/template.js" type="text/javascript"></script><noscript>&nbsp;<!-- item para fins de acessibilidade --></noscript>
+	<!-- Script do portal Brasil deve ficar preferencialmente no rodape para nao atrasar o carregamento da pagina principal -->
+	<script src="http://barra.brasil.gov.br/barra.js?cor=verde" type="text/javascript"></script><noscript>&nbsp;<!-- item para fins de acessibilidade --></noscript>
+</body>
+</html>

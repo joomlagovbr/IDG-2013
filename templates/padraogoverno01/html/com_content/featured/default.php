@@ -23,7 +23,7 @@ require __DIR__.'/../category/_helper.php';
 	<?php if( $this->params->get('show_author') || $this->params->get('show_create_date') || $this->params->get('show_modify_date')) : ?>
 		<div class="content-header-options-1 row-fluid">
 			<div class="documentByLine">
-				<?php if( $this->params->get('show_author') ): ?>
+				<?php if( $this->params->get('show_author') && !is_null(@$this->category)): ?>
 					<span class="documentAuthor"><?php echo JText::sprintf('COM_CONTENT_WRITTEN_BY', '<strong>'.TemplateContentCategoryHelper::getAuthor( $this->category ).'</strong>'); ?></span>				
 					<?php if( $this->params->get('show_create_date') || $this->params->get('show_modify_date')): ?>
 					<span class="separator">|</span>

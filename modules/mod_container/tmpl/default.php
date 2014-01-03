@@ -35,6 +35,8 @@ echo '<'.$tag1.' '.$class.'>'."\n";
 			if(@$mod_params->variacao != '')
 				$class .= ' variacao-module-'.((intval($mod_params->variacao)<10)? '0' : '').intval($mod_params->variacao);
 
+			$mod->title = (@$mod_params->titulo_alternativo!='')? $mod_params->titulo_alternativo : $mod->title;
+			$mod->title = (@$mod_params->alternative_title!='')? $mod_params->alternative_title : $mod->title;
 			$class = 'class="'.trim($class).'"';
 			
 			echo '<'.$tag2.' '.$class.'>'."\n";

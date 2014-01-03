@@ -102,7 +102,7 @@ class ModeloArticle_content
 				}
 			}
 
-			 /* ANTENÇÃO
+			 /* ATENÇÃO
 			 * O CÓDIGO ABAIXO FUNCIONA APENAS NA VERSÃO 3.X.X
 			 * NA VERSÃO 2.5 OU INFERIOR O COMANDO ABAIXO SERÁ DESCONSIDERADO 
 			 */
