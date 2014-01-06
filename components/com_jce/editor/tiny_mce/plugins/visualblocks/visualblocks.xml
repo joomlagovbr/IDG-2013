@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<install version="2.0" type="plugin" plugin="visualblocks" core="1" editable="1">
+	<name>WF_VISUALBLOCKS_TITLE</name>
+	<version>2.3.2.4</version>
+	<creationDate>27 March 2013</creationDate>
+	<author>Ryan Demmer</author>
+	<authorEmail>info@joomlacontenteditor.net</authorEmail>
+	<authorUrl>http://www.joomlacontenteditor.net/</authorUrl>
+	<copyright>Ryan Demmer</copyright>
+	<license>GNU/GPL Version 2 or later - http://www.gnu.org/licenses/gpl-2.0.html</license>
+	<description>WF_VISUALBLOCKS_DESC</description>
+	<icon>visualblocks</icon>
+	<params group="defaults">
+            <param name="state" type="radio" default="1" label="WF_LABEL_STATE" description="WF_STATE_DESC">
+	      <option value="1">WF_OPTION_ON</option>
+	      <option value="0">WF_OPTION_OFF</option>
+	    </param>
+        </params>
+	<help>
+		<topic key="visualblocks.about" title="WF_VISUALBLOCKS_HELP_ABOUT" />
+	</help>
+	<languages></languages>
+</install>

@@ -1,0 +1,26 @@
+<?xml version="1.0" ?>
+<install version="2.0" type="extension" extension="link" folder="search" core="1">
+    <name>WF_LINK_SEARCH_TITLE</name>
+    <version>2.3.2.4</version>
+    <creationDate>27 March 2013</creationDate>
+    <author>Ryan Demmer</author>
+    <authorEmail>info@joomlacontenteditor.net</authorEmail>
+    <authorUrl>http://www.joomlacontenteditor.net/</authorUrl>
+    <copyright>Copyright (C) 2006 - 2013 Ryan Demmer. All rights reserved</copyright>
+    <license>GNU/GPL Version 2 or later - http://www.gnu.org/licenses/gpl-2.0.html</license>
+    <description>WF_LINK_SEARCH_DESC</description>
+    <files>
+        <filename>link.php</filename>
+        <folder>link</folder>
+    </files>
+    <params group="link">
+        <!--param name="enable" type="list" default="1" label="WF_LABEL_EXTENSION_ENABLE" description="WF_LABEL_EXTENSION_ENABLE_DESC">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>
+        </param-->
+        <param name="plugins" type="linksearch" default="" label="WF_PARAM_LINK_SEARCH_PLUGINS" description="WF_PARAM_LINK_SEARCH_PLUGINS_DESC" parent="enable[1]" />
+    </params>
+    <plugins>link</plugins>
+    <media></media>
+    <languages></languages>
+</install>

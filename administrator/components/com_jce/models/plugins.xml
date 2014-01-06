@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plugins>
+    <plugin name="article">
+        <name>article</name>
+        <title>WF_ARTICLE_TITLE</title>
+        <description>WF_ARTICLE_DESC</description>
+        <icon>readmore,pagebreak</icon>
+        <editable>1</editable>
+        <row>4</row>
+        <core>1</core>
+    </plugin>
+    <!--plugin name="advlist">
+        <name>advlist</name>
+        <title>WF_ADVLIST_TITLE</title>
+        <description>WF_ADVLIST_DESC</description>
+        <icon></icon>
+        <editable>0</editable>
+        <row>0</row>
+        <core>1</core>
+    </plugin-->
+    <plugin name="anchor">
+        <title>WF_ANCHOR_TITLE</title>
+        <description>WF_ANCHOR_DESC</description>
+        <name>anchor</name>
+        <core>1</core>
+        <icon>anchor</icon>
+        <row>4</row>
+        <editable>0</editable>
+    </plugin>
+    <plugin name="autosave">
+        <name>autosave</name>
+        <title>WF_AUTOSAVE_TITLE</title>
+        <description>WF_AUTOSAVE_DESC</description>
+        <icon>autosave</icon>
+        <editable>0</editable>
+        <row>4</row>
+        <core>1</core>
+    </plugin>
+    <plugin name="browser">
+        <name>browser</name>
+        <title>WF_BROWSER_TITLE</title>
+        <description>WF_BROWSER_DESC</description>
+        <icon></icon>
+        <editable>1</editable>
+        <row>4</row>
+        <core>1</core>
+    </plugin>
+    <plugin name="charmap">
+        <name>charmap</name>
+        <title>WF_CHARMAP_TITLE</title>
+        <description>WF_CHARMAP_DESC</description>
+        <icon>charmap</icon>
+        <editable>0</editable>
+        <row>2</row>
+        <core>1</core>
+    </plugin>
+    <plugin name="cleanup">
+        <name>cleanup</name>
+        <title>WF_CLEANUP_TITLE</title>
+        <description>WF_CLEANUP_DESC</description>
+        <icon>cleanup</icon>
+        <editable>0</editable>
+        <row>0</row>
+        <core>1</core>
+    </plugin>
+    <plugin name="clipboard">
+        <name>clipboard</name>
+        <title>WF_CLIPBOARD_TITLE</title>
+        <description>WF_CLIPBOARD_DESC</description>
+        <icon>cut,copy,paste</icon>
+        <editable>1</editable>
+        <row>2</row>
+        <core>1</core>
+    </plugin>
+    <plugin name="code">
+        <name>code</name>
+        <title>WF_CODE_TITLE</title>
+        <description>WF_CODE_DESC</description>
+        <icon></icon>
+        <editable>0</editable>
+        <row>0</row>
+        <core>1</core>
+    </plugin>
+    <plugin name="colorpicker">
+        <name>colorpicker</name>
+        <title>WF_COLORPICKER_TITLE</title>
+        <description>WF_COLORPICKER_DESC</description>
+        <icon></icon>
+        <editable>0</editable>
+        <row>0</row>
+        <core>1</core>
+    </plugin>
+    <plugin name="contextmenu">
+        <name>contextmenu</name>
+        <title>WF_CONTEXTMENU_TITLE</title>
+        <description>WF_CONTEXTMENU_DESC</description>
+        <icon></icon>
+        <editable>0</editable>
+        <row>4</row>
+        <core>1</core>
+    </plugin>
+    <plugin name="directionality">
+        <name>directionality</name>
+        <title>WF_DIRECTIONALITY_TITLE</title>
+        <description>WF_DIRECTIONALITY_DESC</description>
+        <icon>ltr,rtl</icon>
+        <editable>0</editable>
+        <row>3</row>
+        <core>1</core>
+    </plugin>
+    <plugin name="format">
+        <name>format</name>
+        <title>WF_FORMAT_TITLE</title>
+        <description>WF_FORMAT_DESC</description>
+        <icon></icon>
+        <editable>0</editable>
+        <row>0</row>
+        <core>1</core>
+    </plugin>
+    <plugin name="fullscreen">
+        <name>fullscreen</name>
+        <title>WF_FULLSCREEN_TITLE</title>
+        <description>WF_FULLSCREEN_DESC</description>
+        <icon>fullscreen</icon>
+        <editable>0</editable>
+        <row>3</row>
+        <core>1</core>
+    </plugin>
+    <plugin name="imgmanager">
+        <name>imgmanager</name>
+        <title>WF_IMGMANAGER_TITLE</title>
+        <description>WF_IMGMANAGER_DESC</description>
+        <icon>imgmanager</icon>
+        <editable>1</editable>
+        <row>4</row>
+        <core>1</core>
+    </plugin>
+    <plugin name="inlinepopups">
+        <name>inlinepopups</name>
+        <title>WF_INLINEPOPUPS_TITLE</title>
+        <description>WF_INLINEPOPUPS_DESC</description>
+        <icon></icon>
+        <editable>0</editable>
+        <row>4</row>
+        <core>1</core>
+    </plugin>
+    <plugin name="layer">
+        <name>layer</name>
+        <title>WF_LAYER_TITLE</title>
+        <description>WF_LAYER_DESC</description>
+        <icon>insertlayer,moveforward,movebackward,absolute</icon>
+        <editable>0</editable>
+        <row>4</row>
+        <core>1</core>
+    </plugin>
+    <plugin name="link">
+        <name>link</name>
+        <title>WF_LINK_TITLE</title>
+        <description>WF_LINK_DESC</description>
+        <icon>link</icon>
+        <editable>1</editable>
+        <row>4</row>
+        <core>1</core>
+    </plugin>
+    <plugin name="lists">
+        <name>lists</name>
+        <title>WF_LISTS_TITLE</title>
+        <description>WF_LISTS_DESC</description>
+        <icon>numlist,bullist</icon>
+        <editable>1</editable>
+        <row>2</row>
+        <core>1</core>
+    </plugin>
+    <plugin name="media">
+        <name>media</name>
+        <title>WF_MEDIA_TITLE</title>
+        <description>WF_MEDIA_DESC</description>
+        <icon></icon>
+        <editable>1</editable>
+        <row>4</row>
+        <core>1</core>
+    </plugin>
+    <plugin name="nonbreaking">
+        <name>nonbreaking</name>
+        <title>WF_NONBREAKING_TITLE</title>
+        <description>WF_NONBREAKING_DESC</description>
+        <icon>nonbreaking</icon>
+        <editable>0</editable>
+        <row>4</row>
+        <core>1</core>
+    </plugin>
+    <plugin name="preview">
+        <name>preview</name>
+        <title>WF_PREVIEW_TITLE</title>
+        <description>WF_PREVIEW_DESC</description>
+        <icon>preview</icon>
+        <editable>0</editable>
+        <row>3</row>
+        <core>1</core>
+    </plugin>
+    <plugin name="print">
+        <name>print</name>
+        <title>WF_PRINT_TITLE</title>
+        <description>WF_PRINT_DESC</description>
+        <icon>print</icon>
+        <editable>0</editable>
+        <row>3</row>
+        <core>1</core>
+    </plugin>
+    <plugin name="searchreplace">
+        <name>searchreplace</name>
+        <title>WF_SEARCHREPLACE_TITLE</title>
+        <description>WF_SEARCHREPLACE_DESC</description>
+        <icon>search,replace</icon>
+        <editable>0</editable>
+        <row>2</row>
+        <core>1</core>
+    </plugin>
+    <plugin name="source">
+        <name>source</name>
+        <title>WF_SOURCE_TITLE</title>
+        <description>WF_SOURCE_DESC</description>
+        <icon>source</icon>
+        <editable>1</editable>
+        <row>4</row>
+        <core>1</core>
+    </plugin>
+    <plugin name="spellchecker">
+        <name>spellchecker</name>
+        <title>WF_SPELLCHECKER_TITLE</title>
+        <description>WF_SPELLCHECKER_DESC</description>
+        <icon>spellchecker</icon>
+        <editable>1</editable>
+        <row>4</row>
+        <core>1</core>
+    </plugin>
+    <plugin name="style">
+        <name>style</name>
+        <title>WF_STYLE_TITLE</title>
+        <description>WF_STYLE_DESC</description>
+        <icon>style</icon>
+        <editable>0</editable>
+        <row>4</row>
+        <core>1</core>
+    </plugin>
+    <plugin name="tabfocus">
+        <name>tabfocus</name>
+        <title>WF_TABFOCUS_TITLE</title>
+        <description>WF_TABFOCUS_DESC</description>
+        <icon></icon>
+        <editable>0</editable>
+        <row>0</row>
+        <core>1</core>
+    </plugin>
+    <plugin name="table">
+        <name>table</name>
+        <title>WF_TABLE_TITLE</title>
+        <description>WF_TABLE_DESC</description>
+        <icon>table_insert,delete_table,|,row_props,cell_props,|,row_before,row_after,delete_row,|,col_before,col_after,delete_col,|,split_cells,merge_cells</icon>
+        <editable>1</editable>
+        <row>3</row>
+        <core>1</core>
+    </plugin>
+    <plugin name="textcase">
+        <name>textcase</name>
+        <title>WF_TEXTCASE_TITLE</title>
+        <description>WF_TEXTCASE_DESC</description>
+        <icon>textcase</icon>
+        <editable>0</editable>
+        <row>4</row>
+        <core>1</core>
+    </plugin>
+    <plugin name="visualchars">
+        <name>visualchars</name>
+        <title>WF_VISUALCHARS_TITLE</title>
+        <description>WF_VISUALCHARS_DESC</description>
+        <icon>visualchars</icon>
+        <editable>0</editable>
+        <row>4</row>
+        <core>1</core>
+    </plugin>
+    <plugin name="wordcount">
+        <name>wordcount</name>
+        <title>WF_WORDCOUNT_TITLE</title>
+        <description>WF_WORDCOUNT_DESC</description>
+        <icon></icon>
+        <editable>0</editable>
+        <row>0</row>
+        <core>1</core>
+    </plugin>
+    <plugin name="xhtmlxtras">
+        <name>xhtmlxtras</name>
+        <title>WF_XHTMLXTRAS_TITLE</title>
+        <description>WF_XHTMLXTRAS_DESC</description>
+        <icon>cite,abbr,acronym,del,ins,attribs</icon>
+        <editable>1</editable>
+        <row>4</row>
+        <core>1</core>
+    </plugin>
+    <plugin name="kitchensink">
+        <title>WF_KITCHENSINK_TITLE</title>
+        <description>WF_KITCHENSINK_DESC</description>
+        <name>kitchensink</name>
+        <core>1</core>
+        <icon>kitchensink</icon>
+        <row>1</row>
+        <editable>0</editable>
+    </plugin>
+</plugins>

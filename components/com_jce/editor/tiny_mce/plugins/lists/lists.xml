@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+<install version="2.0" type="plugin" plugin="lists" core="1" editable="1">
+    <name>WF_LISTS_TITLE</name>
+    <version>2.3.2.4</version>
+    <creationDate>27 March 2013</creationDate>
+    <author>Ryan Demmer</author>
+    <authorEmail>info@joomlacontenteditor.net</authorEmail>
+    <authorUrl>http://www.joomlacontenteditor.net/</authorUrl>
+    <copyright>Ryan Demmer</copyright>
+    <license>GNU/GPL Version 2 or later - http://www.gnu.org/licenses/gpl-2.0.html</license>
+    <description>WF_LISTS_DESC</description>
+    <icon>numlist,bullist</icon>
+    <params group="standard">
+        <param name="number_styles" class="checklist sortable" type="list" multiple="multiple" default="default,lower-alpha,lower-greek,lower-roman,upper-alpha,upper-roman" label="WF_NUMLIST_STYLES" description="WF_NUMLIST_STYLES_DESC">
+            <option value="default">WF_OPTION_DEFAULT</option>
+            <option value="lower-alpha">WF_LISTS_LOWER_ALPHA</option>
+            <option value="lower-greek">WF_LISTS_LOWER_GREEK</option>
+            <option value="lower-roman">WF_LISTS_LOWER_ROMAN</option>
+            <option value="upper-alpha">WF_LISTS_UPPER_ALPHA</option>
+            <option value="upper-roman">WF_LISTS_UPPER_ROMAN</option>
+        </param>
+        <param name="bullet_styles" class="checklist sortable" type="list" multiple="multiple" default="default,circle,disc,square" label="WF_BULLIST_STYLES" description="WF_BULLIST_STYLES_DESC">
+            <option value="default">WF_OPTION_DEFAULT</option>
+            <option value="circle">WF_LISTS_CIRCLE</option>
+            <option value="disc">WF_LISTS_DISC</option>
+            <option value="square">WF_LISTS_SQUARE</option>
+        </param>
+    </params>
+    <params group="buttons">
+        <param name="buttons" class="checklist buttonlist" type="list" multiple="multiple" default="numlist,bullist" label="WF_PARAM_BUTTONS" description="WF_PARAM_BUTTONS_DESC">
+            <option value="numlist">WF_NUMLIST_TITLE</option>
+            <option value="bullist">WF_BULLIST_TITLE</option>
+        </param>
+    </params>
+    <help></help>
+    <languages></languages>
+</install>

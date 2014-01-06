@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<install version="2.0" type="plugin" plugin="style" core="1" editable="0">
+	<name>WF_STYLE_TITLE</name>
+	<version>2.3.2.4</version>
+	<creationDate>27 March 2013</creationDate>
+	<author>Ryan Demmer</author>
+	<authorEmail>info@joomlacontenteditor.net</authorEmail>
+	<authorUrl>http://www.joomlacontenteditor.net/</authorUrl>
+	<copyright>Ryan Demmer</copyright>
+	<license>GNU/GPL Version 2 or later - http://www.gnu.org/licenses/gpl-2.0.html</license>
+	<description>WF_STYLE_DESC</description>
+	<icon>style</icon>
+	<params></params>
+	<help>
+		<topic key="style.about" title="WF_STYLE_HELP_ABOUT" />
+	</help>
+	<languages></languages>
+</install>

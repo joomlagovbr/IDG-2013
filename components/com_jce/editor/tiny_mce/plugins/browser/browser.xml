@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<install version="2.0" type="plugin" plugin="browser" core="1" editable="1">
+    <name>WF_BROWSER_TITLE</name>
+    <version>2.3.2.4</version>
+    <creationDate>27 March 2013</creationDate>
+    <author>Ryan Demmer</author>
+    <authorEmail>info@joomlacontenteditor.net</authorEmail>
+    <authorUrl>http://www.joomlacontenteditor.net/</authorUrl>
+    <copyright>Ryan Demmer</copyright>
+    <license>GNU/GPL Version 2 or later - http://www.gnu.org/licenses/gpl-2.0.html</license>
+    <description>WF_BROWSER_DESC</description>
+    <icon></icon>
+    <files></files>
+    <params group="standard">
+        <param name="dir" type="text" default="" size="50" label="WF_PARAM_DIRECTORY" description="WF_PARAM_DIRECTORY_DESC"/>
+        <param name="max_size" class="upload_size" max="" type="text" default="" label="WF_PARAM_UPLOAD_SIZE" description="WF_PARAM_UPLOAD_SIZE_DESC" placeholder="" />
+        <param name="extensions" type="extension" class="extensions create" default="office=doc,docx,ppt,xls;image=gif,jpeg,jpg,png;acrobat=pdf;archive=zip,tar,gz,rar;flash=swf;quicktime=mov,mp4,qt;windowsmedia=wmv,asx,asf,avi;audio=wav,mp3,aiff;openoffice=odt,odg,odp,ods,odf" label="WF_PARAM_EXTENSIONS" description="WF_PARAM_EXTENSIONS_DESC" />
+        <param name="name" type="filesystem" group="filesystem" default="" label="WF_PARAM_FILESYSTEM" description="WF_PARAM_FILESYSTEM_DESC" />
+    </params>
+    <params group="access">
+        <param name="upload" type="radio" default="1" label="WF_PARAM_UPLOAD" description="WF_PARAM_UPLOAD_DESC">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>
+        </param>
+        <param name="folder_new" type="radio" default="1" label="WF_PARAM_FOLDER_CREATE" description="WF_PARAM_FOLDER_CREATE_DESC">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>
+        </param>
+        <param name="folder_delete" type="radio" default="1" label="WF_PARAM_FOLDER_DELETE" description="WF_PARAM_FOLDER_DELETE_DESC">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>
+        </param>
+        <param name="folder_rename" type="radio" default="1" label="WF_PARAM_FOLDER_RENAME" description="WF_PARAM_FOLDER_RENAME_DESC">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>
+        </param>
+        <param name="folder_move" type="radio" default="1" label="WF_PARAM_FOLDER_PASTE" description="WF_PARAM_FOLDER_PASTE_DESC">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>
+        </param>
+        <param name="file_delete" type="radio" default="1" label="WF_PARAM_FILE_DELETE" description="WF_PARAM_FILE_DELETE_DESC">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>
+        </param>
+        <param name="file_rename" type="radio" default="1" label="WF_PARAM_FILE_RENAME" description="WF_PARAM_FILE_RENAME_DESC">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>
+        </param>
+        <param name="file_move" type="radio" default="1" label="WF_PARAM_FILE_PASTE" description="WF_PARAM_FILE_PASTE_DESC">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>
+        </param>
+    </params>
+    <languages></languages>
+    <help>
+        <topic key="browser.about" title="WF_BROWSER_HELP_ABOUT" />
+        <topic key="browser.interface" title="WF_BROWSER_HELP_INTERFACE" />
+        <topic key="browser.insert" title="WF_BROWSER_HELP_INSERT" />
+        <topic file="libraries/xml/help/manager.xml" />
+    </help>
+</install>

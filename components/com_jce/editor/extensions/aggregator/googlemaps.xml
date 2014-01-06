@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<install version="2.0" type="extension" extension="googlemaps" folder="aggregator" method="upgrade" core="1">
+	<name>WF_AGGREGATOR_GOOGLEMAPS_TITLE</name>
+	<version>2.3.2.4</version>
+	<creationDate>27 March 2013</creationDate>
+	<author>Ryan Demmer</author>
+	<authorEmail>info@joomlacontenteditor.net</authorEmail>
+	<authorUrl>http://www.joomlacontenteditor.net/</authorUrl>
+	<copyright>Copyright (C) 2006 - 2013 Ryan Demmer. All rights reserved</copyright>
+	<license>GNU/GPL Version 2 or later - http://www.gnu.org/licenses/gpl-2.0.html</license>
+	<description>WF_AGGREGATOR_GOOGLEMAPS_DESC</description>
+	<files>
+		<filename>googlemaps.php</filename>
+		<folder>googlemaps</folder>
+	</files>
+	<params group="googlemaps">
+		<param name="enable" type="list" default="1" label="WF_LABEL_EXTENSION_ENABLE" description="WF_LABEL_EXTENSION_ENABLE_DESC">
+        	<option value="1">WF_OPTION_YES</option>
+        	<option value="0">WF_OPTION_NO</option>
+    	</param>
+		<param name="width" type="text" default="425" label="WF_LABEL_WIDTH" description="WF_AGGREGATOR_GOOGLEMAPS_WIDTH_DESC" />
+		<param name="height" type="text" default="350" label="WF_LABEL_HEIGHT" description="WF_AGGREGATOR_GOOGLEMAPS_HEIGHT_DESC" />
+	</params>
+	<plugins>iframe</plugins>
+</install>

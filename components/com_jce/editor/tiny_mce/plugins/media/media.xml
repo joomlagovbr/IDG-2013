@@ -1,0 +1,47 @@
+<?xml version="1.0" ?>
+<install version="2.0" type="plugin" plugin="media" core="1" editable="1">
+    <name>WF_MEDIA_TITLE</name>
+    <version>2.3.2.4</version>
+    <creationDate>27 March 2013</creationDate>
+    <author>Ryan Demmer</author>
+    <authorEmail>info@joomlacontenteditor.net</authorEmail>
+    <authorUrl>http://www.joomlacontenteditor.net</authorUrl>
+    <copyright>Copyright (C) 2006 - 2013 Ryan Demmer. All rights reserved</copyright>
+    <license>GNU/GPL Version 2 or later - http://www.gnu.org/licenses/gpl-2.0.html</license>
+    <description>WF_MEDIA_DESC</description>
+    <icon></icon>
+    <params group="standard">
+        <param name="strict" type="radio" default="1" label="WF_MEDIA_PARAM_STRICT" description="WF_MEDIA_PARAM_STRICT_DESC">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>
+        </param>
+        <param name="iframes" type="radio" default="0" label="WF_MEDIA_PARAM_IFRAMES" description="WF_MEDIA_PARAM_IFRAMES_DESC">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>
+        </param>
+        <param name="audio" type="radio" default="1" label="WF_MEDIA_PARAM_AUDIO" description="WF_MEDIA_PARAM_AUDIO_DESC">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>
+        </param>
+        <param name="video" type="radio" default="1" label="WF_MEDIA_PARAM_VIDEO" description="WF_MEDIA_PARAM_VIDEO_DESC">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>
+        </param>
+        <param name="object" type="radio" default="1" label="WF_MEDIA_PARAM_OBJECT" description="WF_MEDIA_PARAM_OBJECT_DESC">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>
+        </param>
+        <param name="embed" type="radio" default="1" label="WF_MEDIA_PARAM_EMBED" description="WF_MEDIA_PARAM_EMBED_DESC">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>
+        </param>
+    </params>
+    <params group="advanced">
+        <param name="version_flash" type="text" size="50" default="10,1,53,64" label="WF_MEDIA_VERSION_FLASH" />
+        <param name="version_windowsmedia" type="text" size="50" default="10,00,00,3646" label="WF_MEDIA_VERSION_WINDOWSMEDIA" />
+        <param name="version_quicktime" type="text" size="50" default="7,3,0,0" label="WF_MEDIA_VERSION_QUICKTIME" />
+        <param name="version_java" type="text" size="50" default="1,5,0,0" label="WF_MEDIA_VERSION_JAVA" />
+        <param name="version_shockwave" type="text" size="50" default="10,2,0,023" label="WF_MEDIA_VERSION_SHOCKWAVE" />
+    </params>
+    <languages></languages>
+</install>

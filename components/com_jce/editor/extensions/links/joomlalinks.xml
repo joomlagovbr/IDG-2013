@@ -1,0 +1,57 @@
+<?xml version="1.0" ?>
+<install version="2.0" type="extension" extension="joomlalinks" folder="links" method="upgrade" core="1">
+    <name>WF_LINKS_JOOMLALINKS_TITLE</name>
+    <version>2.3.2.4</version>
+    <creationDate>27 March 2013</creationDate>
+    <author>Ryan Demmer</author>
+    <authorEmail>info@joomlacontenteditor.net</authorEmail>
+    <authorUrl>http://www.joomlacontenteditor.net/</authorUrl>
+    <copyright>Copyright (C) 2006 - 2013 Ryan Demmer. All rights reserved</copyright>
+    <license>GNU/GPL Version 2 or later - http://www.gnu.org/licenses/gpl-2.0.html</license>
+    <description>WF_LINKS_JOOMLALINKS_DESC</description>
+    <files>
+        <filename>joomlalinks.php</filename>
+        <folder>joomlalinks</folder>
+    </files>
+	<!--params group="links">
+		<param name="joomlalinks" type="list" default="1" label="WF_LABEL_EXTENSION_ENABLE" description="WF_LABEL_EXTENSION_ENABLE_DESC">
+        	<option value="1">WF_OPTION_YES</option>
+        	<option value="0">WF_OPTION_NO</option>
+    	</param>
+	</params-->
+    <params group="joomlalinks">
+        <!--param name="enable" type="list" default="1" label="WF_LABEL_EXTENSION_ENABLE" description="WF_LABEL_EXTENSION_ENABLE_DESC">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>
+        </param-->
+        <param name="content" type="radio" default="1" label="WF_LINKS_JOOMLALINKS_PARAM_CONTENT" description="WF_LINKS_JOOMLALINKS_PARAM_CONTENT_DESC" parent="enable[1]">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>
+        </param>
+        <param name="article_alias" type="radio" default="1" label="WF_LINKS_JOOMLALINKS_PARAM_ARTICLE_ALIAS" description="WF_LINKS_JOOMLALINKS_PARAM_ARTICLE_ALIAS_DESC" parent="enable[1]">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>
+        </param>
+        <param name="static" type="radio" default="1" label="WF_LINKS_JOOMLALINKS_PARAM_UNCATEGORIZED" description="WF_LINKS_JOOMLALINKS_PARAM_UNCATEGORIZED_DESC" parent="enable[1]">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>
+        </param>
+        <param name="contacts" type="radio" default="1" label="WF_LINKS_JOOMLALINKS_PARAM_CONTACT" description="WF_LINKS_JOOMLALINKS_PARAM_CONTACT_DESC" parent="enable[1]">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>
+        </param>
+        <param name="weblinks" type="radio" default="1" label="WF_LINKS_JOOMLALINKS_PARAM_WEBLINKS" description="WF_LINKS_JOOMLALINKS_PARAM_WEBLINKS_DESC" parent="enable[1]">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>
+        </param>
+        <param name="weblinks_alias" type="radio" default="1" label="WF_LINKS_JOOMLALINKS_PARAM_WEBLINKS_ALIAS" description="WF_LINKS_JOOMLALINKS_PARAM_WEBLINKS_ALIAS_DESC" parent="enable[1]">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>
+        </param>
+        <param name="menu" type="radio" default="1" label="WF_LINKS_JOOMLALINKS_PARAM_MENU" description="WF_LINKS_JOOMLALINKS_PARAM_MENU_DESC" parent="enable[1]">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>
+        </param>
+    </params>
+    <plugins></plugins>
+</install>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<install version="2.0" type="plugin" plugin="contextmenu" core="1" editable="0">
+  <name>WF_CONTEXTMENU_TITLE</name>
+  <version>2.3.2.4</version>
+  <creationDate>27 March 2013</creationDate>
+  <author>Ryan Demmer</author>
+  <authorEmail>info@joomlacontenteditor.net</authorEmail>
+  <authorUrl>http://www.joomlacontenteditor.net/</authorUrl>
+  <copyright>Ryan Demmer</copyright>
+  <license>GNU/GPL Version 2 or later - http://www.gnu.org/licenses/gpl-2.0.html</license>
+  <description>WF_CONTEXTMENU_DESC</description>
+  <icon></icon>
+  <params></params>
+  <help></help>
+  <languages></languages>
+</install>

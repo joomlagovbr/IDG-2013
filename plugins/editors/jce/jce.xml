@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="1.6" type="plugin" group="editors" method="upgrade">
+    <name>plg_editors_jce</name>
+    <version>2.3.2.4</version>
+    <creationDate>27 March 2013</creationDate>
+    <author>Ryan Demmer</author>
+    <authorEmail>info@joomlacontenteditor.net</authorEmail>
+    <authorUrl>http://www.joomlacontenteditor.net</authorUrl>
+    <copyright>2006-2010 Ryan Demmer</copyright>
+    <license>GNU/GPL Version 2 - http://www.gnu.org/licenses/gpl-2.0.html</license>
+    <description>WF_EDITOR_PLUGIN_DESC</description>    
+    <files>
+        <file plugin="jce">jce.php</file>
+    </files>
+</extension>

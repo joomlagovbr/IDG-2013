@@ -64,7 +64,7 @@
 					<option value="azul">azul</option>
 					<option value="branco">branco</option>
 					<option value="verde">verde</option>
-					
+
 
 				</field>
 				<field name="font_style_url" type="text" default="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600,800,700"
@@ -89,8 +89,8 @@
 					filter="string"
 				>
 					<option value="">Padrão</option>
-					<option value="small">small - diminuir fonte</option>					
-					<option value="big">big - aumentar fonte</option>					
+					<option value="small">small - diminuir fonte</option>
+					<option value="big">big - aumentar fonte</option>
 				</field>
 				<field name="rodape_acesso_informacao" type="list" default="1"
 					label="Exibir logo acesso à informação"
@@ -98,7 +98,7 @@
 					filter="integer"
 				>
 					<option value="1">SIM</option>
-					<option value="0">NÃO</option>					
+					<option value="0">NÃO</option>
 				</field>
 				<field name="rodape_logo_brasil" type="list" default="1"
 					label="Exibir logo BRASIL"
@@ -106,7 +106,7 @@
 					filter="integer"
 				>
 					<option value="1">SIM</option>
-					<option value="0">NÃO</option>					
+					<option value="0">NÃO</option>
 				</field>
 				<field name="mensagem_final_ferramenta" type="textarea" default=""
 					label="Mensagem final a respeito da ferramenta"
@@ -119,7 +119,7 @@
 					filter="integer"
 				>
 					<option value="1">SIM</option>
-					<option value="0">NÃO</option>					
+					<option value="0">NÃO</option>
 				</field>
 				<field name="local_jquery" type="list" default="footer"
 					label="Local onde os arquivos jquery serão chamados."
@@ -127,8 +127,8 @@
 					filter="string"
 				>
 					<option value="before_head">Antes do jmodule HEAD</option>
-					<option value="after_head">Depois do jmodule HEAD</option>					
-					<option value="footer">no final da página</option>					
+					<option value="after_head">Depois do jmodule HEAD</option>
+					<option value="footer">no final da página</option>
 				</field>
 				<field name="local_mainscript" type="list" default="footer"
 					label="Local dos arquivos javascript principais"
@@ -136,13 +136,13 @@
 					filter="string"
 				>
 					<option value="before_head">Antes do jmodule HEAD</option>
-					<option value="after_head">Depois do jmodule HEAD</option>					
-					<option value="footer">no final da página</option>					
+					<option value="after_head">Depois do jmodule HEAD</option>
+					<option value="footer">no final da página</option>
 				</field>
 				<field type="spacer" hr="true" />
-				<field name="anexar_js_barra2014" type="list" default="0" label="Anexar arquivo JS da barra do governo 2014" description="Anexa arquivo JS, se disponível para a versão da barra.">					
+				<field name="anexar_js_barra2014" type="list" default="0" label="Anexar arquivo JS da barra do governo 2014" description="Anexa arquivo JS, se disponível para a versão da barra.">
 					<option value="1">SIM</option>
-					<option value="0">NÃO</option>		
+					<option value="0">NÃO</option>
 		  		</field>
 		  		<field name="endereco_js_barra2014" type="text" default="http://barra.brasil.gov.br/barra.js?cor=verde" label="Endereço do script externo" description="Dados provenientes de externamente." size="45" />
 		  		<field type="spacer" hr="true" />
@@ -159,8 +159,8 @@
 					description="Exemplo: dominio.gov; domínio.gov.br2 . Dificilmente será utilizado."
 					filter="integer"
 				>
-					<option value="0">Não</option>					
-					<option value="1">Sim</option>					
+					<option value="0">Não</option>
+					<option value="1">Sim</option>
 				</field>
 			</fieldset>
 		</fields>

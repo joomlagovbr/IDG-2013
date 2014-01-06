@@ -1,0 +1,26 @@
+<?xml version="1.0" ?>
+<install version="1.5" type="extension" extension="window" folder="popups" core="1">
+	<name>WF_POPUPS_WINDOW_TITLE</name>
+	<version>2.3.2.4</version>
+	<creationDate>27 March 2013</creationDate>
+	<author>Ryan Demmer</author>
+	<authorEmail>info@joomlacontenteditor.net</authorEmail>
+	<authorUrl>http://www.joomlacontenteditor.net/</authorUrl>
+	<copyright>Copyright (C) 2006 - 2013 Ryan Demmer. All rights reserved</copyright>
+	<license>GNU/GPL Version 2 or later - http://www.gnu.org/licenses/gpl-2.0.html</license>
+	<description>WF_POPUPS_WINDOW_DESC</description>
+	<files>
+		<filename>window.php</filename>
+		<folder>window</folder>
+	</files>
+	<params group="window">
+	    <!--param name="enable" type="list" default="1" label="WF_LABEL_EXTENSION_ENABLE" description="WF_LABEL_EXTENSION_ENABLE_DESC">
+	    	<option value="1">WF_OPTION_YES</option>
+	    	<option value="0">WF_OPTION_NO</option>
+	    </param-->
+  </params>
+  <plugins>link,imgmanager_ext</plugins>
+	<media></media>
+	<languages></languages>
+</install>
+ 

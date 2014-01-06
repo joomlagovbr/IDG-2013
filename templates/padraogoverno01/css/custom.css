@@ -1,0 +1,19 @@
+ul#accessibility{
+	padding-top: 2px;
+}
+
+.pagina-mapa-do-site .module .menu li a {
+  font-size: 0.9em !important;
+  line-height: 20px !important;
+}
+
+.pagina-mapa-do-site .module .menu li ul a {
+  font-size: 0.9em !important;
+  line-height: 20px !important;
+}
+
+#content.internas ul li {
+  font-size: 1em;
+  line-height: 1.5em !important;
+  list-style: square outside none !important;
+}

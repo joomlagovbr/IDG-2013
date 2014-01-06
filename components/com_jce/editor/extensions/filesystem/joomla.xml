@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<install version="1.5" type="extension" extension="joomla" folder="filesystem" method="upgrade" core="1">
+	<name>WF_FILESYSTEM_JOOMLA_TITLE</name>
+	<version>2.3.2.4</version>
+	<creationDate>27 March 2013</creationDate>
+	<author>Ryan Demmer</author>
+	<authorEmail>info@joomlacontenteditor.net</authorEmail>
+	<authorUrl>http://www.joomlacontenteditor.net/</authorUrl>
+	<copyright>Copyright (C) 2006 - 2013 Ryan Demmer. All rights reserved</copyright>
+	<license>GNU/GPL Version 2 or later - http://www.gnu.org/licenses/gpl-2.0.html</license>
+	<description>WF_FILESYSTEM_JOOMLA_DESC</description>
+	<files>
+		<filename>joomla.php</filename>
+	</files>
+	<params group="joomla" parent="filesystem">
+		<param name="allow_root" type="list" default="0" label="WF_PARAM_ALLOW_ROOT" description="WF_PARAM_ALLOW_ROOT_DESC">
+			<option value="1">WF_OPTION_YES</option>
+			<option value="0">WF_OPTION_NO</option>
+		</param>
+		<param name="restrict_dir" type="textarea" rows="3" cols="50" default="administrator,cache,components,includes,language,libraries,logs,media,modules,plugins,templates,xmlrpc" size="150" label="WF_PARAM_DIRECTORY_RESTRICTED" description="WF_PARAM_DIRECTORY_RESTRICTED_DESC" parent="allow_root[0]" />
+	</params>
+</install>

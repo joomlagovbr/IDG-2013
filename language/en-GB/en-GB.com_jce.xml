@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install version="2.0" type="language" core="1" client="both" method="upgrade">
+	<name>English(United Kingdom)</name>
+	<tag>en-GB</tag>
+	<version>2.3.2.4</version>
+	<creationDate>27 March 2013</creationDate>
+	<author>Ryan Demmer</author>
+	<authorEmail>info@joomlacontenteditor.net</authorEmail>
+	<authorUrl>www.joomlacontenteditor.net</authorUrl>
+	<copyright>Copyright (C) 2006 - 2013 Ryan Demmer. All rights reserved</copyright>
+	<license>GNU/GPL Version 2 or later - http://www.gnu.org/licenses/gpl-2.0.html</license>
+	<description>English(United Kingdom) language pack for JCE 2.x</description>
+	<site folder="language/en-GB">
+		<file>en-GB.com_jce.ini</file>	
+		<!-- // Subscription plugin language files // -->
+		<file>en-GB.com_jce_caption.ini</file> 
+		<file>en-GB.com_jce_emotions.ini</file>
+		<file>en-GB.com_jce_filemanager.ini</file>
+		<file>en-GB.com_jce_fullpage.ini</file>
+		<file>en-GB.com_jce_iframe.ini</file>
+		<file>en-GB.com_jce_mediamanager.ini</file>
+		<file>en-GB.com_jce_mediamanager.ini</file>
+		<file>en-GB.com_jce_templatemanager.ini</file>
+		<file>en-GB.com_jce_microdata.ini</file>
+		<file>en-GB.com_jce_popups_rokbox.ini</file>
+		<file>en-GB.com_jce_popups_widgetkit.ini</file>
+	</site>
+	<administration folder="administrator/language/en-GB">
+		<file>en-GB.com_jce.ini</file>
+		<file>en-GB.com_jce.menu.ini</file>
+		<file>en-GB.com_jce.sys.ini</file>
+		<file>en-GB.plg_editors_jce.ini</file>
+		<file>en-GB.plg_editors_jce.sys.ini</file>
+		<file>en-GB.plg_quickicon_jcefilebrowser.ini</file>
+		<file>en-GB.plg_quickicon_jcefilebrowser.sys.ini</file>
+	</administration>
+</install>

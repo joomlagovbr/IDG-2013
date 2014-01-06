@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <params group="setup">
+        <!--param name="dialog_theme" type="folderlist" directory="components/com_jce/editor/libraries/css/jquery" hide_none="true" hide_default="true" default="smoothness" label="WF_PARAM_EDITOR_DIALOG_THEME" description="WF_PARAM_EDITOR_DIALOG_THEME_DESC" /-->
+        <!-- URLS -->
+        <param name="relative_urls" type="radio" default="1" label="WF_PARAM_RELATIVE" description="WF_PARAM_RELATIVE_DESC">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>
+        </param>
+        <param name="verify_html" type="list" default="" label="WF_PARAM_CLEANUP" description="WF_PARAM_EDITOR_PROFILE_CLEANUP_DESC">
+            <option value="">WF_OPTION_INHERIT</option>
+            <option value="0">WF_OPTION_NO</option>
+            <option value="1">WF_OPTION_YES</option>
+        </param>
+        <param name="schema" type="list" default="" label="WF_PARAM_DOCTYPE" description="WF_PARAM_EDITOR_PROFILE_DOCTYPE_DESC">
+            <option value="">WF_OPTION_INHERIT</option>
+            <option value="html4">HTML4</option>
+            <option value="html5">HTML5</option>
+        </param>
+    </params>
+    <params group="typography">
+        <param name="forced_root_block" type="list" default="" label="WF_PARAM_ROOT_BLOCK" description="WF_PARAM_EDITOR_PROFILE_ROOT_BLOCK_DESC">
+            <option value="">WF_OPTION_INHERIT</option>
+            <option value="p">WF_OPTION_PARAGRAPH</option>
+            <option value="div">WF_OPTION_DIV</option>
+            <option value="forced_root_block:0|force_p_newlines:1">WF_OPTION_PARAGRAPH_MIXED</option>
+            <option value="0">WF_OPTION_LINEBREAK</option>
+        </param>
+        <param name="profile_content_css" type="list" default="2" label="WF_PARAM_EDITOR_PROFILE_CSS" description="WF_PARAM_EDITOR_PROFILE_CSS_DESC">
+            <option value="0">WF_PARAM_CSS_ADD</option>
+            <option value="1">WF_PARAM_CSS_OVERWRITE</option>
+            <option value="2">WF_PARAM_CSS_INHERIT</option>
+        </param>
+        <param name="profile_content_css_custom" placeholder="eg: templates/$template/css/content.css" type="textarea" rows="2" cols="55" default="" label="WF_PARAM_CSS_CUSTOM" description="WF_PARAM_CSS_CUSTOM_DESC" parent="profile_content_css[0,1]" />		
+        <param name="theme_advanced_styles" type="text" size="100" default="" label="WF_PARAM_STYLES" description="WF_PARAM_STYLES_DESC" placeholder="eg: Style1=style1,Style2=style2,Style3=style3" />
+        <!-- Formatting parameters -->
+        <param name="theme_advanced_blockformats" class="checklist sortable" type="list" multiple="multiple" default="p,div,h1,h2,h3,h4,h5,h6,address,code,pre,samp,span,section,article,hgroup,aside,figure,dt,dd" label="WF_PARAM_BLOCK_FORMAT" description="WF_PARAM_BLOCK_FORMAT_DESC">
+            <option value="p">Paragraph</option>
+            <option value="div">Div</option>
+            <option value="h1">Heading1</option>
+            <option value="h2">Heading2</option>
+            <option value="h3">Heading3</option>
+            <option value="h4">Heading4</option>
+            <option value="h5">Heading5</option>
+            <option value="h6">Heading6</option>
+            <option value="address">Address</option>
+            <option value="code">Code</option>
+            <option value="pre">Preformatted</option>
+            <option value="samp">Sample</option>
+            <option value="span">Span</option>
+            <option value="section">Section</option>
+            <option value="article">Article</option>
+            <option value="hgroup">HGroup</option>
+            <option value="aside">Aside</option>
+            <option value="figure">Figure</option>
+            <option value="dt">Definition Term</option>
+            <option value="dd">Definition List</option>
+        </param>
+        <param name="theme_advanced_fonts_add" type="text" size="100" default="" label="WF_PARAM_FONT_ADD" description="WF_PARAM_FONT_ADD_DESC" placeholder="eg: Arial=arial,helvetica,sans-serif;Georgia=georgia,palatino" />
+        <param name="theme_advanced_fonts_remove" type="text" size="100" default="" label="WF_PARAM_FONT_REMOVE" description="WF_PARAM_FONT_REMOVE_DESC" placeholder="eg: Arial;Georgia;Courier New" />
+        <param name="theme_advanced_font_sizes" type="text" size="100" default="" placeholder="eg: 8pt,10pt,12pt,14pt,18pt,24pt,36pt" label="WF_PARAM_FONT_STYLES" description="WF_PARAM_FONT_STYLES_DESC" />
+        <param name="custom_colors" type="textarea" rows="3" cols="50" default="" label="WF_PARAM_CUSTOM_COLORS" description="WF_PARAM_CUSTOM_COLORS_DESC" placeholder="eg: #CC0000,#FF0000" />
+    </params>
+    <params group="filesystem">
+		<!-- Plugin parameters -->
+        <param name="dir" type="text" default="" pattern="[a-zA-Z0-9_\-\.\/\$]*" size="50" placeholder="images" label="WF_PARAM_DIRECTORY" description="WF_PARAM_DIRECTORY_DESC"/>
+        <param name="name" type="filesystem" group="filesystem" exclude_default="true" parameters="components/com_jce/editor/extensions/filesystem" default="joomla" label="WF_PARAM_FILESYSTEM" description="WF_PARAM_FILESYSTEM_DESC" />
+        <param name="max_size" class="upload_size" pattern="[0-9]*" placeholder="1024" max="" type="text" default="" label="WF_PARAM_UPLOAD_SIZE" description="WF_PARAM_UPLOAD_SIZE_DESC" />
+        <param name="upload_conflict" type="list" default="overwrite" label="WF_PARAM_UPLOAD_EXISTS" description="WF_PARAM_UPLOAD_EXISTS_DESC">
+            <option value="unique">WF_PARAM_UPLOAD_EXISTS_UNIQUE</option>
+            <option value="overwrite">WF_PARAM_UPLOAD_EXISTS_OVERWRITE</option>
+        </param>
+        <param name="upload_runtimes" class="checklist sortable" type="list" multiple="multiple" default="html5,flash,silverlight,html4" label="WF_PARAM_UPLOAD_RUNTIME" description="WF_PARAM_UPLOAD_RUNTIME_DESC">
+            <option value="html5">WF_PARAM_UPLOAD_RUNTIME_HTML5</option>
+            <option value="flash">WF_PARAM_UPLOAD_RUNTIME_FLASH</option>
+            <option value="silverlight">WF_PARAM_UPLOAD_RUNTIME_SILVERLIGHT</option>
+            <option value="html4">WF_PARAM_UPLOAD_RUNTIME_HTML4</option>
+        </param> 
+        <param name="browser_position" type="list" default="bottom" label="WF_PARAM_BROWSER_POSITION" description="WF_PARAM_BROWSER_POSITION_DESC">
+            <option value="top">WF_LABEL_TOP</option>
+            <option value="bottom">WF_LABEL_BOTTOM</option>
+        </param>
+        <param name="folder_tree" type="radio" default="1" label="WF_PARAM_FOLDER_TREE" description="WF_PARAM_FOLDER_TREE_DESC">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>
+        </param>
+        <param name="list_limit" type="list" default="all" label="WF_PARAM_LIST_LIMIT" description="WF_PARAM_LIST_LIMIT_DESC">
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="all">WF_OPTION_ALL</option>
+        </param>
+        <param name="validate_mimetype" type="radio" default="1" label="WF_PARAM_VALIDATE_MIMETYPE" description="WF_PARAM_VALIDATE_MIMETYPE_DESC">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>
+        </param>
+        <param name="websafe_mode" type="list" default="utf-8" label="WF_PARAM_WEBSAFE_MODE" description="WF_PARAM_WEBSAFE_MODE_DESC">
+            <option value="utf-8">UTF-8</option>
+            <option value="ascii">ASCII</option>
+        </param>
+        <param name="websafe_allow_spaces" type="radio" default="0" label="WF_PARAM_WEBSAFE_ALLOW_SPACES" description="WF_PARAM_WEBSAFE_ALLOW_SPACES_DESC">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>
+        </param> 
+        <param name="upload_add_random" type="radio" default="0" label="WF_PARAM_UPLOAD_ADD_RANDOM" description="WF_PARAM_UPLOAD_ADD_RANDOM_DESC">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>
+        </param> 
+    </params>
+    <params group="advanced">
+	<!-- Elements -->
+        <param name="invalid_elements" type="text" size="50" default="" label="WF_PARAM_NO_ELEMENTS" description="WF_PARAM_NO_ELEMENTS_DESC" />
+        <param name="invalid_attributes" type="text" size="50" default="dynsrc,lowsrc" label="WF_PARAM_INVALID_ATTRIBUTES" description="WF_PARAM_INVALID_ATTRIBUTES_DESC" />
+        <param name="invalid_attribute_values" type="text" size="50" default="" label="WF_PARAM_INVALID_ATTRIBUTE_VALUES" description="WF_PARAM_INVALID_ATTRIBUTE_VALUES_DESC" />
+        <param name="extended_elements" type="textarea" rows="2" cols="46" default="" label="WF_PARAM_ELEMENTS" description="WF_PARAM_ELEMENTS_DESC" />
+        <param name="allow_javascript" type="radio" default="0" label="WF_PARAM_JAVASCRIPT" description="WF_PARAM_JAVASCRIPT_DESC">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>
+        </param>
+        <param name="allow_css" type="radio" default="0" label="WF_PARAM_CSS" description="WF_PARAM_CSS_DESC">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>
+        </param>
+        <param name="allow_php" type="radio" default="0" label="WF_PARAM_PHP" description="WF_PARAM_PHP_DESC">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>
+        </param>
+        <param name="cdata" type="radio" default="1" label="WF_PARAM_CDATA" description="WF_PARAM_CDATA_DESC">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>
+        </param>
+    </params>
+</config>

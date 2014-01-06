@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cpanel>
+	<help>
+		<topic key="admin.cpanel.about" title="WF_CPANEL_HELP_ABOUT" />
+		<topic key="admin.cpanel.preferences" title="WF_CPANEL_HELP_PREFERENCES" />
+		<topic key="admin.cpanel.updates" title="WF_CPANEL_HELP_UPDATES" />
+	</help>
+</cpanel>

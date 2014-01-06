@@ -1,0 +1,73 @@
+<?xml version="1.0" ?>
+<install version="2.0" type="plugin" plugin="clipboard" core="1" editable="1">
+    <name>WF_CLIPBOARD_TITLE</name>
+    <version>2.3.2.4</version>
+    <creationDate>27 March 2013</creationDate>
+    <author>Ryan Demmer</author>
+    <authorEmail>info@joomlacontenteditor.net</authorEmail>
+    <authorUrl>http://www.joomlacontenteditor.net/</authorUrl>
+    <copyright>Ryan Demmer</copyright>
+    <license>GNU/GPL Version 2 or later - http://www.gnu.org/licenses/gpl-2.0.html</license>
+    <description>WF_CLIPBOARD_DESC</description>
+    <icon>cut,copy,paste</icon>
+    <params group="standard">
+        <param name="paste_use_dialog" type="radio" default="0" label="WF_PASTE_PARAM_DIALOG" description="WF_PASTE_PARAM_DIALOG_DESC">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>
+        </param>
+        <param name="paste_dialog_width" type="text" size="5" default="450" label="WF_PASTE_PARAM_WIDTH" description="WF_PASTE_PARAM_WIDTH_DESC" />
+        <param name="paste_dialog_height" type="text" size="5" default="400" label="WF_PASTE_PARAM_HEIGHT" description="WF_PASTE_PARAM_HEIGHT_DESC" />
+        <param name="paste_force_cleanup" type="list" default="0" label="WF_PASTE_FORCE_CLEANUP" description="WF_PASTE_FORCE_CLEANUP_DESC">
+            <option value="0">WF_PASTE_FORCE_CLEANUP_DETECT</option>
+            <option value="1">WF_PASTE_FORCE_CLEANUP_ALWAYS</option>
+        </param>
+        <param name="paste_strip_class_attributes" type="radio" default="0" label="WF_PASTE_PARAM_CLASSES" description="WF_PASTE_PARAM_CLASSES_DESC">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>
+        </param>
+        <param name="paste_remove_spans" type="radio" default="0" label="WF_PASTE_PARAM_SPANS" description="WF_PASTE_PARAM_SPANS_DESC">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>
+        </param>
+        <param name="paste_remove_styles" type="radio" default="0" label="WF_PASTE_PARAM_STYLES" description="WF_PASTE_PARAM_STYLES_DESC">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>
+        </param>
+        <param name="paste_remove_attributes" type="text" size="50" placeholder="eg: lang,align" default="" label="WF_PASTE_PARAM_ATTRIBUTES" description="WF_PASTE_PARAM_ATTRIBUTES_DESC" />
+        <param name="paste_retain_style_properties" placeholder="eg: font-size,font-family,color" size="50" type="text" default="" label="WF_PASTE_PARAM_RETAIN_STYLES" description="WF_PASTE_PARAM_RETAIN_STYLES_DESC" />
+        <param name="paste_remove_empty_paragraphs" type="radio" default="1" label="WF_PASTE_PARAM_REMOVE_PARAGRAPHS" description="WF_PASTE_PARAM_REMOVE_PARAGRAPHS_DESC">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>           
+        </param>
+        <param name="paste_remove_styles_if_webkit" type="radio" default="0" label="WF_PASTE_PARAM_REMOVE_STYLES_WEBKIT" description="WF_PASTE_PARAM_REMOVE_STYLES_WEBKIT_DESC">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>           
+        </param>
+        <param name="paste_process_footnotes" type="list" default="convert" label="WF_PASTE_PARAM_PROCESS_FOOTNOTES" description="WF_PASTE_PARAM_PROCESS_FOOTNOTES_DESC">
+            <option value="convert">WF_PASTE_PARAM_PROCESS_FOOTNOTES_CONVERT</option>
+            <option value="unlink">WF_PASTE_PARAM_PROCESS_FOOTNOTES_UNLINK</option>
+            <option value="remove">WF_PASTE_PARAM_PROCESS_FOOTNOTES_REMOVE</option>           
+        </param>
+    </params>
+    <params group="access">
+        <param name="paste_html" type="radio" default="1" label="WF_PASTE_PARAM_PASTE_HTML" description="WF_PASTE_PARAM_PASTE_HTML_DESC">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>
+        </param>
+        <param name="paste_text" type="radio" default="1" label="WF_PASTE_PARAM_PASTE_TEXT" description="WF_PASTE_PARAM_PASTE_TEXT_DESC">
+            <option value="1">WF_OPTION_YES</option>
+            <option value="0">WF_OPTION_NO</option>
+        </param>
+    </params>
+    <params group="buttons">
+        <param name="buttons" class="checklist buttonlist" type="list" multiple="multiple" default="cut,copy,paste" label="WF_PARAM_BUTTONS" description="WF_PARAM_BUTTONS_DESC">
+            <option value="cut">Cut</option>
+            <option value="copy">Copy</option>
+            <option value="paste">Paste</option>
+        </param>
+    </params>
+    <help>
+        <topic key="clipboard.about" title="WF_CLIPBOARD_HELP_ABOUT" />
+    </help>
+    <languages></languages>
+</install>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <preferences>
+ 	<params group="standard">
+		<!--param name="theme" type="folderlist" directory="components/com_jce/editor/libraries/css/jquery" hide_none="true" hide_default="true" default="jce" label="WF_ADMIN_THEME" description="WF_ADMIN_THEME_DESC" /-->
+		<param name="help_url" type="text" size="50" default="http://www.joomlacontenteditor.net" label="WF_HELP_URL" description="WF_HELP_URL_DESC" />
+		<param name="feed" type="list" default="0" label="WF_CPANEL_FEED" description="WF_CPANEL_FEED_DESC">
+			<option value="1">WF_OPTION_YES</option>
+			<option value="0">WF_OPTION_NO</option>
+		</param>	
+		<param name="feed_limit" type="list" default="2" label="WF_CPANEL_FEED_LIMIT" description="WF_CPANEL_FEED_LIMIT_DESC">
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+		</param>
+                
+                <param name="browser_width"  type="text" size="5" default="780" label="WF_CPANEL_BROWSER_WIDTH" description="WF_CPANEL_BROWSER_WIDTH_DESC" />
+                <param name="browser_height" type="text" size="5" default="560" label="WF_CPANEL_BROWSER_HEIGHT" description="WF_CPANEL_BROWSER_HEIGHT_DESC" />
+	</params>
+	<params group="updates">
+		<param name="updates_key" type="password" size="50" default="" label="WF_UPDATES_KEY" description="WF_UPDATES_KEY_DESC" />
+		<!--param name="updates_type" type="list" default="" label="WF_UPDATES_TYPES" description="WF_UPDATES_TYPES_DESC">
+			<option value="">WF_UPDATES_OPTION_ALL</option>
+			<option value="full">WF_UPDATES_OPTION_FULL</option>
+			<option value="patch">WF_UPDATES_OPTION_PATCHES</option>
+		</param-->
+	</params>
+</preferences>

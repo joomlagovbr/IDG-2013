@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<install version="2.0" type="plugin" plugin="xhtmlxtras" core="1" editable="1">
+    <name>WF_XHTMLXTRAS_TITLE</name>
+    <version>2.3.2.4</version>
+    <creationDate>27 March 2013</creationDate>
+    <author>Ryan Demmer</author>
+    <authorEmail>info@joomlacontenteditor.net</authorEmail>
+    <authorUrl>http://www.joomlacontenteditor.net/</authorUrl>
+    <copyright>Ryan Demmer</copyright>
+    <license>GNU/GPL Version 2 or later - http://www.gnu.org/licenses/gpl-2.0.html</license>
+    <description>WF_XHTMLXTRAS_DESC</description>
+    <icon>cite,abbr,acronym,del,ins,attribs</icon>
+    <params group="buttons">
+        <param name="buttons" class="checklist buttonlist" type="list" multiple="multiple" default="cite,abbr,acronym,del,ins,attribs" label="WF_PARAM_BUTTONS" description="WF_PARAM_BUTTONS_DESC">
+            <option value="cite">WF_CITE_TITLE</option>
+            <option value="abbr">WF_ABBR_TITLE</option>
+            <option value="acronym">WF_ACRONYM_TITLE</option>
+            <option value="del">WF_DEL_TITLE</option>
+            <option value="ins">WF_INS_TITLE</option>
+            <option value="attribs">WF_ATTRIBUTES_TITLE</option>
+        </param>
+    </params>
+    <help>
+        <topic key="xhtmlxtras.about" title="WF_XHTMLXTRAS_HELP_ABOUT" />
+    </help>
+    <languages></languages>
+</install>

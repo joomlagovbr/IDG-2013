@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<extension version="1.6" type="component" method="upgrade">
+    <name>JCE</name>
+    <author>Ryan Demmer</author>
+    <creationDate>27 March 2013</creationDate>
+    <copyright>Copyright (C) 2006 - 2013 Ryan Demmer. All rights reserved</copyright>
+    <license>GNU/GPL Version 2 or later - http://www.gnu.org/licenses/gpl-2.0.html</license>
+    <authorEmail>info@joomlacontenteditor.net</authorEmail>
+    <authorUrl>www.joomlacontenteditor.net</authorUrl>
+    <version>2.3.2.4</version>
+    <description>WF_ADMIN_DESC</description>
+    
+    <scriptfile>install.script.php</scriptfile>
+	
+    <files folder="components/com_jce">
+        <folder>editor</folder>
+        <folder>media</folder>
+        <folder>views</folder>
+        <file>index.html</file>
+        <file>jce.php</file>
+        <file>licence.txt</file>
+    </files>
+	
+	<!-- Media Player -->
+    <media folder="components/com_jce/editor/libraries" destination="jce">
+        <folder>mediaplayer</folder>
+    </media>
+	
+    <languages folder="language/en-GB">
+        <language tag="en-GB">en-GB.com_jce.xml</language>
+        <language tag="en-GB">en-GB.com_jce.ini</language>
+    </languages>
+	
+	<!-- SQL query files to execute on installation -->
+    <install>
+        <sql>
+            <file charset="utf8" driver="mysql">sql/mysql.sql</file>
+            <file charset="utf8" driver="mysqli">sql/mysql.sql</file>
+            <file charset="utf8" driver="sqlsrv">sql/sqlsrv.sql</file>
+            <file charset="utf8" driver="sqlzure">sql/sqlsrv.sql</file>
+            <file charset="utf8" driver="sqlazure">sql/sqlsrv.sql</file>
+            <!--file charset="utf8" driver="postgresql">sql/postgresql.sql</file-->
+        </sql>
+    </install>
+	
+    <administration>
+        <menu view="cpanel" img="components/com_jce/media/img/menu/logo.png" link="option=com_jce">JCE</menu>
+		
+        <submenu>
+            <menu view="cpanel" img="components/com_jce/media/img/menu/jce-cpanel.png" link="option=com_jce">WF_MENU_CPANEL</menu>
+            <menu view="config" img="components/com_jce/media/img/menu/jce-config.png" link="option=com_jce&amp;view=config">WF_MENU_CONFIG</menu>
+            <menu view="profiles" img="components/com_jce/media/img/menu/jce-profiles.png" link="option=com_jce&amp;view=profiles">WF_MENU_PROFILES</menu>
+            <menu view="installer" img="components/com_jce/media/img/menu/jce-install.png" link="option=com_jce&amp;view=installer">WF_MENU_INSTALL</menu>
+        </submenu>
+		
+        <files folder="administrator/components/com_jce">
+            <folder>adapters</folder>
+            <folder>classes</folder>
+            <folder>controller</folder>
+            <folder>elements</folder>
+            <folder>helpers</folder>
+            <folder>includes</folder>
+            <folder>media</folder>
+            <folder>models</folder>
+            <folder>sql</folder>
+            <folder>tables</folder>
+            <folder>views</folder>
+            <file>access.xml</file>
+            <file>controller.php</file>
+            <file>config.xml</file>
+            <file>index.html</file>
+            <file>install.php</file>
+            <file>install.script.php</file>
+            <file>jce.php</file>
+            <file>licence.txt</file>
+        </files>
+		
+        <languages folder="administrator/language/en-GB">
+            <language tag="en-GB">en-GB.com_jce.ini</language>
+            <language tag="en-GB">en-GB.com_jce.sys.ini</language>
+            <language tag="en-GB">en-GB.plg_editors_jce.ini</language>
+            <language tag="en-GB">en-GB.plg_editors_jce.sys.ini</language>
+            <language tag="en-GB">en-GB.plg_quickicon_jcefilebrowser.ini</language>
+            <language tag="en-GB">en-GB.plg_quickicon_jcefilebrowser.sys.ini</language>
+        </languages>
+		
+    </administration>
+    <updateservers>
+        <server type="extension" priority="1" name="JCE Editor Updates"><![CDATA[https://www.joomlacontenteditor.net/index.php?option=com_updates&view=update&format=xml&id=1]]></server>
+    </updateservers>
+</extension>
