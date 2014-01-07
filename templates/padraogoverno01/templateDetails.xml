@@ -121,15 +121,6 @@
 					<option value="1">SIM</option>
 					<option value="0">NÃO</option>
 				</field>
-				<field name="local_jquery" type="list" default="footer"
-					label="Local onde os arquivos jquery serão chamados."
-					description="De acordo com as possíveis incompatibilidades decorrentes do local de utilização, alterar local das chamadas jquery."
-					filter="string"
-				>
-					<option value="before_head">Antes do jmodule HEAD</option>
-					<option value="after_head">Depois do jmodule HEAD</option>
-					<option value="footer">no final da página</option>
-				</field>
 				<field name="local_mainscript" type="list" default="footer"
 					label="Local dos arquivos javascript principais"
 					description="De acordo com as possíveis incompatibilidades decorrentes do local de utilização, alterar local das chamadas jquery e do local do script principal do template, onde podem constar funções de apoio do template."

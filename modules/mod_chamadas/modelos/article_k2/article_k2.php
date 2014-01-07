@@ -102,15 +102,21 @@ class ModeloArticle_k2
 						$subQuery->where('pai.published = 1');
 
 						$db->setQuery($subQuery);
-						$result = $db->loadResultArray();
+						$result = $db->loadObjectList();
 
-						if(count($result)==0)
+						$result_array = array();
+						for ($j=0, $limit = count($result); $j < $limit; $j++) { 
+							$result_array[] = $result[$j]->id;
+						}
+
+						if(count($result_array)==0)
 							break;
 
-						$categories = array_merge($categories, $result);
-						$cat = implode(',',$result);
+						$categories = array_merge($categories, $result_array);
+						$cat = implode(',',$result_array);
 
 					}
+
 					$categories = array_unique($categories);
 					foreach($categories as &$category)
 					{

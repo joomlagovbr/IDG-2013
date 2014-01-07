@@ -38,12 +38,10 @@ $active_item = TmplPadraoGoverno01Helper::getActiveItemid();
     <!--[if lt IE 8]>
     <link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/css/ie7.css" />
     <link rel="stylesheet" href="font-awesome/css/font-awesome-ie7.min.css" />
-    <![endif]-->
-    <?php if(TmplPadraoGoverno01Helper::beforeHead('local_jquery', $this)) TmplPadraoGoverno01Helper::getJqueryScripts( $this ); ?>
+    <![endif]-->    
     <?php if(TmplPadraoGoverno01Helper::beforeHead('local_mainscript', $this)) TmplPadraoGoverno01Helper::getTemplateMainScripts( $this ); ?>
     <jdoc:include type="head" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <?php if(TmplPadraoGoverno01Helper::afterHead('local_jquery', $this)) TmplPadraoGoverno01Helper::getJqueryScripts( $this ); ?>
     <?php if(TmplPadraoGoverno01Helper::afterHead('local_mainscript', $this)) TmplPadraoGoverno01Helper::getTemplateMainScripts( $this ); ?>
     <?php TmplPadraoGoverno01Helper::getFontStyle( $this ); ?>
     <link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/css/custom.css" />
@@ -251,7 +249,6 @@ $active_item = TmplPadraoGoverno01Helper::getActiveItemid();
     </div>
     <!-- fim div#wrapper -->
     <!-- scripts principais do template -->
-    <?php if(TmplPadraoGoverno01Helper::inFooter('local_jquery', $this)) TmplPadraoGoverno01Helper::getJqueryScripts( $this ); ?>
     <?php if(TmplPadraoGoverno01Helper::inFooter('local_mainscript', $this)) TmplPadraoGoverno01Helper::getTemplateMainScripts( $this ); ?>
     <?php if($this->countModules('barra-do-governo') && $this->params->get('anexar_js_barra2014')) TmplPadraoGoverno01Helper::getBarra2014Script( $this ); ?>
     <?php if($this->params->get('google_analytics_id', '') != ''): ?>
