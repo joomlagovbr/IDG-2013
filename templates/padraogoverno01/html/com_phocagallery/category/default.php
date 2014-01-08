@@ -3,19 +3,18 @@ defined('_JEXEC') or die('Restricted access');
 require JPATH_SITE .'/templates/padraogoverno01/html/com_phocagallery/_helper.php';
 //removendo css,js e custom html do componente:
 TmplPhocagalleryHelper::removeCss(array('phocagallery.css','modal.css'));
-TmplPhocagalleryHelper::removeJs(array('mootools-core-uncompressed.js','core-uncompressed.js','modal-uncompressed.js','modal.js','$$(\'a.pg-modal-button\')'));
+TmplPhocagalleryHelper::removeJs(array('mootools-core-uncompressed.js','mootools-more.js','core-uncompressed.js','modal-uncompressed.js','modal.js','$$(\'a.pg-modal-button\')'));
 TmplPhocagalleryHelper::removeCustom(array('#phocagallery','#sbox-window', 'phocagalleryieall.css', '.phocagallery-box-file'));
 //incluindo campos que nao vem por padrao na consulta
 $this->category = TmplPhocagalleryHelper::getExtrafields($this->category, array('date'));
-
 ?>
 <div id="phocagallery" class="pg-category-view<?php echo $this->params->get( 'pageclass_sfx' ); ?>">
 <?php if ($this->params->get( 'page_heading' ) != '') : ?>
 	<span class="documentCategory"><?php echo $this->params->get( 'page_heading' ); ?></span>
 <?php endif; ?>
-<?php if ( $this->tmpl['displaycatnametitle'] == 1): ?>
-	<h1 class="secondaryHeading"><?php echo $this->category->title; ?></h1>
-<?php endif; ?>
+
+<h1 class="secondaryHeading"><?php echo $this->category->title; ?></h1>
+
 <div class="subtitle pg-category-view-desc<?php echo $this->params->get( 'pageclass_sfx' ); ?>">
 	<?php if (isset($this->category->description) && $this->category->description != '' ): ?>
 		<?php echo JHTML::_('content.prepare', $this->category->description); ?>
@@ -47,7 +46,6 @@ $this->category = TmplPhocagalleryHelper::getExtrafields($this->category, array(
 </div>		
 <?php
 
-
 $this->checkRights = 1;
 
 
@@ -68,8 +66,6 @@ if ((int)$this->tagId > 0) {
 } else {
 	// Standard category displaying
 	$this->checkRights = 0;
-	// Switch image
-	$noBaseImg	= preg_match("/phoca_thumb_l_no_image/i", $this->tmpl['basicimage']);
 
 
 	// Categories View in Category View

@@ -2,8 +2,7 @@
 defined('_JEXEC') or die('Restricted access'); 
 require JPATH_SITE .'/templates/padraogoverno01/html/com_phocagallery/_helper.php';
 //removendo css padrao do componente:
-TmplPhocagalleryHelper::removeCss(array('phocagallery.css'));
-
+TmplPhocagalleryHelper::removeCss( array('phocagallery.css') );
 
 echo '<div id="phocagallery" class="pg-categories-view'.$this->params->get( 'pageclass_sfx' ).'">';
 
@@ -11,15 +10,6 @@ echo '<div id="phocagallery" class="pg-categories-view'.$this->params->get( 'pag
 if ( $this->params->get( 'show_page_heading' ) ) { 
 	echo '<h1 class="borderHeading">'. $this->escape($this->params->get('page_heading')) . '</h1>';
 }
-/*
-?>
-<div class="content-header-options-1 row-fluid">
-	<div class="documentByLine">
-		&nbsp;
-	</div>
-</div>
-<?php
-//*/
 
 if ($this->tmpl['categories_description'] != '') {
 	echo '<div class="description" >';
@@ -27,10 +17,12 @@ if ($this->tmpl['categories_description'] != '') {
 	.'</div>';
 }
 
+// echo $this->loadTemplate('categories');
+// echo $this->loadTemplate('pagination');
+
 echo '<form action="'.htmlspecialchars($this->tmpl['action']).'" method="post" name="adminForm">';
 
-	echo $this->loadTemplate('catimgdetail');
-
+	echo $this->loadTemplate('categories');
 
 	if (count($this->categories)) {
 		
