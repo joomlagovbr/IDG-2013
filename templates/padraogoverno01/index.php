@@ -44,7 +44,6 @@ $active_item = TmplPadraoGoverno01Helper::getActiveItemid();
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <?php if(TmplPadraoGoverno01Helper::afterHead('local_mainscript', $this)) TmplPadraoGoverno01Helper::getTemplateMainScripts( $this ); ?>
     <?php TmplPadraoGoverno01Helper::getFontStyle( $this ); ?>
-    <link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/css/custom.css" />
 
 </head>
 <body <?php echo TmplPadraoGoverno01Helper::getPageClass( $active_item, false, true ); ?>>
