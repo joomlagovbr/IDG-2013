@@ -11,6 +11,7 @@ defined('_JEXEC') or die;
 
 JHtml::addIncludePath(JPATH_COMPONENT.'/helpers');
 require __DIR__.'/_helper.php';
+
 ?>
 <div class="category-list<?php echo $this->pageclass_sfx;?>">
 
@@ -18,7 +19,7 @@ require __DIR__.'/_helper.php';
 	<h1 class="borderHeading">
 		<?php echo $this->escape($this->params->get('page_heading')); ?>
 	</h1>
-	<?php elseif ($this->params->get('show_category_title', 1)) : ?>
+	<?php else : ?>
 	<h1 class="borderHeading">		
 		<?php echo $this->category->title; ?>
 	</h1>
@@ -99,5 +100,5 @@ require __DIR__.'/_helper.php';
 	<?php //mantenha a tag de fechamento de formulario abaixo: a chamada inicial encontra-se na default_articles, no caso de itens serem exibidos. ?>
 	</form>
 	<?php //fim mantenha a tag de fechamento ?>
-	<?php  endif; ?>
+	<?php  endif; //*/ ?>
 </div>

@@ -98,7 +98,7 @@ class TmplPhocagalleryHelper
 	public static function displayMetakeyLinks( $metakey, $link = '' )
 	{
 		if(empty($link))
-			$link = 'index.php?ordering=newest&searchphrase=all&limit=20&areas[0]=contenttags&areas[1]=phocagallery&Itemid=180&option=com_search&searchword=';
+			$link = 'index.php?ordering=newest&searchphrase=all&limit=20&areas[0]=contenttags&areas[1]=phocagallery&Itemid=181&option=com_search&searchword=';
 
 		$keys = explode(',', $metakey);
 		$count_keys = count($keys);

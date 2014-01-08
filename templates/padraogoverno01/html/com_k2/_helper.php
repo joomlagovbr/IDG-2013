@@ -78,7 +78,7 @@ class TmplK2Helper
 	public static function getSearchTagLink( $tag, $link = '' )
 	{
 		if(empty($link))
-			$link = 'index.php?ordering=newest&searchphrase=all&limit=20&areas[0]=contenttags&areas[1]=k2&Itemid=180&option=com_search&searchword=';
+			$link = 'index.php?ordering=newest&searchphrase=all&limit=20&areas[0]=contenttags&areas[1]=k2&Itemid=181&option=com_search&searchword=';
 		
 		$lang = JFactory::getLanguage();	
 		$search_formated = urlencode(substr(trim($tag),0, $lang->getUpperLimitSearchWord()));

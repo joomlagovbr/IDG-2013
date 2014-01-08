@@ -19,7 +19,7 @@ require __DIR__.'/_helper.php';
 	<h1 class="borderHeading">
 		<?php echo $this->escape($this->params->get('page_heading')); ?>
 	</h1>
-	<?php elseif ($this->params->get('show_category_title', 1)) : ?>
+	<?php else : ?>
 	<h1 class="borderHeading">		
 		<?php echo $this->category->title; ?>
 	</h1>

@@ -37,8 +37,10 @@ class TemplateContentCategoryHelper {
 			return '';
 
 		if (@isset($category->metadata)) {
-			if( $category->metadata->get('author') != '')
-				return $category->metadata->get('author');
+			$category->metadata = json_decode($category->metadata);
+
+			if( $category->metadata->author != '')
+				return $category->metadata->author;
 		}
 
 		$author = TemplateContentCategoryHelper::getAuthorByUserId( @$category->created_user_id );
