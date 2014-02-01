@@ -15,7 +15,7 @@ class JConfig {
     public $host = 'localhost';
     public $user = 'root';
     public $password = '';
-    public $db = 'portal_modelo';
+    public $db = 'portal_modelo_3x';
     public $dbprefix = 'pmgov2013_';
     public $live_site = '';
     public $secret = 'NU7Qqn8NUt7KYu1a';
@@ -53,8 +53,8 @@ class JConfig {
     public $sef_suffix = '0';
     public $unicodeslugs = '0';
     public $feed_limit = '10';
-    public $log_path = '/var/www/joomla-3.x-master/logs';
-    public $tmp_path = '/var/www/joomla-3.x-master/tmp';
+    public $log_path = '/var/www/joomla-3.x/logs';
+    public $tmp_path = '/var/www/joomla-3.x/tmp';
     public $lifetime = '15';
     public $session_handler = 'database';
     public $MetaRights = '';
