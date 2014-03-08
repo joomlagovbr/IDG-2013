@@ -3,7 +3,7 @@
  * @package     Joomla.Administrator
  * @subpackage  Template.Isis
  *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -21,10 +21,7 @@ function renderMessage($msgList)
 		$buffer .= '<button type="button" class="close" data-dismiss="alert">&times;</button>';
 		foreach ($msgList as $type => $msgs)
 		{
-			//alteracao projeto portal padrao
-			// $buffer .= '<div class="alert ' . $alert[$type]. '">';
-			$buffer .= '<div class="alert ' . @$alert[$type]. '">';
-			//fim alteracao porjeto portal padrao
+			$buffer .= '<div class="alert ' . $alert[$type]. '">';
 			$buffer .= "\n<h4 class=\"alert-heading\">" . JText::_($type) . "</h4>";
 			if (count($msgs))
 			{

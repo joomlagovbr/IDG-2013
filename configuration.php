@@ -14,7 +14,7 @@ class JConfig {
     public $dbtype = 'mysqli';
     public $host = 'localhost';
     public $user = 'root';
-    public $password = '';
+    public $password = 'root';
     public $db = 'portal_modelo_3x';
     public $dbprefix = 'pmgov2013_';
     public $live_site = '';
@@ -53,8 +53,8 @@ class JConfig {
     public $sef_suffix = '0';
     public $unicodeslugs = '0';
     public $feed_limit = '10';
-    public $log_path = '/var/www/joomla-3.x/logs';
-    public $tmp_path = '/var/www/joomla-3.x/tmp';
+    public $log_path = '/Users/rafaelberlanda/Documents/www/jg20140308/joomla-3.x/logs';
+    public $tmp_path = '/Users/rafaelberlanda/Documents/www/jg20140308/joomla-3.x/tmp';
     public $lifetime = '15';
     public $session_handler = 'database';
     public $MetaRights = '';
