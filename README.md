@@ -1,7 +1,7 @@
 Portal padrão em CMS Joomla 3.2
 ================
 
-Acomponhe as atualizações do projeto
+Acompanhe as atualizações do projeto
 ---------------------
 Participe do grupo do google chamado [Joomla! e-Gov](https://groups.google.com/forum/?hl=pt-BR#!forum/joomla-e-gov-br) para se manter informado sobre o Portal Padrão em CMS Joomla. As atualizações não possuem data programada e ocorrem de acordo com a disponibilidade dos voluntários participantes.
 
