@@ -7,7 +7,7 @@ header {
         font-family: @basic-font-family !important; margin:0; line-height:@line-height; padding-top: 2px;
         li { line-height:@line-height; margin:0 10px 0 0 }
         a { 
-            color:@cor-links-header; font-size: 0.7em;
+            color:@cor-links-header-topo; font-size: 0.7em;
             span { background-color: @cor-links-header-bkgspan; color:@cor-links-header-acessibilidadespan; padding:0 2px 0px 3px }
             &:hover { background:@cor-links-header-bkghover }
         }
@@ -18,7 +18,7 @@ header {
             margin:0 16px 0 0;
             &:last-child { margin-right:0 !important }
         }
-        a { color:@cor-links-header; font-size:0.73em;
+        a { color:@cor-links-header-topo; font-size:0.73em;
               &:hover { text-decoration:underline }
         }
     }
@@ -57,7 +57,7 @@ header {
         .searchButton { padding-bottom:4px; padding-right:8px; }
         .searchButton i.icon-search { font-size:1.25em; color:@cor-iconsearch-header; .chrome_antialising (@cor-iconsearch-header; .4px ) }
     }
-    #social-icons { margin:2px 0 2px 0; .opacity(85);
+    #social-icons { margin:2px 0 2px 0; .opacity(@opacity-header-icons);
         li { margin: 0 0 0 6px }
         a { color:@cor-links-header;
             i { font-size:1.70em; margin-top:5px; .chrome_antialising (@cor-links-header; .4px ) } 
