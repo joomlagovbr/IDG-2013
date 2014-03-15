@@ -8,7 +8,7 @@
 	<authorUrl>https://github.com/joomlagovbr</authorUrl>
 	<copyright>Copyright (C) 2013 Comunidade Joomla Calango e Grupo de Trabalho de Ministérios.</copyright>
 	<license>GNU General Public License version 2</license>
-	<version>2.5.0</version>
+	<version>3.2.1</version>
 	<description>Mais informacoes na URL do github.</description>
 
 	<files>
@@ -71,6 +71,14 @@
 					label="URL de estilo de fonte"
 					description="URL interna ou externa onde se encontra o estilo de fonte utilizado. Para não utilizar, informar 'NENHUM'. Para utilizar as fontes locais que fazem parte do padrão e já estão instaladas e configuradas para este template, informe simplesmente {LOCALFONT}. Para utilizar outra referência de endereço local, utilize {SITE} para indicar o endereço raiz deste site, a partir do qual o arquivo css deverá estar refernciado."
 					filter="string" size="70" />
+				<field name="icon_style" type="list" default="bitmap-portal-brasil"
+					label="Estilo de ícones"
+					description="Determine se os ícones da central de conteúdo e de redes sociais serão no padrão font-awesome, utilizando vetores, ou no padrão do guia do portal Brasil de 24/02/3014, em bitmap formato png"
+					filter="string"
+				>
+					<option value="bitmap-portal-brasil">portal Brasil (bitmap .png)</option>
+					<option value="font-awesome">font-awesome (vetor .svg)</option>
+				</field>
 				<field name="denominacao" type="text" default=""
 					label="Denominação do órgão"
 					description="Informar denominação do órgão. Exemplo: 'Ministério do'"

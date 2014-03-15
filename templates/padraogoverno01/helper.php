@@ -156,6 +156,15 @@ class TmplPadraoGoverno01Helper
 		endif;
 	}
 
+	static function getIconsStyle( &$tmpl )
+	{
+		if($tmpl->params->get('icon_style', 'bitmap-portal-brasil') == 'bitmap-portal-brasil'):
+		?>
+		<link rel="stylesheet" href="<?php echo $tmpl->baseurl; ?>/templates/<?php echo $tmpl->template; ?>/css/icones-bmp-<?php echo $tmpl->params->get('cor', 'verde'); ?>.css" type='text/css'/>
+		<?php
+		endif;
+	}
+
 	static function getActiveItemid()
 	{
 		$app = JFactory::getApplication();
