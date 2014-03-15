@@ -1,10 +1,10 @@
 // cores principais
-@cor-principal:#1F5DC2;
-@cor-gradiente-header-1: lighten(@cor-gradiente-header-2, 10%);
-@cor-gradiente-header-2: darken(#1d67d2, 5%);
+@cor-principal:#3E67B1;
+@cor-gradiente-header-1: #3A72BC; //mais claro - lighten(@cor-gradiente-header-2, 10%);
+@cor-gradiente-header-2: #2160BD; //mais escuro - darken(#1d67d2, 5%);
 
 //header
-@cor-barra-header:darken(@cor-principal, 5%);
+@cor-barra-header: #0F4098;
 @cor-bordaprincipal-header: @cor-barra-header;
 @cor-titulo-principal: #FFF;
 @cor-links-header: @cor-titulo-principal;
@@ -20,24 +20,26 @@
 @opacity-header-icons:85;
 
 //navigation
-@cor-nav-titulos:@cor-principal;
-@cor-nav-links:@cor-preto;
+@cor-nav-titulos:#2C66CE;
+@cor-menudeapoio-links:#2C66CE;
 @cor-navicon-hover:lighten(@cor-principal, 40%);
-@cor-navicon-imagens:#043309;
-@cor-navicon-videos:#199325;
-@cor-navicon-audios:#094f09;
-@cor-navicon-publicacoes:#199325;
-@cor-navicon-aplicativos:#043309;
-@cor-navicon-infograficos:#043309;
-@cor-navicon-estatisticas:#043309;
-@cor-nav-active-level01:#eeeff2;
+@cor-bdr-editoria-aberta:#789FD8;
+//atencao: utilizar cores comentadas abaixo para diferenciar cores das centrais de conteudo, tal qual ocorria antes do ultimo guia da SECOM
+@cor-navicon-padrao-novo-guia:#1659BF;
+@cor-navicon-imagens: @cor-navicon-padrao-novo-guia; //#043309;
+@cor-navicon-videos: @cor-navicon-padrao-novo-guia; //#199325;
+@cor-navicon-audios: @cor-navicon-padrao-novo-guia; //#094f09;
+@cor-navicon-publicacoes: @cor-navicon-padrao-novo-guia; //#199325;
+@cor-navicon-aplicativos: @cor-navicon-padrao-novo-guia; //#043309;
+@cor-navicon-infograficos: @cor-navicon-padrao-novo-guia; //#043309;
+@cor-navicon-estatisticas: @cor-navicon-padrao-novo-guia; //#043309;
 @cor-mainmenu-toggle:@cor-principal;
 @cor-mainmenu-toggle-background:@cor-principal;
 
 //footer
-@cor-footer:#155abf;
+@cor-footer:#1659BF;
 @cor-barralogos-footer: #0041b2;
 @cor-bordaprincipal-footer: @cor-footer;
-@cor-bordas-footer: desaturate(lighten(@cor-principal, 50%), 40%);
-@cor-titulos-footer: #6dbc96;
-@cor-links-footer: @cor-titulo-principal;
+@cor-bordas-footer: #8BACDF;
+@cor-titulos-footer: #FFF;
+@cor-links-footer: #FFF;

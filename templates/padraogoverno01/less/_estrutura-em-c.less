@@ -51,11 +51,11 @@ header {
     #portal-searchbox {
         form { margin:22px 0 0 0 }
         input.searchField {
-          font-size:12px; width:177px;
+          font-size:12px; width:175px; border-right: none !important;
           &:focus { background-color: @cor-focus-header; }
         }
-        .searchButton { padding-bottom:4px; padding-right:8px; }
-        .searchButton i.icon-search { font-size:1.25em; color:@cor-iconsearch-header; .chrome_antialising (@cor-iconsearch-header; .4px ) }
+        .searchButton { padding-bottom:4px; padding-right:8px; background: @cor-branco; border-left: none !important; position:relative; width:34px; height:30px }
+        .searchButton i.icon-search { font-size:1.44em; color:@cor-iconsearch-header; .chrome_antialising (@cor-iconsearch-header; .4px ); position:absolute; left:6px; top:3px }
     }
     #social-icons { margin:2px 0 2px 0; .opacity(@opacity-header-icons);
         li { margin: 0 0 0 6px }
@@ -107,14 +107,14 @@ main {
             &:hover { text-decoration:underline }
         }
         nav { display:block; margin-bottom:35px; }
-        nav h2 { border-top:3px solid @cor-nav-titulos; padding:12px 5px 5px 10px; height:32px; background:@cor-cinza-claro; text-transform:uppercase; font-size:0.85em; line-height:1em; color: @cor-nav-titulos }
+        nav h2 { border-top:3px solid @cor-nav-titulos; padding:12px 5px 5px 10px; height:32px; background:@cor-nav-h2-bkg; text-transform:uppercase; font-size:0.85em; line-height:1em; color: @cor-nav-titulos }
         nav ul { display:block; margin:0; border-top:1px solid @cor-cinza-medio }
         nav li { display:block; padding:5px 10px 5px 20px; border-bottom:1px solid @cor-cinza-medio; }
         /*nav li.active,*/ nav li.deeper {
-            background:@cor-nav-active-level01 url(@nav-active-marker) no-repeat 10px 14px; border-top:2px solid @cor-nav-titulos; border-bottom:2px solid @cor-nav-titulos;
+            background:@cor-nav-active-level01 url(@nav-active-marker) no-repeat 10px 14px; border-top:2px solid @cor-bdr-editoria-aberta; border-bottom:2px solid @cor-bdr-editoria-aberta;
             padding-left:0; padding-right:0; padding-bottom:0;
             a { display:block; padding:5px 5px 10px 20px; font-weight:600; line-height:1.2em; }
-            ul { background:darken(@cor-nav-active-base-bkg, 3%); border-top:none;
+            ul { background:@cor-nav-active-level01; border-top:1px solid darken(@cor-nav-active-base-border, 5%);
                 a { font-weight:normal; font-size:0.85em; padding-bottom:5px; padding-left:25px; }
                 li { padding-left:0; border-bottom:1px solid darken(@cor-nav-active-base-border, 5%); }
                 li.current {
@@ -128,21 +128,21 @@ main {
                 //terceiro nivel de menu
                 /*nav li.active,*/ li.deeper { background:transparent url(@nav-active-marker) no-repeat 15px 14px; border-top:1px solid darken(@cor-nav-active-base-border, 20%); border-bottom:none;
                     a { font-weight:600; padding-bottom:10px; }
-                    ul { background:darken(@cor-nav-active-base-bkg, 6%); border-top:1px solid darken(@cor-nav-active-base-border, 15%);
+                    ul { background:#D9DADC; border-top:1px solid darken(@cor-nav-active-base-border, 15%);
                         a { font-weight:normal; padding-bottom:5px; padding-left:30px; }
                         li { padding-left:0px; border-bottom:1px solid darken(@cor-nav-active-base-border, 15%); }
                         //quarto nivel de menu
-                         /*nav li.active,*/ li.deeper { background:transparent url(@nav-active-marker) no-repeat 20px 14px; border-top:none; border-bottom:1px solid @cor-nav-active-base-border;
+                         /*nav li.active,*/ li.deeper { background:transparent url(@nav-active-marker) no-repeat 20px 14px; border-top:none; border-bottom:none;
                              a { font-weight:600; padding-bottom:10px; }
-                             ul { background:darken(@cor-nav-active-base-bkg, 9%);
+                             ul { background:#CACBCE;
                                  a { font-weight:normal; padding-bottom:5px; padding-left:35px;  }
                                  li { padding-left:0px; }
                                  //quinto nivel de menu
                                 /*nav li.active,*/ li.deeper { background:transparent url(@nav-active-marker) no-repeat 25px 14px; border-bottom:none;
                                     a { font-weight:600; padding-bottom:10px; }
-                                    ul { background:darken(@cor-nav-active-base-bkg, 12%); border-top:1px solid darken(@cor-nav-active-base-border, 30%);
+                                    ul { background:#C1C2C4; border-top:1px solid darken(@cor-nav-active-base-border, 20%);
                                         a { font-weight:normal; padding-bottom:5px; padding-left:35px; }
-                                        li { padding-left:5px; border-bottom:1px solid darken(@cor-nav-active-base-border, 30%);
+                                        li { padding-left:5px; border-bottom:1px solid darken(@cor-nav-active-base-border, 20%);
                                             //nao ha sexto nivel
                                             ul { display:none !important; }
                                         }
