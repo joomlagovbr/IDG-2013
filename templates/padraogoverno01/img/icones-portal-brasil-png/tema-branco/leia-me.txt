@@ -1,0 +1,2 @@
+- diretório de ícones específicos não fornecido junto com o guia do portal Brasil, de 24 de fevereiro.
+- basicamente, somente os icones de redes sociais serão necessários, pois as imagens do menu lateral, por exemplo, são as mesmas do tema azul
