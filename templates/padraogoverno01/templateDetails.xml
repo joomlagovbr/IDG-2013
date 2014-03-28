@@ -161,6 +161,11 @@
 					<option value="0">Não</option>
 					<option value="1">Sim</option>
 				</field>
+				<field type="spacer" hr="true" />
+				<field name="allow_set_color" type="list" default="0" label="Permitir teste com outra cor de tema" description="Permite configurar a cor de uma página específica, com a cor de um tema diferente da cor do tema padrão. Ex.: index.php?cor=amarelo">					
+					<option value="1">SIM</option>
+					<option value="0">NÃO</option>		
+		  		</field>
 			</fieldset>
 		</fields>
 	</config>
