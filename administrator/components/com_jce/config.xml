@@ -6,7 +6,7 @@
         
     <fieldset name="standard" label="WF_PREFERENCES_STANDARD">
         <!--field name="theme" type="folderlist" directory="components/com_jce/editor/libraries/css/jquery" hide_none="true" hide_default="true" default="jce" label="WF_ADMIN_THEME" description="WF_ADMIN_THEME_DESC" /-->
-        <field name="help_url" type="text" size="100" default="http://www.joomlacontenteditor.net" label="WF_HELP_URL" description="WF_HELP_URL_DESC" />
+        <field name="help_url" type="text" size="50" default="http://www.joomlacontenteditor.net" label="WF_HELP_URL" description="WF_HELP_URL_DESC" />
         <field name="feed" type="list" default="0" label="WF_CPANEL_FEED" description="WF_CPANEL_FEED_DESC">
             <option value="1">WF_OPTION_YES</option>
             <option value="0">WF_OPTION_NO</option>
@@ -24,7 +24,7 @@
 
     </fieldset>
     <fieldset name="updates" label="WF_PREFERENCES_UPDATES">
-        <field name="updates_key" type="password" size="100" default="" label="WF_UPDATES_KEY" description="WF_UPDATES_KEY_DESC" />
+        <field name="updates_key" type="password" size="50" default="" label="WF_UPDATES_KEY" description="WF_UPDATES_KEY_DESC" />
         <!--field name="updates_type" type="list" default="" label="WF_UPDATES_TYPES" description="WF_UPDATES_TYPES_DESC">
             <option value="">WF_UPDATES_OPTION_ALL</option>
             <option value="full">WF_UPDATES_OPTION_FULL</option>

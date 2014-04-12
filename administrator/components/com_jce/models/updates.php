@@ -14,13 +14,16 @@ defined('_JEXEC') or die('RESTRICTED');
 // load base model
 require_once (dirname(__FILE__) . '/model.php');
 
+// load helper class
+require_once(dirname(dirname(__FILE__)) . '/helpers/updates.php');
+
 class WFModelUpdates extends WFModel {
 
     protected static $updateURL = 'https://www.joomlacontenteditor.net/index.php?option=com_updates&format=raw';
 
     public static function canUpdate() {
-        if (!function_exists('curl_init')) {
-            return function_exists('file_get_contents') && function_exists('ini_get') && ini_get('allow_url_fopen');
+        if (UpdatesHelper::hasCURL() === false) {
+            return UpdatesHelper::hasFOPEN();
         }
 
         return true;
@@ -141,8 +144,8 @@ class WFModelUpdates extends WFModel {
         $result = array('error' => WFText::_('WF_UPDATES_DOWNLOAD_ERROR'));
 
         $id = JRequest::getInt('id');
-
-        $data = $this->connect(self::$updateURL, 'task=download&id=' . $id);
+        
+        $data = $this->connect(self::$updateURL . '&task=download&id=' . $id);
 
         if ($data) {
             $data = json_decode($data);
@@ -364,105 +367,23 @@ class WFModelUpdates extends WFModel {
      * @param 	String 	$download [optional] path to file to write to
      * @return 	Mixed 	Boolean or JSON String on error
      */
-    function connect($url, $data = '', $download = '') {
+    protected function connect($url, $data = '', $download = '') {
         @error_reporting(E_ERROR);
+        
+        $result = false;
 
-        jimport('joomla.filesystem.file');
-
-        $fp = false;
-
-        // get wrappers
-        $wrappers = stream_get_wrappers();
-
-        // check for support
-        $fopen = function_exists('file_get_contents') && function_exists('ini_get') && ini_get('allow_url_fopen') && in_array('https', $wrappers);
-
-        // try file_get_contents first (requires allow_url_fopen)
-        if ($fopen) {
-            if ($download) {
-                // use Joomla! installer function
-                jimport('joomla.installer.helper');
-                return @JInstallerHelper::downloadPackage($url, $download);
-            } else {
-                $options = array('http' => array('method' => 'POST', 'timeout' => 10, 'content' => $data));
-
-                $context = stream_context_create($options);
-                $result = @file_get_contents($url, false, $context);
-
-                if ($result === false) {
-                    return array('error' => WFText::_('Update check failed : Invalid response from update server'));
-                }
-
-                return $result;
-            }
-            // Use curl if it exists
-        } else if (function_exists('curl_init')) {
-
-            // check for SSL support
-            $version = curl_version();
-            $ssl_supported = ($version['features'] & CURL_VERSION_SSL);
-
-            if (!$ssl_supported) {
-                return array('error' => WFText::_('Update check failed : OpenSSL support for CURL is required'));
-            }
-
-            $ch = curl_init($url);
-            curl_setopt($ch, CURLOPT_HEADER, 0);
-
-            // Pretend we are IE7, so that webservers play nice with us
-            curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 1.0.3705; .NET CLR 1.1.4322; Media Center PC 4.0)');
-            //curl_setopt($ch, CURLOPT_ENCODING, 'gzip');
-            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
-            curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-            // The @ sign allows the next line to fail if open_basedir is set or if safe mode is enabled
-            @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-            @curl_setopt($ch, CURLOPT_MAXREDIRS, 20);
-
-            @curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-
-            if ($data && !$download) {
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-            }
-
-            // file download
-            if ($download) {
-                $fp = @fopen($download, 'wb');
-                @curl_setopt($ch, CURLOPT_FILE, $fp);
-            }
-
-            $result = curl_exec($ch);
-
-            // file download
-            if ($download && $result === false) {
-                return array('error' => 'TRANSFER ERROR : ' . curl_error($ch));
-            }
-
-            curl_close($ch);
-
-            // close fopen handler
-            if ($fp) {
-                @fclose($fp);
-            }
-
-            return $result;
-
-            // error - no update support
+        if ($download) {
+            return UpdatesHelper::download($url, $download);
         } else {
-            return array('error' => WFText::_('WF_UPDATES_DOWNLOAD_ERROR_NO_CONNECT'));
+            $result = UpdatesHelper::check($url, $data);
+
+            if ($result === false) {
+                return array('error' => WFText::_('Update check failed : Invalid response from update server'));
+            }
         }
-
-        return array('error' => WFText::_('WF_UPDATES_DOWNLOAD_ERROR_NO_CONNECT'));
+        
+        return $result;
     }
-
-    function log($msg) {
-        jimport('joomla.error.log');
-        $log = JLog::getInstance('updates.txt');
-        $log->addEntry(array('comment' => 'LOG: ' . $msg));
-    }
-
 }
 
 ?>

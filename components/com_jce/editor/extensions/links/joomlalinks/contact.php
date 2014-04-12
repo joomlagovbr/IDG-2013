@@ -34,7 +34,7 @@ class JoomlalinksContact extends JObject {
      * @return	JCE  The editor object.
      * @since	1.5
      */
-    function & getInstance() {
+    function getInstance() {
         static $instance;
 
         if (!is_object($instance)) {
@@ -75,10 +75,16 @@ class JoomlalinksContact extends JObject {
                     } else {
                         $url = 'index.php?option=com_contact&view=category&catid=';
                     }
+                    
+                    // add category slug and itemid
+                    $url .= $category->slug . $itemid;
+                    
+                    // convert to SEF
+                    $url = self::route($url);
 
                     $items[] = array(
                         'id'    => 'index.php?option=com_contact&view=category&id=' . $category->id,
-                        'url'   => $url . $category->slug . $itemid,
+                        'url'   => $url,
                         'name'  => $category->title . ' / ' . $category->alias,
                         'class' => 'folder contact'
                     );
@@ -103,8 +109,12 @@ class JoomlalinksContact extends JObject {
 
                             $id = 'index.php?option=com_contact&view=category&id=' . $category->slug . $itemid;
                         }
+                        
+                        // convert to SEF
+                        $url = self::route($id);
 
                         $items[] = array(
+                            'url'   => $url,
                             'id'    => $id,
                             'name'  => $category->title . ' / ' . $category->alias,
                             'class' => 'folder content'
@@ -122,16 +132,30 @@ class JoomlalinksContact extends JObject {
                         // fall back to the parent item's Itemid
                         $itemid = '&Itemid=' . $args->Itemid;
                     }
+                    
+                    $id = 'index.php?option=com_contact&view=contact' . $catid . '&id=' . $contact->id . '-' . $contact->alias . $itemid;
 
+                    $id = self::route($id);
+                    
                     $items[] = array(
-                        'id' => 'index.php?option=com_contact&view=contact' . $catid . '&id=' . $contact->id . '-' . $contact->alias . $itemid,
-                        'name' => $contact->name . ' / ' . $contact->alias,
+                        'id'    => $id,
+                        'name'  => $contact->name . ' / ' . $contact->alias,
                         'class' => 'file'
                     );
                 }
                 break;
         }
         return $items;
+    }
+    
+    private static function route($url) {
+        $wf = WFEditorPlugin::getInstance();
+        
+        if ($wf->getParam('links.joomlalinks.sef_url', 0)) {
+            $url = WFLinkExtension::route($url);
+        }
+        
+        return $url;
     }
 
     private static function _contacts($id) {

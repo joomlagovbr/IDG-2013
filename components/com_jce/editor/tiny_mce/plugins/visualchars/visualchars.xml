@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
 <install version="2.0" type="plugin" plugin="visualchars" core="1" editable="1">
 	<name>WF_VISUALCHARS_TITLE</name>
-	<version>2.3.2.4</version>
-	<creationDate>27 March 2013</creationDate>
+	<version>2.3.4.4</version>
+	<creationDate>12 December 2013</creationDate>
 	<author>Ryan Demmer</author>
 	<authorEmail>info@joomlacontenteditor.net</authorEmail>
 	<authorUrl>http://www.joomlacontenteditor.net/</authorUrl>

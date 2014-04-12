@@ -28,6 +28,6 @@ defined('_JEXEC') or die('RESTRICTED');
         <div class="row-fluid body"></div>
     </div>
     <div class="btn-group pull-right fltrgt">
-        <button id="update-button" class="check btn">&nbsp;<?php echo WFText::_('WF_UPDATES_CHECK'); ?></button>
+        <button id="update-button" class="check btn"><i class="icon-search"></i>&nbsp;<?php echo WFText::_('WF_UPDATES_CHECK'); ?></button>
     </div>
 </div>

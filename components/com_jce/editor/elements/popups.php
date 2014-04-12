@@ -36,7 +36,7 @@ class WFElementPopups extends WFElement {
             $path = WF_EDITOR_EXTENSIONS . '/popups';
 
             $filter = '\.xml$';
-            $files  = JFolder::files($path, '\.xml', false, true);
+            $files  = JFolder::files($path, '\.xml', false, true, array('build.xml'));
             
             $options = array();
 

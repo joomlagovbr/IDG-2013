@@ -23,7 +23,7 @@ class WFControllerConfig extends WFController {
     /**
      * Custom Constructor
      */
-    function __construct($default = array()) {
+    public function __construct($default = array()) {
         parent::__construct();
 
         $this->registerTask('apply', 'save');
@@ -36,28 +36,30 @@ class WFControllerConfig extends WFController {
         $db     = JFactory::getDBO();
         $task   = $this->getTask();
 
-        // get params
-        $component = WFExtensionHelper::getComponent();
-        // create params array from json string
-        $params = json_decode($component->params, true);
+        // get plugin
+        $plugin = WFExtensionHelper::getPlugin();
+
         // get params data
         $data   = JRequest::getVar('params', '', 'POST', 'ARRAY');
         // clean input data
         $data   = $this->cleanInput($data);
         
-        // set editor params
-        $params['editor'] = $data;
+        // store data
+        $plugin->params = json_encode($data);
         
-        // set params as JSON string
-        $component->params = json_encode($params);
+        // remove "id"
+        if (isset($plugin->extension_id)) {
+            unset($plugin->id);
+        }
 
-        if (!$component->check()) {
-            JError::raiseError(500, $component->getError());
+        if (!$plugin->check()) {
+            JError::raiseError(500, $plugin->getError());
         }
-        if (!$component->store()) {
-            JError::raiseError(500, $component->getError());
+        if (!$plugin->store()) {
+            JError::raiseError(500, $plugin->getError());
         }
-        $component->checkin();
+        
+        $plugin->checkin();
 
         $msg = JText::sprintf('WF_CONFIG_SAVED');
 

@@ -1,4 +1,4 @@
-/* JCE Editor - 2.3.2.4 | 27 March 2013 | http://www.joomlacontenteditor.net | Copyright (C) 2006 - 2013 Ryan Demmer. All rights reserved | GNU/GPL Version 2 or later - http://www.gnu.org/licenses/gpl-2.0.html */
+/* JCE Editor - 2.3.4.4 | 12 December 2013 | http://www.joomlacontenteditor.net | Copyright (C) 2006 - 2013 Ryan Demmer. All rights reserved | GNU/GPL Version 2 or later - http://www.gnu.org/licenses/gpl-2.0.html */
 var WFLinkBrowser={options:{element:'#link-browser',onClick:$.noop},init:function(options){$.extend(this.options,options);this._createTree();},_createTree:function(){var self=this;$(this.options.element).tree({collapseTree:true,charLength:50,onInit:function(e,callback){if($.isFunction(callback)){callback.apply();}},onNodeClick:function(e,node){var v;if(!$('span.nolink',node).length){v=$('a',node).attr('href');if(v=='javascript:;')
 v=$(node).attr('id');if($.isFunction(self.options.onClick)){self.options.onClick.call(this,$.String.decode(v));}}
 if($('span',node).is('.folder')){$(this).tree('toggleNode',e,node);}

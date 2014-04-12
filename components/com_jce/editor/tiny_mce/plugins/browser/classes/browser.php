@@ -18,7 +18,7 @@ final class WFFileBrowserPlugin extends WFMediaManager {
      * @var string
      */
 
-    protected $_filetypes = 'word=doc,docx;powerpoint=ppt;excel=xls;image=gif,jpeg,jpg,png;acrobat=pdf;archive=zip,tar,gz;flash=swf;winrar=rar;quicktime=mov,mp4,qt;windowsmedia=wmv,asx,asf,avi;audio=wav,mp3,aiff;openoffice=odt,odg,odp,ods,odf';
+    protected $_filetypes = 'word=doc,docx;powerpoint=ppt;excel=xls;image=gif,jpeg,jpg,png;acrobat=pdf;archive=zip,tar,gz;flash=swf;winrar=rar;quicktime=mov,mp4,qt;windowsmedia=wmv,asx,asf,avi;audio=wav,mp3,aiff;openoffice=odt,odg,odp,ods,odf;text=rtf,txt,csv';
 
     /**
      * @access	protected
@@ -38,6 +38,8 @@ final class WFFileBrowserPlugin extends WFMediaManager {
         if (JRequest::getString('filter')) {
             $browser->setFileTypes('files=' . JRequest::getString('filter'));
         }
+        // remove insert button
+        $browser->removeButton('file', 'insert');
     }
 
     /**

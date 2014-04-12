@@ -1,4 +1,4 @@
-/* JCE Editor - 2.3.2.4 | 27 March 2013 | http://www.joomlacontenteditor.net | Copyright (C) 2006 - 2013 Ryan Demmer. All rights reserved | GNU/GPL Version 2 or later - http://www.gnu.org/licenses/gpl-2.0.html */
+/* JCE Editor - 2.3.4.4 | 12 December 2013 | http://www.joomlacontenteditor.net | Copyright (C) 2006 - 2013 Ryan Demmer. All rights reserved | GNU/GPL Version 2 or later - http://www.gnu.org/licenses/gpl-2.0.html */
 (function(tinymce){var DOM=tinymce.DOM,Event=tinymce.dom.Event,is=tinymce.is,each=tinymce.each;tinymce.create('tinymce.ui.ButtonDialog:tinymce.ui.Button',{ButtonDialog:function(id,s,ed){this.parent(id,s,ed);this.settings=s=tinymce.extend({content:'',buttons:[]},this.settings);this.editor=ed;this.onRenderDialog=new tinymce.util.Dispatcher(this);this.onShowDialog=new tinymce.util.Dispatcher(this);this.onHideDialog=new tinymce.util.Dispatcher(this);s.dialog_container=s.dialog_container||DOM.doc.body;},showDialog:function(){var t=this,ed=this.editor,s=this.settings,p1,p2,e=DOM.get(t.id),m;if(t.isDisabled())
 return;this.storeSelection();if(!t.isDialogRendered){t.renderDialog();}
 if(t.isDialogVisible)

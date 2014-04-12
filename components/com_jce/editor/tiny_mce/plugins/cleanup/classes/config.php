@@ -42,7 +42,7 @@ class WFCleanupPluginConfig {
         // Get Extended elements
         $settings['extended_valid_elements'] = $wf->getParam('editor.extended_elements', '', '');
         // Configuration list of invalid elements as array
-        $settings['invalid_elements'] = explode(',', $wf->getParam('editor.invalid_elements', '', ''));
+        $settings['invalid_elements'] = explode(',', preg_replace('#\s+#', '', $wf->getParam('editor.invalid_elements', '', '')));
 
         // Add elements to invalid list (removed by plugin)
         $model->addKeys($settings['invalid_elements'], self::$invalid_elements);

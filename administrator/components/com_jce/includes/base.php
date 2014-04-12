@@ -15,22 +15,16 @@ defined('_JEXEC') or die('RESTRICTED');
 // load constants
 
 require_once(dirname(__FILE__) . '/constants.php');
-
-// low level error handler
-
-//require_once(WF_ADMINISTRATOR . '/classes/error.php');
-
 // load loader
-
 require_once(dirname(__FILE__) . '/loader.php');
-// load text
-require_once(WF_ADMINISTRATOR. '/classes/text.php');
-// load xml
-require_once(WF_ADMINISTRATOR . '/classes/xml.php');
-// load parameter
-require_once(WF_ADMINISTRATOR . '/classes/parameter.php');
 
+// load text
+wfimport('admin.classes.text');
+// load xml
+wfimport('admin.classes.xml');
+// load parameter
+wfimport('admin.classes.parameter');
 // load xml helper
-require_once(WF_ADMINISTRATOR . '/helpers/xml.php');
+wfimport('admin.helpers.xml');
 
 ?>

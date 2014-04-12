@@ -82,11 +82,11 @@ class WFController extends WFControllerBase {
         $view = parent::getView($name, $type, $prefix, $config);
         $document = JFactory::getDocument();
         
-        $bootstrap  = class_exists('JHtmlBootstrap');
-        $jquery     = class_exists('JHtmlJquery'); 
+        // check for bootstrap
+        $bootstrap = is_file(JPATH_LIBRARIES . '/cms/html/bootstrap.php'); 
 
-        // using JUI...
-        if (!$bootstrap || !$jquery) {
+        // not using JUI...
+        if (!$bootstrap) {
             // set device-width meta
             $document->setMetaData('meta', 'width=device-width, initial-scale=1.0');
 
@@ -94,6 +94,8 @@ class WFController extends WFControllerBase {
             $view->addScript(JURI::root(true) . '/components/com_jce/editor/libraries/jquery/js/jquery-' . WF_JQUERY . '.min.js');
             // jQuery noConflict
             $view->addScriptDeclaration('jQuery.noConflict();');
+        } else {
+            JHtml::_('bootstrap.framework');
         }
 
         // JQuery UI
@@ -110,10 +112,6 @@ class WFController extends WFControllerBase {
             default:
                 $view->addStyleSheet(JURI::root(true) . '/administrator/components/com_jce/media/css/global.css');
                 
-                if (!$bootstrap || !$jquery) {
-                    $view->addStyleSheet(JURI::root(true) . '/administrator/components/com_jce/media/css/styles-ui.css');
-                }
-
                 // load Joomla! core javascript
                 if (method_exists('JHtml', 'core')) {
                     JHtml::core();
@@ -121,7 +119,7 @@ class WFController extends WFControllerBase {
 
                 require_once(JPATH_ADMINISTRATOR . '/includes/toolbar.php');
 
-                JToolBarHelper::title(WFText::_('WF_ADMINISTRATION') . ' &rsaquo;&rsaquo; ' . WFText::_('WF_' . strtoupper($name)), 'logo.png');
+                JToolBarHelper::title(WFText::_('WF_ADMINISTRATION') . ' :: ' . WFText::_('WF_' . strtoupper($name)), 'logo.png');
 
                 $params = WFParameterHelper::getComponentParams();
                 $theme = $params->get('preferences.theme', 'jce');
@@ -143,14 +141,12 @@ class WFController extends WFControllerBase {
                     'bootstrap' => $bootstrap
                 );
 
-                $view->addScriptDeclaration('jQuery(document).ready(function($){$.jce.init(' . json_encode($options) . ');});');
-                //$document->addCustomTag('<script type="text/javascript">jQuery(document).ready(function($){$.jce.init(' . json_encode($options) . ');});</script>');
+                $view->addScriptDeclaration('jQuery.jce.options = ' . json_encode($options) . ';');
 
                 $view->addHelperPath(dirname(__FILE__) . '/helpers');
                 $this->addModelPath(dirname(__FILE__) . '/models');
 
                 $view->loadHelper('toolbar');
-                $view->loadHelper('tools');
                 $view->loadHelper('xml');
                 $view->loadHelper($name);
 
@@ -299,6 +295,11 @@ class WFController extends WFControllerBase {
 
     public function authorize($task) {
         wfimport('admin.models.model');
+        
+        // map updates/blank/cpanel task to manage
+        if (empty($task) || $task == 'cpanel' || $task == 'updates') {
+            $task = 'manage';
+        }
 
         if (WFModel::authorize($task) === false) {
             $this->setRedirect('index.php', WFText::_('ALERTNOTAUTH'), 'error');

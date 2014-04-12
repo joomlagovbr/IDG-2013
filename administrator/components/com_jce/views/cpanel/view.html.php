@@ -44,7 +44,7 @@ class WFViewCpanel extends WFView {
 
         $this->addScript('components/com_jce/media/js/cpanel.js');
 
-        $this->addScriptDeclaration('jQuery(document).ready(function($){$.jce.CPanel.init(' . json_encode($options) . ')});');
+        $this->addScriptDeclaration('jQuery.jce.Cpanel.options = ' . json_encode($options) . ';');
 
         // load styles
         $this->addStyleSheet(JURI::root(true) . '/administrator/components/com_jce/media/css/cpanel.css');
@@ -82,7 +82,7 @@ class WFViewCpanel extends WFView {
                 // get params definitions
                 $params = new WFParameter($component->params, '', 'preferences');
                 
-                $width      = (int) $params->get('browser_width', 780);
+                $width      = (int) $params->get('browser_width', 790);
                 $height     = (int) $params->get('browser_height', 560);
                 
                 if (empty($link)) {

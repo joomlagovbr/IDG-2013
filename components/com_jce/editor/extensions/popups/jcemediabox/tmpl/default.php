@@ -88,6 +88,8 @@ defined('_WF_EXT') or die('RESTRICTED');
                 <option value="text/html"><?php echo WFText::_('WF_POPUPS_JCEMEDIABOX_INTERNAL'); ?></option>
                 <option value="iframe"><?php echo WFText::_('WF_POPUPS_JCEMEDIABOX_EXTERNAL'); ?></option>
                 <option value="image"><?php echo WFText::_('WF_POPUPS_JCEMEDIABOX_IMAGE'); ?></option>
+                <option value="video/youtube"><?php echo WFText::_('WF_POPUPS_JCEMEDIABOX_YOUTUBE'); ?></option>
+                <option value="video/vimeo"><?php echo WFText::_('WF_POPUPS_JCEMEDIABOX_VIMEO'); ?></option>
                 <option value="application/x-shockwave-flash"><?php echo WFText::_('WF_POPUPS_JCEMEDIABOX_FLASH'); ?></option>
                 <option value="video/quicktime"><?php echo WFText::_('WF_POPUPS_JCEMEDIABOX_QUICKTIME'); ?></option>
                 <option value="application/x-mplayer2"><?php echo WFText::_('WF_POPUPS_JCEMEDIABOX_WINDOWSMEDIA'); ?></option>

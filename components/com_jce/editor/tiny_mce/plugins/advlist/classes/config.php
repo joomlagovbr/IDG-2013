@@ -18,8 +18,8 @@ class WFAdvlistPluginConfig {
     public static function getConfig(&$settings) {
         $wf = WFEditor::getInstance();
 
-        $number = (array) $wf->getParam('lists.number_styles');
-        $bullet = (array) $wf->getParam('lists.bullet_styles');
+        $number = $wf->getParam('lists.number_styles');
+        $bullet = $wf->getParam('lists.bullet_styles');
 
         if (!empty($number)) {            
             if (count($number) < count(self::$defaultNumList)) {

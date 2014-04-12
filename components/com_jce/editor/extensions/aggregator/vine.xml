@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<install version="2.0" type="extension" extension="vine" folder="aggregator" method="upgrade" core="1">
+	<name>WF_AGGREGATOR_VINE_TITLE</name>
+	<version>2.3.4.4</version>
+	<creationDate>12 December 2013</creationDate>
+	<author>Ryan Demmer</author>
+	<authorEmail>info@joomlacontenteditor.net</authorEmail>
+	<authorUrl>http://www.joomlacontenteditor.net/</authorUrl>
+	<copyright>Copyright (C) 2006 - 2013 Ryan Demmer. All rights reserved</copyright>
+	<license>GNU/GPL Version 2 or later - http://www.gnu.org/licenses/gpl-2.0.html</license>
+	<description>WF_AGGREGATOR_VINE_DESC</description>
+	<files>
+		<filename>vine.php</filename>
+		<folder>vine</folder>
+	</files>
+	<params group="vine">
+		<param name="enable" type="list" default="1" label="WF_LABEL_EXTENSION_ENABLE" description="WF_LABEL_EXTENSION_ENABLE_DESC">
+        	<option value="1">WF_OPTION_YES</option>
+        	<option value="0">WF_OPTION_NO</option>
+    	</param>
+	<param name="type" type="list" default="simple" label="WF_AGGREGATOR_VINE_TYPE" description="WF_AGGREGATOR_VINE_TYPE_DESC">
+        	<option value="simple">WF_AGGREGATOR_VINE_SIMPLE</option>
+        	<option value="postcard">WF_AGGREGATOR_VINE_POSTCARD</option>
+        </param>
+        <param name="size" type="list" default="600" label="WF_AGGREGATOR_VINE_SIZE" description="WF_AGGREGATOR_VINE_SIZE_DESC">
+        	<option value="600">600px</option>
+        	<option value="480">480px</option>
+                <option value="320">320px</option>
+        </param>
+	</params>
+	<plugins></plugins>
+</install>

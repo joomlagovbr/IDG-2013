@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package   	JCE
  * @copyright 	Copyright (c) 2009-2013 Ryan Demmer. All rights reserved.
@@ -37,7 +36,7 @@ foreach ($this->plugins as $plugin) :
                 $params->addElementPath($path . '/elements');
             }
 
-            $class  = in_array($plugin->name, explode(',', $this->profile->plugins)) ? 'tabs-plugin-parameters' : '';
+            $class = in_array($plugin->name, explode(',', $this->profile->plugins)) ? 'tabs-plugin-parameters' : '';
             $groups = $params->getGroups();
 
             if (count($groups)) :
@@ -79,17 +78,17 @@ foreach ($this->plugins as $plugin) :
 
                         foreach ($items as $extension) :
                             // get extension xml file
-                            $file = $extension->manifest;
+                            $manifest = $extension->manifest;
                             if ($extension->core == 0) {
                                 // Load extension language file
                                 $language = JFactory::getLanguage();
                                 $language->load('com_jce_' . $extension->folder . '_' . trim($extension->extension), JPATH_SITE);
                             }
 
-                            if (JFile::exists($file)) :
+                            if (JFile::exists($manifest)) :
                                 // get params for plugin
                                 $key = $plugin->name . '.' . $type . '.' . $extension->extension;
-                                $params = new WFParameter($this->profile->params, $file, $key);
+                                $params = new WFParameter($this->profile->params, $manifest, $key);
 
                                 // add element paths
                                 $params->addElementPath(array(

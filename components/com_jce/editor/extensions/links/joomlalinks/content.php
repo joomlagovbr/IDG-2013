@@ -34,7 +34,7 @@ class JoomlalinksContent extends JObject {
      * @return	JCE  The editor object.
      * @since	1.5
      */
-    function &getInstance() {
+    function getInstance() {
         static $instance;
 
         if (!is_object($instance)) {
@@ -86,9 +86,9 @@ class JoomlalinksContent extends JObject {
                     }
 
                     $items[] = array(
-                        'url' => $url,
-                        'id' => $id,
-                        'name' => $section->title,
+                        'url'   => self::route($url),
+                        'id'    => $id,
+                        'name'  => $section->title,
                         'class' => 'folder content'
                     );
                 }
@@ -125,9 +125,9 @@ class JoomlalinksContent extends JObject {
                     }
 
                     $items[] = array(
-                        'url' => $url,
-                        'id' => $id,
-                        'name' => $category->title . ' / ' . $category->alias,
+                        'url'   => self::route($url),
+                        'id'    => $id,
+                        'name'  => $category->title . ' / ' . $category->alias,
                         'class' => 'folder content'
                     );
                 }
@@ -141,10 +141,12 @@ class JoomlalinksContent extends JObject {
                         } else {
                             $id = ContentHelperRoute::getArticleRoute($article->slug, $article->catslug);
                         }
+                        
+                        $id = self::route($id);
 
                         $items[] = array(
-                            'id' => $id,
-                            'name' => $article->title . ' / ' . $article->alias,
+                            'id'    => $id,
+                            'name'  => $article->title . ' / ' . $article->alias,
                             'class' => 'file'
                         );
 
@@ -196,9 +198,9 @@ class JoomlalinksContent extends JObject {
                             }
 
                             $items[] = array(
-                                'url' => $url,
-                                'id' => $id,
-                                'name' => $category->title . ' / ' . $category->alias,
+                                'url'   => self::route($url),
+                                'id'    => $id,
+                                'name'  => $category->title . ' / ' . $category->alias,
                                 'class' => 'folder content'
                             );
                         }
@@ -213,6 +215,8 @@ class JoomlalinksContent extends JObject {
                     } else {
                         $id = ContentHelperRoute::getArticleRoute($article->slug, $article->catslug);
                     }
+                    
+                    $id = self::route($id);
 
                     $items[] = array(
                         'id' => $id,
@@ -237,6 +241,8 @@ class JoomlalinksContent extends JObject {
                 foreach ($statics as $static) {
                     $id = ContentHelperRoute::getArticleRoute($static->id);
 
+                    $id = self::route($id);
+                    
                     $items[] = array(
                         'id' => $id,
                         'name' => $static->title . ' / ' . $static->alias,
@@ -392,6 +398,16 @@ class JoomlalinksContent extends JObject {
         }
 
         return $anchors;
+    }
+    
+    private static function route($url) {
+        $wf = WFEditorPlugin::getInstance();
+        
+        if ($wf->getParam('links.joomlalinks.sef_url', 0)) {
+            $url = WFLinkExtension::route($url);
+        }
+        
+        return $url;
     }
 
 }

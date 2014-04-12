@@ -10,8 +10,6 @@
  * other free or open source software licenses.
  */
 defined('_JEXEC') or die('RESTRICTED');
-// Set flag that this is an extension parent
-DEFINE('_WF_EXT', 1);
 
 // Load class dependencies
 wfimport('editor.libraries.classes.plugin');

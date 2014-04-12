@@ -61,6 +61,6 @@ defined( '_JEXEC' ) or die('RESTRICTED');
 
             <tr>
                 <td><label for="longdesc" class="hastip" title="<?php echo WFText::_('WF_LABEL_LONGDESC_DESC');?>"><?php echo WFText::_('WF_LABEL_LONGDESC');?></label></td>
-                <td><input id="longdesc" type="text" value="" class="browser image" /></td>
+                <td><input id="longdesc" type="text" value="" class="browser" /></td>
             </tr>
         </table>

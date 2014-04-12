@@ -92,7 +92,11 @@ class WFModelPlugins extends WFModel {
             if (is_file($file)) {
                 $xml = WFXMLElement::load($folder . '/' . $name . '.xml');
 
-                if ($xml) {
+                if ($xml) {                    
+                    if ((string) $xml->getName() != 'extension' && (string) $xml->getName() != 'install') {
+                        continue;
+                    }
+                    
                     $params = $xml->params;
 
                     if (!isset($plugins[$name])) {
@@ -142,7 +146,7 @@ class WFModelPlugins extends WFModel {
         // recursively get all extension files
         $files = JFolder::files(WF_EDITOR_EXTENSIONS, '\.xml$', true, true);
 
-        foreach ($files as $file) {
+        foreach ($files as $file) {            
             $object = new StdClass();
             $object->folder = basename(dirname($file));
             $object->manifest = $file;
@@ -151,10 +155,15 @@ class WFModelPlugins extends WFModel {
             $object->name = $name;
             $object->description = '';
             $object->id = $object->folder . '.' . $object->name;
-
+            
+            // get core xml
             $xml = WFXMLElement::load($file);
 
-            if ($xml) {
+            if ($xml) {                
+                if ((string) $xml->getName() != 'extension' && (string) $xml->getName() != 'install') {                    
+                    continue;
+                }
+                
                 $plugins = (string) $xml->plugins;
 
                 if ($plugins) {
@@ -180,9 +189,10 @@ class WFModelPlugins extends WFModel {
                     $language = JFactory::getLanguage();
                     $language->load('com_jce_' . $object->folder . '_' . $name, JPATH_SITE);
                 }
+                
+                $object->extension = $name;
+                $extensions[] = $object;
             }
-            $object->extension = $name;
-            $extensions[] = $object;
         }
 
         return $extensions;

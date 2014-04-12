@@ -28,8 +28,14 @@ class WFClipboardPluginConfig
 		$settings['clipboard_paste_remove_empty_paragraphs']	= $wf->getParam('clipboard.paste_remove_empty_paragraphs', 1, 1, 'boolean');
 		$settings['clipboard_paste_text']                       = $wf->getParam('clipboard.paste_text', 1, 1, 'boolean');
 		$settings['clipboard_paste_html']                       = $wf->getParam('clipboard.paste_html', 1, 1, 'boolean');
+               
                 
                 $settings['clipboard_paste_process_footnotes']          = $wf->getParam('clipboard.paste_process_footnotes', 'convert', 'convert');
+                $settings['clipboard_paste_upload_images']              = $wf->getParam('clipboard.paste_upload_images', 0, 0);
+                
+                $settings['clipboard_paste_remove_tags']                = $wf->getParam('clipboard.paste_remove_tags', '', '');
+                $settings['clipboard_paste_keep_tags']                = $wf->getParam('clipboard.paste_keep_tags', '', '');
+                $settings['clipboard_paste_filter']                     = $wf->getParam('clipboard.paste_filter', '', '');
 	}
 }
 ?>

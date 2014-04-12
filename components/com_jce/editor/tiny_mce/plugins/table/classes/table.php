@@ -53,7 +53,6 @@ class WFTablesPlugin extends WFEditorPlugin {
         $profile = $this->getProfile();
 
         $settings = array(
-            'context' => $this->getContext(),
             'file_browser' => $this->getParam('file_browser', 1) && in_array('browser', explode(',', $profile->plugins)),
         );
 

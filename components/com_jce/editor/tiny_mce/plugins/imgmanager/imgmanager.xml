@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <install version="2.0" type="plugin" plugin="imgmanager" core="1" editable="1">
     <name>WF_IMGMANAGER_TITLE</name>
-    <version>2.3.2.4</version>
-    <creationDate>27 March 2013</creationDate>
+    <version>2.3.4.4</version>
+    <creationDate>12 December 2013</creationDate>
     <author>Ryan Demmer</author>
     <authorEmail>info@joomlacontenteditor.net</authorEmail>
     <authorUrl>http://www.joomlacontenteditor.net/</authorUrl>
@@ -121,7 +121,7 @@
             <option value="left">WF_OPTION_ALIGN_LEFT</option>
             <option value="right">WF_OPTION_ALIGN_RIGHT</option>
         </param>
-        <param name="always_include_dimensions" type="radio" default="1" label="WF_IMGMANAGER_PARAM_ALWAYS_INCLUDE_DIMENSIONS" description="WF_IMGMANAGER_PARAM_ALWAYS_INCLUDE_DIMENSIONS_DESC">
+        <param name="always_include_dimensions" type="radio" default="0" label="WF_IMGMANAGER_PARAM_ALWAYS_INCLUDE_DIMENSIONS" description="WF_IMGMANAGER_PARAM_ALWAYS_INCLUDE_DIMENSIONS_DESC">
             <option value="1">WF_OPTION_YES</option>
             <option value="0">WF_OPTION_NO</option>
         </param>
@@ -197,7 +197,7 @@
             <option value="0">WF_OPTION_NO</option>
         </param>
         
-        <param name="dragdrop_upload" type="radio" default="1" label="WF_PARAM_DRAPDROP_UPLOAD" description="WF_PARAM_DRAPDROP_UPLOAD_DESC">
+        <param name="inline_upload" type="radio" default="1" label="WF_PARAM_INLINE_UPLOAD" description="WF_PARAM_INLINE_UPLOAD_DESC">
             <option value="1">WF_OPTION_YES</option>
             <option value="0">WF_OPTION_NO</option>
         </param>

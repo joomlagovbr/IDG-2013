@@ -32,22 +32,18 @@ class WFElementFilesystem extends WFElement {
 
         // create a unique id
         $id = preg_replace('#([^a-z0-9_-]+)#i', '', $control_name . 'filesystem' . $name);
-
-        // add javascript if element has parameters
-        if ((string) $node->attributes()->parameters) {
-            $document = JFactory::getDocument();
-            $document->addCustomTag('<script type="text/javascript">$jce.Parameter.add("#' . $id . '", "filesystem");</script>');
-        }
+        
+        $attribs = array('class="parameter-nested-parent"');
 
         // path to directory
         $path = WF_EDITOR_EXTENSIONS . '/filesystem';
 
         $filter = '\.xml$';
-        $files = JFolder::files($path, $filter, false, true);
+        $files  = JFolder::files($path, $filter, false, true, array('build.xml'));
 
         $options = array();
 
-        if (!$node->attributes('exclude_default')) {
+        if ((bool) $node->attributes()->exclude_default === false) {
             $options[] = JHTML::_('select.option', '', WFText::_('WF_OPTION_NOT_SET'));
         }
 
@@ -55,19 +51,19 @@ class WFElementFilesystem extends WFElement {
             foreach ($files as $file) {
                 // load language file
                 $language->load('com_jce_filesystem_' . basename($file, '.xml'), JPATH_SITE);
-                $xml = WFXMLHelper::parseInstallManifest($file);
-                $options[] = JHTML::_('select.option', basename($file, '.xml'), WFText::_($xml['name']));
+                $xml        = WFXMLHelper::parseInstallManifest($file);
+                $options[]  = JHTML::_('select.option', basename($file, '.xml'), WFText::_($xml['name']));
             }
         }
         
-        // if a group is sepcified, setup to be an object
+        // if a group is specified, setup to be an object
         if ((string) $node->attributes()->group) {
             $name = $control_name . '[filesystem][' . $name . ']';
         } else {
             $name = $control_name . '[filesystem]';
         }
 
-        return JHTML::_('select.genericlist', $options, $name, 'class="inputbox"', 'value', 'text', $value, $id);
+        return JHTML::_('select.genericlist', $options, $name, implode(' ', $attribs), 'value', 'text', $value, $id);
     }
 
 }

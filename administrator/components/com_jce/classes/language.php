@@ -13,35 +13,62 @@ defined('_JEXEC') or die('RESTRICTED');
 
 class WFLanguageParser extends JObject {
 
-    protected $mode         = 'editor';
-    protected $plugins      = array();
-    protected $sections     = array();
+    protected $mode = 'editor';
+    protected $plugins = array();
+    protected $sections = array();
 
     function __construct($config = array()) {
-        
+
         if (array_key_exists('plugins', $config)) {
             $config['plugins'] = (array) $config['plugins'];
         }
-        
+
         if (array_key_exists('sections', $config)) {
             $config['sections'] = (array) $config['sections'];
         }
-        
+
         $this->setProperties($config);
+    }
+
+    protected static function object_to_array($data) {
+        if (is_array($data) || is_object($data)) {
+            $result = array();
+            foreach ($data as $key => $value) {
+                if (is_string($value)) {
+                    $value = str_replace(array("\n", "\r"), array('\n', '\r'), $value);
+                }
+
+                $result[$key] = self::object_to_array($value);
+            }
+            return $result;
+        }
+        return $data;
     }
 
     protected static function processLanguageINI($files, $sections = array(), $filter = '') {
         $data = array();
 
         foreach ((array) $files as $file) {
-            $ini = @parse_ini_file($file, true);
+            $ini = false;
+
+            $content = file_get_contents($file);
+
+            if ($content) {
+                if (function_exists('parse_ini_string')) {
+                    $ini = @parse_ini_string($content, true);
+                } else {
+                    $registry = JRegistryFormat::getInstance('INI');
+                    $obj = $registry->stringToObject($content, true);
+                    $ini = self::object_to_array($obj);
+                }
+            }
 
             if ($ini && is_array($ini)) {
                 // only include these keys
                 if (!empty($sections)) {
                     $ini = array_intersect_key($ini, array_flip($sections));
                 }
-                
+
                 // filter keys by regular expression
                 if ($filter) {
                     foreach (array_keys($ini) as $key) {
@@ -78,10 +105,19 @@ class WFLanguageParser extends JObject {
                         // key to lowercase
                         $k = strtolower($k);
 
+                        // get position of the section name in the key if any
+                        $pos = strpos($k, $key . '_');
+
+                        // remove the section name
+                        if ($pos === 0) {
+                            $k = substr($k, strlen($key) + 1);
+                        }
+
                         // hex colours to uppercase and remove marker
                         if (strpos($k, 'hex_') !== false) {
                             $k = strtoupper(str_replace('hex_', '', $k));
                         }
+
                         // create key/value pair as JSON string
                         $output .= '"' . $k . '":' . $v . ',';
 
@@ -106,19 +142,19 @@ class WFLanguageParser extends JObject {
             case 'editor':
                 return '(dlg|_dlg)$';
                 break;
-            case 'plugin':                
+            case 'plugin':
                 return '';
                 break;
         }
     }
-    
+
     public function load($files = array()) {
         // get the language file
-        $language   = JFactory::getLanguage();
+        $language = JFactory::getLanguage();
         // get language tag
-        $tag        = $language->getTag();
+        $tag = $language->getTag();
         // base language path
-        $path       = JPATH_SITE . '/language/' . $tag;
+        $path = JPATH_SITE . '/language/' . $tag;
 
         // if no file set
         if (empty($files)) {
@@ -162,17 +198,17 @@ class WFLanguageParser extends JObject {
                 }
             }
         }
-        
-        $sections   = $this->get('sections');
-        $filter     = $this->getFilter();
 
-        $data   = self::processLanguageINI($files, $sections, $filter);
+        $sections = $this->get('sections');
+        $filter = $this->getFilter();
+
+        $data = self::processLanguageINI($files, $sections, $filter);
         // shorten the tag, eg: en-GB -> en
-        $tag    = substr($tag, 0, strpos($tag, '-'));
-        
+        $tag = substr($tag, 0, strpos($tag, '-'));
+
         // clean data
         $data = rtrim(trim($data), ',');
-        
+
         return 'tinyMCE.addI18n({"' . $tag . '":{' . $data . '}});';
     }
 
@@ -183,13 +219,22 @@ class WFLanguageParser extends JObject {
             header("Content-type: application/javascript; charset: UTF-8");
             header("Vary: Accept-Encoding");
 
-            // expires after 7 days
-            $expires = 60 * 60 * 24 * 7;
+            // expires after 2 days
+            $expires = 60 * 60 * 24 * 2;
 
             header("Cache-Control: maxage=" . $expires);
 
             // Handle proxies
             header("Expires: " . gmdate("D, d M Y H:i:s", time() + $expires) . " GMT");
+
+            // get content hash
+            $hash = hash('md5', $data);
+
+            // set etag header
+            header("ETag: \"{$hash}\"");
+
+            // set content length
+            header("Content-Length: " . strlen($data));
 
             echo $data;
 

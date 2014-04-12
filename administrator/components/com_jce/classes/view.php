@@ -56,16 +56,16 @@ class WFView extends WFViewBase {
         $model      = new WFModel();
         
         foreach ($this->stylesheets as $style) {
-            if (strpos($style, '?version=') === false || strpos($style, '?v=') === false) {
-                $style .= '?v=' . $model->getVersion();
+            if (strpos($style, '?version=') === false || strpos($style, '?etag=') === false) {
+                $style .= '?' . md5(basename($style) . $model->getVersion());
             }
 
             $document->addCustomTag($tab . '<link rel="stylesheet" href="' . $style . '" type="text/css" />' . $end);
         }
         
         foreach ($this->scripts as $script) {
-            if (strpos($script, '?version=') === false || strpos($script, '?v=') === false) {
-                $script .= '?v=' . $model->getVersion();
+            if (strpos($script, '?version=') === false || strpos($script, '?etag=') === false) {
+                $script .= '?' . md5(basename($script) . $model->getVersion());
             }
             
             $document->addCustomTag($tab . '<script src="' . $script . '" type="text/javascript"></script>' . $end);

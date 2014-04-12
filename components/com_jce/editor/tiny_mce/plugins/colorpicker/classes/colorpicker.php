@@ -15,28 +15,20 @@ require_once( WF_EDITOR_LIBRARIES . '/classes/plugin.php' );
 
 class WFColorpickerPlugin extends WFEditorPlugin {
     
+    /**
+     * @access	protected
+     */
+    public function __construct() {
+        parent::__construct(array('colorpicker' => true));
+    }
+    
     public function display() {
         parent::display();
 
         $document = WFDocument::getInstance();
 
-        $document->addScript(array('colorpicker'), 'libraries');
         $document->addScript(array('colorpicker'), 'plugins');
         $document->addStyleSheet(array('colorpicker'), 'plugins');
-        
-        $document->addScriptDeclaration('ColorPicker.settings=' . json_encode($this->getSettings()) . ';');
-    }
-
-    public function getSettings() {
-        
-        wfimport('admin.helpers.tools');
-        
-        $settings = array(
-            'template_colors'   => WFToolsHelper::getTemplateColors(),
-            'custom_colors'     => $this->getParam('editor.custom_colors', '')
-        );
-        
-        return parent::getSettings($settings);
     }
 }
 

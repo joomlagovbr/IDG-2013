@@ -35,7 +35,7 @@ class EnchantSpell extends SpellChecker {
 			return $returnData;
 			enchant_broker_free_dict($d);
 		} else {
-
+                    $this->throwError("Language not installed");
 		}
 		enchant_broker_free($r);
 	}
@@ -57,7 +57,7 @@ class EnchantSpell extends SpellChecker {
 
 			enchant_broker_free_dict($d);
 		} else {
-
+                    $this->throwError("Language not installed");
 		}
 		enchant_broker_free($r);
 

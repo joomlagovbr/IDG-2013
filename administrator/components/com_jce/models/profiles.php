@@ -546,7 +546,7 @@ class WFModelProfiles extends WFModel {
             return 'mceListBox';
         }
 
-        if (in_array($icon, array('paste', 'numlist', 'bullist', 'forecolor', 'backcolor', 'spellchecker', 'textcase'))) {
+        if (in_array($icon, array('numlist', 'bullist', 'forecolor', 'backcolor', 'spellchecker', 'textcase'))) {
             return 'mceSplitButton';
         }
 

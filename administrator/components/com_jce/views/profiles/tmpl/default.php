@@ -13,10 +13,12 @@ defined('_JEXEC') or die('RESTRICTED');
 ?>
 <form enctype="multipart/form-data" action="index.php" method="post" name="adminForm" id="adminForm" class="form-horizontal">
     <div id="jce" class="loading">
+        <div class="progress progress-striped active">
+            <div class="bar" style="width: 100%;"><?php echo JText :: _('WF_MESSAGE_LOAD');?></div>
+        </div>
         <fieldset id="filter-bar" class="btn-toolbar">
             <div class="filter-search btn-group pull-left fltlft">
-                <label for="search" class="element-invisible"><?php echo WFText::_('WF_LABEL_SEARCH'); ?></label>
-                <input type="text" name="search" id="search" size="30" value="<?php echo $this->lists['search']; ?>" class="text_area" onchange="document.adminForm.submit();" placeholder="" />
+                <input type="text" name="search" id="search" size="30" value="<?php echo $this->lists['search']; ?>" class="text_area" onchange="document.adminForm.submit();" placeholder="<?php echo WFText::_('WF_LABEL_SEARCH'); ?>" />
             </div>
             <div class="btn-group fltlft">
                 <button id="filter_go" onclick="this.form.submit();" class="btn" title="<?php echo WFText::_('WF_LABEL_SEARCH'); ?>"><i class="icon-search"></i>&nbsp;<?php echo WFText::_('WF_LABEL_SEARCH'); ?></button>
@@ -24,7 +26,6 @@ defined('_JEXEC') or die('RESTRICTED');
             </div>
             <div class="filter-search fltrt btn-group pull-right visible-desktop">
                 <div class="upload-container btn-group pull-right">
-                    <label for="import" class="element-invisible"><?php echo WFText::_('WF_PROFILES_IMPORT'); ?></label>
                     <div class="input-append upload_button_container">
                         <input type="file" name="import" size="30" id="upload" accept="application/xml" placeholder="<?php echo WFText::_('WF_PROFILES_IMPORT'); ?>" />
                         <button id="upload_button" class="btn upload-import"><i class="icon-arrow-up"></i>&nbsp;<?php echo WFText::_('WF_PROFILES_IMPORT_IMPORT'); ?></button>
@@ -33,20 +34,20 @@ defined('_JEXEC') or die('RESTRICTED');
             </div>
         </fieldset>
         <div class="clr clearfix"></div>
-        <table id="profiles-list" class="adminlist table table-striped" style="position: relative;">
+        <table id="profiles-list" class="table table-striped" style="position: relative;">
             <thead>
                 <tr>
                     <th class="hidden-phone"></th>
                     <th>
                         <input type="checkbox" value="" />
                     </th>
-                    <th class="title">
+                    <th>
                         <?php echo JHTML::_('grid.sort', 'WF_PROFILES_NAME', 'p.name', @$this->lists['order_Dir'], @$this->lists['order']); ?>
                     </th>
-                    <th nowrap="nowrap">
+                    <th>
                         <?php echo JHTML::_('grid.sort', 'WF_PROFILES_STATE', 'p.published', @$this->lists['order_Dir'], @$this->lists['order']); ?>
                     </th>
-                    <th nowrap="nowrap">
+                    <th>
                         <?php echo JHTML::_('grid.sort', 'WF_PROFILES_ORDERING', 'p.ordering', @$this->lists['order_Dir'], @$this->lists['order']); ?>
                         <?php
                         if (count($this->rows) > 1) {
@@ -54,7 +55,7 @@ defined('_JEXEC') or die('RESTRICTED');
                         }
                         ?>
                     </th>
-                    <th nowrap="nowrap" class="title">
+                    <th>
                         <?php echo JHTML::_('grid.sort', 'WF_LABEL_ID', 'p.id', @$this->lists['order_Dir'], @$this->lists['order']); ?>
                     </th>
                 </tr>
@@ -73,6 +74,7 @@ defined('_JEXEC') or die('RESTRICTED');
                     
                     $profile = JTable::getInstance('profiles', 'WFTable');
                     $profile->bind($row);
+                    $profile->editor = null;
 
                     $link = JRoute::_('index.php?option=com_jce&view=profiles&task=edit&cid[]=' . $row->id);
 
@@ -84,8 +86,8 @@ defined('_JEXEC') or die('RESTRICTED');
                     ?>
                     <tr>
                         <td class="order nowrap center hidden-phone">
-                            <span class="sortable-handle ui-icon ui-icon-grip-dotted-vertical">
-                                <i class="icon-menu"></i>
+                            <span class="sortable-handle">
+                                <i class="icon-th"></i>
                             </span>
                         </td>
                         <td align="center">
@@ -108,10 +110,10 @@ defined('_JEXEC') or die('RESTRICTED');
                         </td>
                         <td class="order" align="center">
                             <span class="order-up">
-                                <a title="<?php echo WFText::_('WF_PROFILES_MOVE_UP');?>" href="#" class="btn btn-micro jgrid"><span class="state uparrow"></span><i class="icon-uparrow"></i></a>
+                                <a title="<?php echo WFText::_('WF_PROFILES_MOVE_UP');?>" href="#" class="btn btn-micro jgrid"><i class="icon-uparrow icon-chevron-up"></i></a>
                             </span>
                             <span class="order-down">
-                                <a title="<?php echo WFText::_('WF_PROFILES_MOVE_DOWN');?>" href="#" class="btn btn-micro jgrid"><span class="state downarrow"></span><i class="icon-downarrow"></i></a>
+                                <a title="<?php echo WFText::_('WF_PROFILES_MOVE_DOWN');?>" href="#" class="btn btn-micro jgrid"><i class="icon-downarrow icon-chevron-down"></i></a>
                             </span>
                             <?php $disabled = $n > 1 ? '' : 'disabled="disabled"'; ?>
                             <input type="text" name="order[]" size="5" value="<?php echo $row->ordering; ?>" <?php echo $disabled ?> class="text_area" style="text-align: center" />

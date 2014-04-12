@@ -65,6 +65,7 @@ defined('_JEXEC') or die('RESTRICTED');
                 </div>
                 <div>
                     <?php echo $this->lists['components']; ?>
+                    <input type="hidden" name="components[]" value="" />
                 </div>
             </span>
         </li>

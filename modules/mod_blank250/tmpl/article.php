@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 $article="";
 
 // 1.  title retrieval
-$db=& JFactory::getDBO();
+$db=JFactory::getDBO();
 if (($contenttitleuse==1)&&($itemid !="a")){
     $db->setQuery('SELECT * FROM `#__content` WHERE `id`= '.$itemid.' ORDER BY `id`');
     $contents = $db->loadObjectList();

@@ -29,18 +29,14 @@ class WFElementMediaplayer extends WFElement {
 
         // path to images directory
         $path = WF_EDITOR . '/extensions/mediaplayer';
-        $files = JFolder::files($path, '\.xml', false, true);
+        $files = JFolder::files($path, '\.xml', false, true, array('build.xml'));
+        
+        $attribs = array('class="parameter-nested-parent"');
 
         $language = JFactory::getLanguage();
 
         // create unique id
         $id = preg_replace('#([^a-z0-9_-]+)#i', '', $control_name . 'mediaplayer' . $name);
-
-        // add javascript if element has parameters
-        if ((string) $node->attributes()->parameters) {
-            $document = JFactory::getDocument();
-            $document->addCustomTag('<script type="text/javascript">$jce.Parameter.add("#' . $id . '", "mediaplayer");</script>');
-        }
 
         $options = array();
 
@@ -55,7 +51,7 @@ class WFElementMediaplayer extends WFElement {
             }
         }
 
-        return JHTML::_('select.genericlist', $options, '' . $control_name . '[mediaplayer][' . $name . ']', 'class="inputbox"', 'value', 'text', $value, $id);
+        return JHTML::_('select.genericlist', $options, '' . $control_name . '[mediaplayer][' . $name . ']', implode(' ', $attribs), 'value', 'text', $value, $id);
     }
 
 }

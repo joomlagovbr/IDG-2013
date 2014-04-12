@@ -28,6 +28,10 @@ wfimport('editor.libraries.classes.request');
  */
 class WFEditorPlugin extends JObject {
 
+    // Editor Plugin instance
+    private static $instance;
+    
+    // array of alerts
     private $_alerts = array();
 
     /**
@@ -96,14 +100,12 @@ class WFEditorPlugin extends JObject {
      * @return	JCE  The editor object.
      * @since	1.5
      */
-    public function getInstance($config = array()) {
-        static $instance;
-
-        if (!is_object($instance)) {
-            $instance = new WFEditorPlugin($config);
+    public static function getInstance($config = array()) {
+        if (!isset(self::$instance)) {
+            self::$instance = new WFEditorPlugin($config);
         }
 
-        return $instance;
+        return self::$instance;
     }
 
     /**
@@ -117,11 +119,11 @@ class WFEditorPlugin extends JObject {
         if (!is_object($view)) {
             // create plugin view
             $view = new WFView(array(
-                        'view_path' => $this->get('base_path'),
-                        'template_path' => $this->get('template_path'),
-                        'name' => $this->get('name'),
-                        'layout' => $this->get('layout')
-                    ));
+                'view_path' => $this->get('base_path'),
+                'template_path' => $this->get('template_path'),
+                'name' => $this->get('name'),
+                'layout' => $this->get('layout')
+            ));
         }
 
         $view->assign('plugin', $this);
@@ -145,9 +147,34 @@ class WFEditorPlugin extends JObject {
 
         return $wf->getProfile($plugin);
     }
+    
+    protected function getPluginVersion() {
+        $manifest = WF_EDITOR_PLUGIN . '/' . $this->get('name') . '.xml';
+        
+        $version = '';
+            
+        if (is_file($manifest)) {
+            $xml = WFXMLHelper::parseInstallManifest($manifest);
+
+            if ($xml && isset($xml['version'])) {
+                $version = $xml['version'];
+            }
+        }
+        
+        if ($version) {
+            $version = preg_replace('#[^a-z0-9]+#i', '', $version);
+        }
+        
+        return $version;
+    }
 
     public function execute() {
         WFToken::checkToken() or die('Access to this resource is restricted');
+        
+        // load core language
+        WFLanguage::load('com_jce', JPATH_ADMINISTRATOR);
+        // Load Plugin language
+        WFLanguage::load('com_jce_' . trim($this->getName()));
 
         // JSON request or upload action
         if ($this->isRequest()) {
@@ -173,27 +200,12 @@ class WFEditorPlugin extends JObject {
                 $parser->output($data);
             }
 
-            // load core language
-            WFLanguage::load('com_jce', JPATH_ADMINISTRATOR);
-            // Load Plugin language
-            WFLanguage::load('com_jce_' . trim($this->getName()));
-            
             // set default plugin version
-            $plugin_version = '';
-            
-            $manifest = WF_EDITOR_PLUGIN . '/' . $name . '.xml';
-            
-            if (is_file($manifest)) {
-                $xml = WFXMLHelper::parseInstallManifest($manifest);
-                
-                if ($xml && isset($xml['version'])) {
-                    $plugin_version = $xml['version'];
-                }
-            }
+            $plugin_version = $this->getPluginVersion();
 
             // add plugin version
-            if ($plugin_version) {
-                $version .= '-' . preg_replace('#[^a-z0-9]+#i', '', $plugin_version);
+            if ($plugin_version && $plugin_version != $version) {
+                $version .= '-' . $plugin_version;
             }
 
             // create the document
@@ -247,10 +259,9 @@ class WFEditorPlugin extends JObject {
 
         // add colorpicker
         if ($this->get('colorpicker')) {
-            wfimport('admin.helpers.tools');
-
+            $wf = WFEditor::getInstance();
+            
             $document->addScript(array('colorpicker'), 'libraries');
-            $document->addScriptDeclaration('ColorPicker.settings=' . json_encode(array('template_colors' => WFToolsHelper::getTemplateColors(), 'custom_colors' => $this->getParam('editor.custom_colors', ''))) . ';');
         }
 
         $document->addScript(array(
@@ -259,19 +270,6 @@ class WFEditorPlugin extends JObject {
             'tips',
             'plugin'
         ), 'libraries');
-
-        // load plugin dialog language file if necessary
-        if ($this->getParam('editor.compress_javascript', 0)) {
-            $file = "/langs/" . WFLanguage::getCode() . "_dlg.js";
-
-            if (!JFile::exists(WF_EDITOR_PLUGIN . $file)) {
-                $file = "/langs/en_dlg.js";
-            }
-
-            if (JFile::exists(WF_EDITOR_PLUGIN . $file)) {
-                $document->addScript(array('plugins/' . $this->getName() . $file), 'tiny_mce');
-            }
-        }
 
         $document->addStyleSheet(array('plugin'), 'libraries');
         

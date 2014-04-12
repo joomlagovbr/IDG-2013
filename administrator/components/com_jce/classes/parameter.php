@@ -303,15 +303,12 @@ class WFParameter {
      * @since   2.2.5
      */
     public function getGroups() {
-        if (!is_array($this->xml)) {
-
-            return false;
-        }
-
         $results = array();
         
-        foreach ($this->xml as $name => $group) {
-            $results[] = $name;//$this->getNumParams($name);
+        if (is_array($this->xml)) {
+            foreach ($this->xml as $name => $group) {
+                $results[] = $name;//$this->getNumParams($name);
+            }
         }
         
         return $results;
@@ -485,7 +482,7 @@ class WFParameter {
         return $element->render($node, $value, $control_name);
     }
 
-    private function _cleanAttribute($matches) {
+    private function cleanAttribute($matches) {
         return $matches[1] . '="' . preg_replace('#([^\w]+)#i', '', $matches[2]) . '"';
     }
 
@@ -498,7 +495,7 @@ class WFParameter {
 
             foreach ($params as $item) {
                 //if (is_a($item, 'WFParameter')) {
-                if ($item instanceof WFParameter) {
+                if ($item instanceof WFParameter) {                    
                     foreach ($item->getGroups() as $group) {
                         $label = $group;
                         $class = '';
@@ -508,19 +505,16 @@ class WFParameter {
 
                         if ((string) $xml->attributes()->parent) {
                             $parent = '[' . (string) $xml->attributes()->parent . '][' . $group . ']';
-                            $class = ' class="' . (string) $xml->attributes()->parent . '"';
-                            $label = (string) $xml->attributes()->parent . '_' . $group;
+                            $label  = (string) $xml->attributes()->parent . '_' . $group;
                         }
 
-                        $html .= '<div data-type="' . $group . '"' . $class . '>';
-                        $html .= '<h4>' . WFText::_('WF_' . strtoupper($label) . '_TITLE') . '</h4>';
-                        //$html .= $item->render($name . '[' . $parent . '][' . $group . ']', $group);
+                        $html .= '<div data-parameter-nested-item="' . $group . '">';
                         $html .= $item->render($name . $parent, $group);
                         $html .= '</div>';
                     }
                 } else {
-                    $label = preg_replace_callback('#(for|id)="([^"]+)"#', array($this, '_cleanAttribute'), $item[0]);
-                    $element = preg_replace_callback('#(id)="([^"]+)"#', array($this, '_cleanAttribute'), $item[1]);
+                    $label      = preg_replace_callback('#(for|id)="([^"]+)"#', array($this, 'cleanAttribute'), $item[0]);
+                    $element    = preg_replace_callback('#(id)="([^"]+)"#', array($this, 'cleanAttribute'), $item[1]);
 
                     $html .= '<li>' . $label . $element;
                 }
@@ -545,7 +539,7 @@ class WFParameter {
         return false;
     }
 
-    public static function mergeParams($params1, $params2, $toObject = true) {
+    public static function mergeParams($params1 = array(), $params2 = array(), $toObject = true) {
         $merged = $params1;
 
         foreach ($params2 as $key => $value) {

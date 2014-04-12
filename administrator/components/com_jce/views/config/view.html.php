@@ -17,23 +17,34 @@ wfimport('admin.classes.view');
 class WFViewConfig extends WFView
 {
     function display($tpl = null)
-    {        
-        $db =JFactory::getDBO();
-        
+    {                
         $language =JFactory::getLanguage();
         $language->load('plg_editors_jce', JPATH_ADMINISTRATOR);
         
         $client = JRequest::getWord('client', 'site');
 
-        $model =$this->getModel();
+        $model = $this->getModel();
+
+        $plugin     = WFExtensionHelper::getPlugin();
+        $xml        = WF_EDITOR_LIBRARIES.'/xml/config/editor.xml';
         
-        $lists = array();
-        
-        $component 	= WFExtensionHelper::getComponent();        
-        $xml 		= WF_EDITOR_LIBRARIES.'/xml/config/editor.xml';
+        $data       = null;
+
+        // get params from editor plugin
+        if ($plugin->params && $plugin->params !== "{}") {
+            $data = json_decode($plugin->params);
+        } else {
+            $component  = WFExtensionHelper::getComponent();
+            
+            // get params from component "params" field (legacy)
+            if ($component->params) {
+                $data = json_decode($component->params);
+            }
+        }
         
         // get params definitions
-        $params = new WFParameter($component->params, $xml, 'editor');      
+        $params = new WFParameter($data, $xml, 'editor');
+             
         $params->addElementPath(JPATH_COMPONENT.'/elements');
         
         $this->assign('model', 	$model);

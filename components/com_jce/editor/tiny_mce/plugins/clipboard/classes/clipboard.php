@@ -22,14 +22,22 @@ class WFClipboardPlugin extends WFEditorPlugin
 		parent::display();
 
 		$document = WFDocument::getInstance();
+                
+                // get command, eg: mcePaste, mcePasteText
+                $cmd = JRequest::getCmd('cmd', 'paste');
+                
+                // remove mce prefix
+                $cmd = str_replace('mce', '', $cmd);
+                
+                // set title
+                $document->setTitle(WFText::_('WF_' . strtoupper($cmd) . '_TITLE'));
 
 		$document->addScript(array('clipboard'), 'plugins');
 		$document->addStyleSheet(array('clipboard'), 'plugins');
 	}
 	
-	function getSettings()
-	{
-		$settings = array();		
+	public function getSettings($settings = array())
+	{		
 		return parent::getSettings($settings);
 	}
 }

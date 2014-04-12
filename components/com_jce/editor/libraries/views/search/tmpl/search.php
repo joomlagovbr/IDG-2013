@@ -29,7 +29,7 @@ defined('_JEXEC') or die('RESTRICTED');
                 <?php echo $this->lists['ordering']; ?>
             </div>
         </fieldset>
-        <fieldset class="only">
+        <fieldset class="search_only">
             <legend><?php echo JText::_('WF_SEARCH_SEARCH_ONLY'); ?></legend>
             <ul>
             <?php

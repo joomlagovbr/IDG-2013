@@ -34,7 +34,7 @@ class JoomlalinksMenu extends JObject {
      * @return	JCE  The editor object.
      * @since	1.5
      */
-    function & getInstance() {
+    function getInstance() {
         static $instance;
 
         if (!is_object($instance)) {
@@ -64,8 +64,8 @@ class JoomlalinksMenu extends JObject {
                 $types = self::_types();
                 foreach ($types as $type) {
                     $items[] = array(
-                        'id'    => 'index.php?option=com_menu&view=menu&type=' . $type->id,
-                        'name'  => $type->title,
+                        'id' => 'index.php?option=com_menu&view=menu&type=' . $type->id,
+                        'name' => $type->title,
                         'class' => 'folder menu nolink'
                     );
                 }
@@ -81,6 +81,8 @@ class JoomlalinksMenu extends JObject {
 
                     $class = array();
 
+                    $params = defined('JPATH_PLATFORM') ? new JRegistry($menu->params) : new JParameter($menu->params);
+
                     switch ($menu->type) {
                         case 'separator':
                             if (!$menu->link) {
@@ -91,8 +93,6 @@ class JoomlalinksMenu extends JObject {
                             break;
 
                         case 'alias':
-                            $params = new JRegistry($menu->params);
-
                             // If this is an alias use the item id stored in the parameters to make the link.
                             $link = 'index.php?Itemid=' . $params->get('aliasoptions');
                             break;
@@ -111,10 +111,14 @@ class JoomlalinksMenu extends JObject {
                     } else {
                         $class[] = 'file';
                     }
+                    
+                    if ($params->get('secure')) {
+                        $link = self::toSSL($link);
+                    }
 
                     $items[] = array(
                         'id' => $children ? 'index.php?option=com_menu&view=menu&id=' . $menu->id : $link,
-                        'url' => $link,
+                        'url' => self::route($link),
                         'name' => $title . ' / ' . $menu->alias,
                         'class' => implode(' ', $class)
                     );
@@ -130,11 +134,18 @@ class JoomlalinksMenu extends JObject {
 
                     $title = isset($menu->name) ? $menu->name : $menu->title;
 
+                    // get params
+                    $params = defined('JPATH_PLATFORM') ? new JRegistry($menu->params) : new JParameter($menu->params);
+
                     // resolve link
                     $link = self::_resolveLink($menu);
+                    
+                    if ($params->get('secure')) {
+                        $link = self::toSSL($link);
+                    }
 
                     $items[] = array(
-                        'id' => $link,
+                        'id' => self::route($link),
                         'name' => $title . ' / ' . $menu->alias,
                         'class' => $children ? 'folder menu' : 'file'
                     );
@@ -143,8 +154,30 @@ class JoomlalinksMenu extends JObject {
         }
         return $items;
     }
+    
+    /**
+     * Convert link to SSL
+     * @param type $link
+     * @return string
+     */
+    private static function toSSL($link) {
+        if (strcasecmp(substr($link, 0, 4), 'http') && (strpos($link, 'index.php?') !== false)) {
+            $uri = JURI::getInstance();
 
-    private function _resolveLink($menu) {
+            // Get prefix
+            $prefix = $uri->toString(array('host', 'port'));
+
+            // trim slashes
+            $link = trim($link, '/');
+
+            // Build the URL.
+            $link = 'https://' . $prefix . '/' . $link;
+        }
+        
+        return $link;
+    }
+
+    private static function _resolveLink($menu, $secure) {
         $wf = WFEditorPlugin::getInstance();
 
         // get link from menu object
@@ -195,7 +228,7 @@ class JoomlalinksMenu extends JObject {
 
         $db->setQuery($query, 0);
         $params = new JRegistry($db->loadResult());
-        
+
         $query->clear();
 
         if (is_object($query)) {
@@ -242,8 +275,8 @@ class JoomlalinksMenu extends JObject {
     }
 
     private function _menu($parent = 0, $type = 0) {
-        $db     = JFactory::getDBO();
-        $user   = JFactory::getUser();
+        $db = JFactory::getDBO();
+        $user = JFactory::getUser();
 
         $query = $db->getQuery(true);
 
@@ -254,7 +287,7 @@ class JoomlalinksMenu extends JObject {
                 $query->innerJoin('#__menu_types AS s ON s.id = ' . (int) $type);
                 $query->where('m.menutype = s.menutype');
             }
-            
+
             if ($parent == 0) {
                 $parent = 1;
             }
@@ -281,6 +314,16 @@ class JoomlalinksMenu extends JObject {
 
         $db->setQuery($query, 0);
         return $db->loadObjectList();
+    }
+    
+    private static function route($url) {
+        $wf = WFEditorPlugin::getInstance();
+        
+        if ($wf->getParam('links.joomlalinks.sef_url', 0)) {
+            $url = WFLinkExtension::route($url);
+        }
+        
+        return $url;
     }
 
 }

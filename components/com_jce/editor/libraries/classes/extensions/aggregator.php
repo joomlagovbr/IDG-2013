@@ -15,11 +15,6 @@ class WFAggregatorExtension extends WFExtension {
 
     protected static $instance;
 
-    /*
-     *  @var varchar
-     */
-    private $extensions = array();
-
     /**
      * Constructor activating the default information of the class
      *

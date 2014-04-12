@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<install version="2.1" type="extension" extension="k2links" folder="links" method="upgrade" core="0">
+	<name>K2 Links for JCE Link</name>
+	<version>2.2</version>
+	<creationDate>31 January 2013</creationDate>
+	<author>Nicholas K. Dionysopoulos</author>
+	<authorEmail>nicholas@dionysopoulos.me</authorEmail>
+	<authorUrl>http://www.dionysopoulos.me</authorUrl>
+	<copyright>Copyright (C) 2009 - 2013 Nicholas K. Dionysopoulos. All Rights Reserved.</copyright>
+	<license>GNU GPL v.3 or later</license>
+	<description>K2 Links for JCE 2.0</description>
+	<files>
+		<filename>k2links.php</filename>
+		<filename>k2links/index.html</filename>
+		<filename>k2links/k2.php</filename>
+		<filename>k2links/tags.php</filename>
+	</files>
+	<params group="k2links">
+            <param name="k2" type="list" default="1" label="Category links" description="Allows you to browse K2 categories and link to them or their items">
+        	<option value="1">WF_OPTION_YES</option>
+        	<option value="0">WF_OPTION_NO</option>
+            </param>
+            <param name="tags" type="list" default="1" label="Tag links" description="Allows you to browse K2 tags and link to them or their items">
+        	<option value="1">WF_OPTION_YES</option>
+        	<option value="0">WF_OPTION_NO</option>
+            </param>
+	</params>
+	<plugins></plugins>
+</install>

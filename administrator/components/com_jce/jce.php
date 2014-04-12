@@ -62,10 +62,6 @@ switch ($view) {
             $app->redirect('index.php', WFText::_('ALERTNOTAUTH'), 'error');
         }
 
-        if ($view == 'cpanel') {
-            $view = 'manage';
-        }
-
         // Authorise
         $controller->authorize($view);
         // check state of extension

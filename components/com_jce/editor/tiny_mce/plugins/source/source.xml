@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
 <install version="2.0" type="plugin" plugin="source" core="1" editable="1">
 	<name>WF_SOURCE_TITLE</name>
-	<version>2.3.2.4</version>
-	<creationDate>27 March 2013</creationDate>
+	<version>2.3.4.4</version>
+	<creationDate>12 December 2013</creationDate>
 	<author>Ryan Demmer</author>
 	<authorEmail>info@joomlacontenteditor.net</authorEmail>
 	<authorUrl>http://www.joomlacontenteditor.net/</authorUrl>
@@ -36,7 +36,8 @@
 	      <option value="0">WF_OPTION_NO</option>
 	    </param>
 	    <param name="theme" type="filelist" directory="components/com_jce/editor/tiny_mce/plugins/source/css/codemirror/theme" hide_none="true" hide_default="true" stripext="true" filter="\.css$" default="textmate" label="WF_SOURCE_THEME" description="WF_SOURCE_THEME_DESC" />
-	</params>
+            <param name="font_size" type="text" default="" label="WF_SOURCE_FONT_SIZE" description="WF_SOURCE_FONT_SIZE_DESC" placeholder="eg: 16px" />
+        </params>
 	<help>
 		<topic key="source.about" title="WF_SOURCE_HELP_ABOUT" />
 	</help>

@@ -1,4 +1,4 @@
-/* JCE Editor - 2.3.2.4 | 27 March 2013 | http://www.joomlacontenteditor.net | Copyright (C) 2006 - 2013 Ryan Demmer. All rights reserved | GNU/GPL Version 2 or later - http://www.gnu.org/licenses/gpl-2.0.html */
+/* JCE Editor - 2.3.4.4 | 12 December 2013 | http://www.joomlacontenteditor.net | Copyright (C) 2006 - 2013 Ryan Demmer. All rights reserved | GNU/GPL Version 2 or later - http://www.gnu.org/licenses/gpl-2.0.html */
 (function($){$.widget("ui.listsort",{options:{fields:{}},_init:function(){var self=this;$.each(this.options.fields,function(element,props){$(element).addClass('asc').bind('click',function(){var direction='asc';$(this).toggleClass(function(){if($(this).is('.asc')){$(this).removeClass('asc');direction='desc';}else{$(this).removeClass('desc');direction='asc';}
 return direction;});var selector=props.selector;if($.type(selector)=='string'){selector=[selector];}
 $.each(selector,function(i,s){self.sortList(s,$(element).data('sort-type'),props.attribute,direction);});});});},sortList:function(selector,type,attribute,direction){var self=this;switch(type){case'date':fn=this._sortDate;break;default:fn=this._sortCompare;break;}
@@ -12,4 +12,4 @@ if(t1>t2){r=1;}
 if(t1<t2){r=-1;}
 return r;},_sortCompare:function(a,b){if(a.value<b.value){return-1;}
 if(b.value<a.value){return 1;}
-return 0;},destroy:function(){$.Widget.prototype.destroy.apply(this,arguments);}});$.extend($.ui.listsort,{version:"2.3.2.4"});})(jQuery);
+return 0;},destroy:function(){$.Widget.prototype.destroy.apply(this,arguments);}});$.extend($.ui.listsort,{version:"2.3.4.4"});})(jQuery);

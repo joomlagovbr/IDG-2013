@@ -67,7 +67,7 @@
         <name>clipboard</name>
         <title>WF_CLIPBOARD_TITLE</title>
         <description>WF_CLIPBOARD_DESC</description>
-        <icon>cut,copy,paste</icon>
+        <icon>cut,copy,paste,pastetext</icon>
         <editable>1</editable>
         <row>2</row>
         <core>1</core>

@@ -59,10 +59,12 @@ abstract class WFToolbarHelper {
             JToolbarHelper::preferences('com_jce');
         } else {
             $bar = JToolBar::getInstance('toolbar');
+            
+            $link = 'index.php?option=com_jce&amp;view=preferences&amp;tmpl=component';
 
             $w = 780; $h = 560;
 
-            $html  = '<a href="index.php?option=com_jce&amp;view=preferences&amp;tmpl=component" target="_blank" onclick="' . self::createClick($link, $w, $h) . '" class="preferences" title="' . WFText::_('WF_PREFERENCES_TITLE') . '">';
+            $html  = '<a href="' . $link . '" target="_blank" onclick="' . self::createClick($link, $w, $h) . '" class="preferences" title="' . WFText::_('WF_PREFERENCES_TITLE') . '">';
             $html .= '<span class="icon-32-config icon-32-options" title="' . WFText::_('WF_PREFERENCES_TITLE') . '"></span>' . WFText::_('WF_PREFERENCES') . '</a>';
 
             $bar->appendButton('Custom', $html, 'config');

@@ -142,7 +142,8 @@ class plgEditorJCE extends JPlugin {
         $return = '';
         $results[] = $this->update($args);
 
-        $jui = is_dir(JPATH_SITE . '/media/jui');
+        $version = new JVersion;
+        $JOOMLA3 = (float) $version->RELEASE >= 3;
 
         foreach ($results as $result) {
             if (is_string($result) && trim($result)) {
@@ -158,7 +159,7 @@ class plgEditorJCE extends JPlugin {
              */
             $return .= "\n<div id=\"editor-xtd-buttons\"";
 
-            if ($jui) {
+            if ($JOOMLA3) {
                 $return .= " class=\"btn-toolbar pull-left\">\n\n<div class=\"btn-toolbar\"";
             }
 
@@ -174,25 +175,25 @@ class plgEditorJCE extends JPlugin {
                     $onclick = ($button->get('onclick')) ? ' onclick="' . $button->get('onclick') . '"' : ' onclick="IeCursorFix(); return false;"';
                     $title = ($button->get('title')) ? $button->get('title') : $button->get('text');
 
-                    if (!$jui) {
+                    if ((float) $version->RELEASE < 3) {
                         $return .= '<div class="button2-left"><div class="' . $button->get('name') . '">';
                     }
 
                     $return .= '<a' . $modal . ' title="' . $title . '"' . $href . $onclick . ' rel="' . $button->get('options') . '">';
                     
                     // add icon class
-                    if ($jui) {
+                    if ($JOOMLA3) {
                         $return .= '<i class="icon-' . $button->get('name') . '"></i> ';
                     }
                     
                     $return .= $button->get('text') . '</a>';
 
-                    if (!$jui) {
+                    if (!$JOOMLA3) {
                         $return .= '</div></div>';
                     }
                 }
             }
-            if ($jui) {
+            if ($JOOMLA3) {
                 $return .= "</div>\n";
             }
             $return .= "</div>\n";

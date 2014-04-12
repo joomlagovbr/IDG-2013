@@ -13,10 +13,20 @@ class WFImgmanagerPluginConfig
 {
 	public static function getConfig(&$settings)
 	{
-		$wf = WFEditor::getInstance();
-
-		$settings['imgmanager_dragdrop_upload']     = $wf->getParam('imgmanager.dragdrop_upload', 1, 0, 'boolean');
-                //$settings['imgmanager_hide_xtd_buttons']    = $wf->getParam('imgmanager.hide_xtd_buttons', 1, 0, 'boolean');
+		require_once(dirname(__FILE__) . '/imgmanager.php');
+                
+                // set plugin
+                JRequest::setVar('plugin', 'imgmanager');
+                
+                $plugin = new WFImageManagerPlugin();
+                
+                if ($plugin->getParam('inline_upload', $plugin->getParam('dragdrop_upload', 1, 0), 0)) {
+                    
+                    $settings['imgmanager_upload'] = json_encode(array(
+                        'max_size'  => $plugin->getParam('max_size', 1024),
+                        'filetypes' => $plugin->getFileTypes()
+                    ));
+                }
 	}
 }
 ?>

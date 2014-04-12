@@ -1,4 +1,4 @@
-/* JCE Editor - 2.3.2.4 | 27 March 2013 | http://www.joomlacontenteditor.net | Copyright (C) 2006 - 2013 Ryan Demmer. All rights reserved | GNU/GPL Version 2 or later - http://www.gnu.org/licenses/gpl-2.0.html */
+/* JCE Editor - 2.3.4.4 | 12 December 2013 | http://www.joomlacontenteditor.net | Copyright (C) 2006 - 2013 Ryan Demmer. All rights reserved | GNU/GPL Version 2 or later - http://www.gnu.org/licenses/gpl-2.0.html */
 var XHTMLXtrasDialog={settings:{},init:function(){tinyMCEPopup.resizeToInnerSize();var ed=tinyMCEPopup.editor,se=ed.selection,n=se.getNode(),element=tinyMCEPopup.getWindowArg('element');if(element){n=ed.dom.getParent(n,element);}
 TinyMCE_Utils.fillClassList('class');$.Plugin.init();if(n){var text=n.textContent||n.innerText||'';if(se.isCollapsed()||text==se.getContent({format:'text'})){$(':input').each(function(){var k=$(this).attr('id');if(/on(click|dblclick)/.test(k)){k='data-mce-'+k;}
 $(this).val(ed.dom.getAttrib(n,k));});$('#insert').button('option','label',ed.getLang('update','Insert'));}}

@@ -16,6 +16,8 @@ wfimport('editor.libraries.classes.plugin');
 wfimport('editor.libraries.classes.browser');
 
 class WFMediaManager extends WFEditorPlugin {
+    
+    private static $browser = array();
 
     /**
      * @access  public
@@ -55,14 +57,14 @@ class WFMediaManager extends WFEditorPlugin {
      * @access public
      * @return object WFBrowserExtension
      */
-    public function getBrowser() {
-        static $browser;
-
-        if (!is_object($browser)) {
-            $browser = WFFileBrowser::getInstance($this->getProperties());
+    public function getBrowser() {        
+        $name = $this->getName();
+        
+        if (!isset(self::$browser[$name])) {            
+            self::$browser[$name] = new WFFileBrowser($this->getProperties());
         }
 
-        return $browser;
+        return self::$browser[$name];
     }
 
     /**
@@ -86,6 +88,12 @@ class WFMediaManager extends WFEditorPlugin {
 
         $browser->set('position', $this->getParam('editor.browser_position', 'bottom'));
         $view->assign('browser', $browser);
+    }
+    
+    public function getFileTypes($format = 'array') {
+        $browser = $this->getBrowser();
+        
+        return $browser->getFileTypes($format);
     }
     
     private function getFileSystem() {

@@ -116,7 +116,7 @@ class WFFileSystem extends WFExtension {
                     // Joomla! 2.5?
                     if (is_int($group_id)) {
                         // usergroup table				
-                        $group = JTable::getInstance('Usergroup', 'JTable');
+                        $group = JTable::getInstance('Usergroup');
                         $group->load($group_id);
                         // usertype	
                         $usertype = $group->title;
@@ -128,7 +128,7 @@ class WFFileSystem extends WFExtension {
                 }
 
                 // Replace any path variables
-                $pattern = array('/\$id/', '/\$username/', '/\$usertype/', '/\$(group|profile)/', '/\$day/', '/\$month/', '/\$year/');
+                $pattern = array('/\$id/', '/\$username/', '/\$user(group|type)/', '/\$(group|profile)/', '/\$day/', '/\$month/', '/\$year/');
                 $replace = array($user->id, $user->username, $usertype, $profile->name, date('d'), date('m'), date('Y'));
                 $root = preg_replace($pattern, $replace, $root);
 
@@ -158,7 +158,7 @@ class WFFileSystem extends WFExtension {
         return array();
     }
 
-    public function getFolders($path) {
+    public function getFolders($path, $filter) {
         return array();
     }
 

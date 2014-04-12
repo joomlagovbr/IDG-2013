@@ -9,20 +9,25 @@
 
 // no direct access
 defined('_JEXEC') or die;
-$css='
-#inner' . $modno_bm . '{
-padding:5px;
-background:'.$colour1.' url('.$url.'modules/mod_blank250/tmpl/images/backgrounds/'.$bgpattern.'.png);
-border-radius:5px;
-border:'.$bordersz.'px solid '.$bordercol.';
-box-shadow:0 0 '.$shadsz.'px '.$shadcol.';
+
+$css = "";
+if($graphics == 1){
+	$css .='
+	#inner' . $modno_bm . '{
+	padding:5px;
+	background:'.$colour1.' url('.$url.'modules/mod_blank250/tmpl/images/backgrounds/'.$bgpattern.'.png);
+	border-radius:5px;
+	border:'.$bordersz.'px solid '.$bordercol.';
+	box-shadow:0 0 '.$shadsz.'px '.$shadcol.';
+	}
+
+	#holder' . $modno_bm . ' {
+	padding:'.$shadsz.'px;
+	margin:0;
+	border:0;
+	}';
 }
 
-#holder' . $modno_bm . ' {
-padding:'.$shadsz.'px;
-margin:0;
-border:0;
-}';
 
 $css.='
 #blank'.$modno_bm.'{';

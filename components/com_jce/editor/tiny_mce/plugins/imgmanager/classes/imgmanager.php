@@ -54,13 +54,19 @@ final class WFImageManagerPlugin extends WFMediaManager {
         $document->addScriptDeclaration('ImageManagerDialog.settings=' . json_encode($this->getSettings()) . ';');
     }
 
-    function onUpload($file, $relative = '') {
+    function onUpload($file, $relative = '', $method = '') {
         $browser = $this->getBrowser();
         $filesystem = $browser->getFileSystem();
 
         $params = $this->getParams();
 
-        if (JRequest::getWord('method') === 'dragdrop') {
+        // get method (with bc check)
+        if (empty($method)) {
+            $method = JRequest::getWord('method', '');
+        }
+
+        // dialog/form upload
+        if ($method == 'inline' || $method == 'dragdrop') {
             $result = array(
                 'file' => $relative,
                 'name' => basename($relative)
@@ -161,7 +167,7 @@ final class WFImageManagerPlugin extends WFMediaManager {
         return $browser->getResult();
     }
 
-    public function getSettings() {
+    public function getSettings($settings = array()) {
         $params = $this->getParams();
 
         $settings = array(
@@ -171,7 +177,7 @@ final class WFImageManagerPlugin extends WFMediaManager {
                 'margin' => $params->get('imgmanager.attributes_margin', 1),
                 'border' => $params->get('imgmanager.attributes_border', 1)
             ),
-            'always_include_dimensions' => $params->get('imgmanager.always_include_dimensions', 1)
+            'always_include_dimensions' => $params->get('imgmanager.always_include_dimensions', 0)
         );
 
         return parent::getSettings($settings);
@@ -181,8 +187,8 @@ final class WFImageManagerPlugin extends WFMediaManager {
      * Get default parameters
      * @return string parameters
      */
-    public function getDefaults() {
-        return parent::getDefaults(array());
+    public function getDefaults($defaults = array()) {
+        return parent::getDefaults($defaults);
     }
 
 }

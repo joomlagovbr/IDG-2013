@@ -76,18 +76,20 @@ class WFElementBrowser extends WFElement {
         }
 
         $html .= ' />';
-
-        $options = array(
-            'width'     => 780,
-            'height'    => 560,
-            'modal'     => true,
-            'id'        => $attributes['id'] . '_browser'
-        );
+        
+        $component = WFExtensionHelper::getComponent();
+        // get params definitions
+        $params = new WFParameter($component->params, '', 'preferences');
+        
+        $width  = (int) $params->get('browser_width', 780);
+        $height = (int) $params->get('browser_height', 560);
         
         wfimport('admin.models.model');
         $model = new WFModel();
+        
+        $link = $model->getBrowserLink($attributes['id'], $filter);
 
-        $html .= '<a href="' . $model->getBrowserLink($attributes['id'], $filter) . '" class="dialog browser" target="_blank" data-options="' . str_replace('"', "'", json_encode($options)) . '" title="' . WFText::_('WF_BROWSER_TITLE') . '"><span class="browser"></span></a>';
+        $html .= '<a href="' . $link . '" id="' . $attributes['id'] . '_browser' . '" class="browser" target="_blank" onclick="Joomla.modal(this, \'' . $link . '\', '. $width .', '. $height .');return false;" title="' . WFText::_('WF_BROWSER_TITLE') . '"><span class="browser"></span></a>';
 
         return $html;
     }

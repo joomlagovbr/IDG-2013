@@ -69,20 +69,21 @@ class WFViewMediabox extends WFView {
 
         $this->addScript(JURI::root(true) . '/components/com_jce/editor/libraries/js/colorpicker.js');
         $this->addStyleSheet('components/com_jce/media/css/colorpicker.css');
+        
+        wfimport('admin.models.editor');
 
         $options = array(
-            'template_colors' => WFToolsHelper::getTemplateColors(),
-            'custom_colors' => '',
+            'stylesheets' => (array) WFModelEditor::getStyleSheets(),
             'labels' => array(
                 'picker' => WFText::_('WF_COLORPICKER_PICKER'),
                 'palette' => WFText::_('WF_COLORPICKER_PALETTE'),
                 'named' => WFText::_('WF_COLORPICKER_NAMED'),
                 'template' => WFText::_('WF_COLORPICKER_TEMPLATE'),
-                'custom' => WFText::_('WF_COLORPICKER_CUSTOM'),
                 'color' => WFText::_('WF_COLORPICKER_COLOR'),
                 'apply' => WFText::_('WF_COLORPICKER_APPLY'),
                 'name' => WFText::_('WF_COLORPICKER_NAME')
-            )
+            ),
+            'parent' => '#jce'
         );
 
         $this->addScriptDeclaration('jQuery(document).ready(function($){$("input.color").colorpicker(' . json_encode($options) . ');});');

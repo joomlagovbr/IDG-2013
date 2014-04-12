@@ -10,6 +10,10 @@
  * other free or open source software licenses.
  */
 defined('_JEXEC') or die('RESTRICTED');
+// set as an extension parent
+if (!defined('_WF_EXT')) {
+    define('_WF_EXT', 1);
+}
 
 class WFExtension extends JObject {
 
@@ -86,10 +90,12 @@ class WFExtension extends JObject {
         if (JFolder::exists($path)) {
             foreach ($types as $type) {
                 if ($extension) {
-                    if (JFile::exists($path . '/' . $type . '/' . $extension . '.xml') && JFile::exists($path . '/' . $type . '/' . $extension . '.php')) {
+                    $path = $path . '/' . $type;
+                    
+                    if (JFile::exists($path . '/' . $extension . '.xml') && JFile::exists($path . '/' . $extension . '.php')) {
                         $object = new stdClass();
                         $object->folder = $type;
-                        $object->path = $path . '/' . $type;
+                        $object->path = $path;
                         $object->extension = $extension;
 
                         $extensions[] = $object;
@@ -98,46 +104,23 @@ class WFExtension extends JObject {
                     $files = JFolder::files($path . '/' . $type, '\.xml$', false, true);
 
                     foreach ($files as $file) {
+                        $name = basename($file, '.xml');
+                        $path = dirname($file);
+                        
+                        if (!JFile::exists($path . '/' . $name . '.php')) {
+                            continue;
+                        }
+                        
                         $object = new stdClass();
                         $object->folder = $type;
-                        $object->path = $path . '/' . $type;
+                        $object->path = $path;
+                        $object->extension = $name;
 
-                        $name = JFile::stripExt(basename($file));
-
-                        if (JFile::exists(dirname($file) . '/' . $name . '.php')) {
-                            $object->extension = $name;
-                        }
                         $extensions[] = $object;
                     }
                 }
             }
         }
-
-        // set default prefix
-        /* if (!array_key_exists('prefix', $config)) {
-          $config['prefix'] = 'jce-';
-          }
-
-          // get external extensions
-          jimport('joomla.plugin.helper');
-
-          foreach ($types as $type) {
-          $installed = JPluginHelper::getPlugin($config['prefix'] . $type, $extension);
-
-          foreach ($installed as $item) {
-          $object = new stdClass();
-          $object->folder = $item->type;
-          $object->path = JPATH_PLUGINS . '/' . $item->type;
-
-          $name = $item->element;
-
-          if (JFile::exists(JPATH_PLUGINS . '/' . $item->type . '/' . $item->element . '.php')) {
-          $object->extension = $name;
-          }
-
-          $extensions[] = $object;
-          }
-          } */
 
         return $extensions;
     }
@@ -158,11 +141,6 @@ class WFExtension extends JObject {
         if (!isset($config['base_path'])) {
             $config['base_path'] = WF_EDITOR;
         }
-
-        // set default prefix
-        /* if (!array_key_exists('prefix', $config)) {
-          $config['prefix'] = 'jce-';
-          } */
 
         // sanitize $type
         $type = preg_replace('#[^A-Z0-9\._-]#i', '', $type);
@@ -196,8 +174,6 @@ class WFExtension extends JObject {
                         // Load Extension language file
                         $language->load('com_jce_' . $type . '_' . $name, JPATH_SITE);
 
-                        // remove prefix
-                        //$folder = str_replace($config['prefix'], '', $folder);
                         // Return array of extension names
 
                         $result[$type][] = $name;

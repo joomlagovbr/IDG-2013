@@ -131,9 +131,8 @@ final class WFRequest extends JObject {
 
             if ($json) {                
                 // remove slashes
-                if (get_magic_quotes_gpc()) {
-                    $json = stripslashes($json);
-                }
+                $json = stripslashes($json);
+                
                 // convert to JSON object
                 $json = json_decode($json);
                 

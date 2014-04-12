@@ -14,6 +14,51 @@ defined('_JEXEC') or die('RESTRICTED');
 wfimport('admin.classes.view');
 
 class WFViewProfiles extends WFView {
+    
+    private function getOptions($params) {
+        wfimport('admin.models.editor');
+        
+        $options = array(
+            'editableselects' => array('label' => WFText::_('WF_TOOLS_EDITABLESELECT_LABEL')),
+            'extensions' => array(
+                'labels' => array(
+                    'type_new' => WFText::_('WF_EXTENSION_MAPPER_TYPE_NEW'),
+                    'group_new' => WFText::_('WF_EXTENSION_MAPPER_GROUP_NEW'),
+                    'acrobat' => WFText::_('WF_FILEGROUP_ACROBAT'),
+                    'office' => WFText::_('WF_FILEGROUP_OFFICE'),
+                    'flash' => WFText::_('WF_FILEGROUP_FLASH'),
+                    'shockwave' => WFText::_('WF_FILEGROUP_SHOCKWAVE'),
+                    'quicktime' => WFText::_('WF_FILEGROUP_QUICKTIME'),
+                    'windowsmedia' => WFText::_('WF_FILEGROUP_WINDOWSMEDIA'),
+                    'silverlight' => WFText::_('WF_FILEGROUP_SILVERLIGHT'),
+                    'openoffice' => WFText::_('WF_FILEGROUP_OPENOFFICE'),
+                    'divx' => WFText::_('WF_FILEGROUP_DIVX'),
+                    'real' => WFText::_('WF_FILEGROUP_REAL'),
+                    'video' => WFText::_('WF_FILEGROUP_VIDEO'),
+                    'audio' => WFText::_('WF_FILEGROUP_AUDIO')
+                )
+            ),
+            'colorpicker' => array(
+                'stylesheets' => (array) WFModelEditor::getStyleSheets(),
+                'labels' => array(
+                    'title' => WFText::_('WF_COLORPICKER_TITLE'),
+                    'picker' => WFText::_('WF_COLORPICKER_PICKER'),
+                    'palette' => WFText::_('WF_COLORPICKER_PALETTE'),
+                    'named' => WFText::_('WF_COLORPICKER_NAMED'),
+                    'template' => WFText::_('WF_COLORPICKER_TEMPLATE'),
+                    'custom' => WFText::_('WF_COLORPICKER_CUSTOM'),
+                    'color' => WFText::_('WF_COLORPICKER_COLOR'),
+                    'apply' => WFText::_('WF_COLORPICKER_APPLY'),
+                    'name' => WFText::_('WF_COLORPICKER_NAME')
+                )
+            ),
+            'browser' => array(
+                'title' => WFText::_('WF_BROWSER_TITLE')
+            )
+        );
+
+        return $options;
+    }
 
     public function display($tpl = null) {
         $app = JFactory::getApplication();
@@ -51,7 +96,13 @@ class WFViewProfiles extends WFView {
                 $where = array();
 
                 if ($search) {
-                    $where[] = 'LOWER( p.name ) LIKE ' . $db->Quote('%' . method_exists($db, 'escape') ? $db->escape($search, true) : $db->getEscaped($search, true) . '%', false);
+                    if (method_exists($db, 'escape')) {
+                        $search = $db->escape($search, true);
+                    } else {
+                        $search = $db->getEscaped($search, true);
+                    }
+                    
+                    $where[] = 'LOWER( p.name ) LIKE ' . $db->Quote('%' . $search . '%', false);
                 }
                 if ($filter_state) {
                     if ($filter_state == 'P') {
@@ -162,7 +213,9 @@ class WFViewProfiles extends WFView {
                     'profiles.js',
                     'extensions.js',
                     'checklist.js',
-                    'parameter.js'
+                    'styleformat.js',
+                    'fonts.js',
+                    'blockformats.js'
                 );
                 // Load scripts
                 foreach ($scripts as $script) {
@@ -394,7 +447,7 @@ class WFViewProfiles extends WFView {
                     'phone'    => WFText::_('WF_PROFILES_DEVICE_PHONE')
                 );
                 
-                $lists['device'] = '<div class="">';
+                $lists['device'] = '';
                 
                 foreach($options as $value => $text) {
                     $checked = '';
@@ -405,23 +458,24 @@ class WFViewProfiles extends WFView {
                     
                     $lists['device'] .= '<label class="checkbox inline"><input type="checkbox" name="device[]" value="' . $value . '"'. $checked .' />' . $text . '</label>'; 
                 }
-                
-                $lists['device'] .= '</div>';
 
                 // user types from profile
                 $query = $db->getQuery(true);
 
                 if (is_object($query)) {
                     $query->select('types')->from('#__wf_profiles')->where('id NOT IN (17,28,29,30)');
+                    
+                    $db->setQuery($query);
+                    $types = $db->loadColumn();
                 } else {
                     $query = 'SELECT types'
-                            . ' FROM #__wf_profiles'
-                            // Exclude ROOT, USERS, Super Administrator, Public Frontend, Public Backend
-                            . ' WHERE id NOT IN (17,28,29,30)';
+                    . ' FROM #__wf_profiles'
+                    // Exclude ROOT, USERS, Super Administrator, Public Frontend, Public Backend
+                    . ' WHERE id NOT IN (17,28,29,30)';
+                    
+                    $db->setQuery($query);
+                    $types = $db->loadResultArray();
                 }
-
-                $db->setQuery($query);
-                $types = $db->loadResultArray();
 
                 if (defined('JPATH_PLATFORM')) {
                     $options = array();
@@ -529,13 +583,14 @@ class WFViewProfiles extends WFView {
                 $this->assignRef('rows', $rows);
                 $this->assignRef('params', $params);
                 $this->assignRef('plugins', $plugins);
-
-                $options = WFToolsHelper::getOptions($params);
+                
+                // get options for various widgets
+                $options = $this->getOptions($params);
                 
                 // set suhosin flag
                 $options['suhosin'] = ini_get('suhosin.post.max_vars') && (int) ini_get('suhosin.post.max_vars') < 1000;
 
-                $this->addScriptDeclaration('jQuery(document).ready(function($){$.jce.Profiles.init(' . json_encode($options) . ')});');
+                $this->addScriptDeclaration('jQuery.jce.Profiles.options = ' . json_encode($options) . ';');
 
                 // set toolbar
                 if ($row->id) {

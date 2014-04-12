@@ -44,7 +44,8 @@
 			<option value="2">WF_OPTION_DEFAULT</option>
 		</param>
 		<param name="content_css_custom" type="textarea" rows="2" cols="50" default="" placeholder="eg: templates/$template/css/content.css" label="WF_PARAM_CSS_CUSTOM" description="WF_PARAM_CSS_CUSTOM_DESC" parent="content_css[0]" />		
-	</params>
+                <param name="body_class" type="text" default="" placeholder="eg: content" label="WF_PARAM_EDITOR_BODY_CLASS" description="WF_PARAM_EDITOR_BODY_CLASS_DESC" />
+        </params>
 	<params group="compression">
 		<param name="compress_javascript" type="radio" default="0" label="WF_PARAM_COMPRESS_JAVASCRIPT" description="WF_PARAM_COMPRESS_JAVASCRIPT_DESC">
 			<option value="1">WF_OPTION_YES</option>

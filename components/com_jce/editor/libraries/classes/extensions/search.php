@@ -63,5 +63,4 @@ class WFSearchExtension extends WFExtension {
     public function getView($layout) {        
         return parent::getView(array('name' => 'search', 'layout' => $layout));
     }
-
 }

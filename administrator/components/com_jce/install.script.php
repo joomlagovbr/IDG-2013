@@ -33,9 +33,22 @@ class com_jceInstallerScript {
     }
 
     public function uninstall() {
-        require_once(JPATH_ADMINISTRATOR . '/components/com_jce/install.php');
+        $db = JFactory::getDBO();
 
-        return WFInstall::uninstall();
+        // remove Profiles table if its empty
+        if ((int) self::checkTableContents('#__wf_profiles') == 0) {
+            if (method_exists($db, 'dropTable')) {
+                $db->dropTable('#__wf_profiles', true);
+            } else {
+                $query = 'DROP TABLE IF EXISTS #__wf_profiles';
+                $db->setQuery($query);
+            }
+
+            $db->query();
+        }
+        
+        // remove packages
+        self::removePackages();
     }
 
     public function update($parent) {
@@ -44,6 +57,113 @@ class com_jceInstallerScript {
 
     public function postflight($type, $parent) {
         
+    }
+    
+    /**
+     * Check table contents
+     * @return integer
+     * @param string $table Table name
+     */
+    private static function checkTableContents($table) {
+        $db = JFactory::getDBO();
+
+        $query = $db->getQuery(true);
+
+        if (is_object($query)) {
+            $query->select('COUNT(id)')->from($table);
+        } else {
+            $query = 'SELECT COUNT(id) FROM ' . $table;
+        }
+
+        $db->setQuery($query);
+
+        return $db->loadResult();
+    }
+    
+    private static function getModule($name) {
+        // Joomla! 2.5
+        if (defined('JPATH_PLATFORM')) {
+            $module = JTable::getInstance('extension');
+            return $module->find(array('type' => 'module', 'element' => $name));
+
+            // Joomla! 1.5    
+        } else {
+            $db = JFactory::getDBO();
+            $query = 'SELECT id FROM #__modules' . ' WHERE module = ' . $db->Quote($name);
+
+            $db->setQuery($query);
+            return $db->loadResult();
+        }
+    }
+
+    private static function getPlugin($folder, $element) {
+        // Joomla! 2.5
+        if (defined('JPATH_PLATFORM')) {
+            $plugin = JTable::getInstance('extension');
+            return $plugin->find(array('type' => 'plugin', 'folder' => $folder, 'element' => $element));
+            // Joomla! 1.5    
+        } else {
+            $plugin = JTable::getInstance('plugin');
+
+            $db = JFactory::getDBO();
+            $query = 'SELECT id FROM #__plugins' . ' WHERE folder = ' . $db->Quote($folder) . ' AND element = ' . $db->Quote($element);
+
+            $db->setQuery($query);
+            return $db->loadResult();
+        }
+    }
+    
+    /**
+     * Uninstall the editor
+     * @return boolean
+     */
+    private static function removePackages() {
+        $app = JFactory::getApplication();
+        $db = JFactory::getDBO();
+
+        jimport('joomla.module.helper');
+        jimport('joomla.installer.installer');
+
+        $plugins = array(
+            'editors' => array('jce'),
+            'quickicon' => array('jcefilebrowser')
+        );
+
+        $modules = array('mod_jcefilebrowser');
+
+        // items to remove
+        $items = array(
+            'plugin' => array(),
+            'module' => array()
+        );
+
+        foreach ($plugins as $folder => $elements) {
+            foreach ($elements as $element) {
+                $item = self::getPlugin($folder, $element);
+
+                if ($item) {
+                    $items['plugin'][] = $item;
+                }
+            }
+        }
+
+        foreach ($modules as $module) {
+            $item = self::getModule($module);
+
+            if ($item) {
+                $items['module'][] = $item;
+            }
+        }
+
+        foreach ($items as $type => $extensions) {
+            if ($extensions) {
+                foreach ($extensions as $id) {
+                    $installer = new JInstaller();
+                    $installer->uninstall($type, $id);
+                    $app->enqueueMessage($installer->message);
+                }
+            }
+        }
     }
 
     public static function checkRequirements() {
@@ -131,9 +251,8 @@ function com_install() {
 function com_uninstall() {
 
     if (!defined('JPATH_PLATFORM')) {
-        require_once(JPATH_ADMINISTRATOR . '/components/com_jce/install.php');
-
-        return WFInstall::uninstall();
+        $script = new com_jceInstallerScript();
+        return $script->uninstall();
     }
 
     return true;

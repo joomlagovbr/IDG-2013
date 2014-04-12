@@ -29,15 +29,23 @@ class WFControllerEditor extends WFControllerBase {
         if ($layout) {
             switch ($layout) {
                 case 'editor':
-                    if ($task == 'pack' || $task == 'loadlanguages') {
+                    if ($task == 'pack' || $task == 'loadlanguages' || $task == 'compileless') {
                         wfimport('admin.models.editor');
                         $model = new WFModelEditor();
-
-                        if ($task == 'loadlanguages') {
-                            $model->loadLanguages();
-                        } else {
-                            $model->pack();
+                        
+                        switch($task) {
+                            case 'loadlanguages':
+                                $model->loadLanguages();
+                                break;
+                            case 'pack':
+                                $model->pack();
+                                break;
+                            case 'compileless':
+                                $model->compileLess();
+                                break;
                         }
+                        
+                        exit();
                     }
 
                     break;

@@ -32,6 +32,10 @@ class WFInstallerPlugin extends JObject {
 
     private function setManifest() {
         $manifest = $this->parent->getManifest();
+        
+        if (!$manifest) {
+            return false;
+        }
 
         $values = array('name', 'description', 'install.script', 'uninstall.script', 'icon');
 
@@ -86,18 +90,38 @@ class WFInstallerPlugin extends JObject {
         } else {
             // Non-JCE plugin type, probably JCE MediaBox
             if ($type == 'plugin' && $group == 'system') {
-                require_once(JPATH_LIBRARIES . '/joomla/installer/adapters/plugin.php');
-                // create adapter
-                $adapter = new JInstallerPlugin($this->parent, $db);
+                // check manifest type against Joomla version
+                $manifest = $this->parent->getManifest();
+                
+                if (defined('JPATH_PLATFORM') && $manifest->getName() == 'install') {
+                    $this->parent->abort(WFText::_('WF_INSTALLER_EXTENSION_INSTALL') . ' : ' . WFText::_('WF_INSTALLER_INVALID_MANIFEST'));
+                } else {
+                    @include_once(JPATH_LIBRARIES . '/joomla/installer/adapters/plugin.php');
+                    
+                    // try cms path for Joomla 3.1
+                    if (defined('JPATH_PLATFORM')) {
+                        @include_once(JPATH_LIBRARIES . '/cms/installer/adapter/plugin.php');
+                    }
+                    
+                    if (!class_exists('JInstallerPlugin')) {
+                    	$this->parent->abort();
+                    }
 
-                if (method_exists($adapter, 'loadLanguage')) {
-                    $adapter->loadLanguage($this->parent->getPath('source'));
+                    // create adapter
+                    $adapter = new JInstallerPlugin($this->parent, $db);
+
+                    if (method_exists($adapter, 'loadLanguage')) {
+                        $adapter->loadLanguage($this->parent->getPath('source'));
+                    }
+
+                    // set adapter
+                    $this->parent->setAdapter('plugin', $adapter);
+                    // isntall
+                    return $adapter->install();
                 }
-
-                // set adapter
-                $this->parent->setAdapter('plugin', $adapter);
-                // isntall
-                return $adapter->install();
+                
+                return false;
+                
             } else {
                 $this->parent->abort(WFText::_('WF_INSTALLER_EXTENSION_INSTALL') . ' : ' . WFText::_('WF_INSTALLER_NO_PLUGIN_FILE'));
                 return false;

@@ -88,12 +88,12 @@ class WFPacker extends JObject {
 
     public function pack($minify = true, $gzip = false) {
         $type = $this->getType();
-        
-        /*$encoding = self::getEncoding();
 
-        $zlib = extension_loaded('zlib') && !ini_get('zlib.output_compression');
-        $gzip = $gzip && !empty($encoding) && $zlib && function_exists('gzencode');*/
-        
+        /* $encoding = self::getEncoding();
+
+          $zlib = extension_loaded('zlib') && !ini_get('zlib.output_compression');
+          $gzip = $gzip && !empty($encoding) && $zlib && function_exists('gzencode'); */
+
         ob_start();
 
         // Headers
@@ -107,8 +107,8 @@ class WFPacker extends JObject {
 
         header("Vary: Accept-Encoding");
 
-        // expires after 7 days
-        $expires = 60 * 60 * 24 * 7;
+        // expires after 48 hours
+        $expires = 60 * 60 * 24 * 2;
 
         header("Cache-Control: maxage=" . $expires);
 
@@ -139,6 +139,15 @@ class WFPacker extends JObject {
             header("Content-Encoding: " . $encoding);
             $content = gzencode($content, 4, FORCE_GZIP);
         }
+
+        // get content hash
+        $hash = hash('md5', $content);
+
+        // set etag header
+        header("ETag: \"{$hash}\"");
+
+        // set content length
+        header("Content-Length: " . strlen($content));
 
         // stream to client
         echo $content;
@@ -178,13 +187,40 @@ class WFPacker extends JObject {
             $data = '';
 
             foreach ($matches[1] as $match) {
-                $data .= $this->getText(realpath($this->get('_cssbase') . '/' . $match));
+                // url has a query, remove
+                if (strpos($match, '?') !== false) {
+                    $match = substr($match, 0, strpos($match, '?'));
+                }
+                
+                if (strpos($match, '&') !== false) {
+                    $match = substr($match, 0, strpos($match, '&'));
+                }
+
+                if ($match) {
+                    $data .= $this->getText(realpath($this->get('_cssbase') . '/' . $match));
+                }
             }
 
             return $data;
         }
 
         return '';
+    }
+
+    protected function compileLess($string, $path) {
+        require_once(WF_ADMINISTRATOR . '/classes/lessc.inc.php');
+
+        $less = new lessc;
+        // add file directory
+        $less->addImportDir($path);
+        // add joomla media folder
+        $less->addImportDir(JPATH_SITE . 'media');
+
+        try {
+            return $less->compile($string);
+        } catch (Exception $e) {
+            return "/* LESS file could not be compiled due to error - " . $e->getMessage() . " */";
+        }
     }
 
     protected function getText($file = null, $minify = true) {
@@ -194,6 +230,11 @@ class WFPacker extends JObject {
             if ($text = file_get_contents($file)) {
                 // process css files
                 if ($this->getType() == 'css') {
+
+                    // compile less files
+                    if (preg_match('#\.less$#', $file)) {
+                        $text = $this->compileLess($text, dirname($file));
+                    }
 
                     if (strpos($text, '@import') !== false) {
                         // store the base path of the current file
@@ -208,7 +249,7 @@ class WFPacker extends JObject {
 
                     // process urls
                     $text = preg_replace_callback('#url\s?\([\'"]?([^\'"\))]+)[\'"]?\)#', array('WFPacker', 'processPaths'), $text);
-                    
+
                     if ($minify) {
                         // minify
                         $text = $this->cssmin($text);
@@ -217,7 +258,7 @@ class WFPacker extends JObject {
                 // make sure text ends in a semi-colon;
                 if ($this->getType() == 'javascript') {
                     $text = rtrim(trim($text), ';') . ';';
-                    
+
                     if ($minify) {
                         $text = $this->jsmin($text);
                     }

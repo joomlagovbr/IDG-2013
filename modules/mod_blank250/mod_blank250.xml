@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<extension type="module" version="1.6.0" client="site">
+<extension type="module" version="1.6.0" client="site" method="upgrade">
 	<name>Blank Module</name>
 	<author>Bob Galway</author>
-	<creationDate>August 2013</creationDate>
+	<creationDate>November 2013</creationDate>
 	<copyright>Copyright  Bob Galway. All rights reserved.</copyright>
 	<license>GNU General Public License version 3</license>
 	<authorEmail>reply@blackdale.com</authorEmail>
 	<authorUrl>www.blackdale.com</authorUrl>
-	<version>5.0.2</version>
+	<version>5.0.6</version>
 	<description>BLANKMODULE250</description>
 	<languages>
 		<language tag="en-GB">language/en-GB/en-GB.mod_blank250.ini</language>
@@ -79,7 +79,7 @@
 				</field>
 			</fieldset>
 			<fieldset name="BM15_GRAPHICS">
-				<field name="graphics" type="list" default="1" label="BM15_GRAPHICS_LABEL" description="BM15_GRAPHICS_DESC">
+				<field name="graphics" type="list" default="2" label="BM15_GRAPHICS_LABEL" description="BM15_GRAPHICS_DESC">
 					<option value="1">JYES</option>
 					<option value="2">JNO</option>
 				</field>

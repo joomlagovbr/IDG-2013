@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
 <install version="2.0" type="plugin" plugin="spellchecker" core="1" editable="1">
     <name>WF_SPELLCHECKER_TITLE</name>
-    <version>2.3.2.4</version>
-    <creationDate>27 March 2013</creationDate>
+    <version>2.3.4.4</version>
+    <creationDate>12 December 2013</creationDate>
     <author>Ryan Demmer</author>
     <authorEmail>info@joomlacontenteditor.net</authorEmail>
     <authorUrl>http://www.joomlacontenteditor.net/</authorUrl>
@@ -13,7 +13,7 @@
     <params group="standard">
         <param name="engine" type="list" default="browser" label="WF_SPELLCHECKER_PARAM_ENGINE" description="WF_SPELLCHECKER_PARAM_GOOGLESPELL_LANGUAGES_DESC">
             <option value="browser">WF_SPELLCHECKER_PARAM_BROWSER</option>
-            <option value="googlespell">WF_SPELLCHECKER_PARAM_GOOGLE</option> 
+            <!--option value="googlespell">WF_SPELLCHECKER_PARAM_GOOGLE</option--> 
             <option value="pspell">WF_SPELLCHECKER_PARAM_PSPELL_PHP</option> 
             <option value="pspellshell">WF_SPELLCHECKER_PARAM_PSPELL_CLINE</option>
             <option value="enchantspell">WF_SPELLCHECKER_PARAM_ENCHANT</option>
@@ -24,7 +24,12 @@
                 <option value="1">WF_OPTION_ON</option>
         </param>    
         
-        <param name="googlespell_languages" type="list" class="checklist sortable" multiple="multiple" default="English=en" label="WF_SPELLCHECKER_PARAM_LANGUAGES" description="WF_SPELLCHECKER_PARAM_GOOGLESPELL_LANGUAGES_DESC" parent="engine[googlespell]" >
+        <param name="suggestions" type="radio" default="1" label="WF_SPELLCHECKER_SUGGESTIONS" description="WF_SPELLCHECKER_SUGGESTIONS_DESC">
+                <option value="1">WF_OPTION_YES</option>
+                <option value="0">WF_OPTION_NO</option>
+        </param>
+        
+        <!--param name="googlespell_languages" type="list" class="checklist sortable" multiple="multiple" default="English=en" label="WF_SPELLCHECKER_PARAM_LANGUAGES" description="WF_SPELLCHECKER_PARAM_GOOGLESPELL_LANGUAGES_DESC" parent="engine[googlespell]" >
             <option value="English=en">English</option>
             <option value="Danish=da">Danish</option>
             <option value="Dutch=nl">Dutch</option>
@@ -36,7 +41,7 @@
             <option value="Portuguese=pt">Portuguese(BR)</option>
             <option value="Spanish=es">Spanish</option>
             <option value="Swedish=sv">Swedish</option>
-        </param> 
+        </param--> 
         
         <param name="languages" type="text" size="100" default="English=en" label="WF_SPELLCHECKER_PARAM_LANGUAGES" description="WF_SPELLCHECKER_PARAM_LANGUAGES_DESC" parent="engine[pspell,pspellshell,enchantspell]"/>      
         <param name="pspell_mode" type="text" default="PSPELL_FAST" label="WF_SPELLCHECKER_PARAM_PSPELL_MODE" description="WF_SPELLCHECKER_PARAM_PSPELL_MODE_DESC" parent="engine[pspell,pspellshell]" />	

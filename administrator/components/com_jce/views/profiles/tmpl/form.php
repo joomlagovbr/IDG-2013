@@ -14,6 +14,9 @@ defined('_JEXEC') or die('RESTRICTED');
 ?>
 <form action="index.php" method="post" name="adminForm" id="adminForm" class="form-horizontal">
     <div id="jce" class="loading">
+        <div class="progress progress-striped active">
+            <div class="bar" style="width: 100%;"><?php echo JText :: _('WF_MESSAGE_LOAD');?></div>
+        </div>
         <div id="tabs">
             <ul class="nav nav-tabs">
                 <li class="active wf-tooltip" title="<?php echo JText :: _('WF_PROFILES_SETUP') . '::' . JText :: _('WF_PROFILES_SETUP_DESC'); ?>"><a href="#tabs-setup"><?php echo JText :: _('WF_PROFILES_SETUP'); ?></a></li>
