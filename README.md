@@ -1,5 +1,9 @@
-Portal padrão em CMS Joomla 3.2
+Portal padrão em CMS Joomla 3.2.4
 ================
+
+Sobre este branch específico
+---------------------
+De acordo com as informações a respeito do [lançamento do joomla 3.3](http://www.joomla.org/announcements/release-news/5546-joomla-3-3-0-released.html), este pacote é recomendado somente para versões do PHP inferiores a 5.3.10 . Se este não for o seu caso, recomenda-se a utilização da versão 3.3 do [branch master](https://github.com/joomlagovbr/joomla-3.x/).
 
 Acompanhe as atualizações do projeto
 ---------------------

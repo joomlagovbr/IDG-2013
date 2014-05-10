@@ -25,7 +25,7 @@ final class JVersion
 	public $RELEASE = '3.2';
 
 	/** @var  string  Maintenance version. */
-	public $DEV_LEVEL = '3';
+	public $DEV_LEVEL = '4';
 
 	/** @var  string  Development STATUS. */
 	public $DEV_STATUS = 'Stable';
@@ -37,10 +37,10 @@ final class JVersion
 	public $CODENAME = 'Ember';
 
 	/** @var  string  Release date. */
-	public $RELDATE = '6-March-2014';
+	public $RELDATE = '30-April-2014';
 
 	/** @var  string  Release time. */
-	public $RELTIME = '14:30';
+	public $RELTIME = '14:00';
 
 	/** @var  string  Release timezone. */
 	public $RELTZ = 'GMT';
@@ -144,7 +144,7 @@ final class JVersion
 	 *
 	 * @return  string
 	 *
-	 * @since	3.2
+	 * @since   3.2
 	 */
 	public function generateMediaVersion()
 	{
@@ -163,7 +163,7 @@ final class JVersion
 	 *
 	 * @return  string  The media version.
 	 *
-	 * @since	3.2
+	 * @since   3.2
 	 */
 	public function getMediaVersion()
 	{
@@ -198,7 +198,7 @@ final class JVersion
 	 *
 	 * @return  JVersion  Instance of $this to allow chaining.
 	 *
-	 * @since	3.2
+	 * @since   3.2
 	 */
 	public function refreshMediaVersion()
 	{
@@ -214,7 +214,7 @@ final class JVersion
 	 *
 	 * @return  JVersion  Instance of $this to allow chaining.
 	 *
-	 * @since	3.2
+	 * @since   3.2
 	 */
 	public function setMediaVersion($mediaVersion)
 	{
