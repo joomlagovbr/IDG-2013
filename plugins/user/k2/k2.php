@@ -1,9 +1,9 @@
 <?php
 /**
- * @version		$Id: k2.php 1966 2013-04-29 16:54:48Z lefteris.kavadas $
+ * @version		2.6.x
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
+ * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
  * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -149,7 +149,8 @@ class plgUserK2 extends JPlugin
 				$url = JRoute::_($item->link.'&Itemid='.$itemid, false);
 				if (JURI::isInternal($url))
 				{
-					$mainframe->redirect($url, JText::_('K2_YOUR_SETTINGS_HAVE_BEEN_SAVED'));
+					$mainframe->enqueueMessage(JText::_('K2_YOUR_SETTINGS_HAVE_BEEN_SAVED'));
+					$mainframe->redirect($url);
 				}
 			}
 		}
@@ -243,7 +244,8 @@ class plgUserK2 extends JPlugin
 				{
 					$url = 'index.php?option=com_user&view=register';
 				}
-				$mainframe->redirect($url, JText::_('K2_THE_WORDS_YOU_TYPED_DID_NOT_MATCH_THE_ONES_DISPLAYED_PLEASE_TRY_AGAIN'), 'error');
+				$mainframe->enqueueMessage(JText::_('K2_THE_WORDS_YOU_TYPED_DID_NOT_MATCH_THE_ONES_DISPLAYED_PLEASE_TRY_AGAIN'), 'error');
+				$mainframe->redirect($url);
 			}
 		}
 	}

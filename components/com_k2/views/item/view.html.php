@@ -1,9 +1,9 @@
 <?php
 /**
- * @version		$Id: view.html.php 1992 2013-07-04 16:36:38Z lefteris.kavadas $
+ * @version		2.6.x
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
+ * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
  * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -59,7 +59,11 @@ class K2ViewItem extends K2View
 		{
 			$dispatcher = JDispatcher::getInstance();
 			JPluginHelper::importPlugin('k2');
-			$results = $dispatcher->trigger('onK2UserDisplay', array(&$item->author->profile, &$params, $limitstart));
+			$results = $dispatcher->trigger('onK2UserDisplay', array(
+				&$item->author->profile,
+				&$params,
+				$limitstart
+			));
 			$item->event->K2UserDisplay = trim(implode("\n", $results));
 			$item->author->profile->url = htmlspecialchars($item->author->profile->url, ENT_QUOTES, 'UTF-8');
 		}
@@ -77,7 +81,8 @@ class K2ViewItem extends K2View
 				{
 					$uri = JFactory::getURI();
 					$url = 'index.php?option=com_users&view=login&return='.base64_encode($uri->toString());
-					$mainframe->redirect(JRoute::_($url, false), JText::_('K2_YOU_NEED_TO_LOGIN_FIRST'));
+					$mainframe->enqueueMessage(JText::_('K2_YOU_NEED_TO_LOGIN_FIRST'), 'notice');
+					$mainframe->redirect(JRoute::_($url, false));
 				}
 				else
 				{
@@ -95,7 +100,8 @@ class K2ViewItem extends K2View
 				{
 					$uri = JFactory::getURI();
 					$url = 'index.php?option=com_user&view=login&return='.base64_encode($uri->toString());
-					$mainframe->redirect(JRoute::_($url, false), JText::_('K2_YOU_NEED_TO_LOGIN_FIRST'));
+					$mainframe->enqueueMessage(JText::_('K2_YOU_NEED_TO_LOGIN_FIRST'), 'notice');
+					$mainframe->redirect(JRoute::_($url, false));
 				}
 				else
 				{
@@ -130,14 +136,15 @@ class K2ViewItem extends K2View
 
 		// Set default image
 		K2HelperUtilities::setDefaultImage($item, $view);
-		
+
 		// Pass the old parameter to the view in order to avoid layout changes
-		if($params->get('antispam') == 'recaptcha' || $params->get('antispam') == 'both')
+		if ($params->get('antispam') == 'recaptcha' || $params->get('antispam') == 'both')
 		{
 			$params->set('recaptcha', true);
 			$item->params->set('recaptcha', true);
 		}
-		else {
+		else
+		{
 			$params->set('recaptcha', false);
 			$item->params->set('recaptcha', false);
 		}
@@ -150,9 +157,17 @@ class K2ViewItem extends K2View
 			// Trigger comments events
 			$dispatcher = JDispatcher::getInstance();
 			JPluginHelper::importPlugin('k2');
-			$results = $dispatcher->trigger('onK2CommentsCounter', array(&$item, &$params, $limitstart));
+			$results = $dispatcher->trigger('onK2CommentsCounter', array(
+				&$item,
+				&$params,
+				$limitstart
+			));
 			$item->event->K2CommentsCounter = trim(implode("\n", $results));
-			$results = $dispatcher->trigger('onK2CommentsBlock', array(&$item, &$params, $limitstart));
+			$results = $dispatcher->trigger('onK2CommentsBlock', array(
+				&$item,
+				&$params,
+				$limitstart
+			));
 			$item->event->K2CommentsBlock = trim(implode("\n", $results));
 
 			// Load K2 native comments system only if there are no plugins overriding it
@@ -294,6 +309,40 @@ class K2ViewItem extends K2View
 			{
 				$item->nextLink = urldecode(JRoute::_(K2HelperRoute::getItemRoute($nextItem->id.':'.urlencode($nextItem->alias), $nextItem->catid.':'.urlencode($item->category->alias))));
 				$item->nextTitle = $nextItem->title;
+
+				$date = JFactory::getDate($item->modified);
+				$timestamp = '?t='.$date->toUnix();
+
+				if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$nextItem->id).'_XS.jpg'))
+				{
+					$item->nextImageXSmall = JURI::base(true).'/media/k2/items/cache/'.md5("Image".$nextItem->id).'_XS.jpg'.$timestamp;
+
+				}
+				if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$nextItem->id).'_S.jpg'))
+				{
+					$item->nextImageSmall = JURI::base(true).'/media/k2/items/cache/'.md5("Image".$nextItem->id).'_S.jpg'.$timestamp;
+				}
+
+				if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$nextItem->id).'_M.jpg'))
+				{
+					$item->nextImageMedium = JURI::base(true).'/media/k2/items/cache/'.md5("Image".$nextItem->id).'_M.jpg'.$timestamp;
+				}
+
+				if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$nextItem->id).'_L.jpg'))
+				{
+					$item->nextImageLarge = JURI::base(true).'/media/k2/items/cache/'.md5("Image".$nextItem->id).'_L.jpg'.$timestamp;
+				}
+
+				if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$nextItem->id).'_XL.jpg'))
+				{
+					$item->nextImageXLarge = JURI::base(true).'/media/k2/items/cache/'.md5("Image".$nextItem->id).'_XL.jpg'.$timestamp;
+				}
+
+				if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$nextItem->id).'_Generic.jpg'))
+				{
+					$item->nextImageGeneric = JURI::base(true).'/media/k2/items/cache/'.md5("Image".$nextItem->id).'_Generic.jpg'.$timestamp;
+				}
+
 			}
 
 			$previousItem = $model->getPreviousItem($item->id, $item->catid, $item->ordering);
@@ -301,6 +350,39 @@ class K2ViewItem extends K2View
 			{
 				$item->previousLink = urldecode(JRoute::_(K2HelperRoute::getItemRoute($previousItem->id.':'.urlencode($previousItem->alias), $previousItem->catid.':'.urlencode($item->category->alias))));
 				$item->previousTitle = $previousItem->title;
+
+				$date = JFactory::getDate($item->modified);
+				$timestamp = '?t='.$date->toUnix();
+
+				if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$previousItem->id).'_XS.jpg'))
+				{
+					$item->previousImageXSmall = JURI::base(true).'/media/k2/items/cache/'.md5("Image".$previousItem->id).'_XS.jpg'.$timestamp;
+
+				}
+				if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$previousItem->id).'_S.jpg'))
+				{
+					$item->previousImageSmall = JURI::base(true).'/media/k2/items/cache/'.md5("Image".$previousItem->id).'_S.jpg'.$timestamp;
+				}
+
+				if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$previousItem->id).'_M.jpg'))
+				{
+					$item->previousImageMedium = JURI::base(true).'/media/k2/items/cache/'.md5("Image".$previousItem->id).'_M.jpg'.$timestamp;
+				}
+
+				if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$previousItem->id).'_L.jpg'))
+				{
+					$item->previousImageLarge = JURI::base(true).'/media/k2/items/cache/'.md5("Image".$previousItem->id).'_L.jpg'.$timestamp;
+				}
+
+				if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$previousItem->id).'_XL.jpg'))
+				{
+					$item->previousImageXLarge = JURI::base(true).'/media/k2/items/cache/'.md5("Image".$previousItem->id).'_XL.jpg'.$timestamp;
+				}
+
+				if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$previousItem->id).'_Generic.jpg'))
+				{
+					$item->previousImageGeneric = JURI::base(true).'/media/k2/items/cache/'.md5("Image".$previousItem->id).'_Generic.jpg'.$timestamp;
+				}
 			}
 
 		}

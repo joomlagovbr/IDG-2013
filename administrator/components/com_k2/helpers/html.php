@@ -1,9 +1,9 @@
 <?php
 /**
- * @version		$Id: html.php 2002 2013-07-08 15:43:14Z joomlaworks $
+ * @version		2.6.x
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
+ * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
  * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -57,7 +57,6 @@ class K2HelperHTML
 
 		if ($document->getType() == 'html')
 		{
-
 			if (K2_JVERSION == '15')
 			{
 				JHtml::_('behavior.mootools');
@@ -68,10 +67,17 @@ class K2HelperHTML
 			}
 			else
 			{
-				JHtml::_('behavior.framework');
-				if ($application->isAdmin() || ($application->isSite() && $params->get('jQueryHandling')))
+				if($mediaManager)
 				{
-					JHtml::_('jquery.framework');
+					$document->addScript('//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js');
+				}
+				else
+				{
+					JHtml::_('behavior.framework');
+					if ($application->isAdmin() || ($application->isSite() && $params->get('jQueryHandling')))
+					{
+						JHtml::_('jquery.framework');
+					}
 				}
 			}
 
@@ -91,10 +97,12 @@ class K2HelperHTML
 				{
 					if ($handling && JString::strpos($handling, 'remote') !== false)
 					{
+						// Remove this if statement in 2.7.0
 						if ($handling == '1.9remote')
 						{
 							$handling = '1remote';
 						}
+						
 						$document->addScript('//ajax.googleapis.com/ajax/libs/jquery/'.str_replace('remote', '', $handling).'/jquery.min.js');
 					}
 					else if ($handling && JString::strpos($handling, 'remote') === false)
@@ -124,7 +132,7 @@ class K2HelperHTML
 
 			if ($mediaManager)
 			{
-				$document->addScript(JURI::root(true).'/media/k2/assets/js/elfinder.min.js?v=2.6.7');
+				$document->addScript(JURI::root(true).'/media/k2/assets/js/elfinder.min.js?v=2.6.8');
 			}
 		}
 	}

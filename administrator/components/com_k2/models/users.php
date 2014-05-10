@@ -1,9 +1,9 @@
 <?php
 /**
- * @version		$Id: users.php 1937 2013-03-07 15:19:16Z lefteris.kavadas $
+ * @version		2.6.x
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
+ * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
  * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -212,7 +212,8 @@ class K2ModelUsers extends K2Model
         $db->query();
         $cache = JFactory::getCache('com_k2');
         $cache->clean();
-        $mainframe->redirect('index.php?option=com_k2&view=users', JText::_('K2_USER_PROFILE_DELETED'));
+		$mainframe->enqueueMessage(JText::_('K2_USER_PROFILE_DELETED'));
+        $mainframe->redirect('index.php?option=com_k2&view=users');
     }
 
     function getUserGroups($type = 'joomla')
@@ -306,7 +307,8 @@ class K2ModelUsers extends K2Model
         $query = "UPDATE #__users SET block=0 WHERE id IN(".implode(',', $cid).")";
         $db->setQuery($query);
         $db->query();
-        $mainframe->redirect('index.php?option=com_k2&view=users', JText::_('K2_USERS_ENABLED'));
+		$mainframe->enqueueMessage(JText::_('K2_USERS_ENABLED'));
+        $mainframe->redirect('index.php?option=com_k2&view=users');
     }
 
     function disable()
@@ -318,7 +320,8 @@ class K2ModelUsers extends K2Model
         $query = "UPDATE #__users SET block=1 WHERE id IN(".implode(',', $cid).")";
         $db->setQuery($query);
         $db->query();
-        $mainframe->redirect('index.php?option=com_k2&view=users', JText::_('K2_USERS_DISABLED'));
+		$mainframe->enqueueMessage(JText::_('K2_USERS_DISABLED'));
+        $mainframe->redirect('index.php?option=com_k2&view=users');
     }
 
     function delete()
@@ -341,7 +344,8 @@ class K2ModelUsers extends K2Model
         }
         if (count($cid) < 1)
         {
-            $mainframe->redirect('index.php?option=com_k2&view=users', JText::_('K2_DELETE_COMPLETED'));
+        	$mainframe->enqueueMessage(JText::_('K2_DELETE_COMPLETED'));
+            $mainframe->redirect('index.php?option=com_k2&view=users');
         }
         if (K2_JVERSION != '15')
         {
@@ -394,8 +398,8 @@ class K2ModelUsers extends K2Model
         $query = "DELETE FROM #__k2_users WHERE userID IN(".implode(',', $IDsToDelete).") AND userID!={$user->id}";
         $db->setQuery($query);
         $db->query();
-
-        $mainframe->redirect('index.php?option=com_k2&view=users', JText::_('K2_DELETE_COMPLETED'));
+		$mainframe->enqueueMessage(JText::_('K2_DELETE_COMPLETED'));
+        $mainframe->redirect('index.php?option=com_k2&view=users');
     }
 
     function saveMove()
@@ -456,7 +460,8 @@ class K2ModelUsers extends K2Model
                 $db->query();
             }
         }
-        $mainframe->redirect('index.php?option=com_k2&view=users', JText::_('K2_MOVE_COMPLETED'));
+		$mainframe->enqueueMessage(JText::_('K2_MOVE_COMPLETED'));
+        $mainframe->redirect('index.php?option=com_k2&view=users');
 
     }
 
@@ -552,8 +557,8 @@ class K2ModelUsers extends K2Model
                 }
             }
         }
-
-        $mainframe->redirect('index.php?option=com_k2&view=users', JText::_('K2_IMPORT_COMPLETED'));
+		$mainframe->enqueueMessage(JText::_('K2_IMPORT_COMPLETED'));
+        $mainframe->redirect('index.php?option=com_k2&view=users');
 
     }
 

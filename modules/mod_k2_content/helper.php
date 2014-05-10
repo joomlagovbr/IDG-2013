@@ -1,9 +1,9 @@
 <?php
 /**
- * @version		$Id: helper.php 1832 2013-01-30 13:05:12Z lefteris.kavadas $
+ * @version		2.6.x
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
+ * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
  * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -93,8 +93,15 @@ class modK2ContentHelper
 
 		else
 		{
-			$query = "SELECT i.*, CASE WHEN i.modified = 0 THEN i.created ELSE i.modified END as lastChanged, c.name AS categoryname,c.id AS categoryid, c.alias AS categoryalias, c.params AS categoryparams";
+			$query = "SELECT i.*,";
 
+			if ($ordering == 'modified')
+			{
+				$query .= " CASE WHEN i.modified = 0 THEN i.created ELSE i.modified END as lastChanged,";
+			}
+			
+			$query .= "c.name AS categoryname,c.id AS categoryid, c.alias AS categoryalias, c.params AS categoryparams";
+			
 			if ($ordering == 'best')
 				$query .= ", (r.rating_sum/r.rating_count) AS rating";
 
@@ -416,6 +423,13 @@ class modK2ContentHelper
 
 					$params->set('parsedInModule', 1);
 					// for plugins to know when they are parsed inside this module
+					
+					$item->event = new stdClass;
+					$item->event->BeforeDisplay = '';
+					$item->event->AfterDisplay = '';
+					$item->event->AfterDisplayTitle = '';
+					$item->event->BeforeDisplayContent = '';
+					$item->event->AfterDisplayContent = '';
 
 					if ($params->get('JPlugins', 1))
 					{

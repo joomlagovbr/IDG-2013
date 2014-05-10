@@ -1,9 +1,9 @@
 <?php
 /**
- * @version		$Id: user.php 1812 2013-01-14 18:45:06Z lefteris.kavadas $
+ * @version		2.6.x
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
+ * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
  * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -49,7 +49,7 @@ $user = JFactory::getUser();
 		<?php endif; ?>
 	
 		<?php if ($this->params->get('userImage') && !empty($this->user->avatar)): ?>
-		<img src="<?php echo $this->user->avatar; ?>" alt="<?php echo $this->user->name; ?>" style="width:<?php echo $this->params->get('userImageWidth'); ?>px; height:auto;" />
+		<img src="<?php echo $this->user->avatar; ?>" alt="<?php echo htmlspecialchars($this->user->name, ENT_QUOTES, 'UTF-8'); ?>" style="width:<?php echo $this->params->get('userImageWidth'); ?>px; height:auto;" />
 		<?php endif; ?>
 		
 		<?php if ($this->params->get('userName')): ?>

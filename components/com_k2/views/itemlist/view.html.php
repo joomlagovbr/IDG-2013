@@ -1,9 +1,9 @@
 <?php
 /**
- * @version		$Id: view.html.php 1990 2013-07-04 14:31:30Z lefteris.kavadas $
+ * @version		2.6.x
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
+ * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
  * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -59,7 +59,8 @@ class K2ViewItemlist extends K2View
 						{
 							$uri = JFactory::getURI();
 							$url = 'index.php?option=com_users&view=login&return='.base64_encode($uri->toString());
-							$mainframe->redirect(JRoute::_($url, false), JText::_('K2_YOU_NEED_TO_LOGIN_FIRST'));
+							$mainframe->enqueueMessage(JText::_('K2_YOU_NEED_TO_LOGIN_FIRST'), 'notice');
+							$mainframe->redirect(JRoute::_($url, false));
 						}
 						else
 						{
@@ -83,7 +84,8 @@ class K2ViewItemlist extends K2View
 						{
 							$uri = JFactory::getURI();
 							$url = 'index.php?option=com_user&view=login&return='.base64_encode($uri->toString());
-							$mainframe->redirect(JRoute::_($url, false), JText::_('K2_YOU_NEED_TO_LOGIN_FIRST'));
+							$mainframe->enqueueMessage(JText::_('K2_YOU_NEED_TO_LOGIN_FIRST'), 'notice');
+							$mainframe->redirect(JRoute::_($url, false));
 						}
 						else
 						{
@@ -258,7 +260,6 @@ class K2ViewItemlist extends K2View
 
 				// Set title
 				$title = $userObject->name;
-				$userObject->name = htmlspecialchars($userObject->name, ENT_QUOTES);
 
 				// Set ordering
 				$ordering = $params->get('userOrdering');
@@ -442,15 +443,22 @@ class K2ViewItemlist extends K2View
 			// Plugins
 			$items[$i] = $model->execPlugins($items[$i], $view, $task);
 
-			// Trigger comments counter event
-			$dispatcher = JDispatcher::getInstance();
-			JPluginHelper::importPlugin('k2');
-			$results = $dispatcher->trigger('onK2CommentsCounter', array(
-				&$items[$i],
-				&$params,
-				$limitstart
-			));
-			$items[$i]->event->K2CommentsCounter = trim(implode("\n", $results));
+			// Trigger comments counter event if needed
+			if ($params->get('catItemK2Plugins') &&
+			    ($params->get('catItemCommentsAnchor') ||
+			     $params->get('itemCommentsAnchor') ||
+			     $params->get('itemComments')))
+			{
+				// Trigger comments counter event
+				$dispatcher = JDispatcher::getInstance();
+				JPluginHelper::importPlugin('k2');
+				$results = $dispatcher->trigger('onK2CommentsCounter', array(
+					&$items[$i],
+					&$params,
+					$limitstart
+				));
+				$items[$i]->event->K2CommentsCounter = trim(implode("\n", $results));
+			}
 		}
 
 		// Set title
@@ -497,7 +505,7 @@ class K2ViewItemlist extends K2View
 		}
 		$document->setTitle($params->get('page_title'));
 
-		// Search - Update the Google Search results container (K2 v2.6.7+)
+		// Search - Update the Google Search results container (K2 v2.6.8+)
 		if ($task == 'search')
 		{
 			$googleSearchContainerID = trim($params->get('googleSearchContainer', 'k2GoogleSearchContainer'));

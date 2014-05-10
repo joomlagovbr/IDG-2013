@@ -1,9 +1,9 @@
 <?php
 /**
- * @version		$Id: helper.php 1998 2013-07-08 11:18:43Z lefteris.kavadas $
+ * @version		2.6.x
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
+ * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
  * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -16,6 +16,7 @@ require_once (dirname(__FILE__).DS.'includes'.DS.'calendarClass.php');
 
 class modK2ToolsHelper
 {
+	public static $paths = array();
 
 	public static function getAuthors(&$params)
 	{
@@ -703,7 +704,10 @@ class modK2ToolsHelper
 		$db = JFactory::getDBO();
 		$user = JFactory::getUser();
 		$aid = (int)$user->get('aid');
-
+		
+		$menu = $mainframe->getMenu();
+		$active = $menu->getActive();
+		
 		if ($option == 'com_k2')
 		{
 
@@ -732,6 +736,17 @@ class modK2ToolsHelper
 						echo $db->stderr();
 						return false;
 					}
+					
+					$matchItem = !is_null($active) && @$active->query['view'] == 'item' && @$active->query['id'] == $id;
+					$matchCategory = !is_null($active) && @$active->query['view'] == 'itemlist' && @$active->query['task'] == 'category' && @$active->query['id'] == $row->catid;
+					
+					if($matchItem || $matchCategory)
+					{
+						$title = ($matchCategory) ? $row->title : '';
+						$path = modK2ToolsHelper::getSitePath();
+						return array($path, $title);
+					}
+					
 					$title = $row->title;
 					$path = modK2ToolsHelper::getCategoryPath($row->catid);
 
@@ -740,6 +755,15 @@ class modK2ToolsHelper
 				case 'itemlist' :
 					if ($task == 'category')
 					{
+
+						$match = !is_null($active) && @$active->query['view'] == 'itemlist' && @$active->query['task'] == 'category' && @$active->query['id'] == $id;
+						if($match)
+						{
+							$title = '';
+							$path = modK2ToolsHelper::getSitePath();
+							return array($path, $title);
+						}
+
 
 						$query = "SELECT * FROM #__k2_categories  WHERE id={$id} AND published=1 AND trash=0 ";
 						if (K2_JVERSION != '15')
@@ -818,10 +842,13 @@ class modK2ToolsHelper
 
 	}
 
-	public static function getCategoryPath($catid)
+	public static function getCategoryPath($catid, &$array = array())
 	{
+		if(isset(self::$paths[$catid]))
+		{
+			return self::$paths[$catid];
+		}
 
-		static $array = array();
 		$mainframe = JFactory::getApplication();
 		$user = JFactory::getUser();
 		$aid = (int)$user->get('aid');
@@ -854,10 +881,11 @@ class modK2ToolsHelper
 		foreach ($rows as $row)
 		{
 			array_push($array, '<a href="'.urldecode(JRoute::_(K2HelperRoute::getCategoryRoute($row->id.':'.urlencode($row->alias)))).'">'.$row->name.'</a>');
-			modK2ToolsHelper::getCategoryPath($row->parent);
+			modK2ToolsHelper::getCategoryPath($row->parent, $array);
 		}
-
-		return array_reverse($array);
+		$return = array_reverse($array);
+		self::$paths[$catid] = $return;
+		return $return;
 	}
 
 	public static function getCategoryChildren($catid)

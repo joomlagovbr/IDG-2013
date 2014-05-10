@@ -1,9 +1,9 @@
 <?php
 /**
- * @version		$Id: route.php 1948 2013-03-11 16:47:00Z lefteris.kavadas $
+ * @version		2.6.x
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
+ * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
  * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -14,12 +14,25 @@ jimport('joomla.application.component.helper');
 
 class K2HelperRoute
 {
-
 	private static $anyK2Link = null;
 	private static $multipleCategoriesMapping = array();
+	private static $tree = null;
+	private static $model = null;
+	private static $cache = array(
+		'item' => array(),
+		'category' => array(),
+		'user' => array(),
+		'tag' => array()
+	);
 
 	public static function getItemRoute($id, $catid = 0)
 	{
+		$key = (string)(int)$id.'|'.(int)$catid;
+		if (isset(self::$cache['item'][$key]))
+		{
+			return self::$cache['item'][$key];
+		}
+
 		$needles = array(
 			'item' => (int)$id,
 			'category' => (int)$catid,
@@ -29,17 +42,24 @@ class K2HelperRoute
 		{
 			$link .= '&Itemid='.$item->id;
 		}
+		self::$cache['item'][$key] = $link;
 		return $link;
 	}
 
 	public static function getCategoryRoute($catid)
 	{
+		$key = (int)$catid;
+		if (isset(self::$cache['category'][$key]))
+		{
+			return self::$cache['category'][$key];
+		}
 		$needles = array('category' => (int)$catid);
 		$link = 'index.php?option=com_k2&view=itemlist&task=category&id='.$catid;
 		if ($item = K2HelperRoute::_findItem($needles))
 		{
 			$link .= '&Itemid='.$item->id;
 		}
+		self::$cache['category'][$key] = $link;
 		return $link;
 	}
 
@@ -50,6 +70,12 @@ class K2HelperRoute
 		{
 			global $_CB_framework;
 			return $_CB_framework->userProfileUrl((int)$userID);
+		}
+
+		$key = (int)$userID;
+		if (isset(self::$cache['user'][$key]))
+		{
+			return self::$cache['user'][$key];
 		}
 
 		$needles = array('user' => (int)$userID);
@@ -105,17 +131,25 @@ class K2HelperRoute
 		{
 			$link .= '&Itemid='.$item->id;
 		}
+		self::$cache['user'][$key] = $link;
 		return $link;
 	}
 
 	public static function getTagRoute($tag)
 	{
+		$key = $tag;
+		if (isset(self::$cache['tag'][$key]))
+		{
+			return self::$cache['tag'][$key];
+		}
+
 		$needles = array('tag' => $tag);
 		$link = 'index.php?option=com_k2&view=itemlist&task=tag&tag='.urlencode($tag);
 		if ($item = K2HelperRoute::_findItem($needles))
 		{
 			$link .= '&Itemid='.$item->id;
 		}
+		self::$cache['tag'][$key] = $link;
 		return $link;
 	}
 
@@ -274,9 +308,38 @@ class K2HelperRoute
 			}
 		}
 
-		if (is_null($match) && !is_null(self::$anyK2Link))
+		if (is_null($match))
 		{
-			$match = self::$anyK2Link;
+			// Try to detect any parent category menu item....
+			if ($needle == 'category')
+			{
+				if (is_null(self::$tree))
+				{
+					K2Model::addIncludePath(JPATH_SITE.'/components/com_k2/models');
+					$model = K2Model::getInstance('Itemlist', 'K2Model');
+					self::$model = $model;
+					self::$tree = $model->getCategoriesTree();
+				}
+				$parents = self::$model->getTreePath(self::$tree, $id);
+				if (is_array($parents))
+				{
+					foreach ($parents as $categoryID)
+					{
+						if ($categoryID != $id)
+						{
+							$match = K2HelperRoute::_findItem(array('category' => $categoryID));
+							if (!is_null($match))
+							{
+								break;
+							}
+						}
+					}
+				}
+			}
+			if (is_null($match) && !is_null(self::$anyK2Link))
+			{
+				$match = self::$anyK2Link;
+			}
 		}
 
 		return $match;

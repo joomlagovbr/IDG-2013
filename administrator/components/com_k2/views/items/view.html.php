@@ -1,9 +1,9 @@
 <?php
 /**
- * @version		$Id: view.html.php 1953 2013-04-02 16:34:59Z lefteris.kavadas $
+ * @version		2.6.x
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
+ * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
  * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -40,6 +40,19 @@ class K2ViewItems extends K2View
 		$db = JFactory::getDBO();
 		$nullDate = $db->getNullDate();
 		$this->assignRef('nullDate', $nullDate);
+		
+		
+		if(K2_JVERSION == '30' && $filter_featured == 1 && $filter_order == 'i.ordering')
+		{
+			$filter_order = 'i.featured_ordering';
+			JRequest::setVar('filter_order', 'i.featured_ordering');
+		}
+		
+		if(K2_JVERSION == '30' && $filter_featured != 1 && $filter_order == 'i.featured_ordering')
+		{
+			$filter_order = 'i.ordering';
+			JRequest::setVar('filter_order', 'i.ordering');
+		}
 
 		$model = $this->getModel();
 		$total = $model->getTotal();

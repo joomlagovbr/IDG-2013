@@ -1,9 +1,9 @@
 <?php
 /**
- * @version		$Id: view.feed.php 1930 2013-02-13 14:11:07Z joomlaworks $
+ * @version		2.6.x
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
+ * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
  * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -64,7 +64,8 @@ class K2ViewItemlist extends K2View
                             {
                                 $uri = JFactory::getURI();
                                 $url = 'index.php?option=com_users&view=login&return='.base64_encode($uri->toString());
-                                $mainframe->redirect(JRoute::_($url, false), JText::_('K2_YOU_NEED_TO_LOGIN_FIRST'));
+								$mainframe->enqueueMessage(JText::_('K2_YOU_NEED_TO_LOGIN_FIRST'), 'notice');
+                                $mainframe->redirect(JRoute::_($url, false));
                             }
                             else
                             {
@@ -87,7 +88,8 @@ class K2ViewItemlist extends K2View
                             {
                                 $uri = JFactory::getURI();
                                 $url = 'index.php?option=com_user&view=login&return='.base64_encode($uri->toString());
-                                $mainframe->redirect(JRoute::_($url, false), JText::_('K2_YOU_NEED_TO_LOGIN_FIRST'));
+								$mainframe->enqueueMessage(JText::_('K2_YOU_NEED_TO_LOGIN_FIRST'), 'notice');
+                                $mainframe->redirect(JRoute::_($url, false));
                             }
                             else
                             {
@@ -208,7 +210,7 @@ class K2ViewItemlist extends K2View
         }
 
         // Prepare feed items
-        $model = &$this->getModel('item');
+        $model = $this->getModel('item');
         foreach ($items as $item)
         {
 
@@ -244,7 +246,7 @@ class K2ViewItemlist extends K2View
 
         // Set title
         $document = JFactory::getDocument();
-        $menus = JSite::getMenu();
+        $menus = $mainframe->getMenu();
         $menu = $menus->getActive();
         if (is_object($menu))
         {

@@ -1,9 +1,9 @@
 <?php
 /**
- * @version		$Id: items.php 1978 2013-05-15 19:34:16Z joomlaworks $
+ * @version		2.6.x
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
+ * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
  * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -71,7 +71,6 @@ class K2ElementItems extends K2Element
 				items: 'li',
 				handle: 'span.handle'
 			});
-			\$K2('body').css('overflow-y', 'scroll');
 			\$K2('#itemsList .remove').click(function(){
 				\$K2(this).parent().remove();
 			});
@@ -79,7 +78,7 @@ class K2ElementItems extends K2Element
 		";
 
         $document->addScriptDeclaration($js);
-        $document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.modules.css?v=2.6.7');
+        $document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.modules.css?v=2.6.8');
 
         $current = array();
         if (is_string($value) && !empty($value))

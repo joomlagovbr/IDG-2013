@@ -1,9 +1,9 @@
 <?php
 /**
- * @version		$Id: extrafield.php 1965 2013-04-29 16:01:44Z lefteris.kavadas $
+ * @version		2.6.x
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
+ * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
  * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -33,7 +33,8 @@ class K2ModelExtraField extends K2Model
 		$row = JTable::getInstance('K2ExtraField', 'Table');
 		if (!$row->bind(JRequest::get('post')))
 		{
-			$mainframe->redirect('index.php?option=com_k2&view=extrafields', $row->getError(), 'error');
+			$mainframe->enqueueMessage($row->getError(), 'error');
+			$mainframe->redirect('index.php?option=com_k2&view=extrafields');
 		}
 
 		$isNewGroup = JRequest::getInt('isNew');
@@ -80,15 +81,18 @@ class K2ModelExtraField extends K2Model
 			}
 			elseif ($row->type == 'link')
 			{
-				if (substr($values[$i], 0, 7) == 'http://')
+				if (trim($values[$i]) != '')
 				{
-					$values[$i] = $values[$i];
+					if (substr($values[$i], 0, 7) == 'http://' || substr($values[$i], 0, 8) == 'https://' || substr($values[$i], 0, 2) == '//' || substr($values[$i], 0, 1) == '/')
+					{
+						$values[$i] = $values[$i];
+					}
+					else
+					{
+						$values[$i] = 'http://'.$values[$i];
+					}
 				}
-				else
-				{
-					$values[$i] = 'http://'.$values[$i];
-				}
-				$object->set('value', $values[$i]);
+				$object->set('value', trim($values[$i]));
 			}
 			elseif ($row->type == 'csv')
 			{
@@ -150,12 +154,14 @@ class K2ModelExtraField extends K2Model
 
 		if (!$row->check())
 		{
-			$mainframe->redirect('index.php?option=com_k2&view=extrafield&cid='.$row->id, $row->getError(), 'error');
+			$mainframe->enqueueMessage($row->getError(), 'error');
+			$mainframe->redirect('index.php?option=com_k2&view=extrafield&cid='.$row->id);
 		}
 
 		if (!$row->store())
 		{
-			$mainframe->redirect('index.php?option=com_k2&view=extrafields', $row->getError(), 'error');
+			$mainframe->enqueueMessage($row->getError(), 'error');
+			$mainframe->redirect('index.php?option=com_k2&view=extrafields');
 		}
 
 		$params = JComponentHelper::getParams('com_k2');
@@ -177,8 +183,8 @@ class K2ModelExtraField extends K2Model
 				$link = 'index.php?option=com_k2&view=extrafields';
 				break;
 		}
-
-		$mainframe->redirect($link, $msg);
+		$mainframe->enqueueMessage($msg);
+		$mainframe->redirect($link);
 	}
 
 	function getExtraFieldsByGroup($group)
@@ -272,11 +278,21 @@ class K2ModelExtraField extends K2Model
 			}
 
 		}
-
 		$attributes = '';
-		if ($required)
+		if (version_compare(JVERSION, '3.2', 'ge'))
 		{
-			$attributes .= 'class="k2Required"';
+			$arrayAttributes = array();
+			if ($required)
+			{
+				$arrayAttributes['class'] = "k2Required";
+			}
+		}
+		else
+		{
+			if ($required)
+			{
+				$attributes .= 'class="k2Required"';
+			}
 		}
 
 		if ($showNull && in_array($extraField->type, array(
@@ -327,13 +343,19 @@ class K2ModelExtraField extends K2Model
 				break;
 
 			case 'select' :
-				$attributes .= ' id="'.$extraField->id.'.$extraField->id"';
-				$output = JHTML::_('select.genericlist', $defaultValues, 'K2ExtraField_'.$extraField->id, $attributes, 'value', 'name', $active);
+				$attributes .= ' id="K2ExtraField_'.$extraField->id.'"';
+				$arrayAttributes['id'] = 'K2ExtraField_'.$extraField->id;
+				$attrs = version_compare(JVERSION, '3.2', 'ge') ? $arrayAttributes : $attributes;
+				$output = JHTML::_('select.genericlist', $defaultValues, 'K2ExtraField_'.$extraField->id, $attrs, 'value', 'name', $active);
 				break;
 
 			case 'multipleSelect' :
-				$attributes .= ' id="'.$extraField->id.'.$extraField->id" multiple="multiple"';
-				$output = JHTML::_('select.genericlist', $defaultValues, 'K2ExtraField_'.$extraField->id.'[]', $attributes, 'value', 'name', $active);
+				
+				$attributes .= ' id="K2ExtraField_'.$extraField->id.'" multiple="multiple"';
+				$arrayAttributes['id'] = 'K2ExtraField_'.$extraField->id;
+				$arrayAttributes['multiple'] = "multiple";
+				$attrs = version_compare(JVERSION, '3.2', 'ge') ? $arrayAttributes : $attributes;
+				$output = JHTML::_('select.genericlist', $defaultValues, 'K2ExtraField_'.$extraField->id.'[]', $attrs, 'value', 'name', $active);
 				break;
 
 			case 'radio' :
@@ -341,7 +363,8 @@ class K2ModelExtraField extends K2Model
 				{
 					$active = $defaultValues[0]->value;
 				}
-				$output = JHTML::_('select.radiolist', $defaultValues, 'K2ExtraField_'.$extraField->id, $attributes, 'value', 'name', $active);
+				$attrs = version_compare(JVERSION, '3.2', 'ge') ? $arrayAttributes : $attributes;
+				$output = JHTML::_('select.radiolist', $defaultValues, 'K2ExtraField_'.$extraField->id, $attrs, 'value', 'name', $active);
 				break;
 
 			case 'link' :
@@ -384,7 +407,18 @@ class K2ModelExtraField extends K2Model
 				break;
 
 			case 'date' :
-				$output = JHTML::_('calendar', $active, 'K2ExtraField_'.$extraField->id, 'K2ExtraField_'.$extraField->id, '%Y-%m-%d', $attributes);
+				if ($required)
+				{
+					$attributes = 'class="k2Calendar k2Required"';
+					$arrayAttributes['class'] = "k2Calendar k2Required";
+				}
+				else
+				{
+					$attributes = 'class="k2Calendar"';
+					$arrayAttributes['class'] = "k2Calendar";
+				}
+				$attrs = version_compare(JVERSION, '3.2', 'ge') ? $arrayAttributes : $attributes;
+				$output = JHTML::_('calendar', $active, 'K2ExtraField_'.$extraField->id, 'K2ExtraField_'.$extraField->id, '%Y-%m-%d', $attrs);
 				break;
 			case 'image' :
 				$output = '<input type="text" name="K2ExtraField_'.$extraField->id.'" id="K2ExtraField_'.$extraField->id.'" value="'.$active.'" '.$attributes.' />

@@ -1,9 +1,9 @@
 <?php
 /**
- * @version		$Id: view.html.php 1981 2013-05-22 15:38:17Z lefteris.kavadas $
+ * @version		2.6.x
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
+ * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
  * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -225,6 +225,22 @@ class K2ViewLatest extends K2View
             $source = 'users';
             $this->assignRef('blocks', $users);
         }
+
+		// Browser title
+		$browserTitle = $params->get('page_title');
+		if (K2_JVERSION != '15')
+		{
+			if ($mainframe->getCfg('sitename_pagetitles', 0) == 1)
+            {
+                $browserTitle = JText::sprintf('JPAGETITLE', $mainframe->getCfg('sitename'), $params->get('page_title'));
+            }
+            elseif ($mainframe->getCfg('sitename_pagetitles', 0) == 2)
+            {
+                $browserTitle = JText::sprintf('JPAGETITLE', $params->get('page_title'), $mainframe->getCfg('sitename'));
+            }
+		}
+		$document->setTitle($browserTitle);
+
 
         // Set menu metadata for Joomla! 2.5+
         if (K2_JVERSION != '15')
