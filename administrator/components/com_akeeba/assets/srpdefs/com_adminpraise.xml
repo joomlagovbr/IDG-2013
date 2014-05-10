@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	System Restore Point definition for AdminPraise3 template
+	
+	IMPORTANT NOTE: The template's manifest file is of the "component" type, but
+	only for Joomla! 1.5. The Joomla! 1.6 version has everything built in the
+	template directory and needs no SRP definition whatsoever. The defaults will
+	work perfectly. Yay!
+	
+	Copyright ©2011 Nicholas K. Dionysopoulos / AkeebaBackup.com
+	License: GNU General Public License version 3, or later
+-->
+<restorepoint>
+	<customdirs>
+		<dir>administrator/modules/mod_activitylog_pro</dir>
+		<dir>administrator/modules/mod_adminpraise_cpanel</dir>
+		<dir>administrator/modules/mod_adminpraise_menu</dir>
+		<dir>administrator/modules/mod_quickitem_pro</dir>
+		
+		<dir>plugins/editors/sce</dir>
+		<dir>plugins/system/activitylog_pro</dir>
+		<dir>plugins/system/adminpraise_autoeditor</dir>
+		<dir>plugins/system/adminpraise_mootools</dir>
+		
+		<dir>administrator/templates/adminpraise3</dir>
+	</customdirs>
+	<customfiles>
+		<file>plugins/editors/sce.php</file>
+		<file>plugins/editors/sce.xml</file>
+		<file>plugins/system/activitylog_pro.php</file>
+		<file>plugins/system/activitylog_pro.xml</file>
+		<file>plugins/system/adminpraise_autoeditor.php</file>
+		<file>plugins/system/adminpraise_autoeditor.xml</file>
+		<file>plugins/system/adminpraise_mootools.php</file>
+		<file>plugins/system/adminpraise_mootools.xml</file>
+	</customfiles>
+	<langfiles>
+		<lang>mod_activitylog_pro</lang>
+		<lang>mod_adminpraise_cpanel</lang>
+		<lang>mod_adminpraise_menu</lang>
+		<lang>mod_quickitem_pro</lang>
+		<lang>plg_editors_sce</lang>
+		<lang>plg_system_activitylog_pro</lang>
+		<lang>plg_system_adminpraise_autoeditor</lang>
+		<lang>plg_system_mootools</lang>
+		<lang>tpl_adminpraise3</lang>
+	</langfiles>
+</restorepoint>

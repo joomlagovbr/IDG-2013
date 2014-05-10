@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	System Restore Point definition for RokCandy by RocketTheme
+	Joomla! 1.5 version (installs as component)
+	
+	Copyright ©2011 Nicholas K. Dionysopoulos / AkeebaBackup.com
+	License: GNU General Public License version 3, or later
+-->
+<restorepoint>
+	<customdirs>
+		<dir>plugins/editors-xtd/rokcandy_button</dir>
+		<dir>plugins/system/rokcandy_system</dir>
+	</customdirs>
+	<customfiles>
+		<file>plugins/editors-xtd/rokcandy_button.php</file>
+		<file>plugins/editors-xtd/rokcandy_button.xml</file>
+		<file>plugins/system/rokcandy_system.php</file>
+		<file>plugins/system/rokcandy_system.xml</file>
+	</customfiles>
+	<langfiles>
+		<lang>plg_editors-xtd_rokcandy_button</lang>
+		<lang>plg_system_rokcandy_system</lang>
+	</langfiles>
+	<customtables>
+		<prefix>rokcandy</prefix>
+	</customtables>
+</restorepoint>

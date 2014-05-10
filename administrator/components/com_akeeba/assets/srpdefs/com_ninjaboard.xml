@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	System Restore Point definition for NinjaBoard by NinjaForge
+	
+	Copyright ©2011 Nicholas K. Dionysopoulos / AkeebaBackup.com
+	License: GNU General Public License version 3, or later
+-->
+<restorepoint>
+	<customdirs>
+		<dir>libraries/koowa</dir>
+		<dir>components/com_default</dir>
+		<dir>administrator/components/com_default</dir>
+		<dir>media/lib_koowa</dir>
+		<dir>media/com_default</dir>
+		<dir>modules/mod_default</dir>
+		<dir>administrator/modules/mod_default</dir>
+		<dir>plugins/koowa</dir>
+		<dir>plugins/system/koowa</dir>
+		
+		<dir>administrator/components/com_ninja</dir>
+		<dir>components/com_ninja</dir>
+		<dir>media/com_ninja</dir>
+		
+		<dir>administrator/modules/mod_ninjaboard_stats</dir>
+		<dir>plugins/search/ninjaboard</dir>
+		<dir>plugins/system/ninja</dir>
+	</customdirs>
+	<customfiles>
+		<file>plugins/system/koowa.php</file>
+		<file>plugins/system/koowa.xml</file>
+		
+		<file>plugins/search/ninjaboard.php</file>
+		<file>plugins/search/ninjaboard.xml</file>
+		<file>plugins/system/ninja.php</file>
+		<file>plugins/system/ninja.xml</file>
+	</customfiles>
+	<langfiles>
+		<lang>com_default</lang>
+		<lang>mod_default</lang>
+		
+		<lang>com_ninja</lang>
+		
+		<lang>plg_search_ninjaboard</lang>
+		<lang>plg_system_ninja</lang>
+	</langfiles>
+</restorepoint>

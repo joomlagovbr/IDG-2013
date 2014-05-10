@@ -1,0 +1,87 @@
+/*!
+ * Akeeba Strapper
+ * A handy distribution of namespaced jQuery, jQuery UI and Twitter
+ * Bootstrapper for use with Akeeba components.
+ *
+ * This file defines Akeeba Strapper specific styling overrides
+ */
+div.akeeba-bootstrap {
+  font-size: 10pt;
+  background: transparent;
+}
+div.akeeba-bootstrap .alert {
+  background-image: none;
+}
+div.akeeba-bootstrap form.form-horizontal-wide label.control-label {
+  width: 300px;
+}
+div.akeeba-bootstrap form.form-horizontal-wide div.controls {
+  margin-left: 320px;
+}
+div.akeeba-bootstrap form.form-horizontal-wide textarea {
+  width: 450px;
+}
+div.akeeba-bootstrap td.order span {
+  line-height: 16px;
+  height: 16px;
+  margin: 0;
+  padding: 0;
+}
+div.akeeba-bootstrap td.order a.jgrid span.state {
+  background-repeat: no-repeat;
+  height: 12px;
+  margin-bottom: 2px;
+}
+div.akeeba-bootstrap td.order a.jgrid span.state span.text {
+  line-height: 16px;
+}
+div.akeeba-bootstrap td.order input.text-area-order {
+  margin-bottom: 0;
+  width: 20px;
+}
+div.akeeba-bootstrap td.order .sortable-handler {
+  display: block;
+  float: left;
+  margin: 1px 0 0 0;
+  padding: 5px 5px;
+}
+div.akeeba-bootstrap th a.save-order {
+  height: 19px;
+}
+div.akeeba-bootstrap div.ak_clr_left {
+  clear: left;
+}
+div.akeeba-bootstrap div.ak_clr {
+  clear: both;
+}
+div.akeeba-bootstrap div.icon a.modal {
+  position: relative;
+  top: inherit;
+  left: inherit;
+  z-index: inherit;
+  margin: 0 !important;
+  box-shadow: none;
+}
+div.akeeba-bootstrap div [class^="icon-wrapper"] {
+  display: inline;
+}
+div.icon-wrapper {
+  display: inline;
+}
+/**
+ * Akeeba Live Update button styling
+ */
+span.liveupdate-icon-notsupported {
+  color: #555555;
+}
+span.liveupdate-icon-crashed {
+  color: #555555;
+}
+span.liveupdate-icon-updates {
+  font-weight: bold;
+  color: #9d261d;
+  font-size: 0.87em;
+}
+span.liveupdate-icon-noupdates {
+  color: #46a546;
+}

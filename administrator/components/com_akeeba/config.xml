@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<fieldset
+		name="permissions"
+		label="JCONFIG_PERMISSIONS_LABEL"
+		description="JCONFIG_PERMISSIONS_DESC"
+		>
+
+		<field
+			name="rules"
+			type="rules"
+			label="JCONFIG_PERMISSIONS_LABEL"
+			class="inputbox"
+			filter="rules"
+			component="com_akeeba"
+			section="component" />
+	</fieldset>
+
+	<fieldset name="frontend" label="CONFIG_FRONTEND_HEADER_LABEL" description="CONFIG_FRONTEND_HEADER_DESC">
+
+		<field name="frontend_enable" type="radio" default="0"
+			     label="CONFIG_FEBENABLE_LABEL"
+			     description="CONFIG_FEBENABLE_DESC"
+           class="btn-group">
+			<option value="0">JNo</option>
+			<option value="1">JYes</option>
+		</field>
+
+    <field name="failure_frontend_enable" type="radio" default="0"
+           label="CONFIG_FAILURE_FEBENABLE_LABEL"
+           description="CONFIG_FAILURE_FEBENABLE_DESC"
+           class="btn-group">
+      <option value="0">JNo</option>
+      <option value="1">JYes</option>
+    </field>
+
+		<field name="frontend_secret_word" type="password" default="" size="30"
+			label="CONFIG_SECRETWORD_LABEL"
+			description="CONFIG_SECRETWORD_DESC"
+            class="input-large"/>
+		<field name="frontend_email_on_finish" type="radio" default="0"
+			label="CONFIG_FRONTENDEMAIL_LABEL"
+			description ="CONFIG_FRONTENDEMAIL_DESC"
+            class="btn-group">
+			<option value="0">JNo</option>
+			<option value="1">JYes</option>
+		</field>
+		<field name="frontend_email_address" type="text" default="" size="50"
+			label="CONFIG_ARBITRARYFEEMAIL_LABEL"
+			description="CONFIG_ARBITRARYFEEMAIL_DESC"
+            class="input-xxlarge"/>
+		<field name="frontend_email_subject" type="text" default="" size="50"
+			label="CONFIG_FEEMAILSUBJECT_LABEL"
+			description="CONFIG_FEEMAILSUBJECT_DESC"
+            class="input-xxlarge"/>
+		<field name="frontend_email_body" type="textarea" default="" rows="10" cols="55"
+			label="CONFIG_FEEMAILBODY_LABEL"
+			description="CONFIG_FEEMAILBODY_DESC" />
+
+    <!-- FAILURE CHECK SETTINGS -->
+    <field type="spacer" label="CONFIG_FAILURE_SEPARATOR"/>
+
+    <field name="failure_timeout" type="text" default="180"
+           filter="integer"
+           label="CONFIG_FAILURE_TIMEOUT_LABEL"
+           description="CONFIG_FAILURE_TIMEOUT_DESC"
+      />
+
+    <field name="failure_email_address" type="text" default="" size="50"
+           label="CONFIG_FAILURE_EMAILADDRESS_LABEL"
+           description="CONFIG_FAILURE_EMAILADDRESS_DESC"/>
+
+    <field name="failure_email_subject" type="text" default="" size="50"
+           label="CONFIG_FAILURE_EMAILSUBJECT_LABEL"
+           description="CONFIG_FAILURE_EMAILSUBJECT_DESC"/>
+
+    <field name="failure_email_body" type="textarea" default="" rows="10" cols="55"
+           label="CONFIG_FAILURE_EMAILBODY_LABEL"
+           description="CONFIG_FAILURE_EMAILBODY_DESC"/>
+
+		<field name="siteurl" type="hidden" default="" label="" />
+		<field name="jversion" type="hidden" default="" label="" />
+		<field name="jlibrariesdir" type="hidden" default="" label="" />
+		<field name="lastversion" type="hidden" default="" label="" />
+		<field name="angieupgrade" type="hidden" default="0" label="" />
+	</fieldset>
+
+	<fieldset name="liveupdate" label="CONFIG_LIVEUPDATE_HEADER_LABEL" description="CONFIG_LIVEUPDATE_HEADER_DESC">
+		<field name="update_dlid" type="text" default="" size="30"
+			label="CONFIG_DOWNLOADID_LABEL"
+			description ="CONFIG_DOWNLOADID_DESC" />
+		<field name="displayphpwarning" type="radio" default="1"
+			label="COM_AKEEBA_CONFIG_LIVEUPDATE_DISPLAYPHPWARNING_LABEL"
+			description="COM_AKEEBA_CONFIG_LIVEUPDATE_DISPLAYPHPWARNING_DESC"
+            class="btn-group">
+			<option value="0">JNo</option>
+			<option value="1">JYes</option>
+		</field>
+
+    <field name="autoupdateCli" type="list" default="1"
+           label="CONFIG_AUTOUPDATE_SETTINGS_LABEL"
+           description="CONFIG_AUTOUPDATE_SETTINGS_DESC">
+      <option value="1">CONFIG_AUTOUPDATE_NOTIFY_UPDATE</option>
+      <option value="2">CONFIG_AUTOUPDATE_NOTIFY</option>
+      <option value="3">CONFIG_AUTOUPDATE_UPDATE</option>
+    </field>
+
+    <field name="notificationFreq" type="text" default="1"
+           label="CONFIG_NOTIFICATION_FREQ_LABEL" />
+
+    <field name="notificationTime" type="list" default="day"
+           label="CONFIG_NOTIFICATION_TIME_LABEL" >
+      <option value="min">CONFIG_NOTIFICATION_TIME_MIN</option>
+      <option value="hour">CONFIG_NOTIFICATION_TIME_HOUR</option>
+      <option value="day">CONFIG_NOTIFICATION_TIME_DAY</option>
+    </field>
+
+    <field name="notificationEmail" type="text" default=""
+           label="CONFIG_NOTIFICATION_EMAIL_LABEL"
+           description="CONFIG_NOTIFICATION_EMAIL_DESC"/>
+	</fieldset>
+
+	<fieldset name="security" label="CONFIG_SECURITY_HEADER_LABEL" description="CONFIG_SECURITY_HEADER_DESC">
+		<field name="useencryption" type="radio" default="1"
+			label="CONFIG_SECURITY_USEENCRYPTION_LABEL"
+			description="CONFIG_SECURITY_USEENCRYPTION_DESCRIPTION"
+            class="btn-group">
+			<option value="0">JNo</option>
+			<option value="1">JYes</option>
+		</field>
+	</fieldset>
+
+    <fieldset name="backend" label="CONFIG_BACKEND_HEADER_LABEL" description="CONFIG_BACKEND_HEADER_DESC">
+        <field name="dateformat" type="text" default="" size="30"
+               label="COM_AKEEBA_CONFIG_DATEFORMAT_LABEL"
+               description="COM_AKEEBA_CONFIG_DATEFORMAT_DESC" />
+    </fieldset>
+
+</config>

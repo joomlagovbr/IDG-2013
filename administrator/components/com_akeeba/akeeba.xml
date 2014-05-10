@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="2.5" type="component" method="upgrade">
+	<name>Akeeba</name>
+	<creationDate>2014-05-06</creationDate>
+	<author>Nicholas K. Dionysopoulos</author>
+	<authorEmail>nicholas@dionysopoulos.me</authorEmail>
+	<authorUrl>http://www.akeebabackup.com</authorUrl>
+	<copyright>Copyright (c)2006-2012 Nicholas K. Dionysopoulos</copyright>
+	<license>GNU GPL v3 or later</license>
+	<version>3.11.0</version>
+	<description>Akeeba Backup Core - Full Joomla! site backup solution, Core Edition.</description>
+
+	<!-- Public front end files -->
+	<files folder="frontend">
+		<filename>akeeba.php</filename>
+		<filename>dispatcher.php</filename>
+		<filename>index.html</filename>
+		<folder>controllers</folder>
+		<folder>models</folder>
+		<folder>views</folder>
+	</files>
+
+	<!-- Front end translation files -->
+	<languages folder="language/frontend">
+		<language tag="en-GB">en-GB/en-GB.com_akeeba.ini</language>
+	</languages>
+
+	<!-- Media files -->
+	<media destination="com_akeeba" folder="media">
+		<folder>js</folder>
+		<folder>theme</folder>
+		<folder>icons</folder>
+		<filename>changelog.png</filename>
+	</media>
+
+	<!-- Administrator back-end section -->
+	<administration>
+		<!-- Administration menu -->
+		<menu view="cpanel"
+			img="../media/com_akeeba/icons/akeeba-16.png">COM_AKEEBA</menu>
+
+		<!-- Back-end files -->
+		<files folder="backend">
+			<filename>akeeba.php</filename>
+			<filename>dispatcher.php</filename>
+			<filename>fof.xml</filename>
+			<filename>index.html</filename>
+			<filename>toolbar.php</filename>
+			<filename>version.php</filename>
+			<filename>config.xml</filename>
+			<filename>access.xml</filename>
+			<filename>CHANGELOG.php</filename>
+
+			<folder>akeeba</folder>
+			<folder>assets</folder>
+			<folder>backup</folder>
+			<folder>controllers</folder>
+			<folder>helpers</folder>
+			<folder>models</folder>
+			<folder>sql</folder>
+			<folder>tables</folder>
+			<folder>views</folder>
+		</files>
+
+		<!-- Back-end translation files -->
+		<languages folder="language/backend">
+			<language tag="en-GB">en-GB/en-GB.com_akeeba.ini</language>
+			<language tag="en-GB">en-GB/en-GB.com_akeeba.sys.ini</language>
+		</languages>
+
+	</administration>
+
+	<!-- Installation / uninstallation script file -->
+	<scriptfile>script.akeeba.php</scriptfile>
+	
+	<!-- Update servers -->
+	<updateservers>
+		<server type="extension" priority="1" name="Akeeba Backup Core">http://cdn.akeebabackup.com/updates/abcore.xml</server>
+	</updateservers>
+
+    <!-- Akeeba Backup System Restore Point definition -->
+    <restorepoint>
+        <customdirs>
+            <dir>administrator/modules/mod_akadmin</dir>
+            <dir>plugins/quickicon/akeebabackup</dir>
+            <dir>plugins/system/akeebaupdatecheck</dir>
+            <dir>plugins/system/backuponupdate</dir>
+            <dir>plugins/system/oneclickaction</dir>
+            <dir>plugins/system/srp</dir>
+        </customdirs>
+        <langfiles>
+            <lang>mod_akadmin</lang>
+            <lang>plg_quickicon_akeebabackup</lang>
+            <lang>plg_system_akeebaupdatecheck</lang>
+            <lang>plg_system_backuponupdate</lang>
+            <lang>plg_system_oneclickaction</lang>
+            <lang>plg_system_srp</lang>
+        </langfiles>
+        <extraprefixes>
+            <prefix>ak</prefix>
+        </extraprefixes>
+    </restorepoint>
+</extension>

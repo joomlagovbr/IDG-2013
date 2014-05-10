@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	System Restore Point definition for Akeeba Backup by AkeebaBackup.com
+	
+	Copyright ©2011 Nicholas K. Dionysopoulos / AkeebaBackup.com
+	License: GNU General Public License version 3, or later
+-->
+<restorepoint>
+	<customdirs>
+		<dir>modules/mod_docman_catdown</dir>
+		<dir>modules/mod_docman_latestdown</dir>
+		<dir>modules/mod_docman_lister</dir>
+		<dir>modules/mod_docman_mostdown</dir>
+		<dir>administrator/modules/mod_docman_approval</dir>
+		<dir>administrator/modules/mod_docman_latest</dir>
+		<dir>administrator/modules/mod_docman_logs</dir>
+		<dir>administrator/modules/mod_docman_news</dir>
+		<dir>administrator/modules/mod_docman_top</dir>
+		<dir>plugins/editors-xtd/doclink</dir>
+		<dir>plugins/search/docman.searchbot</dir>
+		<dir>plugins/docman/standardbuttons</dir>
+	</customdirs>
+	<customfiles>
+		<file>plugins/editors-xtd/doclink.php</file>
+		<file>plugins/editors-xtd/doclink.xml</file>
+		<file>plugins/search/docman.searchbot.php</file>
+		<file>plugins/search/docman.searchbot.xml</file>
+		<file>plugins/docman/standardbuttons.php</file>
+		<file>plugins/docman/standardbuttons.xml</file>
+	</customfiles>
+	<langfiles>
+		<lang>mod_docman_catdown</lang>
+		<lang>mod_docman_latestdown</lang>
+		<lang>mod_docman_lister</lang>
+		<lang>mod_docman_mostdown</lang>
+		<lang>mod_docman_approval</lang>
+		<lang>mod_docman_latest</lang>
+		<lang>mod_docman_logs</lang>
+		<lang>mod_docman_news</lang>
+		<lang>mod_docman_top</lang>
+		<lang>plg_editors-xtd_doclink</lang>
+		<lang>plg_search_docman.searchbot</lang>
+		<lang>plg_docman_standardbuttons</lang>
+	</langfiles>
+</restorepoint>

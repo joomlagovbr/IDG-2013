@@ -1,0 +1,333 @@
+/*
+	Akeeba User Interface CSS
+	Copyright (c)2009-2014 Nicholas K. Dionysopoulos <nicholas@dionysopoulos.me>
+	Released under the GNU General Public License, version 3 or later
+*/
+
+/*
+ * Akeeba Backup title icon
+ */
+.icon-48-akeeba { background-image: url(../icons/logo-48.png); }
+
+/*
+ * UI Icons - 32x32
+ */
+div.akeeba-bootstrap div.icon { margin-top: 10px; margin-bottom: 0; }
+.ak-icon { display: block; width: 32px; height: 32px; text-indent: -99999px; overflow: hidden; background: transparent url(../icons/akeeba-ui-32.png) top left no-repeat; margin: 4px auto 6px; }
+.ak-icon-profiles { background-position: 0 0; }
+.ak-icon-configuration { background-position: -32px 0; }
+.ak-icon-backup { background-position: -64px 0; }
+.ak-icon-adminfiles { background-position: -96px 0; }
+.ak-icon-viewlog { background-position: -128px 0; }
+.ak-icon-fsfilter { background-position: -160px 0; }
+.ak-icon-dbfilter { background-position: -192px 0; }
+.ak-icon-extradirs { background-position: -224px 0; }
+.ak-icon-multidb { background-position: -256px 0; }
+.ak-icon-fsrx { background-position: -288px 0; }
+.ak-icon-dbrx { background-position: -320px 0; }
+.ak-icon-extfilter { background-position: -352px 0; }
+.ak-icon-restore { background-position: -384px 0; }
+.ak-icon-view { background-position: -416px 0; }
+.ak-icon-cancel { background-position: -448px 0; }
+.ak-icon-warning { background-position: -480px 0; }
+.ak-icon-ok { background-position: -512px 0; }
+.ak-icon-update { background-position: -544px 0; }
+.ak-icon-confwiz { background-position: -576px 0; }
+.ak-icon-download { background-position: -608px 0; }
+.ak-icon-delete { background-position: -640px 0; }
+.ak-icon-componentparams { background-position: -672px 0; }
+.ak-icon-acl { background-position: -704px 0; }
+.ak-icon-stw { background-position: -736px 0; }
+.ak-icon-schedule { background: transparent url(../icons/scheduling-32.png) top left no-repeat; }
+
+/*
+ * Joomla! 1.6 - 2.5 compatibility
+ */
+/**/
+div.akeeba-bootstrap button, div.akeeba-bootstrap input, div.akeeba-bootstrap select { float: none; }
+.akeeba-formstyle-reset label { float: none !important; clear: none !important; display: inline-block !important; }
+.akeeba-formstyle-reset input { float: none !important; }
+.akeeba-formstyle-reset select { float: none !important; }
+.akeeba-formstyle-reset button { float: none !important; }
+div.akeeba-bootstrap .close  { float: right; }
+/**/
+
+/*
+ * Changelog
+ */
+/**/
+h3.akeeba-changelog { border-bottom: 2px solid #333; margin-top: 10pt; font-size: 13pt; }
+ul.akeeba-changelog { list-style-type: none; padding: 7px; margin: 3px; font-size: 10pt; border: thin solid #ccc; background-color: #fefefe; border-radius: 5px; }
+ul.akeeba-changelog li { line-height: 16px; padding: 0; margin: 0 3px 3px; }
+li.akeeba-changelog-added		{ color: green; }
+li.akeeba-changelog-removed		{ color: red; }
+li.akeeba-changelog-changed		{ color: #666; }
+li.akeeba-changelog-important	{ color: #cc8833; }
+li.akeeba-changelog-fixed		{ color: blue; }
+ul.akeeba-changelog span			{ display: inline-block; height: 16px; width: 32px; background: transparent url(../changelog.png) top left no-repeat; margin-right: 4px; }
+li.akeeba-changelog-removed span	{ background-position: 0 -16px; }
+li.akeeba-changelog-changed	span	{ background-position: 0 -32px; }
+li.akeeba-changelog-important span	{ background-position: 0 -64px; }
+li.akeeba-changelog-fixed span		{ background-position: 0 -48px; }
+/**/
+
+/**
+ * Backup progress
+ */
+#backup-steps div.label, #stepper-steps div.label{
+	display: block;
+	width: 100%;
+	margin-top: 1px;
+}
+#backup-step, #stepper-step{
+	font-weight: bold;
+	border-bottom: thin dotted #333333;
+}
+
+#backup-substep, #stepper-substep {
+	font-style: italic;
+	color: #000066 !important;
+}
+
+#warnings-list {
+	height: 180px;
+	overflow-y: scroll;
+}
+
+#warnings-list div {
+	border-bottom: thin dotted gray;
+	padding: 2px 0;
+}
+
+/*
+ * Tooltip support
+ */
+#tooltip {
+	position: absolute;
+	z-index: 3000;
+	border: thin solid black;
+	background-color: #f2f5f7;
+	padding: 5px;
+	font-size: small !important;
+}
+#tooltip h3, #tooltip div { margin: 0; }
+#tooltip div.ui-icon { float: left; margin-top: 0.2em; margin-right: 0.3em; }
+#tooltip h3 { margin: 0px; padding: 0px; font-size: medium !important; }
+div.viewport-bottom {
+	margin-top: 11px;
+}
+#tooltip .tooltip-arrow-up {
+	border-color: transparent transparent black transparent;
+	border-style: solid;
+	border-width: 10px;
+	height:0;
+	width:0;
+	position: absolute;
+	left: 20px;
+	top: -20px;
+}
+#tooltip .tooltip-arrow-up-leftaligned {
+	border-color: transparent transparent black transparent;
+	border-style: solid;
+	border-width: 5px;
+	height:0;
+	width:0;
+	position: absolute;
+	left: 5px;
+	top: -10px;
+}
+
+div.viewport-bottom .tooltip-arrow-up {
+	display: none;
+}
+div.viewport-bottom .url {
+	/** #AED0EA **/
+	border-color: black transparent transparent transparent;
+	border-style: solid;
+	border-width: 10px;
+	height:0;
+	width:0;
+	position: absolute;
+	left: 20px;
+	bottom: -20px;
+}
+
+
+/**
+ * Filesystem filters
+ */
+/**/
+span.ak-toggle-button:active { border: 1px solid gray; border-bottom: 1px solid silver; border-right: 1px solid silver; }
+span.ak-toggle-button { border: 1px solid silver; border-bottom: 1px solid gray; border-right: 1px solid gray; background-color: #f9f9f6 }
+.ui-state-highlight span.ak-toggle-button { border: 1px solid gray; border-bottom: 1px solid silver; border-right: 1px solid silver; background-color: #ffff00; }
+.ui-state-error span.ak-toggle-button { background-color: red; }
+span.ak-toggle-button-spinning { background-color: #ccc }
+.ui-state-highlight span.ak-toggle-button-spinning { background-color: #ccc }
+.ak-stacked-button { display: inline-block; margin-right: 4px !important; }
+
+span.actionbutton { padding: 0.25em 0.5em; margin: 0 1em 0 0; cursor: pointer; }
+#ak_top_container, #ak_main_container { padding: 4px; }
+#ak_top_container div { text-align: center; }
+#ak_roots_container { border-bottom: thin dashed #666666; padding: 2px 0px 6px 0px; }
+#ak_crumbs_container { padding: 6px 0px 2px 0px; }
+#ak_crumbs_label, #ak_crumbs { display: inline; }
+#ak_crumbs { color: #333; }
+#ak_crumbs span { padding: 1px 3px; cursor: pointer; }
+#ak_main_container { height: 322px; }
+#ak_folder_header, #ak_files_header { height: 18px; }
+#ak_folder_container, #ak_files_container { display: block; width: 48.5%; position: relative; margin: 0; padding: 0px; }
+#ak_folder_container { float: left; }
+#ak_files_container { float: right; }
+#folders, #files { height: 300px; overflow-y: auto; }
+#ak_clr { clear: all; }
+
+.folder-container { background-color: white; height: 18px; padding: 1px; color: #333333; font-weight: normal; border-bottom: 1px solid #d0d0ff; }
+.folder-container span.folder-padding { float: left; cursor: pointer; border: none; margin-right: 4px; width: 16px; height: 16px; display: block; }
+.folder-container span.folder-up span.ui-icon { float: left; }
+.folder-container span.folder-icon-container { float: left; cursor: pointer; border: none; margin-right: 4px; }
+.folder-container span.ui-state-error { cursor: default; }
+.folder-container span.folder-name { padding-left: 4px; cursor: pointer; }
+.folder-container span.folder-name:hover { font-weight: bold; color: #333399; }
+
+.file-container { background-color: white; height: 18px; padding: 1px; color: #333333; font-weight: normal; border-bottom: 1px solid #d0d0ff; }
+.file-container span.file-icon-container { float: left; cursor: pointer; border: none; margin-right: 4px; }
+.file-container span.ui-state-error { cursor: default; }
+.file-container span.file-name { padding-left: 4px; }
+.file-container span.file-clickable { cursor: pointer; }
+.file-container span.file-clickable:hover { font-weight: bold; color: #333399; }
+.file-container span.file-size { display: block; float: right; }
+
+#ak_list_container { padding: 4px; }
+.ak_filter_type { font-weight: bold; }
+.ak_filter_row span.ui-icon { float: left; cursor: pointer; margin-right: 4px; }
+
+#addnewfilter { padding: 0.6em 0; }
+/**/
+
+/**
+ * Database tables filters
+ */
+/**/
+#ak_databases_container { padding: 2px 0px 6px 0px; }
+#ak_tables_header { height: 18px; }
+#ak_tables_container { display: block; width: 100%; position: relative; }
+#tables { height: 300px; overflow-y: auto; }
+
+.table-container { background-color: white; height: 18px; padding: 1px; color: #333333; font-weight: normal; border-bottom: 1px solid #d0d0ff; }
+.table-container span.table-icon-container { float: left; cursor: pointer; margin-right: 4px; }
+.table-container span.ui-state-error { cursor: default; }
+.table-container span.table-name { padding-left: 4px; }
+.table-container span.table-icon-noclick { cursor: default; }
+.table-container span.table-icon-small { margin-right: 0px; }
+/**/
+
+/*
+ * Multiple databases definitions
+ */
+/**/
+#ak_editor_notifier { display: block; margin: 0.5em; padding: 5px; border: thin solid #666666; background: #ffffff; color: #0080cc; font-weight: bold }
+#ak_editor_notifier span.ui-icon { float: left; margin-right: 6px; }
+#ak_editor_notifier img { margin-right: 8px; }
+/**/
+
+/**
+ * Live Update
+ */
+/**/
+#akeeba-update-results {
+	text-align: left;
+	width: 90%;
+	margin: 1em auto;
+}
+
+#akeeba-update-results #update-image {
+	float: left;
+	margin: 0.6em 1em 0 0 ;
+}
+
+div.ok {
+	border: thin solid #008000;
+	background: #aaeeaa;
+	padding: 10px 10px 10px 25px;
+}
+
+div.statuswarning {
+	background: #ffe0a8;
+	padding: 10px 10px 10px 25px;
+}
+
+div.notok {
+	background: #ff570f;
+	padding: 10px 10px 10px 25px;
+}
+
+#version_info_table {
+	border: thin solid gray;
+	background: #efefef;
+	padding: 1em;
+	margin: 0 auto;
+}
+#version_info_table td { padding: 3px 10px 3px 0; border-bottom: thin solid #d0d0d0; }
+#version_info_table .label { font-weight: bold; }
+.version { font-weight: bold; color: #333300; }
+.version-status { color: #666666; font-style: italic; }
+.akupdatebutton { display: inline-block; margin: 6px; padding: 4px; height: 24px; cursor: pointer; }
+.requerygfx {
+	display: block;
+	height: 24px;
+	padding: 5px 4px 0px 32px;
+	background: transparent url(../icons/reload.png) top left no-repeat;
+}
+.updategfx {
+	display: block;
+	height: 24px;
+	padding: 5px 4px 0px 32px;
+	background: transparent url(../icons/update.png) top left no-repeat;
+}
+.updaterwarning { margin: 2em; padding: 1em; font-size: large; }
+/**/
+
+/* Live Update status icon */
+/**/
+.liveupdate-icon-notsupported,.liveupdate-icon-crashed { color: gray; }
+.liveupdate-icon-updates { font-weight: bold; color: red; }
+.liveupdate-icon-noupdates { color: green; }
+
+.postsetup-main { font-weight: bold; font-size: larger; }
+.postsetup-desc { margin-left: 20pt; text-align: justify; font-style: italic; color: #606060 }
+/**/
+
+/**
+ * Restoration
+ */
+/**/
+#extprogress { border: thin solid gray; background-color: #f0f0f0; border-radius: 5px; -moz-border-radius: 5px; padding: 5px; margin: 5px; }
+#extprogress .extlabel { display: inline-block; min-width: 300px; font-weight: bold; }
+#extprogress .extprogrow { border-bottom: thin solid #e0e0e0 }
+/**/
+
+
+/*
+ * Unwritable output directory warning
+ */
+/**
+#akeeba-fatal-outputdirectory {
+	margin: 2em;
+	padding: 1em;
+	font-size: 18px;
+	background-color: yellow;
+	border: 2px solid red;
+	border-radius: 10px;
+	box-shadow: 2px 2px 5px black;
+}
+/**/
+
+/**
+ * Joomla! 3.x workarounds for missing icon classes
+ */
+div#toolbar div#toolbar-back button.btn span.icon-back::before {
+	content: "";
+}
+div#toolbar div#toolbar-restore button.btn span.icon-restore::before {
+	content: "R";
+}

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	System Restore Point definition for Joom!Fish
+	
+	Copyright ©2011 Nicholas K. Dionysopoulos / AkeebaBackup.com
+	License: GNU General Public License version 3, or later
+-->
+<restorepoint>
+	<customdirs>
+		<dir>modules/mod_jflanguageselection</dir>
+		<dir>administrator/modules/mod_translate</dir>
+		
+		<dir>plugins/system/jfdatabase</dir>
+		<dir>plugins/system/jfrouter</dir>
+		<dir>plugins/content/jfalternative</dir>
+		<dir>plugins/search/jfcategories</dir>
+		<dir>plugins/search/jfcontacts</dir>
+		<dir>plugins/search/jfcontent</dir>
+		<dir>plugins/search/jfnewsfeeds</dir>
+		<dir>plugins/search/jfsections</dir>
+		<dir>plugins/search/jfweblinks</dir>
+		<dir>plugins/joomfish/missing_translation</dir>
+	</customdirs>
+	<customfiles>
+		<file>plugins/system/jfdatabase.php</file>
+		<file>plugins/system/jfdatabase.xml</file>
+		<file>plugins/system/jfrouter.php</file>
+		<file>plugins/system/jfrouter.xml</file>
+		<file>plugins/content/jfalternative.php</file>
+		<file>plugins/content/jfalternative.xml</file>
+		<file>plugins/search/jfcategories.php</file>
+		<file>plugins/search/jfcategories.xml</file>
+		<file>plugins/search/jfcontacts.php</file>
+		<file>plugins/search/jfcontacts.xml</file>
+		<file>plugins/search/jfcontent.php</file>
+		<file>plugins/search/jfcontent.xml</file>
+		<file>plugins/search/jfnewsfeeds.php</file>
+		<file>plugins/search/jfnewsfeeds.xml</file>
+		<file>plugins/search/jfsections.php</file>
+		<file>plugins/search/jfsections,xml</file>
+		<file>plugins/search/jfweblinks.php</file>
+		<file>plugins/search/jfweblinks.xml</file>
+		<file>plugins/joomfish/missing_translation.php</file>
+		<file>plugins/joomfish/missing_translation.xml</file>
+	</customfiles>
+	<langfiles>
+		<lang>mod_jflanguageselection</lang>
+		<lang>mod_translate</lang>
+		<lang>plg_system_jfdatabase</lang>
+		<lang>plg_system_jfrouter</lang>
+		<lang>plg_content_jfdatabase</lang>
+		<lang>plg_search_jfcategories</lang>
+		<lang>plg_search_jfcontacts</lang>
+		<lang>plg_search_jfcontent</lang>
+		<lang>plg_search_jfnewsfeeds</lang>
+		<lang>plg_search_jfsections</lang>
+		<lang>plg_search_jfweblinks</lang>
+		<lang>plg_joomfish_missing_translation</lang>
+	</langfiles>
+	<extraprefixes>
+		<prefix>jf</prefix>
+	</extraprefixes>
+</restorepoint>

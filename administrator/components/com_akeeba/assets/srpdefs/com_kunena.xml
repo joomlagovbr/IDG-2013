@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	System Restore Point definition for the Kunena forum component
+	
+	Copyright ©2011 Nicholas K. Dionysopoulos / AkeebaBackup.com
+	License: GNU General Public License version 3, or later
+-->
+<restorepoint>
+	<customdirs>
+		<dir>plugins/system/kunena</dir>
+	</customdirs>
+	<customfiles>
+		<file>plugins/system/kunena.php</file>
+		<file>plugins/system/kunena.xml</file>
+	</customfiles>
+	<langfiles>
+		<lang>plg_system_kunena</lang>
+	</langfiles>
+</restorepoint>

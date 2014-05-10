@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	System Restore Point definition for Akeeba Backup by AkeebaBackup.com
+	
+	Copyright ©2011 Nicholas K. Dionysopoulos / AkeebaBackup.com
+	License: GNU General Public License version 3, or later
+-->
+<restorepoint>
+	<customdirs>
+		<dir>modules/mod_zoocategory</dir>
+		<dir>modules/mod_zoocomment</dir>
+		<dir>modules/mod_zooitem</dir>
+		<dir>modules/mod_zootag</dir>
+		<dir>plugins/content/zooshortcut</dir>
+		<dir>plugins/search/zoosearch</dir>
+		<dir>plugins/system/zooevent</dir>
+	</customdirs>
+	<customfiles>
+		<file>plugins/content/zooshortcut.php</file>
+		<file>plugins/content/zooshortcut.xml</file>
+		<file>plugins/search/zoosearch.php</file>
+		<file>plugins/search/zoosearch.xml</file>
+		<file>plugins/system/zooevent.php</file>
+		<file>plugins/system/zooevent.xml</file>
+	</customfiles>
+	<langfiles>
+		<lang>mod_zoocategory</lang>
+		<lang>mod_zoocomment</lang>
+		<lang>mod_zooitem</lang>
+		<lang>mod_zootag</lang>
+		<lang>plg_content_zooshortcut</lang>
+		<lang>plg_search_zoosearch</lang>
+		<lang>plg_system_zooevent</lang>
+	</langfiles>
+</restorepoint>

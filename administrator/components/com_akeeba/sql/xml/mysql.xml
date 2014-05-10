@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema>
+    <!-- Metadata -->
+    <meta>
+        <!-- Supported driver types -->
+        <drivers>
+            <driver>mysql</driver>
+            <driver>mysqli</driver>
+        </drivers>
+    </meta>
+
+    <!-- SQL commands to run on installation and update -->
+    <sql>
+        <!-- Create the #__ak_profiles table if it's missing -->
+        <action table="#__ak_profiles" canfail="0">
+            <condition type="missing" value="" />
+            <query><![CDATA[
+CREATE TABLE `#__ak_profiles` (
+`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+`description` varchar(255) NOT NULL,
+`configuration` longtext,
+`filters` longtext,
+PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8;
+            ]]></query>
+        </action>
+
+        <!-- Insert into #__ak_profiles if id=1 is not there -->
+        <action table="#__ak_profiles" canfail="1">
+            <condition type="equals" operator="not" value="1"><![CDATA[
+SELECT COUNT(*) FROM `#__ak_profiles` WHERE `id` = 1;
+            ]]></condition>
+
+            <query><![CDATA[
+INSERT IGNORE INTO `#__ak_profiles`
+(`id`,`description`, `configuration`, `filters`) VALUES
+(1,'Default Backup Profile','','');
+            ]]></query>
+        </action>
+
+        <!-- Create #__ak_stats if it's missing -->
+        <action table="#__ak_stats" canfail="0">
+            <condition type="missing" value="" />
+            <query><![CDATA[
+CREATE TABLE `#__ak_stats` (
+	`id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	`description` varchar(255) NOT NULL,
+	`comment` longtext,
+	`backupstart` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+	`backupend` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+	`status` enum('run','fail','complete') NOT NULL DEFAULT 'run',
+	`origin` varchar(30) NOT NULL DEFAULT 'backend',
+	`type` varchar(30) NOT NULL DEFAULT 'full',
+	`profile_id` bigint(20) NOT NULL DEFAULT '1',
+	`archivename` longtext,
+	`absolute_path` longtext,
+	`multipart` int(11) NOT NULL DEFAULT '0',
+	`tag` varchar(255) DEFAULT NULL,
+	`filesexist` tinyint(3) NOT NULL DEFAULT '1',
+	`remote_filename` varchar(1000) DEFAULT NULL,
+	`total_size` bigint(20) NOT NULL DEFAULT '0',
+	PRIMARY KEY (`id`),
+	KEY `idx_fullstatus` (`filesexist`,`status`),
+	KEY `idx_stale` (`status`,`origin`)
+) DEFAULT CHARACTER SET utf8;
+            ]]></query>
+        </action>
+
+        <!-- Create #__ak_storage if it's missing -->
+        <action table="#__ak_storage" canfail="0">
+            <condition type="missing" value="" />
+            <query><![CDATA[
+CREATE TABLE `#__ak_storage` (
+	`tag` varchar(255) NOT NULL,
+	`lastupdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`data` longtext,
+	PRIMARY KEY (`tag`)
+) DEFAULT CHARACTER SET utf8;
+            ]]></query>
+        </action>
+    </sql>
+</schema>

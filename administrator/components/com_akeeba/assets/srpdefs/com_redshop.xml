@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	System Restore Point definition for redSHOP (Free edition) by redCOMPONENT
+	
+	Copyright ©2011 Nicholas K. Dionysopoulos / AkeebaBackup.com
+	License: GNU General Public License version 3, or later
+-->
+<restorepoint>
+	<customdirs>
+		<dir>administrator/modules/mod_redshop_cpicon</dir>
+		<dir>plugins/redshop_payment/rs_payment_paypal</dir>
+		<dir>plugins/redshop_payment/rs_payment_banktransfer</dir>
+		<dir>plugins/redshop_shipping/default_shipping</dir>
+	</customdirs>
+	<customfiles>
+		<file>plugins/redshop_payment/rs_payment_paypal.php</file>
+		<file>plugins/redshop_payment/rs_payment_paypal.xml</file>
+		<file>plugins/redshop_payment/rs_payment_banktransfer.php</file>
+		<file>plugins/redshop_payment/rs_payment_banktransfer.xml</file>
+		<file>plugins/redshop_shipping/default_shipping.php</file>
+		<file>plugins/redshop_shipping/default_shipping.xml</file>
+	</customfiles>
+	<langfiles>
+		<lang>mod_redshop_cpicon</lang>
+		<lang>plg_redshop_payment_rs_payment_paypal</lang>
+		<lang>plg_redshop_payment_rs_payment_banktransfer</lang>
+		<lang>plg_redshop_shipping_default_shipping</lang>
+	</langfiles>
+</restorepoint>

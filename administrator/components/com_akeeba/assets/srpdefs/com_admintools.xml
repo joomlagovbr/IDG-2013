@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	System Restore Point definition for AdminTools by AkeebaBackup.com
+	
+	Copyright ©2011 Nicholas K. Dionysopoulos / AkeebaBackup.com
+	License: GNU General Public License version 3, or later
+-->
+<restorepoint>
+	<customdirs>
+		<dir>administrator/modules/mod_atjupgrade</dir>
+		<dir>plugins/system/admintools</dir>
+		<dir>plugins/system/atoolsjupdatecheck</dir>
+		<dir>plugins/system/atoolsupdatecheck</dir>
+		<dir>plugins/system/oneclickaction</dir>
+	</customdirs>
+	<customfiles>
+		<file>plugins/system/admintools.php</file>
+		<file>plugins/system/admintools.xml</file>
+		<file>plugins/system/atoolsjupdatecheck.php</file>
+		<file>plugins/system/atoolsjupdatecheck.xml</file>
+		<file>plugins/system/atoolsupdatecheck.php</file>
+		<file>plugins/system/atoolsupdatecheck.xml</file>
+		<file>plugins/system/oneclickaction.php</file>
+		<file>plugins/system/oneclickaction.xml</file>
+	</customfiles>
+	<langfiles>
+		<lang>mod_atjupgrade</lang>
+		<lang>plg_system_admintools</lang>
+		<lang>plg_system_atoolsjupdatecheck</lang>
+		<lang>plg_system_atoolsupdatecheck</lang>
+		<lang>plg_system_oneclickaction</lang>
+	</langfiles>
+	<skiptables>
+		<table>admintools_filescache</table>
+		<table>admintools_log</table>
+		<table>admintools_scanalerts</table>
+		<table>admintools_scans</table>
+	</skiptables>
+</restorepoint>

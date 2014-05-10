@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	System Restore Point definition for K2 by JoomlaWorks
+	
+	Copyright ©2011 Nicholas K. Dionysopoulos / AkeebaBackup.com
+	License: GNU General Public License version 3, or later
+-->
+<restorepoint>
+	<customdirs>
+		<!-- Modules bundled with K2 -->
+		<dir>modules/mod_k2_comments</dir>
+		<dir>modules/mod_k2_content</dir>
+		<dir>modules/mod_k2_login</dir>
+		<dir>modules/mod_k2_tools</dir>
+		<dir>modules/mod_k2_users</dir>
+		<dir>administrator/modules/mod_k2_quickicons</dir>
+		<!-- Plugins bundled with K2; Joomla! 1.6 -->
+		<dir>plugins/search/k2</dir>
+		<dir>plugins/system/k2</dir>
+		<dir>plugins/user/k2</dir>
+	</customdirs>
+	<customfiles>
+		<!-- Plugins bundled with K2; Joomla! 1.5 -->
+		<file>plugins/search/k2.php</file>
+		<file>plugins/search/k2.xml</file>
+		<file>plugins/system/k2.php</file>
+		<file>plugins/system/k2.xml</file>
+		<file>plugins/user/k2.php</file>
+		<file>plugins/user/k2.xml</file>
+	</customfiles>
+	<langfiles>
+		<!-- Modules bundled with K2 -->
+		<lang>mod_k2_comments</lang>
+		<lang>mod_k2_content</lang>
+		<lang>mod_k2_login</lang>
+		<lang>mod_k2_tools</lang>
+		<lang>mod_k2_users</lang>
+		<lang>mod_k2_quickicons</lang>
+		<!-- Plugins bundled with K2 -->
+		<lang>plg_search_k2</lang>
+		<lang>plg_system_k2</lang>
+		<lang>plg_user_k2</lang>
+	</langfiles>
+</restorepoint>

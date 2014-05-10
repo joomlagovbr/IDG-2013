@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	System Restore Point definition for Akeeba Release System by AkeebaBackup.com
+	
+	Copyright ©2011 Nicholas K. Dionysopoulos / AkeebaBackup.com
+	License: GNU General Public License version 3, or later
+-->
+<restorepoint>
+	<customdirs>
+		<dir>modules/mod_arsdlid</dir>
+		<dir>modules/mod_arsdownloads</dir>
+		<dir>plugins/ars/tainting</dir>
+		<dir>plugins/ars/bleedingedgediff</dir>
+		<dir>plugins/ars/bleedingedgematurity</dir>
+		<dir>plugins/content/arsdlid</dir>
+		<dir>plugins/content/arslink</dir>
+	</customdirs>
+	<customfiles>
+		<file>plugins/ars/tainting.php</file>
+		<file>plugins/ars/tainting.xml</file>
+		<file>plugins/ars/bleedingedgediff.php</file>
+		<file>plugins/ars/bleedingedgediff.xml</file>
+		<file>plugins/ars/bleedingedgematurity.php</file>
+		<file>plugins/ars/bleedingedgematurity.xml</file>
+		<file>plugins/content/arsdlid.php</file>
+		<file>plugins/content/arsdlid.xml</file>
+		<file>plugins/content/arslink.php</file>
+		<file>plugins/content/arslink.xml</file>
+	</customfiles>
+	<langfiles>
+		<lang>mod_arsdlid</lang>
+		<lang>mod_arsdownloads</lang>
+		<lang>plg_ars_tainting</lang>
+		<lang>plg_ars_bleedingedgediff</lang>
+		<lang>plg_ars_bleedingedgematurity</lang>
+		<lang>plg_content_arsdlid</lang>
+		<lang>plg_content_arslink</lang>
+	</langfiles>
+	<skiptables>
+		<table>ars_log</table>
+	</skiptables>
+</restorepoint>
