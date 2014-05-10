@@ -166,6 +166,10 @@
 					<option value="1">SIM</option>
 					<option value="0">NÃO</option>		
 		  		</field>
+		  		<field name="meta_generator" type="text" default=""
+					label="Tag Generator"
+					description="Informação da meta tag generator do site. Informe o nome da área responsável pelo site dentro de sua instituição, mas avalie se é positivo ou não colocar os dados de contato."
+					filter="string" />
 			</fieldset>
 		</fields>
 	</config>
