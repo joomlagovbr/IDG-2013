@@ -1,5 +1,9 @@
-Portal padrão em CMS Joomla 3.2
+Portal padrão em CMS Joomla 3.3.x
 ================
+
+Sobre esta versão
+---------------------
+O Joomla 3.3 é recomendado para versões do PHP 5.3.10+. Caso a versão do PHP seja inferior, utilize o pacote para [Joomla 3.2.4](https://github.com/joomlagovbr/joomla-3.x/tree/3.2.4). Obtenha maiores informações no [comunicado de lançamento da versão 3.3](http://www.joomla.org/announcements/release-news/5546-joomla-3-3-0-released.html).
 
 Acompanhe as atualizações do projeto
 ---------------------
@@ -36,7 +40,7 @@ Documentação
 Confira a documentação disponível até o momento no repositório provisório [https://github.com/joomlagovbr/documentacao](https://github.com/joomlagovbr/documentacao).
 
 ###Links diretos:
--   [Manual Template Portal Padrão, vr. 0.1](https://github.com/joomlagovbr/documentacao/raw/master/pdf/1.%20Manual%20Portal%20Padrao.pdf) - (as imagens são baseadas na versão Joomla 2.5, mas os princípios de alteração são os mesmos para a versão 3.2)
+-   [Manual Template Portal Padrão, vr. 0.1](https://github.com/joomlagovbr/documentacao/raw/master/pdf/1.%20Manual%20Portal%20Padrao.pdf) - (as imagens são baseadas na versão Joomla 2.5, mas os princípios de alteração são os mesmos para a versão 3.3)
 -   [Como criar uma manchete de página inicial ou editoria](https://github.com/joomlagovbr/documentacao/raw/master/pdf/2.%20Pagina%20Inicial%20-%20Criar%20manchete.pdf)
 -   [Posições de template do projeto Portal Padrão (importante)](https://github.com/joomlagovbr/documentacao/raw/master/pdf/3.%20Posicoes%20de%20template%20do%20projeto%20portal%20padrao.pdf) - (as posições são geradas dinamicamente, através de uma lógica própria)
 
