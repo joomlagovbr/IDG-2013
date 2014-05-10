@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<config>
-    <params group="popups">
-        <param type="popups" name="default" title="WF_LABEL_DEFAULT" description="WF_EXTENSIONS_POPUPS_DEFAULT_DESC" />
-    </params>
-</config>
