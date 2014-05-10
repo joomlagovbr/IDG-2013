@@ -15,6 +15,7 @@ class TmplPadraoGoverno01Helper
 	{
 		self::addHeaders();
 		self::clearDefaultScripts( $tmpl );
+		self::setGenerator( $tmpl->params->get('meta_generator', '') );
 
 		if($tmpl->params->get('allow_set_color', 0)==0)
 			return;
@@ -315,5 +316,10 @@ class TmplPadraoGoverno01Helper
 	{
 		//inclusao de cabecalho para correcao de possivel problema de compatibilidade para IE9 abaixo
 		header('X-UA-Compatible: IE=edge,chrome=1');
+	}
+
+	static function setGenerator( $generator = '' )
+	{
+		JFactory::getDocument()->setGenerator( $generator );
 	}
 }
