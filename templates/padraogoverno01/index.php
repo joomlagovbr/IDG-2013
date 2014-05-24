@@ -236,7 +236,7 @@ $active_item = TmplPadraoGoverno01Helper::getActiveItemid();
             </div>
             <div class="footer-ferramenta">
                 <div class="container">
-                    <?php echo $this->params->get('mensagem_final_ferramenta', '<p>Interface preparada para desenvolvimento com o CMS <a href="http://www.joomla.org">Joomla</a></p>'); ?>
+                    <?php echo $this->params->get('mensagem_final_ferramenta', '<p>Desenvolvido com o CMS de c&oacute;digo aberto <a href="http://www.joomla.org">Joomla</a></p>'); ?>
                 </div>
             </div>
             <div class="footer-atalhos visible-phone">
