@@ -15,7 +15,7 @@ class JConfig {
     public $host = 'localhost';
     public $user = 'root';
     public $password = 'root';
-    public $db = 'portal_modelo_3x';
+    public $db = 'portal_modelo_3x_dev';
     public $dbprefix = 'pmgov2013_';
     public $live_site = '';
     public $secret = 'NU7Qqn8NUt7KYu1a';
