@@ -36,9 +36,11 @@ $prev = $useftp ? 'ftp' : 'database';
 			<div class="help-block">
 				<?php echo $this->form->getInput('sample_file'); ?>
 			</div>
-			<p class="help-block">
+			<!-- portalpadrao: retirada de descricao de ajuda para conteudo padrao -->
+			<!-- <p class="help-block">
 				<?php echo JText::_('INSTL_SITE_INSTALL_SAMPLE_DESC'); ?>
-			</p>
+			</p> -->
+			<!-- portalpadrao: fim retirada de descricao de ajuda para conteudo padrao -->
 		</div>
 	</div>
 

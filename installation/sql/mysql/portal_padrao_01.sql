@@ -14,19 +14,15 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
 
---
--- Create schema portal_modelo_3x_dev
---
-
-CREATE DATABASE IF NOT EXISTS portal_modelo_3x_dev;
-USE portal_modelo_3x_dev;
+-- SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+-- SET time_zone = "+00:00";
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_ak_profiles`
+-- Definition of table `#__ak_profiles`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_ak_profiles`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_ak_profiles` (
+DROP TABLE IF EXISTS `#__ak_profiles`;
+CREATE TABLE  `#__ak_profiles` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `description` varchar(255) NOT NULL,
   `configuration` longtext,
@@ -35,22 +31,22 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_ak_profiles` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_ak_profiles`
+-- Dumping data for table `#__ak_profiles`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_ak_profiles` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_ak_profiles` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_ak_profiles` VALUES  (1,'Default Backup Profile','###AES128###gnUPyy1dRcrLoPPfAy7dZv0yIZsxXC22kxNkMlGdFbI/toWCaEtcEX1cXrWGy9X5pn/kjhm56iyYFVly4e8Jpzc4iBhOo2RTJgXasG4rl5bpDBQ6RxKlaNkBssFwvZthiezLR1p20GGkJszkfFjix9TUV7XhhH4lp+AULUgxa4BEnyn54MsoJT5PZ9E2Uubc3JMVFMKuDxwqhvjFGELR6IzPqsbQBb11DR+9j/cDnaMMpzfsaxlxiUltiq37u10DL/98P/Z1pprkSsBAG4X+jij9q+VL1Msg3sEvcbKaR5EqVLaHqnxpyxKFZ3lSNq+rH7295on2kOVQAUfRgYJKz/hvzgBQP5wJtFPODh1pT1pprFRltfnlU9OJb+SRv/C+qSZViLEIWdB7fZI6zUQpjjlPo3xHLn28KwGtMhi3cMYHh3tDwia8M3zuoFHoEVbbUi7cbhr5oJf4YElfxdjN1epzZ/lnrobKjxiTEZPKFAahnOzvx79nrSWRaSLYbWG8p9U7p+YSvvyM5LIEU+Pjf3+rfd9TEUE7yUJKIbqP0L6a5ZydcQlLUk83kz7hzmjtugw1S+Lm5pi2JCL4H2297fYHKS9yfW3z7WrAuPT0eZK9uTfydWaK5miN5afA6JSTANF38iSFYqKpoCvWyMHGYT8+aavkGvilqNpaD9B2260J/Qdm97JMORbS8sWOdIqycf128/Ib6o/wqv+DYh7ZdICwhGKKONYo5O/N3qxHSqydtPPdG/uu6WxM5R41dhAag4pKvvomze72WUiSa1zjZB/VyllqObRvmCMRaVVdrOJHfpwzE7hIRFakAy+/QX+wRCSJ+vEPixqCT9gcnESSezSaKCJXCv2hl4+9Zx4Ozs8r3lAi2ni+UD6uMlL8rrDIY0KeDDx4U+HJODamzrJZN7GAwruQ2Tw2kfNw/llGZl2+w9taIXGY9ZylEA6UZ5zwLL0YDPHIELMExvnLcgoVsqqv9jZjjTR6lIWYjww4xeIzpra95jsqZsDpZdLiOWYpdtJzsCpDIhKO4z7M0USnGpwRMw80hWFteAuXxk9GS40fCMcpWUn2sF/R58LT4wVSOTGJJfNoe7mmcxx1lNEhugkxSj055zueweCKrTXv3roxtuKzz3lY97/6qqfF4q4xLjTAG/Gs0IOBGaP9v6J5J6YGmcjhAklDw21Za8AVRPJu7xPhpn3/PPs2ArtkL/IwpQCPZeHFR2eyTJt3zyjo+s2fF8cYTeJsEqG1UEXFRiJ7lnXdtEf5q4hSNiQkOnowh7wxkK3AQ5YfYxaIOmfrot9fF8d2EhOsN9kyi5CpCPpx+9dxtvtLUfrBHDqKG6cSme7sSpgdp9g2F0iWiet43xe+FnKRiH9JO2z+ZQeHI73NWJizCdoiQlbMTaGJ9j/fzzGfNnvkZNX9U5GCY474SjcIZx7IDIKLZWSs8ctHYoWaTj1R1HfFKhw1oinnfQuYC9OIVivF6+wpOGuKnaH4oqOIbnTGiR1m+EKweW5WQuHAuSETKybcPYsaPUxo++7jxrpbmnNDqOrg1I4MbW7ZG5h5bPjjhN6qsWtNkfUDZBGOg3OZuEO4QUKrgKHVKlEPg+XgojNstbrcJ1VwefxfeuOKCCJvfFhPUpnK2u6gW2z50m2ThgYFQp6u2NhylM/V7JupTUClvehSiYRgtfJJxtrzTfu1h3IkSd1o2SOZHnCZZwHnu2vIbXaZ43/c+pQLMIvRLJUPsArGqJqDn8ztnMmbufQ20ZXvZG0zFYUUM60tr++VU2xqKdqkZ+3LTqBAjBuQpo/EOJ4inUSMHTJBxeVU235UN2RR3AX70aX2oYroSoz8i8US3tByAJGEbuRKslbunYRSwXbBwlRVo/RJ1eUd4fALTLE7GgUo7d1o79833X2J/gKTn2Th4RzKumGEpdnVWZaqDiTs4nyXc2K3XULTX2to12MX5iX13AXNC9VS9FPtcjiG/xYJibV1y2OEe2ZQE/b62e5oBDk/q5UXO0boxCCF63IlRKVUl+TVHKrzEqTstoU8+f90zeMQQ5My8N1tI/0K9Krq40jsU/Gh45u/+8T6xmUBLzOS4w3fIZHvcenOERFetnKpllkU5SQsyx7sYNKrfiQ6AnWS4Zd7BnPt5FwzsxDOoxePFwfn/+JJeZF41cbaf1tgXg7//X7s5NuvMVJdIYvO8X3Puorv4BClodv9ZZL1UvROQJtD071g1vIAMfQXtvUGLtN+PnAeQmjKuFX/SAXp6/sPc3Af0yuiLY+Ov2NwBUncd8BQCRuwBgAA','');
+/*!40000 ALTER TABLE `#__ak_profiles` DISABLE KEYS */;
+LOCK TABLES `#__ak_profiles` WRITE;
+INSERT INTO `#__ak_profiles` VALUES  (1,'Default Backup Profile','###AES128###gnUPyy1dRcrLoPPfAy7dZv0yIZsxXC22kxNkMlGdFbI/toWCaEtcEX1cXrWGy9X5pn/kjhm56iyYFVly4e8Jpzc4iBhOo2RTJgXasG4rl5bpDBQ6RxKlaNkBssFwvZthiezLR1p20GGkJszkfFjix9TUV7XhhH4lp+AULUgxa4BEnyn54MsoJT5PZ9E2Uubc3JMVFMKuDxwqhvjFGELR6IzPqsbQBb11DR+9j/cDnaMMpzfsaxlxiUltiq37u10DL/98P/Z1pprkSsBAG4X+jij9q+VL1Msg3sEvcbKaR5EqVLaHqnxpyxKFZ3lSNq+rH7295on2kOVQAUfRgYJKz/hvzgBQP5wJtFPODh1pT1pprFRltfnlU9OJb+SRv/C+qSZViLEIWdB7fZI6zUQpjjlPo3xHLn28KwGtMhi3cMYHh3tDwia8M3zuoFHoEVbbUi7cbhr5oJf4YElfxdjN1epzZ/lnrobKjxiTEZPKFAahnOzvx79nrSWRaSLYbWG8p9U7p+YSvvyM5LIEU+Pjf3+rfd9TEUE7yUJKIbqP0L6a5ZydcQlLUk83kz7hzmjtugw1S+Lm5pi2JCL4H2297fYHKS9yfW3z7WrAuPT0eZK9uTfydWaK5miN5afA6JSTANF38iSFYqKpoCvWyMHGYT8+aavkGvilqNpaD9B2260J/Qdm97JMORbS8sWOdIqycf128/Ib6o/wqv+DYh7ZdICwhGKKONYo5O/N3qxHSqydtPPdG/uu6WxM5R41dhAag4pKvvomze72WUiSa1zjZB/VyllqObRvmCMRaVVdrOJHfpwzE7hIRFakAy+/QX+wRCSJ+vEPixqCT9gcnESSezSaKCJXCv2hl4+9Zx4Ozs8r3lAi2ni+UD6uMlL8rrDIY0KeDDx4U+HJODamzrJZN7GAwruQ2Tw2kfNw/llGZl2+w9taIXGY9ZylEA6UZ5zwLL0YDPHIELMExvnLcgoVsqqv9jZjjTR6lIWYjww4xeIzpra95jsqZsDpZdLiOWYpdtJzsCpDIhKO4z7M0USnGpwRMw80hWFteAuXxk9GS40fCMcpWUn2sF/R58LT4wVSOTGJJfNoe7mmcxx1lNEhugkxSj055zueweCKrTXv3roxtuKzz3lY97/6qqfF4q4xLjTAG/Gs0IOBGaP9v6J5J6YGmcjhAklDw21Za8AVRPJu7xPhpn3/PPs2ArtkL/IwpQCPZeHFR2eyTJt3zyjo+s2fF8cYTeJsEqG1UEXFRiJ7lnXdtEf5q4hSNiQkOnowh7wxkK3AQ5YfYxaIOmfrot9fF8d2EhOsN9kyi5CpCPpx+9dxtvtLUfrBHDqKG6cSme7sSpgdp9g2F0iWiet43xe+FnKRiH9JO2z+ZQeHI73NWJizCdoiQlbMTaGJ9j/fzzGfNnvkZNX9U5GCY474SjcIZx7IDIKLZWSs8ctHYoWaTj1R1HfFKhw1oinnfQuYC9OIVivF6+wpOGuKnaH4oqOIbnTGiR1m+EKweW5WQuHAuSETKybcPYsaPUxo++7jxrpbmnNDqOrg1I4MbW7ZG5h5bPjjhN6qsWtNkfUDZBGOg3OZuEO4QUKrgKHVKlEPg+XgojNstbrcJ1VwefxfeuOKCCJvfFhPUpnK2u6gW2z50m2ThgYFQp6u2NhylM/V7JupTUClvehSiYRgtfJJxtrzTfu1h3IkSd1o2SOZHnCZZwHnu2vIbXaZ43/c+pQLMIvRLJUPsArGqJqDn8ztnMmbufQ20ZXvZG0zFYUUM60tr++VU2xqKdqkZ+3LTqBAjBuQpo/EOJ4inUSMHTJBxeVU235UN2RR3AX70aX2oYroSoz8i8US3tByAJGEbuRKslbunYRSwXbBwlRVo/RJ1eUd4fALTLE7GgUo7d1o79833X2J/gKTn2Th4RzKumGEpdnVWZaqDiTs4nyXc2K3XULTX2to12MX5iX13AXNC9VS9FPtcjiG/xYJibV1y2OEe2ZQE/b62e5oBDk/q5UXO0boxCCF63IlRKVUl+TVHKrzEqTstoU8+f90zeMQQ5My8N1tI/0K9Krq40jsU/Gh45u/+8T6xmUBLzOS4w3fIZHvcenOERFetnKpllkU5SQsyx7sYNKrfiQ6AnWS4Zd7BnPt5FwzsxDOoxePFwfn/+JJeZF41cbaf1tgXg7//X7s5NuvMVJdIYvO8X3Puorv4BClodv9ZZL1UvROQJtD071g1vIAMfQXtvUGLtN+PnAeQmjKuFX/SAXp6/sPc3Af0yuiLY+Ov2NwBUncd8BQCRuwBgAA','');
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_ak_profiles` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__ak_profiles` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_ak_stats`
+-- Definition of table `#__ak_stats`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_ak_stats`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_ak_stats` (
+DROP TABLE IF EXISTS `#__ak_stats`;
+CREATE TABLE  `#__ak_stats` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `description` varchar(255) NOT NULL,
   `comment` longtext,
@@ -73,22 +69,22 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_ak_stats` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_ak_stats`
+-- Dumping data for table `#__ak_stats`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_ak_stats` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_ak_stats` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_ak_stats` VALUES  (1,'Backup taken on Sábado, 10 Maio 2014 17:54','','2014-05-10 20:54:31','0000-00-00 00:00:00','complete','backend','full',1,'site-localhost-20140510-175431.zip','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/administrator/components/com_akeeba/backup/site-localhost-20140510-175431.zip',0,'backend',1,NULL,0);
+/*!40000 ALTER TABLE `#__ak_stats` DISABLE KEYS */;
+LOCK TABLES `#__ak_stats` WRITE;
+INSERT INTO `#__ak_stats` VALUES  (1,'Backup taken on Sábado, 10 Maio 2014 17:54','','2014-05-10 20:54:31','0000-00-00 00:00:00','complete','backend','full',1,'site-localhost-20140510-175431.zip','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/administrator/components/com_akeeba/backup/site-localhost-20140510-175431.zip',0,'backend',1,NULL,0);
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_ak_stats` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__ak_stats` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_ak_storage`
+-- Definition of table `#__ak_storage`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_ak_storage`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_ak_storage` (
+DROP TABLE IF EXISTS `#__ak_storage`;
+CREATE TABLE  `#__ak_storage` (
   `tag` varchar(255) NOT NULL,
   `lastupdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `data` longtext,
@@ -96,21 +92,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_ak_storage` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_ak_storage`
+-- Dumping data for table `#__ak_storage`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_ak_storage` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_ak_storage` WRITE;
+/*!40000 ALTER TABLE `#__ak_storage` DISABLE KEYS */;
+LOCK TABLES `#__ak_storage` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_ak_storage` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__ak_storage` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_assets`
+-- Definition of table `#__assets`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_assets`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_assets` (
+DROP TABLE IF EXISTS `#__assets`;
+CREATE TABLE  `#__assets` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Primary Key',
   `parent_id` int(11) NOT NULL DEFAULT '0' COMMENT 'Nested set parent.',
   `lft` int(11) NOT NULL DEFAULT '0' COMMENT 'Nested set lft.',
@@ -126,12 +122,12 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_assets` (
 ) ENGINE=InnoDB AUTO_INCREMENT=224 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_assets`
+-- Dumping data for table `#__assets`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_assets` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_assets` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_assets` VALUES  (1,0,1,413,0,'root.1','Root Asset','{\"core.login.site\":{\"6\":1,\"2\":1},\"core.login.admin\":{\"6\":1},\"core.login.offline\":{\"6\":1},\"core.admin\":{\"8\":1},\"core.manage\":{\"7\":1},\"core.create\":{\"6\":1,\"3\":1},\"core.delete\":{\"6\":1},\"core.edit\":{\"6\":1,\"4\":1},\"core.edit.state\":{\"6\":1,\"5\":1},\"core.edit.own\":{\"6\":1,\"3\":1}}'),
+/*!40000 ALTER TABLE `#__assets` DISABLE KEYS */;
+LOCK TABLES `#__assets` WRITE;
+INSERT INTO `#__assets` VALUES  (1,0,1,413,0,'root.1','Root Asset','{\"core.login.site\":{\"6\":1,\"2\":1},\"core.login.admin\":{\"6\":1},\"core.login.offline\":{\"6\":1},\"core.admin\":{\"8\":1},\"core.manage\":{\"7\":1},\"core.create\":{\"6\":1,\"3\":1},\"core.delete\":{\"6\":1},\"core.edit\":{\"6\":1,\"4\":1},\"core.edit.state\":{\"6\":1,\"5\":1},\"core.edit.own\":{\"6\":1,\"3\":1}}'),
  (2,1,1,2,1,'com_admin','com_admin','{}'),
  (3,1,3,6,1,'com_banners','com_banners','{\"core.admin\":{\"7\":1},\"core.manage\":{\"6\":1},\"core.create\":[],\"core.delete\":[],\"core.edit\":[],\"core.edit.state\":[]}'),
  (4,1,7,8,1,'com_cache','com_cache','{\"core.admin\":{\"7\":1},\"core.manage\":{\"7\":1}}'),
@@ -339,15 +335,15 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_assets` VALUES  (1,0,1,413,0,'root
  (222,1,411,412,1,'com_akeeba','akeeba','{}'),
  (223,18,366,367,2,'com_modules.module.126','mod_barradogoverno','{\"core.delete\":{\"6\":1},\"core.edit\":{\"6\":1,\"4\":1},\"core.edit.state\":{\"6\":1,\"5\":1}}');
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_assets` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__assets` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_associations`
+-- Definition of table `#__associations`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_associations`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_associations` (
+DROP TABLE IF EXISTS `#__associations`;
+CREATE TABLE  `#__associations` (
   `id` int(11) NOT NULL COMMENT 'A reference to the associated item.',
   `context` varchar(50) NOT NULL COMMENT 'The context of the associated item.',
   `key` char(32) NOT NULL COMMENT 'The key for the association computed from an md5 on associated ids.',
@@ -356,21 +352,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_associations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_associations`
+-- Dumping data for table `#__associations`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_associations` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_associations` WRITE;
+/*!40000 ALTER TABLE `#__associations` DISABLE KEYS */;
+LOCK TABLES `#__associations` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_associations` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__associations` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_banner_clients`
+-- Definition of table `#__banner_clients`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_banner_clients`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_banner_clients` (
+DROP TABLE IF EXISTS `#__banner_clients`;
+CREATE TABLE  `#__banner_clients` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
   `contact` varchar(255) NOT NULL DEFAULT '',
@@ -391,21 +387,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_banner_clients` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_banner_clients`
+-- Dumping data for table `#__banner_clients`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_banner_clients` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_banner_clients` WRITE;
+/*!40000 ALTER TABLE `#__banner_clients` DISABLE KEYS */;
+LOCK TABLES `#__banner_clients` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_banner_clients` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__banner_clients` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_banner_tracks`
+-- Definition of table `#__banner_tracks`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_banner_tracks`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_banner_tracks` (
+DROP TABLE IF EXISTS `#__banner_tracks`;
+CREATE TABLE  `#__banner_tracks` (
   `track_date` datetime NOT NULL,
   `track_type` int(10) unsigned NOT NULL,
   `banner_id` int(10) unsigned NOT NULL,
@@ -417,21 +413,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_banner_tracks` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_banner_tracks`
+-- Dumping data for table `#__banner_tracks`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_banner_tracks` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_banner_tracks` WRITE;
+/*!40000 ALTER TABLE `#__banner_tracks` DISABLE KEYS */;
+LOCK TABLES `#__banner_tracks` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_banner_tracks` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__banner_tracks` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_banners`
+-- Definition of table `#__banners`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_banners`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_banners` (
+DROP TABLE IF EXISTS `#__banners`;
+CREATE TABLE  `#__banners` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `cid` int(11) NOT NULL DEFAULT '0',
   `type` int(11) NOT NULL DEFAULT '0',
@@ -475,21 +471,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_banners` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_banners`
+-- Dumping data for table `#__banners`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_banners` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_banners` WRITE;
+/*!40000 ALTER TABLE `#__banners` DISABLE KEYS */;
+LOCK TABLES `#__banners` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_banners` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__banners` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_categories`
+-- Definition of table `#__categories`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_categories`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_categories` (
+DROP TABLE IF EXISTS `#__categories`;
+CREATE TABLE  `#__categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `asset_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'FK to the #__assets table.',
   `parent_id` int(10) unsigned NOT NULL DEFAULT '0',
@@ -528,12 +524,12 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_categories` (
 ) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_categories`
+-- Dumping data for table `#__categories`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_categories` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_categories` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_categories` VALUES  (1,0,0,0,71,0,'','system','ROOT',0x726F6F74,'','',1,0,'0000-00-00 00:00:00',1,'{}','','','',0,'2009-10-18 16:07:09',0,'0000-00-00 00:00:00',0,'*',1),
+/*!40000 ALTER TABLE `#__categories` DISABLE KEYS */;
+LOCK TABLES `#__categories` WRITE;
+INSERT INTO `#__categories` VALUES  (1,0,0,0,71,0,'','system','ROOT',0x726F6F74,'','',1,0,'0000-00-00 00:00:00',1,'{}','','','',0,'2009-10-18 16:07:09',0,'0000-00-00 00:00:00',0,'*',1),
  (2,27,1,1,2,1,'uncategorised','com_content','Uncategorised',0x756E63617465676F7269736564,'','',1,0,'0000-00-00 00:00:00',1,'{\"target\":\"\",\"image\":\"\"}','','','{\"page_title\":\"\",\"author\":\"\",\"robots\":\"\"}',42,'2010-06-28 13:26:37',0,'0000-00-00 00:00:00',4,'*',1),
  (3,28,1,3,4,1,'uncategorised','com_banners','Uncategorised',0x756E63617465676F7269736564,'','',1,0,'0000-00-00 00:00:00',1,'{\"target\":\"\",\"image\":\"\",\"foobar\":\"\"}','','','{\"page_title\":\"\",\"author\":\"\",\"robots\":\"\"}',42,'2010-06-28 13:27:35',0,'0000-00-00 00:00:00',0,'*',1),
  (4,29,1,5,6,1,'uncategorised','com_contact','Uncategorised',0x756E63617465676F7269736564,'','',1,0,'0000-00-00 00:00:00',1,'{\"target\":\"\",\"image\":\"\"}','','','{\"page_title\":\"\",\"author\":\"\",\"robots\":\"\"}',42,'2010-06-28 13:27:57',0,'0000-00-00 00:00:00',0,'*',1),
@@ -570,15 +566,15 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_categories` VALUES  (1,0,0,0,71,0,
  (43,181,9,25,26,3,'assuntos/editoria-a/institucional','com_content','Institucional',0x696E737469747563696F6E616C,'','',1,0,'0000-00-00 00:00:00',1,'{\"category_layout\":\"\",\"image\":\"\"}','','','{\"author\":\"\",\"robots\":\"\"}',576,'2013-12-24 22:13:46',576,'2013-12-24 22:17:14',0,'*',1),
  (44,216,36,60,61,2,'galeria-de-imagens/galeria-2','com_content','Galeria 2',0x67616C657269612D32,'','',1,0,'0000-00-00 00:00:00',1,'{\"category_layout\":\"\",\"image\":\"\"}','','','{\"author\":\"\",\"robots\":\"\"}',576,'2014-01-08 20:13:42',576,'2014-01-08 20:13:58',0,'*',1);
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_categories` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__categories` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_contact_details`
+-- Definition of table `#__contact_details`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_contact_details`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_contact_details` (
+DROP TABLE IF EXISTS `#__contact_details`;
+CREATE TABLE  `#__contact_details` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
   `alias` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
@@ -634,22 +630,22 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_contact_details` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_contact_details`
+-- Dumping data for table `#__contact_details`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_contact_details` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_contact_details` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_contact_details` VALUES  (1,'Denominação do órgão',0x6D696E6973746572696F,'nome do cargo','Esplanada dos Ministérios, Bloco A','Brasília','DF','Brasil','72000-000','61-8000-9000','fax','','images/imagens_menu/foto-230-por-136-01.jpg','joomlagovbr@gmail.com',0,1,0,'0000-00-00 00:00:00',1,'{\"show_contact_category\":\"show_with_link\",\"show_contact_list\":\"1\",\"presentation_style\":\"\",\"show_tags\":\"\",\"show_name\":\"1\",\"show_position\":\"0\",\"show_email\":\"1\",\"show_street_address\":\"1\",\"show_suburb\":\"1\",\"show_state\":\"1\",\"show_postcode\":\"1\",\"show_country\":\"1\",\"show_telephone\":\"1\",\"show_mobile\":\"0\",\"show_fax\":\"0\",\"show_webpage\":\"0\",\"show_misc\":\"1\",\"show_image\":\"1\",\"allow_vcard\":\"1\",\"show_articles\":\"1\",\"show_profile\":\"1\",\"show_links\":\"1\",\"linka_name\":\"teste1\",\"linka\":\"http:\\/\\/www.teste1.com.br\",\"linkb_name\":\"teste2\",\"linkb\":\"http:\\/\\/www.teste2.com.br\",\"linkc_name\":\"teste3\",\"linkc\":\"http:\\/\\/www.teste3.com.br\",\"linkd_name\":\"teste4\",\"linkd\":\"http:\\/\\/www.teste4.com.br\",\"linke_name\":\"teste5\",\"linke\":\"\",\"contact_layout\":\"\",\"show_email_form\":\"\",\"show_email_copy\":\"\",\"banned_email\":\"\",\"banned_subject\":\"\",\"banned_text\":\"\",\"validate_session\":\"\",\"custom_reply\":\"\",\"redirect\":\"\"}',0,38,1,'61-8000-9000','http://www.site.com.br','','','','*','2013-12-21 16:55:16',576,'','2013-12-21 17:03:13',576,'','','{\"robots\":\"\",\"rights\":\"\"}',0,'','0000-00-00 00:00:00','0000-00-00 00:00:00',4,10);
+/*!40000 ALTER TABLE `#__contact_details` DISABLE KEYS */;
+LOCK TABLES `#__contact_details` WRITE;
+INSERT INTO `#__contact_details` VALUES  (1,'Denominação do órgão',0x6D696E6973746572696F,'nome do cargo','Esplanada dos Ministérios, Bloco A','Brasília','DF','Brasil','72000-000','61-8000-9000','fax','','images/imagens_menu/foto-230-por-136-01.jpg','joomlagovbr@gmail.com',0,1,0,'0000-00-00 00:00:00',1,'{\"show_contact_category\":\"show_with_link\",\"show_contact_list\":\"1\",\"presentation_style\":\"\",\"show_tags\":\"\",\"show_name\":\"1\",\"show_position\":\"0\",\"show_email\":\"1\",\"show_street_address\":\"1\",\"show_suburb\":\"1\",\"show_state\":\"1\",\"show_postcode\":\"1\",\"show_country\":\"1\",\"show_telephone\":\"1\",\"show_mobile\":\"0\",\"show_fax\":\"0\",\"show_webpage\":\"0\",\"show_misc\":\"1\",\"show_image\":\"1\",\"allow_vcard\":\"1\",\"show_articles\":\"1\",\"show_profile\":\"1\",\"show_links\":\"1\",\"linka_name\":\"teste1\",\"linka\":\"http:\\/\\/www.teste1.com.br\",\"linkb_name\":\"teste2\",\"linkb\":\"http:\\/\\/www.teste2.com.br\",\"linkc_name\":\"teste3\",\"linkc\":\"http:\\/\\/www.teste3.com.br\",\"linkd_name\":\"teste4\",\"linkd\":\"http:\\/\\/www.teste4.com.br\",\"linke_name\":\"teste5\",\"linke\":\"\",\"contact_layout\":\"\",\"show_email_form\":\"\",\"show_email_copy\":\"\",\"banned_email\":\"\",\"banned_subject\":\"\",\"banned_text\":\"\",\"validate_session\":\"\",\"custom_reply\":\"\",\"redirect\":\"\"}',0,38,1,'61-8000-9000','http://www.site.com.br','','','','*','2013-12-21 16:55:16',576,'','2013-12-21 17:03:13',576,'','','{\"robots\":\"\",\"rights\":\"\"}',0,'','0000-00-00 00:00:00','0000-00-00 00:00:00',4,10);
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_contact_details` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__contact_details` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_content`
+-- Definition of table `#__content`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_content`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_content` (
+DROP TABLE IF EXISTS `#__content`;
+CREATE TABLE  `#__content` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `asset_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'FK to the #__assets table.',
   `title` varchar(255) NOT NULL DEFAULT '',
@@ -692,12 +688,12 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_content` (
 ) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_content`
+-- Dumping data for table `#__content`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_content` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_content` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_content` VALUES  (2,38,'Pagina 1: titulo do texto institucional',0x706167696E612D312D746974756C6F2D646F2D746578746F2D696E737469747563696F6E616C,'<p style=\"text-align: left;\">Espaço para inserir o subtítulo do texto institucional. Se em uma linha, usar 90 caracteres. Se em duas linhas usar 190 caracteres</p>\r\n<p style=\"text-align: left;\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p style=\"text-align: left;\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p style=\"text-align: left;\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p style=\"text-align: left;\">Segundo subtítulo em negrito</p>\r\n<p style=\"text-align: left;\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p style=\"text-align: left;\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p style=\"text-align: left;\">Terceiro subtítulo em negrito</p>\r\n<p style=\"text-align: left;\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p style=\"text-align: left;\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p style=\"text-align: left;\">Link externo 1<br />Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p style=\"text-align: left;\">Link externo 2<br />Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p style=\"text-align: left;\">Link externo 3<br />Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p style=\"text-align: left;\">Link externo 4<br />Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p style=\"text-align: left;\">Link externo 5<br />Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>','',1,8,'2013-10-21 17:11:14',576,'','0000-00-00 00:00:00',0,0,'0000-00-00 00:00:00','2013-10-21 17:11:14','0000-00-00 00:00:00','{\"image_intro\":\"\",\"float_intro\":\"\",\"image_intro_alt\":\"\",\"image_intro_caption\":\"\",\"image_fulltext\":\"\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"\",\"image_fulltext_caption\":\"\"}','{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_intro\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',1,1,'','',1,6,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',0,'*',''),
+/*!40000 ALTER TABLE `#__content` DISABLE KEYS */;
+LOCK TABLES `#__content` WRITE;
+INSERT INTO `#__content` VALUES  (2,38,'Pagina 1: titulo do texto institucional',0x706167696E612D312D746974756C6F2D646F2D746578746F2D696E737469747563696F6E616C,'<p style=\"text-align: left;\">Espaço para inserir o subtítulo do texto institucional. Se em uma linha, usar 90 caracteres. Se em duas linhas usar 190 caracteres</p>\r\n<p style=\"text-align: left;\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p style=\"text-align: left;\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p style=\"text-align: left;\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p style=\"text-align: left;\">Segundo subtítulo em negrito</p>\r\n<p style=\"text-align: left;\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p style=\"text-align: left;\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p style=\"text-align: left;\">Terceiro subtítulo em negrito</p>\r\n<p style=\"text-align: left;\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p style=\"text-align: left;\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p style=\"text-align: left;\">Link externo 1<br />Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p style=\"text-align: left;\">Link externo 2<br />Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p style=\"text-align: left;\">Link externo 3<br />Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p style=\"text-align: left;\">Link externo 4<br />Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p style=\"text-align: left;\">Link externo 5<br />Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>','',1,8,'2013-10-21 17:11:14',576,'','0000-00-00 00:00:00',0,0,'0000-00-00 00:00:00','2013-10-21 17:11:14','0000-00-00 00:00:00','{\"image_intro\":\"\",\"float_intro\":\"\",\"image_intro_alt\":\"\",\"image_intro_caption\":\"\",\"image_fulltext\":\"\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"\",\"image_fulltext_caption\":\"\"}','{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_intro\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',1,1,'','',1,6,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',0,'*',''),
  (3,39,'Página 2: título do texto institucional',0x706167696E612D322D746974756C6F2D646F2D746578746F2D696E737469747563696F6E616C,'<p style=\"text-align: left;\">Espaço para inserir o subtítulo do texto institucional. Se em uma linha, usar 90 caracteres. Se em duas linhas usar 190 caracteres</p>\r\n<p style=\"text-align: left;\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p style=\"text-align: left;\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p style=\"text-align: left;\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p style=\"text-align: left;\">• Lorem ipsum dolor sit amet;</p>\r\n<p style=\"text-align: left;\">• Lorem ipsum dolor sit amet;</p>\r\n<p style=\"text-align: left;\">• Lorem ipsum dolor sit amet</p>\r\n<p style=\"text-align: left;\">• Lorem ipsum dolor sit amet</p>\r\n<p style=\"text-align: left;\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>','',1,11,'2013-10-21 17:13:25',576,'','2013-12-24 21:57:39',576,0,'0000-00-00 00:00:00','2013-10-21 17:13:25','0000-00-00 00:00:00','{\"image_intro\":\"\",\"float_intro\":\"\",\"image_intro_alt\":\"\",\"image_intro_caption\":\"\",\"image_fulltext\":\"\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"\",\"image_fulltext_caption\":\"\"}','{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_tags\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',4,0,'','',1,1,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',0,'*',''),
  (4,40,'Página 3: título do texto institucional',0x706167696E612D332D746974756C6F2D646F2D746578746F2D696E737469747563696F6E616C,'<p style=\"text-align: left;\"><span style=\"color: #c0c0c0;\"><strong>Espaço para inserir o subtítulo do texto institucional. Se em uma linha, usar 90 caracteres. Se em duas linhas usar 190 caracteres</strong></span></p>\r\n<p style=\"text-align: left;\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p style=\"text-align: left;\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p style=\"text-align: left;\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>','',1,11,'2013-10-21 17:14:11',576,'','2013-12-24 21:58:19',576,0,'0000-00-00 00:00:00','2013-10-21 17:14:11','0000-00-00 00:00:00','{\"image_intro\":\"\",\"float_intro\":\"\",\"image_intro_alt\":\"\",\"image_intro_caption\":\"\",\"image_fulltext\":\"\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"\",\"image_fulltext_caption\":\"\"}','{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_tags\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',5,0,'','',1,1,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',0,'*',''),
  (5,48,'Editoria B - Texto 01',0x656469746F7269612D622D746578746F2D3031,'<p>Subtítulo em três linhas com até 110 caracteres. Subtítulo em três linhas com até 110 caracteres.</p>\r\n','\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<blockquote>Use o estilo citação, localizado no campo corpo do texto, para criar um olho na sua matéria. Não há um limite de caracteres</blockquote>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>',1,14,'2013-10-21 17:37:58',576,'','2014-01-02 13:32:12',576,0,'0000-00-00 00:00:00','2013-10-21 17:37:58','0000-00-00 00:00:00','{\"image_intro\":\"images\\/imagens_menu\\/conteudos_de_marcacao\\/editoria_b\\/texto-1-titulo-da-noticia-entre-35-e-90-caracteres.jpeg\",\"float_intro\":\"\",\"image_intro_alt\":\"Foto no tamanho 230 pixels de largura por 136 pixels de altura\",\"image_intro_caption\":\"\",\"image_fulltext\":\"images\\/conteudo\\/thumb-imagem-conteudo.jpg\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"Legenda da foto (arquivo .JPG) deve ter at\\u00e9 60 caracteres, preferencialmente\",\"image_fulltext_caption\":\"Cr\\u00e9dito da imagem\"}','{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_tags\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',22,0,'','',1,31,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',1,'*','Chapéu'),
@@ -709,7 +705,7 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_content` VALUES  (2,38,'Pagina 1: 
  (12,56,'Licitações e contratos',0x6C6963697461636F65732D652D636F6E747261746F73,'<p>Nesta seção são divulgadas informações sobre a execução orçamentária e financeira detalhada do (a) [nome do Órgão ou entidade]</p>\r\n','\r\n<blockquote><a class=\"internal-link\" title=\"\" href=\"http://tv1-lnx-04.grupotv1.com/portalmodelo/sobre/wireframes/wireframe_pagina_despesas.jpg\" target=\"_self\">Acesse o wireframe com o exemplo de uma página de Despesas</a></blockquote>\r\n<blockquote>Acesse uma página de Despesas já publicada (em breve)</blockquote>\r\n<blockquote><a class=\"internal-link\" title=\"\" href=\"http://tv1-lnx-04.grupotv1.com/portalmodelo/sobre/wireframes/como-montar-sua-pagina.zip\" target=\"_self\">Saiba como montar suas páginas. Baixe o wireframe</a></blockquote>\r\n<p>São consideradas despesas quaisquer gastos com aquisição e contratação de obras e compras governamentais. A execução financeira é a utilização dos recursos financeiros visando atender à realização dos programas, ações e projetos e/ou subatividades atribuídos às unidades orçamentárias.</p>\r\n<p>Deverão ser divulgados os seguintes dados e informações em relação à execução orçamentária e financeira dos órgãos/entidades:</p>\r\n<ul>\r\n<li>I - Quadro de Detalhamento de Programas, por unidade orçamentária do órgão/entidade, contendo:</li>\r\n<li>a) código e especificação dos programas orçamentários;</li>\r\n<li>b) orçamento atualizado, levando em consideração os recursos consignados por programa na Lei Orçamentária Anual e em seus créditos adicionais;</li>\r\n<li>c) valor liquidado no ano considerado, para exercícios encerrados, e valor liquidado até o mês considerado, para o exercício corrente;</li>\r\n<li>d) valor pago no ano considerado, para exercícios encerrados, e valor pago até o mês considerado, para o exercício corrente;</li>\r\n<li>e) percentual dos recursos liquidados comparados aos autorizados;</li>\r\n<li class=\"last-item\">f) percentual dos recursos pagos comparados aos autorizados.</li>\r\n</ul>\r\n<ul>\r\n<li>II - Quadro de Execução de Despesas, por unidade orçamentária dos órgãos e entidades, contendo:</li>\r\n<li>a) descrição da natureza das despesas;</li>\r\n<li>b) valor liquidado no ano considerado, para exercícios encerrados e valor liquidado até o mês considerado, para o exercício corrente;</li>\r\n<li class=\"last-item\">c) valor pago no ano considerado, para exercícios encerrados e valor pago até o mês considerado, para o exercício corrente.</li>\r\n</ul>\r\n<p>O órgão/entidade deverá detalhar suas despesas com diárias e passagens pagas a servidores públicos em viagens a trabalho ou a colaboradores eventuais em viagens no interesse da Administração, no seguinte nível de detalhe para cada trecho da viagem:</p>\r\n<ul>\r\n<li>I - órgão superior;</li>\r\n<li>II - órgão subordinado ou entidade vinculada;</li>\r\n<li>III - unidade gestora;</li>\r\n<li>IV - nome do servidor;</li>\r\n<li>V - cargo;</li>\r\n<li>VI - origem de todos os trechos da viagem;</li>\r\n<li>VII - destino de todos os trechos da viagem;</li>\r\n<li>VIII - período da viagem;</li>\r\n<li>IX - motivo da viagem;</li>\r\n<li>X - meio de transporte;</li>\r\n<li>XI - categoria da passagem;</li>\r\n<li>XII - valor da passagem;</li>\r\n<li>XIII - número de diárias;</li>\r\n<li>XIV - valor total das diárias;</li>\r\n<li class=\"last-item\">XV - valor total da viagem.</li>\r\n</ul>\r\n<p>O órgão/entidade que divulga o referido conjunto de informações em seu portal eletrônico ou possui Página de Transparência atualizada poderá disponibilizar link remetendo para a área do portal onde as informações já estão disponíveis ou para sua respectiva Página de Transparência.</p>\r\n<p>O órgão/entidade que não disponibiliza dados de despesa em seu portal eletrônico e não possui Página de Transparência poderá disponibilizar o link do <a class=\"external-link\" title=\"\" href=\"http://www.portaltransparencia.gov.br/despesasdiarias/\" target=\"_self\">Portal da Transparência</a> para cumprir este item, exceto detalhamento de diárias e passagens. O Portal da Transparência do Governo Federal disponibiliza informações de execução orçamentária e financeira dos órgãos/entidades da Administração Federal. As informações são extraídas do Sistema Integrado de Administração Financeira do Governo Federal (SIAFI), portanto, são publicados no Portal da Transparência apenas os dados dos órgãos/entidades que utilizam o SIAFI. Nesses casos, o órgão/entidade poderá disponibilizar link de acesso para o Portal da Transparência. Os órgãos/entidades que não utilizam o SIAFI e cujas informações, portanto, não se encontram no Portal da Transparência, deverão divulgar por meio próprio suas informações de execução orçamentária e financeira.</p>\r\n<p><strong>Guias</strong></p>\r\n<p>Para mais informações sobre a seção de Acesso à Informação, confira os guias elaborados pela Controladoria-Geral da União.</p>\r\n<ul>\r\n<li><a class=\"external-link\" title=\"\" href=\"http://www.acessoainformacao.gov.br/acessoainformacaogov/espaco-gestor/arquivos/Guia_SecaoSitios.pdf\" target=\"_self\">Guia para criação da seção de acesso à informação nos portais eletrônicos dos órgãos e entidades federais</a> (arquivo pdf, tamanho: 1,14 MB)</li>\r\n<li><a class=\"external-link\" title=\"\" href=\"http://www.cgu.gov.br/Publicacoes/BrasilTransparente/Guia_TransparenciaAtiva_EstadosMunicipios.pdf\" target=\"_self\">Guia para criação da Seção de Acesso à Informação nos portais eletrônicos dos Órgãos e Entidades Estaduais e Municipais</a> (arquivo pdf, tamanho:1,27 MB)</li>\r\n<li class=\"last-item\"><a class=\"external-link\" title=\"\" href=\"http://www.acessoainformacao.gov.br/acessoainformacaogov/espaco-gestor/arquivos/Guia_InformacoesClassificadas.pdf\" target=\"_self\">Publicação do rol de informações classificadas e desclassificadas e de relatórios estatísticos sobre a Lei de Acesso à Informação</a> (arquivo pdf, tamanho: 682 KB)</li>\r\n</ul>',1,40,'2013-10-21 18:06:12',576,'','2013-12-22 17:46:48',576,0,'0000-00-00 00:00:00','2013-10-21 18:06:12','0000-00-00 00:00:00','{\"image_intro\":\"\",\"float_intro\":\"\",\"image_intro_alt\":\"\",\"image_intro_caption\":\"\",\"image_fulltext\":\"\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"\",\"image_fulltext_caption\":\"\"}','{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_tags\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',3,3,'','',1,5,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',0,'*',''),
  (13,57,'Servidores',0x7365727669646F726573,'<p>Nesta seção são divulgadas informações sobre concursos públicos de provimento de cargos e relação dos servidores públicos lotados ou em exercício no (a) [nome do órgão ou entidade]</p>\r\n','\r\n<blockquote><a class=\"internal-link\" title=\"\" href=\"http://tv1-lnx-04.grupotv1.com/portalmodelo/sobre/wireframes/wireframe_paginas_servidores.jpg\" target=\"_self\">Acesse o wireframe com o exemplo de uma página de Servidores</a></blockquote>\r\n<blockquote>Acesse uma página de Servidores já publicada (em breve)</blockquote>\r\n<blockquote><a class=\"internal-link\" title=\"\" href=\"http://tv1-lnx-04.grupotv1.com/portalmodelo/sobre/wireframes/como-montar-sua-pagina.zip\" target=\"_self\">Saiba como montar suas páginas. Baixe o wireframe</a></blockquote>\r\n<p>Nesta seção, deverão ser publicadas as íntegras dos editais de concursos públicos para provimento de cargos realizados pelo órgão/entidade e a relação dos agentes públicos, efetivos ou não, lotados ou em exercício no órgão/entidade, apresentando as seguintes informações mínimas:</p>\r\n<ul>\r\n<li>I - número de identificação funcional;</li>\r\n<li>II - nome completo;</li>\r\n<li>III - CPF (ocultando os três primeiros dígitos e os dois dígitos verificadores do CPF);</li>\r\n<li>IV - cargo e função;</li>\r\n<li>V - lotação;</li>\r\n<li>VI - Regime Jurídico;</li>\r\n<li>VII - jornada de trabalho;</li>\r\n<li>VIII - ato de nomeação ou contratação;</li>\r\n<li>IX - respectiva data de publicação do ato;</li>\r\n<li>X - cargo efetivo ou permanente ou emprego permanente;</li>\r\n<li class=\"last-item\">XI - órgão ou entidade de origem, no caso de servidor requisitado ou cedido.</li>\r\n</ul>\r\n<p>Membros de conselhos de administração ou fiscal da administração indireta também devem figurar nesta relação, assim como militares das Forças Armadas. Agentes públicos cujo exercício profissional é protegido por sigilo, em atendimento à legislação vigente, não devem figurar nesta relação.</p>\r\n<p>O órgão/entidade que utiliza o Sistema Integrado de Administração de Recursos Humanos (SIAPE) poderá, para cumprir este item, disponibilizar link para consulta “Servidores” do Portal da Transparência, disponível no <a title=\"\" href=\"http://www.portaldatransparencia.gov.br/servidores\" target=\"_self\">Portal da Transparência</a>.<br /><br />A entidade da Administração Indireta, incluindo agências reguladoras e conselhos de administração e fiscal, cujos registros de servidores não estão no SIAPE, deverá disponibilizar a relação de servidores e agentes públicos, ou, caso já tenha a informação em seu portal eletrônico, remeter para área onde estão disponíveis essas informações.</p>\r\n<p><strong>Guias</strong></p>\r\n<p>Para mais informações sobre a seção de Acesso à Informação, confira os guias elaborados pela Controladoria-Geral da União.</p>\r\n<ul>\r\n<li><a title=\"\" href=\"http://www.acessoainformacao.gov.br/acessoainformacaogov/espaco-gestor/arquivos/Guia_SecaoSitios.pdf\" target=\"_self\">Guia para criação da seção de acesso à informação nos portais eletrônicos dos órgãos e entidades federais</a> (arquivo pdf, tamanho: 1,14 MB)</li>\r\n<li><a title=\"\" href=\"http://www.cgu.gov.br/Publicacoes/BrasilTransparente/Guia_TransparenciaAtiva_EstadosMunicipios.pdf\" target=\"_self\">Guia para criação da Seção de Acesso à Informação nos portais eletrônicos dos Órgãos e Entidades Estaduais e Municipais</a> (arquivo pdf, tamanho:1,27 MB)</li>\r\n<li class=\"last-item\"><a title=\"\" href=\"http://www.acessoainformacao.gov.br/acessoainformacaogov/espaco-gestor/arquivos/Guia_InformacoesClassificadas.pdf\" target=\"_self\">Publicação do rol de informações classificadas e desclassificadas e de relatórios estatísticos sobre a Lei de Acesso à Informação</a> (arquivo pdf, tamanho: 682 KB)</li>\r\n</ul>',1,40,'2013-10-21 18:06:44',576,'','2013-12-22 17:47:38',576,0,'0000-00-00 00:00:00','2013-10-21 18:06:44','0000-00-00 00:00:00','{\"image_intro\":\"\",\"float_intro\":\"\",\"image_intro_alt\":\"\",\"image_intro_caption\":\"\",\"image_fulltext\":\"\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"\",\"image_fulltext_caption\":\"\"}','{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_tags\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',4,2,'','',1,3,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',0,'*',''),
  (14,58,'Informações classificadas',0x696E666F726D61636F65732D636C6173736966696361646173,'<p>Nesta seção são divulgados o rol das informações classificadas em cada grau de sigilo e o rol das informações desclassificadas nos últimos doze meses no âmbito do [nome do órgão ou entidade].</p>\r\n','\r\n<blockquote><a title=\"\" href=\"images/conteudo/wireframe_pagina_informacoes-classificadas.jpg\" target=\"_blank\">Acesse o wireframe com o exemplo de uma página de Informações classificadas</a></blockquote>\r\n<blockquote>Acesse uma página de Informações classificadas já publicada (em breve)</blockquote>\r\n<blockquote><a title=\"\" href=\"images/conteudo/como-montar-sua-pagina.zip\" target=\"_self\">Saiba como montar suas páginas. Baixe o wireframe</a></blockquote>\r\n<p>O novo item de navegação \"Informações classificadas\" deverá trazer um texto explicativo sobre o seu objetivo de atender aos incisos I e II, do Art. 45, do <a title=\"\" href=\"http://www.planalto.gov.br/ccivil_03/_ato2011-2014/2012/Decreto/D7724.htm\" target=\"_self\">Decreto nº 7.724/2012</a>.</p>\r\n<p>A página deverá conter duas áreas específicas para a apresentação das listagens requeridas, com as seguintes nomenclaturas:</p>\r\n<ul>\r\n<li>Rol de informações classificadas</li>\r\n<li>Rol de informações desclassificadas</li>\r\n</ul>\r\n<p><strong>Conteúdo da área \"rol de informações desclassificadas\"</strong></p>\r\n<p>Essa área deverá conter os Números Únicos de Protocolo (NUP) de todos os documentos desclassificados desde a entrada em vigor da Lei de Acesso à Informação.</p>\r\n<p><strong>Conteúdo da área \"rol de informações classificadas\"</strong></p>\r\n<p>O conteúdo dessa área deverá apresentar as seguintes informações:</p>\r\n<ul>\r\n<li>Código de Indexação de Documento que contém Informação Classificada – CIDIC;</li>\r\n<li>Categoria na qual se enquadra a informação;</li>\r\n<li>Indicação do dispositivo legal que fundamenta a classificação;</li>\r\n<li>Data da produção da informação;</li>\r\n<li>Data da classificação;</li>\r\n<li>Prazo da classificação.</li>\r\n</ul>\r\n<p>Somente devem ser incluídas no \"Rol de informações classificadas\" as informações classificadas nos termos do §1º do art. 24 da <a title=\"\" href=\"http://www.planalto.gov.br/ccivil_03/_ato2011-2014/2011/lei/l12527.htm\" target=\"_self\">Lei nº 12.527/2011</a>, ou seja, como reservadas, secretas ou ultrassecretas. Por isso, informações cujo sigilo seja devido a outras legislações (como fiscal e tributária), documentos preparatórios e informações pessoais não estão sujeitos aos termos de divulgação apresentados neste guia.</p>\r\n<p><strong>a) Formato de apresentação do CIDIC</strong></p>\r\n<p>O formato de apresentação do Código de Indexação de Documento que contém Informação Classificada<br />(CIDIC) obedece às seguintes regras, de acordo com os artigos 50 a 54 do <a title=\"\" href=\"http://www.planalto.gov.br/ccivil_03/_ato2011-2014/2012/Decreto/D7845.htm\" target=\"_self\">Decreto nº 7.845/2012</a>:</p>\r\n<ol>\r\n<li>A 1ª parte do CIDIC corresponde ao Número Único de Protocolo – NUP do documento que contém a informação. Este é um código exclusivamente numérico;</li>\r\n<li>A 2ª parte do CIDIC, separada da 1ª parte por um \".\", iniciará sempre por um caractere alfabético (\"U\", \"S\" ou \"R\"), de acordo com o grau de sigilo. Além disso, deve prever até o máximo de 39 posições, com caracteres alfanuméricos e separadores;</li>\r\n<li>Os separadores utilizados serão: \".\" e \"/\" (este último, para as datas);</li>\r\n<li>Para as informações classificadas no grau reservado e secreto, a 2ª parte do CIDIC terá sempre 28 posições com caracteres alfanuméricos e separadores;</li>\r\n<li>Para as informações classificadas no grau ultrassecreto, a 2ª parte do CIDIC terá 28 posições com caracteres alfanuméricos e separadores, enquanto não ocorrer prorrogação do prazo do sigilo;</li>\r\n<li>Quando ocorrer a prorrogação do prazo de sigilo da informação classificada no grau ultrassecreto, a nova data deverá constar no final da 2ª parte do CIDIC, totalizando 39 posições com caracteres alfanuméricos e separadores;</li>\r\n</ol>\r\n<p><strong>b) Categoria na qual se enquadra a informação</strong></p>\r\n<p>A divulgação da informação \"categoria na qual se enquadra a informação\" deve obedecer os padrões estabelecidos no Vocabulário Controlado de Governo Eletrônico – VCGE (Anexo II do Decreto 7.845/2012). Trata-se de um padrão criado para facilitar e uniformizar a classificação dos tipos de informações tratadas em todo o Governo Federal.<br /><br />Para consultar o VCGE, acesse: <a href=\"http://vocab.e.gov.br/2011/03/vcge#esquema\">http://vocab.e.gov.br/2011/03/vcge#esquema</a> Deve-se utilizar apenas o primeiro nível do Vocabulário.</p>\r\n<p><strong>c) Fundamentação legal da classificação</strong></p>\r\n<p>Para indicar a fundamentação legal da classificação, deve-se fazer referência ao inciso do artigo 23 da <a title=\"\" href=\"http://www.planalto.gov.br/ccivil_03/_ato2011-2014/2011/lei/l12527.htm\" target=\"_self\">Lei nº 12.527/2011</a> utilizado como justificativa para a classificação da informação.</p>\r\n<p><strong>d) Formato para publicação das listagens</strong></p>\r\n<p>A disponibilização das listagens deve observar o disposto no artigo 8º, parágrafo 3, inciso II, da <a title=\"\" href=\"http://www.planalto.gov.br/ccivil_03/_Ato2011-2014/2011/Lei/L12527.htm\" target=\"_self\">Lei de Acesso à Informação</a>, ou seja, as informações devem ser publicadas em formatos \"abertos e não proprietários, tais como planilhas e texto, de modo a facilitar a análise das informações\". Também devem ser observados os padrões estabelecidos pela e-PING - Padrões de Interoperabilidade de Governo Eletrônico. O formato (como, por exemplo, html, csv, ods, etc.) a ser utilizado pode ser definido pelo próprio órgão ou entidade, considerando as normas e procedimentos internos de segurança da informação.</p>\r\n<p><strong>Guias</strong></p>\r\n<p>Para mais informações sobre a seção de Acesso à Informação, confira os guias elaborados pela Controladoria-Geral da União.</p>\r\n<p><a title=\"\" href=\"http://www.acessoainformacao.gov.br/acessoainformacaogov/espaco-gestor/arquivos/Guia_SecaoSitios.pdf\" target=\"_self\">Guia para criação da seção de acesso à informação nos portais eletrônicos dos órgãos e entidades federais</a> (arquivo pdf)</p>\r\n<p><a title=\"\" href=\"http://www.cgu.gov.br/Publicacoes/BrasilTransparente/Guia_TransparenciaAtiva_EstadosMunicipios.pdf\" target=\"_self\">Guia para criação da Seção de Acesso à Informação nos portais eletrônicos dos Órgãos e Entidades Estaduais e Municipais</a> (arquivo pdf)</p>\r\n<p><a title=\"\" href=\"http://www.acessoainformacao.gov.br/acessoainformacaogov/espaco-gestor/arquivos/Guia_InformacoesClassificadas.pdf\" target=\"_self\">Publicação do rol de informações classificadas e desclassificadas e de relatórios estatísticos sobre a Lei de Acesso à Informação</a> (arquivo pdf)</p>',1,41,'2013-10-21 18:07:21',576,'','2014-02-05 01:29:39',576,0,'0000-00-00 00:00:00','2013-10-21 18:07:21','0000-00-00 00:00:00','{\"image_intro\":\"\",\"float_intro\":\"\",\"image_intro_alt\":\"\",\"image_intro_caption\":\"\",\"image_fulltext\":\"\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"\",\"image_fulltext_caption\":\"\"}','{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_tags\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',9,1,'','',1,11,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',0,'*','');
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_content` VALUES  (15,59,'Serviço de Informação ao Cidadão (SIC)',0x7365727669636F2D64652D696E666F726D6163616F2D616F2D6369646164616F2D736963,'<p>Nesta seção são divulgadas as informações sobre o Sistema de Informações ao Cidadão (SIC), pertinentes ao seu funcionamento, localização e dados de contato no âmbito do (a) [nome do órgão ou entidade]</p>\r\n','\r\n<blockquote><a class=\"internal-link\" title=\"\" href=\"http://tv1-lnx-04.grupotv1.com/portalmodelo/sobre/wireframes/wireframe_pagina_servicos-de-informacao-ao-cidadao.jpg\" target=\"_self\">Acesse o wireframe com o exemplo de uma página de Serviço de Informação ao Cidadão</a></blockquote>\r\n<blockquote>Acesse uma página de Serviço de Informação ao Cidadão já publicada (em breve)</blockquote>\r\n<blockquote><a class=\"internal-link\" title=\"\" href=\"http://tv1-lnx-04.grupotv1.com/portalmodelo/sobre/wireframes/como-montar-sua-pagina.zip\" target=\"_self\">Saiba como montar suas páginas. Baixe o wireframe</a></blockquote>\r\n<p>Nesse tópico o órgão/entidade disponibilizará as seguintes informações sobre o(s) Serviço(s) de Informação ao Cidadão (SICs), de que trata o artigo 9º da Lei de Acesso à Informação:</p>\r\n<p>I - localização;<br />II - horário de funcionamento;<br />III - nome dos servidores responsáveis pelo SIC;<br />IV - telefone e e-mails específicos para orientação e esclarecimentos de dúvidas, tais como sobre a protocolização de requerimentos de acesso à informação; a tramitação de solicitação de informação;<br />V - nome da autoridade do órgão responsável pelo monitoramento da implementação da Lei de Acesso à Informação no âmbito do órgão/entidade (autoridade prevista no artigo 40º da Lei 12.527/11).</p>\r\n<p>Também será disponibilizado neste item modelo de formulário de solicitação de informação para aqueles que queiram apresentam o pedido em meio físico (papel) junto ao SIC.</p>\r\n<p>Adicionalmente, o órgão ou entidade deverá disponibilizar eventuais informações sobre os procedimentos que os cidadãos deverão adotar para solicitar acesso à informação perante o respectivo órgão/entidade.</p>\r\n<p>Neste item, o órgão/entidade deverá disponibilizar link para o Sistema de Solicitação de Acesso à Informação do Poder Executivo Federal, a ser disponibilizado pela Controladoria-Geral da União (CGU), o qual permitirá que o requerente selecione o órgão ou entidade para o qual deseja endereçar pedido de acesso à informação. A CGU entrará em contato com todas as autoridades responsáveis pela implementação da Lei de Acesso à Informação dos órgãos/entidades a fim de indicar o exato link onde estará disponível a referida informação, bem como receber indicação do nome do servidor que deverá ser cadastrado para ter acesso ao sistema.</p>\r\n<p><strong>Guias</strong></p>\r\n<p>Para mais informações sobre a seção de Acesso à Informação, confira os guias elaborados pela Controladoria-Geral da União.</p>\r\n<p><a class=\"external-link\" title=\"\" href=\"http://www.acessoainformacao.gov.br/acessoainformacaogov/espaco-gestor/arquivos/Guia_SecaoSitios.pdf\" target=\"_self\">Guia para criação da seção de acesso à informação nos portais eletrônicos dos órgãos e entidades federais</a> (arquivo pdf)</p>\r\n<p><a class=\"external-link\" title=\"\" href=\"http://www.cgu.gov.br/Publicacoes/BrasilTransparente/Guia_TransparenciaAtiva_EstadosMunicipios.pdf\" target=\"_self\">Guia para criação da Seção de Acesso à Informação nos portais eletrônicos dos Órgãos e Entidades Estaduais e Municipais</a> (arquivo pdf)</p>\r\n<p><a class=\"external-link\" title=\"\" href=\"http://www.acessoainformacao.gov.br/acessoainformacaogov/espaco-gestor/arquivos/Guia_InformacoesClassificadas.pdf\" target=\"_self\">Publicação do rol de informações classificadas e desclassificadas e de relatórios estatísticos sobre a Lei de Acesso à Informação</a> (arquivo pdf)</p>',1,41,'2013-10-21 18:07:56',576,'','2013-12-22 17:55:17',576,0,'0000-00-00 00:00:00','2013-10-21 18:07:56','0000-00-00 00:00:00','{\"image_intro\":\"\",\"float_intro\":\"\",\"image_intro_alt\":\"\",\"image_intro_caption\":\"\",\"image_fulltext\":\"\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"\",\"image_fulltext_caption\":\"\"}','{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_tags\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',4,0,'','',1,3,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',0,'*',''),
+INSERT INTO `#__content` VALUES  (15,59,'Serviço de Informação ao Cidadão (SIC)',0x7365727669636F2D64652D696E666F726D6163616F2D616F2D6369646164616F2D736963,'<p>Nesta seção são divulgadas as informações sobre o Sistema de Informações ao Cidadão (SIC), pertinentes ao seu funcionamento, localização e dados de contato no âmbito do (a) [nome do órgão ou entidade]</p>\r\n','\r\n<blockquote><a class=\"internal-link\" title=\"\" href=\"http://tv1-lnx-04.grupotv1.com/portalmodelo/sobre/wireframes/wireframe_pagina_servicos-de-informacao-ao-cidadao.jpg\" target=\"_self\">Acesse o wireframe com o exemplo de uma página de Serviço de Informação ao Cidadão</a></blockquote>\r\n<blockquote>Acesse uma página de Serviço de Informação ao Cidadão já publicada (em breve)</blockquote>\r\n<blockquote><a class=\"internal-link\" title=\"\" href=\"http://tv1-lnx-04.grupotv1.com/portalmodelo/sobre/wireframes/como-montar-sua-pagina.zip\" target=\"_self\">Saiba como montar suas páginas. Baixe o wireframe</a></blockquote>\r\n<p>Nesse tópico o órgão/entidade disponibilizará as seguintes informações sobre o(s) Serviço(s) de Informação ao Cidadão (SICs), de que trata o artigo 9º da Lei de Acesso à Informação:</p>\r\n<p>I - localização;<br />II - horário de funcionamento;<br />III - nome dos servidores responsáveis pelo SIC;<br />IV - telefone e e-mails específicos para orientação e esclarecimentos de dúvidas, tais como sobre a protocolização de requerimentos de acesso à informação; a tramitação de solicitação de informação;<br />V - nome da autoridade do órgão responsável pelo monitoramento da implementação da Lei de Acesso à Informação no âmbito do órgão/entidade (autoridade prevista no artigo 40º da Lei 12.527/11).</p>\r\n<p>Também será disponibilizado neste item modelo de formulário de solicitação de informação para aqueles que queiram apresentam o pedido em meio físico (papel) junto ao SIC.</p>\r\n<p>Adicionalmente, o órgão ou entidade deverá disponibilizar eventuais informações sobre os procedimentos que os cidadãos deverão adotar para solicitar acesso à informação perante o respectivo órgão/entidade.</p>\r\n<p>Neste item, o órgão/entidade deverá disponibilizar link para o Sistema de Solicitação de Acesso à Informação do Poder Executivo Federal, a ser disponibilizado pela Controladoria-Geral da União (CGU), o qual permitirá que o requerente selecione o órgão ou entidade para o qual deseja endereçar pedido de acesso à informação. A CGU entrará em contato com todas as autoridades responsáveis pela implementação da Lei de Acesso à Informação dos órgãos/entidades a fim de indicar o exato link onde estará disponível a referida informação, bem como receber indicação do nome do servidor que deverá ser cadastrado para ter acesso ao sistema.</p>\r\n<p><strong>Guias</strong></p>\r\n<p>Para mais informações sobre a seção de Acesso à Informação, confira os guias elaborados pela Controladoria-Geral da União.</p>\r\n<p><a class=\"external-link\" title=\"\" href=\"http://www.acessoainformacao.gov.br/acessoainformacaogov/espaco-gestor/arquivos/Guia_SecaoSitios.pdf\" target=\"_self\">Guia para criação da seção de acesso à informação nos portais eletrônicos dos órgãos e entidades federais</a> (arquivo pdf)</p>\r\n<p><a class=\"external-link\" title=\"\" href=\"http://www.cgu.gov.br/Publicacoes/BrasilTransparente/Guia_TransparenciaAtiva_EstadosMunicipios.pdf\" target=\"_self\">Guia para criação da Seção de Acesso à Informação nos portais eletrônicos dos Órgãos e Entidades Estaduais e Municipais</a> (arquivo pdf)</p>\r\n<p><a class=\"external-link\" title=\"\" href=\"http://www.acessoainformacao.gov.br/acessoainformacaogov/espaco-gestor/arquivos/Guia_InformacoesClassificadas.pdf\" target=\"_self\">Publicação do rol de informações classificadas e desclassificadas e de relatórios estatísticos sobre a Lei de Acesso à Informação</a> (arquivo pdf)</p>',1,41,'2013-10-21 18:07:56',576,'','2013-12-22 17:55:17',576,0,'0000-00-00 00:00:00','2013-10-21 18:07:56','0000-00-00 00:00:00','{\"image_intro\":\"\",\"float_intro\":\"\",\"image_intro_alt\":\"\",\"image_intro_caption\":\"\",\"image_fulltext\":\"\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"\",\"image_fulltext_caption\":\"\"}','{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_tags\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',4,0,'','',1,3,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',0,'*',''),
  (16,69,'Texto 1 - Título da notícia entre 35 e 90 caracteres',0x746578746F2D312D746974756C6F2D64612D6E6F74696369612D656E7472652D33352D652D39302D63617261637465726573,'<p>Subtítulo do texto 1. Se em uma linha, usar 90 caracteres. Se em duas linhas usar 190 caracteres</p>\r\n','\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<blockquote>\r\n<p>Use o estilo \"Block Quote\", localizado nas opções do bloco da matéria, para criar um olho na sua matéria. Não há um limite de caracteres</p>\r\n</blockquote>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><object width=\"640\" height=\"480\" data=\"http://www.youtube-nocookie.com/v/Vj1MpR3iER4?hl=pt_BR&amp;version=3&amp;rel=0\" type=\"application/x-shockwave-flash\"><param name=\"allowFullScreen\" value=\"true\" /><param name=\"allowscriptaccess\" value=\"always\" /><param name=\"src\" value=\"http://www.youtube-nocookie.com/v/Vj1MpR3iER4?hl=pt_BR&amp;version=3&amp;rel=0\" /></object></p>',1,17,'2013-10-21 18:35:16',576,'','2014-01-07 20:49:53',576,0,'0000-00-00 00:00:00','2013-10-21 18:35:16','0000-00-00 00:00:00','{\"image_intro\":\"images\\/conteudo\\/thumb-imagem-conteudo.jpg\",\"float_intro\":\"\",\"image_intro_alt\":\"Legenda da foto (arquivo .JPG) deve ter at\\u00e9 60 caracteres, preferencialmente\",\"image_intro_caption\":\"por Nome do Autor\",\"image_fulltext\":\"images\\/conteudo\\/thumb-imagem-conteudo.jpg\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"Legenda da foto (arquivo .JPG) deve ter at\\u00e9 60 caracteres, preferencialmente\",\"image_fulltext_caption\":\"por Nome do Autor\"}','{\"urla\":\"http:\\/\\/www.brasil.gov.br\",\"urlatext\":\"Brasil.gov.br\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_tags\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',7,10,'Notícia, Texto de marcação, Portal Padrão','',1,8,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',0,'*',''),
  (17,70,'Release 5: Título do release entre 35 e 90 caracteres',0x72656C656173652D352D746974756C6F2D646F2D72656C656173652D656E7472652D33352D652D39302D63617261637465726573,'<p>Subtítulo do texto 1. Se em uma linha, usar 90 caracteres. Se em duas linhas usar 190 caracteres</p>\r\n','\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<blockquote>\r\n<p>Use o estilo \"Block Quote\", localizado nas opções do bloco da matéria, para criar um olho na sua matéria. Não há um limite de caracteres</p>\r\n</blockquote>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><object width=\"640\" height=\"480\" data=\"http://www.youtube-nocookie.com/v/Vj1MpR3iER4?hl=pt_BR&amp;version=3&amp;rel=0\" type=\"application/x-shockwave-flash\"><param name=\"allowFullScreen\" value=\"true\" /><param name=\"allowscriptaccess\" value=\"always\" /><param name=\"src\" value=\"http://www.youtube-nocookie.com/v/Vj1MpR3iER4?hl=pt_BR&amp;version=3&amp;rel=0\" /></object></p>',1,17,'2013-10-22 19:42:21',576,'','2014-01-07 20:46:56',576,0,'0000-00-00 00:00:00','2013-10-22 19:42:21','0000-00-00 00:00:00','{\"image_intro\":\"images\\/conteudo\\/thumb-imagem-conteudo.jpg\",\"float_intro\":\"\",\"image_intro_alt\":\"\",\"image_intro_caption\":\"\",\"image_fulltext\":\"images\\/conteudo\\/thumb-imagem-conteudo.jpg\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"Exemplo de aplica\\u00e7\\u00e3o alternativa de foto no corpo do texto\",\"image_fulltext_caption\":\"por Nome do Autor\"}','{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_tags\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',11,9,'Notícia, Texto de marcação, Portal Padrão','',1,10,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',0,'*','Chapéu da editoria'),
  (18,71,'Release 4: Título do release entre 35 e 90 caracteres',0x72656C656173652D342D746974756C6F2D646F2D72656C656173652D656E7472652D33352D652D39302D63617261637465726573,'<p>Subtitulo do texto 1. Se em uma linha, usar 90 caracteres. Se em duas linhas usar 190 caracteres</p>\r\n','\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<blockquote>Use o estilo \"block quote\", localizado nas ferramentas do editor de texto, para criar um olho na sua matéria. Não há um limite de caracteres</blockquote>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><object width=\"640\" height=\"480\" data=\"http://www.youtube-nocookie.com/v/Vj1MpR3iER4?hl=pt_BR&amp;version=3&amp;rel=0\" type=\"application/x-shockwave-flash\"><param name=\"allowFullScreen\" value=\"true\" /><param name=\"allowscriptaccess\" value=\"always\" /><param name=\"src\" value=\"http://www.youtube-nocookie.com/v/Vj1MpR3iER4?hl=pt_BR&amp;version=3&amp;rel=0\" /></object></p>',1,17,'2013-10-21 18:35:16',576,'','2014-01-07 20:44:47',576,0,'0000-00-00 00:00:00','2013-10-21 18:35:16','0000-00-00 00:00:00','{\"image_intro\":\"images\\/conteudo\\/imagem-conteudo-inicio-apresentacao-direta.png\",\"float_intro\":\"\",\"image_intro_alt\":\"Legenda da foto (arquivo .JPG) deve ter at\\u00e9 60 caracteres, preferencialmente\",\"image_intro_caption\":\"por Nome do Autor\",\"image_fulltext\":\"images\\/conteudo\\/imagem-conteudo-vertical-thumb.png\",\"float_fulltext\":\"right\",\"image_fulltext_alt\":\"Legenda da foto (arquivo .JPG) deve ter at\\u00e9 60 caracteres, preferencialmente\",\"image_fulltext_caption\":\"por Nome do Autor\"}','{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_tags\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',4,8,'Notícia, Texto de marcação, Portal Padrão','',1,1,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',0,'*','Chapéu da editoria'),
@@ -720,7 +716,7 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_content` VALUES  (15,59,'Serviço 
  (23,76,'Texto 4 - Título da notícia entre 35 e 90 caracteres',0x746578746F2D342D746974756C6F2D64612D6E6F74696369612D656E7472652D33352D652D39302D63617261637465726573,'<p>Subtítulo do texto 1. Se em uma linha, usar 90 caracteres. Se em duas linhas usar 190 caracteres</p>\r\n','\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<blockquote>\r\n<p>Use o estilo \"Block Quote\", localizado nas opções do bloco da matéria, para criar um olho na sua matéria. Não há um limite de caracteres</p>\r\n</blockquote>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><object width=\"640\" height=\"480\" data=\"http://www.youtube-nocookie.com/v/Vj1MpR3iER4?hl=pt_BR&amp;version=3&amp;rel=0\" type=\"application/x-shockwave-flash\"><param name=\"allowFullScreen\" value=\"true\" /><param name=\"allowscriptaccess\" value=\"always\" /><param name=\"src\" value=\"http://www.youtube-nocookie.com/v/Vj1MpR3iER4?hl=pt_BR&amp;version=3&amp;rel=0\" /></object></p>',1,17,'2013-10-21 18:35:16',576,'','2014-01-07 20:53:33',576,0,'0000-00-00 00:00:00','2013-10-21 18:35:16','0000-00-00 00:00:00','{\"image_intro\":\"\",\"float_intro\":\"\",\"image_intro_alt\":\"\",\"image_intro_caption\":\"\",\"image_fulltext\":\"\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"\",\"image_fulltext_caption\":\"\"}','{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_tags\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',13,3,'','',1,8,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',0,'*',''),
  (24,77,'Texto 5 - Título da notícia entre 35 e 90 caracteres',0x746578746F2D352D746974756C6F2D64612D6E6F74696369612D656E7472652D33352D652D39302D63617261637465726573,'<p>Subtítulo do texto 1. Se em uma linha, usar 90 caracteres. Se em duas linhas usar 190 caracteres</p>\r\n','\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<blockquote>\r\n<p>Use o estilo \"Block Quote\", localizado nas opções do bloco da matéria, para criar um olho na sua matéria. Não há um limite de caracteres</p>\r\n</blockquote>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><object width=\"640\" height=\"480\" data=\"http://www.youtube-nocookie.com/v/Vj1MpR3iER4?hl=pt_BR&amp;version=3&amp;rel=0\" type=\"application/x-shockwave-flash\"><param name=\"allowFullScreen\" value=\"true\" /><param name=\"allowscriptaccess\" value=\"always\" /><param name=\"src\" value=\"http://www.youtube-nocookie.com/v/Vj1MpR3iER4?hl=pt_BR&amp;version=3&amp;rel=0\" /></object></p>',1,17,'2013-10-21 18:35:16',576,'','2014-01-07 20:54:32',576,0,'0000-00-00 00:00:00','2013-10-21 18:35:16','0000-00-00 00:00:00','{\"image_intro\":\"\",\"float_intro\":\"\",\"image_intro_alt\":\"\",\"image_intro_caption\":\"\",\"image_fulltext\":\"\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"\",\"image_fulltext_caption\":\"\"}','{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_tags\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',3,2,'','',1,6,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',0,'*',''),
  (25,78,'Texto 2 - Título da notícia entre 35 e 90 caracteres',0x746578746F2D322D746974756C6F2D64612D6E6F74696369612D656E7472652D33352D652D39302D63617261637465726573,'<p>Subtítulo do texto 1. Se em uma linha, usar 90 caracteres. Se em duas linhas usar 190 caracteres</p>\r\n','\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<blockquote>\r\n<p>Use o estilo \"Block Quote\", localizado nas opções do bloco da matéria, para criar um olho na sua matéria. Não há um limite de caracteres</p>\r\n</blockquote>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><object width=\"640\" height=\"480\" data=\"http://www.youtube-nocookie.com/v/Vj1MpR3iER4?hl=pt_BR&amp;version=3&amp;rel=0\" type=\"application/x-shockwave-flash\"><param name=\"allowFullScreen\" value=\"true\" /><param name=\"allowscriptaccess\" value=\"always\" /><param name=\"src\" value=\"http://www.youtube-nocookie.com/v/Vj1MpR3iER4?hl=pt_BR&amp;version=3&amp;rel=0\" /></object></p>',1,17,'2013-10-21 18:35:16',576,'','2014-01-07 20:51:04',576,0,'0000-00-00 00:00:00','2013-10-21 18:35:16','0000-00-00 00:00:00','{\"image_intro\":\"\",\"float_intro\":\"\",\"image_intro_alt\":\"\",\"image_intro_caption\":\"\",\"image_fulltext\":\"\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"\",\"image_fulltext_caption\":\"\"}','{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_tags\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',5,1,'','',1,1,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',0,'*','');
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_content` VALUES  (26,79,'Conheça o novo modelo de plataforma digital do governo federal',0x636F6E686563612D6F2D6E6F766F2D6D6F64656C6F2D64652D706C617461666F726D612D6469676974616C2D646F2D676F7665726E6F2D6665646572616C,'<p style=\"text-align: left;\">Estrutura reúne o que há de mais adequado em soluções digitais de acessibilidade e de divulgação de informações nos mais variados formatos; conheça todos os detalhes deste novo modelo</p>\r\n','\r\n<p style=\"text-align: left;\">Seja bem-vindo!</p>\r\n<blockquote>\r\n<p style=\"text-align: left;\"><a href=\"#\">Acesse os manuais que irão auxiliar na montagem de sites dos órgãos do governo federal</a></p>\r\n</blockquote>\r\n<p style=\"text-align: left;\">Para otimizar a comunicação com o cidadão, foi criada a Identidade Digital de Governo. Esse projeto busca padronizar os portais dos órgãos públicos federais e alinhar as informações com foco no cidadão.</p>\r\n<p style=\"text-align: left;\">Os conteúdos, módulos e funcionalidades foram criados para facilitar o acesso aos serviços oferecidos pelo Governo Federal, assim como possibilitam, por meio de vídeos, infográficos, textos, aplicativos, vídeos, que as notícias sejam facilmente compreendidas.</p>\r\n<p style=\"text-align: left;\">A nova Identidade também garante uma navegação acessível, para pessoas com deficiência, e adota conceito de web responsiva, ou seja, a páginas se adaptam automaticamente e podem ser visualizadas tanto em um computador quanto em smartphones e tablets, garantindo uma visualização mais uniforme.</p>\r\n<p style=\"text-align: left;\">Navegue pelo portal e conheça todas as aplicações possíveis para os mais variados conteúdos, sejam vídeos, imagens, áudios e textos.</p>\r\n<p style=\"text-align: left;\">Bom trabalho!</p>',1,17,'2013-10-23 20:51:50',576,'','2013-12-22 02:43:49',576,0,'0000-00-00 00:00:00','2013-10-23 20:51:50','0000-00-00 00:00:00','{\"image_intro\":\"www.youtube.com\\/v\\/BGzfIhIUF68?version=3&hl=pt_BR&rel=0\",\"float_intro\":\"\",\"image_intro_alt\":\"\",\"image_intro_caption\":\"\",\"image_fulltext\":\"\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"\",\"image_fulltext_caption\":\"\"}','{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_tags\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"0\",\"link_author\":\"\",\"show_create_date\":\"1\",\"show_modify_date\":\"1\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"Saiba mais\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',16,1,'Internet, comunicação','',1,58,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',0,'*','identidade digital de governo'),
+INSERT INTO `#__content` VALUES  (26,79,'Conheça o novo modelo de plataforma digital do governo federal',0x636F6E686563612D6F2D6E6F766F2D6D6F64656C6F2D64652D706C617461666F726D612D6469676974616C2D646F2D676F7665726E6F2D6665646572616C,'<p style=\"text-align: left;\">Estrutura reúne o que há de mais adequado em soluções digitais de acessibilidade e de divulgação de informações nos mais variados formatos; conheça todos os detalhes deste novo modelo</p>\r\n','\r\n<p style=\"text-align: left;\">Seja bem-vindo!</p>\r\n<blockquote>\r\n<p style=\"text-align: left;\"><a href=\"#\">Acesse os manuais que irão auxiliar na montagem de sites dos órgãos do governo federal</a></p>\r\n</blockquote>\r\n<p style=\"text-align: left;\">Para otimizar a comunicação com o cidadão, foi criada a Identidade Digital de Governo. Esse projeto busca padronizar os portais dos órgãos públicos federais e alinhar as informações com foco no cidadão.</p>\r\n<p style=\"text-align: left;\">Os conteúdos, módulos e funcionalidades foram criados para facilitar o acesso aos serviços oferecidos pelo Governo Federal, assim como possibilitam, por meio de vídeos, infográficos, textos, aplicativos, vídeos, que as notícias sejam facilmente compreendidas.</p>\r\n<p style=\"text-align: left;\">A nova Identidade também garante uma navegação acessível, para pessoas com deficiência, e adota conceito de web responsiva, ou seja, a páginas se adaptam automaticamente e podem ser visualizadas tanto em um computador quanto em smartphones e tablets, garantindo uma visualização mais uniforme.</p>\r\n<p style=\"text-align: left;\">Navegue pelo portal e conheça todas as aplicações possíveis para os mais variados conteúdos, sejam vídeos, imagens, áudios e textos.</p>\r\n<p style=\"text-align: left;\">Bom trabalho!</p>',1,17,'2013-10-23 20:51:50',576,'','2013-12-22 02:43:49',576,0,'0000-00-00 00:00:00','2013-10-23 20:51:50','0000-00-00 00:00:00','{\"image_intro\":\"www.youtube.com\\/v\\/BGzfIhIUF68?version=3&hl=pt_BR&rel=0\",\"float_intro\":\"\",\"image_intro_alt\":\"\",\"image_intro_caption\":\"\",\"image_fulltext\":\"\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"\",\"image_fulltext_caption\":\"\"}','{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_tags\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"0\",\"link_author\":\"\",\"show_create_date\":\"1\",\"show_modify_date\":\"1\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"Saiba mais\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',16,1,'Internet, comunicação','',1,58,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',0,'*','identidade digital de governo'),
  (28,88,'Perguntas frequentes',0x70657267756E7461732D6672657175656E746573,'<p>Nesta seção são divulgadas as perguntas frequentes sobre o (a) [nome do órgão ou entidade] e ações no âmbito de sua competência.</p>\r\n','\r\n<p>Caso o órgão ou entidade disponibilize uma seção de “Perguntas frequentes” em seu portal eletrônico, deverá remeter para o link que dá acesso a tal seção. O órgão/entidade que não divulga “Perguntas frequentes” deverá fazê-la e mantê-la constantemente atualizada, disponibilizando proativamente as respostas às perguntas usualmente formuladas pelos cidadãos.</p>\r\n<p>A <a class=\"external-link\" title=\"\" href=\"http://www.planalto.gov.br/ccivIl_03/Resolu%C3%A7%C3%A3o/2002/RES07-02web.htm\" target=\"_self\">Resolução nº 7, de 29 de julho de 2002</a>, do Comitê Eletrônico de Governo Eletrônico e os Padrões Web em Governo Eletrônico (Guia de administração do MPOG 8) orientam acerca de criação de seção dedicada às respostas às perguntas mais frequentes da sociedade.</p>',1,28,'2013-10-23 21:35:08',576,'','2013-12-21 14:53:08',576,0,'0000-00-00 00:00:00','2013-10-23 21:35:08','0000-00-00 00:00:00','{\"image_intro\":\"\",\"float_intro\":\"\",\"image_intro_alt\":\"\",\"image_intro_caption\":\"\",\"image_fulltext\":\"\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"\",\"image_fulltext_caption\":\"\"}','{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_tags\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',4,0,'Internet, Comunicação, LAI','',1,12,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',0,'*',''),
  (29,89,'Contato',0x636F6E7461746F,'<p>Área reúne as formas de contato entre o visitante do portal e o órgão</p>\r\n','\r\n<p>Esta seção do portal deverá fornecer ao internauta todas as formas de contato disponíveis para ele interagir com o órgão.</p>\r\n<p>Aqui devem ser publicados os telefones de contato, a ouvidoria, o endereço físico e eletrônico do órgão, além do formulário de contato ( <a class=\"internal-link\" href=\"index.php/contato/formulario-de-contato/\">Página com exemplo de formulário para contato</a> ).</p>',1,2,'2013-10-23 21:36:17',576,'','2013-12-21 15:01:48',576,0,'0000-00-00 00:00:00','2013-10-23 21:36:17','0000-00-00 00:00:00','{\"image_intro\":\"\",\"float_intro\":\"\",\"image_intro_alt\":\"\",\"image_intro_caption\":\"\",\"image_fulltext\":\"\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"\",\"image_fulltext_caption\":\"\"}','{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_tags\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',3,1,'Internet, Comunicação','',1,17,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',0,'*',''),
  (30,90,'Servicos da Denominação',0x7365727669636F732D64612D64656E6F6D696E6163616F,'<p>Página agrega todos os links de acessos a sistemas do órgão.</p>\r\n','\r\n<p>Esta área deverá reunir os links de acesso a sistemas que um órgão ou entidade possua e que disponibilize para os seus visitantes. A página agregadora de conteúdo tem como objetivo facilitar a navegação para o internauta e por isso deverá listar os acessos a sistema com imagens, um breve descritivo sobre o que será encontrado na página em questão e o respectivo link para acesso.</p>\r\n<p>No exemplo abaixo, estão listados alguns sistemas do Ministério da Educação espalhados por todo o site da insituição. Nesta proposta, todos eles seriam publicados em uma única área:</p>',1,2,'2013-10-23 21:37:10',576,'','2013-12-21 17:09:29',576,0,'0000-00-00 00:00:00','2013-10-23 21:37:10','0000-00-00 00:00:00','{\"image_intro\":\"\",\"float_intro\":\"\",\"image_intro_alt\":\"\",\"image_intro_caption\":\"\",\"image_fulltext\":\"\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"\",\"image_fulltext_caption\":\"\"}','{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_tags\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',2,2,'','',1,9,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',0,'*',''),
@@ -739,7 +735,7 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_content` VALUES  (26,79,'Conheça 
  (44,143,'Release 1: Título do release entre 35 e 90 caracteres',0x72656C656173652D312D746974756C6F2D646F2D72656C656173652D656E7472652D33352D652D39302D63617261637465726573,'<p>Subtítulo do texto 1. Se em uma linha, usar 90 caracteres. Se em duas linhas usar 190 caracteres</p>\r\n','\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<blockquote>\r\n<p>Use o estilo \"Block Quote\", localizado nas opções do bloco da matéria, para criar um olho na sua matéria. Não há um limite de caracteres</p>\r\n</blockquote>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><object data=\"http://www.youtube-nocookie.com/v/Vj1MpR3iER4?hl=pt_BR&amp;version=3&amp;rel=0\" type=\"application/x-shockwave-flash\" width=\"640\" height=\"480\"><param name=\"allowFullScreen\" value=\"true\" /><param name=\"allowscriptaccess\" value=\"always\" /><param name=\"src\" value=\"http://www.youtube-nocookie.com/v/Vj1MpR3iER4?hl=pt_BR&amp;version=3&amp;rel=0\" /></object></p>',1,39,'2013-12-21 21:00:44',576,'','2013-12-21 21:01:56',576,0,'0000-00-00 00:00:00','2013-12-21 21:00:44','0000-00-00 00:00:00','{\"image_intro\":\"\",\"float_intro\":\"\",\"image_intro_alt\":\"\",\"image_intro_caption\":\"\",\"image_fulltext\":\"\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"\",\"image_fulltext_caption\":\"\"}','{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_tags\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',2,0,'','',1,1,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',0,'*','Chapéu da editoria'),
  (45,144,'Release 2: Título do release entre 35 e 90 caracteres',0x72656C656173652D322D746974756C6F2D646F2D72656C656173652D656E7472652D33352D652D39302D636172616374657265732D32,'<p>Subtítulo do texto 1. Se em uma linha, usar 90 caracteres. Se em duas linhas usar 190 caracteres</p>\r\n','\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<blockquote>\r\n<p>Use o estilo \"Block Quote\", localizado nas opções do bloco da matéria, para criar um olho na sua matéria. Não há um limite de caracteres</p>\r\n</blockquote>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><object data=\"http://www.youtube-nocookie.com/v/Vj1MpR3iER4?hl=pt_BR&amp;version=3&amp;rel=0\" type=\"application/x-shockwave-flash\" width=\"640\" height=\"480\"><param name=\"allowFullScreen\" value=\"true\" /><param name=\"allowscriptaccess\" value=\"always\" /><param name=\"src\" value=\"http://www.youtube-nocookie.com/v/Vj1MpR3iER4?hl=pt_BR&amp;version=3&amp;rel=0\" /></object></p>',1,39,'2013-12-21 21:00:44',576,'','2013-12-21 21:03:41',576,0,'0000-00-00 00:00:00','2013-12-21 21:00:44','0000-00-00 00:00:00','{\"image_intro\":\"\",\"float_intro\":\"\",\"image_intro_alt\":\"\",\"image_intro_caption\":\"\",\"image_fulltext\":\"\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"\",\"image_fulltext_caption\":\"\"}','{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_tags\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',3,0,'','',1,0,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',0,'*','Chapéu da editoria'),
  (46,145,'Release 3: Título do release entre 35 e 90 caracteres',0x72656C656173652D332D746974756C6F2D646F2D72656C656173652D656E7472652D33352D652D39302D63617261637465726573,'<p>Subtítulo do texto 1. Se em uma linha, usar 90 caracteres. Se em duas linhas usar 190 caracteres</p>\r\n','\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<blockquote>\r\n<p>Use o estilo \"Block Quote\", localizado nas opções do bloco da matéria, para criar um olho na sua matéria. Não há um limite de caracteres</p>\r\n</blockquote>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><object data=\"http://www.youtube-nocookie.com/v/Vj1MpR3iER4?hl=pt_BR&amp;version=3&amp;rel=0\" type=\"application/x-shockwave-flash\" width=\"640\" height=\"480\"><param name=\"allowFullScreen\" value=\"true\" /><param name=\"allowscriptaccess\" value=\"always\" /><param name=\"src\" value=\"http://www.youtube-nocookie.com/v/Vj1MpR3iER4?hl=pt_BR&amp;version=3&amp;rel=0\" /></object></p>',1,39,'2013-12-21 21:00:44',576,'','2013-12-21 21:10:44',576,0,'0000-00-00 00:00:00','2013-12-21 21:00:44','0000-00-00 00:00:00','{\"image_intro\":\"\",\"float_intro\":\"\",\"image_intro_alt\":\"\",\"image_intro_caption\":\"\",\"image_fulltext\":\"\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"\",\"image_fulltext_caption\":\"\"}','{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_tags\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',3,0,'','',1,0,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',0,'*','Chapéu da editoria');
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_content` VALUES  (47,146,'Release 4: Título do release entre 35 e 90 caracteres',0x72656C656173652D342D746974756C6F2D646F2D72656C656173652D656E7472652D33352D652D39302D63617261637465726573,'<p>Subtítulo do texto 1. Se em uma linha, usar 90 caracteres. Se em duas linhas usar 190 caracteres</p>\r\n','\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<blockquote>\r\n<p>Use o estilo \"Block Quote\", localizado nas opções do bloco da matéria, para criar um olho na sua matéria. Não há um limite de caracteres</p>\r\n</blockquote>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><object data=\"http://www.youtube-nocookie.com/v/Vj1MpR3iER4?hl=pt_BR&amp;version=3&amp;rel=0\" type=\"application/x-shockwave-flash\" width=\"640\" height=\"480\"><param name=\"allowFullScreen\" value=\"true\" /><param name=\"allowscriptaccess\" value=\"always\" /><param name=\"src\" value=\"http://www.youtube-nocookie.com/v/Vj1MpR3iER4?hl=pt_BR&amp;version=3&amp;rel=0\" /></object></p>',1,39,'2013-12-21 21:00:44',576,'','2013-12-21 21:11:39',576,0,'0000-00-00 00:00:00','2013-12-21 21:00:44','0000-00-00 00:00:00','{\"image_intro\":\"\",\"float_intro\":\"\",\"image_intro_alt\":\"\",\"image_intro_caption\":\"\",\"image_fulltext\":\"\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"\",\"image_fulltext_caption\":\"\"}','{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_tags\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',4,0,'','',1,0,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',0,'*','Chapéu da editoria'),
+INSERT INTO `#__content` VALUES  (47,146,'Release 4: Título do release entre 35 e 90 caracteres',0x72656C656173652D342D746974756C6F2D646F2D72656C656173652D656E7472652D33352D652D39302D63617261637465726573,'<p>Subtítulo do texto 1. Se em uma linha, usar 90 caracteres. Se em duas linhas usar 190 caracteres</p>\r\n','\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<blockquote>\r\n<p>Use o estilo \"Block Quote\", localizado nas opções do bloco da matéria, para criar um olho na sua matéria. Não há um limite de caracteres</p>\r\n</blockquote>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><object data=\"http://www.youtube-nocookie.com/v/Vj1MpR3iER4?hl=pt_BR&amp;version=3&amp;rel=0\" type=\"application/x-shockwave-flash\" width=\"640\" height=\"480\"><param name=\"allowFullScreen\" value=\"true\" /><param name=\"allowscriptaccess\" value=\"always\" /><param name=\"src\" value=\"http://www.youtube-nocookie.com/v/Vj1MpR3iER4?hl=pt_BR&amp;version=3&amp;rel=0\" /></object></p>',1,39,'2013-12-21 21:00:44',576,'','2013-12-21 21:11:39',576,0,'0000-00-00 00:00:00','2013-12-21 21:00:44','0000-00-00 00:00:00','{\"image_intro\":\"\",\"float_intro\":\"\",\"image_intro_alt\":\"\",\"image_intro_caption\":\"\",\"image_fulltext\":\"\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"\",\"image_fulltext_caption\":\"\"}','{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_tags\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',4,0,'','',1,0,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',0,'*','Chapéu da editoria'),
  (48,147,'Release 5: Título do release entre 35 e 90 caracteres',0x72656C656173652D352D746974756C6F2D646F2D72656C656173652D656E7472652D33352D652D39302D63617261637465726573,'<p>Subtítulo do texto 1. Se em uma linha, usar 90 caracteres. Se em duas linhas usar 190 caracteres</p>\r\n','\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<blockquote>\r\n<p>Use o estilo \"Block Quote\", localizado nas opções do bloco da matéria, para criar um olho na sua matéria. Não há um limite de caracteres</p>\r\n</blockquote>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><object data=\"http://www.youtube-nocookie.com/v/Vj1MpR3iER4?hl=pt_BR&amp;version=3&amp;rel=0\" type=\"application/x-shockwave-flash\" width=\"640\" height=\"480\"><param name=\"allowFullScreen\" value=\"true\" /><param name=\"allowscriptaccess\" value=\"always\" /><param name=\"src\" value=\"http://www.youtube-nocookie.com/v/Vj1MpR3iER4?hl=pt_BR&amp;version=3&amp;rel=0\" /></object></p>',1,39,'2013-12-21 21:00:44',576,'','2013-12-21 21:12:09',576,0,'0000-00-00 00:00:00','2013-12-21 21:00:44','0000-00-00 00:00:00','{\"image_intro\":\"\",\"float_intro\":\"\",\"image_intro_alt\":\"\",\"image_intro_caption\":\"\",\"image_fulltext\":\"\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"\",\"image_fulltext_caption\":\"\"}','{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_tags\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',4,0,'','',1,0,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',0,'*','Chapéu da editoria'),
  (49,173,'O que é RSS?',0x6F2D7175652D652D727373,'<p>O RSS (Really Simple Syndication) é um formato de distribuição de informações em tempo real pela internet. Por esse sistema, o internauta não precisa abrir o navegador ou fazer busca de notícias, fotos ou vídeos em diferentes sites. Todo o conteúdo desejado vai até você automaticamente por um código de RSS. Basta escolher qual conteúdo quer receber.</p>\r\n<p>Há duas formas de usar RSS: diretamente de seu navegador ou por um programa de leitura.</p>\r\n<p>Se você preferir acessar a partir do próprio navegador, é preciso copiar e colar o link do RSS na barra de endereço para ser redirecionado para uma tela que lhe dará as opções e instruções de como ler o código. Existem também aplicativos e complementos dos navegadores que fazem esta função.</p>\r\n<p>A outra maneira é instalando um leitor de RSS (ou também conhecido RSS Reader) no seu computador. Existem inúmeros programas disponíveis para teste ou download gratuito na internet (como por exemplo o FeedReader). Faça a sua pesquisa e escolha aquele que melhor atenda a sua necessidade.</p>','',1,2,'2013-12-22 18:03:02',576,'','0000-00-00 00:00:00',0,0,'0000-00-00 00:00:00','2013-12-22 18:03:02','0000-00-00 00:00:00','{\"image_intro\":\"\",\"float_intro\":\"\",\"image_intro_alt\":\"\",\"image_intro_caption\":\"\",\"image_fulltext\":\"\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"\",\"image_fulltext_caption\":\"\"}','{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_tags\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',1,0,'','',1,0,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',0,'*',''),
  (50,176,'Título da notícia em 3 linhas - até 50 caracteres',0x746974756C6F2D64612D6E6F74696369612D656D2D332D6C696E6861732D6174652D35302D63617261637465726573,'<p>Subtítulo em quatro linhas com até 110 caracteres. Subtítulo em quatro linhas com até 110 caracteres.</p>\r\n','\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<blockquote>Use o estilo citação, localizado no campo corpo do texto, para criar um olho na sua matéria. Não há um limite de caracteres</blockquote>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>',1,9,'2013-12-24 22:02:50',576,'','2013-12-24 22:06:56',576,0,'0000-00-00 00:00:00','2013-12-24 22:02:50','0000-00-00 00:00:00','{\"image_intro\":\"images\\/conteudo\\/imagem-conteudo-200x130-a.jpg\",\"float_intro\":\"\",\"image_intro_alt\":\"Foto no tamanho 200 pixels de largura por 130 pixels de altura\",\"image_intro_caption\":\"\",\"image_fulltext\":\"images\\/conteudo\\/thumb-imagem-conteudo.jpg\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"Legenda da foto (arquivo .JPG) deve ter at\\u00e9 60 caracteres, preferencialmente\",\"image_fulltext_caption\":\"Cr\\u00e9dito da imagem\"}','{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_tags\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',2,2,'','',1,2,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',0,'*','Chapéu'),
@@ -750,7 +746,7 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_content` VALUES  (47,146,'Release 
  (55,183,'Pagina 2: titulo do texto institucional',0x706167696E612D322D746974756C6F2D646F2D746578746F2D696E737469747563696F6E616C2D32,'<p>Espaço para inserir o subtítulo do texto institucional. Se em uma linha, usar 90 caracteres. Se em duas linhas usar 190 caracteres.</p>\r\n','\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<h3>Segundo subtítulo em negrito</h3>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<h3>Terceiro subtítulo em negrito</h3>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><a href=\"http://www.joomla.org\" target=\"_blank\">Link externo 1</a><br />Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><a href=\"http://www.joomla.org\" target=\"_blank\">Link externo 2</a><br />Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><a href=\"http://www.joomla.org\" target=\"_blank\">Link externo 3</a><br />Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><a href=\"http://www.joomla.org\" target=\"_blank\">Link externo 4</a><br />Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><a href=\"http://www.joomla.org\" target=\"_blank\">Link externo 5</a><br />Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p> </p>',1,43,'2013-12-24 22:20:53',576,'','0000-00-00 00:00:00',0,0,'0000-00-00 00:00:00','2013-12-24 22:20:53','0000-00-00 00:00:00','{\"image_intro\":\"\",\"float_intro\":\"\",\"image_intro_alt\":\"\",\"image_intro_caption\":\"\",\"image_fulltext\":\"\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"\",\"image_fulltext_caption\":\"\"}','{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_tags\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',1,1,'','',1,50,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',1,'*',''),
  (56,184,'Pagina 3: titulo do texto institucional',0x706167696E612D332D746974756C6F2D646F2D746578746F2D696E737469747563696F6E616C2D33,'<p>Espaço para inserir o subtítulo do texto institucional. Se em uma linha, usar 90 caracteres. Se em duas linhas usar 190 caracteres.</p>\r\n','\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<h3>Segundo subtítulo em negrito</h3>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<h3>Terceiro subtítulo em negrito</h3>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><a href=\"http://www.joomla.org\" target=\"_blank\">Link externo 1</a><br />Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><a href=\"http://www.joomla.org\" target=\"_blank\">Link externo 2</a><br />Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><a href=\"http://www.joomla.org\" target=\"_blank\">Link externo 3</a><br />Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><a href=\"http://www.joomla.org\" target=\"_blank\">Link externo 4</a><br />Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><a href=\"http://www.joomla.org\" target=\"_blank\">Link externo 5</a><br />Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p> </p>',1,43,'2013-12-24 22:22:23',576,'','0000-00-00 00:00:00',0,0,'0000-00-00 00:00:00','2013-12-24 22:22:23','0000-00-00 00:00:00','{\"image_intro\":\"\",\"float_intro\":\"\",\"image_intro_alt\":\"\",\"image_intro_caption\":\"\",\"image_fulltext\":\"\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"\",\"image_fulltext_caption\":\"\"}','{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_tags\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',1,0,'','',1,4,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',1,'*',''),
  (57,192,'Editoria B - Texto 02',0x656469746F7269612D622D746578746F2D32,'<p>Subtítulo em três linhas com até 110 caracteres. Subtítulo em três linhas com até 110 caracteres.</p>\r\n','\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<blockquote>Use o estilo citação, localizado no campo corpo do texto, para criar um olho na sua matéria. Não há um limite de caracteres</blockquote>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>',1,14,'2013-10-21 17:37:58',576,'','2014-01-02 13:33:11',576,0,'0000-00-00 00:00:00','2013-10-21 17:37:58','0000-00-00 00:00:00','{\"image_intro\":\"images\\/imagens_menu\\/conteudos_de_marcacao\\/editoria_b\\/texto-2-titulo-da-noticia-entre-35-e-90-caracteres.jpeg\",\"float_intro\":\"\",\"image_intro_alt\":\"Foto no tamanho 230 pixels de largura por 136 pixels de altura\",\"image_intro_caption\":\"\",\"image_fulltext\":\"images\\/conteudo\\/thumb-imagem-conteudo.jpg\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"Legenda da foto (arquivo .JPG) deve ter at\\u00e9 60 caracteres, preferencialmente\",\"image_fulltext_caption\":\"Cr\\u00e9dito da imagem\"}','{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_tags\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',23,0,'','',1,31,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',1,'*','Chapéu');
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_content` VALUES  (58,193,'Editoria B - Texto 03',0x656469746F7269612D622D746578746F2D33,'<p>Subtítulo em três linhas com até 110 caracteres. Subtítulo em três linhas com até 110 caracteres.</p>\r\n','\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<blockquote>Use o estilo citação, localizado no campo corpo do texto, para criar um olho na sua matéria. Não há um limite de caracteres</blockquote>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>',1,14,'2013-10-21 17:37:58',576,'','2014-01-02 13:34:05',576,0,'0000-00-00 00:00:00','2013-10-21 17:37:58','0000-00-00 00:00:00','{\"image_intro\":\"images\\/imagens_menu\\/conteudos_de_marcacao\\/editoria_b\\/texto-3-titulo-da-noticia-entre-35-e-90-caracteres.jpeg\",\"float_intro\":\"\",\"image_intro_alt\":\"Foto no tamanho 230 pixels de largura por 136 pixels de altura\",\"image_intro_caption\":\"\",\"image_fulltext\":\"images\\/conteudo\\/thumb-imagem-conteudo.jpg\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"Legenda da foto (arquivo .JPG) deve ter at\\u00e9 60 caracteres, preferencialmente\",\"image_fulltext_caption\":\"Cr\\u00e9dito da imagem\"}','{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_tags\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',24,0,'','',1,31,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',1,'*','Chapéu'),
+INSERT INTO `#__content` VALUES  (58,193,'Editoria B - Texto 03',0x656469746F7269612D622D746578746F2D33,'<p>Subtítulo em três linhas com até 110 caracteres. Subtítulo em três linhas com até 110 caracteres.</p>\r\n','\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<blockquote>Use o estilo citação, localizado no campo corpo do texto, para criar um olho na sua matéria. Não há um limite de caracteres</blockquote>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>',1,14,'2013-10-21 17:37:58',576,'','2014-01-02 13:34:05',576,0,'0000-00-00 00:00:00','2013-10-21 17:37:58','0000-00-00 00:00:00','{\"image_intro\":\"images\\/imagens_menu\\/conteudos_de_marcacao\\/editoria_b\\/texto-3-titulo-da-noticia-entre-35-e-90-caracteres.jpeg\",\"float_intro\":\"\",\"image_intro_alt\":\"Foto no tamanho 230 pixels de largura por 136 pixels de altura\",\"image_intro_caption\":\"\",\"image_fulltext\":\"images\\/conteudo\\/thumb-imagem-conteudo.jpg\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"Legenda da foto (arquivo .JPG) deve ter at\\u00e9 60 caracteres, preferencialmente\",\"image_fulltext_caption\":\"Cr\\u00e9dito da imagem\"}','{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_tags\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',24,0,'','',1,31,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',1,'*','Chapéu'),
  (59,194,'Editoria B - Texto 04',0x656469746F7269612D622D746578746F2D34,'<p>Subtítulo em três linhas com até 110 caracteres. Subtítulo em três linhas com até 110 caracteres.</p>\r\n','\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<blockquote>Use o estilo citação, localizado no campo corpo do texto, para criar um olho na sua matéria. Não há um limite de caracteres</blockquote>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>',1,14,'2013-10-21 17:37:58',576,'','2014-01-02 13:35:27',576,0,'0000-00-00 00:00:00','2013-10-21 17:37:58','0000-00-00 00:00:00','{\"image_intro\":\"images\\/imagens_menu\\/conteudos_de_marcacao\\/editoria_b\\/texto-1-titulo-da-noticia-entre-35-e-90-caracteres.jpeg\",\"float_intro\":\"\",\"image_intro_alt\":\"Foto no tamanho 230 pixels de largura por 136 pixels de altura\",\"image_intro_caption\":\"\",\"image_fulltext\":\"images\\/conteudo\\/thumb-imagem-conteudo.jpg\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"Legenda da foto (arquivo .JPG) deve ter at\\u00e9 60 caracteres, preferencialmente\",\"image_fulltext_caption\":\"Cr\\u00e9dito da imagem\"}','{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_tags\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',23,0,'','',1,31,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',0,'*','Chapéu'),
  (60,195,'Editoria B - Texto 05',0x656469746F7269612D622D746578746F2D35,'<p>Subtítulo em três linhas com até 110 caracteres. Subtítulo em três linhas com até 110 caracteres.</p>\r\n','\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<blockquote>Use o estilo citação, localizado no campo corpo do texto, para criar um olho na sua matéria. Não há um limite de caracteres</blockquote>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>',1,14,'2013-10-21 17:37:58',576,'','2014-01-02 13:35:37',576,0,'0000-00-00 00:00:00','2013-10-21 17:37:58','0000-00-00 00:00:00','{\"image_intro\":\"images\\/imagens_menu\\/conteudos_de_marcacao\\/editoria_b\\/texto-2-titulo-da-noticia-entre-35-e-90-caracteres.jpeg\",\"float_intro\":\"\",\"image_intro_alt\":\"Foto no tamanho 230 pixels de largura por 136 pixels de altura\",\"image_intro_caption\":\"\",\"image_fulltext\":\"images\\/conteudo\\/thumb-imagem-conteudo.jpg\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"Legenda da foto (arquivo .JPG) deve ter at\\u00e9 60 caracteres, preferencialmente\",\"image_fulltext_caption\":\"Cr\\u00e9dito da imagem\"}','{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_tags\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',24,0,'','',1,31,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',0,'*','Chapéu'),
  (61,196,'Editoria B - Texto 06',0x656469746F7269612D622D746578746F2D36,'<p>Subtítulo em três linhas com até 110 caracteres. Subtítulo em três linhas com até 110 caracteres.</p>\r\n','\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<blockquote>Use o estilo citação, localizado no campo corpo do texto, para criar um olho na sua matéria. Não há um limite de caracteres</blockquote>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p><strong>Subtítulo em negrito</strong></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>',1,14,'2013-10-21 17:37:58',576,'','2014-01-02 13:35:47',576,0,'0000-00-00 00:00:00','2013-10-21 17:37:58','0000-00-00 00:00:00','{\"image_intro\":\"images\\/imagens_menu\\/conteudos_de_marcacao\\/editoria_b\\/texto-3-titulo-da-noticia-entre-35-e-90-caracteres.jpeg\",\"float_intro\":\"\",\"image_intro_alt\":\"Foto no tamanho 230 pixels de largura por 136 pixels de altura\",\"image_intro_caption\":\"\",\"image_fulltext\":\"images\\/conteudo\\/thumb-imagem-conteudo.jpg\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"Legenda da foto (arquivo .JPG) deve ter at\\u00e9 60 caracteres, preferencialmente\",\"image_fulltext_caption\":\"Cr\\u00e9dito da imagem\"}','{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_tags\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',25,0,'','',1,31,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',0,'*','Chapéu'),
@@ -763,41 +759,41 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_content` VALUES  (58,193,'Editoria
  (68,220,'Imagem 4: título com até 45 caracteres',0x696D6167656D2D342D746974756C6F2D636F6D2D6174652D34352D63617261637465726573,'<p>Espaço para incluir a legenda/descrição da imagem</p>','',1,44,'2013-11-03 13:14:39',576,'','2013-11-03 13:16:54',576,0,'0000-00-00 00:00:00','2013-11-03 13:14:39','0000-00-00 00:00:00','{\"image_intro\":\"images\\/galeria_em_artigos\\/image04_peq.jpg\",\"float_intro\":\"\",\"image_intro_alt\":\"\",\"image_intro_caption\":\"Nome do autor da imagem\",\"image_fulltext\":\"images\\/galeria_em_artigos\\/image04_grd.png\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"\",\"image_fulltext_caption\":\"Nome do autor da imagem\"}','{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_intro\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',2,0,'','',1,1,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',0,'*',''),
  (69,221,'SEM Imagem: título com até 45 caracteres',0x73656D2D696D6167656D2D746974756C6F2D636F6D2D6174652D34352D63617261637465726573,'<p>Teste de item sem imagem. Espaço para incluir a legenda/descrição da imagem</p>','',1,44,'2013-11-03 13:14:39',576,'','2013-11-03 13:19:07',576,0,'0000-00-00 00:00:00','2013-11-03 13:14:39','0000-00-00 00:00:00','{\"image_intro\":\"\",\"float_intro\":\"\",\"image_intro_alt\":\"\",\"image_intro_caption\":\"Nome do autor da imagem\",\"image_fulltext\":\"\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"\",\"image_fulltext_caption\":\"Nome do autor da imagem\"}','{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}','{\"show_title\":\"\",\"link_titles\":\"\",\"show_intro\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_layout\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}',4,0,'','',1,0,'{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}',0,'*','');
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_content` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__content` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_content_frontpage`
+-- Definition of table `#__content_frontpage`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_content_frontpage`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_content_frontpage` (
+DROP TABLE IF EXISTS `#__content_frontpage`;
+CREATE TABLE  `#__content_frontpage` (
   `content_id` int(11) NOT NULL DEFAULT '0',
   `ordering` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`content_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_content_frontpage`
+-- Dumping data for table `#__content_frontpage`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_content_frontpage` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_content_frontpage` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_content_frontpage` VALUES  (5,3),
+/*!40000 ALTER TABLE `#__content_frontpage` DISABLE KEYS */;
+LOCK TABLES `#__content_frontpage` WRITE;
+INSERT INTO `#__content_frontpage` VALUES  (5,3),
  (55,5),
  (56,4),
  (57,2),
  (58,1);
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_content_frontpage` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__content_frontpage` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_content_rating`
+-- Definition of table `#__content_rating`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_content_rating`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_content_rating` (
+DROP TABLE IF EXISTS `#__content_rating`;
+CREATE TABLE  `#__content_rating` (
   `content_id` int(11) NOT NULL DEFAULT '0',
   `rating_sum` int(10) unsigned NOT NULL DEFAULT '0',
   `rating_count` int(10) unsigned NOT NULL DEFAULT '0',
@@ -806,21 +802,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_content_rating` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_content_rating`
+-- Dumping data for table `#__content_rating`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_content_rating` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_content_rating` WRITE;
+/*!40000 ALTER TABLE `#__content_rating` DISABLE KEYS */;
+LOCK TABLES `#__content_rating` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_content_rating` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__content_rating` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_content_types`
+-- Definition of table `#__content_types`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_content_types`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_content_types` (
+DROP TABLE IF EXISTS `#__content_types`;
+CREATE TABLE  `#__content_types` (
   `type_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `type_title` varchar(255) NOT NULL DEFAULT '',
   `type_alias` varchar(255) NOT NULL DEFAULT '',
@@ -834,12 +830,12 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_content_types` (
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_content_types`
+-- Dumping data for table `#__content_types`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_content_types` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_content_types` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_content_types` VALUES  (1,'Article','com_content.article','{\"special\":{\"dbtable\":\"#__content\",\"key\":\"id\",\"type\":\"Content\",\"prefix\":\"JTable\",\"config\":\"array()\"},\"common\":{\"dbtable\":\"#__ucm_content\",\"key\":\"ucm_id\",\"type\":\"Corecontent\",\"prefix\":\"JTable\",\"config\":\"array()\"}}','','{\"common\":{\"core_content_item_id\":\"id\",\"core_title\":\"title\",\"core_state\":\"state\",\"core_alias\":\"alias\",\"core_created_time\":\"created\",\"core_modified_time\":\"modified\",\"core_body\":\"introtext\", \"core_hits\":\"hits\",\"core_publish_up\":\"publish_up\",\"core_publish_down\":\"publish_down\",\"core_access\":\"access\", \"core_params\":\"attribs\", \"core_featured\":\"featured\", \"core_metadata\":\"metadata\", \"core_language\":\"language\", \"core_images\":\"images\", \"core_urls\":\"urls\", \"core_version\":\"version\", \"core_ordering\":\"ordering\", \"core_metakey\":\"metakey\", \"core_metadesc\":\"metadesc\", \"core_catid\":\"catid\", \"core_xreference\":\"xreference\", \"asset_id\":\"asset_id\"}, \"special\": {\"fulltext\":\"fulltext\"}}','ContentHelperRoute::getArticleRoute','{\"formFile\":\"administrator\\/components\\/com_content\\/models\\/forms\\/article.xml\", \"hideFields\":[\"asset_id\",\"checked_out\",\"checked_out_time\",\"version\"],\"ignoreChanges\":[\"modified_by\", \"modified\", \"checked_out\", \"checked_out_time\", \"version\", \"hits\"],\"convertToInt\":[\"publish_up\", \"publish_down\", \"featured\", \"ordering\"],\"displayLookup\":[{\"sourceColumn\":\"catid\",\"targetTable\":\"#__categories\",\"targetColumn\":\"id\",\"displayColumn\":\"title\"},{\"sourceColumn\":\"created_by\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"},{\"sourceColumn\":\"access\",\"targetTable\":\"#__viewlevels\",\"targetColumn\":\"id\",\"displayColumn\":\"title\"},{\"sourceColumn\":\"modified_by\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"} ]}'),
+/*!40000 ALTER TABLE `#__content_types` DISABLE KEYS */;
+LOCK TABLES `#__content_types` WRITE;
+INSERT INTO `#__content_types` VALUES  (1,'Article','com_content.article','{\"special\":{\"dbtable\":\"#__content\",\"key\":\"id\",\"type\":\"Content\",\"prefix\":\"JTable\",\"config\":\"array()\"},\"common\":{\"dbtable\":\"#__ucm_content\",\"key\":\"ucm_id\",\"type\":\"Corecontent\",\"prefix\":\"JTable\",\"config\":\"array()\"}}','','{\"common\":{\"core_content_item_id\":\"id\",\"core_title\":\"title\",\"core_state\":\"state\",\"core_alias\":\"alias\",\"core_created_time\":\"created\",\"core_modified_time\":\"modified\",\"core_body\":\"introtext\", \"core_hits\":\"hits\",\"core_publish_up\":\"publish_up\",\"core_publish_down\":\"publish_down\",\"core_access\":\"access\", \"core_params\":\"attribs\", \"core_featured\":\"featured\", \"core_metadata\":\"metadata\", \"core_language\":\"language\", \"core_images\":\"images\", \"core_urls\":\"urls\", \"core_version\":\"version\", \"core_ordering\":\"ordering\", \"core_metakey\":\"metakey\", \"core_metadesc\":\"metadesc\", \"core_catid\":\"catid\", \"core_xreference\":\"xreference\", \"asset_id\":\"asset_id\"}, \"special\": {\"fulltext\":\"fulltext\"}}','ContentHelperRoute::getArticleRoute','{\"formFile\":\"administrator\\/components\\/com_content\\/models\\/forms\\/article.xml\", \"hideFields\":[\"asset_id\",\"checked_out\",\"checked_out_time\",\"version\"],\"ignoreChanges\":[\"modified_by\", \"modified\", \"checked_out\", \"checked_out_time\", \"version\", \"hits\"],\"convertToInt\":[\"publish_up\", \"publish_down\", \"featured\", \"ordering\"],\"displayLookup\":[{\"sourceColumn\":\"catid\",\"targetTable\":\"#__categories\",\"targetColumn\":\"id\",\"displayColumn\":\"title\"},{\"sourceColumn\":\"created_by\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"},{\"sourceColumn\":\"access\",\"targetTable\":\"#__viewlevels\",\"targetColumn\":\"id\",\"displayColumn\":\"title\"},{\"sourceColumn\":\"modified_by\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"} ]}'),
  (2,'Weblink','com_weblinks.weblink','{\"special\":{\"dbtable\":\"#__weblinks\",\"key\":\"id\",\"type\":\"Weblink\",\"prefix\":\"WeblinksTable\",\"config\":\"array()\"},\"common\":{\"dbtable\":\"#__ucm_content\",\"key\":\"ucm_id\",\"type\":\"Corecontent\",\"prefix\":\"JTable\",\"config\":\"array()\"}}','','{\"common\":{\"core_content_item_id\":\"id\",\"core_title\":\"title\",\"core_state\":\"state\",\"core_alias\":\"alias\",\"core_created_time\":\"created\",\"core_modified_time\":\"modified\",\"core_body\":\"description\", \"core_hits\":\"hits\",\"core_publish_up\":\"publish_up\",\"core_publish_down\":\"publish_down\",\"core_access\":\"access\", \"core_params\":\"params\", \"core_featured\":\"featured\", \"core_metadata\":\"metadata\", \"core_language\":\"language\", \"core_images\":\"images\", \"core_urls\":\"url\", \"core_version\":\"version\", \"core_ordering\":\"ordering\", \"core_metakey\":\"metakey\", \"core_metadesc\":\"metadesc\", \"core_catid\":\"catid\", \"core_xreference\":\"xreference\", \"asset_id\":\"null\"}, \"special\": {}}','WeblinksHelperRoute::getWeblinkRoute','{\"formFile\":\"administrator\\/components\\/com_weblinks\\/models\\/forms\\/weblink.xml\", \"hideFields\":[\"asset_id\",\"checked_out\",\"checked_out_time\",\"version\",\"featured\",\"images\"], \"ignoreChanges\":[\"modified_by\", \"modified\", \"checked_out\", \"checked_out_time\", \"version\", \"hits\"], \"convertToInt\":[\"publish_up\", \"publish_down\", \"featured\", \"ordering\"], \"displayLookup\":[{\"sourceColumn\":\"catid\",\"targetTable\":\"#__categories\",\"targetColumn\":\"id\",\"displayColumn\":\"title\"},{\"sourceColumn\":\"created_by\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"},{\"sourceColumn\":\"access\",\"targetTable\":\"#__viewlevels\",\"targetColumn\":\"id\",\"displayColumn\":\"title\"},{\"sourceColumn\":\"modified_by\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"} ]}'),
  (3,'Contact','com_contact.contact','{\"special\":{\"dbtable\":\"#__contact_details\",\"key\":\"id\",\"type\":\"Contact\",\"prefix\":\"ContactTable\",\"config\":\"array()\"},\"common\":{\"dbtable\":\"#__ucm_content\",\"key\":\"ucm_id\",\"type\":\"Corecontent\",\"prefix\":\"JTable\",\"config\":\"array()\"}}','','{\"common\":{\"core_content_item_id\":\"id\",\"core_title\":\"name\",\"core_state\":\"published\",\"core_alias\":\"alias\",\"core_created_time\":\"created\",\"core_modified_time\":\"modified\",\"core_body\":\"address\", \"core_hits\":\"hits\",\"core_publish_up\":\"publish_up\",\"core_publish_down\":\"publish_down\",\"core_access\":\"access\", \"core_params\":\"params\", \"core_featured\":\"featured\", \"core_metadata\":\"metadata\", \"core_language\":\"language\", \"core_images\":\"image\", \"core_urls\":\"webpage\", \"core_version\":\"version\", \"core_ordering\":\"ordering\", \"core_metakey\":\"metakey\", \"core_metadesc\":\"metadesc\", \"core_catid\":\"catid\", \"core_xreference\":\"xreference\", \"asset_id\":\"null\"}, \"special\": {\"con_position\":\"con_position\",\"suburb\":\"suburb\",\"state\":\"state\",\"country\":\"country\",\"postcode\":\"postcode\",\"telephone\":\"telephone\",\"fax\":\"fax\",\"misc\":\"misc\",\"email_to\":\"email_to\",\"default_con\":\"default_con\",\"user_id\":\"user_id\",\"mobile\":\"mobile\",\"sortname1\":\"sortname1\",\"sortname2\":\"sortname2\",\"sortname3\":\"sortname3\"}}','ContactHelperRoute::getContactRoute','{\"formFile\":\"administrator\\/components\\/com_contact\\/models\\/forms\\/contact.xml\",\"hideFields\":[\"default_con\",\"checked_out\",\"checked_out_time\",\"version\",\"xreference\"],\"ignoreChanges\":[\"modified_by\", \"modified\", \"checked_out\", \"checked_out_time\", \"version\", \"hits\"],\"convertToInt\":[\"publish_up\", \"publish_down\", \"featured\", \"ordering\"], \"displayLookup\":[ {\"sourceColumn\":\"created_by\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"},{\"sourceColumn\":\"catid\",\"targetTable\":\"#__categories\",\"targetColumn\":\"id\",\"displayColumn\":\"title\"},{\"sourceColumn\":\"modified_by\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"},{\"sourceColumn\":\"access\",\"targetTable\":\"#__viewlevels\",\"targetColumn\":\"id\",\"displayColumn\":\"title\"},{\"sourceColumn\":\"user_id\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"} ] }'),
  (4,'Newsfeed','com_newsfeeds.newsfeed','{\"special\":{\"dbtable\":\"#__newsfeeds\",\"key\":\"id\",\"type\":\"Newsfeed\",\"prefix\":\"NewsfeedsTable\",\"config\":\"array()\"},\"common\":{\"dbtable\":\"#__ucm_content\",\"key\":\"ucm_id\",\"type\":\"Corecontent\",\"prefix\":\"JTable\",\"config\":\"array()\"}}','','{\"common\":{\"core_content_item_id\":\"id\",\"core_title\":\"name\",\"core_state\":\"published\",\"core_alias\":\"alias\",\"core_created_time\":\"created\",\"core_modified_time\":\"modified\",\"core_body\":\"description\", \"core_hits\":\"hits\",\"core_publish_up\":\"publish_up\",\"core_publish_down\":\"publish_down\",\"core_access\":\"access\", \"core_params\":\"params\", \"core_featured\":\"featured\", \"core_metadata\":\"metadata\", \"core_language\":\"language\", \"core_images\":\"images\", \"core_urls\":\"link\", \"core_version\":\"version\", \"core_ordering\":\"ordering\", \"core_metakey\":\"metakey\", \"core_metadesc\":\"metadesc\", \"core_catid\":\"catid\", \"core_xreference\":\"xreference\", \"asset_id\":\"null\"}, \"special\": {\"numarticles\":\"numarticles\",\"cache_time\":\"cache_time\",\"rtl\":\"rtl\"}}','NewsfeedsHelperRoute::getNewsfeedRoute','{\"formFile\":\"administrator\\/components\\/com_newsfeeds\\/models\\/forms\\/newsfeed.xml\",\"hideFields\":[\"asset_id\",\"checked_out\",\"checked_out_time\",\"version\"],\"ignoreChanges\":[\"modified_by\", \"modified\", \"checked_out\", \"checked_out_time\", \"version\", \"hits\"],\"convertToInt\":[\"publish_up\", \"publish_down\", \"featured\", \"ordering\"],\"displayLookup\":[{\"sourceColumn\":\"catid\",\"targetTable\":\"#__categories\",\"targetColumn\":\"id\",\"displayColumn\":\"title\"},{\"sourceColumn\":\"created_by\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"},{\"sourceColumn\":\"access\",\"targetTable\":\"#__viewlevels\",\"targetColumn\":\"id\",\"displayColumn\":\"title\"},{\"sourceColumn\":\"modified_by\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"}]}'),
@@ -855,15 +851,15 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_content_types` VALUES  (1,'Article
  (14,'User Notes','com_users.note','{\"special\":{\"dbtable\":\"#__user_notes\",\"key\":\"id\",\"type\":\"Note\",\"prefix\":\"UsersTable\"}}','','','','{\"formFile\":\"administrator\\/components\\/com_users\\/models\\/forms\\/note.xml\", \"hideFields\":[\"checked_out\",\"checked_out_time\", \"publish_up\", \"publish_down\"],\"ignoreChanges\":[\"modified_user_id\", \"modified_time\", \"checked_out\", \"checked_out_time\"], \"convertToInt\":[\"publish_up\", \"publish_down\"],\"displayLookup\":[{\"sourceColumn\":\"catid\",\"targetTable\":\"#__categories\",\"targetColumn\":\"id\",\"displayColumn\":\"title\"}, {\"sourceColumn\":\"created_user_id\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"}, {\"sourceColumn\":\"user_id\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"}, {\"sourceColumn\":\"modified_user_id\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"}]}'),
  (15,'User Notes Category','com_users.category','{\"special\":{\"dbtable\":\"#__categories\",\"key\":\"id\",\"type\":\"Category\",\"prefix\":\"JTable\",\"config\":\"array()\"},\"common\":{\"dbtable\":\"#__ucm_content\",\"key\":\"ucm_id\",\"type\":\"Corecontent\",\"prefix\":\"JTable\",\"config\":\"array()\"}}','','{\"common\":{\"core_content_item_id\":\"id\",\"core_title\":\"title\",\"core_state\":\"published\",\"core_alias\":\"alias\",\"core_created_time\":\"created_time\",\"core_modified_time\":\"modified_time\",\"core_body\":\"description\", \"core_hits\":\"hits\",\"core_publish_up\":\"null\",\"core_publish_down\":\"null\",\"core_access\":\"access\", \"core_params\":\"params\", \"core_featured\":\"null\", \"core_metadata\":\"metadata\", \"core_language\":\"language\", \"core_images\":\"null\", \"core_urls\":\"null\", \"core_version\":\"version\", \"core_ordering\":\"null\", \"core_metakey\":\"metakey\", \"core_metadesc\":\"metadesc\", \"core_catid\":\"parent_id\", \"core_xreference\":\"null\", \"asset_id\":\"asset_id\"}, \"special\":{\"parent_id\":\"parent_id\",\"lft\":\"lft\",\"rgt\":\"rgt\",\"level\":\"level\",\"path\":\"path\",\"extension\":\"extension\",\"note\":\"note\"}}','','{\"formFile\":\"administrator\\/components\\/com_categories\\/models\\/forms\\/category.xml\", \"hideFields\":[\"checked_out\",\"checked_out_time\",\"version\",\"lft\",\"rgt\",\"level\",\"path\",\"extension\"], \"ignoreChanges\":[\"modified_user_id\", \"modified_time\", \"checked_out\", \"checked_out_time\", \"version\", \"hits\", \"path\"], \"convertToInt\":[\"publish_up\", \"publish_down\"], \"displayLookup\":[{\"sourceColumn\":\"created_user_id\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"}, {\"sourceColumn\":\"access\",\"targetTable\":\"#__viewlevels\",\"targetColumn\":\"id\",\"displayColumn\":\"title\"},{\"sourceColumn\":\"modified_user_id\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"},{\"sourceColumn\":\"parent_id\",\"targetTable\":\"#__categories\",\"targetColumn\":\"id\",\"displayColumn\":\"title\"}]}');
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_content_types` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__content_types` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_contentitem_tag_map`
+-- Definition of table `#__contentitem_tag_map`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_contentitem_tag_map`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_contentitem_tag_map` (
+DROP TABLE IF EXISTS `#__contentitem_tag_map`;
+CREATE TABLE  `#__contentitem_tag_map` (
   `type_alias` varchar(255) NOT NULL DEFAULT '',
   `core_content_id` int(10) unsigned NOT NULL COMMENT 'PK from the core content table',
   `content_item_id` int(11) NOT NULL COMMENT 'PK from the content type table',
@@ -879,41 +875,41 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_contentitem_tag_map` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Maps items from content tables to tags';
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_contentitem_tag_map`
+-- Dumping data for table `#__contentitem_tag_map`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_contentitem_tag_map` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_contentitem_tag_map` WRITE;
+/*!40000 ALTER TABLE `#__contentitem_tag_map` DISABLE KEYS */;
+LOCK TABLES `#__contentitem_tag_map` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_contentitem_tag_map` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__contentitem_tag_map` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_core_log_searches`
+-- Definition of table `#__core_log_searches`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_core_log_searches`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_core_log_searches` (
+DROP TABLE IF EXISTS `#__core_log_searches`;
+CREATE TABLE  `#__core_log_searches` (
   `search_term` varchar(128) NOT NULL DEFAULT '',
   `hits` int(10) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_core_log_searches`
+-- Dumping data for table `#__core_log_searches`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_core_log_searches` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_core_log_searches` WRITE;
+/*!40000 ALTER TABLE `#__core_log_searches` DISABLE KEYS */;
+LOCK TABLES `#__core_log_searches` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_core_log_searches` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__core_log_searches` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_extensions`
+-- Definition of table `#__extensions`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_extensions`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_extensions` (
+DROP TABLE IF EXISTS `#__extensions`;
+CREATE TABLE  `#__extensions` (
   `extension_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `type` varchar(20) NOT NULL,
@@ -938,12 +934,12 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_extensions` (
 ) ENGINE=InnoDB AUTO_INCREMENT=10055 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_extensions`
+-- Dumping data for table `#__extensions`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_extensions` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_extensions` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_extensions` VALUES  (1,'com_mailto','component','com_mailto','',0,1,1,1,'{\"name\":\"com_mailto\",\"type\":\"component\",\"creationDate\":\"April 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2014 Open Source Matters. All rights reserved.\\t\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"COM_MAILTO_XML_DESCRIPTION\",\"group\":\"\"}','','','',0,'0000-00-00 00:00:00',0,0),
+/*!40000 ALTER TABLE `#__extensions` DISABLE KEYS */;
+LOCK TABLES `#__extensions` WRITE;
+INSERT INTO `#__extensions` VALUES  (1,'com_mailto','component','com_mailto','',0,1,1,1,'{\"name\":\"com_mailto\",\"type\":\"component\",\"creationDate\":\"April 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2014 Open Source Matters. All rights reserved.\\t\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"COM_MAILTO_XML_DESCRIPTION\",\"group\":\"\"}','','','',0,'0000-00-00 00:00:00',0,0),
  (2,'com_wrapper','component','com_wrapper','',0,1,1,1,'{\"name\":\"com_wrapper\",\"type\":\"component\",\"creationDate\":\"April 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2014 Open Source Matters. All rights reserved.\\n\\t\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"COM_WRAPPER_XML_DESCRIPTION\",\"group\":\"\"}','','','',0,'0000-00-00 00:00:00',0,0),
  (3,'com_admin','component','com_admin','',1,1,1,1,'{\"name\":\"com_admin\",\"type\":\"component\",\"creationDate\":\"April 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2014 Open Source Matters. All rights reserved.\\n\\t\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"COM_ADMIN_XML_DESCRIPTION\",\"group\":\"\"}','','','',0,'0000-00-00 00:00:00',0,0),
  (4,'com_banners','component','com_banners','',1,1,1,0,'{\"name\":\"com_banners\",\"type\":\"component\",\"creationDate\":\"April 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2014 Open Source Matters. All rights reserved.\\n\\t\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"COM_BANNERS_XML_DESCRIPTION\",\"group\":\"\"}','{\"purchase_type\":\"3\",\"track_impressions\":\"0\",\"track_clicks\":\"0\",\"metakey_prefix\":\"\"}','','',0,'0000-00-00 00:00:00',0,0),
@@ -1062,7 +1058,7 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_extensions` VALUES  (1,'com_mailto
  (437,'plg_quickicon_joomlaupdate','plugin','joomlaupdate','quickicon',0,1,1,1,'{\"name\":\"plg_quickicon_joomlaupdate\",\"type\":\"plugin\",\"creationDate\":\"August 2011\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2014 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_QUICKICON_JOOMLAUPDATE_XML_DESCRIPTION\",\"group\":\"\"}','{}','','',0,'0000-00-00 00:00:00',0,0),
  (438,'plg_quickicon_extensionupdate','plugin','extensionupdate','quickicon',0,1,1,1,'{\"name\":\"plg_quickicon_extensionupdate\",\"type\":\"plugin\",\"creationDate\":\"August 2011\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2014 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_QUICKICON_EXTENSIONUPDATE_XML_DESCRIPTION\",\"group\":\"\"}','{}','','',0,'0000-00-00 00:00:00',0,0),
  (439,'plg_captcha_recaptcha','plugin','recaptcha','captcha',0,0,1,0,'{\"name\":\"plg_captcha_recaptcha\",\"type\":\"plugin\",\"creationDate\":\"December 2011\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2014 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_CAPTCHA_RECAPTCHA_XML_DESCRIPTION\",\"group\":\"\"}','{\"public_key\":\"\",\"private_key\":\"\",\"theme\":\"clean\"}','','',0,'0000-00-00 00:00:00',0,0);
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_extensions` VALUES  (440,'plg_system_highlight','plugin','highlight','system',0,1,1,0,'{\"legacy\":false,\"name\":\"plg_system_highlight\",\"type\":\"plugin\",\"creationDate\":\"August 2011\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2013 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"2.5.0\",\"description\":\"PLG_SYSTEM_HIGHLIGHT_XML_DESCRIPTION\",\"group\":\"\"}','{}','','',0,'0000-00-00 00:00:00',7,0),
+INSERT INTO `#__extensions` VALUES  (440,'plg_system_highlight','plugin','highlight','system',0,1,1,0,'{\"legacy\":false,\"name\":\"plg_system_highlight\",\"type\":\"plugin\",\"creationDate\":\"August 2011\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2013 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"2.5.0\",\"description\":\"PLG_SYSTEM_HIGHLIGHT_XML_DESCRIPTION\",\"group\":\"\"}','{}','','',0,'0000-00-00 00:00:00',7,0),
  (441,'plg_content_finder','plugin','finder','content',0,0,1,0,'{\"legacy\":false,\"name\":\"plg_content_finder\",\"type\":\"plugin\",\"creationDate\":\"December 2011\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2013 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"2.5.0\",\"description\":\"PLG_CONTENT_FINDER_XML_DESCRIPTION\",\"group\":\"\"}','{}','','',0,'0000-00-00 00:00:00',0,0),
  (442,'plg_finder_categories','plugin','categories','finder',0,1,1,0,'{\"name\":\"plg_finder_categories\",\"type\":\"plugin\",\"creationDate\":\"August 2011\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2014 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_FINDER_CATEGORIES_XML_DESCRIPTION\",\"group\":\"\"}','{}','','',0,'0000-00-00 00:00:00',1,0),
  (443,'plg_finder_contacts','plugin','contacts','finder',0,1,1,0,'{\"name\":\"plg_finder_contacts\",\"type\":\"plugin\",\"creationDate\":\"August 2011\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2014 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_FINDER_CONTACTS_XML_DESCRIPTION\",\"group\":\"\"}','{}','','',0,'0000-00-00 00:00:00',2,0),
@@ -1121,15 +1117,15 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_extensions` VALUES  (440,'plg_syst
  (10053,'FOF','library','lib_f0f','',0,1,1,0,'{\"name\":\"FOF\",\"type\":\"library\",\"creationDate\":\"2014-05-02 19:14:41\",\"author\":\"Nicholas K. Dionysopoulos \\/ Akeeba Ltd\",\"copyright\":\"(C)2011-2013 Nicholas K. Dionysopoulos\",\"authorEmail\":\"nicholas@akeebabackup.com\",\"authorUrl\":\"https:\\/\\/www.akeebabackup.com\",\"version\":\"2.3.0\",\"description\":\"Framework-on-Framework (FOF) - The rapid component development framework for Joomla!. This package is the newer version of FOF, not the one shipped with Joomla! as the official Joomla! RAD Layer. The Joomla! RAD Layer has ceased development in March 2014.\",\"group\":\"\"}','{}','','',0,'0000-00-00 00:00:00',0,0),
  (10054,'AkeebaStrapper','file','files_strapper','',0,1,0,0,'{\"name\":\"AkeebaStrapper\",\"type\":\"file\",\"creationDate\":\"2014-05-02 19:14:41\",\"author\":\"Nicholas K. Dionysopoulos\",\"copyright\":\"(C) 2012-2013 Akeeba Ltd.\",\"authorEmail\":\"nicholas@dionysopoulos.me\",\"authorUrl\":\"https:\\/\\/www.akeebabackup.com\",\"version\":\"2.3.0\",\"description\":\"Namespaced jQuery, jQuery UI and Bootstrap for Akeeba products.\",\"group\":\"\"}','','','',0,'0000-00-00 00:00:00',0,0);
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_extensions` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__extensions` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_finder_filters`
+-- Definition of table `#__finder_filters`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_finder_filters`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_filters` (
+DROP TABLE IF EXISTS `#__finder_filters`;
+CREATE TABLE  `#__finder_filters` (
   `filter_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
   `alias` varchar(255) NOT NULL,
@@ -1148,21 +1144,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_filters` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_finder_filters`
+-- Dumping data for table `#__finder_filters`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_finder_filters` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_finder_filters` WRITE;
+/*!40000 ALTER TABLE `#__finder_filters` DISABLE KEYS */;
+LOCK TABLES `#__finder_filters` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_finder_filters` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__finder_filters` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_finder_links`
+-- Definition of table `#__finder_links`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_finder_links`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_links` (
+DROP TABLE IF EXISTS `#__finder_links`;
+CREATE TABLE  `#__finder_links` (
   `link_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `url` varchar(255) NOT NULL,
   `route` varchar(255) NOT NULL,
@@ -1192,29 +1188,29 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_links` (
 ) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_finder_links`
+-- Dumping data for table `#__finder_links`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_finder_links` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_finder_links` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_finder_links` VALUES  (1,'index.php?option=com_k2&view=item&id=1','index.php?option=com_k2&view=item&id=1:manual-de-administracao-tecnica-beta','Manual de administração técnica (beta)','','2013-12-22 10:48:10','940e84a8bd43c8137973674af7bf267a',1,1,1,'*','2013-12-22 12:46:16','0000-00-00 00:00:00','2013-12-22 12:46:16','0000-00-00 00:00:00',0,0,1,0x4F3A31393A2246696E646572496E6465786572526573756C74223A31393A7B733A31313A22002A00656C656D656E7473223B613A32353A7B733A323A226964223B733A313A2231223B733A353A22616C696173223B733A33363A226D616E75616C2D64652D61646D696E697374726163616F2D7465636E6963612D62657461223B733A373A2273756D6D617279223B733A3234393A223C703E4D616E75616C2064652061646D696E6973747261C3A7C3A36F2074C3A9636E69636120646F20706F7274616C2070616472C3A36F20656D204A6F6F6D6C6120322E352C2076657273C3A36F20626574612E20417475616C6D656E74652C20706F7373756920746F646120612073657175656E63696120646520706173736F73207061726120637573746F6D697A6172206F206E6F6D6520646F2073C3AD74696F206520617320636F726573207072696E6369706169732064652061636F72646F20636F6D20756D20646F732071756174726F2070616472C3B5657320646520636F72657320646973706F6EC3AD766569732E3C2F703E223B733A343A22626F6479223B733A303A22223B733A353A226361746964223B733A313A2234223B733A31303A22637265617465645F6279223B733A333A22353736223B733A31363A22637265617465645F62795F616C696173223B733A303A22223B733A383A226D6F646966696564223B733A31393A22303030302D30302D30302030303A30303A3030223B733A31313A226D6F6469666965645F6279223B733A313A2230223B733A363A22706172616D73223B4F3A393A224A5265676973747279223A313A7B733A373A22002A0064617461223B4F3A383A22737464436C617373223A3135343A7B733A31303A22656E61626C655F637373223B733A313A2231223B733A31343A226A517565727948616E646C696E67223B733A393A22312E3872656D6F7465223B733A32313A226261636B656E644A517565727948616E646C696E67223B733A363A2272656D6F7465223B733A383A22757365724E616D65223B733A313A2231223B733A393A2275736572496D616765223B733A313A2231223B733A31353A22757365724465736372697074696F6E223B733A313A2231223B733A373A227573657255524C223B733A313A2231223B733A393A2275736572456D61696C223B733A313A2230223B733A31323A2275736572466565644C696E6B223B733A313A2231223B733A31323A22757365724665656449636F6E223B733A313A2231223B733A31333A22757365724974656D436F756E74223B733A323A223130223B733A31333A22757365724974656D5469746C65223B733A313A2231223B733A31393A22757365724974656D5469746C654C696E6B6564223B733A313A2231223B733A31393A22757365724974656D4461746543726561746564223B733A313A2231223B733A31333A22757365724974656D496D616765223B733A313A2231223B733A31373A22757365724974656D496E74726F54657874223B733A313A2231223B733A31363A22757365724974656D43617465676F7279223B733A313A2231223B733A31323A22757365724974656D54616773223B733A313A2231223B733A32323A22757365724974656D436F6D6D656E7473416E63686F72223B733A313A2231223B733A31363A22757365724974656D526561644D6F7265223B733A313A2231223B733A31373A22757365724974656D4B32506C7567696E73223B733A313A2231223B733A31323A227461674974656D436F756E74223B733A323A223130223B733A31323A227461674974656D5469746C65223B733A313A2231223B733A31383A227461674974656D5469746C654C696E6B6564223B733A313A2231223B733A31383A227461674974656D4461746543726561746564223B733A313A2231223B733A31323A227461674974656D496D616765223B733A313A2231223B733A31363A227461674974656D496E74726F54657874223B733A313A2231223B733A31353A227461674974656D43617465676F7279223B733A313A2231223B733A31353A227461674974656D526561644D6F7265223B733A313A2231223B733A31383A227461674974656D45787472614669656C6473223B733A313A2230223B733A31313A227461674F72646572696E67223B733A303A22223B733A31313A22746167466565644C696E6B223B733A313A2231223B733A31313A227461674665656449636F6E223B733A313A2231223B733A31363A2267656E657269634974656D436F756E74223B733A323A223130223B733A31363A2267656E657269634974656D5469746C65223B733A313A2231223B733A32323A2267656E657269634974656D5469746C654C696E6B6564223B733A313A2231223B733A32323A2267656E657269634974656D4461746543726561746564223B733A313A2231223B733A31363A2267656E657269634974656D496D616765223B733A313A2231223B733A32303A2267656E657269634974656D496E74726F54657874223B733A313A2231223B733A31393A2267656E657269634974656D43617465676F7279223B733A313A2231223B733A31393A2267656E657269634974656D526561644D6F7265223B733A313A2231223B733A32323A2267656E657269634974656D45787472614669656C6473223B733A313A2230223B733A31353A2267656E65726963466565644C696E6B223B733A313A2231223B733A31353A2267656E657269634665656449636F6E223B733A313A2231223B733A393A22666565644C696D6974223B733A323A223130223B733A31333A22666565644974656D496D616765223B733A313A2231223B733A31313A2266656564496D6753697A65223B733A313A2253223B733A31373A22666565644974656D496E74726F54657874223B733A313A2231223B733A31373A226665656454657874576F72644C696D6974223B733A303A22223B733A31363A22666565644974656D46756C6C54657874223B733A313A2231223B733A31323A22666565644974656D54616773223B733A313A2230223B733A31333A22666565644974656D566964656F223B733A313A2230223B733A31353A22666565644974656D47616C6C657279223B733A313A2230223B733A31393A22666565644974656D4174746163686D656E7473223B733A313A2230223B733A31343A2266656564426F677573456D61696C223B733A303A22223B733A31363A22696E74726F54657874436C65616E7570223B733A313A2230223B733A32373A22696E74726F54657874436C65616E75704578636C75646554616773223B733A303A22223B733A32333A22696E74726F54657874436C65616E757054616741747472223B733A303A22223B733A31353A2266756C6C54657874436C65616E7570223B733A313A2230223B733A32363A2266756C6C54657874436C65616E75704578636C75646554616773223B733A303A22223B733A32323A2266756C6C54657874436C65616E757054616741747472223B733A303A22223B733A31323A2278737346696C746572696E67223B733A313A2230223B733A31343A226C696E6B506F7075705769647468223B733A333A22393030223B733A31353A226C696E6B506F707570486569676874223B733A333A22363030223B733A31333A22696D616765735175616C697479223B733A333A22313030223B733A31313A226974656D496D6167655853223B733A333A22313030223B733A31303A226974656D496D61676553223B733A333A22323030223B733A31303A226974656D496D6167654D223B733A333A22343030223B733A31303A226974656D496D6167654C223B733A333A22363030223B733A31313A226974656D496D616765584C223B733A333A22393030223B733A31363A226974656D496D61676547656E65726963223B733A333A22333030223B733A31333A22636174496D6167655769647468223B733A333A22313030223B733A31353A22636174496D61676544656661756C74223B733A313A2231223B733A31343A2275736572496D6167655769647468223B733A333A22313030223B733A31363A2275736572496D61676544656661756C74223B733A313A2231223B733A31373A22636F6D6D656E746572496D675769647468223B733A323A223438223B733A31373A226F6E6C696E65496D616765456469746F72223B733A383A2273706C6173687570223B733A31343A22696D61676554696D657374616D70223B733A313A2230223B733A31363A22696D6167654D656D6F72794C696D6974223B733A303A22223B733A31363A22736F6369616C427574746F6E436F6465223B733A303A22223B733A31353A2274776974746572557365726E616D65223B733A303A22223B733A31333A2266616365626F6F6B496D616765223B733A363A224D656469756D223B733A383A22636F6D6D656E7473223B733A313A2231223B733A31363A22636F6D6D656E74734F72646572696E67223B733A343A2244455343223B733A31333A22636F6D6D656E74734C696D6974223B733A323A223130223B733A32303A22636F6D6D656E7473466F726D506F736974696F6E223B733A353A2262656C6F77223B733A31383A22636F6D6D656E74735075626C697368696E67223B733A313A2231223B733A31373A22636F6D6D656E74735265706F7274696E67223B733A313A2232223B733A32333A22636F6D6D656E74735265706F7274526563697069656E74223B733A303A22223B733A32343A22696E6C696E65436F6D6D656E74734D6F6465726174696F6E223B733A313A2230223B733A383A226772617661746172223B733A313A2231223B733A393A22726563617074636861223B733A313A2230223B733A32323A22726563617074636861466F7252656769737465726564223B733A313A2231223B733A31373A22636F6D6D656E7473466F726D4E6F746573223B733A313A2231223B733A32313A22636F6D6D656E7473466F726D4E6F74657354657874223B733A303A22223B733A31353A2266726F6E74656E6445646974696E67223B733A313A2231223B733A31323A2273686F77496D616765546162223B733A313A2231223B733A31393A2273686F77496D61676547616C6C657279546162223B733A313A2231223B733A31323A2273686F77566964656F546162223B733A313A2231223B733A31383A2273686F7745787472614669656C6473546162223B733A313A2231223B733A31383A2273686F774174746163686D656E7473546162223B733A313A2231223B733A31333A2273686F774B32506C7567696E73223B733A313A2231223B733A32323A2273696465426172446973706C617946726F6E74656E64223B733A313A2230223B733A31323A226D65726765456469746F7273223B733A313A2231223B733A31343A2273696465426172446973706C6179223B733A313A2231223B733A31373A226174746163686D656E7473466F6C646572223B733A303A22223B733A31363A2268696465496D706F7274427574746F6E223B733A313A2230223B733A31323A22676F6F676C65536561726368223B733A313A2230223B733A32313A22676F6F676C65536561726368436F6E7461696E6572223B733A32333A226B32476F6F676C65536561726368436F6E7461696E6572223B733A31333A224B325573657250726F66696C65223B733A313A2231223B733A31313A224B325573657247726F7570223B733A303A22223B733A383A227265646972656374223B733A303A22223B733A31313A2261646D696E536561726368223B733A363A2273696D706C65223B733A31323A22636F6F6B6965446F6D61696E223B733A303A22223B733A31333A2274616767696E6753797374656D223B733A313A2231223B733A383A226C6F636B54616773223B733A313A2230223B733A31333A2273686F7754616746696C746572223B733A313A2230223B733A393A226B325461674E6F726D223B733A313A2230223B733A31333A226B325461674E6F726D43617365223B733A353A226C6F776572223B733A33313A226B325461674E6F726D4164646974696F6E616C5265706C6163656D656E7473223B733A303A22223B733A32303A227265636170746368615F7075626C69635F6B6579223B733A303A22223B733A32313A227265636170746368615F707269766174655F6B6579223B733A303A22223B733A31353A227265636170746368615F7468656D65223B733A353A22636C65616E223B733A32333A227265636170746368614F6E526567697374726174696F6E223B733A313A2230223B733A31333A2273746F70466F72756D5370616D223B733A313A2230223B733A31393A2273746F70466F72756D5370616D4170694B6579223B733A303A22223B733A32313A2273686F774974656D73436F756E74657241646D696E223B733A313A2231223B733A31373A2273686F774368696C644361744974656D73223B733A313A2231223B733A32323A2264697361626C65436F6D706163744F72646572696E67223B733A313A2230223B733A31333A226D657461446573634C696D6974223B733A333A22313530223B733A32323A22656E666F7263655345465265706C6163656D656E7473223B733A313A2230223B733A31353A225345465265706C6163656D656E7473223B733A303A22223B733A353A226B32536566223B733A313A2230223B733A31333A226B325365664C6162656C436174223B733A373A22636F6E74656E74223B733A31333A226B325365664C6162656C546167223B733A333A22746167223B733A31343A226B325365664C6162656C55736572223B733A363A22617574686F72223B733A31363A226B325365664C6162656C536561726368223B733A363A22736561726368223B733A31343A226B325365664C6162656C44617465223B733A343A2264617465223B733A31343A226B325365664C6162656C4974656D223B733A313A2230223B733A32363A226B325365664C6162656C4974656D437573746F6D507265666978223B733A303A22223B733A31373A226B32536566496E736572744974656D4964223B733A313A2231223B733A32343A226B325365664974656D49645469746C65416C696173536570223B733A343A2264617368223B733A32323A226B325365665573654974656D5469746C65416C696173223B733A313A2231223B733A31363A226B32536566496E736572744361744964223B733A313A2231223B733A32333A226B3253656643617449645469746C65416C696173536570223B733A343A2264617368223B733A32313A226B325365665573654361745469746C65416C696173223B733A313A2231223B733A31363A2273683430345365664C6162656C436174223B733A303A22223B733A31373A2273683430345365664C6162656C55736572223B733A343A22626C6F67223B733A31373A2273683430345365664C6162656C4974656D223B733A313A2232223B733A31383A2273683430345365665469746C65416C696173223B733A353A22616C696173223B733A32393A2273683430345365664D6F644B32436F6E74656E7446656564416C696173223B733A343A2266656564223B733A32303A227368343034536566496E736572744974656D4964223B733A313A2230223B733A32363A227368343034536566496E73657274556E697175654974656D4964223B733A313A2230223B733A31333A226362496E746567726174696F6E223B733A313A2230223B7D7D733A373A226D6574616B6579223B733A303A22223B733A383A226D65746164657363223B733A303A22223B733A383A226D65746164617461223B4F3A393A224A5265676973747279223A313A7B733A373A22002A0064617461223B4F3A383A22737464436C617373223A323A7B733A363A22726F626F7473223B733A303A22223B733A363A22617574686F72223B733A303A22223B7D7D733A383A226F72646572696E67223B733A313A2231223B733A353A227472617368223B733A313A2230223B733A393A226361745F7472617368223B733A313A2230223B733A383A2263617465676F7279223B733A31333A225075626C696361C3A7C3B56573223B733A393A226361745F7374617465223B733A313A2231223B733A31303A226361745F616363657373223B733A313A2231223B733A343A22736C7567223B733A33383A22313A6D616E75616C2D64652D61646D696E697374726163616F2D7465636E6963612D62657461223B733A373A22636174736C7567223B733A31333A22343A7075626C696361636F6573223B733A363A22617574686F72223B733A31303A2253757065722055736572223B733A363A226C61796F7574223B733A343A226974656D223B733A343A2270617468223B733A36363A22696E6465782E7068702F636F6D706F6E656E742F6B322F6974656D2F312D6D616E75616C2D64652D61646D696E697374726163616F2D7465636E6963612D62657461223B733A31303A226D657461617574686F72223B4E3B7D733A31353A22002A00696E737472756374696F6E73223B613A353A7B693A313B613A333A7B693A303B733A353A227469746C65223B693A313B733A383A227375627469746C65223B693A323B733A323A226964223B7D693A323B613A323A7B693A303B733A373A2273756D6D617279223B693A313B733A343A22626F6479223B7D693A333B613A383A7B693A303B733A343A226D657461223B693A313B733A31303A226C6973745F7072696365223B693A323B733A31303A2273616C655F7072696365223B693A333B733A373A226D6574616B6579223B693A343B733A383A226D65746164657363223B693A353B733A31303A226D657461617574686F72223B693A363B733A363A22617574686F72223B693A373B733A31363A22637265617465645F62795F616C696173223B7D693A343B613A323A7B693A303B733A343A2270617468223B693A313B733A353A22616C696173223B7D693A353B613A313A7B693A303B733A383A22636F6D6D656E7473223B7D7D733A31313A22002A007461786F6E6F6D79223B613A343A7B733A343A2254797065223B613A313A7B733A373A224B32204974656D223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A373A224B32204974656D223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D733A363A22417574686F72223B613A313A7B733A31303A2253757065722055736572223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A31303A2253757065722055736572223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D733A31313A224B322043617465676F7279223B613A313A7B733A31333A225075626C696361C3A7C3B56573223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A31333A225075626C696361C3A7C3B56573223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D733A383A224C616E6775616765223B613A313A7B733A313A222A223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A313A222A223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D7D733A333A2275726C223B733A33383A22696E6465782E7068703F6F7074696F6E3D636F6D5F6B3226766965773D6974656D2669643D31223B733A353A22726F757465223B733A37353A22696E6465782E7068703F6F7074696F6E3D636F6D5F6B3226766965773D6974656D2669643D313A6D616E75616C2D64652D61646D696E697374726163616F2D7465636E6963612D62657461223B733A353A227469746C65223B733A34313A224D616E75616C2064652061646D696E6973747261C3A7C3A36F2074C3A9636E69636120286265746129223B733A31313A226465736372697074696F6E223B733A303A22223B733A393A227075626C6973686564223B4E3B733A353A227374617465223B693A313B733A363A22616363657373223B733A313A2231223B733A383A226C616E6775616765223B733A313A222A223B733A31383A227075626C6973685F73746172745F64617465223B733A31393A22323031332D31322D32322031323A34363A3136223B733A31363A227075626C6973685F656E645F64617465223B733A31393A22303030302D30302D30302030303A30303A3030223B733A31303A2273746172745F64617465223B733A31393A22323031332D31322D32322031323A34363A3136223B733A383A22656E645F64617465223B733A31393A22303030302D30302D30302030303A30303A3030223B733A31303A226C6973745F7072696365223B4E3B733A31303A2273616C655F7072696365223B4E3B733A373A22747970655F6964223B693A313B733A31353A2264656661756C744C616E6775616765223B733A353A2270742D4252223B7D),
+/*!40000 ALTER TABLE `#__finder_links` DISABLE KEYS */;
+LOCK TABLES `#__finder_links` WRITE;
+INSERT INTO `#__finder_links` VALUES  (1,'index.php?option=com_k2&view=item&id=1','index.php?option=com_k2&view=item&id=1:manual-de-administracao-tecnica-beta','Manual de administração técnica (beta)','','2013-12-22 10:48:10','940e84a8bd43c8137973674af7bf267a',1,1,1,'*','2013-12-22 12:46:16','0000-00-00 00:00:00','2013-12-22 12:46:16','0000-00-00 00:00:00',0,0,1,0x4F3A31393A2246696E646572496E6465786572526573756C74223A31393A7B733A31313A22002A00656C656D656E7473223B613A32353A7B733A323A226964223B733A313A2231223B733A353A22616C696173223B733A33363A226D616E75616C2D64652D61646D696E697374726163616F2D7465636E6963612D62657461223B733A373A2273756D6D617279223B733A3234393A223C703E4D616E75616C2064652061646D696E6973747261C3A7C3A36F2074C3A9636E69636120646F20706F7274616C2070616472C3A36F20656D204A6F6F6D6C6120322E352C2076657273C3A36F20626574612E20417475616C6D656E74652C20706F7373756920746F646120612073657175656E63696120646520706173736F73207061726120637573746F6D697A6172206F206E6F6D6520646F2073C3AD74696F206520617320636F726573207072696E6369706169732064652061636F72646F20636F6D20756D20646F732071756174726F2070616472C3B5657320646520636F72657320646973706F6EC3AD766569732E3C2F703E223B733A343A22626F6479223B733A303A22223B733A353A226361746964223B733A313A2234223B733A31303A22637265617465645F6279223B733A333A22353736223B733A31363A22637265617465645F62795F616C696173223B733A303A22223B733A383A226D6F646966696564223B733A31393A22303030302D30302D30302030303A30303A3030223B733A31313A226D6F6469666965645F6279223B733A313A2230223B733A363A22706172616D73223B4F3A393A224A5265676973747279223A313A7B733A373A22002A0064617461223B4F3A383A22737464436C617373223A3135343A7B733A31303A22656E61626C655F637373223B733A313A2231223B733A31343A226A517565727948616E646C696E67223B733A393A22312E3872656D6F7465223B733A32313A226261636B656E644A517565727948616E646C696E67223B733A363A2272656D6F7465223B733A383A22757365724E616D65223B733A313A2231223B733A393A2275736572496D616765223B733A313A2231223B733A31353A22757365724465736372697074696F6E223B733A313A2231223B733A373A227573657255524C223B733A313A2231223B733A393A2275736572456D61696C223B733A313A2230223B733A31323A2275736572466565644C696E6B223B733A313A2231223B733A31323A22757365724665656449636F6E223B733A313A2231223B733A31333A22757365724974656D436F756E74223B733A323A223130223B733A31333A22757365724974656D5469746C65223B733A313A2231223B733A31393A22757365724974656D5469746C654C696E6B6564223B733A313A2231223B733A31393A22757365724974656D4461746543726561746564223B733A313A2231223B733A31333A22757365724974656D496D616765223B733A313A2231223B733A31373A22757365724974656D496E74726F54657874223B733A313A2231223B733A31363A22757365724974656D43617465676F7279223B733A313A2231223B733A31323A22757365724974656D54616773223B733A313A2231223B733A32323A22757365724974656D436F6D6D656E7473416E63686F72223B733A313A2231223B733A31363A22757365724974656D526561644D6F7265223B733A313A2231223B733A31373A22757365724974656D4B32506C7567696E73223B733A313A2231223B733A31323A227461674974656D436F756E74223B733A323A223130223B733A31323A227461674974656D5469746C65223B733A313A2231223B733A31383A227461674974656D5469746C654C696E6B6564223B733A313A2231223B733A31383A227461674974656D4461746543726561746564223B733A313A2231223B733A31323A227461674974656D496D616765223B733A313A2231223B733A31363A227461674974656D496E74726F54657874223B733A313A2231223B733A31353A227461674974656D43617465676F7279223B733A313A2231223B733A31353A227461674974656D526561644D6F7265223B733A313A2231223B733A31383A227461674974656D45787472614669656C6473223B733A313A2230223B733A31313A227461674F72646572696E67223B733A303A22223B733A31313A22746167466565644C696E6B223B733A313A2231223B733A31313A227461674665656449636F6E223B733A313A2231223B733A31363A2267656E657269634974656D436F756E74223B733A323A223130223B733A31363A2267656E657269634974656D5469746C65223B733A313A2231223B733A32323A2267656E657269634974656D5469746C654C696E6B6564223B733A313A2231223B733A32323A2267656E657269634974656D4461746543726561746564223B733A313A2231223B733A31363A2267656E657269634974656D496D616765223B733A313A2231223B733A32303A2267656E657269634974656D496E74726F54657874223B733A313A2231223B733A31393A2267656E657269634974656D43617465676F7279223B733A313A2231223B733A31393A2267656E657269634974656D526561644D6F7265223B733A313A2231223B733A32323A2267656E657269634974656D45787472614669656C6473223B733A313A2230223B733A31353A2267656E65726963466565644C696E6B223B733A313A2231223B733A31353A2267656E657269634665656449636F6E223B733A313A2231223B733A393A22666565644C696D6974223B733A323A223130223B733A31333A22666565644974656D496D616765223B733A313A2231223B733A31313A2266656564496D6753697A65223B733A313A2253223B733A31373A22666565644974656D496E74726F54657874223B733A313A2231223B733A31373A226665656454657874576F72644C696D6974223B733A303A22223B733A31363A22666565644974656D46756C6C54657874223B733A313A2231223B733A31323A22666565644974656D54616773223B733A313A2230223B733A31333A22666565644974656D566964656F223B733A313A2230223B733A31353A22666565644974656D47616C6C657279223B733A313A2230223B733A31393A22666565644974656D4174746163686D656E7473223B733A313A2230223B733A31343A2266656564426F677573456D61696C223B733A303A22223B733A31363A22696E74726F54657874436C65616E7570223B733A313A2230223B733A32373A22696E74726F54657874436C65616E75704578636C75646554616773223B733A303A22223B733A32333A22696E74726F54657874436C65616E757054616741747472223B733A303A22223B733A31353A2266756C6C54657874436C65616E7570223B733A313A2230223B733A32363A2266756C6C54657874436C65616E75704578636C75646554616773223B733A303A22223B733A32323A2266756C6C54657874436C65616E757054616741747472223B733A303A22223B733A31323A2278737346696C746572696E67223B733A313A2230223B733A31343A226C696E6B506F7075705769647468223B733A333A22393030223B733A31353A226C696E6B506F707570486569676874223B733A333A22363030223B733A31333A22696D616765735175616C697479223B733A333A22313030223B733A31313A226974656D496D6167655853223B733A333A22313030223B733A31303A226974656D496D61676553223B733A333A22323030223B733A31303A226974656D496D6167654D223B733A333A22343030223B733A31303A226974656D496D6167654C223B733A333A22363030223B733A31313A226974656D496D616765584C223B733A333A22393030223B733A31363A226974656D496D61676547656E65726963223B733A333A22333030223B733A31333A22636174496D6167655769647468223B733A333A22313030223B733A31353A22636174496D61676544656661756C74223B733A313A2231223B733A31343A2275736572496D6167655769647468223B733A333A22313030223B733A31363A2275736572496D61676544656661756C74223B733A313A2231223B733A31373A22636F6D6D656E746572496D675769647468223B733A323A223438223B733A31373A226F6E6C696E65496D616765456469746F72223B733A383A2273706C6173687570223B733A31343A22696D61676554696D657374616D70223B733A313A2230223B733A31363A22696D6167654D656D6F72794C696D6974223B733A303A22223B733A31363A22736F6369616C427574746F6E436F6465223B733A303A22223B733A31353A2274776974746572557365726E616D65223B733A303A22223B733A31333A2266616365626F6F6B496D616765223B733A363A224D656469756D223B733A383A22636F6D6D656E7473223B733A313A2231223B733A31363A22636F6D6D656E74734F72646572696E67223B733A343A2244455343223B733A31333A22636F6D6D656E74734C696D6974223B733A323A223130223B733A32303A22636F6D6D656E7473466F726D506F736974696F6E223B733A353A2262656C6F77223B733A31383A22636F6D6D656E74735075626C697368696E67223B733A313A2231223B733A31373A22636F6D6D656E74735265706F7274696E67223B733A313A2232223B733A32333A22636F6D6D656E74735265706F7274526563697069656E74223B733A303A22223B733A32343A22696E6C696E65436F6D6D656E74734D6F6465726174696F6E223B733A313A2230223B733A383A226772617661746172223B733A313A2231223B733A393A22726563617074636861223B733A313A2230223B733A32323A22726563617074636861466F7252656769737465726564223B733A313A2231223B733A31373A22636F6D6D656E7473466F726D4E6F746573223B733A313A2231223B733A32313A22636F6D6D656E7473466F726D4E6F74657354657874223B733A303A22223B733A31353A2266726F6E74656E6445646974696E67223B733A313A2231223B733A31323A2273686F77496D616765546162223B733A313A2231223B733A31393A2273686F77496D61676547616C6C657279546162223B733A313A2231223B733A31323A2273686F77566964656F546162223B733A313A2231223B733A31383A2273686F7745787472614669656C6473546162223B733A313A2231223B733A31383A2273686F774174746163686D656E7473546162223B733A313A2231223B733A31333A2273686F774B32506C7567696E73223B733A313A2231223B733A32323A2273696465426172446973706C617946726F6E74656E64223B733A313A2230223B733A31323A226D65726765456469746F7273223B733A313A2231223B733A31343A2273696465426172446973706C6179223B733A313A2231223B733A31373A226174746163686D656E7473466F6C646572223B733A303A22223B733A31363A2268696465496D706F7274427574746F6E223B733A313A2230223B733A31323A22676F6F676C65536561726368223B733A313A2230223B733A32313A22676F6F676C65536561726368436F6E7461696E6572223B733A32333A226B32476F6F676C65536561726368436F6E7461696E6572223B733A31333A224B325573657250726F66696C65223B733A313A2231223B733A31313A224B325573657247726F7570223B733A303A22223B733A383A227265646972656374223B733A303A22223B733A31313A2261646D696E536561726368223B733A363A2273696D706C65223B733A31323A22636F6F6B6965446F6D61696E223B733A303A22223B733A31333A2274616767696E6753797374656D223B733A313A2231223B733A383A226C6F636B54616773223B733A313A2230223B733A31333A2273686F7754616746696C746572223B733A313A2230223B733A393A226B325461674E6F726D223B733A313A2230223B733A31333A226B325461674E6F726D43617365223B733A353A226C6F776572223B733A33313A226B325461674E6F726D4164646974696F6E616C5265706C6163656D656E7473223B733A303A22223B733A32303A227265636170746368615F7075626C69635F6B6579223B733A303A22223B733A32313A227265636170746368615F707269766174655F6B6579223B733A303A22223B733A31353A227265636170746368615F7468656D65223B733A353A22636C65616E223B733A32333A227265636170746368614F6E526567697374726174696F6E223B733A313A2230223B733A31333A2273746F70466F72756D5370616D223B733A313A2230223B733A31393A2273746F70466F72756D5370616D4170694B6579223B733A303A22223B733A32313A2273686F774974656D73436F756E74657241646D696E223B733A313A2231223B733A31373A2273686F774368696C644361744974656D73223B733A313A2231223B733A32323A2264697361626C65436F6D706163744F72646572696E67223B733A313A2230223B733A31333A226D657461446573634C696D6974223B733A333A22313530223B733A32323A22656E666F7263655345465265706C6163656D656E7473223B733A313A2230223B733A31353A225345465265706C6163656D656E7473223B733A303A22223B733A353A226B32536566223B733A313A2230223B733A31333A226B325365664C6162656C436174223B733A373A22636F6E74656E74223B733A31333A226B325365664C6162656C546167223B733A333A22746167223B733A31343A226B325365664C6162656C55736572223B733A363A22617574686F72223B733A31363A226B325365664C6162656C536561726368223B733A363A22736561726368223B733A31343A226B325365664C6162656C44617465223B733A343A2264617465223B733A31343A226B325365664C6162656C4974656D223B733A313A2230223B733A32363A226B325365664C6162656C4974656D437573746F6D507265666978223B733A303A22223B733A31373A226B32536566496E736572744974656D4964223B733A313A2231223B733A32343A226B325365664974656D49645469746C65416C696173536570223B733A343A2264617368223B733A32323A226B325365665573654974656D5469746C65416C696173223B733A313A2231223B733A31363A226B32536566496E736572744361744964223B733A313A2231223B733A32333A226B3253656643617449645469746C65416C696173536570223B733A343A2264617368223B733A32313A226B325365665573654361745469746C65416C696173223B733A313A2231223B733A31363A2273683430345365664C6162656C436174223B733A303A22223B733A31373A2273683430345365664C6162656C55736572223B733A343A22626C6F67223B733A31373A2273683430345365664C6162656C4974656D223B733A313A2232223B733A31383A2273683430345365665469746C65416C696173223B733A353A22616C696173223B733A32393A2273683430345365664D6F644B32436F6E74656E7446656564416C696173223B733A343A2266656564223B733A32303A227368343034536566496E736572744974656D4964223B733A313A2230223B733A32363A227368343034536566496E73657274556E697175654974656D4964223B733A313A2230223B733A31333A226362496E746567726174696F6E223B733A313A2230223B7D7D733A373A226D6574616B6579223B733A303A22223B733A383A226D65746164657363223B733A303A22223B733A383A226D65746164617461223B4F3A393A224A5265676973747279223A313A7B733A373A22002A0064617461223B4F3A383A22737464436C617373223A323A7B733A363A22726F626F7473223B733A303A22223B733A363A22617574686F72223B733A303A22223B7D7D733A383A226F72646572696E67223B733A313A2231223B733A353A227472617368223B733A313A2230223B733A393A226361745F7472617368223B733A313A2230223B733A383A2263617465676F7279223B733A31333A225075626C696361C3A7C3B56573223B733A393A226361745F7374617465223B733A313A2231223B733A31303A226361745F616363657373223B733A313A2231223B733A343A22736C7567223B733A33383A22313A6D616E75616C2D64652D61646D696E697374726163616F2D7465636E6963612D62657461223B733A373A22636174736C7567223B733A31333A22343A7075626C696361636F6573223B733A363A22617574686F72223B733A31303A2253757065722055736572223B733A363A226C61796F7574223B733A343A226974656D223B733A343A2270617468223B733A36363A22696E6465782E7068702F636F6D706F6E656E742F6B322F6974656D2F312D6D616E75616C2D64652D61646D696E697374726163616F2D7465636E6963612D62657461223B733A31303A226D657461617574686F72223B4E3B7D733A31353A22002A00696E737472756374696F6E73223B613A353A7B693A313B613A333A7B693A303B733A353A227469746C65223B693A313B733A383A227375627469746C65223B693A323B733A323A226964223B7D693A323B613A323A7B693A303B733A373A2273756D6D617279223B693A313B733A343A22626F6479223B7D693A333B613A383A7B693A303B733A343A226D657461223B693A313B733A31303A226C6973745F7072696365223B693A323B733A31303A2273616C655F7072696365223B693A333B733A373A226D6574616B6579223B693A343B733A383A226D65746164657363223B693A353B733A31303A226D657461617574686F72223B693A363B733A363A22617574686F72223B693A373B733A31363A22637265617465645F62795F616C696173223B7D693A343B613A323A7B693A303B733A343A2270617468223B693A313B733A353A22616C696173223B7D693A353B613A313A7B693A303B733A383A22636F6D6D656E7473223B7D7D733A31313A22002A007461786F6E6F6D79223B613A343A7B733A343A2254797065223B613A313A7B733A373A224B32204974656D223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A373A224B32204974656D223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D733A363A22417574686F72223B613A313A7B733A31303A2253757065722055736572223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A31303A2253757065722055736572223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D733A31313A224B322043617465676F7279223B613A313A7B733A31333A225075626C696361C3A7C3B56573223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A31333A225075626C696361C3A7C3B56573223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D733A383A224C616E6775616765223B613A313A7B733A313A222A223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A313A222A223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D7D733A333A2275726C223B733A33383A22696E6465782E7068703F6F7074696F6E3D636F6D5F6B3226766965773D6974656D2669643D31223B733A353A22726F757465223B733A37353A22696E6465782E7068703F6F7074696F6E3D636F6D5F6B3226766965773D6974656D2669643D313A6D616E75616C2D64652D61646D696E697374726163616F2D7465636E6963612D62657461223B733A353A227469746C65223B733A34313A224D616E75616C2064652061646D696E6973747261C3A7C3A36F2074C3A9636E69636120286265746129223B733A31313A226465736372697074696F6E223B733A303A22223B733A393A227075626C6973686564223B4E3B733A353A227374617465223B693A313B733A363A22616363657373223B733A313A2231223B733A383A226C616E6775616765223B733A313A222A223B733A31383A227075626C6973685F73746172745F64617465223B733A31393A22323031332D31322D32322031323A34363A3136223B733A31363A227075626C6973685F656E645F64617465223B733A31393A22303030302D30302D30302030303A30303A3030223B733A31303A2273746172745F64617465223B733A31393A22323031332D31322D32322031323A34363A3136223B733A383A22656E645F64617465223B733A31393A22303030302D30302D30302030303A30303A3030223B733A31303A226C6973745F7072696365223B4E3B733A31303A2273616C655F7072696365223B4E3B733A373A22747970655F6964223B693A313B733A31353A2264656661756C744C616E6775616765223B733A353A2270742D4252223B7D),
  (19,'index.php?option=com_k2&view=item&id=3','index.php?option=com_k2&view=item&id=3:teste-2','Teste 2','','2013-12-22 11:42:58','ac914a0513b8262740428a45d3b70402',1,1,1,'*','2013-12-22 12:48:48','0000-00-00 00:00:00','2013-12-22 13:37:25','0000-00-00 00:00:00',0,0,1,0x4F3A31393A2246696E646572496E6465786572526573756C74223A31393A7B733A31313A22002A00656C656D656E7473223B613A32353A7B733A323A226964223B733A313A2233223B733A353A22616C696173223B733A373A2274657374652D32223B733A373A2273756D6D617279223B733A32373A223C703E446573637269C3A7C3A36F20646F206974656D2E3C2F703E223B733A343A22626F6479223B733A303A22223B733A353A226361746964223B733A313A2231223B733A31303A22637265617465645F6279223B733A333A22353736223B733A31363A22637265617465645F62795F616C696173223B733A303A22223B733A383A226D6F646966696564223B733A31393A22323031332D31322D32322031333A34323A3538223B733A31313A226D6F6469666965645F6279223B733A333A22353736223B733A363A22706172616D73223B4F3A393A224A5265676973747279223A313A7B733A373A22002A0064617461223B4F3A383A22737464436C617373223A3135343A7B733A31303A22656E61626C655F637373223B733A313A2231223B733A31343A226A517565727948616E646C696E67223B733A393A22312E3872656D6F7465223B733A32313A226261636B656E644A517565727948616E646C696E67223B733A363A2272656D6F7465223B733A383A22757365724E616D65223B733A313A2231223B733A393A2275736572496D616765223B733A313A2231223B733A31353A22757365724465736372697074696F6E223B733A313A2231223B733A373A227573657255524C223B733A313A2231223B733A393A2275736572456D61696C223B733A313A2230223B733A31323A2275736572466565644C696E6B223B733A313A2231223B733A31323A22757365724665656449636F6E223B733A313A2231223B733A31333A22757365724974656D436F756E74223B733A323A223130223B733A31333A22757365724974656D5469746C65223B733A313A2231223B733A31393A22757365724974656D5469746C654C696E6B6564223B733A313A2231223B733A31393A22757365724974656D4461746543726561746564223B733A313A2231223B733A31333A22757365724974656D496D616765223B733A313A2231223B733A31373A22757365724974656D496E74726F54657874223B733A313A2231223B733A31363A22757365724974656D43617465676F7279223B733A313A2231223B733A31323A22757365724974656D54616773223B733A313A2231223B733A32323A22757365724974656D436F6D6D656E7473416E63686F72223B733A313A2231223B733A31363A22757365724974656D526561644D6F7265223B733A313A2231223B733A31373A22757365724974656D4B32506C7567696E73223B733A313A2231223B733A31323A227461674974656D436F756E74223B733A323A223130223B733A31323A227461674974656D5469746C65223B733A313A2231223B733A31383A227461674974656D5469746C654C696E6B6564223B733A313A2231223B733A31383A227461674974656D4461746543726561746564223B733A313A2231223B733A31323A227461674974656D496D616765223B733A313A2231223B733A31363A227461674974656D496E74726F54657874223B733A313A2231223B733A31353A227461674974656D43617465676F7279223B733A313A2231223B733A31353A227461674974656D526561644D6F7265223B733A313A2231223B733A31383A227461674974656D45787472614669656C6473223B733A313A2230223B733A31313A227461674F72646572696E67223B733A303A22223B733A31313A22746167466565644C696E6B223B733A313A2231223B733A31313A227461674665656449636F6E223B733A313A2231223B733A31363A2267656E657269634974656D436F756E74223B733A323A223130223B733A31363A2267656E657269634974656D5469746C65223B733A313A2231223B733A32323A2267656E657269634974656D5469746C654C696E6B6564223B733A313A2231223B733A32323A2267656E657269634974656D4461746543726561746564223B733A313A2231223B733A31363A2267656E657269634974656D496D616765223B733A313A2231223B733A32303A2267656E657269634974656D496E74726F54657874223B733A313A2231223B733A31393A2267656E657269634974656D43617465676F7279223B733A313A2231223B733A31393A2267656E657269634974656D526561644D6F7265223B733A313A2231223B733A32323A2267656E657269634974656D45787472614669656C6473223B733A313A2230223B733A31353A2267656E65726963466565644C696E6B223B733A313A2231223B733A31353A2267656E657269634665656449636F6E223B733A313A2231223B733A393A22666565644C696D6974223B733A323A223130223B733A31333A22666565644974656D496D616765223B733A313A2231223B733A31313A2266656564496D6753697A65223B733A313A2253223B733A31373A22666565644974656D496E74726F54657874223B733A313A2231223B733A31373A226665656454657874576F72644C696D6974223B733A303A22223B733A31363A22666565644974656D46756C6C54657874223B733A313A2231223B733A31323A22666565644974656D54616773223B733A313A2230223B733A31333A22666565644974656D566964656F223B733A313A2230223B733A31353A22666565644974656D47616C6C657279223B733A313A2230223B733A31393A22666565644974656D4174746163686D656E7473223B733A313A2230223B733A31343A2266656564426F677573456D61696C223B733A303A22223B733A31363A22696E74726F54657874436C65616E7570223B733A313A2230223B733A32373A22696E74726F54657874436C65616E75704578636C75646554616773223B733A303A22223B733A32333A22696E74726F54657874436C65616E757054616741747472223B733A303A22223B733A31353A2266756C6C54657874436C65616E7570223B733A313A2230223B733A32363A2266756C6C54657874436C65616E75704578636C75646554616773223B733A303A22223B733A32323A2266756C6C54657874436C65616E757054616741747472223B733A303A22223B733A31323A2278737346696C746572696E67223B733A313A2230223B733A31343A226C696E6B506F7075705769647468223B733A333A22393030223B733A31353A226C696E6B506F707570486569676874223B733A333A22363030223B733A31333A22696D616765735175616C697479223B733A333A22313030223B733A31313A226974656D496D6167655853223B733A333A22313030223B733A31303A226974656D496D61676553223B733A333A22323030223B733A31303A226974656D496D6167654D223B733A333A22343030223B733A31303A226974656D496D6167654C223B733A333A22363030223B733A31313A226974656D496D616765584C223B733A333A22393030223B733A31363A226974656D496D61676547656E65726963223B733A333A22333030223B733A31333A22636174496D6167655769647468223B733A333A22313030223B733A31353A22636174496D61676544656661756C74223B733A313A2231223B733A31343A2275736572496D6167655769647468223B733A333A22313030223B733A31363A2275736572496D61676544656661756C74223B733A313A2231223B733A31373A22636F6D6D656E746572496D675769647468223B733A323A223438223B733A31373A226F6E6C696E65496D616765456469746F72223B733A383A2273706C6173687570223B733A31343A22696D61676554696D657374616D70223B733A313A2230223B733A31363A22696D6167654D656D6F72794C696D6974223B733A303A22223B733A31363A22736F6369616C427574746F6E436F6465223B733A303A22223B733A31353A2274776974746572557365726E616D65223B733A303A22223B733A31333A2266616365626F6F6B496D616765223B733A363A224D656469756D223B733A383A22636F6D6D656E7473223B733A313A2231223B733A31363A22636F6D6D656E74734F72646572696E67223B733A343A2244455343223B733A31333A22636F6D6D656E74734C696D6974223B733A323A223130223B733A32303A22636F6D6D656E7473466F726D506F736974696F6E223B733A353A2262656C6F77223B733A31383A22636F6D6D656E74735075626C697368696E67223B733A313A2231223B733A31373A22636F6D6D656E74735265706F7274696E67223B733A313A2232223B733A32333A22636F6D6D656E74735265706F7274526563697069656E74223B733A303A22223B733A32343A22696E6C696E65436F6D6D656E74734D6F6465726174696F6E223B733A313A2230223B733A383A226772617661746172223B733A313A2231223B733A393A22726563617074636861223B733A313A2230223B733A32323A22726563617074636861466F7252656769737465726564223B733A313A2231223B733A31373A22636F6D6D656E7473466F726D4E6F746573223B733A313A2231223B733A32313A22636F6D6D656E7473466F726D4E6F74657354657874223B733A303A22223B733A31353A2266726F6E74656E6445646974696E67223B733A313A2231223B733A31323A2273686F77496D616765546162223B733A313A2231223B733A31393A2273686F77496D61676547616C6C657279546162223B733A313A2231223B733A31323A2273686F77566964656F546162223B733A313A2231223B733A31383A2273686F7745787472614669656C6473546162223B733A313A2231223B733A31383A2273686F774174746163686D656E7473546162223B733A313A2231223B733A31333A2273686F774B32506C7567696E73223B733A313A2231223B733A32323A2273696465426172446973706C617946726F6E74656E64223B733A313A2230223B733A31323A226D65726765456469746F7273223B733A313A2231223B733A31343A2273696465426172446973706C6179223B733A313A2231223B733A31373A226174746163686D656E7473466F6C646572223B733A303A22223B733A31363A2268696465496D706F7274427574746F6E223B733A313A2230223B733A31323A22676F6F676C65536561726368223B733A313A2230223B733A32313A22676F6F676C65536561726368436F6E7461696E6572223B733A32333A226B32476F6F676C65536561726368436F6E7461696E6572223B733A31333A224B325573657250726F66696C65223B733A313A2231223B733A31313A224B325573657247726F7570223B733A303A22223B733A383A227265646972656374223B733A303A22223B733A31313A2261646D696E536561726368223B733A363A2273696D706C65223B733A31323A22636F6F6B6965446F6D61696E223B733A303A22223B733A31333A2274616767696E6753797374656D223B733A313A2231223B733A383A226C6F636B54616773223B733A313A2230223B733A31333A2273686F7754616746696C746572223B733A313A2230223B733A393A226B325461674E6F726D223B733A313A2230223B733A31333A226B325461674E6F726D43617365223B733A353A226C6F776572223B733A33313A226B325461674E6F726D4164646974696F6E616C5265706C6163656D656E7473223B733A303A22223B733A32303A227265636170746368615F7075626C69635F6B6579223B733A303A22223B733A32313A227265636170746368615F707269766174655F6B6579223B733A303A22223B733A31353A227265636170746368615F7468656D65223B733A353A22636C65616E223B733A32333A227265636170746368614F6E526567697374726174696F6E223B733A313A2230223B733A31333A2273746F70466F72756D5370616D223B733A313A2230223B733A31393A2273746F70466F72756D5370616D4170694B6579223B733A303A22223B733A32313A2273686F774974656D73436F756E74657241646D696E223B733A313A2231223B733A31373A2273686F774368696C644361744974656D73223B733A313A2231223B733A32323A2264697361626C65436F6D706163744F72646572696E67223B733A313A2230223B733A31333A226D657461446573634C696D6974223B733A333A22313530223B733A32323A22656E666F7263655345465265706C6163656D656E7473223B733A313A2230223B733A31353A225345465265706C6163656D656E7473223B733A303A22223B733A353A226B32536566223B733A313A2230223B733A31333A226B325365664C6162656C436174223B733A373A22636F6E74656E74223B733A31333A226B325365664C6162656C546167223B733A333A22746167223B733A31343A226B325365664C6162656C55736572223B733A363A22617574686F72223B733A31363A226B325365664C6162656C536561726368223B733A363A22736561726368223B733A31343A226B325365664C6162656C44617465223B733A343A2264617465223B733A31343A226B325365664C6162656C4974656D223B733A313A2230223B733A32363A226B325365664C6162656C4974656D437573746F6D507265666978223B733A303A22223B733A31373A226B32536566496E736572744974656D4964223B733A313A2231223B733A32343A226B325365664974656D49645469746C65416C696173536570223B733A343A2264617368223B733A32323A226B325365665573654974656D5469746C65416C696173223B733A313A2231223B733A31363A226B32536566496E736572744361744964223B733A313A2231223B733A32333A226B3253656643617449645469746C65416C696173536570223B733A343A2264617368223B733A32313A226B325365665573654361745469746C65416C696173223B733A313A2231223B733A31363A2273683430345365664C6162656C436174223B733A303A22223B733A31373A2273683430345365664C6162656C55736572223B733A343A22626C6F67223B733A31373A2273683430345365664C6162656C4974656D223B733A313A2232223B733A31383A2273683430345365665469746C65416C696173223B733A353A22616C696173223B733A32393A2273683430345365664D6F644B32436F6E74656E7446656564416C696173223B733A343A2266656564223B733A32303A227368343034536566496E736572744974656D4964223B733A313A2230223B733A32363A227368343034536566496E73657274556E697175654974656D4964223B733A313A2230223B733A31333A226362496E746567726174696F6E223B733A313A2230223B7D7D733A373A226D6574616B6579223B733A303A22223B733A383A226D65746164657363223B733A303A22223B733A383A226D65746164617461223B4F3A393A224A5265676973747279223A313A7B733A373A22002A0064617461223B4F3A383A22737464436C617373223A323A7B733A363A22726F626F7473223B733A303A22223B733A363A22617574686F72223B733A303A22223B7D7D733A383A226F72646572696E67223B733A313A2232223B733A353A227472617368223B733A313A2230223B733A393A226361745F7472617368223B733A313A2230223B733A383A2263617465676F7279223B733A373A22C3817564696F73223B733A393A226361745F7374617465223B733A313A2231223B733A31303A226361745F616363657373223B733A313A2231223B733A343A22736C7567223B733A393A22333A74657374652D32223B733A373A22636174736C7567223B733A383A22313A617564696F73223B733A363A22617574686F72223B733A31303A2253757065722055736572223B733A363A226C61796F7574223B733A343A226974656D223B733A343A2270617468223B733A33373A22696E6465782E7068702F636F6D706F6E656E742F6B322F6974656D2F332D74657374652D32223B733A31303A226D657461617574686F72223B4E3B7D733A31353A22002A00696E737472756374696F6E73223B613A353A7B693A313B613A333A7B693A303B733A353A227469746C65223B693A313B733A383A227375627469746C65223B693A323B733A323A226964223B7D693A323B613A323A7B693A303B733A373A2273756D6D617279223B693A313B733A343A22626F6479223B7D693A333B613A383A7B693A303B733A343A226D657461223B693A313B733A31303A226C6973745F7072696365223B693A323B733A31303A2273616C655F7072696365223B693A333B733A373A226D6574616B6579223B693A343B733A383A226D65746164657363223B693A353B733A31303A226D657461617574686F72223B693A363B733A363A22617574686F72223B693A373B733A31363A22637265617465645F62795F616C696173223B7D693A343B613A323A7B693A303B733A343A2270617468223B693A313B733A353A22616C696173223B7D693A353B613A313A7B693A303B733A383A22636F6D6D656E7473223B7D7D733A31313A22002A007461786F6E6F6D79223B613A343A7B733A343A2254797065223B613A313A7B733A373A224B32204974656D223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A373A224B32204974656D223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D733A363A22417574686F72223B613A313A7B733A31303A2253757065722055736572223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A31303A2253757065722055736572223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D733A31313A224B322043617465676F7279223B613A313A7B733A373A22C3817564696F73223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A373A22C3817564696F73223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D733A383A224C616E6775616765223B613A313A7B733A313A222A223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A313A222A223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D7D733A333A2275726C223B733A33383A22696E6465782E7068703F6F7074696F6E3D636F6D5F6B3226766965773D6974656D2669643D33223B733A353A22726F757465223B733A34363A22696E6465782E7068703F6F7074696F6E3D636F6D5F6B3226766965773D6974656D2669643D333A74657374652D32223B733A353A227469746C65223B733A373A2254657374652032223B733A31313A226465736372697074696F6E223B733A303A22223B733A393A227075626C6973686564223B4E3B733A353A227374617465223B693A313B733A363A22616363657373223B733A313A2231223B733A383A226C616E6775616765223B733A313A222A223B733A31383A227075626C6973685F73746172745F64617465223B733A31393A22323031332D31322D32322031323A34383A3438223B733A31363A227075626C6973685F656E645F64617465223B733A31393A22303030302D30302D30302030303A30303A3030223B733A31303A2273746172745F64617465223B733A31393A22323031332D31322D32322031333A33373A3235223B733A383A22656E645F64617465223B733A31393A22303030302D30302D30302030303A30303A3030223B733A31303A226C6973745F7072696365223B4E3B733A31303A2273616C655F7072696365223B4E3B733A373A22747970655F6964223B693A313B733A31353A2264656661756C744C616E6775616765223B733A353A2270742D4252223B7D),
  (20,'index.php?option=com_k2&view=item&id=2','index.php?option=com_k2&view=item&id=2:teste&Itemid=147','Teste','','2014-01-07 12:49:04','45a9000b81ff8d7c1eda93346813c82f',1,1,1,'*','2013-12-22 12:48:48','0000-00-00 00:00:00','2013-12-22 12:48:48','0000-00-00 00:00:00',0,0,1,0x4F3A31393A2246696E646572496E6465786572526573756C74223A31393A7B733A31313A22002A00656C656D656E7473223B613A32353A7B733A323A226964223B733A313A2232223B733A353A22616C696173223B733A353A227465737465223B733A373A2273756D6D617279223B733A32373A223C703E446573637269C3A7C3A36F20646F206974656D2E3C2F703E223B733A343A22626F6479223B733A303A22223B733A353A226361746964223B733A313A2231223B733A31303A22637265617465645F6279223B733A333A22353736223B733A31363A22637265617465645F62795F616C696173223B733A303A22223B733A383A226D6F646966696564223B733A31393A22323031342D30312D30372031343A34393A3033223B733A31313A226D6F6469666965645F6279223B733A333A22353736223B733A363A22706172616D73223B4F3A393A224A5265676973747279223A313A7B733A373A22002A0064617461223B4F3A383A22737464436C617373223A3135343A7B733A31303A22656E61626C655F637373223B733A313A2231223B733A31343A226A517565727948616E646C696E67223B733A393A22312E3872656D6F7465223B733A32313A226261636B656E644A517565727948616E646C696E67223B733A363A2272656D6F7465223B733A383A22757365724E616D65223B733A313A2231223B733A393A2275736572496D616765223B733A313A2231223B733A31353A22757365724465736372697074696F6E223B733A313A2231223B733A373A227573657255524C223B733A313A2231223B733A393A2275736572456D61696C223B733A313A2230223B733A31323A2275736572466565644C696E6B223B733A313A2231223B733A31323A22757365724665656449636F6E223B733A313A2231223B733A31333A22757365724974656D436F756E74223B733A323A223130223B733A31333A22757365724974656D5469746C65223B733A313A2231223B733A31393A22757365724974656D5469746C654C696E6B6564223B733A313A2231223B733A31393A22757365724974656D4461746543726561746564223B733A313A2231223B733A31333A22757365724974656D496D616765223B733A313A2231223B733A31373A22757365724974656D496E74726F54657874223B733A313A2231223B733A31363A22757365724974656D43617465676F7279223B733A313A2231223B733A31323A22757365724974656D54616773223B733A313A2231223B733A32323A22757365724974656D436F6D6D656E7473416E63686F72223B733A313A2231223B733A31363A22757365724974656D526561644D6F7265223B733A313A2231223B733A31373A22757365724974656D4B32506C7567696E73223B733A313A2231223B733A31323A227461674974656D436F756E74223B733A323A223130223B733A31323A227461674974656D5469746C65223B733A313A2231223B733A31383A227461674974656D5469746C654C696E6B6564223B733A313A2231223B733A31383A227461674974656D4461746543726561746564223B733A313A2231223B733A31323A227461674974656D496D616765223B733A313A2231223B733A31363A227461674974656D496E74726F54657874223B733A313A2231223B733A31353A227461674974656D43617465676F7279223B733A313A2231223B733A31353A227461674974656D526561644D6F7265223B733A313A2231223B733A31383A227461674974656D45787472614669656C6473223B733A313A2230223B733A31313A227461674F72646572696E67223B733A303A22223B733A31313A22746167466565644C696E6B223B733A313A2231223B733A31313A227461674665656449636F6E223B733A313A2231223B733A31363A2267656E657269634974656D436F756E74223B733A323A223130223B733A31363A2267656E657269634974656D5469746C65223B733A313A2231223B733A32323A2267656E657269634974656D5469746C654C696E6B6564223B733A313A2231223B733A32323A2267656E657269634974656D4461746543726561746564223B733A313A2231223B733A31363A2267656E657269634974656D496D616765223B733A313A2231223B733A32303A2267656E657269634974656D496E74726F54657874223B733A313A2231223B733A31393A2267656E657269634974656D43617465676F7279223B733A313A2231223B733A31393A2267656E657269634974656D526561644D6F7265223B733A313A2231223B733A32323A2267656E657269634974656D45787472614669656C6473223B733A313A2230223B733A31353A2267656E65726963466565644C696E6B223B733A313A2231223B733A31353A2267656E657269634665656449636F6E223B733A313A2231223B733A393A22666565644C696D6974223B733A323A223130223B733A31333A22666565644974656D496D616765223B733A313A2231223B733A31313A2266656564496D6753697A65223B733A313A2253223B733A31373A22666565644974656D496E74726F54657874223B733A313A2231223B733A31373A226665656454657874576F72644C696D6974223B733A303A22223B733A31363A22666565644974656D46756C6C54657874223B733A313A2231223B733A31323A22666565644974656D54616773223B733A313A2230223B733A31333A22666565644974656D566964656F223B733A313A2230223B733A31353A22666565644974656D47616C6C657279223B733A313A2230223B733A31393A22666565644974656D4174746163686D656E7473223B733A313A2230223B733A31343A2266656564426F677573456D61696C223B733A303A22223B733A31363A22696E74726F54657874436C65616E7570223B733A313A2230223B733A32373A22696E74726F54657874436C65616E75704578636C75646554616773223B733A303A22223B733A32333A22696E74726F54657874436C65616E757054616741747472223B733A303A22223B733A31353A2266756C6C54657874436C65616E7570223B733A313A2230223B733A32363A2266756C6C54657874436C65616E75704578636C75646554616773223B733A303A22223B733A32323A2266756C6C54657874436C65616E757054616741747472223B733A303A22223B733A31323A2278737346696C746572696E67223B733A313A2230223B733A31343A226C696E6B506F7075705769647468223B733A333A22393030223B733A31353A226C696E6B506F707570486569676874223B733A333A22363030223B733A31333A22696D616765735175616C697479223B733A333A22313030223B733A31313A226974656D496D6167655853223B733A333A22313030223B733A31303A226974656D496D61676553223B733A333A22323030223B733A31303A226974656D496D6167654D223B733A333A22343030223B733A31303A226974656D496D6167654C223B733A333A22363030223B733A31313A226974656D496D616765584C223B733A333A22393030223B733A31363A226974656D496D61676547656E65726963223B733A333A22333030223B733A31333A22636174496D6167655769647468223B733A333A22313030223B733A31353A22636174496D61676544656661756C74223B733A313A2231223B733A31343A2275736572496D6167655769647468223B733A333A22313030223B733A31363A2275736572496D61676544656661756C74223B733A313A2231223B733A31373A22636F6D6D656E746572496D675769647468223B733A323A223438223B733A31373A226F6E6C696E65496D616765456469746F72223B733A383A2273706C6173687570223B733A31343A22696D61676554696D657374616D70223B733A313A2230223B733A31363A22696D6167654D656D6F72794C696D6974223B733A303A22223B733A31363A22736F6369616C427574746F6E436F6465223B733A303A22223B733A31353A2274776974746572557365726E616D65223B733A303A22223B733A31333A2266616365626F6F6B496D616765223B733A363A224D656469756D223B733A383A22636F6D6D656E7473223B733A313A2231223B733A31363A22636F6D6D656E74734F72646572696E67223B733A343A2244455343223B733A31333A22636F6D6D656E74734C696D6974223B733A323A223130223B733A32303A22636F6D6D656E7473466F726D506F736974696F6E223B733A353A2262656C6F77223B733A31383A22636F6D6D656E74735075626C697368696E67223B733A313A2231223B733A31373A22636F6D6D656E74735265706F7274696E67223B733A313A2232223B733A32333A22636F6D6D656E74735265706F7274526563697069656E74223B733A303A22223B733A32343A22696E6C696E65436F6D6D656E74734D6F6465726174696F6E223B733A313A2230223B733A383A226772617661746172223B733A313A2231223B733A393A22726563617074636861223B733A313A2230223B733A32323A22726563617074636861466F7252656769737465726564223B733A313A2231223B733A31373A22636F6D6D656E7473466F726D4E6F746573223B733A313A2231223B733A32313A22636F6D6D656E7473466F726D4E6F74657354657874223B733A303A22223B733A31353A2266726F6E74656E6445646974696E67223B733A313A2231223B733A31323A2273686F77496D616765546162223B733A313A2231223B733A31393A2273686F77496D61676547616C6C657279546162223B733A313A2231223B733A31323A2273686F77566964656F546162223B733A313A2231223B733A31383A2273686F7745787472614669656C6473546162223B733A313A2231223B733A31383A2273686F774174746163686D656E7473546162223B733A313A2231223B733A31333A2273686F774B32506C7567696E73223B733A313A2231223B733A32323A2273696465426172446973706C617946726F6E74656E64223B733A313A2230223B733A31323A226D65726765456469746F7273223B733A313A2231223B733A31343A2273696465426172446973706C6179223B733A313A2231223B733A31373A226174746163686D656E7473466F6C646572223B733A303A22223B733A31363A2268696465496D706F7274427574746F6E223B733A313A2230223B733A31323A22676F6F676C65536561726368223B733A313A2230223B733A32313A22676F6F676C65536561726368436F6E7461696E6572223B733A32333A226B32476F6F676C65536561726368436F6E7461696E6572223B733A31333A224B325573657250726F66696C65223B733A313A2231223B733A31313A224B325573657247726F7570223B733A303A22223B733A383A227265646972656374223B733A303A22223B733A31313A2261646D696E536561726368223B733A363A2273696D706C65223B733A31323A22636F6F6B6965446F6D61696E223B733A303A22223B733A31333A2274616767696E6753797374656D223B733A313A2231223B733A383A226C6F636B54616773223B733A313A2230223B733A31333A2273686F7754616746696C746572223B733A313A2230223B733A393A226B325461674E6F726D223B733A313A2230223B733A31333A226B325461674E6F726D43617365223B733A353A226C6F776572223B733A33313A226B325461674E6F726D4164646974696F6E616C5265706C6163656D656E7473223B733A303A22223B733A32303A227265636170746368615F7075626C69635F6B6579223B733A303A22223B733A32313A227265636170746368615F707269766174655F6B6579223B733A303A22223B733A31353A227265636170746368615F7468656D65223B733A353A22636C65616E223B733A32333A227265636170746368614F6E526567697374726174696F6E223B733A313A2230223B733A31333A2273746F70466F72756D5370616D223B733A313A2230223B733A31393A2273746F70466F72756D5370616D4170694B6579223B733A303A22223B733A32313A2273686F774974656D73436F756E74657241646D696E223B733A313A2231223B733A31373A2273686F774368696C644361744974656D73223B733A313A2231223B733A32323A2264697361626C65436F6D706163744F72646572696E67223B733A313A2230223B733A31333A226D657461446573634C696D6974223B733A333A22313530223B733A32323A22656E666F7263655345465265706C6163656D656E7473223B733A313A2230223B733A31353A225345465265706C6163656D656E7473223B733A303A22223B733A353A226B32536566223B733A313A2230223B733A31333A226B325365664C6162656C436174223B733A373A22636F6E74656E74223B733A31333A226B325365664C6162656C546167223B733A333A22746167223B733A31343A226B325365664C6162656C55736572223B733A363A22617574686F72223B733A31363A226B325365664C6162656C536561726368223B733A363A22736561726368223B733A31343A226B325365664C6162656C44617465223B733A343A2264617465223B733A31343A226B325365664C6162656C4974656D223B733A313A2230223B733A32363A226B325365664C6162656C4974656D437573746F6D507265666978223B733A303A22223B733A31373A226B32536566496E736572744974656D4964223B733A313A2231223B733A32343A226B325365664974656D49645469746C65416C696173536570223B733A343A2264617368223B733A32323A226B325365665573654974656D5469746C65416C696173223B733A313A2231223B733A31363A226B32536566496E736572744361744964223B733A313A2231223B733A32333A226B3253656643617449645469746C65416C696173536570223B733A343A2264617368223B733A32313A226B325365665573654361745469746C65416C696173223B733A313A2231223B733A31363A2273683430345365664C6162656C436174223B733A303A22223B733A31373A2273683430345365664C6162656C55736572223B733A343A22626C6F67223B733A31373A2273683430345365664C6162656C4974656D223B733A313A2232223B733A31383A2273683430345365665469746C65416C696173223B733A353A22616C696173223B733A32393A2273683430345365664D6F644B32436F6E74656E7446656564416C696173223B733A343A2266656564223B733A32303A227368343034536566496E736572744974656D4964223B733A313A2230223B733A32363A227368343034536566496E73657274556E697175654974656D4964223B733A313A2230223B733A31333A226362496E746567726174696F6E223B733A313A2230223B7D7D733A373A226D6574616B6579223B733A303A22223B733A383A226D65746164657363223B733A303A22223B733A383A226D65746164617461223B4F3A393A224A5265676973747279223A313A7B733A373A22002A0064617461223B4F3A383A22737464436C617373223A323A7B733A363A22726F626F7473223B733A303A22223B733A363A22617574686F72223B733A303A22223B7D7D733A383A226F72646572696E67223B733A313A2231223B733A353A227472617368223B733A313A2230223B733A393A226361745F7472617368223B733A313A2230223B733A383A2263617465676F7279223B733A373A22C3817564696F73223B733A393A226361745F7374617465223B733A313A2231223B733A31303A226361745F616363657373223B733A313A2231223B733A343A22736C7567223B733A373A22323A7465737465223B733A373A22636174736C7567223B733A383A22313A617564696F73223B733A363A22617574686F72223B733A31303A2253757065722055736572223B733A363A226C61796F7574223B733A343A226974656D223B733A343A2270617468223B733A34323A22696E6465782E7068702F323031332D31302D32372D31332D32362D33352F6974656D2F322D7465737465223B733A31303A226D657461617574686F72223B4E3B7D733A31353A22002A00696E737472756374696F6E73223B613A353A7B693A313B613A333A7B693A303B733A353A227469746C65223B693A313B733A383A227375627469746C65223B693A323B733A323A226964223B7D693A323B613A323A7B693A303B733A373A2273756D6D617279223B693A313B733A343A22626F6479223B7D693A333B613A383A7B693A303B733A343A226D657461223B693A313B733A31303A226C6973745F7072696365223B693A323B733A31303A2273616C655F7072696365223B693A333B733A373A226D6574616B6579223B693A343B733A383A226D65746164657363223B693A353B733A31303A226D657461617574686F72223B693A363B733A363A22617574686F72223B693A373B733A31363A22637265617465645F62795F616C696173223B7D693A343B613A323A7B693A303B733A343A2270617468223B693A313B733A353A22616C696173223B7D693A353B613A313A7B693A303B733A383A22636F6D6D656E7473223B7D7D733A31313A22002A007461786F6E6F6D79223B613A343A7B733A343A2254797065223B613A313A7B733A373A224B32204974656D223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A373A224B32204974656D223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D733A363A22417574686F72223B613A313A7B733A31303A2253757065722055736572223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A31303A2253757065722055736572223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D733A31313A224B322043617465676F7279223B613A313A7B733A373A22C3817564696F73223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A373A22C3817564696F73223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D733A383A224C616E6775616765223B613A313A7B733A313A222A223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A313A222A223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D7D733A333A2275726C223B733A33383A22696E6465782E7068703F6F7074696F6E3D636F6D5F6B3226766965773D6974656D2669643D32223B733A353A22726F757465223B733A35353A22696E6465782E7068703F6F7074696F6E3D636F6D5F6B3226766965773D6974656D2669643D323A7465737465264974656D69643D313437223B733A353A227469746C65223B733A353A225465737465223B733A31313A226465736372697074696F6E223B733A303A22223B733A393A227075626C6973686564223B4E3B733A353A227374617465223B693A313B733A363A22616363657373223B733A313A2231223B733A383A226C616E6775616765223B733A313A222A223B733A31383A227075626C6973685F73746172745F64617465223B733A31393A22323031332D31322D32322031323A34383A3438223B733A31363A227075626C6973685F656E645F64617465223B733A31393A22303030302D30302D30302030303A30303A3030223B733A31303A2273746172745F64617465223B733A31393A22323031332D31322D32322031323A34383A3438223B733A383A22656E645F64617465223B733A31393A22303030302D30302D30302030303A30303A3030223B733A31303A226C6973745F7072696365223B4E3B733A31303A2273616C655F7072696365223B4E3B733A373A22747970655F6964223B693A313B733A31353A2264656661756C744C616E6775616765223B733A353A2270742D4252223B7D),
  (21,'index.php?option=com_k2&view=item&id=5','index.php?option=com_k2&view=item&id=5:copia-de-teste','Cópia de Teste','','2014-01-07 12:49:37','c2d49b06903d872bca32ea3880b4cbb9',1,1,1,'*','2013-12-22 12:48:48','0000-00-00 00:00:00','2013-12-22 13:38:53','0000-00-00 00:00:00',0,0,1,0x4F3A31393A2246696E646572496E6465786572526573756C74223A31393A7B733A31313A22002A00656C656D656E7473223B613A32353A7B733A323A226964223B733A313A2235223B733A353A22616C696173223B733A31343A22636F7069612D64652D7465737465223B733A373A2273756D6D617279223B733A32373A223C703E446573637269C3A7C3A36F20646F206974656D2E3C2F703E223B733A343A22626F6479223B733A303A22223B733A353A226361746964223B733A313A2232223B733A31303A22637265617465645F6279223B733A333A22353736223B733A31363A22637265617465645F62795F616C696173223B733A303A22223B733A383A226D6F646966696564223B733A31393A22323031342D30312D30372031343A34393A3337223B733A31313A226D6F6469666965645F6279223B733A333A22353736223B733A363A22706172616D73223B4F3A393A224A5265676973747279223A313A7B733A373A22002A0064617461223B4F3A383A22737464436C617373223A3135343A7B733A31303A22656E61626C655F637373223B733A313A2231223B733A31343A226A517565727948616E646C696E67223B733A393A22312E3872656D6F7465223B733A32313A226261636B656E644A517565727948616E646C696E67223B733A363A2272656D6F7465223B733A383A22757365724E616D65223B733A313A2231223B733A393A2275736572496D616765223B733A313A2231223B733A31353A22757365724465736372697074696F6E223B733A313A2231223B733A373A227573657255524C223B733A313A2231223B733A393A2275736572456D61696C223B733A313A2230223B733A31323A2275736572466565644C696E6B223B733A313A2231223B733A31323A22757365724665656449636F6E223B733A313A2231223B733A31333A22757365724974656D436F756E74223B733A323A223130223B733A31333A22757365724974656D5469746C65223B733A313A2231223B733A31393A22757365724974656D5469746C654C696E6B6564223B733A313A2231223B733A31393A22757365724974656D4461746543726561746564223B733A313A2231223B733A31333A22757365724974656D496D616765223B733A313A2231223B733A31373A22757365724974656D496E74726F54657874223B733A313A2231223B733A31363A22757365724974656D43617465676F7279223B733A313A2231223B733A31323A22757365724974656D54616773223B733A313A2231223B733A32323A22757365724974656D436F6D6D656E7473416E63686F72223B733A313A2231223B733A31363A22757365724974656D526561644D6F7265223B733A313A2231223B733A31373A22757365724974656D4B32506C7567696E73223B733A313A2231223B733A31323A227461674974656D436F756E74223B733A323A223130223B733A31323A227461674974656D5469746C65223B733A313A2231223B733A31383A227461674974656D5469746C654C696E6B6564223B733A313A2231223B733A31383A227461674974656D4461746543726561746564223B733A313A2231223B733A31323A227461674974656D496D616765223B733A313A2231223B733A31363A227461674974656D496E74726F54657874223B733A313A2231223B733A31353A227461674974656D43617465676F7279223B733A313A2231223B733A31353A227461674974656D526561644D6F7265223B733A313A2231223B733A31383A227461674974656D45787472614669656C6473223B733A313A2230223B733A31313A227461674F72646572696E67223B733A303A22223B733A31313A22746167466565644C696E6B223B733A313A2231223B733A31313A227461674665656449636F6E223B733A313A2231223B733A31363A2267656E657269634974656D436F756E74223B733A323A223130223B733A31363A2267656E657269634974656D5469746C65223B733A313A2231223B733A32323A2267656E657269634974656D5469746C654C696E6B6564223B733A313A2231223B733A32323A2267656E657269634974656D4461746543726561746564223B733A313A2231223B733A31363A2267656E657269634974656D496D616765223B733A313A2231223B733A32303A2267656E657269634974656D496E74726F54657874223B733A313A2231223B733A31393A2267656E657269634974656D43617465676F7279223B733A313A2231223B733A31393A2267656E657269634974656D526561644D6F7265223B733A313A2231223B733A32323A2267656E657269634974656D45787472614669656C6473223B733A313A2230223B733A31353A2267656E65726963466565644C696E6B223B733A313A2231223B733A31353A2267656E657269634665656449636F6E223B733A313A2231223B733A393A22666565644C696D6974223B733A323A223130223B733A31333A22666565644974656D496D616765223B733A313A2231223B733A31313A2266656564496D6753697A65223B733A313A2253223B733A31373A22666565644974656D496E74726F54657874223B733A313A2231223B733A31373A226665656454657874576F72644C696D6974223B733A303A22223B733A31363A22666565644974656D46756C6C54657874223B733A313A2231223B733A31323A22666565644974656D54616773223B733A313A2230223B733A31333A22666565644974656D566964656F223B733A313A2230223B733A31353A22666565644974656D47616C6C657279223B733A313A2230223B733A31393A22666565644974656D4174746163686D656E7473223B733A313A2230223B733A31343A2266656564426F677573456D61696C223B733A303A22223B733A31363A22696E74726F54657874436C65616E7570223B733A313A2230223B733A32373A22696E74726F54657874436C65616E75704578636C75646554616773223B733A303A22223B733A32333A22696E74726F54657874436C65616E757054616741747472223B733A303A22223B733A31353A2266756C6C54657874436C65616E7570223B733A313A2230223B733A32363A2266756C6C54657874436C65616E75704578636C75646554616773223B733A303A22223B733A32323A2266756C6C54657874436C65616E757054616741747472223B733A303A22223B733A31323A2278737346696C746572696E67223B733A313A2230223B733A31343A226C696E6B506F7075705769647468223B733A333A22393030223B733A31353A226C696E6B506F707570486569676874223B733A333A22363030223B733A31333A22696D616765735175616C697479223B733A333A22313030223B733A31313A226974656D496D6167655853223B733A333A22313030223B733A31303A226974656D496D61676553223B733A333A22323030223B733A31303A226974656D496D6167654D223B733A333A22343030223B733A31303A226974656D496D6167654C223B733A333A22363030223B733A31313A226974656D496D616765584C223B733A333A22393030223B733A31363A226974656D496D61676547656E65726963223B733A333A22333030223B733A31333A22636174496D6167655769647468223B733A333A22313030223B733A31353A22636174496D61676544656661756C74223B733A313A2231223B733A31343A2275736572496D6167655769647468223B733A333A22313030223B733A31363A2275736572496D61676544656661756C74223B733A313A2231223B733A31373A22636F6D6D656E746572496D675769647468223B733A323A223438223B733A31373A226F6E6C696E65496D616765456469746F72223B733A383A2273706C6173687570223B733A31343A22696D61676554696D657374616D70223B733A313A2230223B733A31363A22696D6167654D656D6F72794C696D6974223B733A303A22223B733A31363A22736F6369616C427574746F6E436F6465223B733A303A22223B733A31353A2274776974746572557365726E616D65223B733A303A22223B733A31333A2266616365626F6F6B496D616765223B733A363A224D656469756D223B733A383A22636F6D6D656E7473223B733A313A2231223B733A31363A22636F6D6D656E74734F72646572696E67223B733A343A2244455343223B733A31333A22636F6D6D656E74734C696D6974223B733A323A223130223B733A32303A22636F6D6D656E7473466F726D506F736974696F6E223B733A353A2262656C6F77223B733A31383A22636F6D6D656E74735075626C697368696E67223B733A313A2231223B733A31373A22636F6D6D656E74735265706F7274696E67223B733A313A2232223B733A32333A22636F6D6D656E74735265706F7274526563697069656E74223B733A303A22223B733A32343A22696E6C696E65436F6D6D656E74734D6F6465726174696F6E223B733A313A2230223B733A383A226772617661746172223B733A313A2231223B733A393A22726563617074636861223B733A313A2230223B733A32323A22726563617074636861466F7252656769737465726564223B733A313A2231223B733A31373A22636F6D6D656E7473466F726D4E6F746573223B733A313A2231223B733A32313A22636F6D6D656E7473466F726D4E6F74657354657874223B733A303A22223B733A31353A2266726F6E74656E6445646974696E67223B733A313A2231223B733A31323A2273686F77496D616765546162223B733A313A2231223B733A31393A2273686F77496D61676547616C6C657279546162223B733A313A2231223B733A31323A2273686F77566964656F546162223B733A313A2231223B733A31383A2273686F7745787472614669656C6473546162223B733A313A2231223B733A31383A2273686F774174746163686D656E7473546162223B733A313A2231223B733A31333A2273686F774B32506C7567696E73223B733A313A2231223B733A32323A2273696465426172446973706C617946726F6E74656E64223B733A313A2230223B733A31323A226D65726765456469746F7273223B733A313A2231223B733A31343A2273696465426172446973706C6179223B733A313A2231223B733A31373A226174746163686D656E7473466F6C646572223B733A303A22223B733A31363A2268696465496D706F7274427574746F6E223B733A313A2230223B733A31323A22676F6F676C65536561726368223B733A313A2230223B733A32313A22676F6F676C65536561726368436F6E7461696E6572223B733A32333A226B32476F6F676C65536561726368436F6E7461696E6572223B733A31333A224B325573657250726F66696C65223B733A313A2231223B733A31313A224B325573657247726F7570223B733A303A22223B733A383A227265646972656374223B733A303A22223B733A31313A2261646D696E536561726368223B733A363A2273696D706C65223B733A31323A22636F6F6B6965446F6D61696E223B733A303A22223B733A31333A2274616767696E6753797374656D223B733A313A2231223B733A383A226C6F636B54616773223B733A313A2230223B733A31333A2273686F7754616746696C746572223B733A313A2230223B733A393A226B325461674E6F726D223B733A313A2230223B733A31333A226B325461674E6F726D43617365223B733A353A226C6F776572223B733A33313A226B325461674E6F726D4164646974696F6E616C5265706C6163656D656E7473223B733A303A22223B733A32303A227265636170746368615F7075626C69635F6B6579223B733A303A22223B733A32313A227265636170746368615F707269766174655F6B6579223B733A303A22223B733A31353A227265636170746368615F7468656D65223B733A353A22636C65616E223B733A32333A227265636170746368614F6E526567697374726174696F6E223B733A313A2230223B733A31333A2273746F70466F72756D5370616D223B733A313A2230223B733A31393A2273746F70466F72756D5370616D4170694B6579223B733A303A22223B733A32313A2273686F774974656D73436F756E74657241646D696E223B733A313A2231223B733A31373A2273686F774368696C644361744974656D73223B733A313A2231223B733A32323A2264697361626C65436F6D706163744F72646572696E67223B733A313A2230223B733A31333A226D657461446573634C696D6974223B733A333A22313530223B733A32323A22656E666F7263655345465265706C6163656D656E7473223B733A313A2230223B733A31353A225345465265706C6163656D656E7473223B733A303A22223B733A353A226B32536566223B733A313A2230223B733A31333A226B325365664C6162656C436174223B733A373A22636F6E74656E74223B733A31333A226B325365664C6162656C546167223B733A333A22746167223B733A31343A226B325365664C6162656C55736572223B733A363A22617574686F72223B733A31363A226B325365664C6162656C536561726368223B733A363A22736561726368223B733A31343A226B325365664C6162656C44617465223B733A343A2264617465223B733A31343A226B325365664C6162656C4974656D223B733A313A2230223B733A32363A226B325365664C6162656C4974656D437573746F6D507265666978223B733A303A22223B733A31373A226B32536566496E736572744974656D4964223B733A313A2231223B733A32343A226B325365664974656D49645469746C65416C696173536570223B733A343A2264617368223B733A32323A226B325365665573654974656D5469746C65416C696173223B733A313A2231223B733A31363A226B32536566496E736572744361744964223B733A313A2231223B733A32333A226B3253656643617449645469746C65416C696173536570223B733A343A2264617368223B733A32313A226B325365665573654361745469746C65416C696173223B733A313A2231223B733A31363A2273683430345365664C6162656C436174223B733A303A22223B733A31373A2273683430345365664C6162656C55736572223B733A343A22626C6F67223B733A31373A2273683430345365664C6162656C4974656D223B733A313A2232223B733A31383A2273683430345365665469746C65416C696173223B733A353A22616C696173223B733A32393A2273683430345365664D6F644B32436F6E74656E7446656564416C696173223B733A343A2266656564223B733A32303A227368343034536566496E736572744974656D4964223B733A313A2230223B733A32363A227368343034536566496E73657274556E697175654974656D4964223B733A313A2230223B733A31333A226362496E746567726174696F6E223B733A313A2230223B7D7D733A373A226D6574616B6579223B733A303A22223B733A383A226D65746164657363223B733A303A22223B733A383A226D65746164617461223B4F3A393A224A5265676973747279223A313A7B733A373A22002A0064617461223B4F3A383A22737464436C617373223A323A7B733A363A22726F626F7473223B733A303A22223B733A363A22617574686F72223B733A303A22223B7D7D733A383A226F72646572696E67223B733A313A2231223B733A353A227472617368223B733A313A2230223B733A393A226361745F7472617368223B733A313A2230223B733A383A2263617465676F7279223B733A31303A22C3817564696F73202331223B733A393A226361745F7374617465223B733A313A2231223B733A31303A226361745F616363657373223B733A313A2231223B733A343A22736C7567223B733A31363A22353A636F7069612D64652D7465737465223B733A373A22636174736C7567223B733A31303A22323A617564696F732D31223B733A363A22617574686F72223B733A31303A2253757065722055736572223B733A363A226C61796F7574223B733A343A226974656D223B733A343A2270617468223B733A34343A22696E6465782E7068702F636F6D706F6E656E742F6B322F6974656D2F352D636F7069612D64652D7465737465223B733A31303A226D657461617574686F72223B4E3B7D733A31353A22002A00696E737472756374696F6E73223B613A353A7B693A313B613A333A7B693A303B733A353A227469746C65223B693A313B733A383A227375627469746C65223B693A323B733A323A226964223B7D693A323B613A323A7B693A303B733A373A2273756D6D617279223B693A313B733A343A22626F6479223B7D693A333B613A383A7B693A303B733A343A226D657461223B693A313B733A31303A226C6973745F7072696365223B693A323B733A31303A2273616C655F7072696365223B693A333B733A373A226D6574616B6579223B693A343B733A383A226D65746164657363223B693A353B733A31303A226D657461617574686F72223B693A363B733A363A22617574686F72223B693A373B733A31363A22637265617465645F62795F616C696173223B7D693A343B613A323A7B693A303B733A343A2270617468223B693A313B733A353A22616C696173223B7D693A353B613A313A7B693A303B733A383A22636F6D6D656E7473223B7D7D733A31313A22002A007461786F6E6F6D79223B613A343A7B733A343A2254797065223B613A313A7B733A373A224B32204974656D223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A373A224B32204974656D223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D733A363A22417574686F72223B613A313A7B733A31303A2253757065722055736572223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A31303A2253757065722055736572223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D733A31313A224B322043617465676F7279223B613A313A7B733A31303A22C3817564696F73202331223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A31303A22C3817564696F73202331223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D733A383A224C616E6775616765223B613A313A7B733A313A222A223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A313A222A223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D7D733A333A2275726C223B733A33383A22696E6465782E7068703F6F7074696F6E3D636F6D5F6B3226766965773D6974656D2669643D35223B733A353A22726F757465223B733A35333A22696E6465782E7068703F6F7074696F6E3D636F6D5F6B3226766965773D6974656D2669643D353A636F7069612D64652D7465737465223B733A353A227469746C65223B733A31353A2243C3B3706961206465205465737465223B733A31313A226465736372697074696F6E223B733A303A22223B733A393A227075626C6973686564223B4E3B733A353A227374617465223B693A313B733A363A22616363657373223B733A313A2231223B733A383A226C616E6775616765223B733A313A222A223B733A31383A227075626C6973685F73746172745F64617465223B733A31393A22323031332D31322D32322031323A34383A3438223B733A31363A227075626C6973685F656E645F64617465223B733A31393A22303030302D30302D30302030303A30303A3030223B733A31303A2273746172745F64617465223B733A31393A22323031332D31322D32322031333A33383A3533223B733A383A22656E645F64617465223B733A31393A22303030302D30302D30302030303A30303A3030223B733A31303A226C6973745F7072696365223B4E3B733A31303A2273616C655F7072696365223B4E3B733A373A22747970655F6964223B693A313B733A31353A2264656661756C744C616E6775616765223B733A353A2270742D4252223B7D),
  (22,'index.php?option=com_k2&view=item&id=6','index.php?option=com_k2&view=item&id=6:copia-de-copia-de-teste','Cópia de Cópia de Teste','','2014-01-07 12:50:02','a9a0f26ce4e8a4c3455c71f7215d7268',1,1,1,'*','2013-12-22 12:48:48','0000-00-00 00:00:00','2013-12-22 13:40:37','0000-00-00 00:00:00',0,0,1,0x4F3A31393A2246696E646572496E6465786572526573756C74223A31393A7B733A31313A22002A00656C656D656E7473223B613A32353A7B733A323A226964223B733A313A2236223B733A353A22616C696173223B733A32333A22636F7069612D64652D636F7069612D64652D7465737465223B733A373A2273756D6D617279223B733A32373A223C703E446573637269C3A7C3A36F20646F206974656D2E3C2F703E223B733A343A22626F6479223B733A303A22223B733A353A226361746964223B733A313A2232223B733A31303A22637265617465645F6279223B733A333A22353736223B733A31363A22637265617465645F62795F616C696173223B733A303A22223B733A383A226D6F646966696564223B733A31393A22323031342D30312D30372031343A35303A3032223B733A31313A226D6F6469666965645F6279223B733A333A22353736223B733A363A22706172616D73223B4F3A393A224A5265676973747279223A313A7B733A373A22002A0064617461223B4F3A383A22737464436C617373223A3135343A7B733A31303A22656E61626C655F637373223B733A313A2231223B733A31343A226A517565727948616E646C696E67223B733A393A22312E3872656D6F7465223B733A32313A226261636B656E644A517565727948616E646C696E67223B733A363A2272656D6F7465223B733A383A22757365724E616D65223B733A313A2231223B733A393A2275736572496D616765223B733A313A2231223B733A31353A22757365724465736372697074696F6E223B733A313A2231223B733A373A227573657255524C223B733A313A2231223B733A393A2275736572456D61696C223B733A313A2230223B733A31323A2275736572466565644C696E6B223B733A313A2231223B733A31323A22757365724665656449636F6E223B733A313A2231223B733A31333A22757365724974656D436F756E74223B733A323A223130223B733A31333A22757365724974656D5469746C65223B733A313A2231223B733A31393A22757365724974656D5469746C654C696E6B6564223B733A313A2231223B733A31393A22757365724974656D4461746543726561746564223B733A313A2231223B733A31333A22757365724974656D496D616765223B733A313A2231223B733A31373A22757365724974656D496E74726F54657874223B733A313A2231223B733A31363A22757365724974656D43617465676F7279223B733A313A2231223B733A31323A22757365724974656D54616773223B733A313A2231223B733A32323A22757365724974656D436F6D6D656E7473416E63686F72223B733A313A2231223B733A31363A22757365724974656D526561644D6F7265223B733A313A2231223B733A31373A22757365724974656D4B32506C7567696E73223B733A313A2231223B733A31323A227461674974656D436F756E74223B733A323A223130223B733A31323A227461674974656D5469746C65223B733A313A2231223B733A31383A227461674974656D5469746C654C696E6B6564223B733A313A2231223B733A31383A227461674974656D4461746543726561746564223B733A313A2231223B733A31323A227461674974656D496D616765223B733A313A2231223B733A31363A227461674974656D496E74726F54657874223B733A313A2231223B733A31353A227461674974656D43617465676F7279223B733A313A2231223B733A31353A227461674974656D526561644D6F7265223B733A313A2231223B733A31383A227461674974656D45787472614669656C6473223B733A313A2230223B733A31313A227461674F72646572696E67223B733A303A22223B733A31313A22746167466565644C696E6B223B733A313A2231223B733A31313A227461674665656449636F6E223B733A313A2231223B733A31363A2267656E657269634974656D436F756E74223B733A323A223130223B733A31363A2267656E657269634974656D5469746C65223B733A313A2231223B733A32323A2267656E657269634974656D5469746C654C696E6B6564223B733A313A2231223B733A32323A2267656E657269634974656D4461746543726561746564223B733A313A2231223B733A31363A2267656E657269634974656D496D616765223B733A313A2231223B733A32303A2267656E657269634974656D496E74726F54657874223B733A313A2231223B733A31393A2267656E657269634974656D43617465676F7279223B733A313A2231223B733A31393A2267656E657269634974656D526561644D6F7265223B733A313A2231223B733A32323A2267656E657269634974656D45787472614669656C6473223B733A313A2230223B733A31353A2267656E65726963466565644C696E6B223B733A313A2231223B733A31353A2267656E657269634665656449636F6E223B733A313A2231223B733A393A22666565644C696D6974223B733A323A223130223B733A31333A22666565644974656D496D616765223B733A313A2231223B733A31313A2266656564496D6753697A65223B733A313A2253223B733A31373A22666565644974656D496E74726F54657874223B733A313A2231223B733A31373A226665656454657874576F72644C696D6974223B733A303A22223B733A31363A22666565644974656D46756C6C54657874223B733A313A2231223B733A31323A22666565644974656D54616773223B733A313A2230223B733A31333A22666565644974656D566964656F223B733A313A2230223B733A31353A22666565644974656D47616C6C657279223B733A313A2230223B733A31393A22666565644974656D4174746163686D656E7473223B733A313A2230223B733A31343A2266656564426F677573456D61696C223B733A303A22223B733A31363A22696E74726F54657874436C65616E7570223B733A313A2230223B733A32373A22696E74726F54657874436C65616E75704578636C75646554616773223B733A303A22223B733A32333A22696E74726F54657874436C65616E757054616741747472223B733A303A22223B733A31353A2266756C6C54657874436C65616E7570223B733A313A2230223B733A32363A2266756C6C54657874436C65616E75704578636C75646554616773223B733A303A22223B733A32323A2266756C6C54657874436C65616E757054616741747472223B733A303A22223B733A31323A2278737346696C746572696E67223B733A313A2230223B733A31343A226C696E6B506F7075705769647468223B733A333A22393030223B733A31353A226C696E6B506F707570486569676874223B733A333A22363030223B733A31333A22696D616765735175616C697479223B733A333A22313030223B733A31313A226974656D496D6167655853223B733A333A22313030223B733A31303A226974656D496D61676553223B733A333A22323030223B733A31303A226974656D496D6167654D223B733A333A22343030223B733A31303A226974656D496D6167654C223B733A333A22363030223B733A31313A226974656D496D616765584C223B733A333A22393030223B733A31363A226974656D496D61676547656E65726963223B733A333A22333030223B733A31333A22636174496D6167655769647468223B733A333A22313030223B733A31353A22636174496D61676544656661756C74223B733A313A2231223B733A31343A2275736572496D6167655769647468223B733A333A22313030223B733A31363A2275736572496D61676544656661756C74223B733A313A2231223B733A31373A22636F6D6D656E746572496D675769647468223B733A323A223438223B733A31373A226F6E6C696E65496D616765456469746F72223B733A383A2273706C6173687570223B733A31343A22696D61676554696D657374616D70223B733A313A2230223B733A31363A22696D6167654D656D6F72794C696D6974223B733A303A22223B733A31363A22736F6369616C427574746F6E436F6465223B733A303A22223B733A31353A2274776974746572557365726E616D65223B733A303A22223B733A31333A2266616365626F6F6B496D616765223B733A363A224D656469756D223B733A383A22636F6D6D656E7473223B733A313A2231223B733A31363A22636F6D6D656E74734F72646572696E67223B733A343A2244455343223B733A31333A22636F6D6D656E74734C696D6974223B733A323A223130223B733A32303A22636F6D6D656E7473466F726D506F736974696F6E223B733A353A2262656C6F77223B733A31383A22636F6D6D656E74735075626C697368696E67223B733A313A2231223B733A31373A22636F6D6D656E74735265706F7274696E67223B733A313A2232223B733A32333A22636F6D6D656E74735265706F7274526563697069656E74223B733A303A22223B733A32343A22696E6C696E65436F6D6D656E74734D6F6465726174696F6E223B733A313A2230223B733A383A226772617661746172223B733A313A2231223B733A393A22726563617074636861223B733A313A2230223B733A32323A22726563617074636861466F7252656769737465726564223B733A313A2231223B733A31373A22636F6D6D656E7473466F726D4E6F746573223B733A313A2231223B733A32313A22636F6D6D656E7473466F726D4E6F74657354657874223B733A303A22223B733A31353A2266726F6E74656E6445646974696E67223B733A313A2231223B733A31323A2273686F77496D616765546162223B733A313A2231223B733A31393A2273686F77496D61676547616C6C657279546162223B733A313A2231223B733A31323A2273686F77566964656F546162223B733A313A2231223B733A31383A2273686F7745787472614669656C6473546162223B733A313A2231223B733A31383A2273686F774174746163686D656E7473546162223B733A313A2231223B733A31333A2273686F774B32506C7567696E73223B733A313A2231223B733A32323A2273696465426172446973706C617946726F6E74656E64223B733A313A2230223B733A31323A226D65726765456469746F7273223B733A313A2231223B733A31343A2273696465426172446973706C6179223B733A313A2231223B733A31373A226174746163686D656E7473466F6C646572223B733A303A22223B733A31363A2268696465496D706F7274427574746F6E223B733A313A2230223B733A31323A22676F6F676C65536561726368223B733A313A2230223B733A32313A22676F6F676C65536561726368436F6E7461696E6572223B733A32333A226B32476F6F676C65536561726368436F6E7461696E6572223B733A31333A224B325573657250726F66696C65223B733A313A2231223B733A31313A224B325573657247726F7570223B733A303A22223B733A383A227265646972656374223B733A303A22223B733A31313A2261646D696E536561726368223B733A363A2273696D706C65223B733A31323A22636F6F6B6965446F6D61696E223B733A303A22223B733A31333A2274616767696E6753797374656D223B733A313A2231223B733A383A226C6F636B54616773223B733A313A2230223B733A31333A2273686F7754616746696C746572223B733A313A2230223B733A393A226B325461674E6F726D223B733A313A2230223B733A31333A226B325461674E6F726D43617365223B733A353A226C6F776572223B733A33313A226B325461674E6F726D4164646974696F6E616C5265706C6163656D656E7473223B733A303A22223B733A32303A227265636170746368615F7075626C69635F6B6579223B733A303A22223B733A32313A227265636170746368615F707269766174655F6B6579223B733A303A22223B733A31353A227265636170746368615F7468656D65223B733A353A22636C65616E223B733A32333A227265636170746368614F6E526567697374726174696F6E223B733A313A2230223B733A31333A2273746F70466F72756D5370616D223B733A313A2230223B733A31393A2273746F70466F72756D5370616D4170694B6579223B733A303A22223B733A32313A2273686F774974656D73436F756E74657241646D696E223B733A313A2231223B733A31373A2273686F774368696C644361744974656D73223B733A313A2231223B733A32323A2264697361626C65436F6D706163744F72646572696E67223B733A313A2230223B733A31333A226D657461446573634C696D6974223B733A333A22313530223B733A32323A22656E666F7263655345465265706C6163656D656E7473223B733A313A2230223B733A31353A225345465265706C6163656D656E7473223B733A303A22223B733A353A226B32536566223B733A313A2230223B733A31333A226B325365664C6162656C436174223B733A373A22636F6E74656E74223B733A31333A226B325365664C6162656C546167223B733A333A22746167223B733A31343A226B325365664C6162656C55736572223B733A363A22617574686F72223B733A31363A226B325365664C6162656C536561726368223B733A363A22736561726368223B733A31343A226B325365664C6162656C44617465223B733A343A2264617465223B733A31343A226B325365664C6162656C4974656D223B733A313A2230223B733A32363A226B325365664C6162656C4974656D437573746F6D507265666978223B733A303A22223B733A31373A226B32536566496E736572744974656D4964223B733A313A2231223B733A32343A226B325365664974656D49645469746C65416C696173536570223B733A343A2264617368223B733A32323A226B325365665573654974656D5469746C65416C696173223B733A313A2231223B733A31363A226B32536566496E736572744361744964223B733A313A2231223B733A32333A226B3253656643617449645469746C65416C696173536570223B733A343A2264617368223B733A32313A226B325365665573654361745469746C65416C696173223B733A313A2231223B733A31363A2273683430345365664C6162656C436174223B733A303A22223B733A31373A2273683430345365664C6162656C55736572223B733A343A22626C6F67223B733A31373A2273683430345365664C6162656C4974656D223B733A313A2232223B733A31383A2273683430345365665469746C65416C696173223B733A353A22616C696173223B733A32393A2273683430345365664D6F644B32436F6E74656E7446656564416C696173223B733A343A2266656564223B733A32303A227368343034536566496E736572744974656D4964223B733A313A2230223B733A32363A227368343034536566496E73657274556E697175654974656D4964223B733A313A2230223B733A31333A226362496E746567726174696F6E223B733A313A2230223B7D7D733A373A226D6574616B6579223B733A303A22223B733A383A226D65746164657363223B733A303A22223B733A383A226D65746164617461223B4F3A393A224A5265676973747279223A313A7B733A373A22002A0064617461223B4F3A383A22737464436C617373223A323A7B733A363A22726F626F7473223B733A303A22223B733A363A22617574686F72223B733A303A22223B7D7D733A383A226F72646572696E67223B733A313A2232223B733A353A227472617368223B733A313A2230223B733A393A226361745F7472617368223B733A313A2230223B733A383A2263617465676F7279223B733A31303A22C3817564696F73202331223B733A393A226361745F7374617465223B733A313A2231223B733A31303A226361745F616363657373223B733A313A2231223B733A343A22736C7567223B733A32353A22363A636F7069612D64652D636F7069612D64652D7465737465223B733A373A22636174736C7567223B733A31303A22323A617564696F732D31223B733A363A22617574686F72223B733A31303A2253757065722055736572223B733A363A226C61796F7574223B733A343A226974656D223B733A343A2270617468223B733A35333A22696E6465782E7068702F636F6D706F6E656E742F6B322F6974656D2F362D636F7069612D64652D636F7069612D64652D7465737465223B733A31303A226D657461617574686F72223B4E3B7D733A31353A22002A00696E737472756374696F6E73223B613A353A7B693A313B613A333A7B693A303B733A353A227469746C65223B693A313B733A383A227375627469746C65223B693A323B733A323A226964223B7D693A323B613A323A7B693A303B733A373A2273756D6D617279223B693A313B733A343A22626F6479223B7D693A333B613A383A7B693A303B733A343A226D657461223B693A313B733A31303A226C6973745F7072696365223B693A323B733A31303A2273616C655F7072696365223B693A333B733A373A226D6574616B6579223B693A343B733A383A226D65746164657363223B693A353B733A31303A226D657461617574686F72223B693A363B733A363A22617574686F72223B693A373B733A31363A22637265617465645F62795F616C696173223B7D693A343B613A323A7B693A303B733A343A2270617468223B693A313B733A353A22616C696173223B7D693A353B613A313A7B693A303B733A383A22636F6D6D656E7473223B7D7D733A31313A22002A007461786F6E6F6D79223B613A343A7B733A343A2254797065223B613A313A7B733A373A224B32204974656D223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A373A224B32204974656D223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D733A363A22417574686F72223B613A313A7B733A31303A2253757065722055736572223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A31303A2253757065722055736572223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D733A31313A224B322043617465676F7279223B613A313A7B733A31303A22C3817564696F73202331223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A31303A22C3817564696F73202331223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D733A383A224C616E6775616765223B613A313A7B733A313A222A223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A313A222A223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D7D733A333A2275726C223B733A33383A22696E6465782E7068703F6F7074696F6E3D636F6D5F6B3226766965773D6974656D2669643D36223B733A353A22726F757465223B733A36323A22696E6465782E7068703F6F7074696F6E3D636F6D5F6B3226766965773D6974656D2669643D363A636F7069612D64652D636F7069612D64652D7465737465223B733A353A227469746C65223B733A32353A2243C3B37069612064652043C3B3706961206465205465737465223B733A31313A226465736372697074696F6E223B733A303A22223B733A393A227075626C6973686564223B4E3B733A353A227374617465223B693A313B733A363A22616363657373223B733A313A2231223B733A383A226C616E6775616765223B733A313A222A223B733A31383A227075626C6973685F73746172745F64617465223B733A31393A22323031332D31322D32322031323A34383A3438223B733A31363A227075626C6973685F656E645F64617465223B733A31393A22303030302D30302D30302030303A30303A3030223B733A31303A2273746172745F64617465223B733A31393A22323031332D31322D32322031333A34303A3337223B733A383A22656E645F64617465223B733A31393A22303030302D30302D30302030303A30303A3030223B733A31303A226C6973745F7072696365223B4E3B733A31303A2273616C655F7072696365223B4E3B733A373A22747970655F6964223B693A313B733A31353A2264656661756C744C616E6775616765223B733A353A2270742D4252223B7D),
  (24,'index.php?option=com_k2&view=item&id=4','index.php?option=com_k2&view=item&id=4:teste&Itemid=147','Teste 3','','2014-01-07 12:50:45','10851b938dafa7470996479ba2a85e05',1,1,1,'*','2013-12-22 12:48:48','0000-00-00 00:00:00','2013-12-22 13:38:00','0000-00-00 00:00:00',0,0,1,0x4F3A31393A2246696E646572496E6465786572526573756C74223A31393A7B733A31313A22002A00656C656D656E7473223B613A32353A7B733A323A226964223B733A313A2234223B733A353A22616C696173223B733A353A227465737465223B733A373A2273756D6D617279223B733A32373A223C703E446573637269C3A7C3A36F20646F206974656D2E3C2F703E223B733A343A22626F6479223B733A303A22223B733A353A226361746964223B733A313A2231223B733A31303A22637265617465645F6279223B733A333A22353736223B733A31363A22637265617465645F62795F616C696173223B733A303A22223B733A383A226D6F646966696564223B733A31393A22323031342D30312D30372031343A35303A3435223B733A31313A226D6F6469666965645F6279223B733A333A22353736223B733A363A22706172616D73223B4F3A393A224A5265676973747279223A313A7B733A373A22002A0064617461223B4F3A383A22737464436C617373223A3135343A7B733A31303A22656E61626C655F637373223B733A313A2231223B733A31343A226A517565727948616E646C696E67223B733A393A22312E3872656D6F7465223B733A32313A226261636B656E644A517565727948616E646C696E67223B733A363A2272656D6F7465223B733A383A22757365724E616D65223B733A313A2231223B733A393A2275736572496D616765223B733A313A2231223B733A31353A22757365724465736372697074696F6E223B733A313A2231223B733A373A227573657255524C223B733A313A2231223B733A393A2275736572456D61696C223B733A313A2230223B733A31323A2275736572466565644C696E6B223B733A313A2231223B733A31323A22757365724665656449636F6E223B733A313A2231223B733A31333A22757365724974656D436F756E74223B733A323A223130223B733A31333A22757365724974656D5469746C65223B733A313A2231223B733A31393A22757365724974656D5469746C654C696E6B6564223B733A313A2231223B733A31393A22757365724974656D4461746543726561746564223B733A313A2231223B733A31333A22757365724974656D496D616765223B733A313A2231223B733A31373A22757365724974656D496E74726F54657874223B733A313A2231223B733A31363A22757365724974656D43617465676F7279223B733A313A2231223B733A31323A22757365724974656D54616773223B733A313A2231223B733A32323A22757365724974656D436F6D6D656E7473416E63686F72223B733A313A2231223B733A31363A22757365724974656D526561644D6F7265223B733A313A2231223B733A31373A22757365724974656D4B32506C7567696E73223B733A313A2231223B733A31323A227461674974656D436F756E74223B733A323A223130223B733A31323A227461674974656D5469746C65223B733A313A2231223B733A31383A227461674974656D5469746C654C696E6B6564223B733A313A2231223B733A31383A227461674974656D4461746543726561746564223B733A313A2231223B733A31323A227461674974656D496D616765223B733A313A2231223B733A31363A227461674974656D496E74726F54657874223B733A313A2231223B733A31353A227461674974656D43617465676F7279223B733A313A2231223B733A31353A227461674974656D526561644D6F7265223B733A313A2231223B733A31383A227461674974656D45787472614669656C6473223B733A313A2230223B733A31313A227461674F72646572696E67223B733A303A22223B733A31313A22746167466565644C696E6B223B733A313A2231223B733A31313A227461674665656449636F6E223B733A313A2231223B733A31363A2267656E657269634974656D436F756E74223B733A323A223130223B733A31363A2267656E657269634974656D5469746C65223B733A313A2231223B733A32323A2267656E657269634974656D5469746C654C696E6B6564223B733A313A2231223B733A32323A2267656E657269634974656D4461746543726561746564223B733A313A2231223B733A31363A2267656E657269634974656D496D616765223B733A313A2231223B733A32303A2267656E657269634974656D496E74726F54657874223B733A313A2231223B733A31393A2267656E657269634974656D43617465676F7279223B733A313A2231223B733A31393A2267656E657269634974656D526561644D6F7265223B733A313A2231223B733A32323A2267656E657269634974656D45787472614669656C6473223B733A313A2230223B733A31353A2267656E65726963466565644C696E6B223B733A313A2231223B733A31353A2267656E657269634665656449636F6E223B733A313A2231223B733A393A22666565644C696D6974223B733A323A223130223B733A31333A22666565644974656D496D616765223B733A313A2231223B733A31313A2266656564496D6753697A65223B733A313A2253223B733A31373A22666565644974656D496E74726F54657874223B733A313A2231223B733A31373A226665656454657874576F72644C696D6974223B733A303A22223B733A31363A22666565644974656D46756C6C54657874223B733A313A2231223B733A31323A22666565644974656D54616773223B733A313A2230223B733A31333A22666565644974656D566964656F223B733A313A2230223B733A31353A22666565644974656D47616C6C657279223B733A313A2230223B733A31393A22666565644974656D4174746163686D656E7473223B733A313A2230223B733A31343A2266656564426F677573456D61696C223B733A303A22223B733A31363A22696E74726F54657874436C65616E7570223B733A313A2230223B733A32373A22696E74726F54657874436C65616E75704578636C75646554616773223B733A303A22223B733A32333A22696E74726F54657874436C65616E757054616741747472223B733A303A22223B733A31353A2266756C6C54657874436C65616E7570223B733A313A2230223B733A32363A2266756C6C54657874436C65616E75704578636C75646554616773223B733A303A22223B733A32323A2266756C6C54657874436C65616E757054616741747472223B733A303A22223B733A31323A2278737346696C746572696E67223B733A313A2230223B733A31343A226C696E6B506F7075705769647468223B733A333A22393030223B733A31353A226C696E6B506F707570486569676874223B733A333A22363030223B733A31333A22696D616765735175616C697479223B733A333A22313030223B733A31313A226974656D496D6167655853223B733A333A22313030223B733A31303A226974656D496D61676553223B733A333A22323030223B733A31303A226974656D496D6167654D223B733A333A22343030223B733A31303A226974656D496D6167654C223B733A333A22363030223B733A31313A226974656D496D616765584C223B733A333A22393030223B733A31363A226974656D496D61676547656E65726963223B733A333A22333030223B733A31333A22636174496D6167655769647468223B733A333A22313030223B733A31353A22636174496D61676544656661756C74223B733A313A2231223B733A31343A2275736572496D6167655769647468223B733A333A22313030223B733A31363A2275736572496D61676544656661756C74223B733A313A2231223B733A31373A22636F6D6D656E746572496D675769647468223B733A323A223438223B733A31373A226F6E6C696E65496D616765456469746F72223B733A383A2273706C6173687570223B733A31343A22696D61676554696D657374616D70223B733A313A2230223B733A31363A22696D6167654D656D6F72794C696D6974223B733A303A22223B733A31363A22736F6369616C427574746F6E436F6465223B733A303A22223B733A31353A2274776974746572557365726E616D65223B733A303A22223B733A31333A2266616365626F6F6B496D616765223B733A363A224D656469756D223B733A383A22636F6D6D656E7473223B733A313A2231223B733A31363A22636F6D6D656E74734F72646572696E67223B733A343A2244455343223B733A31333A22636F6D6D656E74734C696D6974223B733A323A223130223B733A32303A22636F6D6D656E7473466F726D506F736974696F6E223B733A353A2262656C6F77223B733A31383A22636F6D6D656E74735075626C697368696E67223B733A313A2231223B733A31373A22636F6D6D656E74735265706F7274696E67223B733A313A2232223B733A32333A22636F6D6D656E74735265706F7274526563697069656E74223B733A303A22223B733A32343A22696E6C696E65436F6D6D656E74734D6F6465726174696F6E223B733A313A2230223B733A383A226772617661746172223B733A313A2231223B733A393A22726563617074636861223B733A313A2230223B733A32323A22726563617074636861466F7252656769737465726564223B733A313A2231223B733A31373A22636F6D6D656E7473466F726D4E6F746573223B733A313A2231223B733A32313A22636F6D6D656E7473466F726D4E6F74657354657874223B733A303A22223B733A31353A2266726F6E74656E6445646974696E67223B733A313A2231223B733A31323A2273686F77496D616765546162223B733A313A2231223B733A31393A2273686F77496D61676547616C6C657279546162223B733A313A2231223B733A31323A2273686F77566964656F546162223B733A313A2231223B733A31383A2273686F7745787472614669656C6473546162223B733A313A2231223B733A31383A2273686F774174746163686D656E7473546162223B733A313A2231223B733A31333A2273686F774B32506C7567696E73223B733A313A2231223B733A32323A2273696465426172446973706C617946726F6E74656E64223B733A313A2230223B733A31323A226D65726765456469746F7273223B733A313A2231223B733A31343A2273696465426172446973706C6179223B733A313A2231223B733A31373A226174746163686D656E7473466F6C646572223B733A303A22223B733A31363A2268696465496D706F7274427574746F6E223B733A313A2230223B733A31323A22676F6F676C65536561726368223B733A313A2230223B733A32313A22676F6F676C65536561726368436F6E7461696E6572223B733A32333A226B32476F6F676C65536561726368436F6E7461696E6572223B733A31333A224B325573657250726F66696C65223B733A313A2231223B733A31313A224B325573657247726F7570223B733A303A22223B733A383A227265646972656374223B733A303A22223B733A31313A2261646D696E536561726368223B733A363A2273696D706C65223B733A31323A22636F6F6B6965446F6D61696E223B733A303A22223B733A31333A2274616767696E6753797374656D223B733A313A2231223B733A383A226C6F636B54616773223B733A313A2230223B733A31333A2273686F7754616746696C746572223B733A313A2230223B733A393A226B325461674E6F726D223B733A313A2230223B733A31333A226B325461674E6F726D43617365223B733A353A226C6F776572223B733A33313A226B325461674E6F726D4164646974696F6E616C5265706C6163656D656E7473223B733A303A22223B733A32303A227265636170746368615F7075626C69635F6B6579223B733A303A22223B733A32313A227265636170746368615F707269766174655F6B6579223B733A303A22223B733A31353A227265636170746368615F7468656D65223B733A353A22636C65616E223B733A32333A227265636170746368614F6E526567697374726174696F6E223B733A313A2230223B733A31333A2273746F70466F72756D5370616D223B733A313A2230223B733A31393A2273746F70466F72756D5370616D4170694B6579223B733A303A22223B733A32313A2273686F774974656D73436F756E74657241646D696E223B733A313A2231223B733A31373A2273686F774368696C644361744974656D73223B733A313A2231223B733A32323A2264697361626C65436F6D706163744F72646572696E67223B733A313A2230223B733A31333A226D657461446573634C696D6974223B733A333A22313530223B733A32323A22656E666F7263655345465265706C6163656D656E7473223B733A313A2230223B733A31353A225345465265706C6163656D656E7473223B733A303A22223B733A353A226B32536566223B733A313A2230223B733A31333A226B325365664C6162656C436174223B733A373A22636F6E74656E74223B733A31333A226B325365664C6162656C546167223B733A333A22746167223B733A31343A226B325365664C6162656C55736572223B733A363A22617574686F72223B733A31363A226B325365664C6162656C536561726368223B733A363A22736561726368223B733A31343A226B325365664C6162656C44617465223B733A343A2264617465223B733A31343A226B325365664C6162656C4974656D223B733A313A2230223B733A32363A226B325365664C6162656C4974656D437573746F6D507265666978223B733A303A22223B733A31373A226B32536566496E736572744974656D4964223B733A313A2231223B733A32343A226B325365664974656D49645469746C65416C696173536570223B733A343A2264617368223B733A32323A226B325365665573654974656D5469746C65416C696173223B733A313A2231223B733A31363A226B32536566496E736572744361744964223B733A313A2231223B733A32333A226B3253656643617449645469746C65416C696173536570223B733A343A2264617368223B733A32313A226B325365665573654361745469746C65416C696173223B733A313A2231223B733A31363A2273683430345365664C6162656C436174223B733A303A22223B733A31373A2273683430345365664C6162656C55736572223B733A343A22626C6F67223B733A31373A2273683430345365664C6162656C4974656D223B733A313A2232223B733A31383A2273683430345365665469746C65416C696173223B733A353A22616C696173223B733A32393A2273683430345365664D6F644B32436F6E74656E7446656564416C696173223B733A343A2266656564223B733A32303A227368343034536566496E736572744974656D4964223B733A313A2230223B733A32363A227368343034536566496E73657274556E697175654974656D4964223B733A313A2230223B733A31333A226362496E746567726174696F6E223B733A313A2230223B7D7D733A373A226D6574616B6579223B733A303A22223B733A383A226D65746164657363223B733A303A22223B733A383A226D65746164617461223B4F3A393A224A5265676973747279223A313A7B733A373A22002A0064617461223B4F3A383A22737464436C617373223A323A7B733A363A22726F626F7473223B733A303A22223B733A363A22617574686F72223B733A303A22223B7D7D733A383A226F72646572696E67223B733A313A2233223B733A353A227472617368223B733A313A2230223B733A393A226361745F7472617368223B733A313A2230223B733A383A2263617465676F7279223B733A373A22C3817564696F73223B733A393A226361745F7374617465223B733A313A2231223B733A31303A226361745F616363657373223B733A313A2231223B733A343A22736C7567223B733A373A22343A7465737465223B733A373A22636174736C7567223B733A383A22313A617564696F73223B733A363A22617574686F72223B733A31303A2253757065722055736572223B733A363A226C61796F7574223B733A343A226974656D223B733A343A2270617468223B733A34323A22696E6465782E7068702F323031332D31302D32372D31332D32362D33352F6974656D2F342D7465737465223B733A31303A226D657461617574686F72223B4E3B7D733A31353A22002A00696E737472756374696F6E73223B613A353A7B693A313B613A333A7B693A303B733A353A227469746C65223B693A313B733A383A227375627469746C65223B693A323B733A323A226964223B7D693A323B613A323A7B693A303B733A373A2273756D6D617279223B693A313B733A343A22626F6479223B7D693A333B613A383A7B693A303B733A343A226D657461223B693A313B733A31303A226C6973745F7072696365223B693A323B733A31303A2273616C655F7072696365223B693A333B733A373A226D6574616B6579223B693A343B733A383A226D65746164657363223B693A353B733A31303A226D657461617574686F72223B693A363B733A363A22617574686F72223B693A373B733A31363A22637265617465645F62795F616C696173223B7D693A343B613A323A7B693A303B733A343A2270617468223B693A313B733A353A22616C696173223B7D693A353B613A313A7B693A303B733A383A22636F6D6D656E7473223B7D7D733A31313A22002A007461786F6E6F6D79223B613A343A7B733A343A2254797065223B613A313A7B733A373A224B32204974656D223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A373A224B32204974656D223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D733A363A22417574686F72223B613A313A7B733A31303A2253757065722055736572223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A31303A2253757065722055736572223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D733A31313A224B322043617465676F7279223B613A313A7B733A373A22C3817564696F73223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A373A22C3817564696F73223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D733A383A224C616E6775616765223B613A313A7B733A313A222A223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A313A222A223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D7D733A333A2275726C223B733A33383A22696E6465782E7068703F6F7074696F6E3D636F6D5F6B3226766965773D6974656D2669643D34223B733A353A22726F757465223B733A35353A22696E6465782E7068703F6F7074696F6E3D636F6D5F6B3226766965773D6974656D2669643D343A7465737465264974656D69643D313437223B733A353A227469746C65223B733A373A2254657374652033223B733A31313A226465736372697074696F6E223B733A303A22223B733A393A227075626C6973686564223B4E3B733A353A227374617465223B693A313B733A363A22616363657373223B733A313A2231223B733A383A226C616E6775616765223B733A313A222A223B733A31383A227075626C6973685F73746172745F64617465223B733A31393A22323031332D31322D32322031323A34383A3438223B733A31363A227075626C6973685F656E645F64617465223B733A31393A22303030302D30302D30302030303A30303A3030223B733A31303A2273746172745F64617465223B733A31393A22323031332D31322D32322031333A33383A3030223B733A383A22656E645F64617465223B733A31393A22303030302D30302D30302030303A30303A3030223B733A31303A226C6973745F7072696365223B4E3B733A31303A2273616C655F7072696365223B4E3B733A373A22747970655F6964223B693A313B733A31353A2264656661756C744C616E6775616765223B733A353A2270742D4252223B7D);
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_finder_links` VALUES  (29,'index.php?option=com_k2&view=item&id=8','index.php?option=com_k2&view=item&id=8:copia-de-copia-de-teste-2','Cópia de Cópia de Cópia de Teste 2','','2014-01-07 12:52:59','70db2a346eaf28a11937201b257af3b6',1,1,1,'*','2013-12-22 12:48:48','0000-00-00 00:00:00','2014-01-07 14:52:11','0000-00-00 00:00:00',0,0,1,0x4F3A31393A2246696E646572496E6465786572526573756C74223A31393A7B733A31313A22002A00656C656D656E7473223B613A32353A7B733A323A226964223B733A313A2238223B733A353A22616C696173223B733A32353A22636F7069612D64652D636F7069612D64652D74657374652D32223B733A373A2273756D6D617279223B733A32373A223C703E446573637269C3A7C3A36F20646F206974656D2E3C2F703E223B733A343A22626F6479223B733A303A22223B733A353A226361746964223B733A313A2232223B733A31303A22637265617465645F6279223B733A333A22353736223B733A31363A22637265617465645F62795F616C696173223B733A303A22223B733A383A226D6F646966696564223B733A31393A22323031342D30312D30372031343A35323A3539223B733A31313A226D6F6469666965645F6279223B733A333A22353736223B733A363A22706172616D73223B4F3A393A224A5265676973747279223A313A7B733A373A22002A0064617461223B4F3A383A22737464436C617373223A3135343A7B733A31303A22656E61626C655F637373223B733A313A2231223B733A31343A226A517565727948616E646C696E67223B733A393A22312E3872656D6F7465223B733A32313A226261636B656E644A517565727948616E646C696E67223B733A363A2272656D6F7465223B733A383A22757365724E616D65223B733A313A2231223B733A393A2275736572496D616765223B733A313A2231223B733A31353A22757365724465736372697074696F6E223B733A313A2231223B733A373A227573657255524C223B733A313A2231223B733A393A2275736572456D61696C223B733A313A2230223B733A31323A2275736572466565644C696E6B223B733A313A2231223B733A31323A22757365724665656449636F6E223B733A313A2231223B733A31333A22757365724974656D436F756E74223B733A323A223130223B733A31333A22757365724974656D5469746C65223B733A313A2231223B733A31393A22757365724974656D5469746C654C696E6B6564223B733A313A2231223B733A31393A22757365724974656D4461746543726561746564223B733A313A2231223B733A31333A22757365724974656D496D616765223B733A313A2231223B733A31373A22757365724974656D496E74726F54657874223B733A313A2231223B733A31363A22757365724974656D43617465676F7279223B733A313A2231223B733A31323A22757365724974656D54616773223B733A313A2231223B733A32323A22757365724974656D436F6D6D656E7473416E63686F72223B733A313A2231223B733A31363A22757365724974656D526561644D6F7265223B733A313A2231223B733A31373A22757365724974656D4B32506C7567696E73223B733A313A2231223B733A31323A227461674974656D436F756E74223B733A323A223130223B733A31323A227461674974656D5469746C65223B733A313A2231223B733A31383A227461674974656D5469746C654C696E6B6564223B733A313A2231223B733A31383A227461674974656D4461746543726561746564223B733A313A2231223B733A31323A227461674974656D496D616765223B733A313A2231223B733A31363A227461674974656D496E74726F54657874223B733A313A2231223B733A31353A227461674974656D43617465676F7279223B733A313A2231223B733A31353A227461674974656D526561644D6F7265223B733A313A2231223B733A31383A227461674974656D45787472614669656C6473223B733A313A2230223B733A31313A227461674F72646572696E67223B733A303A22223B733A31313A22746167466565644C696E6B223B733A313A2231223B733A31313A227461674665656449636F6E223B733A313A2231223B733A31363A2267656E657269634974656D436F756E74223B733A323A223130223B733A31363A2267656E657269634974656D5469746C65223B733A313A2231223B733A32323A2267656E657269634974656D5469746C654C696E6B6564223B733A313A2231223B733A32323A2267656E657269634974656D4461746543726561746564223B733A313A2231223B733A31363A2267656E657269634974656D496D616765223B733A313A2231223B733A32303A2267656E657269634974656D496E74726F54657874223B733A313A2231223B733A31393A2267656E657269634974656D43617465676F7279223B733A313A2231223B733A31393A2267656E657269634974656D526561644D6F7265223B733A313A2231223B733A32323A2267656E657269634974656D45787472614669656C6473223B733A313A2230223B733A31353A2267656E65726963466565644C696E6B223B733A313A2231223B733A31353A2267656E657269634665656449636F6E223B733A313A2231223B733A393A22666565644C696D6974223B733A323A223130223B733A31333A22666565644974656D496D616765223B733A313A2231223B733A31313A2266656564496D6753697A65223B733A313A2253223B733A31373A22666565644974656D496E74726F54657874223B733A313A2231223B733A31373A226665656454657874576F72644C696D6974223B733A303A22223B733A31363A22666565644974656D46756C6C54657874223B733A313A2231223B733A31323A22666565644974656D54616773223B733A313A2230223B733A31333A22666565644974656D566964656F223B733A313A2230223B733A31353A22666565644974656D47616C6C657279223B733A313A2230223B733A31393A22666565644974656D4174746163686D656E7473223B733A313A2230223B733A31343A2266656564426F677573456D61696C223B733A303A22223B733A31363A22696E74726F54657874436C65616E7570223B733A313A2230223B733A32373A22696E74726F54657874436C65616E75704578636C75646554616773223B733A303A22223B733A32333A22696E74726F54657874436C65616E757054616741747472223B733A303A22223B733A31353A2266756C6C54657874436C65616E7570223B733A313A2230223B733A32363A2266756C6C54657874436C65616E75704578636C75646554616773223B733A303A22223B733A32323A2266756C6C54657874436C65616E757054616741747472223B733A303A22223B733A31323A2278737346696C746572696E67223B733A313A2230223B733A31343A226C696E6B506F7075705769647468223B733A333A22393030223B733A31353A226C696E6B506F707570486569676874223B733A333A22363030223B733A31333A22696D616765735175616C697479223B733A333A22313030223B733A31313A226974656D496D6167655853223B733A333A22313030223B733A31303A226974656D496D61676553223B733A333A22323030223B733A31303A226974656D496D6167654D223B733A333A22343030223B733A31303A226974656D496D6167654C223B733A333A22363030223B733A31313A226974656D496D616765584C223B733A333A22393030223B733A31363A226974656D496D61676547656E65726963223B733A333A22333030223B733A31333A22636174496D6167655769647468223B733A333A22313030223B733A31353A22636174496D61676544656661756C74223B733A313A2231223B733A31343A2275736572496D6167655769647468223B733A333A22313030223B733A31363A2275736572496D61676544656661756C74223B733A313A2231223B733A31373A22636F6D6D656E746572496D675769647468223B733A323A223438223B733A31373A226F6E6C696E65496D616765456469746F72223B733A383A2273706C6173687570223B733A31343A22696D61676554696D657374616D70223B733A313A2230223B733A31363A22696D6167654D656D6F72794C696D6974223B733A303A22223B733A31363A22736F6369616C427574746F6E436F6465223B733A303A22223B733A31353A2274776974746572557365726E616D65223B733A303A22223B733A31333A2266616365626F6F6B496D616765223B733A363A224D656469756D223B733A383A22636F6D6D656E7473223B733A313A2231223B733A31363A22636F6D6D656E74734F72646572696E67223B733A343A2244455343223B733A31333A22636F6D6D656E74734C696D6974223B733A323A223130223B733A32303A22636F6D6D656E7473466F726D506F736974696F6E223B733A353A2262656C6F77223B733A31383A22636F6D6D656E74735075626C697368696E67223B733A313A2231223B733A31373A22636F6D6D656E74735265706F7274696E67223B733A313A2232223B733A32333A22636F6D6D656E74735265706F7274526563697069656E74223B733A303A22223B733A32343A22696E6C696E65436F6D6D656E74734D6F6465726174696F6E223B733A313A2230223B733A383A226772617661746172223B733A313A2231223B733A393A22726563617074636861223B733A313A2230223B733A32323A22726563617074636861466F7252656769737465726564223B733A313A2231223B733A31373A22636F6D6D656E7473466F726D4E6F746573223B733A313A2231223B733A32313A22636F6D6D656E7473466F726D4E6F74657354657874223B733A303A22223B733A31353A2266726F6E74656E6445646974696E67223B733A313A2231223B733A31323A2273686F77496D616765546162223B733A313A2231223B733A31393A2273686F77496D61676547616C6C657279546162223B733A313A2231223B733A31323A2273686F77566964656F546162223B733A313A2231223B733A31383A2273686F7745787472614669656C6473546162223B733A313A2231223B733A31383A2273686F774174746163686D656E7473546162223B733A313A2231223B733A31333A2273686F774B32506C7567696E73223B733A313A2231223B733A32323A2273696465426172446973706C617946726F6E74656E64223B733A313A2230223B733A31323A226D65726765456469746F7273223B733A313A2231223B733A31343A2273696465426172446973706C6179223B733A313A2231223B733A31373A226174746163686D656E7473466F6C646572223B733A303A22223B733A31363A2268696465496D706F7274427574746F6E223B733A313A2230223B733A31323A22676F6F676C65536561726368223B733A313A2230223B733A32313A22676F6F676C65536561726368436F6E7461696E6572223B733A32333A226B32476F6F676C65536561726368436F6E7461696E6572223B733A31333A224B325573657250726F66696C65223B733A313A2231223B733A31313A224B325573657247726F7570223B733A303A22223B733A383A227265646972656374223B733A303A22223B733A31313A2261646D696E536561726368223B733A363A2273696D706C65223B733A31323A22636F6F6B6965446F6D61696E223B733A303A22223B733A31333A2274616767696E6753797374656D223B733A313A2231223B733A383A226C6F636B54616773223B733A313A2230223B733A31333A2273686F7754616746696C746572223B733A313A2230223B733A393A226B325461674E6F726D223B733A313A2230223B733A31333A226B325461674E6F726D43617365223B733A353A226C6F776572223B733A33313A226B325461674E6F726D4164646974696F6E616C5265706C6163656D656E7473223B733A303A22223B733A32303A227265636170746368615F7075626C69635F6B6579223B733A303A22223B733A32313A227265636170746368615F707269766174655F6B6579223B733A303A22223B733A31353A227265636170746368615F7468656D65223B733A353A22636C65616E223B733A32333A227265636170746368614F6E526567697374726174696F6E223B733A313A2230223B733A31333A2273746F70466F72756D5370616D223B733A313A2230223B733A31393A2273746F70466F72756D5370616D4170694B6579223B733A303A22223B733A32313A2273686F774974656D73436F756E74657241646D696E223B733A313A2231223B733A31373A2273686F774368696C644361744974656D73223B733A313A2231223B733A32323A2264697361626C65436F6D706163744F72646572696E67223B733A313A2230223B733A31333A226D657461446573634C696D6974223B733A333A22313530223B733A32323A22656E666F7263655345465265706C6163656D656E7473223B733A313A2230223B733A31353A225345465265706C6163656D656E7473223B733A303A22223B733A353A226B32536566223B733A313A2230223B733A31333A226B325365664C6162656C436174223B733A373A22636F6E74656E74223B733A31333A226B325365664C6162656C546167223B733A333A22746167223B733A31343A226B325365664C6162656C55736572223B733A363A22617574686F72223B733A31363A226B325365664C6162656C536561726368223B733A363A22736561726368223B733A31343A226B325365664C6162656C44617465223B733A343A2264617465223B733A31343A226B325365664C6162656C4974656D223B733A313A2230223B733A32363A226B325365664C6162656C4974656D437573746F6D507265666978223B733A303A22223B733A31373A226B32536566496E736572744974656D4964223B733A313A2231223B733A32343A226B325365664974656D49645469746C65416C696173536570223B733A343A2264617368223B733A32323A226B325365665573654974656D5469746C65416C696173223B733A313A2231223B733A31363A226B32536566496E736572744361744964223B733A313A2231223B733A32333A226B3253656643617449645469746C65416C696173536570223B733A343A2264617368223B733A32313A226B325365665573654361745469746C65416C696173223B733A313A2231223B733A31363A2273683430345365664C6162656C436174223B733A303A22223B733A31373A2273683430345365664C6162656C55736572223B733A343A22626C6F67223B733A31373A2273683430345365664C6162656C4974656D223B733A313A2232223B733A31383A2273683430345365665469746C65416C696173223B733A353A22616C696173223B733A32393A2273683430345365664D6F644B32436F6E74656E7446656564416C696173223B733A343A2266656564223B733A32303A227368343034536566496E736572744974656D4964223B733A313A2230223B733A32363A227368343034536566496E73657274556E697175654974656D4964223B733A313A2230223B733A31333A226362496E746567726174696F6E223B733A313A2230223B7D7D733A373A226D6574616B6579223B733A303A22223B733A383A226D65746164657363223B733A303A22223B733A383A226D65746164617461223B4F3A393A224A5265676973747279223A313A7B733A373A22002A0064617461223B4F3A383A22737464436C617373223A323A7B733A363A22726F626F7473223B733A303A22223B733A363A22617574686F72223B733A303A22223B7D7D733A383A226F72646572696E67223B733A313A2233223B733A353A227472617368223B733A313A2230223B733A393A226361745F7472617368223B733A313A2230223B733A383A2263617465676F7279223B733A31303A22C3817564696F73202331223B733A393A226361745F7374617465223B733A313A2231223B733A31303A226361745F616363657373223B733A313A2231223B733A343A22736C7567223B733A32373A22383A636F7069612D64652D636F7069612D64652D74657374652D32223B733A373A22636174736C7567223B733A31303A22323A617564696F732D31223B733A363A22617574686F72223B733A31303A2253757065722055736572223B733A363A226C61796F7574223B733A343A226974656D223B733A343A2270617468223B733A35353A22696E6465782E7068702F636F6D706F6E656E742F6B322F6974656D2F382D636F7069612D64652D636F7069612D64652D74657374652D32223B733A31303A226D657461617574686F72223B4E3B7D733A31353A22002A00696E737472756374696F6E73223B613A353A7B693A313B613A333A7B693A303B733A353A227469746C65223B693A313B733A383A227375627469746C65223B693A323B733A323A226964223B7D693A323B613A323A7B693A303B733A373A2273756D6D617279223B693A313B733A343A22626F6479223B7D693A333B613A383A7B693A303B733A343A226D657461223B693A313B733A31303A226C6973745F7072696365223B693A323B733A31303A2273616C655F7072696365223B693A333B733A373A226D6574616B6579223B693A343B733A383A226D65746164657363223B693A353B733A31303A226D657461617574686F72223B693A363B733A363A22617574686F72223B693A373B733A31363A22637265617465645F62795F616C696173223B7D693A343B613A323A7B693A303B733A343A2270617468223B693A313B733A353A22616C696173223B7D693A353B613A313A7B693A303B733A383A22636F6D6D656E7473223B7D7D733A31313A22002A007461786F6E6F6D79223B613A343A7B733A343A2254797065223B613A313A7B733A373A224B32204974656D223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A373A224B32204974656D223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D733A363A22417574686F72223B613A313A7B733A31303A2253757065722055736572223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A31303A2253757065722055736572223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D733A31313A224B322043617465676F7279223B613A313A7B733A31303A22C3817564696F73202331223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A31303A22C3817564696F73202331223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D733A383A224C616E6775616765223B613A313A7B733A313A222A223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A313A222A223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D7D733A333A2275726C223B733A33383A22696E6465782E7068703F6F7074696F6E3D636F6D5F6B3226766965773D6974656D2669643D38223B733A353A22726F757465223B733A36343A22696E6465782E7068703F6F7074696F6E3D636F6D5F6B3226766965773D6974656D2669643D383A636F7069612D64652D636F7069612D64652D74657374652D32223B733A353A227469746C65223B733A33373A2243C3B37069612064652043C3B37069612064652043C3B37069612064652054657374652032223B733A31313A226465736372697074696F6E223B733A303A22223B733A393A227075626C6973686564223B4E3B733A353A227374617465223B693A313B733A363A22616363657373223B733A313A2231223B733A383A226C616E6775616765223B733A313A222A223B733A31383A227075626C6973685F73746172745F64617465223B733A31393A22323031332D31322D32322031323A34383A3438223B733A31363A227075626C6973685F656E645F64617465223B733A31393A22303030302D30302D30302030303A30303A3030223B733A31303A2273746172745F64617465223B733A31393A22323031342D30312D30372031343A35323A3131223B733A383A22656E645F64617465223B733A31393A22303030302D30302D30302030303A30303A3030223B733A31303A226C6973745F7072696365223B4E3B733A31303A2273616C655F7072696365223B4E3B733A373A22747970655F6964223B693A313B733A31353A2264656661756C744C616E6775616765223B733A353A2270742D4252223B7D),
+INSERT INTO `#__finder_links` VALUES  (29,'index.php?option=com_k2&view=item&id=8','index.php?option=com_k2&view=item&id=8:copia-de-copia-de-teste-2','Cópia de Cópia de Cópia de Teste 2','','2014-01-07 12:52:59','70db2a346eaf28a11937201b257af3b6',1,1,1,'*','2013-12-22 12:48:48','0000-00-00 00:00:00','2014-01-07 14:52:11','0000-00-00 00:00:00',0,0,1,0x4F3A31393A2246696E646572496E6465786572526573756C74223A31393A7B733A31313A22002A00656C656D656E7473223B613A32353A7B733A323A226964223B733A313A2238223B733A353A22616C696173223B733A32353A22636F7069612D64652D636F7069612D64652D74657374652D32223B733A373A2273756D6D617279223B733A32373A223C703E446573637269C3A7C3A36F20646F206974656D2E3C2F703E223B733A343A22626F6479223B733A303A22223B733A353A226361746964223B733A313A2232223B733A31303A22637265617465645F6279223B733A333A22353736223B733A31363A22637265617465645F62795F616C696173223B733A303A22223B733A383A226D6F646966696564223B733A31393A22323031342D30312D30372031343A35323A3539223B733A31313A226D6F6469666965645F6279223B733A333A22353736223B733A363A22706172616D73223B4F3A393A224A5265676973747279223A313A7B733A373A22002A0064617461223B4F3A383A22737464436C617373223A3135343A7B733A31303A22656E61626C655F637373223B733A313A2231223B733A31343A226A517565727948616E646C696E67223B733A393A22312E3872656D6F7465223B733A32313A226261636B656E644A517565727948616E646C696E67223B733A363A2272656D6F7465223B733A383A22757365724E616D65223B733A313A2231223B733A393A2275736572496D616765223B733A313A2231223B733A31353A22757365724465736372697074696F6E223B733A313A2231223B733A373A227573657255524C223B733A313A2231223B733A393A2275736572456D61696C223B733A313A2230223B733A31323A2275736572466565644C696E6B223B733A313A2231223B733A31323A22757365724665656449636F6E223B733A313A2231223B733A31333A22757365724974656D436F756E74223B733A323A223130223B733A31333A22757365724974656D5469746C65223B733A313A2231223B733A31393A22757365724974656D5469746C654C696E6B6564223B733A313A2231223B733A31393A22757365724974656D4461746543726561746564223B733A313A2231223B733A31333A22757365724974656D496D616765223B733A313A2231223B733A31373A22757365724974656D496E74726F54657874223B733A313A2231223B733A31363A22757365724974656D43617465676F7279223B733A313A2231223B733A31323A22757365724974656D54616773223B733A313A2231223B733A32323A22757365724974656D436F6D6D656E7473416E63686F72223B733A313A2231223B733A31363A22757365724974656D526561644D6F7265223B733A313A2231223B733A31373A22757365724974656D4B32506C7567696E73223B733A313A2231223B733A31323A227461674974656D436F756E74223B733A323A223130223B733A31323A227461674974656D5469746C65223B733A313A2231223B733A31383A227461674974656D5469746C654C696E6B6564223B733A313A2231223B733A31383A227461674974656D4461746543726561746564223B733A313A2231223B733A31323A227461674974656D496D616765223B733A313A2231223B733A31363A227461674974656D496E74726F54657874223B733A313A2231223B733A31353A227461674974656D43617465676F7279223B733A313A2231223B733A31353A227461674974656D526561644D6F7265223B733A313A2231223B733A31383A227461674974656D45787472614669656C6473223B733A313A2230223B733A31313A227461674F72646572696E67223B733A303A22223B733A31313A22746167466565644C696E6B223B733A313A2231223B733A31313A227461674665656449636F6E223B733A313A2231223B733A31363A2267656E657269634974656D436F756E74223B733A323A223130223B733A31363A2267656E657269634974656D5469746C65223B733A313A2231223B733A32323A2267656E657269634974656D5469746C654C696E6B6564223B733A313A2231223B733A32323A2267656E657269634974656D4461746543726561746564223B733A313A2231223B733A31363A2267656E657269634974656D496D616765223B733A313A2231223B733A32303A2267656E657269634974656D496E74726F54657874223B733A313A2231223B733A31393A2267656E657269634974656D43617465676F7279223B733A313A2231223B733A31393A2267656E657269634974656D526561644D6F7265223B733A313A2231223B733A32323A2267656E657269634974656D45787472614669656C6473223B733A313A2230223B733A31353A2267656E65726963466565644C696E6B223B733A313A2231223B733A31353A2267656E657269634665656449636F6E223B733A313A2231223B733A393A22666565644C696D6974223B733A323A223130223B733A31333A22666565644974656D496D616765223B733A313A2231223B733A31313A2266656564496D6753697A65223B733A313A2253223B733A31373A22666565644974656D496E74726F54657874223B733A313A2231223B733A31373A226665656454657874576F72644C696D6974223B733A303A22223B733A31363A22666565644974656D46756C6C54657874223B733A313A2231223B733A31323A22666565644974656D54616773223B733A313A2230223B733A31333A22666565644974656D566964656F223B733A313A2230223B733A31353A22666565644974656D47616C6C657279223B733A313A2230223B733A31393A22666565644974656D4174746163686D656E7473223B733A313A2230223B733A31343A2266656564426F677573456D61696C223B733A303A22223B733A31363A22696E74726F54657874436C65616E7570223B733A313A2230223B733A32373A22696E74726F54657874436C65616E75704578636C75646554616773223B733A303A22223B733A32333A22696E74726F54657874436C65616E757054616741747472223B733A303A22223B733A31353A2266756C6C54657874436C65616E7570223B733A313A2230223B733A32363A2266756C6C54657874436C65616E75704578636C75646554616773223B733A303A22223B733A32323A2266756C6C54657874436C65616E757054616741747472223B733A303A22223B733A31323A2278737346696C746572696E67223B733A313A2230223B733A31343A226C696E6B506F7075705769647468223B733A333A22393030223B733A31353A226C696E6B506F707570486569676874223B733A333A22363030223B733A31333A22696D616765735175616C697479223B733A333A22313030223B733A31313A226974656D496D6167655853223B733A333A22313030223B733A31303A226974656D496D61676553223B733A333A22323030223B733A31303A226974656D496D6167654D223B733A333A22343030223B733A31303A226974656D496D6167654C223B733A333A22363030223B733A31313A226974656D496D616765584C223B733A333A22393030223B733A31363A226974656D496D61676547656E65726963223B733A333A22333030223B733A31333A22636174496D6167655769647468223B733A333A22313030223B733A31353A22636174496D61676544656661756C74223B733A313A2231223B733A31343A2275736572496D6167655769647468223B733A333A22313030223B733A31363A2275736572496D61676544656661756C74223B733A313A2231223B733A31373A22636F6D6D656E746572496D675769647468223B733A323A223438223B733A31373A226F6E6C696E65496D616765456469746F72223B733A383A2273706C6173687570223B733A31343A22696D61676554696D657374616D70223B733A313A2230223B733A31363A22696D6167654D656D6F72794C696D6974223B733A303A22223B733A31363A22736F6369616C427574746F6E436F6465223B733A303A22223B733A31353A2274776974746572557365726E616D65223B733A303A22223B733A31333A2266616365626F6F6B496D616765223B733A363A224D656469756D223B733A383A22636F6D6D656E7473223B733A313A2231223B733A31363A22636F6D6D656E74734F72646572696E67223B733A343A2244455343223B733A31333A22636F6D6D656E74734C696D6974223B733A323A223130223B733A32303A22636F6D6D656E7473466F726D506F736974696F6E223B733A353A2262656C6F77223B733A31383A22636F6D6D656E74735075626C697368696E67223B733A313A2231223B733A31373A22636F6D6D656E74735265706F7274696E67223B733A313A2232223B733A32333A22636F6D6D656E74735265706F7274526563697069656E74223B733A303A22223B733A32343A22696E6C696E65436F6D6D656E74734D6F6465726174696F6E223B733A313A2230223B733A383A226772617661746172223B733A313A2231223B733A393A22726563617074636861223B733A313A2230223B733A32323A22726563617074636861466F7252656769737465726564223B733A313A2231223B733A31373A22636F6D6D656E7473466F726D4E6F746573223B733A313A2231223B733A32313A22636F6D6D656E7473466F726D4E6F74657354657874223B733A303A22223B733A31353A2266726F6E74656E6445646974696E67223B733A313A2231223B733A31323A2273686F77496D616765546162223B733A313A2231223B733A31393A2273686F77496D61676547616C6C657279546162223B733A313A2231223B733A31323A2273686F77566964656F546162223B733A313A2231223B733A31383A2273686F7745787472614669656C6473546162223B733A313A2231223B733A31383A2273686F774174746163686D656E7473546162223B733A313A2231223B733A31333A2273686F774B32506C7567696E73223B733A313A2231223B733A32323A2273696465426172446973706C617946726F6E74656E64223B733A313A2230223B733A31323A226D65726765456469746F7273223B733A313A2231223B733A31343A2273696465426172446973706C6179223B733A313A2231223B733A31373A226174746163686D656E7473466F6C646572223B733A303A22223B733A31363A2268696465496D706F7274427574746F6E223B733A313A2230223B733A31323A22676F6F676C65536561726368223B733A313A2230223B733A32313A22676F6F676C65536561726368436F6E7461696E6572223B733A32333A226B32476F6F676C65536561726368436F6E7461696E6572223B733A31333A224B325573657250726F66696C65223B733A313A2231223B733A31313A224B325573657247726F7570223B733A303A22223B733A383A227265646972656374223B733A303A22223B733A31313A2261646D696E536561726368223B733A363A2273696D706C65223B733A31323A22636F6F6B6965446F6D61696E223B733A303A22223B733A31333A2274616767696E6753797374656D223B733A313A2231223B733A383A226C6F636B54616773223B733A313A2230223B733A31333A2273686F7754616746696C746572223B733A313A2230223B733A393A226B325461674E6F726D223B733A313A2230223B733A31333A226B325461674E6F726D43617365223B733A353A226C6F776572223B733A33313A226B325461674E6F726D4164646974696F6E616C5265706C6163656D656E7473223B733A303A22223B733A32303A227265636170746368615F7075626C69635F6B6579223B733A303A22223B733A32313A227265636170746368615F707269766174655F6B6579223B733A303A22223B733A31353A227265636170746368615F7468656D65223B733A353A22636C65616E223B733A32333A227265636170746368614F6E526567697374726174696F6E223B733A313A2230223B733A31333A2273746F70466F72756D5370616D223B733A313A2230223B733A31393A2273746F70466F72756D5370616D4170694B6579223B733A303A22223B733A32313A2273686F774974656D73436F756E74657241646D696E223B733A313A2231223B733A31373A2273686F774368696C644361744974656D73223B733A313A2231223B733A32323A2264697361626C65436F6D706163744F72646572696E67223B733A313A2230223B733A31333A226D657461446573634C696D6974223B733A333A22313530223B733A32323A22656E666F7263655345465265706C6163656D656E7473223B733A313A2230223B733A31353A225345465265706C6163656D656E7473223B733A303A22223B733A353A226B32536566223B733A313A2230223B733A31333A226B325365664C6162656C436174223B733A373A22636F6E74656E74223B733A31333A226B325365664C6162656C546167223B733A333A22746167223B733A31343A226B325365664C6162656C55736572223B733A363A22617574686F72223B733A31363A226B325365664C6162656C536561726368223B733A363A22736561726368223B733A31343A226B325365664C6162656C44617465223B733A343A2264617465223B733A31343A226B325365664C6162656C4974656D223B733A313A2230223B733A32363A226B325365664C6162656C4974656D437573746F6D507265666978223B733A303A22223B733A31373A226B32536566496E736572744974656D4964223B733A313A2231223B733A32343A226B325365664974656D49645469746C65416C696173536570223B733A343A2264617368223B733A32323A226B325365665573654974656D5469746C65416C696173223B733A313A2231223B733A31363A226B32536566496E736572744361744964223B733A313A2231223B733A32333A226B3253656643617449645469746C65416C696173536570223B733A343A2264617368223B733A32313A226B325365665573654361745469746C65416C696173223B733A313A2231223B733A31363A2273683430345365664C6162656C436174223B733A303A22223B733A31373A2273683430345365664C6162656C55736572223B733A343A22626C6F67223B733A31373A2273683430345365664C6162656C4974656D223B733A313A2232223B733A31383A2273683430345365665469746C65416C696173223B733A353A22616C696173223B733A32393A2273683430345365664D6F644B32436F6E74656E7446656564416C696173223B733A343A2266656564223B733A32303A227368343034536566496E736572744974656D4964223B733A313A2230223B733A32363A227368343034536566496E73657274556E697175654974656D4964223B733A313A2230223B733A31333A226362496E746567726174696F6E223B733A313A2230223B7D7D733A373A226D6574616B6579223B733A303A22223B733A383A226D65746164657363223B733A303A22223B733A383A226D65746164617461223B4F3A393A224A5265676973747279223A313A7B733A373A22002A0064617461223B4F3A383A22737464436C617373223A323A7B733A363A22726F626F7473223B733A303A22223B733A363A22617574686F72223B733A303A22223B7D7D733A383A226F72646572696E67223B733A313A2233223B733A353A227472617368223B733A313A2230223B733A393A226361745F7472617368223B733A313A2230223B733A383A2263617465676F7279223B733A31303A22C3817564696F73202331223B733A393A226361745F7374617465223B733A313A2231223B733A31303A226361745F616363657373223B733A313A2231223B733A343A22736C7567223B733A32373A22383A636F7069612D64652D636F7069612D64652D74657374652D32223B733A373A22636174736C7567223B733A31303A22323A617564696F732D31223B733A363A22617574686F72223B733A31303A2253757065722055736572223B733A363A226C61796F7574223B733A343A226974656D223B733A343A2270617468223B733A35353A22696E6465782E7068702F636F6D706F6E656E742F6B322F6974656D2F382D636F7069612D64652D636F7069612D64652D74657374652D32223B733A31303A226D657461617574686F72223B4E3B7D733A31353A22002A00696E737472756374696F6E73223B613A353A7B693A313B613A333A7B693A303B733A353A227469746C65223B693A313B733A383A227375627469746C65223B693A323B733A323A226964223B7D693A323B613A323A7B693A303B733A373A2273756D6D617279223B693A313B733A343A22626F6479223B7D693A333B613A383A7B693A303B733A343A226D657461223B693A313B733A31303A226C6973745F7072696365223B693A323B733A31303A2273616C655F7072696365223B693A333B733A373A226D6574616B6579223B693A343B733A383A226D65746164657363223B693A353B733A31303A226D657461617574686F72223B693A363B733A363A22617574686F72223B693A373B733A31363A22637265617465645F62795F616C696173223B7D693A343B613A323A7B693A303B733A343A2270617468223B693A313B733A353A22616C696173223B7D693A353B613A313A7B693A303B733A383A22636F6D6D656E7473223B7D7D733A31313A22002A007461786F6E6F6D79223B613A343A7B733A343A2254797065223B613A313A7B733A373A224B32204974656D223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A373A224B32204974656D223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D733A363A22417574686F72223B613A313A7B733A31303A2253757065722055736572223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A31303A2253757065722055736572223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D733A31313A224B322043617465676F7279223B613A313A7B733A31303A22C3817564696F73202331223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A31303A22C3817564696F73202331223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D733A383A224C616E6775616765223B613A313A7B733A313A222A223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A313A222A223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D7D733A333A2275726C223B733A33383A22696E6465782E7068703F6F7074696F6E3D636F6D5F6B3226766965773D6974656D2669643D38223B733A353A22726F757465223B733A36343A22696E6465782E7068703F6F7074696F6E3D636F6D5F6B3226766965773D6974656D2669643D383A636F7069612D64652D636F7069612D64652D74657374652D32223B733A353A227469746C65223B733A33373A2243C3B37069612064652043C3B37069612064652043C3B37069612064652054657374652032223B733A31313A226465736372697074696F6E223B733A303A22223B733A393A227075626C6973686564223B4E3B733A353A227374617465223B693A313B733A363A22616363657373223B733A313A2231223B733A383A226C616E6775616765223B733A313A222A223B733A31383A227075626C6973685F73746172745F64617465223B733A31393A22323031332D31322D32322031323A34383A3438223B733A31363A227075626C6973685F656E645F64617465223B733A31393A22303030302D30302D30302030303A30303A3030223B733A31303A2273746172745F64617465223B733A31393A22323031342D30312D30372031343A35323A3131223B733A383A22656E645F64617465223B733A31393A22303030302D30302D30302030303A30303A3030223B733A31303A226C6973745F7072696365223B4E3B733A31303A2273616C655F7072696365223B4E3B733A373A22747970655F6964223B693A313B733A31353A2264656661756C744C616E6775616765223B733A353A2270742D4252223B7D),
  (30,'index.php?option=com_k2&view=item&id=7','index.php?option=com_k2&view=item&id=7:copia-de-copia-de-copia-de-teste','Cópia de Cópia de Cópia de Teste','','2014-01-07 13:14:05','4cde40395711d3f216d63e2c592d8801',1,1,1,'*','2013-12-22 12:48:48','0000-00-00 00:00:00','2013-12-22 13:41:30','0000-00-00 00:00:00',0,0,1,0x4F3A31393A2246696E646572496E6465786572526573756C74223A31393A7B733A31313A22002A00656C656D656E7473223B613A32353A7B733A323A226964223B733A313A2237223B733A353A22616C696173223B733A33323A22636F7069612D64652D636F7069612D64652D636F7069612D64652D7465737465223B733A373A2273756D6D617279223B733A32373A223C703E446573637269C3A7C3A36F20646F206974656D2E3C2F703E223B733A343A22626F6479223B733A303A22223B733A353A226361746964223B733A313A2233223B733A31303A22637265617465645F6279223B733A333A22353736223B733A31363A22637265617465645F62795F616C696173223B733A303A22223B733A383A226D6F646966696564223B733A31393A22323031342D30312D30372031343A35303A3237223B733A31313A226D6F6469666965645F6279223B733A333A22353736223B733A363A22706172616D73223B4F3A393A224A5265676973747279223A313A7B733A373A22002A0064617461223B4F3A383A22737464436C617373223A3135343A7B733A31303A22656E61626C655F637373223B733A313A2231223B733A31343A226A517565727948616E646C696E67223B733A393A22312E3872656D6F7465223B733A32313A226261636B656E644A517565727948616E646C696E67223B733A363A2272656D6F7465223B733A383A22757365724E616D65223B733A313A2231223B733A393A2275736572496D616765223B733A313A2231223B733A31353A22757365724465736372697074696F6E223B733A313A2231223B733A373A227573657255524C223B733A313A2231223B733A393A2275736572456D61696C223B733A313A2230223B733A31323A2275736572466565644C696E6B223B733A313A2231223B733A31323A22757365724665656449636F6E223B733A313A2231223B733A31333A22757365724974656D436F756E74223B733A323A223130223B733A31333A22757365724974656D5469746C65223B733A313A2231223B733A31393A22757365724974656D5469746C654C696E6B6564223B733A313A2231223B733A31393A22757365724974656D4461746543726561746564223B733A313A2231223B733A31333A22757365724974656D496D616765223B733A313A2231223B733A31373A22757365724974656D496E74726F54657874223B733A313A2231223B733A31363A22757365724974656D43617465676F7279223B733A313A2231223B733A31323A22757365724974656D54616773223B733A313A2231223B733A32323A22757365724974656D436F6D6D656E7473416E63686F72223B733A313A2231223B733A31363A22757365724974656D526561644D6F7265223B733A313A2231223B733A31373A22757365724974656D4B32506C7567696E73223B733A313A2231223B733A31323A227461674974656D436F756E74223B733A323A223130223B733A31323A227461674974656D5469746C65223B733A313A2231223B733A31383A227461674974656D5469746C654C696E6B6564223B733A313A2231223B733A31383A227461674974656D4461746543726561746564223B733A313A2231223B733A31323A227461674974656D496D616765223B733A313A2231223B733A31363A227461674974656D496E74726F54657874223B733A313A2231223B733A31353A227461674974656D43617465676F7279223B733A313A2231223B733A31353A227461674974656D526561644D6F7265223B733A313A2231223B733A31383A227461674974656D45787472614669656C6473223B733A313A2230223B733A31313A227461674F72646572696E67223B733A303A22223B733A31313A22746167466565644C696E6B223B733A313A2231223B733A31313A227461674665656449636F6E223B733A313A2231223B733A31363A2267656E657269634974656D436F756E74223B733A323A223130223B733A31363A2267656E657269634974656D5469746C65223B733A313A2231223B733A32323A2267656E657269634974656D5469746C654C696E6B6564223B733A313A2231223B733A32323A2267656E657269634974656D4461746543726561746564223B733A313A2231223B733A31363A2267656E657269634974656D496D616765223B733A313A2231223B733A32303A2267656E657269634974656D496E74726F54657874223B733A313A2231223B733A31393A2267656E657269634974656D43617465676F7279223B733A313A2231223B733A31393A2267656E657269634974656D526561644D6F7265223B733A313A2231223B733A32323A2267656E657269634974656D45787472614669656C6473223B733A313A2230223B733A31353A2267656E65726963466565644C696E6B223B733A313A2231223B733A31353A2267656E657269634665656449636F6E223B733A313A2231223B733A393A22666565644C696D6974223B733A323A223130223B733A31333A22666565644974656D496D616765223B733A313A2231223B733A31313A2266656564496D6753697A65223B733A313A2253223B733A31373A22666565644974656D496E74726F54657874223B733A313A2231223B733A31373A226665656454657874576F72644C696D6974223B733A303A22223B733A31363A22666565644974656D46756C6C54657874223B733A313A2231223B733A31323A22666565644974656D54616773223B733A313A2230223B733A31333A22666565644974656D566964656F223B733A313A2230223B733A31353A22666565644974656D47616C6C657279223B733A313A2230223B733A31393A22666565644974656D4174746163686D656E7473223B733A313A2230223B733A31343A2266656564426F677573456D61696C223B733A303A22223B733A31363A22696E74726F54657874436C65616E7570223B733A313A2230223B733A32373A22696E74726F54657874436C65616E75704578636C75646554616773223B733A303A22223B733A32333A22696E74726F54657874436C65616E757054616741747472223B733A303A22223B733A31353A2266756C6C54657874436C65616E7570223B733A313A2230223B733A32363A2266756C6C54657874436C65616E75704578636C75646554616773223B733A303A22223B733A32323A2266756C6C54657874436C65616E757054616741747472223B733A303A22223B733A31323A2278737346696C746572696E67223B733A313A2230223B733A31343A226C696E6B506F7075705769647468223B733A333A22393030223B733A31353A226C696E6B506F707570486569676874223B733A333A22363030223B733A31333A22696D616765735175616C697479223B733A333A22313030223B733A31313A226974656D496D6167655853223B733A333A22313030223B733A31303A226974656D496D61676553223B733A333A22323030223B733A31303A226974656D496D6167654D223B733A333A22343030223B733A31303A226974656D496D6167654C223B733A333A22363030223B733A31313A226974656D496D616765584C223B733A333A22393030223B733A31363A226974656D496D61676547656E65726963223B733A333A22333030223B733A31333A22636174496D6167655769647468223B733A333A22313030223B733A31353A22636174496D61676544656661756C74223B733A313A2231223B733A31343A2275736572496D6167655769647468223B733A333A22313030223B733A31363A2275736572496D61676544656661756C74223B733A313A2231223B733A31373A22636F6D6D656E746572496D675769647468223B733A323A223438223B733A31373A226F6E6C696E65496D616765456469746F72223B733A383A2273706C6173687570223B733A31343A22696D61676554696D657374616D70223B733A313A2230223B733A31363A22696D6167654D656D6F72794C696D6974223B733A303A22223B733A31363A22736F6369616C427574746F6E436F6465223B733A303A22223B733A31353A2274776974746572557365726E616D65223B733A303A22223B733A31333A2266616365626F6F6B496D616765223B733A363A224D656469756D223B733A383A22636F6D6D656E7473223B733A313A2231223B733A31363A22636F6D6D656E74734F72646572696E67223B733A343A2244455343223B733A31333A22636F6D6D656E74734C696D6974223B733A323A223130223B733A32303A22636F6D6D656E7473466F726D506F736974696F6E223B733A353A2262656C6F77223B733A31383A22636F6D6D656E74735075626C697368696E67223B733A313A2231223B733A31373A22636F6D6D656E74735265706F7274696E67223B733A313A2232223B733A32333A22636F6D6D656E74735265706F7274526563697069656E74223B733A303A22223B733A32343A22696E6C696E65436F6D6D656E74734D6F6465726174696F6E223B733A313A2230223B733A383A226772617661746172223B733A313A2231223B733A393A22726563617074636861223B733A313A2230223B733A32323A22726563617074636861466F7252656769737465726564223B733A313A2231223B733A31373A22636F6D6D656E7473466F726D4E6F746573223B733A313A2231223B733A32313A22636F6D6D656E7473466F726D4E6F74657354657874223B733A303A22223B733A31353A2266726F6E74656E6445646974696E67223B733A313A2231223B733A31323A2273686F77496D616765546162223B733A313A2231223B733A31393A2273686F77496D61676547616C6C657279546162223B733A313A2231223B733A31323A2273686F77566964656F546162223B733A313A2231223B733A31383A2273686F7745787472614669656C6473546162223B733A313A2231223B733A31383A2273686F774174746163686D656E7473546162223B733A313A2231223B733A31333A2273686F774B32506C7567696E73223B733A313A2231223B733A32323A2273696465426172446973706C617946726F6E74656E64223B733A313A2230223B733A31323A226D65726765456469746F7273223B733A313A2231223B733A31343A2273696465426172446973706C6179223B733A313A2231223B733A31373A226174746163686D656E7473466F6C646572223B733A303A22223B733A31363A2268696465496D706F7274427574746F6E223B733A313A2230223B733A31323A22676F6F676C65536561726368223B733A313A2230223B733A32313A22676F6F676C65536561726368436F6E7461696E6572223B733A32333A226B32476F6F676C65536561726368436F6E7461696E6572223B733A31333A224B325573657250726F66696C65223B733A313A2231223B733A31313A224B325573657247726F7570223B733A303A22223B733A383A227265646972656374223B733A303A22223B733A31313A2261646D696E536561726368223B733A363A2273696D706C65223B733A31323A22636F6F6B6965446F6D61696E223B733A303A22223B733A31333A2274616767696E6753797374656D223B733A313A2231223B733A383A226C6F636B54616773223B733A313A2230223B733A31333A2273686F7754616746696C746572223B733A313A2230223B733A393A226B325461674E6F726D223B733A313A2230223B733A31333A226B325461674E6F726D43617365223B733A353A226C6F776572223B733A33313A226B325461674E6F726D4164646974696F6E616C5265706C6163656D656E7473223B733A303A22223B733A32303A227265636170746368615F7075626C69635F6B6579223B733A303A22223B733A32313A227265636170746368615F707269766174655F6B6579223B733A303A22223B733A31353A227265636170746368615F7468656D65223B733A353A22636C65616E223B733A32333A227265636170746368614F6E526567697374726174696F6E223B733A313A2230223B733A31333A2273746F70466F72756D5370616D223B733A313A2230223B733A31393A2273746F70466F72756D5370616D4170694B6579223B733A303A22223B733A32313A2273686F774974656D73436F756E74657241646D696E223B733A313A2231223B733A31373A2273686F774368696C644361744974656D73223B733A313A2231223B733A32323A2264697361626C65436F6D706163744F72646572696E67223B733A313A2230223B733A31333A226D657461446573634C696D6974223B733A333A22313530223B733A32323A22656E666F7263655345465265706C6163656D656E7473223B733A313A2230223B733A31353A225345465265706C6163656D656E7473223B733A303A22223B733A353A226B32536566223B733A313A2230223B733A31333A226B325365664C6162656C436174223B733A373A22636F6E74656E74223B733A31333A226B325365664C6162656C546167223B733A333A22746167223B733A31343A226B325365664C6162656C55736572223B733A363A22617574686F72223B733A31363A226B325365664C6162656C536561726368223B733A363A22736561726368223B733A31343A226B325365664C6162656C44617465223B733A343A2264617465223B733A31343A226B325365664C6162656C4974656D223B733A313A2230223B733A32363A226B325365664C6162656C4974656D437573746F6D507265666978223B733A303A22223B733A31373A226B32536566496E736572744974656D4964223B733A313A2231223B733A32343A226B325365664974656D49645469746C65416C696173536570223B733A343A2264617368223B733A32323A226B325365665573654974656D5469746C65416C696173223B733A313A2231223B733A31363A226B32536566496E736572744361744964223B733A313A2231223B733A32333A226B3253656643617449645469746C65416C696173536570223B733A343A2264617368223B733A32313A226B325365665573654361745469746C65416C696173223B733A313A2231223B733A31363A2273683430345365664C6162656C436174223B733A303A22223B733A31373A2273683430345365664C6162656C55736572223B733A343A22626C6F67223B733A31373A2273683430345365664C6162656C4974656D223B733A313A2232223B733A31383A2273683430345365665469746C65416C696173223B733A353A22616C696173223B733A32393A2273683430345365664D6F644B32436F6E74656E7446656564416C696173223B733A343A2266656564223B733A32303A227368343034536566496E736572744974656D4964223B733A313A2230223B733A32363A227368343034536566496E73657274556E697175654974656D4964223B733A313A2230223B733A31333A226362496E746567726174696F6E223B733A313A2230223B7D7D733A373A226D6574616B6579223B733A303A22223B733A383A226D65746164657363223B733A303A22223B733A383A226D65746164617461223B4F3A393A224A5265676973747279223A313A7B733A373A22002A0064617461223B4F3A383A22737464436C617373223A323A7B733A363A22726F626F7473223B733A303A22223B733A363A22617574686F72223B733A303A22223B7D7D733A383A226F72646572696E67223B733A313A2231223B733A353A227472617368223B733A313A2230223B733A393A226361745F7472617368223B733A313A2230223B733A383A2263617465676F7279223B733A393A22417564696F73202332223B733A393A226361745F7374617465223B733A313A2231223B733A31303A226361745F616363657373223B733A313A2231223B733A343A22736C7567223B733A33343A22373A636F7069612D64652D636F7069612D64652D636F7069612D64652D7465737465223B733A373A22636174736C7567223B733A31303A22333A617564696F732D32223B733A363A22617574686F72223B733A31303A2253757065722055736572223B733A363A226C61796F7574223B733A343A226974656D223B733A343A2270617468223B733A36323A22696E6465782E7068702F636F6D706F6E656E742F6B322F6974656D2F372D636F7069612D64652D636F7069612D64652D636F7069612D64652D7465737465223B733A31303A226D657461617574686F72223B4E3B7D733A31353A22002A00696E737472756374696F6E73223B613A353A7B693A313B613A333A7B693A303B733A353A227469746C65223B693A313B733A383A227375627469746C65223B693A323B733A323A226964223B7D693A323B613A323A7B693A303B733A373A2273756D6D617279223B693A313B733A343A22626F6479223B7D693A333B613A383A7B693A303B733A343A226D657461223B693A313B733A31303A226C6973745F7072696365223B693A323B733A31303A2273616C655F7072696365223B693A333B733A373A226D6574616B6579223B693A343B733A383A226D65746164657363223B693A353B733A31303A226D657461617574686F72223B693A363B733A363A22617574686F72223B693A373B733A31363A22637265617465645F62795F616C696173223B7D693A343B613A323A7B693A303B733A343A2270617468223B693A313B733A353A22616C696173223B7D693A353B613A313A7B693A303B733A383A22636F6D6D656E7473223B7D7D733A31313A22002A007461786F6E6F6D79223B613A343A7B733A343A2254797065223B613A313A7B733A373A224B32204974656D223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A373A224B32204974656D223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D733A363A22417574686F72223B613A313A7B733A31303A2253757065722055736572223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A31303A2253757065722055736572223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D733A31313A224B322043617465676F7279223B613A313A7B733A393A22417564696F73202332223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A393A22417564696F73202332223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D733A383A224C616E6775616765223B613A313A7B733A313A222A223B4F3A373A224A4F626A656374223A343A7B733A31303A22002A005F6572726F7273223B613A303A7B7D733A353A227469746C65223B733A313A222A223B733A353A227374617465223B693A313B733A363A22616363657373223B693A313B7D7D7D733A333A2275726C223B733A33383A22696E6465782E7068703F6F7074696F6E3D636F6D5F6B3226766965773D6974656D2669643D37223B733A353A22726F757465223B733A37313A22696E6465782E7068703F6F7074696F6E3D636F6D5F6B3226766965773D6974656D2669643D373A636F7069612D64652D636F7069612D64652D636F7069612D64652D7465737465223B733A353A227469746C65223B733A33353A2243C3B37069612064652043C3B37069612064652043C3B3706961206465205465737465223B733A31313A226465736372697074696F6E223B733A303A22223B733A393A227075626C6973686564223B4E3B733A353A227374617465223B693A313B733A363A22616363657373223B733A313A2231223B733A383A226C616E6775616765223B733A313A222A223B733A31383A227075626C6973685F73746172745F64617465223B733A31393A22323031332D31322D32322031323A34383A3438223B733A31363A227075626C6973685F656E645F64617465223B733A31393A22303030302D30302D30302030303A30303A3030223B733A31303A2273746172745F64617465223B733A31393A22323031332D31322D32322031333A34313A3330223B733A383A22656E645F64617465223B733A31393A22303030302D30302D30302030303A30303A3030223B733A31303A226C6973745F7072696365223B4E3B733A31303A2273616C655F7072696365223B4E3B733A373A22747970655F6964223B693A313B733A31353A2264656661756C744C616E6775616765223B733A353A2270742D4252223B7D);
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_finder_links` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__finder_links` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms0`
+-- Definition of table `#__finder_links_terms0`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms0`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms0` (
+DROP TABLE IF EXISTS `#__finder_links_terms0`;
+CREATE TABLE  `#__finder_links_terms0` (
   `link_id` int(10) unsigned NOT NULL,
   `term_id` int(10) unsigned NOT NULL,
   `weight` float unsigned NOT NULL,
@@ -1224,21 +1220,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms0` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms0`
+-- Dumping data for table `#__finder_links_terms0`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_finder_links_terms0` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_finder_links_terms0` WRITE;
+/*!40000 ALTER TABLE `#__finder_links_terms0` DISABLE KEYS */;
+LOCK TABLES `#__finder_links_terms0` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_finder_links_terms0` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__finder_links_terms0` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms1`
+-- Definition of table `#__finder_links_terms1`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms1`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms1` (
+DROP TABLE IF EXISTS `#__finder_links_terms1`;
+CREATE TABLE  `#__finder_links_terms1` (
   `link_id` int(10) unsigned NOT NULL,
   `term_id` int(10) unsigned NOT NULL,
   `weight` float unsigned NOT NULL,
@@ -1248,21 +1244,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms1` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms1`
+-- Dumping data for table `#__finder_links_terms1`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_finder_links_terms1` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_finder_links_terms1` WRITE;
+/*!40000 ALTER TABLE `#__finder_links_terms1` DISABLE KEYS */;
+LOCK TABLES `#__finder_links_terms1` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_finder_links_terms1` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__finder_links_terms1` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms2`
+-- Definition of table `#__finder_links_terms2`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms2`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms2` (
+DROP TABLE IF EXISTS `#__finder_links_terms2`;
+CREATE TABLE  `#__finder_links_terms2` (
   `link_id` int(10) unsigned NOT NULL,
   `term_id` int(10) unsigned NOT NULL,
   `weight` float unsigned NOT NULL,
@@ -1272,21 +1268,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms2` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms2`
+-- Dumping data for table `#__finder_links_terms2`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_finder_links_terms2` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_finder_links_terms2` WRITE;
+/*!40000 ALTER TABLE `#__finder_links_terms2` DISABLE KEYS */;
+LOCK TABLES `#__finder_links_terms2` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_finder_links_terms2` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__finder_links_terms2` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms3`
+-- Definition of table `#__finder_links_terms3`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms3`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms3` (
+DROP TABLE IF EXISTS `#__finder_links_terms3`;
+CREATE TABLE  `#__finder_links_terms3` (
   `link_id` int(10) unsigned NOT NULL,
   `term_id` int(10) unsigned NOT NULL,
   `weight` float unsigned NOT NULL,
@@ -1296,21 +1292,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms3` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms3`
+-- Dumping data for table `#__finder_links_terms3`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_finder_links_terms3` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_finder_links_terms3` WRITE;
+/*!40000 ALTER TABLE `#__finder_links_terms3` DISABLE KEYS */;
+LOCK TABLES `#__finder_links_terms3` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_finder_links_terms3` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__finder_links_terms3` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms4`
+-- Definition of table `#__finder_links_terms4`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms4`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms4` (
+DROP TABLE IF EXISTS `#__finder_links_terms4`;
+CREATE TABLE  `#__finder_links_terms4` (
   `link_id` int(10) unsigned NOT NULL,
   `term_id` int(10) unsigned NOT NULL,
   `weight` float unsigned NOT NULL,
@@ -1320,21 +1316,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms4` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms4`
+-- Dumping data for table `#__finder_links_terms4`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_finder_links_terms4` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_finder_links_terms4` WRITE;
+/*!40000 ALTER TABLE `#__finder_links_terms4` DISABLE KEYS */;
+LOCK TABLES `#__finder_links_terms4` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_finder_links_terms4` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__finder_links_terms4` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms5`
+-- Definition of table `#__finder_links_terms5`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms5`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms5` (
+DROP TABLE IF EXISTS `#__finder_links_terms5`;
+CREATE TABLE  `#__finder_links_terms5` (
   `link_id` int(10) unsigned NOT NULL,
   `term_id` int(10) unsigned NOT NULL,
   `weight` float unsigned NOT NULL,
@@ -1344,21 +1340,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms5` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms5`
+-- Dumping data for table `#__finder_links_terms5`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_finder_links_terms5` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_finder_links_terms5` WRITE;
+/*!40000 ALTER TABLE `#__finder_links_terms5` DISABLE KEYS */;
+LOCK TABLES `#__finder_links_terms5` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_finder_links_terms5` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__finder_links_terms5` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms6`
+-- Definition of table `#__finder_links_terms6`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms6`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms6` (
+DROP TABLE IF EXISTS `#__finder_links_terms6`;
+CREATE TABLE  `#__finder_links_terms6` (
   `link_id` int(10) unsigned NOT NULL,
   `term_id` int(10) unsigned NOT NULL,
   `weight` float unsigned NOT NULL,
@@ -1368,21 +1364,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms6` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms6`
+-- Dumping data for table `#__finder_links_terms6`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_finder_links_terms6` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_finder_links_terms6` WRITE;
+/*!40000 ALTER TABLE `#__finder_links_terms6` DISABLE KEYS */;
+LOCK TABLES `#__finder_links_terms6` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_finder_links_terms6` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__finder_links_terms6` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms7`
+-- Definition of table `#__finder_links_terms7`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms7`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms7` (
+DROP TABLE IF EXISTS `#__finder_links_terms7`;
+CREATE TABLE  `#__finder_links_terms7` (
   `link_id` int(10) unsigned NOT NULL,
   `term_id` int(10) unsigned NOT NULL,
   `weight` float unsigned NOT NULL,
@@ -1392,21 +1388,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms7` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms7`
+-- Dumping data for table `#__finder_links_terms7`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_finder_links_terms7` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_finder_links_terms7` WRITE;
+/*!40000 ALTER TABLE `#__finder_links_terms7` DISABLE KEYS */;
+LOCK TABLES `#__finder_links_terms7` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_finder_links_terms7` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__finder_links_terms7` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms8`
+-- Definition of table `#__finder_links_terms8`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms8`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms8` (
+DROP TABLE IF EXISTS `#__finder_links_terms8`;
+CREATE TABLE  `#__finder_links_terms8` (
   `link_id` int(10) unsigned NOT NULL,
   `term_id` int(10) unsigned NOT NULL,
   `weight` float unsigned NOT NULL,
@@ -1416,21 +1412,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms8` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms8`
+-- Dumping data for table `#__finder_links_terms8`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_finder_links_terms8` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_finder_links_terms8` WRITE;
+/*!40000 ALTER TABLE `#__finder_links_terms8` DISABLE KEYS */;
+LOCK TABLES `#__finder_links_terms8` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_finder_links_terms8` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__finder_links_terms8` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms9`
+-- Definition of table `#__finder_links_terms9`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms9`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms9` (
+DROP TABLE IF EXISTS `#__finder_links_terms9`;
+CREATE TABLE  `#__finder_links_terms9` (
   `link_id` int(10) unsigned NOT NULL,
   `term_id` int(10) unsigned NOT NULL,
   `weight` float unsigned NOT NULL,
@@ -1440,21 +1436,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms9` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_finder_links_terms9`
+-- Dumping data for table `#__finder_links_terms9`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_finder_links_terms9` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_finder_links_terms9` WRITE;
+/*!40000 ALTER TABLE `#__finder_links_terms9` DISABLE KEYS */;
+LOCK TABLES `#__finder_links_terms9` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_finder_links_terms9` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__finder_links_terms9` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_finder_links_termsa`
+-- Definition of table `#__finder_links_termsa`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_finder_links_termsa`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_links_termsa` (
+DROP TABLE IF EXISTS `#__finder_links_termsa`;
+CREATE TABLE  `#__finder_links_termsa` (
   `link_id` int(10) unsigned NOT NULL,
   `term_id` int(10) unsigned NOT NULL,
   `weight` float unsigned NOT NULL,
@@ -1464,21 +1460,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_links_termsa` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_finder_links_termsa`
+-- Dumping data for table `#__finder_links_termsa`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_finder_links_termsa` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_finder_links_termsa` WRITE;
+/*!40000 ALTER TABLE `#__finder_links_termsa` DISABLE KEYS */;
+LOCK TABLES `#__finder_links_termsa` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_finder_links_termsa` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__finder_links_termsa` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_finder_links_termsb`
+-- Definition of table `#__finder_links_termsb`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_finder_links_termsb`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_links_termsb` (
+DROP TABLE IF EXISTS `#__finder_links_termsb`;
+CREATE TABLE  `#__finder_links_termsb` (
   `link_id` int(10) unsigned NOT NULL,
   `term_id` int(10) unsigned NOT NULL,
   `weight` float unsigned NOT NULL,
@@ -1488,21 +1484,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_links_termsb` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_finder_links_termsb`
+-- Dumping data for table `#__finder_links_termsb`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_finder_links_termsb` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_finder_links_termsb` WRITE;
+/*!40000 ALTER TABLE `#__finder_links_termsb` DISABLE KEYS */;
+LOCK TABLES `#__finder_links_termsb` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_finder_links_termsb` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__finder_links_termsb` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_finder_links_termsc`
+-- Definition of table `#__finder_links_termsc`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_finder_links_termsc`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_links_termsc` (
+DROP TABLE IF EXISTS `#__finder_links_termsc`;
+CREATE TABLE  `#__finder_links_termsc` (
   `link_id` int(10) unsigned NOT NULL,
   `term_id` int(10) unsigned NOT NULL,
   `weight` float unsigned NOT NULL,
@@ -1512,21 +1508,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_links_termsc` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_finder_links_termsc`
+-- Dumping data for table `#__finder_links_termsc`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_finder_links_termsc` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_finder_links_termsc` WRITE;
+/*!40000 ALTER TABLE `#__finder_links_termsc` DISABLE KEYS */;
+LOCK TABLES `#__finder_links_termsc` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_finder_links_termsc` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__finder_links_termsc` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_finder_links_termsd`
+-- Definition of table `#__finder_links_termsd`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_finder_links_termsd`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_links_termsd` (
+DROP TABLE IF EXISTS `#__finder_links_termsd`;
+CREATE TABLE  `#__finder_links_termsd` (
   `link_id` int(10) unsigned NOT NULL,
   `term_id` int(10) unsigned NOT NULL,
   `weight` float unsigned NOT NULL,
@@ -1536,21 +1532,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_links_termsd` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_finder_links_termsd`
+-- Dumping data for table `#__finder_links_termsd`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_finder_links_termsd` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_finder_links_termsd` WRITE;
+/*!40000 ALTER TABLE `#__finder_links_termsd` DISABLE KEYS */;
+LOCK TABLES `#__finder_links_termsd` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_finder_links_termsd` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__finder_links_termsd` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_finder_links_termse`
+-- Definition of table `#__finder_links_termse`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_finder_links_termse`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_links_termse` (
+DROP TABLE IF EXISTS `#__finder_links_termse`;
+CREATE TABLE  `#__finder_links_termse` (
   `link_id` int(10) unsigned NOT NULL,
   `term_id` int(10) unsigned NOT NULL,
   `weight` float unsigned NOT NULL,
@@ -1560,21 +1556,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_links_termse` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_finder_links_termse`
+-- Dumping data for table `#__finder_links_termse`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_finder_links_termse` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_finder_links_termse` WRITE;
+/*!40000 ALTER TABLE `#__finder_links_termse` DISABLE KEYS */;
+LOCK TABLES `#__finder_links_termse` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_finder_links_termse` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__finder_links_termse` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_finder_links_termsf`
+-- Definition of table `#__finder_links_termsf`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_finder_links_termsf`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_links_termsf` (
+DROP TABLE IF EXISTS `#__finder_links_termsf`;
+CREATE TABLE  `#__finder_links_termsf` (
   `link_id` int(10) unsigned NOT NULL,
   `term_id` int(10) unsigned NOT NULL,
   `weight` float unsigned NOT NULL,
@@ -1584,21 +1580,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_links_termsf` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_finder_links_termsf`
+-- Dumping data for table `#__finder_links_termsf`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_finder_links_termsf` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_finder_links_termsf` WRITE;
+/*!40000 ALTER TABLE `#__finder_links_termsf` DISABLE KEYS */;
+LOCK TABLES `#__finder_links_termsf` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_finder_links_termsf` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__finder_links_termsf` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_finder_taxonomy`
+-- Definition of table `#__finder_taxonomy`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_finder_taxonomy`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_taxonomy` (
+DROP TABLE IF EXISTS `#__finder_taxonomy`;
+CREATE TABLE  `#__finder_taxonomy` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `parent_id` int(10) unsigned NOT NULL DEFAULT '0',
   `title` varchar(255) NOT NULL,
@@ -1614,12 +1610,12 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_taxonomy` (
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_finder_taxonomy`
+-- Dumping data for table `#__finder_taxonomy`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_finder_taxonomy` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_finder_taxonomy` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_finder_taxonomy` VALUES  (1,0,'ROOT',0,0,0),
+/*!40000 ALTER TABLE `#__finder_taxonomy` DISABLE KEYS */;
+LOCK TABLES `#__finder_taxonomy` WRITE;
+INSERT INTO `#__finder_taxonomy` VALUES  (1,0,'ROOT',0,0,0),
  (2,1,'Type',1,1,0),
  (3,2,'K2 Item',1,1,0),
  (4,1,'Author',1,1,0),
@@ -1632,15 +1628,15 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_finder_taxonomy` VALUES  (1,0,'ROO
  (15,6,'Áudios #1',1,1,0),
  (18,6,'Audios #2',1,1,0);
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_finder_taxonomy` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__finder_taxonomy` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_finder_taxonomy_map`
+-- Definition of table `#__finder_taxonomy_map`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_finder_taxonomy_map`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_taxonomy_map` (
+DROP TABLE IF EXISTS `#__finder_taxonomy_map`;
+CREATE TABLE  `#__finder_taxonomy_map` (
   `link_id` int(10) unsigned NOT NULL,
   `node_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`link_id`,`node_id`),
@@ -1649,12 +1645,12 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_taxonomy_map` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_finder_taxonomy_map`
+-- Dumping data for table `#__finder_taxonomy_map`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_finder_taxonomy_map` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_finder_taxonomy_map` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_finder_taxonomy_map` VALUES  (1,3),
+/*!40000 ALTER TABLE `#__finder_taxonomy_map` DISABLE KEYS */;
+LOCK TABLES `#__finder_taxonomy_map` WRITE;
+INSERT INTO `#__finder_taxonomy_map` VALUES  (1,3),
  (1,5),
  (1,7),
  (1,9),
@@ -1687,15 +1683,15 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_finder_taxonomy_map` VALUES  (1,3)
  (30,9),
  (30,18);
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_finder_taxonomy_map` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__finder_taxonomy_map` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_finder_terms`
+-- Definition of table `#__finder_terms`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_finder_terms`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_terms` (
+DROP TABLE IF EXISTS `#__finder_terms`;
+CREATE TABLE  `#__finder_terms` (
   `term_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `term` varchar(75) NOT NULL,
   `stem` varchar(75) NOT NULL,
@@ -1713,21 +1709,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_terms` (
 ) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_finder_terms`
+-- Dumping data for table `#__finder_terms`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_finder_terms` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_finder_terms` WRITE;
+/*!40000 ALTER TABLE `#__finder_terms` DISABLE KEYS */;
+LOCK TABLES `#__finder_terms` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_finder_terms` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__finder_terms` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_finder_terms_common`
+-- Definition of table `#__finder_terms_common`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_finder_terms_common`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_terms_common` (
+DROP TABLE IF EXISTS `#__finder_terms_common`;
+CREATE TABLE  `#__finder_terms_common` (
   `term` varchar(75) NOT NULL,
   `language` varchar(3) NOT NULL,
   KEY `idx_word_lang` (`term`,`language`),
@@ -1735,12 +1731,12 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_terms_common` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_finder_terms_common`
+-- Dumping data for table `#__finder_terms_common`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_finder_terms_common` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_finder_terms_common` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_finder_terms_common` VALUES  ('a','en'),
+/*!40000 ALTER TABLE `#__finder_terms_common` DISABLE KEYS */;
+LOCK TABLES `#__finder_terms_common` WRITE;
+INSERT INTO `#__finder_terms_common` VALUES  ('a','en'),
  ('about','en'),
  ('after','en'),
  ('ago','en'),
@@ -1856,15 +1852,15 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_finder_terms_common` VALUES  ('a',
  ('your','en'),
  ('yours','en');
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_finder_terms_common` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__finder_terms_common` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_finder_tokens`
+-- Definition of table `#__finder_tokens`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_finder_tokens`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_tokens` (
+DROP TABLE IF EXISTS `#__finder_tokens`;
+CREATE TABLE  `#__finder_tokens` (
   `term` varchar(75) NOT NULL,
   `stem` varchar(75) NOT NULL,
   `common` tinyint(1) unsigned NOT NULL DEFAULT '0',
@@ -1877,21 +1873,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_tokens` (
 ) ENGINE=MEMORY DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_finder_tokens`
+-- Dumping data for table `#__finder_tokens`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_finder_tokens` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_finder_tokens` WRITE;
+/*!40000 ALTER TABLE `#__finder_tokens` DISABLE KEYS */;
+LOCK TABLES `#__finder_tokens` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_finder_tokens` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__finder_tokens` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_finder_tokens_aggregate`
+-- Definition of table `#__finder_tokens_aggregate`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_finder_tokens_aggregate`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_tokens_aggregate` (
+DROP TABLE IF EXISTS `#__finder_tokens_aggregate`;
+CREATE TABLE  `#__finder_tokens_aggregate` (
   `term_id` int(10) unsigned NOT NULL,
   `map_suffix` char(1) NOT NULL,
   `term` varchar(75) NOT NULL,
@@ -1908,21 +1904,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_tokens_aggregate` (
 ) ENGINE=MEMORY DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_finder_tokens_aggregate`
+-- Dumping data for table `#__finder_tokens_aggregate`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_finder_tokens_aggregate` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_finder_tokens_aggregate` WRITE;
+/*!40000 ALTER TABLE `#__finder_tokens_aggregate` DISABLE KEYS */;
+LOCK TABLES `#__finder_tokens_aggregate` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_finder_tokens_aggregate` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__finder_tokens_aggregate` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_finder_types`
+-- Definition of table `#__finder_types`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_finder_types`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_types` (
+DROP TABLE IF EXISTS `#__finder_types`;
+CREATE TABLE  `#__finder_types` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(100) NOT NULL,
   `mime` varchar(100) NOT NULL,
@@ -1931,12 +1927,12 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_finder_types` (
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_finder_types`
+-- Dumping data for table `#__finder_types`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_finder_types` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_finder_types` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_finder_types` VALUES  (1,'K2 Item',''),
+/*!40000 ALTER TABLE `#__finder_types` DISABLE KEYS */;
+LOCK TABLES `#__finder_types` WRITE;
+INSERT INTO `#__finder_types` VALUES  (1,'K2 Item',''),
  (2,'Tag',''),
  (3,'Category',''),
  (4,'Contact',''),
@@ -1944,15 +1940,15 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_finder_types` VALUES  (1,'K2 Item'
  (6,'News Feed',''),
  (7,'Web Link','');
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_finder_types` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__finder_types` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_k2_attachments`
+-- Definition of table `#__k2_attachments`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_k2_attachments`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_k2_attachments` (
+DROP TABLE IF EXISTS `#__k2_attachments`;
+CREATE TABLE  `#__k2_attachments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `itemID` int(11) NOT NULL,
   `filename` varchar(255) NOT NULL,
@@ -1964,22 +1960,22 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_k2_attachments` (
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_k2_attachments`
+-- Dumping data for table `#__k2_attachments`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_k2_attachments` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_k2_attachments` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_k2_attachments` VALUES  (1,1,'1._Manual_Portal_PadraYo.pdf','1._Manual_Portal_PadraYo.pdf','1._Manual_Portal_PadraYo.pdf',3);
+/*!40000 ALTER TABLE `#__k2_attachments` DISABLE KEYS */;
+LOCK TABLES `#__k2_attachments` WRITE;
+INSERT INTO `#__k2_attachments` VALUES  (1,1,'1._Manual_Portal_PadraYo.pdf','1._Manual_Portal_PadraYo.pdf','1._Manual_Portal_PadraYo.pdf',3);
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_k2_attachments` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__k2_attachments` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_k2_categories`
+-- Definition of table `#__k2_categories`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_k2_categories`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_k2_categories` (
+DROP TABLE IF EXISTS `#__k2_categories`;
+CREATE TABLE  `#__k2_categories` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `alias` varchar(255) NOT NULL,
@@ -2005,26 +2001,26 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_k2_categories` (
 ) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_k2_categories`
+-- Dumping data for table `#__k2_categories`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_k2_categories` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_k2_categories` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_k2_categories` VALUES  (1,'Áudios','audios','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>',0,1,1,1,1,'','{\"inheritFrom\":\"0\",\"theme\":\"audios\",\"num_leading_items\":\"0\",\"num_leading_columns\":\"1\",\"leadingImgSize\":\"none\",\"num_primary_items\":\"0\",\"num_primary_columns\":\"1\",\"primaryImgSize\":\"none\",\"num_secondary_items\":\"10\",\"num_secondary_columns\":\"1\",\"secondaryImgSize\":\"none\",\"num_links\":\"0\",\"num_links_columns\":\"1\",\"linksImgSize\":\"none\",\"catCatalogMode\":\"0\",\"catFeaturedItems\":\"1\",\"catOrdering\":\"\",\"catPagination\":\"2\",\"catPaginationResults\":\"1\",\"catTitle\":\"1\",\"catTitleItemCounter\":\"0\",\"catDescription\":\"1\",\"catImage\":\"0\",\"catFeedLink\":\"0\",\"catFeedIcon\":\"0\",\"subCategories\":\"1\",\"subCatColumns\":\"2\",\"subCatOrdering\":\"\",\"subCatTitle\":\"1\",\"subCatTitleItemCounter\":\"1\",\"subCatDescription\":\"1\",\"subCatImage\":\"1\",\"itemImageXS\":\"\",\"itemImageS\":\"\",\"itemImageM\":\"\",\"itemImageL\":\"\",\"itemImageXL\":\"\",\"catItemTitle\":\"1\",\"catItemTitleLinked\":\"1\",\"catItemFeaturedNotice\":\"0\",\"catItemAuthor\":\"1\",\"catItemDateCreated\":\"1\",\"catItemRating\":\"0\",\"catItemImage\":\"1\",\"catItemIntroText\":\"1\",\"catItemIntroTextWordLimit\":\"\",\"catItemExtraFields\":\"0\",\"catItemHits\":\"0\",\"catItemCategory\":\"1\",\"catItemTags\":\"1\",\"catItemAttachments\":\"0\",\"catItemAttachmentsCounter\":\"0\",\"catItemVideo\":\"1\",\"catItemVideoWidth\":\"\",\"catItemVideoHeight\":\"\",\"catItemAudioWidth\":\"200\",\"catItemAudioHeight\":\"200\",\"catItemVideoAutoPlay\":\"0\",\"catItemImageGallery\":\"0\",\"catItemDateModified\":\"0\",\"catItemReadMore\":\"1\",\"catItemCommentsAnchor\":\"0\",\"catItemK2Plugins\":\"1\",\"itemDateCreated\":\"1\",\"itemTitle\":\"1\",\"itemFeaturedNotice\":\"0\",\"itemAuthor\":\"1\",\"itemFontResizer\":\"0\",\"itemPrintButton\":\"0\",\"itemEmailButton\":\"0\",\"itemSocialButton\":\"0\",\"itemVideoAnchor\":\"0\",\"itemImageGalleryAnchor\":\"0\",\"itemCommentsAnchor\":\"0\",\"itemRating\":\"0\",\"itemImage\":\"0\",\"itemImgSize\":\"XSmall\",\"itemImageMainCaption\":\"0\",\"itemImageMainCredits\":\"0\",\"itemIntroText\":\"1\",\"itemFullText\":\"1\",\"itemExtraFields\":\"0\",\"itemDateModified\":\"1\",\"itemHits\":\"1\",\"itemCategory\":\"1\",\"itemTags\":\"1\",\"itemAttachments\":\"0\",\"itemAttachmentsCounter\":\"0\",\"itemVideo\":\"1\",\"itemVideoWidth\":\"\",\"itemVideoHeight\":\"\",\"itemAudioWidth\":\"\",\"itemAudioHeight\":\"\",\"itemVideoAutoPlay\":\"0\",\"itemVideoCaption\":\"1\",\"itemVideoCredits\":\"1\",\"itemImageGallery\":\"0\",\"itemNavigation\":\"1\",\"itemComments\":\"0\",\"itemTwitterButton\":\"0\",\"itemFacebookButton\":\"0\",\"itemGooglePlusOneButton\":\"0\",\"itemAuthorBlock\":\"0\",\"itemAuthorImage\":\"0\",\"itemAuthorDescription\":\"0\",\"itemAuthorURL\":\"0\",\"itemAuthorEmail\":\"0\",\"itemAuthorLatest\":\"0\",\"itemAuthorLatestLimit\":\"5\",\"itemRelated\":\"1\",\"itemRelatedLimit\":\"5\",\"itemRelatedTitle\":\"0\",\"itemRelatedCategory\":\"0\",\"itemRelatedImageSize\":\"0\",\"itemRelatedIntrotext\":\"0\",\"itemRelatedFulltext\":\"0\",\"itemRelatedAuthor\":\"0\",\"itemRelatedMedia\":\"0\",\"itemRelatedImageGallery\":\"0\",\"itemK2Plugins\":\"0\",\"catMetaDesc\":\"\",\"catMetaKey\":\"\",\"catMetaRobots\":\"\",\"catMetaAuthor\":\"\"}',0,'','*'),
+/*!40000 ALTER TABLE `#__k2_categories` DISABLE KEYS */;
+LOCK TABLES `#__k2_categories` WRITE;
+INSERT INTO `#__k2_categories` VALUES  (1,'Áudios','audios','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>',0,1,1,1,1,'','{\"inheritFrom\":\"0\",\"theme\":\"audios\",\"num_leading_items\":\"0\",\"num_leading_columns\":\"1\",\"leadingImgSize\":\"none\",\"num_primary_items\":\"0\",\"num_primary_columns\":\"1\",\"primaryImgSize\":\"none\",\"num_secondary_items\":\"10\",\"num_secondary_columns\":\"1\",\"secondaryImgSize\":\"none\",\"num_links\":\"0\",\"num_links_columns\":\"1\",\"linksImgSize\":\"none\",\"catCatalogMode\":\"0\",\"catFeaturedItems\":\"1\",\"catOrdering\":\"\",\"catPagination\":\"2\",\"catPaginationResults\":\"1\",\"catTitle\":\"1\",\"catTitleItemCounter\":\"0\",\"catDescription\":\"1\",\"catImage\":\"0\",\"catFeedLink\":\"0\",\"catFeedIcon\":\"0\",\"subCategories\":\"1\",\"subCatColumns\":\"2\",\"subCatOrdering\":\"\",\"subCatTitle\":\"1\",\"subCatTitleItemCounter\":\"1\",\"subCatDescription\":\"1\",\"subCatImage\":\"1\",\"itemImageXS\":\"\",\"itemImageS\":\"\",\"itemImageM\":\"\",\"itemImageL\":\"\",\"itemImageXL\":\"\",\"catItemTitle\":\"1\",\"catItemTitleLinked\":\"1\",\"catItemFeaturedNotice\":\"0\",\"catItemAuthor\":\"1\",\"catItemDateCreated\":\"1\",\"catItemRating\":\"0\",\"catItemImage\":\"1\",\"catItemIntroText\":\"1\",\"catItemIntroTextWordLimit\":\"\",\"catItemExtraFields\":\"0\",\"catItemHits\":\"0\",\"catItemCategory\":\"1\",\"catItemTags\":\"1\",\"catItemAttachments\":\"0\",\"catItemAttachmentsCounter\":\"0\",\"catItemVideo\":\"1\",\"catItemVideoWidth\":\"\",\"catItemVideoHeight\":\"\",\"catItemAudioWidth\":\"200\",\"catItemAudioHeight\":\"200\",\"catItemVideoAutoPlay\":\"0\",\"catItemImageGallery\":\"0\",\"catItemDateModified\":\"0\",\"catItemReadMore\":\"1\",\"catItemCommentsAnchor\":\"0\",\"catItemK2Plugins\":\"1\",\"itemDateCreated\":\"1\",\"itemTitle\":\"1\",\"itemFeaturedNotice\":\"0\",\"itemAuthor\":\"1\",\"itemFontResizer\":\"0\",\"itemPrintButton\":\"0\",\"itemEmailButton\":\"0\",\"itemSocialButton\":\"0\",\"itemVideoAnchor\":\"0\",\"itemImageGalleryAnchor\":\"0\",\"itemCommentsAnchor\":\"0\",\"itemRating\":\"0\",\"itemImage\":\"0\",\"itemImgSize\":\"XSmall\",\"itemImageMainCaption\":\"0\",\"itemImageMainCredits\":\"0\",\"itemIntroText\":\"1\",\"itemFullText\":\"1\",\"itemExtraFields\":\"0\",\"itemDateModified\":\"1\",\"itemHits\":\"1\",\"itemCategory\":\"1\",\"itemTags\":\"1\",\"itemAttachments\":\"0\",\"itemAttachmentsCounter\":\"0\",\"itemVideo\":\"1\",\"itemVideoWidth\":\"\",\"itemVideoHeight\":\"\",\"itemAudioWidth\":\"\",\"itemAudioHeight\":\"\",\"itemVideoAutoPlay\":\"0\",\"itemVideoCaption\":\"1\",\"itemVideoCredits\":\"1\",\"itemImageGallery\":\"0\",\"itemNavigation\":\"1\",\"itemComments\":\"0\",\"itemTwitterButton\":\"0\",\"itemFacebookButton\":\"0\",\"itemGooglePlusOneButton\":\"0\",\"itemAuthorBlock\":\"0\",\"itemAuthorImage\":\"0\",\"itemAuthorDescription\":\"0\",\"itemAuthorURL\":\"0\",\"itemAuthorEmail\":\"0\",\"itemAuthorLatest\":\"0\",\"itemAuthorLatestLimit\":\"5\",\"itemRelated\":\"1\",\"itemRelatedLimit\":\"5\",\"itemRelatedTitle\":\"0\",\"itemRelatedCategory\":\"0\",\"itemRelatedImageSize\":\"0\",\"itemRelatedIntrotext\":\"0\",\"itemRelatedFulltext\":\"0\",\"itemRelatedAuthor\":\"0\",\"itemRelatedMedia\":\"0\",\"itemRelatedImageGallery\":\"0\",\"itemK2Plugins\":\"0\",\"catMetaDesc\":\"\",\"catMetaKey\":\"\",\"catMetaRobots\":\"\",\"catMetaAuthor\":\"\"}',0,'','*'),
  (2,'Áudios #1','audios-1','',1,1,1,1,1,'','{\"inheritFrom\":\"1\",\"theme\":\"audios\",\"num_leading_items\":\"2\",\"num_leading_columns\":\"1\",\"leadingImgSize\":\"Large\",\"num_primary_items\":\"4\",\"num_primary_columns\":\"2\",\"primaryImgSize\":\"Medium\",\"num_secondary_items\":\"4\",\"num_secondary_columns\":\"1\",\"secondaryImgSize\":\"Small\",\"num_links\":\"4\",\"num_links_columns\":\"1\",\"linksImgSize\":\"XSmall\",\"catCatalogMode\":\"0\",\"catFeaturedItems\":\"1\",\"catOrdering\":\"\",\"catPagination\":\"2\",\"catPaginationResults\":\"1\",\"catTitle\":\"1\",\"catTitleItemCounter\":\"1\",\"catDescription\":\"1\",\"catImage\":\"1\",\"catFeedLink\":\"1\",\"catFeedIcon\":\"1\",\"subCategories\":\"1\",\"subCatColumns\":\"2\",\"subCatOrdering\":\"\",\"subCatTitle\":\"1\",\"subCatTitleItemCounter\":\"1\",\"subCatDescription\":\"1\",\"subCatImage\":\"1\",\"itemImageXS\":\"\",\"itemImageS\":\"\",\"itemImageM\":\"\",\"itemImageL\":\"\",\"itemImageXL\":\"\",\"catItemTitle\":\"1\",\"catItemTitleLinked\":\"1\",\"catItemFeaturedNotice\":\"0\",\"catItemAuthor\":\"1\",\"catItemDateCreated\":\"1\",\"catItemRating\":\"0\",\"catItemImage\":\"1\",\"catItemIntroText\":\"1\",\"catItemIntroTextWordLimit\":\"\",\"catItemExtraFields\":\"0\",\"catItemHits\":\"0\",\"catItemCategory\":\"1\",\"catItemTags\":\"1\",\"catItemAttachments\":\"0\",\"catItemAttachmentsCounter\":\"0\",\"catItemVideo\":\"0\",\"catItemVideoWidth\":\"\",\"catItemVideoHeight\":\"\",\"catItemAudioWidth\":\"\",\"catItemAudioHeight\":\"\",\"catItemVideoAutoPlay\":\"0\",\"catItemImageGallery\":\"0\",\"catItemDateModified\":\"0\",\"catItemReadMore\":\"1\",\"catItemCommentsAnchor\":\"1\",\"catItemK2Plugins\":\"1\",\"itemDateCreated\":\"1\",\"itemTitle\":\"1\",\"itemFeaturedNotice\":\"1\",\"itemAuthor\":\"1\",\"itemFontResizer\":\"1\",\"itemPrintButton\":\"1\",\"itemEmailButton\":\"1\",\"itemSocialButton\":\"1\",\"itemVideoAnchor\":\"1\",\"itemImageGalleryAnchor\":\"1\",\"itemCommentsAnchor\":\"1\",\"itemRating\":\"1\",\"itemImage\":\"1\",\"itemImgSize\":\"Large\",\"itemImageMainCaption\":\"1\",\"itemImageMainCredits\":\"1\",\"itemIntroText\":\"1\",\"itemFullText\":\"1\",\"itemExtraFields\":\"1\",\"itemDateModified\":\"1\",\"itemHits\":\"1\",\"itemCategory\":\"1\",\"itemTags\":\"1\",\"itemAttachments\":\"1\",\"itemAttachmentsCounter\":\"1\",\"itemVideo\":\"1\",\"itemVideoWidth\":\"\",\"itemVideoHeight\":\"\",\"itemAudioWidth\":\"\",\"itemAudioHeight\":\"\",\"itemVideoAutoPlay\":\"0\",\"itemVideoCaption\":\"1\",\"itemVideoCredits\":\"1\",\"itemImageGallery\":\"1\",\"itemNavigation\":\"1\",\"itemComments\":\"1\",\"itemTwitterButton\":\"1\",\"itemFacebookButton\":\"1\",\"itemGooglePlusOneButton\":\"1\",\"itemAuthorBlock\":\"1\",\"itemAuthorImage\":\"1\",\"itemAuthorDescription\":\"1\",\"itemAuthorURL\":\"1\",\"itemAuthorEmail\":\"0\",\"itemAuthorLatest\":\"1\",\"itemAuthorLatestLimit\":\"5\",\"itemRelated\":\"1\",\"itemRelatedLimit\":\"5\",\"itemRelatedTitle\":\"1\",\"itemRelatedCategory\":\"0\",\"itemRelatedImageSize\":\"0\",\"itemRelatedIntrotext\":\"0\",\"itemRelatedFulltext\":\"0\",\"itemRelatedAuthor\":\"0\",\"itemRelatedMedia\":\"0\",\"itemRelatedImageGallery\":\"0\",\"itemK2Plugins\":\"1\",\"catMetaDesc\":\"\",\"catMetaKey\":\"\",\"catMetaRobots\":\"\",\"catMetaAuthor\":\"\"}',0,'','*'),
  (3,'Audios #2','audios-2','',1,1,1,1,2,'','{\"inheritFrom\":\"1\",\"theme\":\"audios\",\"num_leading_items\":\"2\",\"num_leading_columns\":\"1\",\"leadingImgSize\":\"Large\",\"num_primary_items\":\"4\",\"num_primary_columns\":\"2\",\"primaryImgSize\":\"Medium\",\"num_secondary_items\":\"4\",\"num_secondary_columns\":\"1\",\"secondaryImgSize\":\"Small\",\"num_links\":\"4\",\"num_links_columns\":\"1\",\"linksImgSize\":\"XSmall\",\"catCatalogMode\":\"0\",\"catFeaturedItems\":\"1\",\"catOrdering\":\"\",\"catPagination\":\"2\",\"catPaginationResults\":\"1\",\"catTitle\":\"1\",\"catTitleItemCounter\":\"1\",\"catDescription\":\"1\",\"catImage\":\"1\",\"catFeedLink\":\"1\",\"catFeedIcon\":\"1\",\"subCategories\":\"1\",\"subCatColumns\":\"2\",\"subCatOrdering\":\"\",\"subCatTitle\":\"1\",\"subCatTitleItemCounter\":\"1\",\"subCatDescription\":\"1\",\"subCatImage\":\"1\",\"itemImageXS\":\"\",\"itemImageS\":\"\",\"itemImageM\":\"\",\"itemImageL\":\"\",\"itemImageXL\":\"\",\"catItemTitle\":\"1\",\"catItemTitleLinked\":\"1\",\"catItemFeaturedNotice\":\"0\",\"catItemAuthor\":\"1\",\"catItemDateCreated\":\"1\",\"catItemRating\":\"0\",\"catItemImage\":\"1\",\"catItemIntroText\":\"1\",\"catItemIntroTextWordLimit\":\"\",\"catItemExtraFields\":\"0\",\"catItemHits\":\"0\",\"catItemCategory\":\"1\",\"catItemTags\":\"1\",\"catItemAttachments\":\"0\",\"catItemAttachmentsCounter\":\"0\",\"catItemVideo\":\"0\",\"catItemVideoWidth\":\"\",\"catItemVideoHeight\":\"\",\"catItemAudioWidth\":\"\",\"catItemAudioHeight\":\"\",\"catItemVideoAutoPlay\":\"0\",\"catItemImageGallery\":\"0\",\"catItemDateModified\":\"0\",\"catItemReadMore\":\"1\",\"catItemCommentsAnchor\":\"1\",\"catItemK2Plugins\":\"1\",\"itemDateCreated\":\"1\",\"itemTitle\":\"1\",\"itemFeaturedNotice\":\"1\",\"itemAuthor\":\"1\",\"itemFontResizer\":\"1\",\"itemPrintButton\":\"1\",\"itemEmailButton\":\"1\",\"itemSocialButton\":\"1\",\"itemVideoAnchor\":\"1\",\"itemImageGalleryAnchor\":\"1\",\"itemCommentsAnchor\":\"1\",\"itemRating\":\"1\",\"itemImage\":\"1\",\"itemImgSize\":\"Large\",\"itemImageMainCaption\":\"1\",\"itemImageMainCredits\":\"1\",\"itemIntroText\":\"1\",\"itemFullText\":\"1\",\"itemExtraFields\":\"1\",\"itemDateModified\":\"1\",\"itemHits\":\"1\",\"itemCategory\":\"1\",\"itemTags\":\"1\",\"itemAttachments\":\"1\",\"itemAttachmentsCounter\":\"1\",\"itemVideo\":\"1\",\"itemVideoWidth\":\"\",\"itemVideoHeight\":\"\",\"itemAudioWidth\":\"\",\"itemAudioHeight\":\"\",\"itemVideoAutoPlay\":\"0\",\"itemVideoCaption\":\"1\",\"itemVideoCredits\":\"1\",\"itemImageGallery\":\"1\",\"itemNavigation\":\"1\",\"itemComments\":\"1\",\"itemTwitterButton\":\"1\",\"itemFacebookButton\":\"1\",\"itemGooglePlusOneButton\":\"1\",\"itemAuthorBlock\":\"1\",\"itemAuthorImage\":\"1\",\"itemAuthorDescription\":\"1\",\"itemAuthorURL\":\"1\",\"itemAuthorEmail\":\"0\",\"itemAuthorLatest\":\"1\",\"itemAuthorLatestLimit\":\"5\",\"itemRelated\":\"1\",\"itemRelatedLimit\":\"5\",\"itemRelatedTitle\":\"1\",\"itemRelatedCategory\":\"0\",\"itemRelatedImageSize\":\"0\",\"itemRelatedIntrotext\":\"0\",\"itemRelatedFulltext\":\"0\",\"itemRelatedAuthor\":\"0\",\"itemRelatedMedia\":\"0\",\"itemRelatedImageGallery\":\"0\",\"itemK2Plugins\":\"1\",\"catMetaDesc\":\"\",\"catMetaKey\":\"\",\"catMetaRobots\":\"\",\"catMetaAuthor\":\"\"}',0,'','*'),
  (4,'Publicações','publicacoes','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>',0,2,1,1,2,'','{\"inheritFrom\":\"0\",\"theme\":\"publicacoes\",\"num_leading_items\":\"0\",\"num_leading_columns\":\"1\",\"leadingImgSize\":\"none\",\"num_primary_items\":\"0\",\"num_primary_columns\":\"1\",\"primaryImgSize\":\"none\",\"num_secondary_items\":\"10\",\"num_secondary_columns\":\"1\",\"secondaryImgSize\":\"none\",\"num_links\":\"0\",\"num_links_columns\":\"1\",\"linksImgSize\":\"none\",\"catCatalogMode\":\"0\",\"catFeaturedItems\":\"1\",\"catOrdering\":\"\",\"catPagination\":\"2\",\"catPaginationResults\":\"1\",\"catTitle\":\"1\",\"catTitleItemCounter\":\"0\",\"catDescription\":\"0\",\"catImage\":\"1\",\"catFeedLink\":\"0\",\"catFeedIcon\":\"0\",\"subCategories\":\"1\",\"subCatColumns\":\"2\",\"subCatOrdering\":\"\",\"subCatTitle\":\"1\",\"subCatTitleItemCounter\":\"0\",\"subCatDescription\":\"1\",\"subCatImage\":\"0\",\"itemImageXS\":\"\",\"itemImageS\":\"\",\"itemImageM\":\"\",\"itemImageL\":\"\",\"itemImageXL\":\"\",\"catItemTitle\":\"1\",\"catItemTitleLinked\":\"1\",\"catItemFeaturedNotice\":\"0\",\"catItemAuthor\":\"1\",\"catItemDateCreated\":\"1\",\"catItemRating\":\"0\",\"catItemImage\":\"1\",\"catItemIntroText\":\"1\",\"catItemIntroTextWordLimit\":\"\",\"catItemExtraFields\":\"0\",\"catItemHits\":\"0\",\"catItemCategory\":\"1\",\"catItemTags\":\"1\",\"catItemAttachments\":\"1\",\"catItemAttachmentsCounter\":\"1\",\"catItemVideo\":\"0\",\"catItemVideoWidth\":\"\",\"catItemVideoHeight\":\"\",\"catItemAudioWidth\":\"\",\"catItemAudioHeight\":\"\",\"catItemVideoAutoPlay\":\"0\",\"catItemImageGallery\":\"0\",\"catItemDateModified\":\"0\",\"catItemReadMore\":\"1\",\"catItemCommentsAnchor\":\"0\",\"catItemK2Plugins\":\"1\",\"itemDateCreated\":\"1\",\"itemTitle\":\"1\",\"itemFeaturedNotice\":\"0\",\"itemAuthor\":\"1\",\"itemFontResizer\":\"0\",\"itemPrintButton\":\"0\",\"itemEmailButton\":\"0\",\"itemSocialButton\":\"0\",\"itemVideoAnchor\":\"0\",\"itemImageGalleryAnchor\":\"0\",\"itemCommentsAnchor\":\"0\",\"itemRating\":\"0\",\"itemImage\":\"0\",\"itemImgSize\":\"XSmall\",\"itemImageMainCaption\":\"0\",\"itemImageMainCredits\":\"0\",\"itemIntroText\":\"1\",\"itemFullText\":\"1\",\"itemExtraFields\":\"0\",\"itemDateModified\":\"1\",\"itemHits\":\"0\",\"itemCategory\":\"1\",\"itemTags\":\"1\",\"itemAttachments\":\"1\",\"itemAttachmentsCounter\":\"1\",\"itemVideo\":\"0\",\"itemVideoWidth\":\"\",\"itemVideoHeight\":\"\",\"itemAudioWidth\":\"\",\"itemAudioHeight\":\"\",\"itemVideoAutoPlay\":\"0\",\"itemVideoCaption\":\"1\",\"itemVideoCredits\":\"1\",\"itemImageGallery\":\"0\",\"itemNavigation\":\"1\",\"itemComments\":\"0\",\"itemTwitterButton\":\"0\",\"itemFacebookButton\":\"0\",\"itemGooglePlusOneButton\":\"0\",\"itemAuthorBlock\":\"0\",\"itemAuthorImage\":\"0\",\"itemAuthorDescription\":\"0\",\"itemAuthorURL\":\"0\",\"itemAuthorEmail\":\"0\",\"itemAuthorLatest\":\"0\",\"itemAuthorLatestLimit\":\"5\",\"itemRelated\":\"0\",\"itemRelatedLimit\":\"5\",\"itemRelatedTitle\":\"0\",\"itemRelatedCategory\":\"0\",\"itemRelatedImageSize\":\"0\",\"itemRelatedIntrotext\":\"0\",\"itemRelatedFulltext\":\"0\",\"itemRelatedAuthor\":\"0\",\"itemRelatedMedia\":\"0\",\"itemRelatedImageGallery\":\"0\",\"itemK2Plugins\":\"0\",\"catMetaDesc\":\"\",\"catMetaKey\":\"\",\"catMetaRobots\":\"\",\"catMetaAuthor\":\"\"}',0,'','*'),
  (5,'Publicações #1','publicacoes-1','',4,2,1,1,1,'','{\"inheritFrom\":\"4\",\"theme\":\"publicacoes\",\"num_leading_items\":\"2\",\"num_leading_columns\":\"1\",\"leadingImgSize\":\"Large\",\"num_primary_items\":\"4\",\"num_primary_columns\":\"2\",\"primaryImgSize\":\"Medium\",\"num_secondary_items\":\"4\",\"num_secondary_columns\":\"1\",\"secondaryImgSize\":\"Small\",\"num_links\":\"4\",\"num_links_columns\":\"1\",\"linksImgSize\":\"XSmall\",\"catCatalogMode\":\"0\",\"catFeaturedItems\":\"1\",\"catOrdering\":\"\",\"catPagination\":\"2\",\"catPaginationResults\":\"1\",\"catTitle\":\"1\",\"catTitleItemCounter\":\"1\",\"catDescription\":\"1\",\"catImage\":\"1\",\"catFeedLink\":\"1\",\"catFeedIcon\":\"1\",\"subCategories\":\"1\",\"subCatColumns\":\"2\",\"subCatOrdering\":\"\",\"subCatTitle\":\"1\",\"subCatTitleItemCounter\":\"1\",\"subCatDescription\":\"1\",\"subCatImage\":\"1\",\"itemImageXS\":\"\",\"itemImageS\":\"\",\"itemImageM\":\"\",\"itemImageL\":\"\",\"itemImageXL\":\"\",\"catItemTitle\":\"1\",\"catItemTitleLinked\":\"1\",\"catItemFeaturedNotice\":\"0\",\"catItemAuthor\":\"1\",\"catItemDateCreated\":\"1\",\"catItemRating\":\"0\",\"catItemImage\":\"1\",\"catItemIntroText\":\"1\",\"catItemIntroTextWordLimit\":\"\",\"catItemExtraFields\":\"0\",\"catItemHits\":\"0\",\"catItemCategory\":\"1\",\"catItemTags\":\"1\",\"catItemAttachments\":\"0\",\"catItemAttachmentsCounter\":\"0\",\"catItemVideo\":\"0\",\"catItemVideoWidth\":\"\",\"catItemVideoHeight\":\"\",\"catItemAudioWidth\":\"\",\"catItemAudioHeight\":\"\",\"catItemVideoAutoPlay\":\"0\",\"catItemImageGallery\":\"0\",\"catItemDateModified\":\"0\",\"catItemReadMore\":\"1\",\"catItemCommentsAnchor\":\"1\",\"catItemK2Plugins\":\"1\",\"itemDateCreated\":\"1\",\"itemTitle\":\"1\",\"itemFeaturedNotice\":\"1\",\"itemAuthor\":\"1\",\"itemFontResizer\":\"1\",\"itemPrintButton\":\"1\",\"itemEmailButton\":\"1\",\"itemSocialButton\":\"1\",\"itemVideoAnchor\":\"1\",\"itemImageGalleryAnchor\":\"1\",\"itemCommentsAnchor\":\"1\",\"itemRating\":\"1\",\"itemImage\":\"1\",\"itemImgSize\":\"Large\",\"itemImageMainCaption\":\"1\",\"itemImageMainCredits\":\"1\",\"itemIntroText\":\"1\",\"itemFullText\":\"1\",\"itemExtraFields\":\"1\",\"itemDateModified\":\"1\",\"itemHits\":\"1\",\"itemCategory\":\"1\",\"itemTags\":\"1\",\"itemAttachments\":\"1\",\"itemAttachmentsCounter\":\"1\",\"itemVideo\":\"1\",\"itemVideoWidth\":\"\",\"itemVideoHeight\":\"\",\"itemAudioWidth\":\"\",\"itemAudioHeight\":\"\",\"itemVideoAutoPlay\":\"0\",\"itemVideoCaption\":\"1\",\"itemVideoCredits\":\"1\",\"itemImageGallery\":\"1\",\"itemNavigation\":\"1\",\"itemComments\":\"1\",\"itemTwitterButton\":\"1\",\"itemFacebookButton\":\"1\",\"itemGooglePlusOneButton\":\"1\",\"itemAuthorBlock\":\"1\",\"itemAuthorImage\":\"1\",\"itemAuthorDescription\":\"1\",\"itemAuthorURL\":\"1\",\"itemAuthorEmail\":\"0\",\"itemAuthorLatest\":\"1\",\"itemAuthorLatestLimit\":\"5\",\"itemRelated\":\"1\",\"itemRelatedLimit\":\"5\",\"itemRelatedTitle\":\"1\",\"itemRelatedCategory\":\"0\",\"itemRelatedImageSize\":\"0\",\"itemRelatedIntrotext\":\"0\",\"itemRelatedFulltext\":\"0\",\"itemRelatedAuthor\":\"0\",\"itemRelatedMedia\":\"0\",\"itemRelatedImageGallery\":\"0\",\"itemK2Plugins\":\"1\",\"catMetaDesc\":\"\",\"catMetaKey\":\"\",\"catMetaRobots\":\"\",\"catMetaAuthor\":\"\"}',0,'','*');
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_k2_categories` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__k2_categories` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_k2_comments`
+-- Definition of table `#__k2_comments`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_k2_comments`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_k2_comments` (
+DROP TABLE IF EXISTS `#__k2_comments`;
+CREATE TABLE  `#__k2_comments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `itemID` int(11) NOT NULL,
   `userID` int(11) NOT NULL,
@@ -2042,21 +2038,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_k2_comments` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_k2_comments`
+-- Dumping data for table `#__k2_comments`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_k2_comments` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_k2_comments` WRITE;
+/*!40000 ALTER TABLE `#__k2_comments` DISABLE KEYS */;
+LOCK TABLES `#__k2_comments` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_k2_comments` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__k2_comments` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_k2_extra_fields`
+-- Definition of table `#__k2_extra_fields`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_k2_extra_fields`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_k2_extra_fields` (
+DROP TABLE IF EXISTS `#__k2_extra_fields`;
+CREATE TABLE  `#__k2_extra_fields` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `value` text NOT NULL,
@@ -2071,46 +2067,46 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_k2_extra_fields` (
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_k2_extra_fields`
+-- Dumping data for table `#__k2_extra_fields`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_k2_extra_fields` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_k2_extra_fields` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_k2_extra_fields` VALUES  (1,'oculta campos categoria áudio','[{\"name\":null,\"value\":\"#####tabImage,tabImageGallery,tabExtraFields,tabAttachments\",\"editor\":null,\"rows\":\"\",\"cols\":\"\",\"target\":null,\"alias\":\"oculta_campos_audio\",\"required\":0,\"showNull\":0}]','textarea',1,1,1),
+/*!40000 ALTER TABLE `#__k2_extra_fields` DISABLE KEYS */;
+LOCK TABLES `#__k2_extra_fields` WRITE;
+INSERT INTO `#__k2_extra_fields` VALUES  (1,'oculta campos categoria áudio','[{\"name\":null,\"value\":\"#####tabImage,tabImageGallery,tabExtraFields,tabAttachments\",\"editor\":null,\"rows\":\"\",\"cols\":\"\",\"target\":null,\"alias\":\"oculta_campos_audio\",\"required\":0,\"showNull\":0}]','textarea',1,1,1),
  (2,'oculta campos categoria publicações','[{\"name\":null,\"value\":\"#####tabImage,tabImageGallery,tabExtraFields,tabVideo\",\"editor\":null,\"rows\":\"\",\"cols\":\"\",\"target\":null,\"alias\":\"oculta_campos_publicacoes\",\"required\":0,\"showNull\":0}]','textarea',2,1,1);
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_k2_extra_fields` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__k2_extra_fields` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_k2_extra_fields_groups`
+-- Definition of table `#__k2_extra_fields_groups`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_k2_extra_fields_groups`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_k2_extra_fields_groups` (
+DROP TABLE IF EXISTS `#__k2_extra_fields_groups`;
+CREATE TABLE  `#__k2_extra_fields_groups` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_k2_extra_fields_groups`
+-- Dumping data for table `#__k2_extra_fields_groups`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_k2_extra_fields_groups` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_k2_extra_fields_groups` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_k2_extra_fields_groups` VALUES  (1,'Oculta campos desnecessários à categoria. - Áudios'),
+/*!40000 ALTER TABLE `#__k2_extra_fields_groups` DISABLE KEYS */;
+LOCK TABLES `#__k2_extra_fields_groups` WRITE;
+INSERT INTO `#__k2_extra_fields_groups` VALUES  (1,'Oculta campos desnecessários à categoria. - Áudios'),
  (2,'Oculta campos desnecessários à categoria. - Publicações');
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_k2_extra_fields_groups` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__k2_extra_fields_groups` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_k2_items`
+-- Definition of table `#__k2_items`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_k2_items`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_k2_items` (
+DROP TABLE IF EXISTS `#__k2_items`;
+CREATE TABLE  `#__k2_items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
   `alias` varchar(255) DEFAULT NULL,
@@ -2162,12 +2158,12 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_k2_items` (
 ) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_k2_items`
+-- Dumping data for table `#__k2_items`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_k2_items` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_k2_items` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_k2_items` VALUES  (1,'Manual de administração técnica (beta)','manual-de-administracao-tecnica-beta',4,1,'<p>Manual de administração técnica do portal padrão em Joomla 2.5, versão beta. Atualmente, possui toda a sequencia de passos para customizar o nome do sítio e as cores principais de acordo com um dos quatro padrões de cores disponíveis.</p>','',NULL,NULL,'[{\"id\":\"2\",\"value\":\"#####tabImage,tabImageGallery,tabExtraFields,tabVideo\"}]','#####tabImage,tabImageGallery,tabExtraFields,tabVideo','2013-12-22 12:46:16',576,'',0,'0000-00-00 00:00:00','0000-00-00 00:00:00',0,'2013-12-22 12:46:16','0000-00-00 00:00:00',0,1,1,0,0,'','','','',0,'{\"catItemTitle\":\"\",\"catItemTitleLinked\":\"\",\"catItemFeaturedNotice\":\"\",\"catItemAuthor\":\"\",\"catItemDateCreated\":\"\",\"catItemRating\":\"\",\"catItemImage\":\"\",\"catItemIntroText\":\"\",\"catItemExtraFields\":\"\",\"catItemHits\":\"\",\"catItemCategory\":\"\",\"catItemTags\":\"\",\"catItemAttachments\":\"\",\"catItemAttachmentsCounter\":\"\",\"catItemVideo\":\"\",\"catItemVideoWidth\":\"\",\"catItemVideoHeight\":\"\",\"catItemAudioWidth\":\"\",\"catItemAudioHeight\":\"\",\"catItemVideoAutoPlay\":\"\",\"catItemImageGallery\":\"\",\"catItemDateModified\":\"\",\"catItemReadMore\":\"\",\"catItemCommentsAnchor\":\"\",\"catItemK2Plugins\":\"\",\"itemDateCreated\":\"\",\"itemTitle\":\"\",\"itemFeaturedNotice\":\"\",\"itemAuthor\":\"\",\"itemFontResizer\":\"\",\"itemPrintButton\":\"\",\"itemEmailButton\":\"\",\"itemSocialButton\":\"\",\"itemVideoAnchor\":\"\",\"itemImageGalleryAnchor\":\"\",\"itemCommentsAnchor\":\"\",\"itemRating\":\"\",\"itemImage\":\"\",\"itemImgSize\":\"\",\"itemImageMainCaption\":\"\",\"itemImageMainCredits\":\"\",\"itemIntroText\":\"\",\"itemFullText\":\"\",\"itemExtraFields\":\"\",\"itemDateModified\":\"\",\"itemHits\":\"\",\"itemCategory\":\"\",\"itemTags\":\"\",\"itemAttachments\":\"\",\"itemAttachmentsCounter\":\"\",\"itemVideo\":\"\",\"itemVideoWidth\":\"\",\"itemVideoHeight\":\"\",\"itemAudioWidth\":\"\",\"itemAudioHeight\":\"\",\"itemVideoAutoPlay\":\"\",\"itemVideoCaption\":\"\",\"itemVideoCredits\":\"\",\"itemImageGallery\":\"\",\"itemNavigation\":\"\",\"itemComments\":\"\",\"itemTwitterButton\":\"\",\"itemFacebookButton\":\"\",\"itemGooglePlusOneButton\":\"\",\"itemAuthorBlock\":\"\",\"itemAuthorImage\":\"\",\"itemAuthorDescription\":\"\",\"itemAuthorURL\":\"\",\"itemAuthorEmail\":\"\",\"itemAuthorLatest\":\"\",\"itemAuthorLatestLimit\":\"\",\"itemRelated\":\"\",\"itemRelatedLimit\":\"\",\"itemRelatedTitle\":\"\",\"itemRelatedCategory\":\"\",\"itemRelatedImageSize\":\"\",\"itemRelatedIntrotext\":\"\",\"itemRelatedFulltext\":\"\",\"itemRelatedAuthor\":\"\",\"itemRelatedMedia\":\"\",\"itemRelatedImageGallery\":\"\",\"itemK2Plugins\":\"\"}','','robots=\nauthor=','','','*'),
+/*!40000 ALTER TABLE `#__k2_items` DISABLE KEYS */;
+LOCK TABLES `#__k2_items` WRITE;
+INSERT INTO `#__k2_items` VALUES  (1,'Manual de administração técnica (beta)','manual-de-administracao-tecnica-beta',4,1,'<p>Manual de administração técnica do portal padrão em Joomla 2.5, versão beta. Atualmente, possui toda a sequencia de passos para customizar o nome do sítio e as cores principais de acordo com um dos quatro padrões de cores disponíveis.</p>','',NULL,NULL,'[{\"id\":\"2\",\"value\":\"#####tabImage,tabImageGallery,tabExtraFields,tabVideo\"}]','#####tabImage,tabImageGallery,tabExtraFields,tabVideo','2013-12-22 12:46:16',576,'',0,'0000-00-00 00:00:00','0000-00-00 00:00:00',0,'2013-12-22 12:46:16','0000-00-00 00:00:00',0,1,1,0,0,'','','','',0,'{\"catItemTitle\":\"\",\"catItemTitleLinked\":\"\",\"catItemFeaturedNotice\":\"\",\"catItemAuthor\":\"\",\"catItemDateCreated\":\"\",\"catItemRating\":\"\",\"catItemImage\":\"\",\"catItemIntroText\":\"\",\"catItemExtraFields\":\"\",\"catItemHits\":\"\",\"catItemCategory\":\"\",\"catItemTags\":\"\",\"catItemAttachments\":\"\",\"catItemAttachmentsCounter\":\"\",\"catItemVideo\":\"\",\"catItemVideoWidth\":\"\",\"catItemVideoHeight\":\"\",\"catItemAudioWidth\":\"\",\"catItemAudioHeight\":\"\",\"catItemVideoAutoPlay\":\"\",\"catItemImageGallery\":\"\",\"catItemDateModified\":\"\",\"catItemReadMore\":\"\",\"catItemCommentsAnchor\":\"\",\"catItemK2Plugins\":\"\",\"itemDateCreated\":\"\",\"itemTitle\":\"\",\"itemFeaturedNotice\":\"\",\"itemAuthor\":\"\",\"itemFontResizer\":\"\",\"itemPrintButton\":\"\",\"itemEmailButton\":\"\",\"itemSocialButton\":\"\",\"itemVideoAnchor\":\"\",\"itemImageGalleryAnchor\":\"\",\"itemCommentsAnchor\":\"\",\"itemRating\":\"\",\"itemImage\":\"\",\"itemImgSize\":\"\",\"itemImageMainCaption\":\"\",\"itemImageMainCredits\":\"\",\"itemIntroText\":\"\",\"itemFullText\":\"\",\"itemExtraFields\":\"\",\"itemDateModified\":\"\",\"itemHits\":\"\",\"itemCategory\":\"\",\"itemTags\":\"\",\"itemAttachments\":\"\",\"itemAttachmentsCounter\":\"\",\"itemVideo\":\"\",\"itemVideoWidth\":\"\",\"itemVideoHeight\":\"\",\"itemAudioWidth\":\"\",\"itemAudioHeight\":\"\",\"itemVideoAutoPlay\":\"\",\"itemVideoCaption\":\"\",\"itemVideoCredits\":\"\",\"itemImageGallery\":\"\",\"itemNavigation\":\"\",\"itemComments\":\"\",\"itemTwitterButton\":\"\",\"itemFacebookButton\":\"\",\"itemGooglePlusOneButton\":\"\",\"itemAuthorBlock\":\"\",\"itemAuthorImage\":\"\",\"itemAuthorDescription\":\"\",\"itemAuthorURL\":\"\",\"itemAuthorEmail\":\"\",\"itemAuthorLatest\":\"\",\"itemAuthorLatestLimit\":\"\",\"itemRelated\":\"\",\"itemRelatedLimit\":\"\",\"itemRelatedTitle\":\"\",\"itemRelatedCategory\":\"\",\"itemRelatedImageSize\":\"\",\"itemRelatedIntrotext\":\"\",\"itemRelatedFulltext\":\"\",\"itemRelatedAuthor\":\"\",\"itemRelatedMedia\":\"\",\"itemRelatedImageGallery\":\"\",\"itemK2Plugins\":\"\"}','','robots=\nauthor=','','','*'),
  (2,'Teste','teste',1,1,'<p>Descrição do item.</p>','','{mp3}2{/mp3}',NULL,'[{\"id\":\"1\",\"value\":\"#####tabImage,tabImageGallery,tabExtraFields,tabAttachments\"}]','#####tabImage,tabImageGallery,tabExtraFields,tabAttachments ','2013-12-22 12:48:48',576,'',0,'0000-00-00 00:00:00','2014-01-07 14:49:03',576,'2013-12-22 12:48:48','0000-00-00 00:00:00',0,1,1,0,0,'','','','',0,'{\"catItemTitle\":\"\",\"catItemTitleLinked\":\"\",\"catItemFeaturedNotice\":\"\",\"catItemAuthor\":\"\",\"catItemDateCreated\":\"\",\"catItemRating\":\"\",\"catItemImage\":\"\",\"catItemIntroText\":\"\",\"catItemExtraFields\":\"\",\"catItemHits\":\"\",\"catItemCategory\":\"\",\"catItemTags\":\"\",\"catItemAttachments\":\"\",\"catItemAttachmentsCounter\":\"\",\"catItemVideo\":\"\",\"catItemVideoWidth\":\"\",\"catItemVideoHeight\":\"\",\"catItemAudioWidth\":\"\",\"catItemAudioHeight\":\"\",\"catItemVideoAutoPlay\":\"\",\"catItemImageGallery\":\"\",\"catItemDateModified\":\"\",\"catItemReadMore\":\"\",\"catItemCommentsAnchor\":\"\",\"catItemK2Plugins\":\"\",\"itemDateCreated\":\"\",\"itemTitle\":\"\",\"itemFeaturedNotice\":\"\",\"itemAuthor\":\"\",\"itemFontResizer\":\"\",\"itemPrintButton\":\"\",\"itemEmailButton\":\"\",\"itemSocialButton\":\"\",\"itemVideoAnchor\":\"\",\"itemImageGalleryAnchor\":\"\",\"itemCommentsAnchor\":\"\",\"itemRating\":\"\",\"itemImage\":\"\",\"itemImgSize\":\"\",\"itemImageMainCaption\":\"\",\"itemImageMainCredits\":\"\",\"itemIntroText\":\"\",\"itemFullText\":\"\",\"itemExtraFields\":\"\",\"itemDateModified\":\"\",\"itemHits\":\"\",\"itemCategory\":\"\",\"itemTags\":\"\",\"itemAttachments\":\"\",\"itemAttachmentsCounter\":\"\",\"itemVideo\":\"\",\"itemVideoWidth\":\"\",\"itemVideoHeight\":\"\",\"itemAudioWidth\":\"\",\"itemAudioHeight\":\"\",\"itemVideoAutoPlay\":\"\",\"itemVideoCaption\":\"\",\"itemVideoCredits\":\"\",\"itemImageGallery\":\"\",\"itemNavigation\":\"\",\"itemComments\":\"\",\"itemTwitterButton\":\"\",\"itemFacebookButton\":\"\",\"itemGooglePlusOneButton\":\"\",\"itemAuthorBlock\":\"\",\"itemAuthorImage\":\"\",\"itemAuthorDescription\":\"\",\"itemAuthorURL\":\"\",\"itemAuthorEmail\":\"\",\"itemAuthorLatest\":\"\",\"itemAuthorLatestLimit\":\"\",\"itemRelated\":\"\",\"itemRelatedLimit\":\"\",\"itemRelatedTitle\":\"\",\"itemRelatedCategory\":\"\",\"itemRelatedImageSize\":\"\",\"itemRelatedIntrotext\":\"\",\"itemRelatedFulltext\":\"\",\"itemRelatedAuthor\":\"\",\"itemRelatedMedia\":\"\",\"itemRelatedImageGallery\":\"\",\"itemK2Plugins\":\"\"}','','robots=\nauthor=','','','*'),
  (3,'Teste 2','teste-2',1,1,'<p>Descrição do item.</p>','','{mp3}3{/mp3}',NULL,'[{\"id\":\"1\",\"value\":\"#####tabImage,tabImageGallery,tabExtraFields,tabAttachments\"}]','#####tabImage,tabImageGallery,tabExtraFields,tabAttachments ','2013-12-22 13:37:25',576,'',0,'0000-00-00 00:00:00','2013-12-22 13:42:58',576,'2013-12-22 12:48:48','0000-00-00 00:00:00',0,1,2,0,0,'','','','',0,'{\"catItemTitle\":\"\",\"catItemTitleLinked\":\"\",\"catItemFeaturedNotice\":\"\",\"catItemAuthor\":\"\",\"catItemDateCreated\":\"\",\"catItemRating\":\"\",\"catItemImage\":\"\",\"catItemIntroText\":\"\",\"catItemExtraFields\":\"\",\"catItemHits\":\"\",\"catItemCategory\":\"\",\"catItemTags\":\"\",\"catItemAttachments\":\"\",\"catItemAttachmentsCounter\":\"\",\"catItemVideo\":\"\",\"catItemVideoWidth\":\"\",\"catItemVideoHeight\":\"\",\"catItemAudioWidth\":\"\",\"catItemAudioHeight\":\"\",\"catItemVideoAutoPlay\":\"\",\"catItemImageGallery\":\"\",\"catItemDateModified\":\"\",\"catItemReadMore\":\"\",\"catItemCommentsAnchor\":\"\",\"catItemK2Plugins\":\"\",\"itemDateCreated\":\"\",\"itemTitle\":\"\",\"itemFeaturedNotice\":\"\",\"itemAuthor\":\"\",\"itemFontResizer\":\"\",\"itemPrintButton\":\"\",\"itemEmailButton\":\"\",\"itemSocialButton\":\"\",\"itemVideoAnchor\":\"\",\"itemImageGalleryAnchor\":\"\",\"itemCommentsAnchor\":\"\",\"itemRating\":\"\",\"itemImage\":\"\",\"itemImgSize\":\"\",\"itemImageMainCaption\":\"\",\"itemImageMainCredits\":\"\",\"itemIntroText\":\"\",\"itemFullText\":\"\",\"itemExtraFields\":\"\",\"itemDateModified\":\"\",\"itemHits\":\"\",\"itemCategory\":\"\",\"itemTags\":\"\",\"itemAttachments\":\"\",\"itemAttachmentsCounter\":\"\",\"itemVideo\":\"\",\"itemVideoWidth\":\"\",\"itemVideoHeight\":\"\",\"itemAudioWidth\":\"\",\"itemAudioHeight\":\"\",\"itemVideoAutoPlay\":\"\",\"itemVideoCaption\":\"\",\"itemVideoCredits\":\"\",\"itemImageGallery\":\"\",\"itemNavigation\":\"\",\"itemComments\":\"\",\"itemTwitterButton\":\"\",\"itemFacebookButton\":\"\",\"itemGooglePlusOneButton\":\"\",\"itemAuthorBlock\":\"\",\"itemAuthorImage\":\"\",\"itemAuthorDescription\":\"\",\"itemAuthorURL\":\"\",\"itemAuthorEmail\":\"\",\"itemAuthorLatest\":\"\",\"itemAuthorLatestLimit\":\"\",\"itemRelated\":\"\",\"itemRelatedLimit\":\"\",\"itemRelatedTitle\":\"\",\"itemRelatedCategory\":\"\",\"itemRelatedImageSize\":\"\",\"itemRelatedIntrotext\":\"\",\"itemRelatedFulltext\":\"\",\"itemRelatedAuthor\":\"\",\"itemRelatedMedia\":\"\",\"itemRelatedImageGallery\":\"\",\"itemK2Plugins\":\"\"}','','robots=\nauthor=','','','*'),
  (4,'Teste 3','teste',1,1,'<p>Descrição do item.</p>','','{mp3}4{/mp3}',NULL,'[{\"id\":\"1\",\"value\":\"#####tabImage,tabImageGallery,tabExtraFields,tabAttachments\"}]','#####tabImage,tabImageGallery,tabExtraFields,tabAttachments ','2013-12-22 13:38:00',576,'',0,'0000-00-00 00:00:00','2014-01-07 14:50:45',576,'2013-12-22 12:48:48','0000-00-00 00:00:00',0,1,4,0,0,'','','','',0,'{\"catItemTitle\":\"\",\"catItemTitleLinked\":\"\",\"catItemFeaturedNotice\":\"\",\"catItemAuthor\":\"\",\"catItemDateCreated\":\"\",\"catItemRating\":\"\",\"catItemImage\":\"\",\"catItemIntroText\":\"\",\"catItemExtraFields\":\"\",\"catItemHits\":\"\",\"catItemCategory\":\"\",\"catItemTags\":\"\",\"catItemAttachments\":\"\",\"catItemAttachmentsCounter\":\"\",\"catItemVideo\":\"\",\"catItemVideoWidth\":\"\",\"catItemVideoHeight\":\"\",\"catItemAudioWidth\":\"\",\"catItemAudioHeight\":\"\",\"catItemVideoAutoPlay\":\"\",\"catItemImageGallery\":\"\",\"catItemDateModified\":\"\",\"catItemReadMore\":\"\",\"catItemCommentsAnchor\":\"\",\"catItemK2Plugins\":\"\",\"itemDateCreated\":\"\",\"itemTitle\":\"\",\"itemFeaturedNotice\":\"\",\"itemAuthor\":\"\",\"itemFontResizer\":\"\",\"itemPrintButton\":\"\",\"itemEmailButton\":\"\",\"itemSocialButton\":\"\",\"itemVideoAnchor\":\"\",\"itemImageGalleryAnchor\":\"\",\"itemCommentsAnchor\":\"\",\"itemRating\":\"\",\"itemImage\":\"\",\"itemImgSize\":\"\",\"itemImageMainCaption\":\"\",\"itemImageMainCredits\":\"\",\"itemIntroText\":\"\",\"itemFullText\":\"\",\"itemExtraFields\":\"\",\"itemDateModified\":\"\",\"itemHits\":\"\",\"itemCategory\":\"\",\"itemTags\":\"\",\"itemAttachments\":\"\",\"itemAttachmentsCounter\":\"\",\"itemVideo\":\"\",\"itemVideoWidth\":\"\",\"itemVideoHeight\":\"\",\"itemAudioWidth\":\"\",\"itemAudioHeight\":\"\",\"itemVideoAutoPlay\":\"\",\"itemVideoCaption\":\"\",\"itemVideoCredits\":\"\",\"itemImageGallery\":\"\",\"itemNavigation\":\"\",\"itemComments\":\"\",\"itemTwitterButton\":\"\",\"itemFacebookButton\":\"\",\"itemGooglePlusOneButton\":\"\",\"itemAuthorBlock\":\"\",\"itemAuthorImage\":\"\",\"itemAuthorDescription\":\"\",\"itemAuthorURL\":\"\",\"itemAuthorEmail\":\"\",\"itemAuthorLatest\":\"\",\"itemAuthorLatestLimit\":\"\",\"itemRelated\":\"\",\"itemRelatedLimit\":\"\",\"itemRelatedTitle\":\"\",\"itemRelatedCategory\":\"\",\"itemRelatedImageSize\":\"\",\"itemRelatedIntrotext\":\"\",\"itemRelatedFulltext\":\"\",\"itemRelatedAuthor\":\"\",\"itemRelatedMedia\":\"\",\"itemRelatedImageGallery\":\"\",\"itemK2Plugins\":\"\"}','','robots=\nauthor=','','','*'),
@@ -2176,15 +2172,15 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_k2_items` VALUES  (1,'Manual de ad
  (7,'Cópia de Cópia de Cópia de Teste','copia-de-copia-de-copia-de-teste',3,1,'<p>Descrição do item.</p>','','{mp3}7{/mp3}',NULL,'[{\"id\":\"1\",\"value\":\"#####tabImage,tabImageGallery,tabExtraFields,tabAttachments\"}]','#####tabImage,tabImageGallery,tabExtraFields,tabAttachments ','2013-12-22 13:41:30',576,'',0,'0000-00-00 00:00:00','2014-01-07 14:50:27',576,'2013-12-22 12:48:48','0000-00-00 00:00:00',0,1,1,1,4,'','','','',1,'{\"catItemTitle\":\"\",\"catItemTitleLinked\":\"\",\"catItemFeaturedNotice\":\"\",\"catItemAuthor\":\"\",\"catItemDateCreated\":\"\",\"catItemRating\":\"\",\"catItemImage\":\"\",\"catItemIntroText\":\"\",\"catItemExtraFields\":\"\",\"catItemHits\":\"\",\"catItemCategory\":\"\",\"catItemTags\":\"\",\"catItemAttachments\":\"\",\"catItemAttachmentsCounter\":\"\",\"catItemVideo\":\"\",\"catItemVideoWidth\":\"\",\"catItemVideoHeight\":\"\",\"catItemAudioWidth\":\"\",\"catItemAudioHeight\":\"\",\"catItemVideoAutoPlay\":\"\",\"catItemImageGallery\":\"\",\"catItemDateModified\":\"\",\"catItemReadMore\":\"\",\"catItemCommentsAnchor\":\"\",\"catItemK2Plugins\":\"\",\"itemDateCreated\":\"\",\"itemTitle\":\"\",\"itemFeaturedNotice\":\"\",\"itemAuthor\":\"\",\"itemFontResizer\":\"\",\"itemPrintButton\":\"\",\"itemEmailButton\":\"\",\"itemSocialButton\":\"\",\"itemVideoAnchor\":\"\",\"itemImageGalleryAnchor\":\"\",\"itemCommentsAnchor\":\"\",\"itemRating\":\"\",\"itemImage\":\"\",\"itemImgSize\":\"\",\"itemImageMainCaption\":\"\",\"itemImageMainCredits\":\"\",\"itemIntroText\":\"\",\"itemFullText\":\"\",\"itemExtraFields\":\"\",\"itemDateModified\":\"\",\"itemHits\":\"\",\"itemCategory\":\"\",\"itemTags\":\"\",\"itemAttachments\":\"\",\"itemAttachmentsCounter\":\"\",\"itemVideo\":\"\",\"itemVideoWidth\":\"\",\"itemVideoHeight\":\"\",\"itemAudioWidth\":\"\",\"itemAudioHeight\":\"\",\"itemVideoAutoPlay\":\"\",\"itemVideoCaption\":\"\",\"itemVideoCredits\":\"\",\"itemImageGallery\":\"\",\"itemNavigation\":\"\",\"itemComments\":\"\",\"itemTwitterButton\":\"\",\"itemFacebookButton\":\"\",\"itemGooglePlusOneButton\":\"\",\"itemAuthorBlock\":\"\",\"itemAuthorImage\":\"\",\"itemAuthorDescription\":\"\",\"itemAuthorURL\":\"\",\"itemAuthorEmail\":\"\",\"itemAuthorLatest\":\"\",\"itemAuthorLatestLimit\":\"\",\"itemRelated\":\"\",\"itemRelatedLimit\":\"\",\"itemRelatedTitle\":\"\",\"itemRelatedCategory\":\"\",\"itemRelatedImageSize\":\"\",\"itemRelatedIntrotext\":\"\",\"itemRelatedFulltext\":\"\",\"itemRelatedAuthor\":\"\",\"itemRelatedMedia\":\"\",\"itemRelatedImageGallery\":\"\",\"itemK2Plugins\":\"\"}','','robots=\nauthor=','','','*'),
  (8,'Cópia de Cópia de Cópia de Teste 2','copia-de-copia-de-teste-2',2,1,'<p>Descrição do item.</p>','','{mp3}6{/mp3}',NULL,'[{\"id\":\"1\",\"value\":\"#####tabImage,tabImageGallery,tabExtraFields,tabAttachments\"}]','#####tabImage,tabImageGallery,tabExtraFields,tabAttachments ','2014-01-07 14:52:11',576,'',0,'0000-00-00 00:00:00','2014-01-07 14:52:59',576,'2013-12-22 12:48:48','0000-00-00 00:00:00',0,1,3,1,3,'','','','',0,'{\"catItemTitle\":\"\",\"catItemTitleLinked\":\"\",\"catItemFeaturedNotice\":\"\",\"catItemAuthor\":\"\",\"catItemDateCreated\":\"\",\"catItemRating\":\"\",\"catItemImage\":\"\",\"catItemIntroText\":\"\",\"catItemExtraFields\":\"\",\"catItemHits\":\"\",\"catItemCategory\":\"\",\"catItemTags\":\"\",\"catItemAttachments\":\"\",\"catItemAttachmentsCounter\":\"\",\"catItemVideo\":\"\",\"catItemVideoWidth\":\"\",\"catItemVideoHeight\":\"\",\"catItemAudioWidth\":\"\",\"catItemAudioHeight\":\"\",\"catItemVideoAutoPlay\":\"\",\"catItemImageGallery\":\"\",\"catItemDateModified\":\"\",\"catItemReadMore\":\"\",\"catItemCommentsAnchor\":\"\",\"catItemK2Plugins\":\"\",\"itemDateCreated\":\"\",\"itemTitle\":\"\",\"itemFeaturedNotice\":\"\",\"itemAuthor\":\"\",\"itemFontResizer\":\"\",\"itemPrintButton\":\"\",\"itemEmailButton\":\"\",\"itemSocialButton\":\"\",\"itemVideoAnchor\":\"\",\"itemImageGalleryAnchor\":\"\",\"itemCommentsAnchor\":\"\",\"itemRating\":\"\",\"itemImage\":\"\",\"itemImgSize\":\"\",\"itemImageMainCaption\":\"\",\"itemImageMainCredits\":\"\",\"itemIntroText\":\"\",\"itemFullText\":\"\",\"itemExtraFields\":\"\",\"itemDateModified\":\"\",\"itemHits\":\"\",\"itemCategory\":\"\",\"itemTags\":\"\",\"itemAttachments\":\"\",\"itemAttachmentsCounter\":\"\",\"itemVideo\":\"\",\"itemVideoWidth\":\"\",\"itemVideoHeight\":\"\",\"itemAudioWidth\":\"\",\"itemAudioHeight\":\"\",\"itemVideoAutoPlay\":\"\",\"itemVideoCaption\":\"\",\"itemVideoCredits\":\"\",\"itemImageGallery\":\"\",\"itemNavigation\":\"\",\"itemComments\":\"\",\"itemTwitterButton\":\"\",\"itemFacebookButton\":\"\",\"itemGooglePlusOneButton\":\"\",\"itemAuthorBlock\":\"\",\"itemAuthorImage\":\"\",\"itemAuthorDescription\":\"\",\"itemAuthorURL\":\"\",\"itemAuthorEmail\":\"\",\"itemAuthorLatest\":\"\",\"itemAuthorLatestLimit\":\"\",\"itemRelated\":\"\",\"itemRelatedLimit\":\"\",\"itemRelatedTitle\":\"\",\"itemRelatedCategory\":\"\",\"itemRelatedImageSize\":\"\",\"itemRelatedIntrotext\":\"\",\"itemRelatedFulltext\":\"\",\"itemRelatedAuthor\":\"\",\"itemRelatedMedia\":\"\",\"itemRelatedImageGallery\":\"\",\"itemK2Plugins\":\"\"}','','robots=\nauthor=','','','*');
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_k2_items` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__k2_items` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_k2_rating`
+-- Definition of table `#__k2_rating`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_k2_rating`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_k2_rating` (
+DROP TABLE IF EXISTS `#__k2_rating`;
+CREATE TABLE  `#__k2_rating` (
   `itemID` int(11) NOT NULL DEFAULT '0',
   `rating_sum` int(11) unsigned NOT NULL DEFAULT '0',
   `rating_count` int(11) unsigned NOT NULL DEFAULT '0',
@@ -2193,21 +2189,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_k2_rating` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_k2_rating`
+-- Dumping data for table `#__k2_rating`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_k2_rating` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_k2_rating` WRITE;
+/*!40000 ALTER TABLE `#__k2_rating` DISABLE KEYS */;
+LOCK TABLES `#__k2_rating` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_k2_rating` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__k2_rating` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_k2_tags`
+-- Definition of table `#__k2_tags`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_k2_tags`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_k2_tags` (
+DROP TABLE IF EXISTS `#__k2_tags`;
+CREATE TABLE  `#__k2_tags` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `published` smallint(6) NOT NULL DEFAULT '0',
@@ -2217,23 +2213,23 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_k2_tags` (
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_k2_tags`
+-- Dumping data for table `#__k2_tags`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_k2_tags` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_k2_tags` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_k2_tags` VALUES  (1,'teste',1),
+/*!40000 ALTER TABLE `#__k2_tags` DISABLE KEYS */;
+LOCK TABLES `#__k2_tags` WRITE;
+INSERT INTO `#__k2_tags` VALUES  (1,'teste',1),
  (2,'internet',1);
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_k2_tags` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__k2_tags` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_k2_tags_xref`
+-- Definition of table `#__k2_tags_xref`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_k2_tags_xref`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_k2_tags_xref` (
+DROP TABLE IF EXISTS `#__k2_tags_xref`;
+CREATE TABLE  `#__k2_tags_xref` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `tagID` int(11) NOT NULL,
   `itemID` int(11) NOT NULL,
@@ -2243,12 +2239,12 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_k2_tags_xref` (
 ) ENGINE=MyISAM AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_k2_tags_xref`
+-- Dumping data for table `#__k2_tags_xref`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_k2_tags_xref` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_k2_tags_xref` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_k2_tags_xref` VALUES  (22,1,2),
+/*!40000 ALTER TABLE `#__k2_tags_xref` DISABLE KEYS */;
+LOCK TABLES `#__k2_tags_xref` WRITE;
+INSERT INTO `#__k2_tags_xref` VALUES  (22,1,2),
  (21,2,3),
  (20,1,3),
  (23,1,5),
@@ -2257,15 +2253,15 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_k2_tags_xref` VALUES  (22,1,2),
  (25,1,7),
  (29,1,8);
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_k2_tags_xref` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__k2_tags_xref` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_k2_user_groups`
+-- Definition of table `#__k2_user_groups`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_k2_user_groups`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_k2_user_groups` (
+DROP TABLE IF EXISTS `#__k2_user_groups`;
+CREATE TABLE  `#__k2_user_groups` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `permissions` text NOT NULL,
@@ -2273,23 +2269,23 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_k2_user_groups` (
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_k2_user_groups`
+-- Dumping data for table `#__k2_user_groups`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_k2_user_groups` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_k2_user_groups` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_k2_user_groups` VALUES  (1,'Registered','{\"comment\":\"1\",\"frontEdit\":\"0\",\"add\":\"0\",\"editOwn\":\"0\",\"editAll\":\"0\",\"publish\":\"0\",\"inheritance\":0,\"categories\":\"all\"}'),
+/*!40000 ALTER TABLE `#__k2_user_groups` DISABLE KEYS */;
+LOCK TABLES `#__k2_user_groups` WRITE;
+INSERT INTO `#__k2_user_groups` VALUES  (1,'Registered','{\"comment\":\"1\",\"frontEdit\":\"0\",\"add\":\"0\",\"editOwn\":\"0\",\"editAll\":\"0\",\"publish\":\"0\",\"inheritance\":0,\"categories\":\"all\"}'),
  (2,'Site Owner','{\"comment\":\"1\",\"frontEdit\":\"1\",\"add\":\"1\",\"editOwn\":\"1\",\"editAll\":\"1\",\"publish\":\"1\",\"inheritance\":1,\"categories\":\"all\"}');
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_k2_user_groups` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__k2_user_groups` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_k2_users`
+-- Definition of table `#__k2_users`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_k2_users`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_k2_users` (
+DROP TABLE IF EXISTS `#__k2_users`;
+CREATE TABLE  `#__k2_users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `userID` int(11) NOT NULL,
   `userName` varchar(255) DEFAULT NULL,
@@ -2308,21 +2304,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_k2_users` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_k2_users`
+-- Dumping data for table `#__k2_users`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_k2_users` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_k2_users` WRITE;
+/*!40000 ALTER TABLE `#__k2_users` DISABLE KEYS */;
+LOCK TABLES `#__k2_users` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_k2_users` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__k2_users` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_languages`
+-- Definition of table `#__languages`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_languages`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_languages` (
+DROP TABLE IF EXISTS `#__languages`;
+CREATE TABLE  `#__languages` (
   `lang_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `lang_code` char(7) NOT NULL,
   `title` varchar(50) NOT NULL,
@@ -2345,22 +2341,22 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_languages` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_languages`
+-- Dumping data for table `#__languages`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_languages` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_languages` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_languages` VALUES  (1,'en-GB','English (UK)','English (UK)','en','en','','','','',1,0,1);
+/*!40000 ALTER TABLE `#__languages` DISABLE KEYS */;
+LOCK TABLES `#__languages` WRITE;
+INSERT INTO `#__languages` VALUES  (1,'en-GB','English (UK)','English (UK)','en','en','','','','',1,0,1);
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_languages` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__languages` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_menu`
+-- Definition of table `#__menu`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_menu`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_menu` (
+DROP TABLE IF EXISTS `#__menu`;
+CREATE TABLE  `#__menu` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `menutype` varchar(24) NOT NULL COMMENT 'The type of menu this item belongs to. FK to #__menu_types.menutype',
   `title` varchar(255) NOT NULL COMMENT 'The display title of the menu item.',
@@ -2396,12 +2392,12 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_menu` (
 ) ENGINE=InnoDB AUTO_INCREMENT=241 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_menu`
+-- Dumping data for table `#__menu`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_menu` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_menu` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_menu` VALUES  (1,'','Menu_Item_Root',0x726F6F74,'','','','',1,0,0,0,0,'0000-00-00 00:00:00',0,0,'',0,'',0,271,0,'*',0),
+/*!40000 ALTER TABLE `#__menu` DISABLE KEYS */;
+LOCK TABLES `#__menu` WRITE;
+INSERT INTO `#__menu` VALUES  (1,'','Menu_Item_Root',0x726F6F74,'','','','',1,0,0,0,0,'0000-00-00 00:00:00',0,0,'',0,'',0,271,0,'*',0),
  (2,'menu','com_banners',0x42616E6E657273,'','Banners','index.php?option=com_banners','component',0,1,1,4,0,'0000-00-00 00:00:00',0,0,'class:banners',0,'',3,12,0,'*',1),
  (3,'menu','com_banners',0x42616E6E657273,'','Banners/Banners','index.php?option=com_banners','component',0,2,2,4,0,'0000-00-00 00:00:00',0,0,'class:banners',0,'',4,5,0,'*',1),
  (4,'menu','com_banners_categories',0x43617465676F72696573,'','Banners/Categories','index.php?option=com_categories&extension=com_banners','component',0,2,2,6,0,'0000-00-00 00:00:00',0,0,'class:banners-cat',0,'',6,7,0,'*',1),
@@ -2518,7 +2514,7 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_menu` VALUES  (1,'','Menu_Item_Roo
  (214,'assuntos','Página 3: título do texto institucional',0x706167696E612D332D746974756C6F2D646F2D746578746F2D696E737469747563696F6E616C,'','editoria-a/menu-nivel-2/menu-nivel-3/pagina-3-titulo-do-texto-institucional','index.php?option=com_content&view=article&id=56','component',1,212,4,22,0,'0000-00-00 00:00:00',0,1,'',0,'{\"show_title\":\"\",\"link_titles\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_vote\":\"\",\"show_tags\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"menu-anchor_title\":\"\",\"menu-anchor_css\":\"\",\"menu_image\":\"\",\"menu_text\":1,\"page_title\":\"\",\"show_page_heading\":0,\"page_heading\":\"\",\"pageclass_sfx\":\"\",\"menu-meta_description\":\"\",\"menu-meta_keywords\":\"\",\"robots\":\"\",\"secure\":0}',118,119,0,'*',0),
  (215,'mainmenu','Galeria de imagens utilizando conteúdo padrão do joomla',0x67616C657269612D64652D696D6167656E732D656D2D61727469676F732D646F2D6A6F6F6D6C61,'','galeria-de-imagens-em-artigos-do-joomla','index.php?option=com_content&view=category&layout=blog&id=36','component',1,1,1,22,0,'0000-00-00 00:00:00',0,1,'',0,'{\"layout_type\":\"blog\",\"show_category_heading_title_text\":\"\",\"show_category_title\":\"1\",\"show_description\":\"1\",\"show_description_image\":\"\",\"maxLevel\":\"-1\",\"show_empty_categories\":\"\",\"show_no_articles\":\"\",\"show_subcat_desc\":\"1\",\"show_cat_num_articles\":\"1\",\"page_subheading\":\"\",\"num_leading_articles\":\"2\",\"num_intro_articles\":\"3\",\"num_columns\":\"1\",\"num_links\":\"\",\"multi_column_order\":\"\",\"show_subcategory_content\":\"1\",\"orderby_pri\":\"\",\"orderby_sec\":\"\",\"order_date\":\"\",\"show_pagination\":\"\",\"show_pagination_results\":\"\",\"show_title\":\"\",\"link_titles\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"1\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_vote\":\"\",\"show_readmore\":\"\",\"show_readmore_title\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"show_feed_link\":\"\",\"feed_summary\":\"\",\"menu-anchor_title\":\"\",\"menu-anchor_css\":\"\",\"menu_image\":\"\",\"menu_text\":1,\"page_title\":\"\",\"show_page_heading\":0,\"page_heading\":\"\",\"pageclass_sfx\":\"\",\"menu-meta_description\":\"\",\"menu-meta_keywords\":\"\",\"robots\":\"\",\"secure\":0}',237,238,0,'*',0),
  (221,'assuntos','Menu de 3. nível',0x6D656E752D6E6976656C2D33,'','editoria-a/menu-nivel-3','index.php?option=com_content&view=article&id=54','component',1,107,2,22,0,'0000-00-00 00:00:00',0,1,'',0,'{\"show_title\":\"\",\"link_titles\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_vote\":\"\",\"show_tags\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"menu-anchor_title\":\"\",\"menu-anchor_css\":\"\",\"menu_image\":\"\",\"menu_text\":1,\"page_title\":\"\",\"show_page_heading\":0,\"page_heading\":\"\",\"pageclass_sfx\":\"\",\"menu-meta_description\":\"\",\"menu-meta_keywords\":\"\",\"robots\":\"\",\"secure\":0}',122,123,0,'*',0);
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_menu` VALUES  (222,'assuntos','Menu de 3. nível-B',0x6D656E752D6E6976656C2D332D62,'','editoria-a/menu-nivel-2/menu-nivel-3/pagina-2-titulo-do-texto-institucional/menu-nivel-3-b','index.php?option=com_content&view=featured','component',1,213,5,22,0,'0000-00-00 00:00:00',0,1,'',0,'{\"featured_categories\":[\"43\"],\"layout_type\":\"blog\",\"num_leading_articles\":\"2\",\"num_intro_articles\":\"0\",\"num_columns\":\"1\",\"num_links\":\"0\",\"multi_column_order\":\"\",\"orderby_pri\":\"\",\"orderby_sec\":\"\",\"order_date\":\"\",\"show_pagination\":\"\",\"show_pagination_results\":\"\",\"show_title\":\"\",\"link_titles\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_vote\":\"\",\"show_readmore\":\"\",\"show_readmore_title\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"show_feed_link\":\"\",\"feed_summary\":\"\",\"menu-anchor_title\":\"\",\"menu-anchor_css\":\"\",\"menu_image\":\"\",\"menu_text\":1,\"page_title\":\"\",\"show_page_heading\":1,\"page_heading\":\"Menu de 3. n\\u00edvel\",\"pageclass_sfx\":\"\",\"menu-meta_description\":\"\",\"menu-meta_keywords\":\"\",\"robots\":\"\",\"secure\":0}',111,116,0,'*',0),
+INSERT INTO `#__menu` VALUES  (222,'assuntos','Menu de 3. nível-B',0x6D656E752D6E6976656C2D332D62,'','editoria-a/menu-nivel-2/menu-nivel-3/pagina-2-titulo-do-texto-institucional/menu-nivel-3-b','index.php?option=com_content&view=featured','component',1,213,5,22,0,'0000-00-00 00:00:00',0,1,'',0,'{\"featured_categories\":[\"43\"],\"layout_type\":\"blog\",\"num_leading_articles\":\"2\",\"num_intro_articles\":\"0\",\"num_columns\":\"1\",\"num_links\":\"0\",\"multi_column_order\":\"\",\"orderby_pri\":\"\",\"orderby_sec\":\"\",\"order_date\":\"\",\"show_pagination\":\"\",\"show_pagination_results\":\"\",\"show_title\":\"\",\"link_titles\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_vote\":\"\",\"show_readmore\":\"\",\"show_readmore_title\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"show_feed_link\":\"\",\"feed_summary\":\"\",\"menu-anchor_title\":\"\",\"menu-anchor_css\":\"\",\"menu_image\":\"\",\"menu_text\":1,\"page_title\":\"\",\"show_page_heading\":1,\"page_heading\":\"Menu de 3. n\\u00edvel\",\"pageclass_sfx\":\"\",\"menu-meta_description\":\"\",\"menu-meta_keywords\":\"\",\"robots\":\"\",\"secure\":0}',111,116,0,'*',0),
  (223,'assuntos','Página 2: título do texto institucional',0x706167696E612D322D746974756C6F2D646F2D746578746F2D696E737469747563696F6E616C,'','editoria-a/menu-nivel-2/menu-nivel-3/pagina-2-titulo-do-texto-institucional/menu-nivel-3-b/pagina-2-titulo-do-texto-institucional','index.php?option=com_content&view=article&id=55','component',1,222,6,22,0,'0000-00-00 00:00:00',0,1,'',0,'{\"show_title\":\"\",\"link_titles\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_vote\":\"\",\"show_tags\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"menu-anchor_title\":\"\",\"menu-anchor_css\":\"\",\"menu_image\":\"\",\"menu_text\":1,\"page_title\":\"\",\"show_page_heading\":0,\"page_heading\":\"\",\"pageclass_sfx\":\"\",\"menu-meta_description\":\"\",\"menu-meta_keywords\":\"\",\"robots\":\"\",\"secure\":0}',112,113,0,'*',0),
  (224,'assuntos','Página 3: título do texto institucional',0x706167696E612D332D746974756C6F2D646F2D746578746F2D696E737469747563696F6E616C,'','editoria-a/menu-nivel-2/menu-nivel-3/pagina-2-titulo-do-texto-institucional/menu-nivel-3-b/pagina-3-titulo-do-texto-institucional','index.php?option=com_content&view=article&id=56','component',1,222,6,22,0,'0000-00-00 00:00:00',0,1,'',0,'{\"show_title\":\"\",\"link_titles\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_vote\":\"\",\"show_tags\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"menu-anchor_title\":\"\",\"menu-anchor_css\":\"\",\"menu_image\":\"\",\"menu_text\":1,\"page_title\":\"\",\"show_page_heading\":0,\"page_heading\":\"\",\"pageclass_sfx\":\"\",\"menu-meta_description\":\"\",\"menu-meta_keywords\":\"\",\"robots\":\"\",\"secure\":0}',114,115,0,'*',0),
  (225,'midias-sociais','Google Plus',0x323031342D30332D32322D31332D35382D3535,'google-plus-sign','2014-03-22-13-58-55','#','url',0,1,1,0,0,'0000-00-00 00:00:00',0,1,'',0,'{\"menu-anchor_title\":\"\",\"menu-anchor_css\":\"\",\"menu_image\":\"\",\"menu_text\":1}',239,240,0,'*',0),
@@ -2538,15 +2534,15 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_menu` VALUES  (222,'assuntos','Men
  (239,'main','K2_INFORMATION',0x6B322D696E666F726D6174696F6E,'','com-k2/k2-information','index.php?option=com_k2&view=info','component',0,229,2,10035,0,'0000-00-00 00:00:00',0,1,'class:component',0,'',266,267,0,'',1),
  (240,'main','COM_AKEEBA',0x636F6D2D616B65656261,'','com-akeeba','index.php?option=com_akeeba','component',0,1,1,10052,0,'0000-00-00 00:00:00',0,1,'../media/com_akeeba/icons/akeeba-16.png',0,'',269,270,0,'',1);
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_menu` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__menu` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_menu_types`
+-- Definition of table `#__menu_types`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_menu_types`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_menu_types` (
+DROP TABLE IF EXISTS `#__menu_types`;
+CREATE TABLE  `#__menu_types` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `menutype` varchar(24) NOT NULL,
   `title` varchar(48) NOT NULL,
@@ -2556,12 +2552,12 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_menu_types` (
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_menu_types`
+-- Dumping data for table `#__menu_types`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_menu_types` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_menu_types` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_menu_types` VALUES  (1,'mainmenu','Main Menu','The main menu for the site'),
+/*!40000 ALTER TABLE `#__menu_types` DISABLE KEYS */;
+LOCK TABLES `#__menu_types` WRITE;
+INSERT INTO `#__menu_types` VALUES  (1,'mainmenu','Main Menu','The main menu for the site'),
  (3,'acesso-a-informacao','Acesso à Informação',''),
  (4,'em-destaque','Em destaque',''),
  (5,'servicos','Serviços',''),
@@ -2574,15 +2570,15 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_menu_types` VALUES  (1,'mainmenu',
  (12,'rss','RSS',''),
  (13,'sobre-o-site','Sobre o site','');
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_menu_types` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__menu_types` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_messages`
+-- Definition of table `#__messages`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_messages`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_messages` (
+DROP TABLE IF EXISTS `#__messages`;
+CREATE TABLE  `#__messages` (
   `message_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id_from` int(10) unsigned NOT NULL DEFAULT '0',
   `user_id_to` int(10) unsigned NOT NULL DEFAULT '0',
@@ -2597,21 +2593,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_messages` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_messages`
+-- Dumping data for table `#__messages`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_messages` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_messages` WRITE;
+/*!40000 ALTER TABLE `#__messages` DISABLE KEYS */;
+LOCK TABLES `#__messages` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_messages` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__messages` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_messages_cfg`
+-- Definition of table `#__messages_cfg`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_messages_cfg`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_messages_cfg` (
+DROP TABLE IF EXISTS `#__messages_cfg`;
+CREATE TABLE  `#__messages_cfg` (
   `user_id` int(10) unsigned NOT NULL DEFAULT '0',
   `cfg_name` varchar(100) NOT NULL DEFAULT '',
   `cfg_value` varchar(255) NOT NULL DEFAULT '',
@@ -2619,21 +2615,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_messages_cfg` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_messages_cfg`
+-- Dumping data for table `#__messages_cfg`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_messages_cfg` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_messages_cfg` WRITE;
+/*!40000 ALTER TABLE `#__messages_cfg` DISABLE KEYS */;
+LOCK TABLES `#__messages_cfg` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_messages_cfg` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__messages_cfg` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_modules`
+-- Definition of table `#__modules`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_modules`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_modules` (
+DROP TABLE IF EXISTS `#__modules`;
+CREATE TABLE  `#__modules` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `asset_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'FK to the #__assets table.',
   `title` varchar(100) NOT NULL DEFAULT '',
@@ -2659,12 +2655,12 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_modules` (
 ) ENGINE=InnoDB AUTO_INCREMENT=198 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_modules`
+-- Dumping data for table `#__modules`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_modules` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_modules` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_modules` VALUES  (1,128,'Menu de Relevância','Antigo módulo relacionado ao \"Menu de apoio\", renomeado para menu de relevância em 24 de maio.','',1,'menu-principal',0,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',1,'mod_menu',1,1,'{\"menutype\":\"menu-de-relevancia\",\"base\":\"\",\"startLevel\":\"1\",\"endLevel\":\"0\",\"showAllChildren\":\"0\",\"tag_id\":\"\",\"class_sfx\":\"span9\",\"window_open\":\"\",\"layout\":\"padraogoverno01:menuprincipal\",\"moduleclass_sfx\":\"menu-de-apoio\",\"cache\":\"1\",\"cache_time\":\"900\",\"cachemode\":\"itemid\",\"module_tag\":\"div\",\"bootstrap_size\":\"0\",\"header_tag\":\"h3\",\"header_class\":\"\",\"style\":\"0\"}',0,'*'),
+/*!40000 ALTER TABLE `#__modules` DISABLE KEYS */;
+LOCK TABLES `#__modules` WRITE;
+INSERT INTO `#__modules` VALUES  (1,128,'Menu de Relevância','Antigo módulo relacionado ao \"Menu de apoio\", renomeado para menu de relevância em 24 de maio.','',1,'menu-principal',0,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',1,'mod_menu',1,1,'{\"menutype\":\"menu-de-relevancia\",\"base\":\"\",\"startLevel\":\"1\",\"endLevel\":\"0\",\"showAllChildren\":\"0\",\"tag_id\":\"\",\"class_sfx\":\"span9\",\"window_open\":\"\",\"layout\":\"padraogoverno01:menuprincipal\",\"moduleclass_sfx\":\"menu-de-apoio\",\"cache\":\"1\",\"cache_time\":\"900\",\"cachemode\":\"itemid\",\"module_tag\":\"div\",\"bootstrap_size\":\"0\",\"header_tag\":\"h3\",\"header_class\":\"\",\"style\":\"0\"}',0,'*'),
  (2,0,'Login','','',1,'login',0,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',1,'mod_login',1,1,'',1,'*'),
  (3,0,'Popular Articles','','',3,'cpanel',0,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',1,'mod_popular',3,1,'{\"count\":\"5\",\"catid\":\"\",\"user_id\":\"0\",\"layout\":\"_:default\",\"moduleclass_sfx\":\"\",\"cache\":\"0\",\"automatic_title\":\"1\"}',1,'*'),
  (4,0,'Recently Added Articles','','',4,'cpanel',0,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',1,'mod_latest',3,1,'{\"count\":\"5\",\"ordering\":\"c_dsc\",\"catid\":\"\",\"user_id\":\"0\",\"layout\":\"_:default\",\"moduleclass_sfx\":\"\",\"cache\":\"0\",\"automatic_title\":\"1\"}',1,'*'),
@@ -2733,7 +2729,7 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_modules` VALUES  (1,128,'Menu de R
  (163,157,'Manuais','','<table>\r\n<tbody>\r\n<tr>\r\n<td><a title=\"\" href=\"http://portalpadrao.plone.org.br/manuais/arquivos/diretrizes-de-comunicacao_v2_final.pdf/@@download/file\" target=\"_self\"> <img class=\"img-rounded\" title=\"Imagem da capa do Manual de diretrizes de comunicação da identidade digital\" src=\"http://portalpadrao.plone.org.br/manuais/arquivos/manual-diretrizes.jpg/@@images/3e3a0e31-06de-4ca9-b26b-5ce1180373c3.jpeg\" alt=\"Imagem da capa do Manual de diretrizes de comunicação da identidade digital\" border=\"0\" /> </a></td>\r\n<td><a title=\"Manual de diretrizes de comunicação da identidade digital do governo\" href=\"http://portalpadrao.plone.org.br/manuais/arquivos/diretrizes-de-comunicacao_v2_final.pdf/@@download/file\" target=\"_self\"><strong>Manual de Diretrizes de Comunicação da Identidade Digital de Governo</strong></a> <br />Material foi desenvolvido com objetivo de apresentar as funções, vantagens e características do Portal Padrão, parte integrante do Projeto de Identidade Digital do Governo Federal. <br /> <br />versão 2.0 / outubro de 2013</td>\r\n</tr>\r\n<tr>\r\n<td><a title=\"\" href=\"http://portalpadrao.plone.org.br/manuais/arquivos/guia-de-montagem-nov2013-v2.pdf/@@download/file\" target=\"_self\"> <img class=\"img-rounded\" title=\"Imagem da capa do Guia de Estilo do Portal Padrão para Identidade Digital de Governo\" src=\"http://portalpadrao.plone.org.br/manuais/arquivos/capa-manual-estilo.jpg/@@images/1ee64b95-1d11-4421-8f26-909e0e1a9995.jpeg\" alt=\"Imagem da capa do Guia de Estilo do Portal Padrão para Identidade Digital de Governo\" border=\"0\" /> </a></td>\r\n<td><a title=\"\" href=\"http://portalpadrao.plone.org.br/manuais/arquivos/guia-de-montagem-nov2013-v2.pdf/@@download/file\" target=\"_self\"><strong>Guia de Estilo do Portal Padrão para Identidade Digital de Governo </strong></a> <br /> Guia visual lista as funções, características e relações estruturais entre os diversos elementos do projeto gráfico, possibilitando a compreensão do conjunto e ao mesmo tempo oferecendo as informações necessárias para sua correta replicação.</td>\r\n</tr>\r\n<tr>\r\n<td style=\"text-align: center;\"><br /><span class=\"lead icon-li icon-stack\"><em class=\"icon-circle icon-stack-base\"><span class=\"hide\"> </span></em><em class=\"icon-file-text icon-light\"><span class=\"hide\"> </span></em></span></td>\r\n<td><strong><br /><a href=\"index.php/publicacoes/item/download/1_3dbe9fd2cbe7e85ab72ee8c7bfc78d6c\">Manual de edição técnica do portal padrão em joomla</a></strong><br />Versão beta do manual, em pdf, descrevendo os passos de configuração do tema.<br /><br /></td>\r\n</tr>\r\n</tbody>\r\n</table>',1,'pagina-interna-capa-manuais',0,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',1,'mod_custom',1,1,'{\"prepare_content\":\"0\",\"backgroundimage\":\"\",\"layout\":\"_:default\",\"moduleclass_sfx\":\"\",\"cache\":\"1\",\"cache_time\":\"900\",\"cachemode\":\"static\",\"module_tag\":\"div\",\"bootstrap_size\":\"0\",\"header_tag\":\"h3\",\"header_class\":\"\",\"style\":\"0\"}',0,'*'),
  (164,158,'Outros manuais','','<table class=\"plain\">\r\n<tbody>\r\n<tr><th><img class=\"img-rounded\" src=\"images/conteudo/epwgadministracao_Page_01.jpg\" alt=\"\" border=\"0\" /></th><th>\r\n<p style=\"text-align: left;\"><strong> <a class=\"external-link\" title=\"Administração de sites e portais\" href=\"https://www.governoeletronico.gov.br/acoes-e-projetos/padroes-brasil-e-gov/guia-de-administracao\" target=\"_self\">Administração de Sites e Portais </a> </strong> <br /> <strong>Objetivo do Guia de Administração é oferecer subsídios para a concepção, desenvolvimento, manutenção e administração de sítios de governo eletrônico na esfera federal. </strong></p>\r\n</th></tr>\r\n<tr>\r\n<td><img class=\"img-rounded\" src=\"images/conteudo/Semttulo.png\" alt=\"\" border=\"0\" /></td>\r\n<td><strong> <a class=\"external-link\" title=\"Cartilha de Codificação\" href=\"https://www.governoeletronico.gov.br/acoes-e-projetos/padroes-brasil-e-gov/cartilha-de-codificacao\" target=\"_self\">Cartilha de Codificação <br /> </a> </strong>Manual detalha as recomendações de boas práticas em codificação, que orientem as equipes no desenvolvimento de sítios, portais e serviços de governo eletrônico com o propósito de torná-los identificáveis, portáveis, relevantes, acessíveis e efetivos.</td>\r\n</tr>\r\n<tr>\r\n<td><img class=\"img-rounded\" src=\"images/conteudo/epwgusabilidade_Page_01.jpg\" alt=\"\" border=\"0\" /></td>\r\n<td>\r\n<p><strong> <a class=\"external-link\" title=\"Cartilha de usabilidade\" href=\"https://www.governoeletronico.gov.br/acoes-e-projetos/padroes-brasil-e-gov/cartilha-de-usabilidade\" target=\"_self\">Cartilha de Usabilidade <br /> </a> </strong> Cartilha propõe ser um guia na aplicação da usabilidade em sítios da administração pública de forma clara e descomplicada. São apresentadas recomendações descritas de forma prática e aplicável, assim como orientações sobre como realizar testes.</p>\r\n</td>\r\n</tr>\r\n<tr>\r\n<td><img class=\"img-rounded\" src=\"images/conteudo/eMAGV3_Page_01.jpg\" alt=\"\" border=\"0\" /></td>\r\n<td>\r\n<p><strong> <a class=\"external-link\" title=\"Acessibilidade\" href=\"https://www.governoeletronico.gov.br/acoes-e-projetos/e-MAG\" target=\"_self\">Acessibilidade <br /> </a> </strong> Modelo de Acessibilidade de Governo Eletrônico (e-MAG) consiste em um conjunto de recomendações para que o processo de acessibilidade dos sítios e portais do governo brasileiro seja conduzido de forma padronizada e de fácil implementação.</p>\r\n</td>\r\n</tr>\r\n<tr>\r\n<td><img class=\"img-rounded\" src=\"images/conteudo/manual_redes_sociales_port_02_Page_01.jpg\" alt=\"\" border=\"0\" /></td>\r\n<td><strong> <a class=\"external-link\" title=\"Redes Sociais\" href=\"http://www.secom.gov.br/sobre-a-secom/acoes-e-programas/comunicacao-digital/redes-sociais/publicacoes/manual-de-redes-sociais-/at_download/file\" target=\"_self\">Redes Sociais </a> </strong> <br />Este documento tem como objetivo estipular melhores práticas e guiar os agentes da comunidade Sicom no uso de redes sociais, incluindo a geração de conteúdo, interação com o usuário e atuação em casos de crise.</td>\r\n</tr>\r\n<tr>\r\n<td><img class=\"img-rounded\" src=\"images/conteudo/epwgRedacaoWeb_Page_01.jpg\" alt=\"\" border=\"0\" /></td>\r\n<td><strong> <a class=\"external-link\" title=\"Cartilha de Redação Web\" href=\"https://www.governoeletronico.gov.br/acoes-e-projetos/padroes-brasil-e-gov/cartilha-de-redacao-web\" target=\"_self\">Cartilha de Redação Web </a> </strong> <br />Desenvolvida por Bruno Rodrigues e com direitos cedidos ao Departamento de Governo Eletrônico, a cartilha pretende ser um guia e um norte na tarefa de elaborar informação clara, estruturada e eficaz para o meio digital</td>\r\n</tr>\r\n</tbody>\r\n</table>',1,'pagina-interna-capa-manuais',0,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',1,'mod_custom',1,1,'{\"prepare_content\":\"0\",\"backgroundimage\":\"\",\"layout\":\"_:default\",\"moduleclass_sfx\":\"\",\"cache\":\"1\",\"cache_time\":\"900\",\"cachemode\":\"static\",\"module_tag\":\"div\",\"bootstrap_size\":\"0\",\"header_tag\":\"h3\",\"header_class\":\"\",\"style\":\"0\"}',0,'*'),
  (165,160,'K2 Comments','','',0,'',0,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',0,'mod_k2_comments',1,1,'',0,'*');
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_modules` VALUES  (166,161,'K2 Content','','',0,'',0,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',0,'mod_k2_content',1,1,'',0,'*'),
+INSERT INTO `#__modules` VALUES  (166,161,'K2 Content','','',0,'',0,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',0,'mod_k2_content',1,1,'',0,'*'),
  (167,162,'K2 Tools','','',0,'',0,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',0,'mod_k2_tools',1,1,'',0,'*'),
  (168,163,'K2 Users','','',0,'',0,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',0,'mod_k2_users',1,1,'',0,'*'),
  (169,164,'K2 User','','',0,'',0,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',0,'mod_k2_user',1,1,'',0,'*'),
@@ -2766,27 +2762,27 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_modules` VALUES  (166,161,'K2 Cont
  (196,214,'Módulo de manchete lateral','','',3,'pagina-interna-capa-editoria-d',0,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',1,'mod_chamadas',1,1,'{\"layout\":\"padraogoverno01:manchete-texto-lateral\",\"variacao\":\"0\",\"modelo\":\"article_content\",\"quantidade\":\"6\",\"id_article_unico\":\"\",\"id_item_unico\":0,\"titulo_alternativo\":\"\",\"link_saiba_mais\":\"#\",\"link_saiba_mais_menu\":\"\",\"link_saiba_mais_article\":\"\",\"texto_saiba_mais\":\"\",\"habilitar_mensagem_vazia\":\"0\",\"mensagem_vazia\":\"\",\"chapeu\":\"cont.xreference\",\"destaque\":\"0\",\"somente_imagem\":\"0\",\"buscar_cat_tag\":\"1\",\"catid\":[\"17\"],\"catid_components\":\"\",\"visualizar_filho\":\"0\",\"nivel\":\"10\",\"ordem\":\"publish_up\",\"ordem_direction\":\"DESC\",\"chapeu_item1\":\"Tempo e clima\",\"title_item1\":\"Minist\\u00e9rio inaugura radar meteorol\\u00f3gico em Natal (RN)\",\"desc_item1\":\"<p>Aparelho atender\\u00e1 a uma das metas do Plano Nacional de Gest\\u00e3o de Riscos e Alertas de Desastres Naturais<\\/p>\",\"show_image_item1\":\"\",\"image_item1\":\"images\\/chamadas\\/foto_chamada_grande.jpg\",\"image_item1_align\":\"right\",\"image_item1_alt\":\"\",\"url_simple_item1\":\"\",\"url_menu_item1\":\"\",\"url_article_item1\":\"\",\"ordering_item1\":\"1\",\"variacao_item1\":\"0\",\"chapeu_item2\":\"\",\"title_item2\":\"\",\"desc_item2\":\"\",\"show_image_item2\":\"\",\"image_item2\":\"images\\/conteudo\\/imagem-conteudo-200x130-a.jpg\",\"image_item2_align\":\"\",\"image_item2_alt\":\"\",\"url_simple_item2\":\"\",\"url_menu_item2\":\"\",\"url_article_item2\":\"\",\"ordering_item2\":\"2\",\"variacao_item2\":\"0\",\"chapeu_item3\":\"\",\"title_item3\":\"\",\"desc_item3\":\"\",\"show_image_item3\":\"\",\"image_item3\":\"\",\"image_item3_align\":\"\",\"image_item3_alt\":\"\",\"url_simple_item3\":\"\",\"url_menu_item3\":\"\",\"url_article_item3\":\"\",\"ordering_item3\":\"3\",\"variacao_item3\":\"0\",\"chapeu_item4\":\"\",\"title_item4\":\"\",\"desc_item4\":\"\",\"show_image_item4\":\"\",\"image_item4\":\"\",\"image_item4_align\":\"\",\"image_item4_alt\":\"\",\"url_simple_item4\":\"\",\"url_menu_item4\":\"\",\"url_article_item4\":\"\",\"ordering_item4\":\"4\",\"variacao_item4\":\"0\",\"limitar_caractere\":\"0\",\"limite_caractere\":\"\",\"exibir_imagem\":\"1\",\"exibir_introtext\":\"1\",\"exibir_title\":\"1\",\"subitem_class\":\"\",\"header_tag\":\"h1\",\"moduleclass_sfx\":\"manchete-lateral-tit-menor\",\"owncache\":\"1\",\"cache_time\":\"900\",\"limite_campos_preenchimento_manual\":\"\",\"module_tag\":\"div\",\"bootstrap_size\":\"0\",\"header_class\":\"\",\"style\":\"0\"}',0,'*'),
  (197,215,'Módulo de manchete lateral - outro exemplo','','',4,'pagina-interna-capa-editoria-d',0,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',1,'mod_chamadas',1,1,'{\"layout\":\"padraogoverno01:manchete-texto-lateral\",\"variacao\":\"0\",\"modelo\":\"article_content\",\"quantidade\":\"4\",\"id_article_unico\":\"\",\"id_item_unico\":0,\"titulo_alternativo\":\"\",\"link_saiba_mais\":\"#\",\"link_saiba_mais_menu\":\"\",\"link_saiba_mais_article\":\"\",\"texto_saiba_mais\":\"Simula\\u00e7\\u00e3o de link de rodap\\u00e9 do m\\u00f3dulo\",\"habilitar_mensagem_vazia\":\"0\",\"mensagem_vazia\":\"\",\"chapeu\":\"nenhum\",\"destaque\":\"0\",\"somente_imagem\":\"0\",\"buscar_cat_tag\":\"1\",\"catid\":[\"17\"],\"catid_components\":\"\",\"visualizar_filho\":\"0\",\"nivel\":\"10\",\"ordem\":\"publish_up\",\"ordem_direction\":\"DESC\",\"chapeu_item1\":\"Tempo e clima\",\"title_item1\":\"Minist\\u00e9rio inaugura radar meteorol\\u00f3gico em Natal (RN)\",\"desc_item1\":\"<p>Aparelho atender\\u00e1 a uma das metas do Plano Nacional de Gest\\u00e3o de Riscos e Alertas de Desastres Naturais<\\/p>\",\"show_image_item1\":\"1\",\"image_item1\":\"images\\/chamadas\\/foto_chamada_grande.jpg\",\"image_item1_align\":\"right\",\"image_item1_alt\":\"\",\"url_simple_item1\":\"\",\"url_menu_item1\":\"\",\"url_article_item1\":\"\",\"ordering_item1\":\"1\",\"variacao_item1\":\"0\",\"chapeu_item2\":\"\",\"title_item2\":\"\",\"desc_item2\":\"\",\"show_image_item2\":\"\",\"image_item2\":\"\",\"image_item2_align\":\"\",\"image_item2_alt\":\"\",\"url_simple_item2\":\"\",\"url_menu_item2\":\"\",\"url_article_item2\":\"\",\"ordering_item2\":\"2\",\"variacao_item2\":\"0\",\"chapeu_item3\":\"\",\"title_item3\":\"\",\"desc_item3\":\"\",\"show_image_item3\":\"\",\"image_item3\":\"\",\"image_item3_align\":\"\",\"image_item3_alt\":\"\",\"url_simple_item3\":\"\",\"url_menu_item3\":\"\",\"url_article_item3\":\"\",\"ordering_item3\":\"3\",\"variacao_item3\":\"0\",\"chapeu_item4\":\"\",\"title_item4\":\"\",\"desc_item4\":\"\",\"show_image_item4\":\"\",\"image_item4\":\"\",\"image_item4_align\":\"\",\"image_item4_alt\":\"\",\"url_simple_item4\":\"\",\"url_menu_item4\":\"\",\"url_article_item4\":\"\",\"ordering_item4\":\"4\",\"variacao_item4\":\"0\",\"limitar_caractere\":\"0\",\"limite_caractere\":\"\",\"exibir_imagem\":\"0\",\"exibir_introtext\":\"1\",\"exibir_title\":\"1\",\"subitem_class\":\"\",\"header_tag\":\"h1\",\"moduleclass_sfx\":\"manchete-lateral-tit-menor outstanding-02\",\"owncache\":\"1\",\"cache_time\":\"900\",\"limite_campos_preenchimento_manual\":\"\",\"module_tag\":\"div\",\"bootstrap_size\":\"0\",\"header_class\":\"\",\"style\":\"0\"}',0,'*');
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_modules` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__modules` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_modules_menu`
+-- Definition of table `#__modules_menu`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_modules_menu`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_modules_menu` (
+DROP TABLE IF EXISTS `#__modules_menu`;
+CREATE TABLE  `#__modules_menu` (
   `moduleid` int(11) NOT NULL DEFAULT '0',
   `menuid` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`moduleid`,`menuid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_modules_menu`
+-- Dumping data for table `#__modules_menu`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_modules_menu` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_modules_menu` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_modules_menu` VALUES  (1,-181),
+/*!40000 ALTER TABLE `#__modules_menu` DISABLE KEYS */;
+LOCK TABLES `#__modules_menu` WRITE;
+INSERT INTO `#__modules_menu` VALUES  (1,-181),
  (1,-142),
  (2,0),
  (3,0),
@@ -2890,15 +2886,15 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_modules_menu` VALUES  (1,-181),
  (196,0),
  (197,0);
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_modules_menu` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__modules_menu` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_newsfeeds`
+-- Definition of table `#__newsfeeds`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_newsfeeds`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_newsfeeds` (
+DROP TABLE IF EXISTS `#__newsfeeds`;
+CREATE TABLE  `#__newsfeeds` (
   `catid` int(11) NOT NULL DEFAULT '0',
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL DEFAULT '',
@@ -2940,21 +2936,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_newsfeeds` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_newsfeeds`
+-- Dumping data for table `#__newsfeeds`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_newsfeeds` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_newsfeeds` WRITE;
+/*!40000 ALTER TABLE `#__newsfeeds` DISABLE KEYS */;
+LOCK TABLES `#__newsfeeds` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_newsfeeds` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__newsfeeds` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_overrider`
+-- Definition of table `#__overrider`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_overrider`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_overrider` (
+DROP TABLE IF EXISTS `#__overrider`;
+CREATE TABLE  `#__overrider` (
   `id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key',
   `constant` varchar(255) NOT NULL,
   `string` text NOT NULL,
@@ -2963,12 +2959,12 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_overrider` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4292 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_overrider`
+-- Dumping data for table `#__overrider`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_overrider` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_overrider` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_overrider` VALUES  (1,'COM_CONTACT_ADDRESS','Endereço','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_contact.ini'),
+/*!40000 ALTER TABLE `#__overrider` DISABLE KEYS */;
+LOCK TABLES `#__overrider` WRITE;
+INSERT INTO `#__overrider` VALUES  (1,'COM_CONTACT_ADDRESS','Endereço','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_contact.ini'),
  (2,'COM_CONTACT_ARTICLES_HEADING','Artigos do Contato','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_contact.ini'),
  (3,'COM_CONTACT_CAPTCHA_LABEL','Captcha','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_contact.ini'),
  (4,'COM_CONTACT_CAPTCHA_DESC','Digite na caixa de texto, o que deseja ver na imagem.','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_contact.ini'),
@@ -3364,7 +3360,7 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_overrider` VALUES  (1,'COM_CONTACT
  (394,'COM_MEDIA_FIELD_IGNORED_EXTENSIONS_LABEL','Extensões Ignoradas','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_media.ini'),
  (395,'COM_MEDIA_FIELD_ILLEGAL_MIME_TYPES_DESC','Uma lista, separada por vírgula, dos tipos MIME proibidos para uploads (lista negra)','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_media.ini'),
  (396,'COM_MEDIA_FIELD_ILLEGAL_MIME_TYPES_LABEL','Tipos MIME Proibidos','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_media.ini');
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_overrider` VALUES  (397,'COM_MEDIA_FIELD_LEGAL_EXTENSIONS_DESC','Extensões (Tipos de Arquivo) que você pode enviar (separadas por vírgula).','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_media.ini'),
+INSERT INTO `#__overrider` VALUES  (397,'COM_MEDIA_FIELD_LEGAL_EXTENSIONS_DESC','Extensões (Tipos de Arquivo) que você pode enviar (separadas por vírgula).','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_media.ini'),
  (398,'COM_MEDIA_FIELD_LEGAL_EXTENSIONS_LABEL','Extensões Permitidas (Tipos de Arquivo)','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_media.ini'),
  (399,'COM_MEDIA_FIELD_LEGAL_IMAGE_EXTENSIONS_DESC','Extensões de Imagem (Tipo de Arquivo) que você pode fazer o upload (separados por vírgula). São usadas para verificar se os cabeçalhos da imagem é válido.','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_media.ini'),
  (400,'COM_MEDIA_FIELD_LEGAL_IMAGE_EXTENSIONS_LABEL','Extensões de Imagens Permitidas (Tipos de Arquivo)','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_media.ini'),
@@ -3704,7 +3700,7 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_overrider` VALUES  (397,'COM_MEDIA
  (734,'COM_PHOCAGALLERY_CREATE_MAIN_CATEGORY','Criar álbum principal','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_phocagallery.ini'),
  (735,'COM_PHOCAGALLERY_CREATE_SUBCATEGORY','Criar sub-álbum','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_phocagallery.ini'),
  (736,'COM_PHOCAGALLERY_CREATIVE_PROGRAM','Programa criativo','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_phocagallery.ini');
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_overrider` VALUES  (737,'COM_PHOCAGALLERY_CURRENT','Atual','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_phocagallery.ini'),
+INSERT INTO `#__overrider` VALUES  (737,'COM_PHOCAGALLERY_CURRENT','Atual','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_phocagallery.ini'),
  (738,'COM_PHOCAGALLERY_CURRENT_IMAGE','Imagem de fundo atual','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_phocagallery.ini'),
  (739,'COM_PHOCAGALLERY_CURRENT_THEME','Tema atual','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_phocagallery.ini'),
  (740,'COM_PHOCAGALLERY_CUSTOM_PROCESS','Processo customizado','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_phocagallery.ini'),
@@ -4026,7 +4022,7 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_overrider` VALUES  (737,'COM_PHOCA
  (1056,'COM_PHOCAGALLERY_FIELD_DISPLAY_STATISTICS_LABEL','Exibir estatísticas','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_phocagallery.ini'),
  (1057,'COM_PHOCAGALLERY_FIELD_DISPLAY_SUBCATEGORIES_DESC','Exiba sub-álbuns na visão de álbuns','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_phocagallery.ini'),
  (1058,'COM_PHOCAGALLERY_FIELD_DISPLAY_SUBCATEGORIES_LABEL','Exibir sub-álbuns','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_phocagallery.ini');
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_overrider` VALUES  (1059,'COM_PHOCAGALLERY_FIELD_DISPLAY_SUBCATEGORIES_ON_PAGE_CV_DESC','Sub-álbuns são exibidos somente na primeira página porém você pode exibi-los em todas as páginas ou ocultá-los (visão de álbuns na visão de álbum)','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_phocagallery.ini'),
+INSERT INTO `#__overrider` VALUES  (1059,'COM_PHOCAGALLERY_FIELD_DISPLAY_SUBCATEGORIES_ON_PAGE_CV_DESC','Sub-álbuns são exibidos somente na primeira página porém você pode exibi-los em todas as páginas ou ocultá-los (visão de álbuns na visão de álbum)','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_phocagallery.ini'),
  (1060,'COM_PHOCAGALLERY_FIELD_DISPLAY_SUBCATEGORIES_ON_PAGE_CV_LABEL','Exiba sub-álbuns em todas páginas','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_phocagallery.ini'),
  (1061,'COM_PHOCAGALLERY_FIELD_DISPLAY_SUBCATEGORIES_ON_PAGE_DESC','Sub-álbuns são exibidos somente na primeira página porém você pode exibi-los em todas as páginas (nesse caso a paginação será usada)','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_phocagallery.ini'),
  (1062,'COM_PHOCAGALLERY_FIELD_DISPLAY_SUBCATEGORIES_ON_PAGE_LABEL','Exibir sub-álbuns em todas páginas','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_phocagallery.ini'),
@@ -4323,7 +4319,7 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_overrider` VALUES  (1059,'COM_PHOC
  (1353,'COM_PHOCAGALLERY_FORM_SELECT_FILENAME','Selecionar nome de arquivo','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_phocagallery.ini'),
  (1354,'COM_PHOCAGALLERY_FORM_SELECT_FOLDER','Selecionar diretório','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_phocagallery.ini'),
  (1355,'COM_PHOCAGALLERY_FROM','de','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_phocagallery.ini');
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_overrider` VALUES  (1356,'COM_PHOCAGALLERY_FTP_LOGIN_DESC','Para carregar arquivos (imagens, temas), Joomla! provavelmente irá precisar dos detalhes de sua conta FTP. Por favor entre com os detalhes nos campos do formulário abaixo.','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_phocagallery.ini'),
+INSERT INTO `#__overrider` VALUES  (1356,'COM_PHOCAGALLERY_FTP_LOGIN_DESC','Para carregar arquivos (imagens, temas), Joomla! provavelmente irá precisar dos detalhes de sua conta FTP. Por favor entre com os detalhes nos campos do formulário abaixo.','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_phocagallery.ini'),
  (1357,'COM_PHOCAGALLERY_FTP_LOGIN_LABEL','Detalhes de login FTP','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_phocagallery.ini'),
  (1358,'COM_PHOCAGALLERY_FUNCTION','Função','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_phocagallery.ini'),
  (1359,'COM_PHOCAGALLERY_FUNCTIONS','Funções','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_phocagallery.ini'),
@@ -4686,7 +4682,7 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_overrider` VALUES  (1356,'COM_PHOC
  (1716,'COM_PHOCAGALLERY_STOP_THUMBNAIL_GENERATION','Parar criação de miniaturas','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_phocagallery.ini'),
  (1717,'COM_PHOCAGALLERY_SUBCATEGORIES','Sub-álbuns','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_phocagallery.ini'),
  (1718,'COM_PHOCAGALLERY_SUBCATEGORY','Sub-álbum','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_phocagallery.ini');
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_overrider` VALUES  (1719,'COM_PHOCAGALLERY_SUBMIT_COMMENT','Enviar comentário','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_phocagallery.ini'),
+INSERT INTO `#__overrider` VALUES  (1719,'COM_PHOCAGALLERY_SUBMIT_COMMENT','Enviar comentário','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_phocagallery.ini'),
  (1720,'COM_PHOCAGALLERY_SUCCESS_APPROVE_ALL','Todos álbuns e imagnes autorizados','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_phocagallery.ini'),
  (1721,'COM_PHOCAGALLERY_SUCCESS_BG_IMAGE','Imagem de fundo alterada','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_phocagallery.ini'),
  (1722,'COM_PHOCAGALLERY_SUCCESS_COMMENT_SUBMIT','Comentário enviado','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_phocagallery.ini'),
@@ -5023,7 +5019,7 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_overrider` VALUES  (1719,'COM_PHOC
  (2053,'COM_USERS_USER_FIELD_FRONTEND_LANGUAGE_DESC','Escolha aqui o idioma padrão para o site','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_users.ini'),
  (2054,'COM_USERS_USER_FIELD_FRONTEND_LANGUAGE_LABEL','Idioma do site','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_users.ini'),
  (2055,'COM_USERS_USER_FIELD_HELPSITE_DESC','Site de Ajuda para a Administração','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_users.ini');
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_overrider` VALUES  (2056,'COM_USERS_USER_FIELD_HELPSITE_LABEL','Site de Ajuda','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_users.ini'),
+INSERT INTO `#__overrider` VALUES  (2056,'COM_USERS_USER_FIELD_HELPSITE_LABEL','Site de Ajuda','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_users.ini'),
  (2057,'COM_USERS_USER_FIELD_TIMEZONE_DESC','Escolha aqui o seu fuso horário','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_users.ini'),
  (2058,'COM_USERS_USER_FIELD_TIMEZONE_LABEL','Fuso Horário','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_users.ini'),
  (2059,'COM_USERS_USER_NOT_FOUND','Usuário não encontrado','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.com_users.ini'),
@@ -5436,7 +5432,7 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_overrider` VALUES  (2056,'COM_USER
  (2466,'JLIB_CLIENT_ERROR_JFTP_PWD_BAD_RESPONSE','JFTP: :pwd: Má resposta. Resposta do servidor: %s [Expected: 257]','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.lib_joomla.ini'),
  (2467,'JLIB_CLIENT_ERROR_JFTP_SYST_BAD_RESPONSE_NATIVE','JFTP: :syst: Má resposta','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.lib_joomla.ini'),
  (2468,'JLIB_CLIENT_ERROR_JFTP_SYST_BAD_RESPONSE','JFTP: :syst: Má resposta. Resposta do servidor: %s [Expected: 215]','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.lib_joomla.ini');
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_overrider` VALUES  (2469,'JLIB_CLIENT_ERROR_JFTP_CHDIR_BAD_RESPONSE_NATIVE','JFTP: :chdir: Má resposta','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.lib_joomla.ini'),
+INSERT INTO `#__overrider` VALUES  (2469,'JLIB_CLIENT_ERROR_JFTP_CHDIR_BAD_RESPONSE_NATIVE','JFTP: :chdir: Má resposta','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.lib_joomla.ini'),
  (2470,'JLIB_CLIENT_ERROR_JFTP_CHDIR_BAD_RESPONSE','JFTP: :chdir: Má resposta. Resposta do servidor: %1$s [Expected: 250]. Caminho enviado: %2$s','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.lib_joomla.ini'),
  (2471,'JLIB_CLIENT_ERROR_JFTP_REINIT_BAD_RESPONSE_NATIVE','JFTP: :reinit: Má resposta','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.lib_joomla.ini'),
  (2472,'JLIB_CLIENT_ERROR_JFTP_REINIT_BAD_RESPONSE','JFTP: :reinit: Má resposta. Resposta do servidor: %s [Expected: 220]','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.lib_joomla.ini'),
@@ -5778,7 +5774,7 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_overrider` VALUES  (2469,'JLIB_CLI
  (2808,'JLIB_INSTALLER_ABORT','Parar instalação de idioma: %s','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.lib_joomla.ini'),
  (2809,'JLIB_INSTALLER_ABORT_ALREADYINSTALLED','A extensão já está instalada','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.lib_joomla.ini'),
  (2810,'JLIB_INSTALLER_ABORT_COMP_BUILDADMINMENUS_FAILED','Erro ao construir menus da administração','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.lib_joomla.ini');
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_overrider` VALUES  (2811,'JLIB_INSTALLER_ABORT_COMP_INSTALL_COPY_SETUP','Instalação de Componente: Não foi possível copiar arquivo de instalação.','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.lib_joomla.ini'),
+INSERT INTO `#__overrider` VALUES  (2811,'JLIB_INSTALLER_ABORT_COMP_INSTALL_COPY_SETUP','Instalação de Componente: Não foi possível copiar arquivo de instalação.','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.lib_joomla.ini'),
  (2812,'JLIB_INSTALLER_ABORT_COMP_INSTALL_CUSTOM_INSTALL_FAILURE','Instalação de Componente: Falha na instalação personalizada','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.lib_joomla.ini'),
  (2813,'JLIB_INSTALLER_ABORT_COMP_INSTALL_MANIFEST','Instalação de Componente: Não foi possível copiar os arquivos de manifesto php.','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.lib_joomla.ini'),
  (2814,'JLIB_INSTALLER_ABORT_COMP_INSTALL_PHP_INSTALL','Instalação de Componente: Não foi possível copiar os arquivos de instalação do php.','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.lib_joomla.ini'),
@@ -6074,7 +6070,7 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_overrider` VALUES  (2811,'JLIB_INS
  (3104,'MOD_ARTICLES_CATEGORY_FIELD_SHOWFEATURED_LABEL','Artigos em Destaque','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.mod_articles_category.ini'),
  (3105,'MOD_ARTICLES_CATEGORY_FIELD_SHOWHITS_DESC','Se deseja exibe o número de acessos de cada artigo.','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.mod_articles_category.ini'),
  (3106,'MOD_ARTICLES_CATEGORY_FIELD_SHOWHITS_LABEL','Acessos','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.mod_articles_category.ini');
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_overrider` VALUES  (3107,'MOD_ARTICLES_CATEGORY_FIELD_SHOWINTROTEXT_DESC','Selecione exibir se você gostaria de publicar a introdução.','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.mod_articles_category.ini'),
+INSERT INTO `#__overrider` VALUES  (3107,'MOD_ARTICLES_CATEGORY_FIELD_SHOWINTROTEXT_DESC','Selecione exibir se você gostaria de publicar a introdução.','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.mod_articles_category.ini'),
  (3108,'MOD_ARTICLES_CATEGORY_FIELD_SHOWINTROTEXT_LABEL','Introdução','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.mod_articles_category.ini'),
  (3109,'MOD_ARTICLES_CATEGORY_FIELD_SHOWONARTICLEPAGE_DESC','Selecione exibir ou ocultar a lista decorrente da página de artigos. Isso significa que o módulo irá apenas exibir dinâmicamente na categoria artigos.','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.mod_articles_category.ini'),
  (3110,'MOD_ARTICLES_CATEGORY_FIELD_SHOWONARTICLEPAGE_LABEL','Exibir na Página de Artigos','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.mod_articles_category.ini'),
@@ -6383,7 +6379,7 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_overrider` VALUES  (3107,'MOD_ARTI
  (3413,'MOD_CHAMADA_FIELD_MANUAL_MENU04_DESC','Informe URL de item de menu, de preenchimento manual, ou sobrescreva os dados da URL de item de menu do terceiro item retornado pela consulta do módulo.','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.mod_chamadas.ini'),
  (3414,'MOD_CHAMADA_FIELD_MANUAL_ARTICLE04_LABEL','URL de artigo de conteúdo para item 04','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.mod_chamadas.ini'),
  (3415,'MOD_CHAMADA_FIELD_MANUAL_ARTICLE04_DESC','Informe URL de artigo de menu, de preenchimento manual, ou sobrescreva os dados da URL de artigo de menu do terceiro item retornado pela consulta do módulo.','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.mod_chamadas.ini');
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_overrider` VALUES  (3416,'MOD_CHAMADA_FIELD_MANUAL_ORDERING04_LABEL','Ordenação item 04','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.mod_chamadas.ini'),
+INSERT INTO `#__overrider` VALUES  (3416,'MOD_CHAMADA_FIELD_MANUAL_ORDERING04_LABEL','Ordenação item 04','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.mod_chamadas.ini'),
  (3417,'MOD_CHAMADA_FIELD_MANUAL_ORDERING04_DESC','Ordenação entre os diferentes itens manuais. Funciona somente quando todo o preenchimento é manual.','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.mod_chamadas.ini'),
  (3418,'MOD_CHAMADA_FIELD_VARIACAO_LAYOUT04_LABEL','Variação de cor de layout do Item 04','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.mod_chamadas.ini'),
  (3419,'COM_CONTENT_SELECT_AN_ARTICLE','Selecione um artigo','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.mod_chamadas.ini'),
@@ -6748,7 +6744,7 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_overrider` VALUES  (3416,'MOD_CHAM
  (3778,'K2_SELECT_THE_NUMBER_OF_LEVELS_YOU_WISH_TO_RENDER_LEAVE_THIS_BLANK_IF_YOU_WISH_TO_RENDER_ALL_THE_LEVELS_BELOW_THE_SELECTED_ROOT_CATEGORY','Selecione o número de níveis que deseja apresentar. Deixe em branco se você deseja processar todos os níveis abaixo da categoria raiz selecionada.','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.mod_k2_tools.ini'),
  (3779,'K2_SELECT_THE_ROOT_CATEGORY_FOR_WHICH_YOU_WANT_TO_CREATE_A_CATEGORY_DROPDOWN_LIST_SELECT_NONE_TO_CREATE_A_DROPDOWN_LIST_FROM_ALL_CATEGORIES','Selecione a categoria raiz para o qual você quer criar uma categoria de lista suspensa. Selecione nenhum para criar uma lista suspensa com  todas as categorias.','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.mod_k2_tools.ini'),
  (3780,'K2_SELECT_THE_ROOT_CATEGORY_FOR_WHICH_YOU_WANT_TO_CREATE_A_CATEGORY_LIST_SELECT_NONE_TO_FETCH_A_LIST_OF_ALL_CATEGORIES','Selecione a categoria raiz para o qual você deseja criar uma lista de categorias. Selecione nenhum para buscar uma lista de todas as categorias.','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.mod_k2_tools.ini');
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_overrider` VALUES  (3781,'K2_SELECT_THE_ROOT_CATEGORY_FOR_WHICH_YOU_WANT_TO_FILTER_AN_AUTHOR_LIST_SELECT_NONE_TO_FETCH_AUTHORS_FROM_ALL_CATEGORIES','Selecione a categoria raiz para o qual você deseja limitar uma lista de autores. Selecione nenhum para buscar autores de todas as categorias.','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.mod_k2_tools.ini'),
+INSERT INTO `#__overrider` VALUES  (3781,'K2_SELECT_THE_ROOT_CATEGORY_FOR_WHICH_YOU_WANT_TO_FILTER_AN_AUTHOR_LIST_SELECT_NONE_TO_FETCH_AUTHORS_FROM_ALL_CATEGORIES','Selecione a categoria raiz para o qual você deseja limitar uma lista de autores. Selecione nenhum para buscar autores de todas as categorias.','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.mod_k2_tools.ini'),
  (3782,'K2_SELECT_THE_X_MOST_POPULAR_TAGS_TO_DISPLAY','Selecione X etiquetas mais populares para mostrar.','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.mod_k2_tools.ini'),
  (3783,'K2_SELECT_WHETHER_TO_CACHE_THE_CONTENT_OF_THIS_MODULE','Selecione se deseja armazenar em cache o conteúdo deste módulo','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.mod_k2_tools.ini'),
  (3784,'K2_SEPTEMBER','Setembro','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.mod_k2_tools.ini'),
@@ -7080,7 +7076,7 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_overrider` VALUES  (3781,'K2_SELEC
  (4110,'MOD_WEBLINKS_FIELD_COUNT_LABEL','Contagem','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.mod_weblinks.ini'),
  (4111,'MOD_WEBLINKS_FIELD_COUNTCLICKS_DESC','Se definido como sim, o número de vezes que o link foi clicado será gravado','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.mod_weblinks.ini'),
  (4112,'MOD_WEBLINKS_FIELD_COUNTCLICKS_LABEL','Contar Cliques','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.mod_weblinks.ini');
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_overrider` VALUES  (4113,'MOD_WEBLINKS_FIELD_DESCRIPTION_DESC','Exibe a descrição do Weblink','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.mod_weblinks.ini'),
+INSERT INTO `#__overrider` VALUES  (4113,'MOD_WEBLINKS_FIELD_DESCRIPTION_DESC','Exibe a descrição do Weblink','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.mod_weblinks.ini'),
  (4114,'MOD_WEBLINKS_FIELD_DESCRIPTION_LABEL','Descrição','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.mod_weblinks.ini'),
  (4115,'MOD_WEBLINKS_FIELD_FOLLOW_DESC','Indexação de Robôs - permite, ou não seguir','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.mod_weblinks.ini'),
  (4116,'MOD_WEBLINKS_FIELD_FOLLOW_LABEL','Seguir/Não Seguir','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.mod_weblinks.ini'),
@@ -7260,15 +7256,15 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_overrider` VALUES  (4113,'MOD_WEBL
  (4290,'TPL_PROTOSTAR_POSITION_FOOTER','Rodapé','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.tpl_protostar.sys.ini'),
  (4291,'TPL_PROTOSTAR_XML_DESCRIPTION','Continuando os templates espaciais (Solarflare para 1.0 e Milkyway para 1.5), Protostar é o template base do Joomla 3.0 baseado no Bootstrap do Twitter e o lançamento da Bibilioteca de Interface do Usuário Joomla (JUI).','/Users/rafaelberlanda/Documents/www/jg20140508/joomla-3.x/language/pt-BR/pt-BR.tpl_protostar.sys.ini');
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_overrider` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__overrider` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_phocagallery`
+-- Definition of table `#__phocagallery`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_phocagallery`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_phocagallery` (
+DROP TABLE IF EXISTS `#__phocagallery`;
+CREATE TABLE  `#__phocagallery` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `catid` int(11) NOT NULL DEFAULT '0',
   `sid` int(11) NOT NULL DEFAULT '0',
@@ -7312,12 +7308,12 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_phocagallery` (
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_phocagallery`
+-- Dumping data for table `#__phocagallery`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_phocagallery` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_phocagallery` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_phocagallery` VALUES  (1,1,0,'Imagem 1: título com até 45 caracteres','imagem-1-titulo-com-ate-45-caracteres','galeria2/image01_grd.png',1,'<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>','2013-12-22 02:05:51',12,'0','0',0,'',0,'',0,70910,1,1,0,'0000-00-00 00:00:00',1,NULL,'teste, teste 2','Nome do fotógrafo.',NULL,'www.teste1.com.br|teste|_self|1','www.teste2.com.br|teste2|_self|1','',0,'','','','','','','*'),
+/*!40000 ALTER TABLE `#__phocagallery` DISABLE KEYS */;
+LOCK TABLES `#__phocagallery` WRITE;
+INSERT INTO `#__phocagallery` VALUES  (1,1,0,'Imagem 1: título com até 45 caracteres','imagem-1-titulo-com-ate-45-caracteres','galeria2/image01_grd.png',1,'<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>','2013-12-22 02:05:51',12,'0','0',0,'',0,'',0,70910,1,1,0,'0000-00-00 00:00:00',1,NULL,'teste, teste 2','Nome do fotógrafo.',NULL,'www.teste1.com.br|teste|_self|1','www.teste2.com.br|teste2|_self|1','',0,'','','','','','','*'),
  (2,1,0,'Imagem 2: título com até 45 caracteres','imagem-2-titulo-com-ate-45-caracteres','galeria2/image02_grd.png',1,'<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>','2013-12-22 02:05:51',5,'0','0',0,'',0,'',0,103730,1,1,0,'0000-00-00 00:00:00',2,NULL,'teste, teste 2','Nome do fotógrafo.',NULL,'www.teste1.com.br|teste|_self|1','www.teste2.com.br|teste2|_self|1','',0,'','','','','','','*'),
  (3,1,0,'Imagem 3: título com até 45 caracteres','imagem-3-titulo-com-ate-45-caracteres','galeria2/image03_grd.png',1,'<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>','2013-12-22 02:05:51',2,'0','0',0,'',0,'',0,78834,1,1,0,'0000-00-00 00:00:00',3,NULL,'teste, teste 2','Nome do fotógrafo.',NULL,'www.teste1.com.br|teste|_self|1','www.teste2.com.br|teste2|_self|1','',0,'','','','','','','*'),
  (4,1,0,'Imagem 4: título com até 45 caracteres','imagem-4-titulo-com-ate-45-caracteres','galeria2/image04_grd.png',1,'<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>','2013-12-22 02:05:51',8,'0','0',0,'',0,'',0,86827,1,1,0,'0000-00-00 00:00:00',4,NULL,'teste, teste 2','Nome do fotógrafo.',NULL,'www.teste1.com.br|teste|_self|1','www.teste2.com.br|teste2|_self|1','',0,'','','','','','','*'),
@@ -7330,15 +7326,15 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_phocagallery` VALUES  (1,1,0,'Imag
  (11,3,0,'Imagens teste #3','imagens-teste-3','galeria2/img_0148.jpg',1,'','2014-01-08 00:13:03',0,'','',0,'',0,'',0,643647,1,1,0,'0000-00-00 00:00:00',3,NULL,'','',NULL,'||_self|1','||_self|1','',0,'','','','','','','*'),
  (12,3,0,'Imagens teste #4','imagens-teste-4','galeria2/img_0138.jpg',1,'','2014-01-08 00:14:07',0,'','',0,'',0,'',0,784592,1,1,0,'0000-00-00 00:00:00',4,NULL,'','',NULL,'||_self|1','||_self|1','',0,'','','','','','','*');
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_phocagallery` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__phocagallery` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_phocagallery_categories`
+-- Definition of table `#__phocagallery_categories`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_phocagallery_categories`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_phocagallery_categories` (
+DROP TABLE IF EXISTS `#__phocagallery_categories`;
+CREATE TABLE  `#__phocagallery_categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `parent_id` int(11) NOT NULL DEFAULT '0',
   `owner_id` int(11) NOT NULL DEFAULT '0',
@@ -7385,24 +7381,24 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_phocagallery_categories` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_phocagallery_categories`
+-- Dumping data for table `#__phocagallery_categories`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_phocagallery_categories` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_phocagallery_categories` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_phocagallery_categories` VALUES  (1,0,0,'Galeria de imagens 01','','galeria-de-imagens-01','','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>','2013-12-22 01:53:21',1,1,0,'0000-00-00 00:00:00',NULL,1,1,0,70,'0','0','0','galeria1','','',0,'','','','','',0,'',NULL,'palavra01, palavra02','',NULL,'*'),
+/*!40000 ALTER TABLE `#__phocagallery_categories` DISABLE KEYS */;
+LOCK TABLES `#__phocagallery_categories` WRITE;
+INSERT INTO `#__phocagallery_categories` VALUES  (1,0,0,'Galeria de imagens 01','','galeria-de-imagens-01','','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>','2013-12-22 01:53:21',1,1,0,'0000-00-00 00:00:00',NULL,1,1,0,70,'0','0','0','galeria1','','',0,'','','','','',0,'',NULL,'palavra01, palavra02','',NULL,'*'),
  (2,1,0,'Galeria de imagens 02','','galeria-de-imagens-02','','','','','2014-01-07 22:39:14',1,1,0,'0000-00-00 00:00:00',NULL,1,1,0,3,'0','0','0','galeria2','','',0,'','','','','',0,'',NULL,'','',NULL,'*'),
  (3,2,0,'Galeria de imagens 03','','galeria-de-imagens-3','','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut laborae et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>','2014-01-07 22:41:06',1,1,0,'0000-00-00 00:00:00',NULL,1,1,0,1,'0','0','0','galeria3','','',0,'','','','','',0,'',NULL,'','',NULL,'*');
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_phocagallery_categories` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__phocagallery_categories` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_phocagallery_comments`
+-- Definition of table `#__phocagallery_comments`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_phocagallery_comments`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_phocagallery_comments` (
+DROP TABLE IF EXISTS `#__phocagallery_comments`;
+CREATE TABLE  `#__phocagallery_comments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `catid` int(11) NOT NULL DEFAULT '0',
   `userid` int(11) NOT NULL DEFAULT '0',
@@ -7420,21 +7416,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_phocagallery_comments` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_phocagallery_comments`
+-- Dumping data for table `#__phocagallery_comments`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_phocagallery_comments` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_phocagallery_comments` WRITE;
+/*!40000 ALTER TABLE `#__phocagallery_comments` DISABLE KEYS */;
+LOCK TABLES `#__phocagallery_comments` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_phocagallery_comments` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__phocagallery_comments` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_phocagallery_fb_users`
+-- Definition of table `#__phocagallery_fb_users`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_phocagallery_fb_users`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_phocagallery_fb_users` (
+DROP TABLE IF EXISTS `#__phocagallery_fb_users`;
+CREATE TABLE  `#__phocagallery_fb_users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `appid` varchar(255) NOT NULL DEFAULT '',
   `appsid` varchar(255) NOT NULL DEFAULT '',
@@ -7459,21 +7455,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_phocagallery_fb_users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_phocagallery_fb_users`
+-- Dumping data for table `#__phocagallery_fb_users`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_phocagallery_fb_users` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_phocagallery_fb_users` WRITE;
+/*!40000 ALTER TABLE `#__phocagallery_fb_users` DISABLE KEYS */;
+LOCK TABLES `#__phocagallery_fb_users` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_phocagallery_fb_users` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__phocagallery_fb_users` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_phocagallery_img_comments`
+-- Definition of table `#__phocagallery_img_comments`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_phocagallery_img_comments`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_phocagallery_img_comments` (
+DROP TABLE IF EXISTS `#__phocagallery_img_comments`;
+CREATE TABLE  `#__phocagallery_img_comments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `imgid` int(11) NOT NULL DEFAULT '0',
   `userid` int(11) NOT NULL DEFAULT '0',
@@ -7491,21 +7487,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_phocagallery_img_comments` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_phocagallery_img_comments`
+-- Dumping data for table `#__phocagallery_img_comments`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_phocagallery_img_comments` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_phocagallery_img_comments` WRITE;
+/*!40000 ALTER TABLE `#__phocagallery_img_comments` DISABLE KEYS */;
+LOCK TABLES `#__phocagallery_img_comments` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_phocagallery_img_comments` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__phocagallery_img_comments` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_phocagallery_img_votes`
+-- Definition of table `#__phocagallery_img_votes`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_phocagallery_img_votes`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_phocagallery_img_votes` (
+DROP TABLE IF EXISTS `#__phocagallery_img_votes`;
+CREATE TABLE  `#__phocagallery_img_votes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `imgid` int(11) NOT NULL DEFAULT '0',
   `userid` int(11) NOT NULL DEFAULT '0',
@@ -7521,21 +7517,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_phocagallery_img_votes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_phocagallery_img_votes`
+-- Dumping data for table `#__phocagallery_img_votes`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_phocagallery_img_votes` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_phocagallery_img_votes` WRITE;
+/*!40000 ALTER TABLE `#__phocagallery_img_votes` DISABLE KEYS */;
+LOCK TABLES `#__phocagallery_img_votes` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_phocagallery_img_votes` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__phocagallery_img_votes` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_phocagallery_img_votes_statistics`
+-- Definition of table `#__phocagallery_img_votes_statistics`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_phocagallery_img_votes_statistics`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_phocagallery_img_votes_statistics` (
+DROP TABLE IF EXISTS `#__phocagallery_img_votes_statistics`;
+CREATE TABLE  `#__phocagallery_img_votes_statistics` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `imgid` int(11) NOT NULL DEFAULT '0',
   `count` int(11) NOT NULL DEFAULT '0',
@@ -7545,21 +7541,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_phocagallery_img_votes_statistic
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_phocagallery_img_votes_statistics`
+-- Dumping data for table `#__phocagallery_img_votes_statistics`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_phocagallery_img_votes_statistics` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_phocagallery_img_votes_statistics` WRITE;
+/*!40000 ALTER TABLE `#__phocagallery_img_votes_statistics` DISABLE KEYS */;
+LOCK TABLES `#__phocagallery_img_votes_statistics` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_phocagallery_img_votes_statistics` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__phocagallery_img_votes_statistics` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_phocagallery_styles`
+-- Definition of table `#__phocagallery_styles`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_phocagallery_styles`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_phocagallery_styles` (
+DROP TABLE IF EXISTS `#__phocagallery_styles`;
+CREATE TABLE  `#__phocagallery_styles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL DEFAULT '',
   `alias` varchar(255) NOT NULL DEFAULT '',
@@ -7576,25 +7572,25 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_phocagallery_styles` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_phocagallery_styles`
+-- Dumping data for table `#__phocagallery_styles`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_phocagallery_styles` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_phocagallery_styles` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_phocagallery_styles` VALUES  (1,'Phocagallery','phocagallery','phocagallery.css','',1,1,0,'0000-00-00 00:00:00',1,NULL,'*'),
+/*!40000 ALTER TABLE `#__phocagallery_styles` DISABLE KEYS */;
+LOCK TABLES `#__phocagallery_styles` WRITE;
+INSERT INTO `#__phocagallery_styles` VALUES  (1,'Phocagallery','phocagallery','phocagallery.css','',1,1,0,'0000-00-00 00:00:00',1,NULL,'*'),
  (2,'Rating','','rating.css',NULL,1,1,0,'0000-00-00 00:00:00',2,NULL,'*'),
  (3,'Default','','default.css',NULL,2,1,0,'0000-00-00 00:00:00',3,NULL,'*'),
  (4,'Bootstrap','','bootstrap.min.css',NULL,1,0,0,'0000-00-00 00:00:00',4,NULL,'*');
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_phocagallery_styles` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__phocagallery_styles` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_phocagallery_tags`
+-- Definition of table `#__phocagallery_tags`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_phocagallery_tags`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_phocagallery_tags` (
+DROP TABLE IF EXISTS `#__phocagallery_tags`;
+CREATE TABLE  `#__phocagallery_tags` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL DEFAULT '',
   `alias` varchar(255) NOT NULL DEFAULT '',
@@ -7611,23 +7607,23 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_phocagallery_tags` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_phocagallery_tags`
+-- Dumping data for table `#__phocagallery_tags`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_phocagallery_tags` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_phocagallery_tags` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_phocagallery_tags` VALUES  (1,'Internet','internet',0,'','',1,0,'0000-00-00 00:00:00',1,NULL,''),
+/*!40000 ALTER TABLE `#__phocagallery_tags` DISABLE KEYS */;
+LOCK TABLES `#__phocagallery_tags` WRITE;
+INSERT INTO `#__phocagallery_tags` VALUES  (1,'Internet','internet',0,'','',1,0,'0000-00-00 00:00:00',1,NULL,''),
  (2,'Educação','educacao',0,'','',1,0,'0000-00-00 00:00:00',2,NULL,'');
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_phocagallery_tags` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__phocagallery_tags` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_phocagallery_tags_ref`
+-- Definition of table `#__phocagallery_tags_ref`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_phocagallery_tags_ref`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_phocagallery_tags_ref` (
+DROP TABLE IF EXISTS `#__phocagallery_tags_ref`;
+CREATE TABLE  `#__phocagallery_tags_ref` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `imgid` int(11) NOT NULL DEFAULT '0',
   `tagid` int(11) NOT NULL DEFAULT '0',
@@ -7637,23 +7633,23 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_phocagallery_tags_ref` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_phocagallery_tags_ref`
+-- Dumping data for table `#__phocagallery_tags_ref`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_phocagallery_tags_ref` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_phocagallery_tags_ref` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_phocagallery_tags_ref` VALUES  (1,1,1),
+/*!40000 ALTER TABLE `#__phocagallery_tags_ref` DISABLE KEYS */;
+LOCK TABLES `#__phocagallery_tags_ref` WRITE;
+INSERT INTO `#__phocagallery_tags_ref` VALUES  (1,1,1),
  (2,1,2);
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_phocagallery_tags_ref` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__phocagallery_tags_ref` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_phocagallery_user`
+-- Definition of table `#__phocagallery_user`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_phocagallery_user`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_phocagallery_user` (
+DROP TABLE IF EXISTS `#__phocagallery_user`;
+CREATE TABLE  `#__phocagallery_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `userid` int(11) NOT NULL DEFAULT '0',
   `avatar` varchar(40) NOT NULL DEFAULT '',
@@ -7669,21 +7665,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_phocagallery_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_phocagallery_user`
+-- Dumping data for table `#__phocagallery_user`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_phocagallery_user` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_phocagallery_user` WRITE;
+/*!40000 ALTER TABLE `#__phocagallery_user` DISABLE KEYS */;
+LOCK TABLES `#__phocagallery_user` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_phocagallery_user` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__phocagallery_user` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_phocagallery_votes`
+-- Definition of table `#__phocagallery_votes`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_phocagallery_votes`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_phocagallery_votes` (
+DROP TABLE IF EXISTS `#__phocagallery_votes`;
+CREATE TABLE  `#__phocagallery_votes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `catid` int(11) NOT NULL DEFAULT '0',
   `userid` int(11) NOT NULL DEFAULT '0',
@@ -7699,21 +7695,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_phocagallery_votes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_phocagallery_votes`
+-- Dumping data for table `#__phocagallery_votes`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_phocagallery_votes` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_phocagallery_votes` WRITE;
+/*!40000 ALTER TABLE `#__phocagallery_votes` DISABLE KEYS */;
+LOCK TABLES `#__phocagallery_votes` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_phocagallery_votes` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__phocagallery_votes` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_phocagallery_votes_statistics`
+-- Definition of table `#__phocagallery_votes_statistics`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_phocagallery_votes_statistics`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_phocagallery_votes_statistics` (
+DROP TABLE IF EXISTS `#__phocagallery_votes_statistics`;
+CREATE TABLE  `#__phocagallery_votes_statistics` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `catid` int(11) NOT NULL DEFAULT '0',
   `count` int(11) NOT NULL DEFAULT '0',
@@ -7723,21 +7719,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_phocagallery_votes_statistics` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_phocagallery_votes_statistics`
+-- Dumping data for table `#__phocagallery_votes_statistics`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_phocagallery_votes_statistics` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_phocagallery_votes_statistics` WRITE;
+/*!40000 ALTER TABLE `#__phocagallery_votes_statistics` DISABLE KEYS */;
+LOCK TABLES `#__phocagallery_votes_statistics` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_phocagallery_votes_statistics` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__phocagallery_votes_statistics` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_plg_system_adminexile`
+-- Definition of table `#__plg_system_adminexile`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_plg_system_adminexile`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_plg_system_adminexile` (
+DROP TABLE IF EXISTS `#__plg_system_adminexile`;
+CREATE TABLE  `#__plg_system_adminexile` (
   `ip` varchar(45) NOT NULL,
   `firstattempt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `lastattempt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -7747,21 +7743,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_plg_system_adminexile` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_plg_system_adminexile`
+-- Dumping data for table `#__plg_system_adminexile`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_plg_system_adminexile` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_plg_system_adminexile` WRITE;
+/*!40000 ALTER TABLE `#__plg_system_adminexile` DISABLE KEYS */;
+LOCK TABLES `#__plg_system_adminexile` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_plg_system_adminexile` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__plg_system_adminexile` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_postinstall_messages`
+-- Definition of table `#__postinstall_messages`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_postinstall_messages`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_postinstall_messages` (
+DROP TABLE IF EXISTS `#__postinstall_messages`;
+CREATE TABLE  `#__postinstall_messages` (
   `postinstall_message_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `extension_id` bigint(20) NOT NULL DEFAULT '700' COMMENT 'FK to #__extensions',
   `title_key` varchar(255) NOT NULL DEFAULT '' COMMENT 'Lang key for the title',
@@ -7780,24 +7776,24 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_postinstall_messages` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_postinstall_messages`
+-- Dumping data for table `#__postinstall_messages`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_postinstall_messages` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_postinstall_messages` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_postinstall_messages` VALUES  (1,700,'PLG_TWOFACTORAUTH_TOTP_POSTINSTALL_TITLE','PLG_TWOFACTORAUTH_TOTP_POSTINSTALL_BODY','PLG_TWOFACTORAUTH_TOTP_POSTINSTALL_ACTION','plg_twofactorauth_totp',1,'action','site://plugins/twofactorauth/totp/postinstall/actions.php','twofactorauth_postinstall_action','site://plugins/twofactorauth/totp/postinstall/actions.php','twofactorauth_postinstall_condition','3.2.0',0),
+/*!40000 ALTER TABLE `#__postinstall_messages` DISABLE KEYS */;
+LOCK TABLES `#__postinstall_messages` WRITE;
+INSERT INTO `#__postinstall_messages` VALUES  (1,700,'PLG_TWOFACTORAUTH_TOTP_POSTINSTALL_TITLE','PLG_TWOFACTORAUTH_TOTP_POSTINSTALL_BODY','PLG_TWOFACTORAUTH_TOTP_POSTINSTALL_ACTION','plg_twofactorauth_totp',1,'action','site://plugins/twofactorauth/totp/postinstall/actions.php','twofactorauth_postinstall_action','site://plugins/twofactorauth/totp/postinstall/actions.php','twofactorauth_postinstall_condition','3.2.0',0),
  (2,700,'COM_CPANEL_MSG_EACCELERATOR_TITLE','COM_CPANEL_MSG_EACCELERATOR_BODY','COM_CPANEL_MSG_EACCELERATOR_BUTTON','com_cpanel',1,'action','admin://components/com_admin/postinstall/eaccelerator.php','admin_postinstall_eaccelerator_action','admin://components/com_admin/postinstall/eaccelerator.php','admin_postinstall_eaccelerator_condition','3.2.0',1),
  (3,700,'COM_CPANEL_MSG_PHPVERSION_TITLE','COM_CPANEL_MSG_PHPVERSION_BODY','','com_cpanel',1,'message','','','admin://components/com_admin/postinstall/phpversion.php','admin_postinstall_phpversion_condition','3.2.2',0);
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_postinstall_messages` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__postinstall_messages` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_redirect_links`
+-- Definition of table `#__redirect_links`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_redirect_links`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_redirect_links` (
+DROP TABLE IF EXISTS `#__redirect_links`;
+CREATE TABLE  `#__redirect_links` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `old_url` varchar(255) NOT NULL,
   `new_url` varchar(255) NOT NULL,
@@ -7813,50 +7809,50 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_redirect_links` (
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_redirect_links`
+-- Dumping data for table `#__redirect_links`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_redirect_links` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_redirect_links` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_redirect_links` VALUES  (1,'http://10.200.1.43/INTERNET/portal_modelo_3x_dev/index.php/editoria-a/menu-de-3-nivel','','http://10.200.1.43/INTERNET/portal_modelo_3x_dev/index.php/editoria-a/menu-de-2-nivel','',1,0,'2013-10-21 17:28:46','0000-00-00 00:00:00'),
+/*!40000 ALTER TABLE `#__redirect_links` DISABLE KEYS */;
+LOCK TABLES `#__redirect_links` WRITE;
+INSERT INTO `#__redirect_links` VALUES  (1,'http://10.200.1.43/INTERNET/portal_modelo_3x_dev/index.php/editoria-a/menu-de-3-nivel','','http://10.200.1.43/INTERNET/portal_modelo_3x_dev/index.php/editoria-a/menu-de-2-nivel','',1,0,'2013-10-21 17:28:46','0000-00-00 00:00:00'),
  (2,'http://localhost/joomlagovbr/joomla-2.5/index.php/component/content/category','','http://localhost/joomlagovbr/joomla-2.5/','',1,0,'2013-11-03 13:00:02','0000-00-00 00:00:00'),
  (3,'http://localhost/joomlagovbr/joomla-3.1/index.php/component/content/category/37-galeria-de-imagens/galeria-1','','http://localhost/joomlagovbr/joomla-3.1/','',1,0,'2013-11-03 17:12:50','0000-00-00 00:00:00'),
  (4,'http://localhost/joomlagovbr/joomla-3.x/index.php/contato/formulario-de-contato/','','http://localhost/joomlagovbr/joomla-3.x/index.php/contato','',1,0,'2013-12-21 15:02:59','0000-00-00 00:00:00'),
  (5,'http://localhost/joomlagovbr/joomla-3.x/index.php?Itemid=144','','http://localhost/joomlagovbr/joomla-3.x/index.php/mapa-do-site','',1,0,'2013-12-22 18:15:16','0000-00-00 00:00:00'),
  (6,'http://localhost/joomlagovbr/joomla-3.x/index.php?Itemid=143','','http://localhost/joomlagovbr/joomla-3.x/index.php?Itemid=144','',1,0,'2013-12-22 18:15:33','0000-00-00 00:00:00');
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_redirect_links` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__redirect_links` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_schemas`
+-- Definition of table `#__schemas`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_schemas`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_schemas` (
+DROP TABLE IF EXISTS `#__schemas`;
+CREATE TABLE  `#__schemas` (
   `extension_id` int(11) NOT NULL,
   `version_id` varchar(20) NOT NULL,
   PRIMARY KEY (`extension_id`,`version_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_schemas`
+-- Dumping data for table `#__schemas`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_schemas` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_schemas` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_schemas` VALUES  (700,'3.3.0-2014-04-02'),
+/*!40000 ALTER TABLE `#__schemas` DISABLE KEYS */;
+LOCK TABLES `#__schemas` WRITE;
+INSERT INTO `#__schemas` VALUES  (700,'3.3.0-2014-04-02'),
  (10030,'3.5.8');
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_schemas` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__schemas` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_session`
+-- Definition of table `#__session`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_session`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_session` (
+DROP TABLE IF EXISTS `#__session`;
+CREATE TABLE  `#__session` (
   `session_id` varchar(200) NOT NULL DEFAULT '',
   `client_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `guest` tinyint(4) unsigned DEFAULT '1',
@@ -7870,23 +7866,23 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_session` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_session`
+-- Dumping data for table `#__session`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_session` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_session` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_session` VALUES  ('68df4d81290c99742541d37eba631855',0,1,'1402149668','__default|a:7:{s:15:\"session.counter\";i:26;s:19:\"session.timer.start\";i:1402148802;s:18:\"session.timer.last\";i:1402149654;s:17:\"session.timer.now\";i:1402149667;s:22:\"session.client.browser\";s:81:\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:29.0) Gecko/20100101 Firefox/29.0\";s:8:\"registry\";O:24:\"Joomla\\Registry\\Registry\":1:{s:7:\"\\0\\0\\0data\";O:8:\"stdClass\":0:{}}s:4:\"user\";O:5:\"JUser\":25:{s:9:\"\\0\\0\\0isRoot\";b:0;s:2:\"id\";i:0;s:4:\"name\";N;s:8:\"username\";N;s:5:\"email\";N;s:8:\"password\";N;s:14:\"password_clear\";s:0:\"\";s:5:\"block\";N;s:9:\"sendEmail\";i:0;s:12:\"registerDate\";N;s:13:\"lastvisitDate\";N;s:10:\"activation\";N;s:6:\"params\";N;s:6:\"groups\";a:1:{i:0;s:1:\"1\";}s:5:\"guest\";i:1;s:13:\"lastResetTime\";N;s:10:\"resetCount\";N;s:12:\"requireReset\";N;s:10:\"\\0\\0\\0_params\";O:24:\"Joomla\\Registry\\Registry\":1:{s:7:\"\\0\\0\\0data\";O:8:\"stdClass\":0:{}}s:14:\"\\0\\0\\0_authGroups\";a:1:{i:0;i:1;}s:14:\"\\0\\0\\0_authLevels\";a:2:{i:0;i:1;i:1;i:1;}s:15:\"\\0\\0\\0_authActions\";N;s:12:\"\\0\\0\\0_errorMsg\";N;s:10:\"\\0\\0\\0_errors\";a:0:{}s:3:\"aid\";i:0;}}',0,''),
+/*!40000 ALTER TABLE `#__session` DISABLE KEYS */;
+LOCK TABLES `#__session` WRITE;
+INSERT INTO `#__session` VALUES  ('68df4d81290c99742541d37eba631855',0,1,'1402149668','__default|a:7:{s:15:\"session.counter\";i:26;s:19:\"session.timer.start\";i:1402148802;s:18:\"session.timer.last\";i:1402149654;s:17:\"session.timer.now\";i:1402149667;s:22:\"session.client.browser\";s:81:\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:29.0) Gecko/20100101 Firefox/29.0\";s:8:\"registry\";O:24:\"Joomla\\Registry\\Registry\":1:{s:7:\"\\0\\0\\0data\";O:8:\"stdClass\":0:{}}s:4:\"user\";O:5:\"JUser\":25:{s:9:\"\\0\\0\\0isRoot\";b:0;s:2:\"id\";i:0;s:4:\"name\";N;s:8:\"username\";N;s:5:\"email\";N;s:8:\"password\";N;s:14:\"password_clear\";s:0:\"\";s:5:\"block\";N;s:9:\"sendEmail\";i:0;s:12:\"registerDate\";N;s:13:\"lastvisitDate\";N;s:10:\"activation\";N;s:6:\"params\";N;s:6:\"groups\";a:1:{i:0;s:1:\"1\";}s:5:\"guest\";i:1;s:13:\"lastResetTime\";N;s:10:\"resetCount\";N;s:12:\"requireReset\";N;s:10:\"\\0\\0\\0_params\";O:24:\"Joomla\\Registry\\Registry\":1:{s:7:\"\\0\\0\\0data\";O:8:\"stdClass\":0:{}}s:14:\"\\0\\0\\0_authGroups\";a:1:{i:0;i:1;}s:14:\"\\0\\0\\0_authLevels\";a:2:{i:0;i:1;i:1;i:1;}s:15:\"\\0\\0\\0_authActions\";N;s:12:\"\\0\\0\\0_errorMsg\";N;s:10:\"\\0\\0\\0_errors\";a:0:{}s:3:\"aid\";i:0;}}',0,''),
  ('9fe1dd91765fe8708cae70f5e27c37e8',1,0,'1402149685','__default|a:8:{s:15:\"session.counter\";i:86;s:19:\"session.timer.start\";i:1402146938;s:18:\"session.timer.last\";i:1402149684;s:17:\"session.timer.now\";i:1402149684;s:22:\"session.client.browser\";s:81:\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:29.0) Gecko/20100101 Firefox/29.0\";s:8:\"registry\";O:24:\"Joomla\\Registry\\Registry\":1:{s:7:\"\\0\\0\\0data\";O:8:\"stdClass\":7:{s:11:\"application\";O:8:\"stdClass\":1:{s:4:\"lang\";s:0:\"\";}s:13:\"com_installer\";O:8:\"stdClass\":3:{s:7:\"message\";s:0:\"\";s:17:\"extension_message\";s:0:\"\";s:12:\"redirect_url\";N;}s:9:\"com_menus\";O:8:\"stdClass\":2:{s:5:\"items\";O:8:\"stdClass\":3:{s:8:\"menutype\";s:13:\"menu-de-apoio\";s:10:\"limitstart\";i:0;s:4:\"list\";a:4:{s:9:\"direction\";s:3:\"asc\";s:5:\"limit\";s:2:\"20\";s:8:\"ordering\";s:5:\"a.lft\";s:5:\"start\";d:0;}}s:4:\"edit\";O:8:\"stdClass\":1:{s:4:\"menu\";O:8:\"stdClass\":2:{s:2:\"id\";a:0:{}s:4:\"data\";N;}}}s:11:\"com_modules\";O:8:\"stdClass\":3:{s:7:\"modules\";O:8:\"stdClass\":4:{s:6:\"filter\";O:8:\"stdClass\":8:{s:18:\"client_id_previous\";i:0;s:6:\"search\";s:0:\"\";s:6:\"access\";i:0;s:5:\"state\";s:0:\"\";s:8:\"position\";s:0:\"\";s:6:\"module\";s:0:\"\";s:9:\"client_id\";i:0;s:8:\"language\";s:0:\"\";}s:8:\"ordercol\";s:8:\"position\";s:9:\"orderdirn\";s:3:\"asc\";s:10:\"limitstart\";i:0;}s:4:\"edit\";O:8:\"stdClass\":1:{s:6:\"module\";O:8:\"stdClass\":2:{s:2:\"id\";a:0:{}s:4:\"data\";N;}}s:3:\"add\";O:8:\"stdClass\":1:{s:6:\"module\";O:8:\"stdClass\":2:{s:12:\"extension_id\";N;s:6:\"params\";N;}}}s:6:\"global\";O:8:\"stdClass\":1:{s:4:\"list\";O:8:\"stdClass\":1:{s:5:\"limit\";i:20;}}s:13:\"com_templates\";O:8:\"stdClass\":1:{s:4:\"edit\";O:8:\"stdClass\":1:{s:5:\"style\";O:8:\"stdClass\":2:{s:2:\"id\";a:0:{}s:4:\"data\";N;}}}s:9:\"com_cache\";O:8:\"stdClass\":1:{s:5:\"cache\";O:8:\"stdClass\":4:{s:8:\"ordercol\";s:5:\"group\";s:6:\"filter\";O:8:\"stdClass\":1:{s:9:\"client_id\";i:0;}s:9:\"orderdirn\";s:3:\"asc\";s:10:\"limitstart\";s:1:\"0\";}}}}s:4:\"user\";O:5:\"JUser\":27:{s:9:\"\\0\\0\\0isRoot\";b:1;s:2:\"id\";s:3:\"576\";s:4:\"name\";s:10:\"Super User\";s:8:\"username\";s:5:\"admin\";s:5:\"email\";s:21:\"joomlagovbr@gmail.com\";s:8:\"password\";s:60:\"$2y$10$nh5eZb8dCBa3mwdAN1uE..EVC3s3vptMvMLfW6ZcAvfLhXbGhWRdG\";s:14:\"password_clear\";s:0:\"\";s:5:\"block\";s:1:\"0\";s:9:\"sendEmail\";s:1:\"1\";s:12:\"registerDate\";s:19:\"2013-10-14 14:26:05\";s:13:\"lastvisitDate\";s:19:\"2014-05-10 20:31:49\";s:10:\"activation\";s:1:\"0\";s:6:\"params\";s:95:\"{\"admin_style\":\"\",\"admin_language\":\"\",\"language\":\"\",\"editor\":\"jce\",\"helpsite\":\"\",\"timezone\":\"\"}\";s:6:\"groups\";a:1:{i:8;s:1:\"8\";}s:5:\"guest\";i:0;s:13:\"lastResetTime\";s:19:\"0000-00-00 00:00:00\";s:10:\"resetCount\";s:1:\"0\";s:12:\"requireReset\";s:1:\"0\";s:10:\"\\0\\0\\0_params\";O:24:\"Joomla\\Registry\\Registry\":1:{s:7:\"\\0\\0\\0data\";O:8:\"stdClass\":6:{s:11:\"admin_style\";s:0:\"\";s:14:\"admin_language\";s:0:\"\";s:8:\"language\";s:0:\"\";s:6:\"editor\";s:3:\"jce\";s:8:\"helpsite\";s:0:\"\";s:8:\"timezone\";s:0:\"\";}}s:14:\"\\0\\0\\0_authGroups\";a:2:{i:0;i:1;i:1;i:8;}s:14:\"\\0\\0\\0_authLevels\";a:4:{i:0;i:1;i:1;i:1;i:2;i:2;i:3;i:3;}s:15:\"\\0\\0\\0_authActions\";N;s:12:\"\\0\\0\\0_errorMsg\";N;s:10:\"\\0\\0\\0_errors\";a:0:{}s:3:\"aid\";i:0;s:6:\"otpKey\";s:0:\"\";s:4:\"otep\";s:0:\"\";}s:13:\"session.token\";s:32:\"5e7d77e5b7bcf1fe97044a1bb829f71d\";}__akeeba|a:1:{s:7:\"profile\";i:1;}',576,'admin');
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_session` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__session` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_tags`
+-- Definition of table `#__tags`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_tags`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_tags` (
+DROP TABLE IF EXISTS `#__tags`;
+CREATE TABLE  `#__tags` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `parent_id` int(10) unsigned NOT NULL DEFAULT '0',
   `lft` int(11) NOT NULL DEFAULT '0',
@@ -7928,22 +7924,22 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_tags` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_tags`
+-- Dumping data for table `#__tags`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_tags` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_tags` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_tags` VALUES  (1,0,0,1,0,'','ROOT',0x726F6F74,'','',1,0,'0000-00-00 00:00:00',1,'{}','','','',0,'2011-01-01 00:00:01','',0,'0000-00-00 00:00:00','','',0,'*',1,'0000-00-00 00:00:00','0000-00-00 00:00:00');
+/*!40000 ALTER TABLE `#__tags` DISABLE KEYS */;
+LOCK TABLES `#__tags` WRITE;
+INSERT INTO `#__tags` VALUES  (1,0,0,1,0,'','ROOT',0x726F6F74,'','',1,0,'0000-00-00 00:00:00',1,'{}','','','',0,'2011-01-01 00:00:01','',0,'0000-00-00 00:00:00','','',0,'*',1,'0000-00-00 00:00:00','0000-00-00 00:00:00');
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_tags` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__tags` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_template_styles`
+-- Definition of table `#__template_styles`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_template_styles`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_template_styles` (
+DROP TABLE IF EXISTS `#__template_styles`;
+CREATE TABLE  `#__template_styles` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `template` varchar(50) NOT NULL DEFAULT '',
   `client_id` tinyint(1) unsigned NOT NULL DEFAULT '0',
@@ -7956,25 +7952,25 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_template_styles` (
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_template_styles`
+-- Dumping data for table `#__template_styles`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_template_styles` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_template_styles` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_template_styles` VALUES  (2,'bluestork',1,'0','Bluestork - Default','{\"useRoundedCorners\":\"1\",\"showSiteName\":\"0\"}'),
+/*!40000 ALTER TABLE `#__template_styles` DISABLE KEYS */;
+LOCK TABLES `#__template_styles` WRITE;
+INSERT INTO `#__template_styles` VALUES  (2,'bluestork',1,'0','Bluestork - Default','{\"useRoundedCorners\":\"1\",\"showSiteName\":\"0\"}'),
  (5,'hathor',1,'0','Hathor - Default','{\"showSiteName\":\"0\",\"colourChoice\":\"\",\"boldText\":\"0\"}'),
  (7,'padraogoverno01',0,'1','padraogoverno01 - Default','{\"cor\":\"verde\",\"font_style_url\":\"http:\\/\\/fonts.googleapis.com\\/css?family=Open+Sans:400italic,400,600,800,700\",\"icon_style\":\"bitmap-portal-brasil\",\"denominacao\":\"Denomina\\u00e7\\u00e3o do \\u00f3rg\\u00e3o\",\"nome_principal\":\"Nome principal\",\"subordinacao\":\"subordina\\u00e7\\u00e3o\",\"classe_nome_principal\":\"\",\"rodape_acesso_informacao\":1,\"rodape_logo_brasil\":1,\"mensagem_final_ferramenta\":\"\",\"clear_default_javascript\":1,\"local_mainscript\":\"footer\",\"anexar_js_barra2014\":\"0\",\"endereco_js_barra2014\":\"http:\\/\\/barra.brasil.gov.br\\/barra.js?cor=verde\",\"google_analytics_id\":\"\",\"google_analytics_domain_name\":\"\",\"google_analytics_allow_linker\":0,\"allow_set_color\":\"1\",\"meta_generator\":\"\"}'),
  (9,'isis',1,'1','isis - Default','{\"templateColor\":\"\",\"logoFile\":\"\"}');
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_template_styles` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__template_styles` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_ucm_base`
+-- Definition of table `#__ucm_base`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_ucm_base`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_ucm_base` (
+DROP TABLE IF EXISTS `#__ucm_base`;
+CREATE TABLE  `#__ucm_base` (
   `ucm_id` int(10) unsigned NOT NULL,
   `ucm_item_id` int(10) NOT NULL,
   `ucm_type_id` int(11) NOT NULL,
@@ -7986,21 +7982,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_ucm_base` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_ucm_base`
+-- Dumping data for table `#__ucm_base`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_ucm_base` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_ucm_base` WRITE;
+/*!40000 ALTER TABLE `#__ucm_base` DISABLE KEYS */;
+LOCK TABLES `#__ucm_base` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_ucm_base` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__ucm_base` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_ucm_content`
+-- Definition of table `#__ucm_content`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_ucm_content`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_ucm_content` (
+DROP TABLE IF EXISTS `#__ucm_content`;
+CREATE TABLE  `#__ucm_content` (
   `core_content_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `core_type_alias` varchar(255) NOT NULL DEFAULT '' COMMENT 'FK to the content types table',
   `core_title` varchar(255) NOT NULL,
@@ -8049,21 +8045,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_ucm_content` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Contains core content data in name spaced fields';
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_ucm_content`
+-- Dumping data for table `#__ucm_content`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_ucm_content` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_ucm_content` WRITE;
+/*!40000 ALTER TABLE `#__ucm_content` DISABLE KEYS */;
+LOCK TABLES `#__ucm_content` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_ucm_content` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__ucm_content` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_ucm_history`
+-- Definition of table `#__ucm_history`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_ucm_history`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_ucm_history` (
+DROP TABLE IF EXISTS `#__ucm_history`;
+CREATE TABLE  `#__ucm_history` (
   `version_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `ucm_item_id` int(10) unsigned NOT NULL,
   `ucm_type_id` int(10) unsigned NOT NULL,
@@ -8080,21 +8076,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_ucm_history` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_ucm_history`
+-- Dumping data for table `#__ucm_history`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_ucm_history` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_ucm_history` WRITE;
+/*!40000 ALTER TABLE `#__ucm_history` DISABLE KEYS */;
+LOCK TABLES `#__ucm_history` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_ucm_history` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__ucm_history` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_update_sites`
+-- Definition of table `#__update_sites`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_update_sites`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_update_sites` (
+DROP TABLE IF EXISTS `#__update_sites`;
+CREATE TABLE  `#__update_sites` (
   `update_site_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) DEFAULT '',
   `type` varchar(20) DEFAULT '',
@@ -8106,12 +8102,12 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_update_sites` (
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='Update Sites';
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_update_sites`
+-- Dumping data for table `#__update_sites`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_update_sites` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_update_sites` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_update_sites` VALUES  (1,'Joomla Core','collection','http://update.joomla.org/core/sts/list_sts.xml',1,1402148853,''),
+/*!40000 ALTER TABLE `#__update_sites` DISABLE KEYS */;
+LOCK TABLES `#__update_sites` WRITE;
+INSERT INTO `#__update_sites` VALUES  (1,'Joomla Core','collection','http://update.joomla.org/core/sts/list_sts.xml',1,1402148853,''),
  (2,'Joomla Extension Directory','collection','http://update.joomla.org/jed/list.xml',1,1402148853,''),
  (3,'Accredited Joomla! Translations','collection','http://update.joomla.org/language/translationlist_3.xml',1,1402148853,''),
  (5,'Blackdale','extension','http://updates.blackdale.com/update/modblank250/modblank250.xml',1,1402148853,''),
@@ -8120,27 +8116,27 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_update_sites` VALUES  (1,'Joomla C
  (8,'WebInstaller Update Site','extension','http://appscdn.joomla.org/webapps/jedapps/webinstaller.xml',1,1402148853,''),
  (9,'Akeeba Backup Core','extension','http://cdn.akeebabackup.com/updates/abcore.xml',1,1402148853,'');
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_update_sites` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__update_sites` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_update_sites_extensions`
+-- Definition of table `#__update_sites_extensions`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_update_sites_extensions`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_update_sites_extensions` (
+DROP TABLE IF EXISTS `#__update_sites_extensions`;
+CREATE TABLE  `#__update_sites_extensions` (
   `update_site_id` int(11) NOT NULL DEFAULT '0',
   `extension_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`update_site_id`,`extension_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Links extensions to update sites';
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_update_sites_extensions`
+-- Dumping data for table `#__update_sites_extensions`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_update_sites_extensions` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_update_sites_extensions` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_update_sites_extensions` VALUES  (1,700),
+/*!40000 ALTER TABLE `#__update_sites_extensions` DISABLE KEYS */;
+LOCK TABLES `#__update_sites_extensions` WRITE;
+INSERT INTO `#__update_sites_extensions` VALUES  (1,700),
  (2,700),
  (3,600),
  (3,10002),
@@ -8150,15 +8146,15 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_update_sites_extensions` VALUES  (
  (8,10051),
  (9,10052);
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_update_sites_extensions` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__update_sites_extensions` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_updates`
+-- Definition of table `#__updates`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_updates`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_updates` (
+DROP TABLE IF EXISTS `#__updates`;
+CREATE TABLE  `#__updates` (
   `update_id` int(11) NOT NULL AUTO_INCREMENT,
   `update_site_id` int(11) DEFAULT '0',
   `extension_id` int(11) DEFAULT '0',
@@ -8177,12 +8173,12 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_updates` (
 ) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8 COMMENT='Available Updates';
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_updates`
+-- Dumping data for table `#__updates`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_updates` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_updates` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_updates` VALUES  (1,3,0,'Malay','','pkg_ms-MY','package','',0,'3.2.2.1','','http://update.joomla.org/language/details3/ms-MY_details.xml','',''),
+/*!40000 ALTER TABLE `#__updates` DISABLE KEYS */;
+LOCK TABLES `#__updates` WRITE;
+INSERT INTO `#__updates` VALUES  (1,3,0,'Malay','','pkg_ms-MY','package','',0,'3.2.2.1','','http://update.joomla.org/language/details3/ms-MY_details.xml','',''),
  (2,3,0,'Romanian','','pkg_ro-RO','package','',0,'3.3.0.1','','http://update.joomla.org/language/details3/ro-RO_details.xml','',''),
  (3,3,0,'Flemish','','pkg_nl-BE','package','',0,'3.3.0.1','','http://update.joomla.org/language/details3/nl-BE_details.xml','',''),
  (4,3,0,'Chinese Traditional','','pkg_zh-TW','package','',0,'3.3.0.1','','http://update.joomla.org/language/details3/zh-TW_details.xml','',''),
@@ -8236,15 +8232,15 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_updates` VALUES  (1,3,0,'Malay',''
  (52,3,0,'Welsh','','pkg_cy-GB','package','',0,'3.3.0.1','','http://update.joomla.org/language/details3/cy-GB_details.xml','',''),
  (53,7,10050,'AllVideos','The ultimate media player for Joomla!','jw_allvideos','plugin','content',0,'4.6.1','','http://www.joomlaworks.net/updates/jw_allvideos.xml','http://www.joomlaworks.net/forum/extension-updates/15010-june-4th,-2014-allvideos-v4-6-1','');
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_updates` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__updates` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_user_keys`
+-- Definition of table `#__user_keys`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_user_keys`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_user_keys` (
+DROP TABLE IF EXISTS `#__user_keys`;
+CREATE TABLE  `#__user_keys` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` varchar(255) NOT NULL,
   `token` varchar(255) NOT NULL,
@@ -8260,21 +8256,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_user_keys` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_user_keys`
+-- Dumping data for table `#__user_keys`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_user_keys` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_user_keys` WRITE;
+/*!40000 ALTER TABLE `#__user_keys` DISABLE KEYS */;
+LOCK TABLES `#__user_keys` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_user_keys` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__user_keys` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_user_notes`
+-- Definition of table `#__user_notes`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_user_notes`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_user_notes` (
+DROP TABLE IF EXISTS `#__user_notes`;
+CREATE TABLE  `#__user_notes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(10) unsigned NOT NULL DEFAULT '0',
   `catid` int(10) unsigned NOT NULL DEFAULT '0',
@@ -8296,21 +8292,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_user_notes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_user_notes`
+-- Dumping data for table `#__user_notes`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_user_notes` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_user_notes` WRITE;
+/*!40000 ALTER TABLE `#__user_notes` DISABLE KEYS */;
+LOCK TABLES `#__user_notes` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_user_notes` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__user_notes` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_user_profiles`
+-- Definition of table `#__user_profiles`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_user_profiles`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_user_profiles` (
+DROP TABLE IF EXISTS `#__user_profiles`;
+CREATE TABLE  `#__user_profiles` (
   `user_id` int(11) NOT NULL,
   `profile_key` varchar(100) NOT NULL,
   `profile_value` varchar(255) NOT NULL,
@@ -8319,43 +8315,43 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_user_profiles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Simple user profile storage table';
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_user_profiles`
+-- Dumping data for table `#__user_profiles`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_user_profiles` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_user_profiles` WRITE;
+/*!40000 ALTER TABLE `#__user_profiles` DISABLE KEYS */;
+LOCK TABLES `#__user_profiles` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_user_profiles` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__user_profiles` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_user_usergroup_map`
+-- Definition of table `#__user_usergroup_map`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_user_usergroup_map`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_user_usergroup_map` (
+DROP TABLE IF EXISTS `#__user_usergroup_map`;
+CREATE TABLE  `#__user_usergroup_map` (
   `user_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Foreign Key to #__users.id',
   `group_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Foreign Key to #__usergroups.id',
   PRIMARY KEY (`user_id`,`group_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_user_usergroup_map`
+-- Dumping data for table `#__user_usergroup_map`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_user_usergroup_map` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_user_usergroup_map` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_user_usergroup_map` VALUES  (576,8);
+/*!40000 ALTER TABLE `#__user_usergroup_map` DISABLE KEYS */;
+LOCK TABLES `#__user_usergroup_map` WRITE;
+INSERT INTO `#__user_usergroup_map` VALUES  (576,8);
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_user_usergroup_map` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__user_usergroup_map` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_usergroups`
+-- Definition of table `#__usergroups`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_usergroups`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_usergroups` (
+DROP TABLE IF EXISTS `#__usergroups`;
+CREATE TABLE  `#__usergroups` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Primary Key',
   `parent_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Adjacency List Reference Id',
   `lft` int(11) NOT NULL DEFAULT '0' COMMENT 'Nested set lft.',
@@ -8369,12 +8365,12 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_usergroups` (
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_usergroups`
+-- Dumping data for table `#__usergroups`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_usergroups` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_usergroups` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_usergroups` VALUES  (1,0,1,20,'Public'),
+/*!40000 ALTER TABLE `#__usergroups` DISABLE KEYS */;
+LOCK TABLES `#__usergroups` WRITE;
+INSERT INTO `#__usergroups` VALUES  (1,0,1,20,'Public'),
  (2,1,6,17,'Registered'),
  (3,2,7,14,'Author'),
  (4,3,8,11,'Editor'),
@@ -8383,15 +8379,15 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_usergroups` VALUES  (1,0,1,20,'Pub
  (7,6,3,4,'Administrator'),
  (8,1,18,19,'Super Users');
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_usergroups` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__usergroups` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_users`
+-- Definition of table `#__users`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_users`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_users` (
+DROP TABLE IF EXISTS `#__users`;
+CREATE TABLE  `#__users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
   `username` varchar(150) NOT NULL DEFAULT '',
@@ -8416,22 +8412,22 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_users` (
 ) ENGINE=InnoDB AUTO_INCREMENT=577 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_users`
+-- Dumping data for table `#__users`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_users` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_users` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_users` VALUES  (576,'Super User','admin','joomlagovbr@gmail.com','$2y$10$nh5eZb8dCBa3mwdAN1uE..EVC3s3vptMvMLfW6ZcAvfLhXbGhWRdG',0,1,'2013-10-14 14:26:05','2014-06-07 13:15:46','0','{\"admin_style\":\"\",\"admin_language\":\"\",\"language\":\"\",\"editor\":\"jce\",\"helpsite\":\"\",\"timezone\":\"\"}','0000-00-00 00:00:00',0,'','',0);
+/*!40000 ALTER TABLE `#__users` DISABLE KEYS */;
+LOCK TABLES `#__users` WRITE;
+INSERT INTO `#__users` VALUES  (576,'Super User','admin','joomlagovbr@gmail.com','$2y$10$nh5eZb8dCBa3mwdAN1uE..EVC3s3vptMvMLfW6ZcAvfLhXbGhWRdG',0,1,'2013-10-14 14:26:05','2014-06-07 13:15:46','0','{\"admin_style\":\"\",\"admin_language\":\"\",\"language\":\"\",\"editor\":\"jce\",\"helpsite\":\"\",\"timezone\":\"\"}','0000-00-00 00:00:00',0,'','',0);
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_users` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__users` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_viewlevels`
+-- Definition of table `#__viewlevels`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_viewlevels`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_viewlevels` (
+DROP TABLE IF EXISTS `#__viewlevels`;
+CREATE TABLE  `#__viewlevels` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Primary Key',
   `title` varchar(100) NOT NULL DEFAULT '',
   `ordering` int(11) NOT NULL DEFAULT '0',
@@ -8441,24 +8437,24 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_viewlevels` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_viewlevels`
+-- Dumping data for table `#__viewlevels`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_viewlevels` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_viewlevels` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_viewlevels` VALUES  (1,'Public',0,'[1]'),
+/*!40000 ALTER TABLE `#__viewlevels` DISABLE KEYS */;
+LOCK TABLES `#__viewlevels` WRITE;
+INSERT INTO `#__viewlevels` VALUES  (1,'Public',0,'[1]'),
  (2,'Registered',1,'[6,2,8]'),
  (3,'Special',2,'[6,3,8]');
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_viewlevels` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__viewlevels` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_weblinks`
+-- Definition of table `#__weblinks`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_weblinks`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_weblinks` (
+DROP TABLE IF EXISTS `#__weblinks`;
+CREATE TABLE  `#__weblinks` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `catid` int(11) NOT NULL DEFAULT '0',
   `title` varchar(250) NOT NULL DEFAULT '',
@@ -8499,21 +8495,21 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_weblinks` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_weblinks`
+-- Dumping data for table `#__weblinks`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_weblinks` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_weblinks` WRITE;
+/*!40000 ALTER TABLE `#__weblinks` DISABLE KEYS */;
+LOCK TABLES `#__weblinks` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_weblinks` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__weblinks` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_youtubegallery_categories`
+-- Definition of table `#__youtubegallery_categories`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_youtubegallery_categories`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_youtubegallery_categories` (
+DROP TABLE IF EXISTS `#__youtubegallery_categories`;
+CREATE TABLE  `#__youtubegallery_categories` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `categoryname` varchar(50) NOT NULL,
   `description` text NOT NULL,
@@ -8523,42 +8519,42 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_youtubegallery_categories` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_youtubegallery_categories`
+-- Dumping data for table `#__youtubegallery_categories`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_youtubegallery_categories` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_youtubegallery_categories` WRITE;
+/*!40000 ALTER TABLE `#__youtubegallery_categories` DISABLE KEYS */;
+LOCK TABLES `#__youtubegallery_categories` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_youtubegallery_categories` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__youtubegallery_categories` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_youtubegallery_settings`
+-- Definition of table `#__youtubegallery_settings`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_youtubegallery_settings`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_youtubegallery_settings` (
+DROP TABLE IF EXISTS `#__youtubegallery_settings`;
+CREATE TABLE  `#__youtubegallery_settings` (
   `option` varchar(50) NOT NULL,
   `value` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`option`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_youtubegallery_settings`
+-- Dumping data for table `#__youtubegallery_settings`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_youtubegallery_settings` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_youtubegallery_settings` WRITE;
+/*!40000 ALTER TABLE `#__youtubegallery_settings` DISABLE KEYS */;
+LOCK TABLES `#__youtubegallery_settings` WRITE;
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_youtubegallery_settings` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__youtubegallery_settings` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_youtubegallery_themes`
+-- Definition of table `#__youtubegallery_themes`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_youtubegallery_themes`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_youtubegallery_themes` (
+DROP TABLE IF EXISTS `#__youtubegallery_themes`;
+CREATE TABLE  `#__youtubegallery_themes` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `themename` varchar(50) NOT NULL,
   `showtitle` tinyint(1) NOT NULL,
@@ -8614,23 +8610,23 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_youtubegallery_themes` (
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_youtubegallery_themes`
+-- Dumping data for table `#__youtubegallery_themes`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_youtubegallery_themes` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_youtubegallery_themes` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_youtubegallery_themes` VALUES  (1,'Tema para módulos',1,1,0,0,0,1,1,'',1,459,344,'','','','',1,'',1,'','','',0,1,1,'',0,'','',0,4,1,'',1,0,'','',1,0,50,'publisheddate desc','',1,'',0,'','',0,0,0),
+/*!40000 ALTER TABLE `#__youtubegallery_themes` DISABLE KEYS */;
+LOCK TABLES `#__youtubegallery_themes` WRITE;
+INSERT INTO `#__youtubegallery_themes` VALUES  (1,'Tema para módulos',1,1,0,0,0,1,1,'',1,459,344,'','','','',1,'',1,'','','',0,1,1,'',0,'','',0,4,1,'',1,0,'','',1,0,50,'publisheddate desc','',1,'',0,'','',0,0,0),
  (2,'Tema para componente',0,0,0,0,0,0,1,'',1,400,300,'','','','',0,'',0,'','','',1,0,0,'',0,'','',0,10,1,'',1,0,'','[if:videoplayer]\r\n<h1 class=\"secondaryHeading\">[videotitle]</h1>\r\n\r\n<div class=\"subtitle\"></div>\r\n<div class=\"content-header-options-1 row-fluid\">\r\n<div class=\"documentByLine span10\">\r\n<span>publicado em [video:publisheddate: d/m/Y]</span>\r\n</div>\r\n<div class=\"span2\">\r\n<a class=\"pull-right\" href=\"javascript:history.back()\"><i class=\"icon-angle-left\">&nbsp;</i>voltar</a>\r\n</div>\r\n</div>\r\n\r\n<div class=\"row-fluid subtitle\">\r\n<div class=\"span7\">\r\n[videoplayer]\r\n</div>\r\n<div class=\"span5\">\r\n[if:videodescription]\r\n<p>[videodescription]</p>\r\n[endif:videodescription]\r\n\r\n</div>\r\n\r\n</div>\r\n[endif:videoplayer]\r\n\r\n<div class=\"tile-list-1\">\r\n[navigationbar:1]\r\n</div>\r\n\r\n[pagination]',1,0,50,'publisheddate desc','<div class=\"tileItem\">\r\n<div class=\"span10 tileContent\">\r\n<div class=\"tileImage img-rounded\">\r\n[a][image][/a]\r\n</div>\r\n<h2 class=\"tileHeadline\">\r\n[a][title][/a]\r\n</h2>\r\n<span class=\"description\">\r\n[if:description]\r\n[description:22] [...]\r\n[endif:description]\r\n</span>\r\n</div>\r\n<div class=\"span2 tileInfo\">\r\n<ul>\r\n<li><i class=\"icon-fixed-width icon-calendar\"></i>  [publisheddate:d/m/Y]</li>\r\n<li><i class=\"icon-fixed-width icon-time\"></i> [publisheddate:H\\hi]</li>\r\n</ul>	\r\n</div>\r\n</div>',1,'',0,'','',0,0,0);
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_youtubegallery_themes` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__youtubegallery_themes` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_youtubegallery_videolists`
+-- Definition of table `#__youtubegallery_videolists`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_youtubegallery_videolists`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_youtubegallery_videolists` (
+DROP TABLE IF EXISTS `#__youtubegallery_videolists`;
+CREATE TABLE  `#__youtubegallery_videolists` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `listname` varchar(50) NOT NULL,
   `videolist` text,
@@ -8641,22 +8637,22 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_youtubegallery_videolists` (
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_youtubegallery_videolists`
+-- Dumping data for table `#__youtubegallery_videolists`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_youtubegallery_videolists` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_youtubegallery_videolists` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_youtubegallery_videolists` VALUES  (1,'Galeria de vídeos','http://www.youtube.com/user/CanalPortalBrasil?feature=watch',1,1,'2014-05-10 20:33:09');
+/*!40000 ALTER TABLE `#__youtubegallery_videolists` DISABLE KEYS */;
+LOCK TABLES `#__youtubegallery_videolists` WRITE;
+INSERT INTO `#__youtubegallery_videolists` VALUES  (1,'Galeria de vídeos','http://www.youtube.com/user/CanalPortalBrasil?feature=watch',1,1,'2014-05-10 20:33:09');
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_youtubegallery_videolists` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__youtubegallery_videolists` ENABLE KEYS */;
 
 
 --
--- Definition of table `portal_modelo_3x_dev`.`pmgov2013_youtubegallery_videos`
+-- Definition of table `#__youtubegallery_videos`
 --
 
-DROP TABLE IF EXISTS `portal_modelo_3x_dev`.`pmgov2013_youtubegallery_videos`;
-CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_youtubegallery_videos` (
+DROP TABLE IF EXISTS `#__youtubegallery_videos`;
+CREATE TABLE  `#__youtubegallery_videos` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `listid` int(11) NOT NULL,
   `parentid` int(11) NOT NULL,
@@ -8704,12 +8700,12 @@ CREATE TABLE  `portal_modelo_3x_dev`.`pmgov2013_youtubegallery_videos` (
 ) ENGINE=MyISAM AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `portal_modelo_3x_dev`.`pmgov2013_youtubegallery_videos`
+-- Dumping data for table `#__youtubegallery_videos`
 --
 
-/*!40000 ALTER TABLE `pmgov2013_youtubegallery_videos` DISABLE KEYS */;
-LOCK TABLES `pmgov2013_youtubegallery_videos` WRITE;
-INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_youtubegallery_videos` VALUES  (1,1,0,'youtubeuseruploads','CanalPortalBrasil','','','','','','','','2014-05-10 20:33:09',1,0,0,'',10000,'0000-00-00 00:00:00',0,0,0,0,0,0,0,'',0,0,0,0,0,'','',0,0,'',0,0,0,'',0,''),
+/*!40000 ALTER TABLE `#__youtubegallery_videos` DISABLE KEYS */;
+LOCK TABLES `#__youtubegallery_videos` WRITE;
+INSERT INTO `#__youtubegallery_videos` VALUES  (1,1,0,'youtubeuseruploads','CanalPortalBrasil','','','','','','','','2014-05-10 20:33:09',1,0,0,'',10000,'0000-00-00 00:00:00',0,0,0,0,0,0,0,'',0,0,0,0,0,'','',0,0,'',0,0,0,'',0,''),
  (31,1,1,'youtube','giifmedWGWw','http://i1.ytimg.com/vi/giifmedWGWw/default.jpg,http://i1.ytimg.com/vi/giifmedWGWw/mqdefault.jpg,http://i1.ytimg.com/vi/giifmedWGWw/hqdefault.jpg,http://i1.ytimg.com/vi/giifmedWGWw/1.jpg,http://i1.ytimg.com/vi/giifmedWGWw/2.jpg,http://i1.ytimg.com/vi/giifmedWGWw/3.jpg','Brasil é hexa em investimentos','Com a Copa das Copas, Brasil investiu em aeroportos, mobilidade urbana, gerou emprego e qualificação e vai movimentar mais de R$ 142 bilhões só com turismo e serviços','','','','','2014-05-10 20:33:09',1,200,1,'http://www.youtube.com/watch?v=giifmedWGWw&feature=youtube_gdata',10001,'2014-05-08 20:53:38',34,3.66667,5,1,3,0,87,'',0,0,2,1,0,'','',0,0,'',0,0,0,'',0,'brasil-e-hexa-em-investimentos'),
  (32,1,1,'youtube','TJ4aHTyTjvI','http://i1.ytimg.com/vi/TJ4aHTyTjvI/default.jpg,http://i1.ytimg.com/vi/TJ4aHTyTjvI/mqdefault.jpg,http://i1.ytimg.com/vi/TJ4aHTyTjvI/hqdefault.jpg,http://i1.ytimg.com/vi/TJ4aHTyTjvI/sddefault.jpg,http://i1.ytimg.com/vi/TJ4aHTyTjvI/1.jpg,http://i1.ytimg.com/vi/TJ4aHTyTjvI/2.jpg,http://i1.ytimg.com/vi/TJ4aHTyTjvI/3.jpg','Quem ama o futebol não tolera discriminação','Brasil vai fazer da Copa das Copas um símbolo mundial contra o racismo','','','','','2014-05-10 20:33:09',1,200,1,'http://www.youtube.com/watch?v=TJ4aHTyTjvI&feature=youtube_gdata',10002,'2014-05-08 20:53:31',31,5,5,1,1,0,183,'',0,0,1,0,0,'','',0,0,'',0,0,0,'',0,'quem-ama-o-futebol-n-ao-tolera-discriminac-ao'),
  (33,1,1,'youtube','LWN7IwU5KbY','http://i1.ytimg.com/vi/LWN7IwU5KbY/default.jpg,http://i1.ytimg.com/vi/LWN7IwU5KbY/mqdefault.jpg,http://i1.ytimg.com/vi/LWN7IwU5KbY/hqdefault.jpg,http://i1.ytimg.com/vi/LWN7IwU5KbY/1.jpg,http://i1.ytimg.com/vi/LWN7IwU5KbY/2.jpg,http://i1.ytimg.com/vi/LWN7IwU5KbY/3.jpg','Brasil é hexa em investimentos','Com a Copa das Copas, Brasil investiu em aeroportos, mobilidade urbana, gerou emprego e qualificação e vai movimentar mais de R$ 142 bilhões só com turismo e serviços','','','','','2014-05-10 20:33:10',1,200,1,'http://www.youtube.com/watch?v=LWN7IwU5KbY&feature=youtube_gdata',10003,'2014-05-08 20:53:21',63,2.33333,5,1,6,0,135,'',0,0,2,4,0,'','',0,0,'',0,0,0,'',0,'brasil-e-hexa-em-investimentos'),
@@ -8736,7 +8732,7 @@ INSERT INTO `portal_modelo_3x_dev`.`pmgov2013_youtubegallery_videos` VALUES  (1,
  (54,1,1,'youtube','t6Zww3qvF1M','http://i1.ytimg.com/vi/t6Zww3qvF1M/default.jpg,http://i1.ytimg.com/vi/t6Zww3qvF1M/mqdefault.jpg,http://i1.ytimg.com/vi/t6Zww3qvF1M/hqdefault.jpg,http://i1.ytimg.com/vi/t6Zww3qvF1M/sddefault.jpg,http://i1.ytimg.com/vi/t6Zww3qvF1M/1.jpg,http://i1.ytimg.com/vi/t6Zww3qvF1M/2.jpg,http://i1.ytimg.com/vi/t6Zww3qvF1M/3.jpg','Campanha de Prestação de Contas Regional 2014 - Paraná','Educação Básica no Paraná','','','','','0000-00-00 00:00:00',1,0,1,'http://www.youtube.com/watch?v=t6Zww3qvF1M&feature=youtube_gdata',10024,'2014-05-07 17:58:01',31,0,0,0,0,0,26,'',0,0,0,0,0,'','',0,0,'',0,0,0,'',0,'campanha-de-prestac-ao-de-contas-regional-2014-paran-a'),
  (55,1,1,'youtube','PtoTIefryEA','http://i1.ytimg.com/vi/PtoTIefryEA/default.jpg,http://i1.ytimg.com/vi/PtoTIefryEA/mqdefault.jpg,http://i1.ytimg.com/vi/PtoTIefryEA/hqdefault.jpg,http://i1.ytimg.com/vi/PtoTIefryEA/sddefault.jpg,http://i1.ytimg.com/vi/PtoTIefryEA/1.jpg,http://i1.ytimg.com/vi/PtoTIefryEA/2.jpg,http://i1.ytimg.com/vi/PtoTIefryEA/3.jpg','Campanha de Prestação de Contas Regional 2014 - Piauí','Educação Básica no Piauí','','','','','0000-00-00 00:00:00',1,0,1,'http://www.youtube.com/watch?v=PtoTIefryEA&feature=youtube_gdata',10025,'2014-05-07 17:52:44',36,0,0,0,0,0,14,'',0,0,0,0,0,'','',0,0,'',0,0,0,'',0,'campanha-de-prestac-ao-de-contas-regional-2014-piau-i');
 UNLOCK TABLES;
-/*!40000 ALTER TABLE `pmgov2013_youtubegallery_videos` ENABLE KEYS */;
+/*!40000 ALTER TABLE `#__youtubegallery_videos` ENABLE KEYS */;
 
 
 
