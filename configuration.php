@@ -53,8 +53,8 @@ class JConfig {
     public $sef_suffix = '0';
     public $unicodeslugs = '0';
     public $feed_limit = '10';
-    public $log_path = '/Users/rafaelberlanda/Documents/www/jg20140308/joomla-3.x/logs';
-    public $tmp_path = '/Users/rafaelberlanda/Documents/www/jg20140308/joomla-3.x/tmp';
+    public $log_path = '/Users/rafaelberlanda/Documents/www/jg20140524/joomla-3.x.dev/logs';
+    public $tmp_path = '/Users/rafaelberlanda/Documents/www/jg20140524/joomla-3.x.dev/tmp';
     public $lifetime = '15';
     public $session_handler = 'database';
     public $MetaRights = '';

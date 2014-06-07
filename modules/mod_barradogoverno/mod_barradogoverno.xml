@@ -4,15 +4,15 @@
 	version="1.0"
 	client="site"
 	method="upgrade">
-	<name>mod_barradogoverno</name>
+	<name>Barra Institucional do Governo Federal versão 2014, módulo 2.0 beta</name>
 	<author>Comunidade Joomla Calango e Grupo de Trabalho de Ministérios</author>
-	<creationDate>Outubro 2013</creationDate>
-	<copyright>Copyright (C) 2013 Comunidade Joomla Calango e Grupo de Trabalho de Ministérios</copyright>
+	<creationDate>Maio 2014</creationDate>
+	<copyright>Copyright (C) 2014 Comunidade Joomla Calango</copyright>
 	<license>GNU General Public License version 2</license>
 	<authorEmail>joomlagovbr@gmail.com</authorEmail>
 	<authorUrl>https://github.com/joomlagovbr</authorUrl>
-	<version>1.0</version>
-	<description>Mais informacoes na url do github.</description>
+	<version>2.0</version>
+	<description>Barra do governo federal recomendada desde o final de 2013, em sua versão padrão. Maiores informações no arquivo READ-ME ou em https://github.com/joomlagovbr</description>
 	<files>
 		<filename module="mod_barradogoverno">mod_barradogoverno.php</filename>
 		<folder>assets</folder>
@@ -28,65 +28,59 @@
 					name="layout"
 					type="modulelayout"
 					label="Modelo da barra do governo"
-					description="Escolher versão 2012 ou 2014 da barra. Nova barra possui dados provenientes diretamente do SERPRO."
+					description="Escolher versão default ou configuração manual da barra."
 					default="default" />
-			</fieldset>
-			<fieldset name="opcoes_barra_2014" label="Opções de configuração da barra padrão">
+				<field type="spacer" name="spacer1" class="text" label="&lt;b&gt;Opções da barra default&lt;/b&gt;" />
 				<field name="anexar_js_2014" type="list" default="1" label="Anexar arquivo JS" description="Anexa arquivo JS, se disponível para a versão da barra.">
-					<option value="2">dentro da chamada de scripts do Joomla</option>
-					<option value="1">dentro do DIV da barra</option>
+					<option value="2">dentro da chamada de scripts do Joomla (carregamento do site pode ficar lento se barra.js for externo)</option>
+					<option value="1">assincronamente no final da página</option>
+					<option value="3">diretamente após o DIV (carregamento do site pode ficar lento se barra.js for externo)</option>
 					<option value="0">não anexar</option>		
 		  		</field>
-		  		<field name="endereco_js_2014" type="text" default="http://barra.brasil.gov.br/barra.js?cor=verde" label="Endereço do script externo" description="Dados provenientes de externamente." size="35" />
-		  		<field type="spacer" hr="true" />		  		
-				<field name="mensagem_ie6_2014" type="textarea" cols="40" rows="3" default="Seu navegador é incompatível com os novos padrões de tecnologia e por isso você não pode visualizar a nova barra do Governo Federal. Atualize ou troque seu navegador." label="Mensagem de incompatibilidade com IE 6" description="Deixe vazio para não exibir" />				
+		  		<field name="endereco_js_2014" type="text" default="//barra.brasil.gov.br/barra.js" label="Endereço do script externo" description="Dados provenientes de externamente." size="35" />
+		  			
+		  		<field name="correcoes_css_2014" type="list" default="1" label="Correções CSS" description="Utilize essa opção quando os links do menu da barra do governo aparecerem desalinhados.">
+					<option value="1">SIM</option>
+					<option value="0">NÃO</option>		
+		  		</field>	  		
+				<field name="mensagem_ie6_2014" type="textarea" cols="40" rows="3" default="Seu navegador é incompatível com os novos padrões de tecnologia e por isso você não pode visualizar a nova barra do Governo Federal. Atualize ou troque seu navegador." label="Mensagem de&lt;br&gt;incompatibilidade&lt;br&gt;com IE 6" description="Deixe vazio para não exibir" />				
 				<field name="correcoes_ie8_2014" type="list" default="show_css" label="Correções para IE 7 e IE8" description="Decide o que fazer quando o navegador do usuário for IE7 ou IE8, casos em que o css da barra do governo não é carregado corretamente.">
 					<option value="hide">Não exibir a barra</option>
 					<option value="show">Exibir a barra sem realizar correções</option>
 					<option value="show_css">Exibir barra utilizando css mencionado abaixo</option>							
 		  		</field>
 		  		<field name="link_css_ie8_2014" type="text" default="{URL_SITE}/modules/mod_barradogoverno/assets/2014/css/ie8.css" label="Link CSS para IE inferior a 9" description="Utilizar {URL_SITE} como referência à URL base do site" size="60" />
-			</fieldset>
-			<fieldset name="opcoes_barra_2012" label="Opções da barra 2012">
-				<field name="anexar_css_2012" type="list" default="1" label="Anexar arquivos CSS" description="Anexa arquivo css padrão da barra.">
-					<option value="1">SIM</option>
-					<option value="0">NÃO</option>		
-		  		</field>	
 		  		<field type="spacer" hr="true" />
-				<field name="cor_2012" type="list" default="" label="Cor da barra 2012" description="Disponível somente para versão 2012 da barra.">
-					<option value="">Padrão</option>
-					<option value="barraGovernoAzul">Azul</option>
-					<option value="barraGovernoCinza">Cinza</option>
-					<option value="barraGovernoPreto">Preto</option>
-					<option value="barraGovernoVerde">Verde</option>			
-		  		</field>
-				<field name="acesso_a_informacao_2012" type="list" default="1" label="Exibir acesso à informação" description="Exibe link para acesso à informação. Somente barra 2012">
-					<option value="1">SIM</option>
-					<option value="0">NÃO</option>		
-		  		</field>
-		  		<field name="largura_barra_2012" type="text" default="970" label="Lagura da barra 2012" description="Lagura da barra 2012, para alinhamento (em pixels, não é necessário informar a unidade 'px')" />
-				<field name="alinhamento_barra_2012" type="list" default="" label="Alinhamento da barra 2012" description="Alinhamento da barra 2012">
-					<option value="">Padrão (centralizado)</option>
-					<option value="barraGovernoEsquerda">A esquerda</option>		
-		  		</field>
-		  		<field type="spacer" hr="true" />
-				<field name="link_acesso_a_informacao_2012" type="text" default="http://www.acessoainformacao.gov.br/acessoainformacaogov/" label="Link para imagem de acesso à informação" description="Disponível somente para versão 2012 da barra." size="35" />
-				<field name="link_portal_brasil_2012" type="text" default="http://www.brasil.gov.br/" label="Link para Portal Brasil" description="Disponível somente para versão 2012 da barra." />
-				<field name="target_links_2012" type="list" default="_blank" label="Target" description="Target dos links.">
-					<option value="none">nenhum</option>
-					<option value="_self">_self</option>		
-					<option value="_parent">_parent</option>		
-					<option value="_blank">_blank</option>		
-		  		</field>	  		
-			</fieldset>
-			<fieldset name="opcoes_barra_manual" label="Opções da barra configurada manualmente">
-				<field name="head_manual" type="textarea" cols="50" rows="20" default="" filter="raw" label="Código personalizado para o head da página" description="" />
-				<field name="html_manual" type="textarea" cols="50" rows="20" default="" filter="raw" label="Código personalizado para a barra" description="" />
+
+		  		<field type="spacer" name="spacer2" class="text" label="&lt;b&gt;Opções da barra manual&lt;/b&gt;" />
+		  		<field name="head_manual" type="textarea" cols="50" rows="20" default="" class="textarea1" filter="raw" label="Código personalizado para&lt;br&gt;inclusão na tag head&lt;br&gt;da página" description="" />
+				<field name="html_manual" type="textarea" cols="50" rows="20" default="" filter="raw" label="Código personalizado&lt;br&gt;para a barra&amp;nbsp;&amp;nbsp;" description="" />
 			</fieldset>
 			<fieldset
 				name="advanced">
-		  		<field name="anexar_head" type="textarea" cols="50" rows="20" default="" filter="raw" label="Anexar custom code no HEAD da página" description="" />
+		  		<field name="anexar_head" type="textarea" cols="50" rows="20" default="" filter="raw" label="Anexar custom code no&lt;br&gt;HEAD da página" description="Código a ser adicionado no cabeçalho da página. Permite inserção de css, para correções de conflito css, ou mesmo javascript." />
 				<field
+					name="script_default_cache"
+					type="list"
+					default="0"
+					label="Cache do script barra.js"
+					description="Realizar cache de barra.js. Utiliza o tempo global de cache do joomla, caso o cache esteja ligado, ou utiliza o tempo de cache definido no tempo de cache do módulo.">
+					<option
+						value="1">SIM</option>
+					<option
+						value="0">NÃO</option>
+				</field>
+				<field
+					name="script_default_curl_proxy"
+					type="text"
+					default=""
+					label="Proxy CURL"
+					description="O cache depende da função CURL habilitada e também de acesso externo direto à URL de destino da barra, ou acesso via proxy. Nota: não é necessário e nem recomendado liberar acesso a toda a internet para o servidor de produção. Somente à URL de destino." />
+				<field
+					name="script_default_cached_time"
+					type="hidden"
+					default="0" />
+<field
 					name="moduleclass_sfx"
 					type="textarea" rows="3"
 					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
