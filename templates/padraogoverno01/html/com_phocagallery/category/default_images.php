@@ -97,7 +97,7 @@ if (!empty($this->items)) { ?>
 					echo JHtml::_( 'image', $cv->extm, $cv->altvalue, array('style' => 'width:'. $correctImageRes['width'] .'px;height:'.$correctImageRes['height'] .'px;', 'class' => 'pg-image tileImage'));
 					
 				} else {
-					echo JHtml::_( 'image', $cv->linkthumbnailpath, $cv->oimgalt, array('class' => $cv->ooverlibclass.' tileImage' ));
+					echo @JHtml::_( 'image', $cv->linkthumbnailpath, $cv->oimgalt, array('class' => $cv->ooverlibclass.' tileImage' ));
 				}
 				
 				if ($cv->type == 2 && $cv->enable_cooliris == 1) {
