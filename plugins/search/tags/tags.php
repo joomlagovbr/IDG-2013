@@ -76,12 +76,12 @@ class PlgSearchTags extends JPlugin
 		}
 
 		$text = trim($text);
-		
+
 		if ($text == '')
 		{
 			return array();
 		}
-		
+
 		$text = $db->quote('%' . $db->escape($text, true) . '%', false);
 
 		switch ($ordering)
@@ -171,7 +171,7 @@ class PlgSearchTags extends JPlugin
 
 				if ($tagged_items)
 				{
-					foreach($tagged_items as $k => $item)
+					foreach ($tagged_items as $k => $item)
 					{
 						$new_item = new stdClass;
 						$new_item->href = $item->link;
@@ -184,9 +184,8 @@ class PlgSearchTags extends JPlugin
 					}
 				}
 			}
-			
+
 			return $final_items;
 		}
 	}
 }
-
