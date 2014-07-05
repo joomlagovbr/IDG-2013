@@ -37,7 +37,7 @@
 					<option value="1">dentro do DIV da barra</option>
 					<option value="0">não anexar</option>		
 		  		</field>
-		  		<field name="endereco_js_2014" type="text" default="http://barra.brasil.gov.br/barra.js?cor=verde" label="Endereço do script externo" description="Dados provenientes de externamente." size="35" />
+		  		<field name="endereco_js_2014" type="text" default="//barra.brasil.gov.br/barra.js" label="Endereço do script externo" description="Dados provenientes de externamente." size="35" />
 		  		<field type="spacer" hr="true" />		  		
 				<field name="mensagem_ie6_2014" type="textarea" cols="40" rows="3" default="Seu navegador é incompatível com os novos padrões de tecnologia e por isso você não pode visualizar a nova barra do Governo Federal. Atualize ou troque seu navegador." label="Mensagem de incompatibilidade com IE 6" description="Deixe vazio para não exibir" />				
 				<field name="correcoes_ie8_2014" type="list" default="show_css" label="Correções para IE 7 e IE8" description="Decide o que fazer quando o navegador do usuário for IE7 ou IE8, casos em que o css da barra do governo não é carregado corretamente.">
