@@ -8,7 +8,8 @@
 			size="20"
 			default="en-GB"
 			onchange="Install.setlanguage();" /> -->
-		<field name="language" type="list" default="en-GB" label="Idioma padrão" class="chzn-select-deselect" onchange="Install.setlanguage();">
+		<field name="language" type="list" default="pt-BR" label="Idioma padrão" class="chzn-select-deselect" onchange="Install.setlanguage();">
+			<option value="pt-BR">Português (do Brasil)</option>	
 			<option value="en-GB">English (United States)</option>	
   		</field>
 		<!-- portalpadrao: fim modificacao para deixar somente um idioma -->
