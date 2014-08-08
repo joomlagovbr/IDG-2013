@@ -302,7 +302,7 @@ class TmplPadraoGoverno01Helper
 
 	static function debug( $preffix = '', $active_item = 0 )
 	{
-		if(JApplication::getCfg('debug')==1)
+		if(JFactory::getConfig()->get('debug')==1)
 		{
 			// var_dump($active_item);
 			echo '<strong>Debug de template</strong><br />';
