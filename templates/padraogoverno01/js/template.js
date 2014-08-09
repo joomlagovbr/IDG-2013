@@ -8,18 +8,18 @@ jQuery(function () {
 		{
 			jQuery('div.layout').addClass('contraste');	
 			layout_classes = jQuery.cookie('layout_classes');
-			if( layout_classes != 'undefined' )
+			if( layout_classes != 'undefined' && layout_classes != null)
 				layout_classes = layout_classes + ' contraste';
 			else
 				layout_classes = 'contraste';
-			jQuery.cookie('layout_classes', layout_classes );
+			jQuery.cookie('layout_classes', layout_classes, { path: '/' } );
 		}
 		else
 		{
 			jQuery('div.layout').removeClass('contraste');
 			layout_classes = jQuery.cookie('layout_classes');
 			layout_classes = layout_classes.replace('contraste', '');			
-			jQuery.cookie('layout_classes', layout_classes );		
+			jQuery.cookie('layout_classes', layout_classes, { path: '/' } );		
 		}
 	});
 	//fim acao botao de alto contraste
@@ -82,6 +82,15 @@ function init() {
 
 	//paginas internas:
 	delaySocialItems();
+
+	//remocao de conflito com tooltips de mootools
+	// jQuery('.hasTooltip').tooltip('disable');
+	// jQuery('[rel=tooltip]').tooltip('disable');
+	jQuery('.hasTooltip').mouseout(function(){
+		// jQuery(this).tooltip('disable');
+		jQuery(this).show();
+	});
+
 }
 
 function resize() {

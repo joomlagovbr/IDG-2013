@@ -14,8 +14,12 @@ class TmplPadraoGoverno01Helper
 	static function init( &$tmpl )
 	{
 		self::addHeaders();
-		self::clearDefaultScripts( $tmpl );
 		self::setGenerator( $tmpl->params->get('meta_generator', '') );
+
+		$user = JFactory::getUser();
+		$clear_default_javascript = $tmpl->params->get('clear_default_javascript', 0);
+		if($user->guest && $clear_default_javascript==1)
+			self::clearDefaultScripts( $tmpl );
 
 		if($tmpl->params->get('allow_set_color', 0)==0)
 			return;
@@ -123,8 +127,9 @@ class TmplPadraoGoverno01Helper
 
 	static function getTemplateMainScripts( &$tmpl )
 	{
+		// return;
 		?>
-		<script src="<?php echo $tmpl->baseurl; ?>/templates/<?php echo $tmpl->template; ?>/bootstrap/js/bootstrap.min.js" type="text/javascript"></script><noscript>&nbsp;<!-- item para fins de acessibilidade --></noscript>
+		<script src="<?php echo $tmpl->baseurl; ?>/templates/<?php echo $tmpl->template; ?>/bootstrap/js/bootstrap.js" type="text/javascript"></script><noscript>&nbsp;<!-- item para fins de acessibilidade --></noscript>
 	    <script src="<?php echo $tmpl->baseurl; ?>/templates/<?php echo $tmpl->template; ?>/js/jquery.cookie.js" type="text/javascript"></script><noscript>&nbsp;<!-- item para fins de acessibilidade --></noscript>
 	    <script src="<?php echo $tmpl->baseurl; ?>/templates/<?php echo $tmpl->template; ?>/js/template.js" type="text/javascript"></script><noscript>&nbsp;<!-- item para fins de acessibilidade --></noscript>
 		<?php
@@ -186,6 +191,29 @@ class TmplPadraoGoverno01Helper
 		$itemid = $jinput->get('Itemid', 0, 'integer');
 		$menu = $app->getMenu();
 		return $menu->getItem($itemid);		
+	}
+
+	static function isProtostarCssNeededForComponent()
+	{
+		$app    = JFactory::getApplication();
+		$jinput = $app->input;
+		$option = $jinput->get('option', '');
+		$layout = $jinput->get('layout', '');
+		$tmpl   = $jinput->get('tmpl', '');
+		$view   = $jinput->get('view', '');
+
+		if ($tmpl!='component')
+			return false;
+		
+		//inclusao de artigos em frontend
+		if($option=='com_content' && ($layout=='modal' || $layout=='pagebreak'))
+			return true;
+
+		// inclusao de imagens em frontend
+		if ($option=='com_media' && ($view=='imagesList' || $view=='images'))
+			return true;
+
+		return false;
 	}
 
 	static function getItemidParam( $activeItemid, $param )
