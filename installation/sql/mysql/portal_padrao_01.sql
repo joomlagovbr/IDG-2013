@@ -8328,9 +8328,9 @@ CREATE TABLE  `#__users` (
 --
 
 /*!40000 ALTER TABLE `#__users` DISABLE KEYS */;
-LOCK TABLES `#__users` WRITE;
-INSERT INTO `#__users` VALUES  (576,'Super User','admin','joomlagovbr@gmail.com','$2y$10$jN9cqIctGw2b.88ugASMcOpLAb2vZLzKXrwqqyo8H0KcPFiH7mNdS',0,1,'2013-10-14 14:26:05','2014-08-09 21:04:39','0','{\"admin_style\":\"\",\"admin_language\":\"\",\"language\":\"\",\"editor\":\"jce\",\"helpsite\":\"\",\"timezone\":\"\"}','0000-00-00 00:00:00',0,'','',0);
-UNLOCK TABLES;
+######LOCK TABLES `#__users` WRITE;
+INSERT INTO `#__users` VALUES  (576,'Super User Default (apague ou troque os dados - está desabilitado)','admin_default','joomlagovbr@gmail.com','$2y$10$jN9cqIctGw2b.88ugASMcOpLAb2vZLzKXrwqqyo8H0KcPFiH7mNdS',1,1,'2013-10-14 14:26:05','2014-08-09 21:04:39','0','{\"admin_style\":\"\",\"admin_language\":\"\",\"language\":\"\",\"editor\":\"jce\",\"helpsite\":\"\",\"timezone\":\"\"}','0000-00-00 00:00:00',0,'','',0);
+######UNLOCK TABLES;
 /*!40000 ALTER TABLE `#__users` ENABLE KEYS */;
 
 
