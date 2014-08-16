@@ -224,7 +224,7 @@ class PlgEditorTinymce extends JPlugin
 		$toolbar3_add = array();
 		$toolbar4_add = array();
 		$elements = array();
-		$plugins = array('autolink', 'lists', 'image', 'charmap', 'print', 'preview', 'anchor', 'pagebreak', 'code', 'save', 'textcolor', 'importcss');
+		$plugins = array('autolink', 'lists', 'image', 'charmap', 'print', 'preview', 'anchor', 'pagebreak', 'code', 'save', 'textcolor', 'colorpicker', 'importcss');
 		$toolbar1_add[] = 'bold';
 		$toolbar1_add[] = 'italic';
 		$toolbar1_add[] = 'underline';
@@ -635,7 +635,7 @@ class PlgEditorTinymce extends JPlugin
 					$smallButtons
 					invalid_elements : \"$invalid_elements\",
 					// Plugins
-					plugins : \"table link image code charmap autolink lists importcss\",
+					plugins : \"table link image code hr charmap autolink lists importcss\",
 					// Toolbar
 					toolbar1: \"$toolbar1\",
 					toolbar2: \"$toolbar2\",

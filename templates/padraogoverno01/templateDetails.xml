@@ -98,7 +98,7 @@
 					<option value="1">SIM</option>
 					<option value="0">NÃO</option>
 				</field>
-				<field name="rodape_logo_brasil" type="list" default="1"
+				<field name="rodape_logo_brasil" type="list" default="0"
 					label="Exibir logo BRASIL"
 					description="Logo no rodapé do Governo Federal"
 					filter="integer"
