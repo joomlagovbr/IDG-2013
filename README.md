@@ -15,7 +15,7 @@ ATENÇÃO
 Este projeto visa ser um *quickstart* para iniciar projetos próprios de portais padrão em CMS Joomla, e atende as principais especificações e módulos recomendados pela Presidência da República, mas não esgota todos os módulos e recomendações citadas nos manuais.
 
 Os voluntários deste grupo não se responsabilizam pela incorreta utilização deste pacote, bem como pela incorreta configuração do servidor de produção, no que se refere
-aos quesitos segurança e performance.
+a quesitos segurança e performance.
 
 Recomenda-se a utilização de ambiente LAMP (Linux, Apache, MySQL, PHP), configurado para ambientes de produção de governo, o que implica configurações severas de permissões de pasta, restrições de acesso ao diretório /administrator, realização de BACKUPS, dentre outras boas práticas.
 
@@ -24,15 +24,9 @@ ESTE PROJETO É RECOMENDADO PARA PROFISSIONAIS COM EXPERIÊNCIA NA UTILIZAÇÃO 
 
 Configuração inicial
 ---------------------
-Altere os dados de conexão com o banco no arquivo configuration.php
-É necessário informar usuário e senha de banco de dados, no mínimo.
-Ao executar o script de banco, um novo schema MySQL chamado portal_padrao será criado.
+Não é mais necessário alterar o arquivo configuration.php manualmente.
 
-###Dados de acesso à área administrativa:
--   user: admin
--   senha: admin
-
-ALTERE OS DADOS DE ACESSO NOS AMBIENTES DE PRODUÇÃO E HOMOLOGAÇÃO.
+O instalador padrão do CMS Joomla! 3.x foi customizado para configurar uma instalação padrão do CMS Joomla! com componentes, módulos, template e conteúdo de exemplo do Portal Padrão.
 
 
 Documentação
