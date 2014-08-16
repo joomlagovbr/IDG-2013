@@ -39,7 +39,7 @@ CREATE TABLE  `portal_modelo_3x`.`pmgov2013_assets` (
   UNIQUE KEY `idx_asset_name` (`name`),
   KEY `idx_lft_rgt` (`lft`,`rgt`),
   KEY `idx_parent_id` (`parent_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=223 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=222 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `portal_modelo_3x`.`pmgov2013_assets`
@@ -2564,7 +2564,7 @@ CREATE TABLE  `portal_modelo_3x`.`pmgov2013_modules` (
   KEY `published` (`published`,`access`),
   KEY `newsfeeds` (`module`,`published`),
   KEY `idx_language` (`language`)
-) ENGINE=InnoDB AUTO_INCREMENT=199 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=198 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `portal_modelo_3x`.`pmgov2013_modules`
@@ -7783,8 +7783,8 @@ CREATE TABLE  `portal_modelo_3x`.`pmgov2013_session` (
 
 /*!40000 ALTER TABLE `pmgov2013_session` DISABLE KEYS */;
 LOCK TABLES `pmgov2013_session` WRITE;
-INSERT INTO `portal_modelo_3x`.`pmgov2013_session` VALUES  ('aba4739df6af8070d3aa00c4b3bd2a46',0,1,'1407618255','__default|a:7:{s:15:\"session.counter\";i:1;s:19:\"session.timer.start\";i:1407618251;s:18:\"session.timer.last\";i:1407618251;s:17:\"session.timer.now\";i:1407618251;s:22:\"session.client.browser\";s:81:\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:31.0) Gecko/20100101 Firefox/31.0\";s:8:\"registry\";O:24:\"Joomla\\Registry\\Registry\":1:{s:7:\"\\0\\0\\0data\";O:8:\"stdClass\":0:{}}s:4:\"user\";O:5:\"JUser\":25:{s:9:\"\\0\\0\\0isRoot\";N;s:2:\"id\";i:0;s:4:\"name\";N;s:8:\"username\";N;s:5:\"email\";N;s:8:\"password\";N;s:14:\"password_clear\";s:0:\"\";s:5:\"block\";N;s:9:\"sendEmail\";i:0;s:12:\"registerDate\";N;s:13:\"lastvisitDate\";N;s:10:\"activation\";N;s:6:\"params\";N;s:6:\"groups\";a:1:{i:0;s:1:\"1\";}s:5:\"guest\";i:1;s:13:\"lastResetTime\";N;s:10:\"resetCount\";N;s:12:\"requireReset\";N;s:10:\"\\0\\0\\0_params\";O:24:\"Joomla\\Registry\\Registry\":1:{s:7:\"\\0\\0\\0data\";O:8:\"stdClass\":0:{}}s:14:\"\\0\\0\\0_authGroups\";N;s:14:\"\\0\\0\\0_authLevels\";a:2:{i:0;i:1;i:1;i:1;}s:15:\"\\0\\0\\0_authActions\";N;s:12:\"\\0\\0\\0_errorMsg\";N;s:10:\"\\0\\0\\0_errors\";a:0:{}s:3:\"aid\";i:0;}}',0,''),
- ('ce2dcda12197de4eb435517d3572fea6',1,0,'1407618377','__default|a:8:{s:15:\"session.counter\";i:11;s:19:\"session.timer.start\";i:1407618268;s:18:\"session.timer.last\";i:1407618376;s:17:\"session.timer.now\";i:1407618377;s:22:\"session.client.browser\";s:81:\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:31.0) Gecko/20100101 Firefox/31.0\";s:8:\"registry\";O:24:\"Joomla\\Registry\\Registry\":1:{s:7:\"\\0\\0\\0data\";O:8:\"stdClass\":3:{s:11:\"application\";O:8:\"stdClass\":1:{s:4:\"lang\";s:0:\"\";}s:13:\"com_installer\";O:8:\"stdClass\":2:{s:7:\"message\";s:0:\"\";s:17:\"extension_message\";s:0:\"\";}s:16:\"com_joomlaupdate\";O:8:\"stdClass\":3:{s:4:\"file\";N;s:8:\"password\";s:32:\"NyksZkFqL4jGYfzMWcJo52M1ugIiNsN5\";s:8:\"filesize\";i:1521458;}}}s:4:\"user\";O:5:\"JUser\":27:{s:9:\"\\0\\0\\0isRoot\";b:1;s:2:\"id\";s:3:\"576\";s:4:\"name\";s:10:\"Super User\";s:8:\"username\";s:5:\"admin\";s:5:\"email\";s:21:\"joomlagovbr@gmail.com\";s:8:\"password\";s:60:\"$2y$10$jN9cqIctGw2b.88ugASMcOpLAb2vZLzKXrwqqyo8H0KcPFiH7mNdS\";s:14:\"password_clear\";s:0:\"\";s:5:\"block\";s:1:\"0\";s:9:\"sendEmail\";s:1:\"1\";s:12:\"registerDate\";s:19:\"2013-10-14 14:26:05\";s:13:\"lastvisitDate\";s:19:\"2014-07-05 18:46:28\";s:10:\"activation\";s:1:\"0\";s:6:\"params\";s:95:\"{\"admin_style\":\"\",\"admin_language\":\"\",\"language\":\"\",\"editor\":\"jce\",\"helpsite\":\"\",\"timezone\":\"\"}\";s:6:\"groups\";a:1:{i:8;s:1:\"8\";}s:5:\"guest\";i:0;s:13:\"lastResetTime\";s:19:\"0000-00-00 00:00:00\";s:10:\"resetCount\";s:1:\"0\";s:12:\"requireReset\";s:1:\"0\";s:10:\"\\0\\0\\0_params\";O:24:\"Joomla\\Registry\\Registry\":1:{s:7:\"\\0\\0\\0data\";O:8:\"stdClass\":6:{s:11:\"admin_style\";s:0:\"\";s:14:\"admin_language\";s:0:\"\";s:8:\"language\";s:0:\"\";s:6:\"editor\";s:3:\"jce\";s:8:\"helpsite\";s:0:\"\";s:8:\"timezone\";s:0:\"\";}}s:14:\"\\0\\0\\0_authGroups\";a:2:{i:0;i:1;i:1;i:8;}s:14:\"\\0\\0\\0_authLevels\";a:4:{i:0;i:1;i:1;i:1;i:2;i:2;i:3;i:3;}s:15:\"\\0\\0\\0_authActions\";N;s:12:\"\\0\\0\\0_errorMsg\";N;s:10:\"\\0\\0\\0_errors\";a:0:{}s:3:\"aid\";i:0;s:6:\"otpKey\";s:0:\"\";s:4:\"otep\";s:0:\"\";}s:13:\"session.token\";s:32:\"cc0ad1eb675b6d428f018488ff5b3504\";}',576,'admin');
+INSERT INTO `portal_modelo_3x`.`pmgov2013_session` VALUES  ('aba4739df6af8070d3aa00c4b3bd2a46',0,1,'1408191548','__default|a:7:{s:15:\"session.counter\";i:2;s:19:\"session.timer.start\";i:1407619259;s:18:\"session.timer.last\";i:1407619259;s:17:\"session.timer.now\";i:1408191542;s:22:\"session.client.browser\";s:81:\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:31.0) Gecko/20100101 Firefox/31.0\";s:8:\"registry\";O:24:\"Joomla\\Registry\\Registry\":1:{s:7:\"\\0\\0\\0data\";O:8:\"stdClass\":0:{}}s:4:\"user\";O:5:\"JUser\":25:{s:9:\"\\0\\0\\0isRoot\";N;s:2:\"id\";i:0;s:4:\"name\";N;s:8:\"username\";N;s:5:\"email\";N;s:8:\"password\";N;s:14:\"password_clear\";s:0:\"\";s:5:\"block\";N;s:9:\"sendEmail\";i:0;s:12:\"registerDate\";N;s:13:\"lastvisitDate\";N;s:10:\"activation\";N;s:6:\"params\";N;s:6:\"groups\";a:1:{i:0;s:1:\"1\";}s:5:\"guest\";i:1;s:13:\"lastResetTime\";N;s:10:\"resetCount\";N;s:12:\"requireReset\";N;s:10:\"\\0\\0\\0_params\";O:24:\"Joomla\\Registry\\Registry\":1:{s:7:\"\\0\\0\\0data\";O:8:\"stdClass\":0:{}}s:14:\"\\0\\0\\0_authGroups\";N;s:14:\"\\0\\0\\0_authLevels\";a:2:{i:0;i:1;i:1;i:1;}s:15:\"\\0\\0\\0_authActions\";N;s:12:\"\\0\\0\\0_errorMsg\";N;s:10:\"\\0\\0\\0_errors\";a:0:{}s:3:\"aid\";i:0;}}',0,''),
+ ('ce2dcda12197de4eb435517d3572fea6',1,0,'1408191649','__default|a:8:{s:15:\"session.counter\";i:17;s:19:\"session.timer.start\";i:1407618268;s:18:\"session.timer.last\";i:1408191599;s:17:\"session.timer.now\";i:1408191647;s:22:\"session.client.browser\";s:81:\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:31.0) Gecko/20100101 Firefox/31.0\";s:8:\"registry\";O:24:\"Joomla\\Registry\\Registry\":1:{s:7:\"\\0\\0\\0data\";O:8:\"stdClass\":3:{s:11:\"application\";O:8:\"stdClass\":1:{s:4:\"lang\";s:0:\"\";}s:13:\"com_installer\";O:8:\"stdClass\":2:{s:7:\"message\";s:0:\"\";s:17:\"extension_message\";s:0:\"\";}s:16:\"com_joomlaupdate\";O:8:\"stdClass\":3:{s:4:\"file\";N;s:8:\"password\";s:32:\"NyksZkFqL4jGYfzMWcJo52M1ugIiNsN5\";s:8:\"filesize\";i:1521458;}}}s:4:\"user\";O:5:\"JUser\":27:{s:9:\"\\0\\0\\0isRoot\";b:1;s:2:\"id\";s:3:\"576\";s:4:\"name\";s:10:\"Super User\";s:8:\"username\";s:5:\"admin\";s:5:\"email\";s:21:\"joomlagovbr@gmail.com\";s:8:\"password\";s:60:\"$2y$10$jN9cqIctGw2b.88ugASMcOpLAb2vZLzKXrwqqyo8H0KcPFiH7mNdS\";s:14:\"password_clear\";s:0:\"\";s:5:\"block\";s:1:\"0\";s:9:\"sendEmail\";s:1:\"1\";s:12:\"registerDate\";s:19:\"2013-10-14 14:26:05\";s:13:\"lastvisitDate\";s:19:\"2014-07-05 18:46:28\";s:10:\"activation\";s:1:\"0\";s:6:\"params\";s:95:\"{\"admin_style\":\"\",\"admin_language\":\"\",\"language\":\"\",\"editor\":\"jce\",\"helpsite\":\"\",\"timezone\":\"\"}\";s:6:\"groups\";a:1:{i:8;s:1:\"8\";}s:5:\"guest\";i:0;s:13:\"lastResetTime\";s:19:\"0000-00-00 00:00:00\";s:10:\"resetCount\";s:1:\"0\";s:12:\"requireReset\";s:1:\"0\";s:10:\"\\0\\0\\0_params\";O:24:\"Joomla\\Registry\\Registry\":1:{s:7:\"\\0\\0\\0data\";O:8:\"stdClass\":6:{s:11:\"admin_style\";s:0:\"\";s:14:\"admin_language\";s:0:\"\";s:8:\"language\";s:0:\"\";s:6:\"editor\";s:3:\"jce\";s:8:\"helpsite\";s:0:\"\";s:8:\"timezone\";s:0:\"\";}}s:14:\"\\0\\0\\0_authGroups\";a:2:{i:0;i:1;i:1;i:8;}s:14:\"\\0\\0\\0_authLevels\";a:4:{i:0;i:1;i:1;i:1;i:2;i:2;i:3;i:3;}s:15:\"\\0\\0\\0_authActions\";N;s:12:\"\\0\\0\\0_errorMsg\";N;s:10:\"\\0\\0\\0_errors\";a:0:{}s:3:\"aid\";i:0;s:6:\"otpKey\";s:0:\"\";s:4:\"otep\";s:0:\"\";}s:13:\"session.token\";s:32:\"cc0ad1eb675b6d428f018488ff5b3504\";}',576,'admin');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `pmgov2013_session` ENABLE KEYS */;
 
@@ -8019,12 +8019,12 @@ CREATE TABLE  `portal_modelo_3x`.`pmgov2013_update_sites` (
 
 /*!40000 ALTER TABLE `pmgov2013_update_sites` DISABLE KEYS */;
 LOCK TABLES `pmgov2013_update_sites` WRITE;
-INSERT INTO `portal_modelo_3x`.`pmgov2013_update_sites` VALUES  (1,'Joomla Core','collection','http://update.joomla.org/core/sts/list_sts.xml',1,1407618285,''),
- (2,'Joomla Extension Directory','collection','http://update.joomla.org/jed/list.xml',1,1407618285,''),
- (3,'Accredited Joomla! Translations','collection','http://update.joomla.org/language/translationlist_3.xml',1,1407618285,''),
- (5,'Blackdale','extension','http://updates.blackdale.com/update/modblank250/modblank250.xml',1,1407618285,''),
- (6,'K2 Updates','extension','http://getk2.org/update.xml',1,1407618285,''),
- (7,'AllVideos','extension','http://www.joomlaworks.net/updates/jw_allvideos.xml',1,1407618285,'');
+INSERT INTO `portal_modelo_3x`.`pmgov2013_update_sites` VALUES  (1,'Joomla Core','collection','http://update.joomla.org/core/sts/list_sts.xml',1,1408191586,''),
+ (2,'Joomla Extension Directory','collection','http://update.joomla.org/jed/list.xml',1,1408191586,''),
+ (3,'Accredited Joomla! Translations','collection','http://update.joomla.org/language/translationlist_3.xml',1,1408191586,''),
+ (5,'Blackdale','extension','http://updates.blackdale.com/update/modblank250/modblank250.xml',1,1408191584,''),
+ (6,'K2 Updates','extension','http://getk2.org/update.xml',1,1408191584,''),
+ (7,'AllVideos','extension','http://www.joomlaworks.net/updates/jw_allvideos.xml',1,1408191586,'');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `pmgov2013_update_sites` ENABLE KEYS */;
 
@@ -8078,7 +8078,7 @@ CREATE TABLE  `portal_modelo_3x`.`pmgov2013_updates` (
   `infourl` text NOT NULL,
   `extra_query` varchar(1000) DEFAULT '',
   PRIMARY KEY (`update_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8 COMMENT='Available Updates';
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8 COMMENT='Available Updates';
 
 --
 -- Dumping data for table `portal_modelo_3x`.`pmgov2013_updates`
@@ -8117,32 +8117,35 @@ INSERT INTO `portal_modelo_3x`.`pmgov2013_updates` VALUES  (1,3,0,'Malay','','pk
  (29,3,0,'Norwegian Bokmal','','pkg_nb-NO','package','',0,'3.2.2.1','','http://update.joomla.org/language/details3/nb-NO_details.xml','',''),
  (30,3,0,'Persian','','pkg_fa-IR','package','',0,'3.3.1.1','','http://update.joomla.org/language/details3/fa-IR_details.xml','',''),
  (31,3,0,'Polish','','pkg_pl-PL','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/pl-PL_details.xml','',''),
- (33,3,0,'Portuguese','','pkg_pt-PT','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/pt-PT_details.xml','',''),
- (34,3,0,'Russian','','pkg_ru-RU','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/ru-RU_details.xml','',''),
- (35,3,0,'Slovak','','pkg_sk-SK','package','',0,'3.3.1.1','','http://update.joomla.org/language/details3/sk-SK_details.xml','',''),
- (36,3,0,'Swedish','','pkg_sv-SE','package','',0,'3.3.3.3','','http://update.joomla.org/language/details3/sv-SE_details.xml','',''),
- (37,3,0,'Syriac','','pkg_sy-IQ','package','',0,'3.3.2.1','','http://update.joomla.org/language/details3/sy-IQ_details.xml','',''),
- (38,3,0,'Tamil','','pkg_ta-IN','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/ta-IN_details.xml','',''),
- (39,3,0,'Thai','','pkg_th-TH','package','',0,'3.3.2.1','','http://update.joomla.org/language/details3/th-TH_details.xml','',''),
- (40,3,0,'Turkish','','pkg_tr-TR','package','',0,'3.3.2.1','','http://update.joomla.org/language/details3/tr-TR_details.xml','',''),
- (41,3,0,'Ukrainian','','pkg_uk-UA','package','',0,'3.3.1.11','','http://update.joomla.org/language/details3/uk-UA_details.xml','',''),
- (42,3,0,'Uyghur','','pkg_ug-CN','package','',0,'3.3.0.1','','http://update.joomla.org/language/details3/ug-CN_details.xml','',''),
- (43,3,0,'Albanian','','pkg_sq-AL','package','',0,'3.1.1.1','','http://update.joomla.org/language/details3/sq-AL_details.xml','',''),
- (44,3,0,'Serbian Latin','','pkg_sr-YU','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/sr-YU_details.xml','',''),
- (45,3,0,'Spanish','','pkg_es-ES','package','',0,'3.3.1.3','','http://update.joomla.org/language/details3/es-ES_details.xml','',''),
- (46,3,0,'Bosnian','','pkg_bs-BA','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/bs-BA_details.xml','',''),
- (47,3,0,'Serbian Cyrillic','','pkg_sr-RS','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/sr-RS_details.xml','',''),
- (48,3,0,'Vietnamese','','pkg_vi-VN','package','',0,'3.2.1.1','','http://update.joomla.org/language/details3/vi-VN_details.xml','',''),
- (49,3,0,'Bahasa Indonesia','','pkg_id-ID','package','',0,'3.3.0.2','','http://update.joomla.org/language/details3/id-ID_details.xml','',''),
- (50,3,0,'Finnish','','pkg_fi-FI','package','',0,'3.3.2.1','','http://update.joomla.org/language/details3/fi-FI_details.xml','',''),
- (51,3,0,'Swahili','','pkg_sw-KE','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/sw-KE_details.xml','',''),
- (52,3,0,'Montenegrin','','pkg_srp-ME','package','',0,'3.3.1.1','','http://update.joomla.org/language/details3/srp-ME_details.xml','',''),
- (53,3,0,'EnglishCA','','pkg_en-CA','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/en-CA_details.xml','',''),
+ (32,3,0,'Portuguese','','pkg_pt-PT','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/pt-PT_details.xml','',''),
+ (33,3,0,'Russian','','pkg_ru-RU','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/ru-RU_details.xml','',''),
+ (34,3,0,'Slovak','','pkg_sk-SK','package','',0,'3.3.1.1','','http://update.joomla.org/language/details3/sk-SK_details.xml','',''),
+ (35,3,0,'Swedish','','pkg_sv-SE','package','',0,'3.3.3.3','','http://update.joomla.org/language/details3/sv-SE_details.xml','',''),
+ (36,3,0,'Syriac','','pkg_sy-IQ','package','',0,'3.3.2.1','','http://update.joomla.org/language/details3/sy-IQ_details.xml','',''),
+ (37,3,0,'Tamil','','pkg_ta-IN','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/ta-IN_details.xml','',''),
+ (38,3,0,'Thai','','pkg_th-TH','package','',0,'3.3.2.1','','http://update.joomla.org/language/details3/th-TH_details.xml','',''),
+ (39,3,0,'Turkish','','pkg_tr-TR','package','',0,'3.3.2.1','','http://update.joomla.org/language/details3/tr-TR_details.xml','',''),
+ (40,3,0,'Ukrainian','','pkg_uk-UA','package','',0,'3.3.3.15','','http://update.joomla.org/language/details3/uk-UA_details.xml','',''),
+ (41,3,0,'Uyghur','','pkg_ug-CN','package','',0,'3.3.0.1','','http://update.joomla.org/language/details3/ug-CN_details.xml','',''),
+ (42,3,0,'Albanian','','pkg_sq-AL','package','',0,'3.1.1.1','','http://update.joomla.org/language/details3/sq-AL_details.xml','',''),
+ (43,3,0,'Serbian Latin','','pkg_sr-YU','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/sr-YU_details.xml','',''),
+ (44,3,0,'Spanish','','pkg_es-ES','package','',0,'3.3.1.3','','http://update.joomla.org/language/details3/es-ES_details.xml','',''),
+ (45,3,0,'Bosnian','','pkg_bs-BA','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/bs-BA_details.xml','',''),
+ (46,3,0,'Serbian Cyrillic','','pkg_sr-RS','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/sr-RS_details.xml','',''),
+ (47,3,0,'Vietnamese','','pkg_vi-VN','package','',0,'3.2.1.1','','http://update.joomla.org/language/details3/vi-VN_details.xml','',''),
+ (48,3,0,'Bahasa Indonesia','','pkg_id-ID','package','',0,'3.3.0.2','','http://update.joomla.org/language/details3/id-ID_details.xml','',''),
+ (49,3,0,'Finnish','','pkg_fi-FI','package','',0,'3.3.2.1','','http://update.joomla.org/language/details3/fi-FI_details.xml','',''),
+ (50,3,0,'Swahili','','pkg_sw-KE','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/sw-KE_details.xml','',''),
+ (51,3,0,'Montenegrin','','pkg_srp-ME','package','',0,'3.3.1.1','','http://update.joomla.org/language/details3/srp-ME_details.xml','',''),
+ (52,3,0,'EnglishCA','','pkg_en-CA','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/en-CA_details.xml','',''),
+ (53,3,0,'FrenchCA','','pkg_fr-CA','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/fr-CA_details.xml','',''),
  (54,3,0,'FrenchCA','','pkg_fr-CA','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/fr-CA_details.xml','',''),
  (55,3,0,'Welsh','','pkg_cy-GB','package','',0,'3.3.0.1','','http://update.joomla.org/language/details3/cy-GB_details.xml','',''),
- (56,3,0,'Sinhala','','pkg_si-LK','package','',0,'3.3.1.1','','http://update.joomla.org/language/details3/si-LK_details.xml','',''),
- (57,6,10035,'K2','K2, the powerful content extension for Joomla! (by JoomlaWorks)','com_k2','component','',1,'2.6.8','','http://getk2.org/update.xml','',''),
- (58,7,10050,'AllVideos','The ultimate media player for Joomla!','jw_allvideos','plugin','content',0,'4.6.1','','http://www.joomlaworks.net/updates/jw_allvideos.xml','http://www.joomlaworks.net/forum/extension-updates/15010-june-4th,-2014-allvideos-v4-6-1','');
+ (56,3,0,'Welsh','','pkg_cy-GB','package','',0,'3.3.0.1','','http://update.joomla.org/language/details3/cy-GB_details.xml','',''),
+ (57,3,0,'Sinhala','','pkg_si-LK','package','',0,'3.3.1.1','','http://update.joomla.org/language/details3/si-LK_details.xml','',''),
+ (58,3,0,'Sinhala','','pkg_si-LK','package','',0,'3.3.1.1','','http://update.joomla.org/language/details3/si-LK_details.xml','',''),
+ (59,6,10035,'K2','K2, the powerful content extension for Joomla! (by JoomlaWorks)','com_k2','component','',1,'2.6.8','','http://getk2.org/update.xml','',''),
+ (60,7,10050,'AllVideos','The ultimate media player for Joomla!','jw_allvideos','plugin','content',0,'4.6.1','','http://www.joomlaworks.net/updates/jw_allvideos.xml','http://www.joomlaworks.net/forum/extension-updates/15010-june-4th,-2014-allvideos-v4-6-1','');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `pmgov2013_updates` ENABLE KEYS */;
 
@@ -8325,7 +8328,7 @@ CREATE TABLE  `portal_modelo_3x`.`pmgov2013_users` (
   KEY `idx_block` (`block`),
   KEY `username` (`username`),
   KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=578 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=577 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `portal_modelo_3x`.`pmgov2013_users`
