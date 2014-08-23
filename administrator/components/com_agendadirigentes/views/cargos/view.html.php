@@ -37,8 +37,22 @@ class AgendaDirigentesViewCargos extends JViewLegacy
                 // Assign data to the view
                 $this->items = $items;
                 $this->pagination = $pagination;
- 
+  
+                // Set the toolbar
+                $this->addToolBar();
+                
                 // Display the template
                 parent::display($tpl);
+        }
+
+        /**
+         * Setting the toolbar
+         */
+        protected function addToolBar() 
+        {
+                JToolBarHelper::title(JText::_('COM_AGENDADIRIGENTES_MANAGER_CARGOS'));
+                JToolBarHelper::deleteList('', 'cargos.delete');
+                JToolBarHelper::editList('cargo.edit');
+                JToolBarHelper::addNew('cargo.add');
         }
 }

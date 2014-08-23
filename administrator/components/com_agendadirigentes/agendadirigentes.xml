@@ -59,6 +59,7 @@
                         <folder>tables</folder>
                         <folder>models</folder>
                         <folder>views</folder>
+                        <folder>controllers</folder>
                 </files>
         </administration> 
 </extension>

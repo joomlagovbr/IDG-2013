@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+        <fieldset addfieldpath="/administrator/components/com_agendadirigentes/models/fields">
+                <field
+                        name="id"
+                        type="hidden"
+                />
+                <field
+                        name="name"
+                        type="text"
+                        label="COM_AGENDADIRIGENTES_DIRIGENTES_NAME_LABEL"
+                        description="COM_AGENDADIRIGENTES_DIRIGENTES_NAME_DESC"
+                        size="40"
+                        class="inputbox"
+                        default=""
+                />
+                <field
+                        name="catid"
+                        type="category"
+                        show_root="1"
+                        extension="com_agendadirigentes"
+                        label="COM_AGENDADIRIGENTES_DIRIGENTES_CATID_LABEL"
+                        description="COM_AGENDADIRIGENTES_DIRIGENTES_CATID_DESC"
+                        default=""
+                />
+                <field
+                        name="cargo_id"
+                        type="cargo"
+                        label="COM_AGENDADIRIGENTES_DIRIGENTES_CARGO_ID_LABEL"
+                        description="COM_AGENDADIRIGENTES_DIRIGENTES_CARGO_ID_DESC"
+                        default=""
+                />
+                <field
+                        name="block"
+                        type="radio"
+                        label="COM_AGENDADIRIGENTES_DIRIGENTES_BLOCK_LABEL"
+                        description="COM_AGENDADIRIGENTES_DIRIGENTES_BLOCK_DESC"
+                        default="0"
+                        >
+                        <option value="0">JNO</option>
+                        <option value="1">JYES</option>
+                </field>
+                <field
+                        name="ordering"
+                        type="dirigenteordering"
+                        label="COM_AGENDADIRIGENTES_DIRIGENTES_ORDERING_LABEL"
+                        description="COM_AGENDADIRIGENTES_DIRIGENTES_ORDERING_DESC"
+                        default=""
+                />
+        </fieldset>
+</form>

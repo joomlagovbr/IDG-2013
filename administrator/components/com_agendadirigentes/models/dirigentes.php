@@ -30,8 +30,8 @@ class AgendaDirigentesModelDirigentes extends JModelList
                 // Select some fields from the hello table
                 $query
                     ->select('DISTINCT a.*, c.name as cargo, d.title as categoria') //, e.name as proprietario
-                    ->from( $db->quoteName('#__agendadedirigentes_dirigentes', 'a') )
-                    ->join('LEFT', $db->quoteName('#__agendadedirigentes_cargos', 'c') . ' ON (' . $db->quoteName('c.id') . ' = ' . $db->quoteName('a.cargo_id') . ')')
+                    ->from( $db->quoteName('#__agendadirigentes_dirigentes', 'a') )
+                    ->join('LEFT', $db->quoteName('#__agendadirigentes_cargos', 'c') . ' ON (' . $db->quoteName('c.id') . ' = ' . $db->quoteName('a.cargo_id') . ')')
                     ->join('INNER', $db->quoteName('#__categories', 'd') . ' ON (' . $db->quoteName('d.id') . ' = ' . $db->quoteName('a.catid') . ')')
                     ;
 

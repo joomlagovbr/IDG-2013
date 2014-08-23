@@ -14,19 +14,19 @@ defined('_JEXEC') or die;
 jimport('joomla.application.component.view');
  
 /**
- * Dirigentes View
+ * Dirigente View
  */
-class AgendaDirigentesViewDirigentes extends JViewLegacy
+class AgendaDirigentesViewDirigente extends JViewLegacy
 {
         /**
-         * Dirigentes view display method
+         * display method of Dirigente
          * @return void
          */
-        function display($tpl = null) 
+        public function display($tpl = null) 
         {
-                // Get data from the model
-                $items = $this->get('Items');
-                $pagination = $this->get('Pagination');
+                // get the Data
+                $form = $this->get('Form');
+                $item = $this->get('Item');
  
                 // Check for errors.
                 if (count($errors = $this->get('Errors'))) 
@@ -34,25 +34,28 @@ class AgendaDirigentesViewDirigentes extends JViewLegacy
                         JError::raiseError(500, implode('<br />', $errors));
                         return false;
                 }
-                // Assign data to the view
-                $this->items = $items;
-                $this->pagination = $pagination;
-
+                // Assign the Data
+                $this->form = $form;
+                $this->item = $item;
+ 
                 // Set the toolbar
                 $this->addToolBar();
  
                 // Display the template
                 parent::display($tpl);
         }
-
+ 
         /**
          * Setting the toolbar
          */
         protected function addToolBar() 
         {
-                JToolBarHelper::title(JText::_('COM_AGENDADIRIGENTES_MANAGER_DIRIGENTES'));
-                JToolBarHelper::deleteList('', 'dirigentes.delete');
-                JToolBarHelper::editList('dirigente.edit');
-                JToolBarHelper::addNew('dirigente.add');
+                $input = JFactory::getApplication()->input;
+                $input->set('hidemainmenu', true);
+                $isNew = ($this->item->id == 0);
+                JToolBarHelper::title($isNew ? JText::_('COM_AGENDADIRIGENTES_MANAGER_DIRIGENTE_NEW')
+                                             : JText::_('COM_AGENDADIRIGENTES_MANAGER_DIRIGENTE_EDIT'));
+                JToolBarHelper::save('dirigente.save');
+                JToolBarHelper::cancel('dirigente.cancel', $isNew ? 'JTOOLBAR_CANCEL' : 'JTOOLBAR_CLOSE');
         }
 }

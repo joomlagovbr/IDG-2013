@@ -9,7 +9,6 @@
  
 // impedir acesso direto ao arquivo
 defined('_JEXEC') or die;
- 
 ?>
 <tr>
         <th width="5">

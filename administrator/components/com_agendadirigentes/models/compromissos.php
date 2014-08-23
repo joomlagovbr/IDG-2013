@@ -37,15 +37,15 @@ class AgendaDirigentesModelCompromissos extends JModelList
                     ->select(' dir.name AS nameOwner, dir.id AS idOwner')
                     ->select(' car.name AS cargoOwner')
                     ->select(' cat.title AS titleCategory')
-                    ->from( $db->quoteName('#__agendadedirigentes_compromissos', 'comp') )
+                    ->from( $db->quoteName('#__agendadirigentes_compromissos', 'comp') )
                     ->join( 'LEFT',
-                        $db->quoteName('#__agendadedirigentes_dirigentes_compromissos', 'dc')
+                        $db->quoteName('#__agendadirigentes_dirigentes_compromissos', 'dc')
                         .' ON (' . $db->quoteName('comp.id') . ' = ' . $db->quoteName('dc.compromisso_id') . ')' )
                     ->join( 'LEFT',
-                        $db->quoteName('#__agendadedirigentes_dirigentes', 'dir')
+                        $db->quoteName('#__agendadirigentes_dirigentes', 'dir')
                         .' ON (' . $db->quoteName('dc.owner') . ' = ' . $db->quoteName('dir.id') . ')' )
                     ->join( 'LEFT',
-                        $db->quoteName('#__agendadedirigentes_cargos', 'car')
+                        $db->quoteName('#__agendadirigentes_cargos', 'car')
                         .' ON (' . $db->quoteName('dir.cargo_id') . ' = ' . $db->quoteName('car.id') . ')' )
                     ->join( 'LEFT',
                         $db->quoteName('#__categories', 'cat')
@@ -58,10 +58,10 @@ class AgendaDirigentesModelCompromissos extends JModelList
 /*
 SELECT
 
-FROM `x3dts_agendadedirigentes_compromissos` AS comp
-LEFT JOIN `x3dts_agendadedirigentes_dirigentes_compromissos` AS dc ON comp.id = dc.compromisso_id
-LEFT JOIN `x3dts_agendadedirigentes_dirigentes` AS dir ON dc.owner = dir.id
-LEFT JOIN `x3dts_agendadedirigentes_cargos` AS car ON dir.cargo_id = car.id
+FROM `x3dts_agendadirigentes_compromissos` AS comp
+LEFT JOIN `x3dts_agendadirigentes_dirigentes_compromissos` AS dc ON comp.id = dc.compromisso_id
+LEFT JOIN `x3dts_agendadirigentes_dirigentes` AS dir ON dc.owner = dir.id
+LEFT JOIN `x3dts_agendadirigentes_cargos` AS car ON dir.cargo_id = car.id
 
 ORDER BY comp.id desc
 
