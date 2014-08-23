@@ -7,8 +7,8 @@
         <authorUrl>http://portalpadrao.joomlacalango.org</authorUrl>
         <copyright>Copyright (c) 2013 - 2014 JUG Joomla Calango. Todos os direitos reservados.</copyright>
         <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-        <version>0.0.6</version>
-        <description>Componente para controle da agenda de dirigentes de órgãos do governo federal.</description> 
+        <version>0.0.7</version>
+        <description>COM_AGENDADIRIGENTES_DESCRIPTION</description> 
         <install> <!-- Runs on install -->
                 <sql>
                         <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
@@ -31,6 +31,10 @@
                 <folder>views</folder>
                 <folder>models</folder>
         </files>
+        <languages folder="site/language">
+                <language tag="en-GB">en-GB.com_agendadirigentes.ini</language>
+                <language tag="pt-BR">pt-BR.com_agendadirigentes.ini</language>
+        </languages>
         <administration>
                 <languages folder="language">
                         <language tag="en-GB">en-GB.com_agendadirigentes.ini</language>
@@ -39,21 +43,22 @@
                         <language tag="pt-BR">pt-BR.com_agendadirigentes.sys.ini</language>
                 </languages>
                 <!-- Administration Menu Section -->
-                <menu>COM_AGENDADIRIGENTES</menu>
+                <menu>COM_AGENDADIRIGENTES_MENU</menu>
                 <submenu>
-                        <menu view="compromissos" link="option=com_agendadirigentes&amp;view=compromissos">COM_AGENDADIRIGENTES_COMPROMISSOS</menu>
-                        <menu view="dirigentes" link="option=com_agendadirigentes&amp;view=dirigentes">COM_AGENDADIRIGENTES_DIRIGENTES</menu>
-                        <menu view="categorias" link="option=com_categories&amp;extension=com_agendadirigentes">COM_AGENDADIRIGENTES_CATEGORIAS</menu>
-                        <menu view="cargos" link="option=com_agendadirigentes&amp;view=cargos">COM_AGENDADIRIGENTES_CARGOS</menu>
-                        <menu view="agendas_anteriores" link="option=com_agendadirigentes&amp;view=agendas_anteriores">COM_AGENDADIRIGENTES_AGENDASANTERIORES</menu>
+                        <menu view="compromissos" link="option=com_agendadirigentes&amp;view=compromissos">COM_AGENDADIRIGENTES_MENU_COMPROMISSOS</menu>
+                        <menu view="dirigentes" link="option=com_agendadirigentes&amp;view=dirigentes">COM_AGENDADIRIGENTES_MENU_DIRIGENTES</menu>
+                        <menu view="categorias" link="option=com_categories&amp;extension=com_agendadirigentes">COM_AGENDADIRIGENTES_MENU_CATEGORIAS</menu>
+                        <menu view="cargos" link="option=com_agendadirigentes&amp;view=cargos">COM_AGENDADIRIGENTES_MENU_CARGOS</menu>
+                        <!-- <menu view="agendas_anteriores" link="option=com_agendadirigentes&amp;view=agendas_anteriores">COM_AGENDADIRIGENTES_AGENDASANTERIORES</menu> -->
                 </submenu>
                 <files folder="admin">
                         <filename>index.html</filename>
                         <filename>agendadirigentes.php</filename>
                         <filename>access.xml</filename>
                         <folder>sql</folder>
-                        <!-- <folder>tables</folder> -->
-                        <!-- <folder>models</folder> -->
+                        <folder>tables</folder>
+                        <folder>models</folder>
+                        <folder>views</folder>
                 </files>
         </administration> 
 </extension>

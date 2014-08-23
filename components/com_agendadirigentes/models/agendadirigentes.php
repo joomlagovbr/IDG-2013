@@ -19,32 +19,73 @@ jimport('joomla.application.component.modelitem');
 class AgendaDirigentesModelAgendaDirigentes extends JModelItem
 {
         /**
-         * @var string msg
+         * @var array messages
          */
-        protected $msg;
+        protected $messages;
+ 
+        /**
+         * Returns a reference to the a Table object, always creating it.
+         *
+         * @param       type    The table type to instantiate
+         * @param       string  A prefix for the table class name. Optional.
+         * @param       array   Configuration array for model. Optional.
+         * @return      JTable  A database object
+         * @since       2.5
+         */
+        public function getTable($type = 'AgendaDirigentes', $prefix = 'AgendaDirigentesTable', $config = array()) 
+        {
+                return JTable::getInstance($type, $prefix, $config);
+        }
  
         /**
          * Get the message
+         * @param  int    The corresponding id of the message to be retrieved
          * @return string The message to be displayed to the user
          */
-        public function getMsg() 
+        public function getMsg($id = 1) 
         {
-                if (!isset($this->msg)) 
+                if (!is_array($this->messages))
                 {
-                        $jinput = JFactory::getApplication()->input;
-                        $id     = $jinput->get('show_compromissos', 0, 'INT');
-
-                        switch ($id) 
-                        {
-                                case 1:
-                                        $this->msg = 'Good bye World!';
-                                break;
-                                default:
-                                case 0:
-                                        $this->msg = 'Hello World!';
-                                break;
-                        }
+                        $this->messages = array();
                 }
-                return $this->msg;
+ 
+                if (!isset($this->messages[$id])) 
+                {
+                        //request the selected id
+                        $jinput = JFactory::getApplication()->input;
+                        $id = $jinput->get('id', 1, 'INT' );
+ 
+                        // Get a TableHelloWorld instance
+                        $table = $this->getTable();
+ 
+                        // Load the message
+                        $table->load($id);
+ 
+                        // Assign the message
+                        $this->messages[$id] = $table->greeting;
+                }
+ 
+                return $this->messages[$id];
         }
+ 
+        // public function getMsg() 
+        // {
+        //         if (!isset($this->msg)) 
+        //         {
+        //                 $jinput = JFactory::getApplication()->input;
+        //                 $id     = $jinput->get('show_compromissos', 0, 'INT');
+
+        //                 switch ($id) 
+        //                 {
+        //                         case 1:
+        //                                 $this->msg = 'Good bye World!';
+        //                         break;
+        //                         default:
+        //                         case 0:
+        //                                 $this->msg = 'Hello World!';
+        //                         break;
+        //                 }
+        //         }
+        //         return $this->msg;
+        // }
 }

@@ -6,7 +6,7 @@
 		</message>
 	</layout>
 	<fields name="request">
-		<fieldset name="request">
+		<fieldset name="request" addfieldpath="/administrator/components/com_agendadirigentes/models/fields">
 			<field
 				name="show_compromissos"
 				type="list"
@@ -22,6 +22,14 @@
 				label="COM_AGENDADIRIGENTES_AGENDADIRIGENTES_FIELD_DATA_LABEL"
 				description="COM_AGENDADIRIGENTES_AGENDADIRIGENTES_FIELD_DATA_DESC"
 				default="" />
+			<!-- testes -->
+			<field
+                                name="id"
+                                type="helloworld"
+                                label="COM_HELLOWORLD_HELLOWORLD_FIELD_GREETING_LABEL"
+                                description="COM_HELLOWORLD_HELLOWORLD_FIELD_GREETING_DESC"
+                        />
+			<!-- fim testes -->
 		</fieldset>
 	</fields>
 </metadata>

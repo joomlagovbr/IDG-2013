@@ -2,21 +2,21 @@
 DROP TABLE IF EXISTS `#__agendadedirigentes_compromissos_anteriores`;
 CREATE TABLE `#__agendadedirigentes_compromissos_anteriores` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `autoridade_id` int(10) unsigned NOT NULL,
+  `dirigente_id` int(10) unsigned NOT NULL,
   `src` varchar(255) NOT NULL,
   `data_inicial` date NOT NULL,
   `data_final` date NOT NULL,
   `name` varchar(255) NOT NULL,
   `published` int(1) DEFAULT 0,
   PRIMARY KEY (`id`),
-  KEY `idx_autoridade_id` (`autoridade_id`),
+  KEY `idx_dirigente_id` (`dirigente_id`),
   KEY `idx_inicio_validade` (`data_inicial`),
   KEY `idx_fim_validade` (`data_final`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-#tabela de autoridades
-DROP TABLE IF EXISTS `#__agendadedirigentes_autoridades`;
-CREATE TABLE `#__agendadedirigentes_autoridades` (
+#tabela de dirigentes
+DROP TABLE IF EXISTS `#__agendadedirigentes_dirigentes`;
+CREATE TABLE `#__agendadedirigentes_dirigentes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `catid` int(11) NOT NULL,
@@ -29,26 +29,26 @@ CREATE TABLE `#__agendadedirigentes_autoridades` (
   KEY `idx_block` (`block`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-#relacionamento autoridades e eventos
-DROP TABLE IF EXISTS `#__agendadedirigentes_autoridades_compromissos`;
-CREATE TABLE `#__agendadedirigentes_autoridades_compromissos` (
-  `autoridade_id` int(11) NOT NULL,
+#relacionamento dirigentes e eventos
+DROP TABLE IF EXISTS `#__agendadedirigentes_dirigentes_compromissos`;
+CREATE TABLE `#__agendadedirigentes_dirigentes_compromissos` (
+  `dirigente_id` int(11) NOT NULL,
   `compromisso_id` int(11) NOT NULL,
   `owner` int(11) DEFAULT '0',
   `status` int(11) NOT NULL DEFAULT '1' COMMENT 'Status 1: comum; Status 2: sobreposto',
-  PRIMARY KEY (`autoridade_id`,`compromisso_id`),
+  PRIMARY KEY (`dirigente_id`,`compromisso_id`),
   KEY `idx_owner` (`owner`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #autorizacoes de cadastro
-DROP TABLE IF EXISTS `#__agendadedirigentes_autoridades_permissoes`;
-CREATE TABLE `#__agendadedirigentes_autoridades_permissoes` (
+DROP TABLE IF EXISTS `#__agendadedirigentes_dirigentes_permissoes`;
+CREATE TABLE `#__agendadedirigentes_dirigentes_permissoes` (
   `user_id` int(11) NOT NULL,
-  `autoridade_id` int(11) NOT NULL,
-  PRIMARY KEY (`user_id`,`autoridade_id`)
+  `dirigente_id` int(11) NOT NULL,
+  PRIMARY KEY (`user_id`,`dirigente_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-#cargos de autoridades
+#cargos de dirigentes
 DROP TABLE IF EXISTS `#__agendadedirigentes_cargos`;
 CREATE TABLE `#__agendadedirigentes_cargos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
