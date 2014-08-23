@@ -6,9 +6,9 @@ defined('_JEXEC') or die('Restricted access');
 jimport('joomla.database.table');
  
 /**
- * Hello Table class
+ * Cargo Table class
  */
-class AgendaDirigentesTableCargos extends JTable
+class AgendaDirigentesTableCargo extends JTable
 {
         /**
          * Constructor
