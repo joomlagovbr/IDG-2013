@@ -43,6 +43,9 @@ class AgendaDirigentesViewDirigente extends JViewLegacy
  
                 // Display the template
                 parent::display($tpl);
+
+                // Set the document
+                $this->setDocument();
         }
  
         /**
@@ -54,8 +57,21 @@ class AgendaDirigentesViewDirigente extends JViewLegacy
                 $input->set('hidemainmenu', true);
                 $isNew = ($this->item->id == 0);
                 JToolBarHelper::title($isNew ? JText::_('COM_AGENDADIRIGENTES_MANAGER_DIRIGENTE_NEW')
-                                             : JText::_('COM_AGENDADIRIGENTES_MANAGER_DIRIGENTE_EDIT'));
+                                             : JText::_('COM_AGENDADIRIGENTES_MANAGER_DIRIGENTE_EDIT'), 'compromisso');
                 JToolBarHelper::save('dirigente.save');
                 JToolBarHelper::cancel('dirigente.cancel', $isNew ? 'JTOOLBAR_CANCEL' : 'JTOOLBAR_CLOSE');
+        }
+
+        /**
+         * Method to set up the document properties
+         *
+         * @return void
+         */
+        protected function setDocument() 
+        {
+                $isNew = ($this->item->id < 1);
+                $document = JFactory::getDocument();
+                $document->setTitle($isNew ? JText::_('COM_AGENDADIRIGENTES_MANAGER_DIRIGENTE_NEW')
+                                           : JText::_('COM_AGENDADIRIGENTES_MANAGER_DIRIGENTE_EDIT'));
         }
 }

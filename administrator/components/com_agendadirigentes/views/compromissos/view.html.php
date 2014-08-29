@@ -39,20 +39,37 @@ class AgendaDirigentesViewCompromissos extends JViewLegacy
                 $this->pagination = $pagination;
  
                 // Set the toolbar
-                $this->addToolBar();
+                $this->addToolBar($this->pagination->total);
 
                 // Display the template
                 parent::display($tpl);
+ 
+                // Set the document
+                $this->setDocument();
         }
 
         /**
          * Setting the toolbar
          */
-        protected function addToolBar() 
+        protected function addToolBar( $total = NULL ) 
         {
-                JToolBarHelper::title(JText::_('COM_AGENDADIRIGENTES_MANAGER_COMPROMISSOS'));
+                JToolBarHelper::title(JText::_('COM_AGENDADIRIGENTES_MANAGER_COMPROMISSOS').
+                        //Reflect number of items in title!
+                        ($total?' <span style="font-size: 0.5em; vertical-align: middle;">('.$total.')</span>':'')
+                        , 'compromisso');
                 JToolBarHelper::deleteList('', 'compromissos.delete');
                 JToolBarHelper::editList('compromisso.edit');
                 JToolBarHelper::addNew('compromisso.add');
+        }
+
+        /**
+         * Method to set up the document properties
+         *
+         * @return void
+         */
+        protected function setDocument() 
+        {
+                $document = JFactory::getDocument();
+                $document->setTitle(JText::_('COM_AGENDADIRIGENTES_MANAGER_COMPROMISSOS'));
         }
 }

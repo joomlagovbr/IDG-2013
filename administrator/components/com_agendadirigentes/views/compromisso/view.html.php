@@ -19,6 +19,12 @@ jimport('joomla.application.component.view');
 class AgendaDirigentesViewCompromisso extends JViewLegacy
 {
         /**
+         * View form
+         *
+         * @var         form
+         */
+        protected $form = null;
+        /**
          * display method of Compromisso
          * @return void
          */
@@ -27,6 +33,7 @@ class AgendaDirigentesViewCompromisso extends JViewLegacy
                 // get the Data
                 $form = $this->get('Form');
                 $item = $this->get('Item');
+                $script = $this->get('Script');
  
                 // Check for errors.
                 if (count($errors = $this->get('Errors'))) 
@@ -37,12 +44,16 @@ class AgendaDirigentesViewCompromisso extends JViewLegacy
                 // Assign the Data
                 $this->form = $form;
                 $this->item = $item;
+                $this->script = $script;
  
                 // Set the toolbar
                 $this->addToolBar();
  
                 // Display the template
                 parent::display($tpl);
+
+                // Set the document
+                $this->setDocument();
         }
  
         /**
@@ -54,8 +65,25 @@ class AgendaDirigentesViewCompromisso extends JViewLegacy
                 $input->set('hidemainmenu', true);
                 $isNew = ($this->item->id == 0);
                 JToolBarHelper::title($isNew ? JText::_('COM_AGENDADIRIGENTES_MANAGER_COMPROMISSO_NEW')
-                                             : JText::_('COM_AGENDADIRIGENTES_MANAGER_COMPROMISSO_EDIT'));
+                                             : JText::_('COM_AGENDADIRIGENTES_MANAGER_COMPROMISSO_EDIT'), 'compromisso');
                 JToolBarHelper::save('compromisso.save');
                 JToolBarHelper::cancel('compromisso.cancel', $isNew ? 'JTOOLBAR_CANCEL' : 'JTOOLBAR_CLOSE');
+        }
+
+        /**
+         * Method to set up the document properties
+         *
+         * @return void
+         */
+        protected function setDocument() 
+        {
+                $isNew = ($this->item->id < 1);
+                $document = JFactory::getDocument();
+                $document->setTitle($isNew ? JText::_('COM_AGENDADIRIGENTES_MANAGER_COMPROMISSO_NEW')
+                                           : JText::_('COM_AGENDADIRIGENTES_MANAGER_COMPROMISSO_EDIT'));
+                $document->addScript(JURI::root() . $this->script);
+                $document->addScript(JURI::root() . "/administrator/components/com_agendadirigentes"
+                                                  . "/views/compromisso/submitbutton.js");
+                JText::script('COM_AGENDADIRIGENTES_FORMVALIDATOR_ERROR_UNACCEPTABLE');
         }
 }

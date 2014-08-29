@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<form>
+<form addrulepath="/administrator/components/com_agendadirigentes/models/rules">
         <fieldset addfieldpath="/administrator/components/com_agendadirigentes/models/fields">
                 <field
                         name="id"
@@ -17,8 +17,9 @@
                         description="COM_AGENDADIRIGENTES_COMPROMISSOS_TITLE_DESC"
                         cols="40"
                         rows="5"
-                        class="inputbox"
+                        class="inputbox validate-compromisso-title"
                         default=""
+                        required="true"
                 />
                 <field
                         name="catid"
@@ -28,6 +29,8 @@
                         label="COM_AGENDADIRIGENTES_COMPROMISSOS_CATID_LABEL"
                         description="COM_AGENDADIRIGENTES_COMPROMISSOS_CATID_DESC"
                         default=""
+                        required="true"
+                        class="inputbox validate-compromisso-catid"
                 />
                 <field
                         name="published"
@@ -56,6 +59,9 @@
                         label="COM_AGENDADIRIGENTES_COMPROMISSOS_DATA_INICIAL_LABEL"
                         description="COM_AGENDADIRIGENTES_COMPROMISSOS_DATA_INICIAL_DESC"
                         default=""
+                        required="true"
+                        onchange="copiarValorParaDataFinal( this );"
+                        class="inputbox validate-compromisso-data_inicial"
                 />
                 <field
                         name="data_final"
@@ -64,6 +70,8 @@
                         label="COM_AGENDADIRIGENTES_COMPROMISSOS_DATA_FINAL_LABEL"
                         description="COM_AGENDADIRIGENTES_COMPROMISSOS_DATA_FINAL_DESC"
                         default=""
+                        required="true"
+                        class="inputbox validate-compromisso-data_final"
                 />
                 <field
                         name="dia_todo"

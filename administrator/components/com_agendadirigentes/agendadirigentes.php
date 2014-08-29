@@ -8,7 +8,11 @@
 */
  
 // impedir acesso direto ao arquivo
-defined('_JEXEC') or die;
+defined('_JEXEC') or die('Restricted access');
+
+// Set some global property
+$document = JFactory::getDocument();
+$document->addStyleDeclaration('.icon-compromisso {background-image: url(../media/com_agendadirigentes/images/icon-calendar.png);}');
  
 // import joomla controller library
 jimport('joomla.application.component.controller');

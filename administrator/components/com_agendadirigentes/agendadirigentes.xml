@@ -35,6 +35,10 @@
                 <language tag="en-GB">en-GB.com_agendadirigentes.ini</language>
                 <language tag="pt-BR">pt-BR.com_agendadirigentes.ini</language>
         </languages>
+        <media destination="com_agendadirigentes" folder="media">
+                <filename>index.html</filename>
+                <folder>images</folder>
+        </media>
         <administration>
                 <languages folder="language">
                         <language tag="en-GB">en-GB.com_agendadirigentes.ini</language>
@@ -43,7 +47,7 @@
                         <language tag="pt-BR">pt-BR.com_agendadirigentes.sys.ini</language>
                 </languages>
                 <!-- Administration Menu Section -->
-                <menu>COM_AGENDADIRIGENTES_MENU</menu>
+                <menu img="../media/com_agendadirigentes/images/icon-calendar.png">COM_AGENDADIRIGENTES_MENU</menu>
                 <submenu>
                         <menu view="compromissos" link="option=com_agendadirigentes&amp;view=compromissos">COM_AGENDADIRIGENTES_MENU_COMPROMISSOS</menu>
                         <menu view="dirigentes" link="option=com_agendadirigentes&amp;view=dirigentes">COM_AGENDADIRIGENTES_MENU_DIRIGENTES</menu>
