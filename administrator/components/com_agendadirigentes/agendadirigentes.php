@@ -10,6 +10,9 @@
 // impedir acesso direto ao arquivo
 defined('_JEXEC') or die('Restricted access');
 
+// require helper file
+JLoader::register('AgendaDirigentesHelper', JPATH_COMPONENT. '/helpers/agendadirigentes.php');
+
 // Set some global property
 $document = JFactory::getDocument();
 $document->addStyleDeclaration('.icon-compromisso {background-image: url(../media/com_agendadirigentes/images/icon-calendar.png);}');

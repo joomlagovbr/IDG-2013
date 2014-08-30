@@ -4,11 +4,14 @@
                 <field
                         name="id"
                         type="hidden"
+                        filter="integer"
                 />
                 <field
                         name="compromisso_alterado"
                         type="hidden"
                         default="0"
+                        validate="boolean"
+                        filter="integer"
                 />
                 <field
                         name="title"
@@ -18,26 +21,33 @@
                         cols="40"
                         rows="5"
                         class="inputbox validate-compromisso-title"
+                        validate="titleorname"
                         default=""
                         required="true"
+                        filter="string"
                 />
                 <field
                         name="catid"
-                        type="category"
-                        show_root="1"
+                        type="category"                        
                         extension="com_agendadirigentes"
                         label="COM_AGENDADIRIGENTES_COMPROMISSOS_CATID_LABEL"
                         description="COM_AGENDADIRIGENTES_COMPROMISSOS_CATID_DESC"
                         default=""
-                        required="true"
                         class="inputbox validate-compromisso-catid"
-                />
+                        required="true"
+                        validate="catid"
+                        filter="integer"
+                >
+                        <option value="0">COM_AGENDADIRIGENTES_LIST_SELECT</option>
+                </field>
                 <field
                         name="published"
                         type="radio"
                         label="COM_AGENDADIRIGENTES_COMPROMISSOS_PUBLISHED_LABEL"
                         description="COM_AGENDADIRIGENTES_COMPROMISSOS_PUBLISHED_DESC"
                         default="0"
+                        validate="boolean"
+                        filter="integer"
                         >
                         <option value="0">JNO</option>
                         <option value="1">JYES</option>
@@ -48,6 +58,8 @@
                         label="COM_AGENDADIRIGENTES_COMPROMISSOS_FEATURED_LABEL"
                         description="COM_AGENDADIRIGENTES_COMPROMISSOS_FEATURED_DESC"
                         default="0"
+                        validate="boolean"
+                        filter="integer"
                         >
                         <option value="0">JNO</option>
                         <option value="1">JYES</option>
@@ -62,6 +74,8 @@
                         required="true"
                         onchange="copiarValorParaDataFinal( this );"
                         class="inputbox validate-compromisso-data_inicial"
+                        validate="databrasil"
+                        filter="string"
                 />
                 <field
                         name="data_final"
@@ -72,6 +86,8 @@
                         default=""
                         required="true"
                         class="inputbox validate-compromisso-data_final"
+                        validate="databrasil"
+                        filter="string"
                 />
                 <field
                         name="dia_todo"
@@ -79,6 +95,8 @@
                         label="COM_AGENDADIRIGENTES_COMPROMISSOS_DIA_TODO_LABEL"
                         description="COM_AGENDADIRIGENTES_COMPROMISSOS_DIA_TODO_DESC"
                         default="0"
+                        validate="boolean"
+                        filter="integer"
                         >
                         <option value="0">JNO</option>
                         <option value="1">JYES</option>
@@ -89,6 +107,8 @@
                         label="COM_AGENDADIRIGENTES_COMPROMISSOS_EXIBIR_HORARIO_INICIO_LABEL"
                         description="COM_AGENDADIRIGENTES_COMPROMISSOS_EXIBIR_HORARIO_INICIO_DESC"
                         default="0"
+                        validate="boolean"
+                        filter="integer"                     
                         >
                         <option value="0">JNO</option>
                         <option value="1">JYES</option>
@@ -101,6 +121,8 @@
                         label="COM_AGENDADIRIGENTES_COMPROMISSOS_HORARIO_INICIO_LABEL"
                         description="COM_AGENDADIRIGENTES_COMPROMISSOS_HORARIO_INICIO_DESC"
                         default=""
+                        validate="hora"
+                        filter="string"
                 />
                 <field
                         name="exibir_horario_fim"
@@ -108,6 +130,8 @@
                         label="COM_AGENDADIRIGENTES_COMPROMISSOS_EXIBIR_HORARIO_FIM_LABEL"
                         description="COM_AGENDADIRIGENTES_COMPROMISSOS_EXIBIR_HORARIO_FIM_DESC"
                         default="0"
+                        validate="boolean"
+                        filter="integer"
                         >
                         <option value="0">JNO</option>
                         <option value="1">JYES</option>
@@ -120,6 +144,8 @@
                         label="COM_AGENDADIRIGENTES_COMPROMISSOS_HORARIO_FIM_LABEL"
                         description="COM_AGENDADIRIGENTES_COMPROMISSOS_HORARIO_FIM_DESC"
                         default=""
+                        validate="hora"
+                        filter="string"
                 />
                 <field
                         name="exibir_local"
@@ -127,6 +153,8 @@
                         label="COM_AGENDADIRIGENTES_COMPROMISSOS_EXIBIR_LOCAL_LABEL"
                         description="COM_AGENDADIRIGENTES_COMPROMISSOS_EXIBIR_LOCAL_DESC"
                         default="1"
+                        validate="boolean"
+                        filter="integer"
                         >
                         <option value="0">JNO</option>
                         <option value="1">JYES</option>
@@ -136,17 +164,19 @@
                         type="textarea"
                         label="COM_AGENDADIRIGENTES_COMPROMISSOS_LOCAL_LABEL"
                         description="COM_AGENDADIRIGENTES_COMPROMISSOS_LOCAL_DESC"
-                        default=""
+                        default="string"
                 />
                 <field
                         name="ordering"
                         type="hidden"
                         default="0"
+                        filter="integer"
                 />
                 <field
                         name="params"
                         type="hidden"
                         default=""
+                        filter="string"
                 />
                 <field
                         name="description"
@@ -155,6 +185,7 @@
                         description="COM_AGENDADIRIGENTES_COMPROMISSOS_DESCRIPTION_DESC"
                         default=""
                         readonly="true"
+                        filter="raw"
                 />
                 <field
                         name="created"
@@ -163,6 +194,7 @@
                         description="COM_AGENDADIRIGENTES_COMPROMISSOS_CREATED_DESC"
                         default=""
                         readonly="true"
+                        filter="string"
                 />
                 <field
                         name="created_by"
@@ -171,6 +203,7 @@
                         description="COM_AGENDADIRIGENTES_COMPROMISSOS_CREATED_BY_DESC"
                         default=""
                         readonly="true"
+                        filter="integer"
                 />
                 <field
                         name="modified"
@@ -179,6 +212,7 @@
                         description="COM_AGENDADIRIGENTES_COMPROMISSOS_MODIFIED_DESC"
                         default=""
                         readonly="true"
+                        filter="string"
                 />
                 <field
                         name="modified_by"
@@ -187,14 +221,7 @@
                         description="COM_AGENDADIRIGENTES_COMPROMISSOS_MODIFIED_BY_DESC"
                         default=""
                         readonly="true"
-                />
-                <field
-                        name="modified_by"
-                        type="text"
-                        label="COM_AGENDADIRIGENTES_COMPROMISSOS_MODIFIED_BY_LABEL"
-                        description="COM_AGENDADIRIGENTES_COMPROMISSOS_MODIFIED_BY_DESC"
-                        default=""
-                        readonly="true"
+                        filter="integer"
                 />
                 <field
                         name="language"
@@ -203,6 +230,7 @@
                         label="COM_AGENDADIRIGENTES_COMPROMISSOS_LANGUAGE_LABEL"
                         description="COM_AGENDADIRIGENTES_COMPROMISSOS_LANGUAGE_DESC"
                         default="pt-BR"
+                        filter="string"
                 />
                 <field
                         name="version"
@@ -211,6 +239,7 @@
                         description="COM_AGENDADIRIGENTES_COMPROMISSOS_VERSION_DESC"
                         default="0"
                         readonly="true"
+                        filter="integer"
                 />
         </fieldset>
 </form>

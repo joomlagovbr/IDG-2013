@@ -27,6 +27,8 @@ class AgendaDirigentesViewDirigentes extends JViewLegacy
                 // Get data from the model
                 $items = $this->get('Items');
                 $pagination = $this->get('Pagination');
+
+                AgendaDirigentesHelper::addSubmenu('dirigentes');
  
                 // Check for errors.
                 if (count($errors = $this->get('Errors'))) 
@@ -40,6 +42,9 @@ class AgendaDirigentesViewDirigentes extends JViewLegacy
 
                 // Set the toolbar
                 $this->addToolBar($this->pagination->total);
+ 
+                //set sidebar menu
+                $this->sidebar = JHtmlSidebar::render();
  
                 // Display the template
                 parent::display($tpl);
@@ -57,9 +62,9 @@ class AgendaDirigentesViewDirigentes extends JViewLegacy
                         //Reflect number of items in title!
                         ($total?' <span style="font-size: 0.5em; vertical-align: middle;">('.$total.')</span>':'')
                         , 'compromisso');
-                JToolBarHelper::deleteList('', 'dirigentes.delete');
-                JToolBarHelper::editList('dirigente.edit');
                 JToolBarHelper::addNew('dirigente.add');
+                JToolBarHelper::editList('dirigente.edit');
+                JToolBarHelper::deleteList('', 'dirigentes.delete');
         }
 
         /**

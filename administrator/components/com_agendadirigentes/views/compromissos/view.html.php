@@ -27,7 +27,9 @@ class AgendaDirigentesViewCompromissos extends JViewLegacy
                 // Get data from the model
                 $items = $this->get('Items');
                 $pagination = $this->get('Pagination');
- 
+                
+                AgendaDirigentesHelper::addSubmenu('compromissos');
+
                 // Check for errors.
                 if (count($errors = $this->get('Errors'))) 
                 {
@@ -41,9 +43,12 @@ class AgendaDirigentesViewCompromissos extends JViewLegacy
                 // Set the toolbar
                 $this->addToolBar($this->pagination->total);
 
+                //set sidebar menu
+                $this->sidebar = JHtmlSidebar::render();
+
                 // Display the template
                 parent::display($tpl);
- 
+            
                 // Set the document
                 $this->setDocument();
         }
@@ -57,9 +62,9 @@ class AgendaDirigentesViewCompromissos extends JViewLegacy
                         //Reflect number of items in title!
                         ($total?' <span style="font-size: 0.5em; vertical-align: middle;">('.$total.')</span>':'')
                         , 'compromisso');
-                JToolBarHelper::deleteList('', 'compromissos.delete');
-                JToolBarHelper::editList('compromisso.edit');
                 JToolBarHelper::addNew('compromisso.add');
+                JToolBarHelper::editList('compromisso.edit');
+                JToolBarHelper::deleteList('', 'compromissos.delete');
         }
 
         /**

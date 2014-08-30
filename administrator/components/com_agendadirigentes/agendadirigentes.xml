@@ -59,11 +59,14 @@
                         <filename>index.html</filename>
                         <filename>agendadirigentes.php</filename>
                         <filename>access.xml</filename>
+                        <filename>controller.php</filename>
+                        <folder>assets</folder>
+                        <folder>controllers</folder>
+                        <folder>helpers</folder>
+                        <folder>models</folder>
                         <folder>sql</folder>
                         <folder>tables</folder>
-                        <folder>models</folder>
                         <folder>views</folder>
-                        <folder>controllers</folder>
                 </files>
         </administration> 
 </extension>

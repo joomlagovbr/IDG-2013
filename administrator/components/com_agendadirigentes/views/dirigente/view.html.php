@@ -73,5 +73,13 @@ class AgendaDirigentesViewDirigente extends JViewLegacy
                 $document = JFactory::getDocument();
                 $document->setTitle($isNew ? JText::_('COM_AGENDADIRIGENTES_MANAGER_DIRIGENTE_NEW')
                                            : JText::_('COM_AGENDADIRIGENTES_MANAGER_DIRIGENTE_EDIT'));
+                //regras de validacao
+                $document->addScript(JURI::root() . "/administrator/components/com_agendadirigentes"
+                                                  . "/assets/js/rules.dirigente.js");
+                //funcao de submit geral
+                $document->addScript(JURI::root() . "/administrator/components/com_agendadirigentes"
+                                                  . "/assets/js/submitbutton.js");
+                //strings a serem traduzidas nos arquivos js
+                JText::script('COM_AGENDADIRIGENTES_FORMVALIDATOR_ERROR_UNACCEPTABLE');
         }
 }

@@ -15,16 +15,16 @@ jimport('joomla.form.helper');
 JFormHelper::loadFieldClass('list');
  
 /**
- * HelloWorld Form Field class for the HelloWorld component
+ * Dirigentes Form Field class for the AgendaDirigentes component
  */
-class JFormFieldAutoridades extends JFormFieldList
+class JFormFieldDirigentes extends JFormFieldList
 {
         /**
          * The field type.
          *
          * @var         string
          */
-        protected $type = 'Autoridades';
+        protected $type = 'Dirigentes';
  
         /**
          * Method to get a list of options for a list input.
@@ -35,16 +35,19 @@ class JFormFieldAutoridades extends JFormFieldList
         {
                 $db = JFactory::getDBO();
                 $query = $db->getQuery(true);
-                $query->select('id,name');
-                $query->from('#__agendadirigentes_autoridades');
+                $query->select('dir.id, dir.name, cat.title AS category_title')
+                        ->from( $db->quoteName('#__agendadirigentes_dirigentes', 'dir') )
+                        ->join('INNER', $db->quoteName('#__categories', 'cat')
+                                . ' ON (' . $db->quoteName('dir.catid') . ' = ' . $db->quoteName('cat.id') . ')');
                 $db->setQuery((string)$query);
-                $autoridades = $db->loadObjectList();
+                $dirigentes = $db->loadObjectList();
                 $options = array();
-                if ($autoridades)
+                if ($dirigentes)
                 {
-                        foreach($autoridades as $autoridade) 
+                        foreach($dirigentes as $dirigente) 
                         {
-                                $options[] = JHtml::_('select.option', $autoridade->id, $autoridade->name);
+                                $options[] = JHtml::_('select.option', $dirigente->id,
+                                        '('.$dirigente->category_title.') '.$dirigente->name);
                         }
                 }
                 $options = array_merge(parent::getOptions(), $options);

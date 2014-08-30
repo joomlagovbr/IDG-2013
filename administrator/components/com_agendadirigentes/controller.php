@@ -30,8 +30,6 @@ class AgendaDirigentesController extends JControllerLegacy
                 $input->set('view', $input->getCmd('view', 'Dirigentes'));
  
                 // call parent behavior
-                parent::display($cachable);
+                parent::display($cachable, $urlparams);
         }
 }
-
-###http://docs.joomla.org/J3.x:Developing_a_MVC_Component/Basic_backend

@@ -27,6 +27,8 @@ class AgendaDirigentesViewCargos extends JViewLegacy
                 // Get data from the model
                 $items = $this->get('Items');
                 $pagination = $this->get('Pagination');
+
+                AgendaDirigentesHelper::addSubmenu('cargos');
  
                 // Check for errors.
                 if (count($errors = $this->get('Errors'))) 
@@ -41,6 +43,9 @@ class AgendaDirigentesViewCargos extends JViewLegacy
                 // Set the toolbar
                 $this->addToolBar($this->pagination->total);
                 
+                //set sidebar menu
+                $this->sidebar = JHtmlSidebar::render();
+                
                 // Display the template
                 parent::display($tpl);
  
@@ -51,15 +56,15 @@ class AgendaDirigentesViewCargos extends JViewLegacy
         /**
          * Setting the toolbar
          */
-        protected function addToolBar() 
+        protected function addToolBar( $total = NULL ) 
         {
                 JToolBarHelper::title(JText::_('COM_AGENDADIRIGENTES_MANAGER_CARGOS').
                         //Reflect number of items in title!
                         ($total?' <span style="font-size: 0.5em; vertical-align: middle;">('.$total.')</span>':'')
                         , 'compromisso');
-                JToolBarHelper::deleteList('', 'cargos.delete');
-                JToolBarHelper::editList('cargo.edit');
                 JToolBarHelper::addNew('cargo.add');
+                JToolBarHelper::editList('cargo.edit');
+                JToolBarHelper::deleteList('', 'cargos.delete');
         }
 
         /**

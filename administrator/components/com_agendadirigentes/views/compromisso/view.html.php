@@ -81,9 +81,13 @@ class AgendaDirigentesViewCompromisso extends JViewLegacy
                 $document = JFactory::getDocument();
                 $document->setTitle($isNew ? JText::_('COM_AGENDADIRIGENTES_MANAGER_COMPROMISSO_NEW')
                                            : JText::_('COM_AGENDADIRIGENTES_MANAGER_COMPROMISSO_EDIT'));
-                $document->addScript(JURI::root() . $this->script);
+                //regras de validacao
                 $document->addScript(JURI::root() . "/administrator/components/com_agendadirigentes"
-                                                  . "/views/compromisso/submitbutton.js");
+                                                  . "/assets/js/rules.compromisso.js");
+                //funcao de submit geral
+                $document->addScript(JURI::root() . "/administrator/components/com_agendadirigentes"
+                                                  . "/assets/js/submitbutton.js");
+                //strings a serem traduzidas nos arquivos js
                 JText::script('COM_AGENDADIRIGENTES_FORMVALIDATOR_ERROR_UNACCEPTABLE');
         }
 }

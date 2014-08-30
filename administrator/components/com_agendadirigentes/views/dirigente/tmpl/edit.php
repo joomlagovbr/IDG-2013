@@ -11,9 +11,10 @@
 defined('_JEXEC') or die;
 
 JHtml::_('behavior.tooltip');
+JHtml::_('behavior.formvalidation');
 ?>
 <form action="<?php echo JRoute::_('index.php?option=com_agendadirigentes&layout=edit&id=' . (int) $this->item->id); ?>"
-    method="post" name="adminForm" id="adminForm">
+    method="post" name="adminForm" id="adminForm" class="form-validate">
     <div class="form-horizontal">
         <fieldset class="adminform">
             <legend><?php echo JText::_('COM_AGENDADIRIGENTES_DIRIGENTE_DETAILS'); ?></legend>

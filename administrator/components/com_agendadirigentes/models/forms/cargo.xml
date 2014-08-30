@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<form>
-        <fieldset>
+<form addrulepath="/administrator/components/com_agendadirigentes/models/rules">
+        <fieldset addfieldpath="/administrator/components/com_agendadirigentes/models/fields">
                 <field
                         name="id"
                         type="hidden"
+                        filter="integer"
                 />
                 <field
                         name="name"
@@ -11,17 +12,26 @@
                         label="COM_AGENDADIRIGENTES_CARGOS_NAME_LABEL"
                         description="COM_AGENDADIRIGENTES_CARGOS_NAME_DESC"
                         size="40"
-                        class="inputbox"
+                        maxlength="255"
+                        class="inputbox validate-cargo-name"
                         default=""
+                        required="true"
+                        validate="titleorname"
+                        filter="string"
                 />
                 <field
                         name="catid"
                         type="category"
-                        show_root="1"
                         extension="com_agendadirigentes"
                         label="COM_AGENDADIRIGENTES_CARGOS_CATID_LABEL"
                         description="COM_AGENDADIRIGENTES_CARGOS_CATID_DESC"
+                        class="inputbox validate-cargo-catid"
                         default=""
-                />
+                        required="true"
+                        validate="catid"
+                        filter="integer"
+                >
+                        <option value="0">COM_AGENDADIRIGENTES_LIST_SELECT</option>
+                </field>
         </fieldset>
 </form>

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<form>
+<form addrulepath="/administrator/components/com_agendadirigentes/models/rules">
         <fieldset addfieldpath="/administrator/components/com_agendadirigentes/models/fields">
                 <field
                         name="id"
                         type="hidden"
+                        filter="integer"
                 />
                 <field
                         name="name"
@@ -11,24 +12,36 @@
                         label="COM_AGENDADIRIGENTES_DIRIGENTES_NAME_LABEL"
                         description="COM_AGENDADIRIGENTES_DIRIGENTES_NAME_DESC"
                         size="40"
-                        class="inputbox"
+                        class="inputbox validate-dirigente-name"
+                        validate="titleorname"
                         default=""
+                        required="true"
+                        filter="string"
                 />
                 <field
                         name="catid"
                         type="category"
-                        show_root="1"
                         extension="com_agendadirigentes"
                         label="COM_AGENDADIRIGENTES_DIRIGENTES_CATID_LABEL"
                         description="COM_AGENDADIRIGENTES_DIRIGENTES_CATID_DESC"
                         default=""
-                />
+                        class="inputbox validate-dirigente-catid"
+                        required="true"
+                        validate="catid"
+                        filter="integer"
+                >
+                        <option value="0">COM_AGENDADIRIGENTES_LIST_SELECT</option>
+                </field>
                 <field
                         name="cargo_id"
                         type="cargo"
                         label="COM_AGENDADIRIGENTES_DIRIGENTES_CARGO_ID_LABEL"
                         description="COM_AGENDADIRIGENTES_DIRIGENTES_CARGO_ID_DESC"
                         default=""
+                        class="inputbox validate-dirigente-cargo"
+                        required="true"
+                        validate="cargo"
+                        filter="integer"
                 />
                 <field
                         name="block"
@@ -36,6 +49,8 @@
                         label="COM_AGENDADIRIGENTES_DIRIGENTES_BLOCK_LABEL"
                         description="COM_AGENDADIRIGENTES_DIRIGENTES_BLOCK_DESC"
                         default="0"
+                        validate="boolean"
+                        filter="integer"
                         >
                         <option value="0">JNO</option>
                         <option value="1">JYES</option>
@@ -45,7 +60,8 @@
                         type="dirigenteordering"
                         label="COM_AGENDADIRIGENTES_DIRIGENTES_ORDERING_LABEL"
                         description="COM_AGENDADIRIGENTES_DIRIGENTES_ORDERING_DESC"
-                        default=""
+                        default="0"
+                        filter="integer"
                 />
         </fieldset>
 </form>
