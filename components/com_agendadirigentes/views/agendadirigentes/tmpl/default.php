@@ -11,3 +11,6 @@
 defined('_JEXEC') or die;
 ?>
 <h1><?php echo $this->msg; ?></h1>
+<h1><?php echo $this->item->title.(($this->item->local and $this->item->params->get('exibir_local'))
+                                      ? (' ('.$this->item->local.')') : ''); ?>
+</h1>

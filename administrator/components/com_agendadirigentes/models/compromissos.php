@@ -31,9 +31,9 @@ class AgendaDirigentesModelCompromissos extends JModelList
                 $query
                     ->select('DISTINCT(comp.id), comp.catid, comp.checked_out, comp.title, comp.data_inicial')
                     ->select(' comp.data_final, comp.horario_inicio, comp.horario_fim, comp.description, comp.local')
-                    ->select(' comp.exibir_local, comp.exibir_horario_inicio, comp.exibir_horario_fim, comp.ordering')
-                    ->select(' comp.published, comp.dia_todo')
-                    ->select(' dc.status, dc.owner')
+                    ->select(' comp.params, comp.ordering')
+                    ->select(' comp.state, comp.dia_todo')
+                    ->select(' dc.sobreposto, dc.owner')
                     ->select(' dir.name AS nameOwner, dir.id AS idOwner')
                     ->select(' car.name AS cargoOwner')
                     ->select(' cat.title AS titleCategory')

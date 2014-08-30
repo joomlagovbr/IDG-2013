@@ -65,6 +65,7 @@ class AgendaDirigentesViewCompromissos extends JViewLegacy
                 JToolBarHelper::addNew('compromisso.add');
                 JToolBarHelper::editList('compromisso.edit');
                 JToolBarHelper::deleteList('', 'compromissos.delete');
+                JToolBarHelper::preferences('com_agendadirigentes');
         }
 
         /**

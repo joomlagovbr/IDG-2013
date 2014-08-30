@@ -22,7 +22,14 @@ JHtml::_('behavior.tooltip');
                         <?php echo JHtml::_('grid.id', $i, $item->id); ?>
                 </td>
                 <td>
-                        <?php echo $item->name; ?>
+                    <?php 
+                        $canEdit = true;
+                        if ($canEdit) : ?>
+                        <a href="<?php echo JRoute::_('index.php?option=com_agendadirigentes&task=dirigente.edit&id=' . (int) $item->id); ?>">
+                            <?php echo $this->escape($item->name); ?></a>
+                    <?php else : ?>
+                        <?php echo $this->escape($item->name); ?>
+                    <?php endif; ?>
                 </td>
                 <td>
                         <?php echo $item->cargo; ?>

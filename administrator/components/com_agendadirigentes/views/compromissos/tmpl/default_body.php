@@ -22,25 +22,38 @@ JHtml::_('behavior.tooltip');
                         <?php echo JHtml::_('grid.id', $i, $item->id); ?>
                 </td>
                 <td>
-                        <?php echo $item->title; ?>
+                    <?php 
+                        $canEdit = true;
+                        if ($canEdit) : ?>
+                        <a href="<?php echo JRoute::_('index.php?option=com_agendadirigentes&task=compromisso.edit&id=' . (int) $item->id); ?>">
+                            <?php echo $this->escape($item->title); ?></a>
+                    <?php else : ?>
+                        <?php echo $this->escape($item->title); ?>
+                    <?php endif; ?>
+                </td>
+                <td>
+                        <?php echo $item->nameOwner; ?>
+                        <?php if($item->cargoOwner): ?>
+                        (<?php echo $item->cargoOwner; ?>)
+                        <?php endif; ?>
                 </td>
                 <td>
                         <?php echo $item->titleCategory; ?>
                 </td>
                 <td>
-                        <?php echo $item->published; ?>
-                </td>
-                <td>
-                        <?php echo $item->dia_todo; ?>
+                        <?php echo $item->state; ?>
                 </td>
                 <td>
                         <?php echo $item->data_inicial; ?>
                 </td>
                 <td>
-                        <?php echo $item->horario_inicio; ?>
+                        <?php echo $item->data_final; ?>
                 </td>
                 <td>
-                        <?php echo $item->data_final; ?>
+                        <?php echo $item->dia_todo; ?>
+                </td>
+                <td>
+                        <?php echo $item->horario_inicio; ?>
                 </td>
                 <td>
                         <?php echo $item->horario_fim; ?>
@@ -48,14 +61,8 @@ JHtml::_('behavior.tooltip');
                 <td>
                         <?php echo $item->ordering; ?>
                 </td>
-                <td>
+               <!--  <td>
                         <?php echo $item->local; ?>
-                </td>
-                <td>
-                        <?php echo $item->nameOwner; ?>
-                </td>
-                <td>
-                        <?php echo $item->cargoOwner; ?>
-                </td>
+                </td> -->
         </tr>
 <?php endforeach; ?>

@@ -19,10 +19,36 @@ jimport('joomla.application.component.modelitem');
 class AgendaDirigentesModelAgendaDirigentes extends JModelItem
 {
         /**
-         * @var array messages
+         * @var array item
          */
-        protected $messages;
+        protected $item;
+         
+         /**
+         * Method to auto-populate the model state.
+         *
+         * This method should only be called once per instantiation and is designed
+         * to be called on the first call to the getState() method unless the model
+         * configuration flag to ignore the request is set.
+         *
+         * Note. Calling getState in this method will result in recursion.
+         *
+         * @return      void
+         * @since       2.5
+         */
+        protected function populateState() 
+        {
+                $app = JFactory::getApplication();
+                // Get the message id
+                $input = JFactory::getApplication()->input;
+                $id = $input->getInt('id');
+                $this->setState('compromisso.id', $id);
  
+                // Load the parameters.
+                $params = $app->getParams();
+                $this->setState('params', $params);
+                parent::populateState();
+        }
+
         /**
          * Returns a reference to the a Table object, always creating it.
          *
@@ -42,30 +68,67 @@ class AgendaDirigentesModelAgendaDirigentes extends JModelItem
          * @param  int    The corresponding id of the message to be retrieved
          * @return string The message to be displayed to the user
          */
-        public function getMsg($id = 1) 
+        public function getItem() 
         {
-                if (!is_array($this->messages))
+                // if (!is_array($this->messages))
+                // {
+                //         $this->messages = array();
+                // }
+ 
+                // if (!isset($this->messages[$id])) 
+                // {
+                //         //request the selected id
+                //         $jinput = JFactory::getApplication()->input;
+                //         $id = $jinput->get('id', 1, 'INT' );
+ 
+                //         // Get a TableHelloWorld instance
+                //         $table = $this->getTable();
+ 
+                //         // Load the message
+                //         $table->load($id);
+ 
+                //         // Assign the message
+                //         $this->messages[$id] = $table->greeting;
+                // }
+ 
+                // return $this->messages[$id];
+
+                //
+                if (!isset($this->item)) 
                 {
-                        $this->messages = array();
+                        $db = JFactory::getDBO();
+                        $id = $this->getState('compromisso.id');
+                        
+                        $db->setQuery(
+
+                                $db->getQuery(true)
+                                ->from( $db->quoteName('#__agendadirigentes_compromissos', 'comp') )
+                                ->join( 'LEFT', $db->quoteName('#__categories', 'cat')
+                                        .' ON (' . $db->quoteName('comp.catid') . ' = ' . $db->quoteName('cat.id') . ')' )
+                                ->select('comp.title, comp.params, c.title as category, comp.local')
+                                ->where('comp.id=' . (int)$id)
+                        
+                        );
+
+                        if (!$this->item = $db->loadObject()) 
+                        {
+                                $this->setError($this->_db->getError());
+                        }
+                        else
+                        {
+                                // Load the JSON string
+                                $params = new JRegistry;                                
+                                $params->loadString($this->item->params, 'JSON');
+                                $this->item->params = $params;
+ 
+                                // Merge global params with item params
+                                $params = clone $this->getState('params');
+                                $params->merge($this->item->params);
+                                $this->item->params = $params;
+                        }
                 }
- 
-                if (!isset($this->messages[$id])) 
-                {
-                        //request the selected id
-                        $jinput = JFactory::getApplication()->input;
-                        $id = $jinput->get('id', 1, 'INT' );
- 
-                        // Get a TableHelloWorld instance
-                        $table = $this->getTable();
- 
-                        // Load the message
-                        $table->load($id);
- 
-                        // Assign the message
-                        $this->messages[$id] = $table->greeting;
-                }
- 
-                return $this->messages[$id];
+                return $this->item;
+                //
         }
  
         // public function getMsg() 

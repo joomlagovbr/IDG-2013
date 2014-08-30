@@ -22,38 +22,38 @@ defined('_JEXEC') or die;
                 <?php echo JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_TITLE'); ?>
         </th>
         <th>
+                <?php echo JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_OWNER'); ?>
+        </th>
+        <th>
                 <?php echo JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_CATEGORIA'); ?>
         </th>
         <th>
-                <?php echo JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_PUBLISHED'); ?>
-        </th>
-        <th>
-                <?php echo JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_DIA_TODO'); ?>
+                <?php echo JText::_('JSTATUS'); ?>
         </th>
         <th>
                 <?php echo JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_DATA_INICIAL'); ?>
         </th>
         <th>
-                <?php echo JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_HORARIO_INICIO'); ?>
+                <?php echo JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_DATA_FINAL'); ?>
         </th>
         <th>
-                <?php echo JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_DATA_FINAL'); ?>
+                <?php echo JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_DIA_TODO'); ?>
+        </th>
+        <th>
+                <?php echo JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_HORARIO_INICIO'); ?>
         </th>
         <th>
                 <?php echo JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_HORARIO_FIM'); ?>
         </th>
-        <th>
+        <!-- <th>
                 <?php echo JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_LOCAL'); ?>
-        </th>
+        </th> -->
         <th>
                 <?php echo JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_ORDERING'); ?>
         </th>
-        <th>
-                <?php echo JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_OWNER'); ?>
-        </th>
-        <th>
+<!--         <th>
                 <?php echo JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_OWNER_CARGO'); ?>
-        </th>
+        </th> -->
 </tr>
 <!-- COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_CHECKED_OUT -->
 

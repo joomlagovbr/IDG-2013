@@ -19,8 +19,8 @@ JHtml::_('behavior.formvalidation');
         <fieldset class="adminform">
             <legend><?php echo JText::_('COM_AGENDADIRIGENTES_COMPROMISSO_DETAILS'); ?></legend>
             <div class="row-fluid">
-                <div class="span6">
-                    <?php foreach ($this->form->getFieldset() as $field): ?>
+                <div class="span8">
+                    <?php foreach ($this->form->getFieldset('details') as $field): ?>
                         <div class="control-group">
                             <?php if (!$field->hidden): ?>
                             <div class="control-label"><?php echo $field->label; ?></div>
@@ -29,6 +29,22 @@ JHtml::_('behavior.formvalidation');
                         </div>
                     <?php endforeach; ?>
                 </div>
+                <div class="span4">
+                    <?php foreach ($this->form->getFieldset('display') as $field): ?>
+                        <div class="control-group">
+                            <?php if (!$field->hidden): ?>
+                            <div class="control-label"><?php echo $field->label; ?></div>
+                            <?php endif; ?>
+                            <div class="controls"><?php echo $field->input; ?></div>
+                        </div>
+                    <?php endforeach; ?>
+                    <?php //echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'display')); ?>
+                    <?php //echo JLayoutHelper::render('joomla.edit.params', $this); ?>
+                    <?php //echo JHtml::_('bootstrap.endTabSet'); ?>
+                </div>
+                <!-- <div class="span3">
+                    <?php //echo JLayoutHelper::render('joomla.edit.global', $this); ?>
+                </div> -->
             </div>
         </fieldset>
     </div>

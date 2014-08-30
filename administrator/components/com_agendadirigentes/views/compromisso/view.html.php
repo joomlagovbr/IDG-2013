@@ -66,7 +66,9 @@ class AgendaDirigentesViewCompromisso extends JViewLegacy
                 $isNew = ($this->item->id == 0);
                 JToolBarHelper::title($isNew ? JText::_('COM_AGENDADIRIGENTES_MANAGER_COMPROMISSO_NEW')
                                              : JText::_('COM_AGENDADIRIGENTES_MANAGER_COMPROMISSO_EDIT'), 'compromisso');
+                JToolBarHelper::apply('compromisso.apply');
                 JToolBarHelper::save('compromisso.save');
+                JToolBarHelper::save2new('compromisso.save2new');
                 JToolBarHelper::cancel('compromisso.cancel', $isNew ? 'JTOOLBAR_CANCEL' : 'JTOOLBAR_CLOSE');
         }
 

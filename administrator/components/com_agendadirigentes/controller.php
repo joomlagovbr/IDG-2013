@@ -27,7 +27,7 @@ class AgendaDirigentesController extends JControllerLegacy
         {
                 // set default view if not set
                 $input = JFactory::getApplication()->input;
-                $input->set('view', $input->getCmd('view', 'Dirigentes'));
+                $input->set('view', $input->getCmd('view', 'Compromissos'));
  
                 // call parent behavior
                 parent::display($cachable, $urlparams);

@@ -65,6 +65,7 @@ class AgendaDirigentesViewCargos extends JViewLegacy
                 JToolBarHelper::addNew('cargo.add');
                 JToolBarHelper::editList('cargo.edit');
                 JToolBarHelper::deleteList('', 'cargos.delete');
+                JToolBarHelper::preferences('com_agendadirigentes');
         }
 
         /**

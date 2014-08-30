@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+        <fieldset
+                name="general"
+                label="COM_AGENDADIRIGENTES_CONFIG_GENERAL_SETTINGS_LABEL"
+        >
+                <!-- description="COM_AGENDADIRIGENTES_CONFIG_GENERAL_SETTINGS_DESC" -->
+                <field
+                        name="email_administrators"
+                        type="textarea"
+                        cols="40"
+                        rows="4"
+                        label="COM_AGENDADIRIGENTES_EMAIL_ADMINISTRATORS_LABEL"
+                        description="COM_AGENDADIRIGENTES_EMAIL_ADMINISTRATORS_DESC"
+                        default=""
+                />
+        </fieldset>
+        <fieldset
+                name="compromissos"
+                label="COM_AGENDADIRIGENTES_CONFIG_COMPROMISSOS_SETTINGS_LABEL"
+        >
+                <!-- description="COM_AGENDADIRIGENTES_CONFIG_COMPROMISSOS_SETTINGS_DESC" -->
+                <field
+                        name="exibir_horario_inicio"
+                        type="list"
+                        label="COM_AGENDADIRIGENTES_COMPROMISSOS_EXIBIR_HORARIO_INICIO_LABEL"
+                        description="COM_AGENDADIRIGENTES_COMPROMISSOS_EXIBIR_HORARIO_INICIO_DESC"
+                        default="1"
+                        >
+                        <option value="0">JHIDE</option>
+                        <option value="1">JSHOW</option>
+                </field>
+                <field
+                        name="exibir_horario_fim"
+                        type="list"
+                        label="COM_AGENDADIRIGENTES_COMPROMISSOS_EXIBIR_HORARIO_FIM_LABEL"
+                        description="COM_AGENDADIRIGENTES_COMPROMISSOS_EXIBIR_HORARIO_FIM_DESC"
+                        default="1"
+                        >
+                        <option value="0">JHIDE</option>
+                        <option value="1">JSHOW</option>
+                </field>
+                <field
+                        name="exibir_local"
+                        type="list"
+                        label="COM_AGENDADIRIGENTES_COMPROMISSO_PARAM_EXIBIR_LOCAL_LABEL"
+                        description="COM_AGENDADIRIGENTES_COMPROMISSO_PARAM_EXIBIR_LOCAL_DESC"
+                        default="1"
+                >                                
+                        <option value="0">JHIDE</option>
+                        <option value="1">JSHOW</option>
+                </field>
+        </fieldset>
+</config>
