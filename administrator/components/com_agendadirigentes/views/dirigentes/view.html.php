@@ -24,6 +24,12 @@ class AgendaDirigentesViewDirigentes extends JViewLegacy
          */
         function display($tpl = null) 
         {
+                $this->canDo  = JHelperContent::getActions('com_agendadirigentes');
+                
+                if (!$this->canDo->get('dirigentes.list')) {
+                    return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+                }
+
                 // Get data from the model
                 $items = $this->get('Items');
                 $pagination = $this->get('Pagination');

@@ -18,6 +18,7 @@ CREATE TABLE `#__agendadirigentes_compromissos_anteriores` (
 DROP TABLE IF EXISTS `#__agendadirigentes_dirigentes`;
 CREATE TABLE `#__agendadirigentes_dirigentes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `asset_id` int(11) NOT NULL DEFAULT '0',
   `name` varchar(255) DEFAULT NULL,
   `catid` int(11) NOT NULL,
   `cargo_id` int(11) NOT NULL,

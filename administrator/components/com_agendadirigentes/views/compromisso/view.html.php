@@ -24,6 +24,7 @@ class AgendaDirigentesViewCompromisso extends JViewLegacy
          * @var         form
          */
         protected $form = null;
+
         /**
          * display method of Compromisso
          * @return void
@@ -66,9 +67,35 @@ class AgendaDirigentesViewCompromisso extends JViewLegacy
                 $isNew = ($this->item->id == 0);
                 JToolBarHelper::title($isNew ? JText::_('COM_AGENDADIRIGENTES_MANAGER_COMPROMISSO_NEW')
                                              : JText::_('COM_AGENDADIRIGENTES_MANAGER_COMPROMISSO_EDIT'), 'compromisso');
-                JToolBarHelper::apply('compromisso.apply');
-                JToolBarHelper::save('compromisso.save');
-                JToolBarHelper::save2new('compromisso.save2new');
+                
+                // Since we don't track these assets at the item level, use the category id.
+                $canDo = JHelperContent::getActions('com_agendadirigentes');
+                // $canDo = JHelperContent::getActions('com_agendadirigentes', 'compromisso', $this->item->catid);
+
+                if ($isNew)
+                {
+                    if ($canDo->get('core.create'))
+                    {
+                        JToolBarHelper::apply('compromisso.apply');
+                        JToolBarHelper::save('compromisso.save');
+                        JToolBarHelper::save2new('compromisso.save2new');
+                    }                   
+                }
+                else
+                {
+                    if ($canDo->get('core.edit'))
+                    {
+                        JToolBarHelper::apply('compromisso.apply');
+                        JToolBarHelper::save('compromisso.save');
+                        JToolBarHelper::save2new('compromisso.save2new');
+                    }
+
+                    if ($canDo->get('core.create'))
+                    {
+                        JToolBarHelper::save2copy('compromisso.save2copy');
+                    }                     
+                }
+
                 JToolBarHelper::cancel('compromisso.cancel', $isNew ? 'JTOOLBAR_CANCEL' : 'JTOOLBAR_CLOSE');
         }
 

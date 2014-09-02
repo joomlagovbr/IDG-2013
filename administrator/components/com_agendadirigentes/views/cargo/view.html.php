@@ -18,34 +18,52 @@ jimport('joomla.application.component.view');
  */
 class AgendaDirigentesViewCargo extends JViewLegacy
 {
+        protected $canDo = null;
+
         /**
          * display method of Cargo
          * @return void
          */
         public function display($tpl = null) 
         {
-                // get the Data
-                $form = $this->get('Form');
-                $item = $this->get('Item');
- 
-                // Check for errors.
-                if (count($errors = $this->get('Errors'))) 
-                {
-                        JError::raiseError(500, implode('<br />', $errors));
-                        return false;
-                }
-                // Assign the Data
-                $this->form = $form;
-                $this->item = $item;
- 
-                // Set the toolbar
-                $this->addToolBar();
- 
-                // Display the template
-                parent::display($tpl);
+          // get the Data
+          $form = $this->get('Form');
+          $item = $this->get('Item');
 
-                // Set the document
-                $this->setDocument();
+          if ( !empty($item->catid) ) {
+            //sempre que section != 'component', essa devera ser a funcao de getActions
+            $this->canDo = AgendaDirigentesHelper::getActions('com_agendadirigentes', 'category', $item->catid);
+            if (!$this->canDo->get('dirigentes.manage')) {
+              JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+              $app = JFactory::getApplication();
+              $app->redirect('index.php');
+            }
+          }
+
+          if (!$this->canDo->get('cargos.manage')) {
+            JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+            $app = JFactory::getApplication();
+            $app->redirect('index.php');
+          }
+
+          // Check for errors.
+          if (count($errors = $this->get('Errors'))) 
+          {
+                  JError::raiseError(500, implode('<br />', $errors));
+                  return false;
+          }
+          // Assign the Data
+          $this->form = $form;
+          $this->item = $item;
+
+          // Set the toolbar
+          $this->addToolBar();
+
+          // Display the template
+          parent::display($tpl);
+
+          // Set the document
+          $this->setDocument();
         }
  
         /**

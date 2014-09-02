@@ -27,7 +27,17 @@ class AgendaDirigentesViewDirigente extends JViewLegacy
                 // get the Data
                 $form = $this->get('Form');
                 $item = $this->get('Item');
- 
+                
+                if ( !empty($item->catid) ) {
+                  //sempre que section != 'component', essa devera ser a funcao de getActions
+                  $this->canDo = AgendaDirigentesHelper::getActions('com_agendadirigentes', 'category', $item->catid);
+                  if (!$this->canDo->get('dirigentes.manage')) {
+                    JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+                    $app = JFactory::getApplication();
+                    $app->redirect('index.php');
+                  }
+                }
+
                 // Check for errors.
                 if (count($errors = $this->get('Errors'))) 
                 {

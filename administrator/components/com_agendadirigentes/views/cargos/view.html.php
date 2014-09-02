@@ -18,39 +18,47 @@ jimport('joomla.application.component.view');
  */
 class AgendaDirigentesViewCargos extends JViewLegacy
 {
+        protected $canDo;
+
         /**
          * Cargos view display method
          * @return void
          */
         function display($tpl = null) 
         {
-                // Get data from the model
-                $items = $this->get('Items');
-                $pagination = $this->get('Pagination');
+            $this->canDo  = JHelperContent::getActions('com_agendadirigentes');
+            
+            if (!$this->canDo->get('cargos.list')) {
+                return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+            }
+                
+            // Get data from the model
+            $items = $this->get('Items');
+            $pagination = $this->get('Pagination');
 
-                AgendaDirigentesHelper::addSubmenu('cargos');
- 
-                // Check for errors.
-                if (count($errors = $this->get('Errors'))) 
-                {
-                        JError::raiseError(500, implode('<br />', $errors));
-                        return false;
-                }
-                // Assign data to the view
-                $this->items = $items;
-                $this->pagination = $pagination;
-  
-                // Set the toolbar
-                $this->addToolBar($this->pagination->total);
-                
-                //set sidebar menu
-                $this->sidebar = JHtmlSidebar::render();
-                
-                // Display the template
-                parent::display($tpl);
- 
-                // Set the document
-                $this->setDocument();
+            AgendaDirigentesHelper::addSubmenu('cargos');
+
+            // Check for errors.
+            if (count($errors = $this->get('Errors'))) 
+            {
+                    JError::raiseError(500, implode('<br />', $errors));
+                    return false;
+            }
+            // Assign data to the view
+            $this->items = $items;
+            $this->pagination = $pagination;
+
+            // Set the toolbar
+            $this->addToolBar($this->pagination->total);
+            
+            //set sidebar menu
+            $this->sidebar = JHtmlSidebar::render();
+            
+            // Display the template
+            parent::display($tpl);
+
+            // Set the document
+            $this->setDocument();
         }
 
         /**

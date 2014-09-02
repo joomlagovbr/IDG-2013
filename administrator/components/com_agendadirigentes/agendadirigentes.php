@@ -10,6 +10,12 @@
 // impedir acesso direto ao arquivo
 defined('_JEXEC') or die('Restricted access');
 
+// Access check: is this user allowed to access the backend of this component?
+if (!JFactory::getUser()->authorise('core.manage', 'com_agendadirigentes')) 
+{
+        return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+}
+
 // require helper file
 JLoader::register('AgendaDirigentesHelper', JPATH_COMPONENT. '/helpers/agendadirigentes.php');
 

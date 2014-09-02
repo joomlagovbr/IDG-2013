@@ -18,16 +18,23 @@ jimport('joomla.application.component.view');
  */
 class AgendaDirigentesViewCompromissos extends JViewLegacy
 {
+        protected $canDo;
+
         /**
          * Compromissos view display method
          * @return void
          */
         function display($tpl = null) 
         {
+                $this->canDo  = JHelperContent::getActions('com_agendadirigentes');
+                
+                if (!$this->canDo->get('cargos.list')) {
+                    
+                }
+
                 // Get data from the model
                 $items = $this->get('Items');
                 $pagination = $this->get('Pagination');
-                
                 AgendaDirigentesHelper::addSubmenu('compromissos');
 
                 // Check for errors.
@@ -62,10 +69,20 @@ class AgendaDirigentesViewCompromissos extends JViewLegacy
                         //Reflect number of items in title!
                         ($total?' <span style="font-size: 0.5em; vertical-align: middle;">('.$total.')</span>':'')
                         , 'compromisso');
-                JToolBarHelper::addNew('compromisso.add');
-                JToolBarHelper::editList('compromisso.edit');
-                JToolBarHelper::deleteList('', 'compromissos.delete');
-                JToolBarHelper::preferences('com_agendadirigentes');
+
+
+                if ($this->canDo->get('core.create')) 
+                    JToolBarHelper::addNew('compromisso.add');
+
+                if ($this->canDo->get('core.edit')) 
+                    JToolBarHelper::editList('compromisso.edit');
+
+                if ($this->canDo->get('core.delete')) 
+                    JToolBarHelper::deleteList('', 'compromissos.delete');
+
+                // Options button.
+                if ($this->canDo->get('core.admin')) 
+                    JToolBarHelper::preferences('com_agendadirigentes');
         }
 
         /**

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <access component="com_agendadirigentes">
 	<section name="component">
 		<action name="core.admin" title="JACTION_ADMIN" description="JACTION_ADMIN_COMPONENT_DESC"/>
@@ -8,14 +8,19 @@
 		<action name="core.edit" title="JACTION_EDIT" description="JACTION_EDIT_COMPONENT_DESC"/>
 		<action name="core.edit.state" title="JACTION_EDITSTATE" description="JACTION_EDITSTATE_COMPONENT_DESC"/>
         <action name="core.edit.own" title="JACTION_EDITOWN" description="JACTION_EDITOWN_COMPONENT_DESC"/>
+		<action name="cargos.list" title="cargos list" description="" />
+		<action name="dirigentes.list" title="dirigentes list" description="" />
 	</section>
 	<section name="category">
 		<action name="core.create" title="JACTION_CREATE" description="COM_CATEGORIES_ACCESS_CREATE_DESC" />
 		<action name="core.delete" title="JACTION_DELETE" description="COM_CATEGORIES_ACCESS_DELETE_DESC" />
 		<action name="core.edit" title="JACTION_EDIT" description="COM_CATEGORIES_ACCESS_EDIT_DESC" />
 		<action name="core.edit.state" title="JACTION_EDITSTATE" description="COM_CATEGORIES_ACCESS_EDITSTATE_DESC" />
+		<!-- <action name="cargos.list" title="cargos list" description="" /> -->
+		<action name="cargos.manage" title="cargos manage" description="" />
+		<action name="dirigentes.manage" title="dirigentes manage" description="" />
 	</section>
-    <section name="message">
+    <section name="compromisso">
             <action name="core.delete" title="JACTION_DELETE" description="COM_AGENDADIRIGENTES_ACCESS_DELETE_DESC" />
             <action name="core.edit" title="JACTION_EDIT" description="COM_AGENDADIRIGENTES_EDIT_DESC" />
     </section>
