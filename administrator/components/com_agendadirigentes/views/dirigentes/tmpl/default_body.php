@@ -30,6 +30,24 @@ $user = JFactory::getUser();
                         <?php echo JHtml::_('grid.id', $i, $item->id); ?>
                     <?php endif; ?>
                 </td>
+                <td class="center">
+                    <div class="btn-group">
+                        <?php
+                        $canChange = true;
+                        echo JHtml::_('jgrid.published', $item->state, $i, 'dirigentes.', $canChange, 'cb'); ?>
+                        <?php
+                        // Create dropdown items
+                        $action = $this->archived ? 'unarchive' : 'archive';
+                        JHtml::_('actionsdropdown.' . $action, 'cb' . $i, 'dirigentes');
+
+                        $action = $this->trashed ? 'untrash' : 'trash';
+                        JHtml::_('actionsdropdown.' . $action, 'cb' . $i, 'dirigentes');
+
+                        // Render dropdown list
+                        echo JHtml::_('actionsdropdown.render', $this->escape($item->name));
+                        ?>
+                    </div>
+                </td>
                 <td>
                     <?php if ( $canManage ) : ?>
                         <a href="<?php echo JRoute::_('index.php?option=com_agendadirigentes&task=dirigente.edit&id=' . (int) $item->id); ?>">
@@ -39,22 +57,19 @@ $user = JFactory::getUser();
                     <?php endif; ?>
                 </td>
                 <td>
-                        <?php echo $item->cargo; ?>
-                </td>
-                <td>
                         <?php echo $item->categoria; ?>
                 </td>
                 <td>
-                        <?php //echo $item->categoria; ?>
-                </td>
-                <td>
-                        <?php //echo $item->categoria; ?>
-                </td>
-                <td>
-                        <?php echo $item->block; ?>
+                        <?php echo $item->cargo; ?>
                 </td>
                 <td>
                         <?php echo $item->ordering; ?>
+                </td>
+                <!-- <td>
+                        <?php //echo $item->categoria; ?>
+                </td> -->
+                <td>
+                        <?php echo $item->block; ?>
                 </td>
         </tr>
 <?php endforeach; ?>

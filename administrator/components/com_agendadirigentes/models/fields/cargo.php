@@ -40,7 +40,7 @@ class JFormFieldCargo extends JFormFieldList
                 $db->setQuery((string)$query);
                 $cargos = $db->loadObjectList();
                 $options = array();
-                 $options[] = JHtml::_('select.option', 0, JText::_('COM_AGENDADIRIGENTES_LIST_SELECT'));
+                $options[] = JHtml::_('select.option', '', JText::_('COM_AGENDADIRIGENTES_SELECT_CARGO'));
                 if ($cargos)
                 {
                         foreach($cargos as $cargo) 

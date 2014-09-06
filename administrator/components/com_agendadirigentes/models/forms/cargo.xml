@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form addrulepath="/administrator/components/com_agendadirigentes/models/rules">
-        <fieldset addfieldpath="/administrator/components/com_agendadirigentes/models/fields">
+        <fieldset name="details" addfieldpath="/administrator/components/com_agendadirigentes/models/fields">
                 <field
                         name="id"
                         type="hidden"
@@ -33,5 +33,30 @@
                 >
                         <option value="0">COM_AGENDADIRIGENTES_LIST_SELECT</option>
                 </field>
+                <field
+                        name="published"
+                        type="list"
+                        label="JPUBLISHED"
+                        description="COM_AGENDADIRIGENTES_CARGOS_PUBLISHED_DESC"
+                        size="1" 
+                        default="0"
+                        validate="boolean"
+                        filter="integer">
+                        <option value="1">JPUBLISHED</option>
+                        <option value="0">JUNPUBLISHED</option>
+                </field>
+        </fieldset>
+        <fieldset name="accesscontrol">
+                <field name="asset_id" type="hidden" filter="unset" />
+                <field name="rules"
+                        type="rules"
+                        label="JFIELD_RULES_LABEL"
+                        translate_label="false"
+                        filter="rules"
+                        validate="rules"
+                        class="inputbox"
+                        component="com_agendadirigentes"
+                        section="cargo"
+                />
         </fieldset>
 </form>

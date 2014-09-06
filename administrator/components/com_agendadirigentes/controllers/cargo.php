@@ -40,12 +40,13 @@ class AgendaDirigentesControllerCargo extends JControllerForm
      * @param string $key
      * @return bool
      */
-    protected function allowEdit($data = array(), $key = 'id')
+    protected function allowEdit($data = array(), $key = 'catid')
     {
-        $id = isset( $data[ $key ] ) ? $data[ $key ] : 0;
+        $key = 'catid';
+        $id = isset( $data[ $key ] ) ? $data[ $key ] : 0;        
         if( !empty( $id ) ){
             $user = JFactory::getUser();
-            return $user->authorise( "cargo.manage", "com_agendadirigentes.category." . $id );
+            return $user->authorise( "cargos.manage", "com_agendadirigentes.category." . $id );
         }
 
         return true;

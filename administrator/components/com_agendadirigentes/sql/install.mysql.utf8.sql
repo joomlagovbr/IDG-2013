@@ -22,12 +22,16 @@ CREATE TABLE `#__agendadirigentes_dirigentes` (
   `name` varchar(255) DEFAULT NULL,
   `catid` int(11) NOT NULL,
   `cargo_id` int(11) NOT NULL,
+  `state` TINYINT(3) NOT NULL DEFAULT '0',
   `block` int(1) unsigned NOT NULL DEFAULT '0',
-  `ordering` int(1) unsigned NOT NULL DEFAULT '0',
+  `ordering` int(3) unsigned NOT NULL DEFAULT '0',
+  `interino` int(1) unsigned NOT NULL DEFAULT '0',
+  `em_atividade` int(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `idx_catid` (`catid`),
   KEY `idx_cargo_id` (`cargo_id`),
-  KEY `idx_block` (`block`)
+  KEY `idx_block` (`block`),
+  KEY `idx_em_atividade` (`em_atividade`),
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 #relacionamento dirigentes e eventos

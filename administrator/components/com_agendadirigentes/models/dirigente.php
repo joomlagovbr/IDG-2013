@@ -58,4 +58,15 @@ class AgendaDirigentesModelDirigente extends JModelAdmin
                 }
                 return $data;
         }
+
+        /**
+         * Method to check if it's OK to delete a message. Overwrites JModelAdmin::canDelete
+         */
+        protected function canDelete($dirigente)
+        {
+            if( !empty( $dirigente->id ) ){
+                $user = JFactory::getUser();
+                return $user->authorise( "dirigentes.delete", "com_agendadirigentes.cargo." . $dirigente->cargo_id );
+            }
+        }
 }

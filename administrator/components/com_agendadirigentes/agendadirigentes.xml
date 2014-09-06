@@ -19,6 +19,8 @@
                         <file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
                 </sql>
         </uninstall>
+        <!-- Runs on install/uninstall/update; New in 2.5 -->
+        <scriptfile>script.php</scriptfile>
         <update>
                 <schemas>
                         <schemapath type="mysql">sql/updates/mysql/</schemapath>
@@ -69,4 +71,9 @@
                         <folder>views</folder>
                 </files>
         </administration> 
+
+        <!-- UPDATESERVER DEFINITION -->
+        <!-- <updateservers<name />
+                <server type="extension" priority="1" name="AgendaDirigentes Update Site">http://yourdomain.com/update/helloworld-update.xml</server>
+        </updateservers> -->
 </extension>

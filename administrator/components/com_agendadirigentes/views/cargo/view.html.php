@@ -33,17 +33,19 @@ class AgendaDirigentesViewCargo extends JViewLegacy
           if ( !empty($item->catid) ) {
             //sempre que section != 'component', essa devera ser a funcao de getActions
             $this->canDo = AgendaDirigentesHelper::getActions('com_agendadirigentes', 'category', $item->catid);
-            if (!$this->canDo->get('dirigentes.manage')) {
+            if (!$this->canDo->get('cargos.manage')) {
               JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
               $app = JFactory::getApplication();
               $app->redirect('index.php');
             }
           }
-
-          if (!$this->canDo->get('cargos.manage')) {
-            JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
-            $app = JFactory::getApplication();
-            $app->redirect('index.php');
+          else
+          {
+            $this->canDo  = JHelperContent::getActions('com_agendadirigentes');
+            
+            if (!$this->canDo->get('cargos.add')) {
+                return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+            }
           }
 
           // Check for errors.
@@ -76,7 +78,10 @@ class AgendaDirigentesViewCargo extends JViewLegacy
                 $isNew = ($this->item->id == 0);
                 JToolBarHelper::title($isNew ? JText::_('COM_AGENDADIRIGENTES_MANAGER_CARGO_NEW')
                                              : JText::_('COM_AGENDADIRIGENTES_MANAGER_CARGO_EDIT'), 'compromisso');
+                JToolBarHelper::apply('cargo.apply');
                 JToolBarHelper::save('cargo.save');
+                JToolBarHelper::save2new('cargo.save2new');
+                JToolBarHelper::save2copy('cargo.save2copy');
                 JToolBarHelper::cancel('cargo.cancel', $isNew ? 'JTOOLBAR_CANCEL' : 'JTOOLBAR_CLOSE');
         }
 

@@ -31,8 +31,11 @@ class AgendaDirigentesViewDirigentes extends JViewLegacy
                 }
 
                 // Get data from the model
-                $items = $this->get('Items');
-                $pagination = $this->get('Pagination');
+                $this->state = $this->get('State');
+                $this->items = $this->get('Items');
+                $this->pagination = $this->get('Pagination');
+                $this->filterForm = $this->get('FilterForm');
+                $this->activeFilters = $this->get('ActiveFilters');
 
                 AgendaDirigentesHelper::addSubmenu('dirigentes');
  
@@ -43,9 +46,11 @@ class AgendaDirigentesViewDirigentes extends JViewLegacy
                         return false;
                 }
                 // Assign data to the view
-                $this->items = $items;
-                $this->pagination = $pagination;
-
+                $this->user = JFactory::getUser();
+                $this->listOrder = $this->escape($this->state->get('list.ordering', 'a.id'));
+                $this->listDirn  = $this->escape($this->state->get('list.direction', 'DESC'));
+                $this->archived  = $this->state->get('filter.state') == 2 ? true : false;
+                $this->trashed   = $this->state->get('filter.state') == -2 ? true : false;
                 // Set the toolbar
                 $this->addToolBar($this->pagination->total);
  
@@ -83,5 +88,25 @@ class AgendaDirigentesViewDirigentes extends JViewLegacy
         {
                 $document = JFactory::getDocument();
                 $document->setTitle(JText::_('COM_AGENDADIRIGENTES_MANAGER_DIRIGENTES'));
+        }
+        
+        /**
+         * Returns an array of fields the table can be sorted by
+         *
+         * @return  array  Array containing the field name to sort by as the key and display text as value
+         *
+         * @since   3.0
+         */
+        protected function getSortFields()
+        {
+            return array(
+                'a.id' => JText::_('COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_ID'),
+                'a.name' => JText::_('COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_NOME'),
+                'a.state' => JText::_('COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_STATE'),
+                'c.name' => JText::_('COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_CARGO'),
+                'd.title' => JText::_('COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_CATEGORIA'),
+                'a.block' => JText::_('COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_BLOQUEADO'),
+                'a.ordering' => JText::_('COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_ORDEM')
+            );
         }
 }

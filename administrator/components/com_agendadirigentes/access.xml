@@ -9,6 +9,7 @@
 		<action name="core.edit.state" title="JACTION_EDITSTATE" description="JACTION_EDITSTATE_COMPONENT_DESC"/>
         <action name="core.edit.own" title="JACTION_EDITOWN" description="JACTION_EDITOWN_COMPONENT_DESC"/>
 		<action name="cargos.list" title="cargos list" description="" />
+		<action name="cargos.add" title="cargos add" description="" />
 		<action name="dirigentes.list" title="dirigentes list" description="" />
 	</section>
 	<section name="category">
@@ -17,11 +18,17 @@
 		<action name="core.edit" title="JACTION_EDIT" description="COM_CATEGORIES_ACCESS_EDIT_DESC" />
 		<action name="core.edit.state" title="JACTION_EDITSTATE" description="COM_CATEGORIES_ACCESS_EDITSTATE_DESC" />
 		<!-- <action name="cargos.list" title="cargos list" description="" /> -->
+		<action name="cargos.admin" title="cargos admin" description="" />
 		<action name="cargos.manage" title="cargos manage" description="" />
 		<action name="dirigentes.manage" title="dirigentes manage" description="" />
 	</section>
-    <section name="compromisso">
-            <action name="core.delete" title="JACTION_DELETE" description="COM_AGENDADIRIGENTES_ACCESS_DELETE_DESC" />
-            <action name="core.edit" title="JACTION_EDIT" description="COM_AGENDADIRIGENTES_EDIT_DESC" />
+    <section name="cargo">
+    		<action name="dirigentes.delete" title="dirigentes delete" description="" />
+    		<action name="dirigentes.edit" title="dirigentes edit" description="" />
+    		<action name="dirigentes.add" title="dirigentes add" description="" />
+            <action name="compromissos.list" title="compromissos list" description="" />
+            <action name="compromissos.manage" title="compromissos manage" description="" />
+            <action name="compromissos.overrideall" title="compromissos override diferentes niveis" description="" />
+            <action name="compromissos.override" title="compromissos override niveis abaixo" description="" />
     </section>
 </access>

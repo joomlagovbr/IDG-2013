@@ -20,7 +20,7 @@ JHtml::_('behavior.formvalidation');
             <legend><?php echo JText::_('COM_AGENDADIRIGENTES_CARGO_DETAILS'); ?></legend>
             <div class="row-fluid">
                 <div class="span6">
-                    <?php foreach ($this->form->getFieldset() as $field): ?>
+                    <?php foreach ($this->form->getFieldset('details') as $field): ?>
                         <div class="control-group">
                             <?php if (!$field->hidden): ?>
                             <div class="control-label"><?php echo $field->label; ?></div>
@@ -32,6 +32,25 @@ JHtml::_('behavior.formvalidation');
             </div>
         </fieldset>
     </div>
+   <!-- begin ACL definition-->
+ 
+   <div class="clr"></div>
+ 
+   <?php if ($this->canDo->get('cargos.admin') || $this->canDo->get('core.admin')): ?>
+      <div class="row-fluid"><div class="span12">
+         <?php //echo JHtml::_('sliders.start', 'permissions-sliders-'.$this->item->id, array()); //'useCookie'=>1 ?>
+ 
+            <?php //echo JHtml::_('sliders.panel', JText::_('COM_AGENDADIRIGENTES_FIELDSET_RULES'), 'access-rules'); ?>
+            <fieldset class="panelform">
+               <?php echo $this->form->getLabel('rules'); ?>
+               <?php echo $this->form->getInput('rules'); ?>
+            </fieldset>
+ 
+         <?php //echo JHtml::_('sliders.end'); ?>
+      </div></div>
+   <?php endif; ?>
+ 
+   <!-- end ACL definition-->
     <input type="hidden" name="task" value="cargo.edit" />
     <?php echo JHtml::_('form.token'); ?>
 </form>

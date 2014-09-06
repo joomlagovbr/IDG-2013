@@ -9,14 +9,10 @@
  
 // impedir acesso direto ao arquivo
 defined('_JEXEC') or die;
- 
-// load tooltip behavior
-JHtml::_('behavior.tooltip');
-$user = JFactory::getUser();
 ?>
 <?php foreach($this->items as $i => $item):
         
-       $canManage = $user->authorise( "dirigentes.manage", "com_agendadirigentes.category." . $item->catid );
+       $canManage = $this->user->authorise( "dirigentes.manage", "com_agendadirigentes.category." . $item->catid );
         ?>
         <tr class="row<?php echo $i % 2; ?>">
                 <td>
@@ -28,6 +24,11 @@ $user = JFactory::getUser();
                     <?php if ( $canManage ) : ?>
                         <?php echo JHtml::_('grid.id', $i, $item->id); ?>
                     <?php endif; ?>
+                </td>
+                <td>
+                        <?php
+                        $canChange = true;
+                        echo JHtml::_('jgrid.published', $item->published, $i, 'cargos.', $canChange, 'cb'); ?>
                 </td>
                 <td>
                     <?php 
