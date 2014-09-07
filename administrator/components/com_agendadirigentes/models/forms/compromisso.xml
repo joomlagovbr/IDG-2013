@@ -20,13 +20,13 @@
                         description="COM_AGENDADIRIGENTES_COMPROMISSOS_TITLE_DESC"
                         cols="40"
                         rows="5"
-                        class="inputbox validate-compromisso-title"
+                        class="span12 validate-compromisso-title"
                         validate="titleorname"
                         default=""
                         required="true"
                         filter="string"
                 />
-                <field
+               <!--  <field
                         name="catid"
                         type="category"                        
                         extension="com_agendadirigentes"
@@ -39,7 +39,27 @@
                         filter="integer"
                 >
                         <option value="0">COM_AGENDADIRIGENTES_LIST_SELECT</option>
-                </field>
+                </field> -->
+                <field
+                        name="owner"
+                        type="dirigentestags"
+                        label="COM_AGENDADIRIGENTES_DIRIGENTES_OWNER_LABEL"
+                        description="COM_AGENDADIRIGENTES_DIRIGENTES_OWNER_DESC"                                                
+                        class="span12"
+                        multiple="false"
+                        required="true"
+                        emptyfirst="true"
+                        onchange="removeselected(this, 'dirigentes');"
+                />
+                <field
+                        name="dirigentes"
+                        type="dirigentestags"
+                        label="COM_AGENDADIRIGENTES_DIRIGENTES_PARTICIPANTES_LABEL"
+                        description="COM_AGENDADIRIGENTES_DIRIGENTES_PARTICIPANTES_DESC"                                             
+                        class="span12"
+                        multiple="true"
+                />
+                        <!-- required="true" -->
 
                 <field name="state" type="list"
                         label="JSTATUS" description="COM_AGENDADIRIGENTES_FIELD_STATE_DESC"
@@ -127,7 +147,8 @@
                         type="textarea"
                         label="COM_AGENDADIRIGENTES_COMPROMISSOS_LOCAL_LABEL"
                         description="COM_AGENDADIRIGENTES_COMPROMISSOS_LOCAL_DESC"
-                        default="string"
+                        default=""
+                        filter="string"
                 />
                 <field
                         name="ordering"

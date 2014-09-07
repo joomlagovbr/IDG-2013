@@ -24,9 +24,9 @@ defined('_JEXEC') or die;
         <th>
                 <?php echo JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_OWNER'); ?>
         </th>
-        <th>
+        <!-- <th>
                 <?php echo JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_CATEGORIA'); ?>
-        </th>
+        </th> -->
         <th>
                 <?php echo JText::_('JSTATUS'); ?>
         </th>

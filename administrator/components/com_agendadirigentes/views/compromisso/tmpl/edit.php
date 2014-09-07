@@ -12,7 +12,26 @@ defined('_JEXEC') or die;
 
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.formvalidation');
+JHtml::_('behavior.multiselect');
+JHtml::_('formbehavior.chosen', 'select');
 ?>
+<script type="text/javascript">
+function removeselected(elm, aim)
+{ 
+    jQuery('#jform_'+aim+' option:disabled').attr("disabled", false);
+    jQuery('#jform_'+aim+' option').each(function(){
+        if (jQuery(this).val()==jQuery(elm).val())
+        {
+            jQuery(this).attr("disabled", "true");                                 
+            jQuery('#jform_'+aim).trigger('liszt:updated');
+            return;
+        } 
+    });
+}
+jQuery(document).ready(function(){
+    removeselected("#jform_owner", 'dirigentes');    
+});
+</script>
 <form action="<?php echo JRoute::_('index.php?option=com_agendadirigentes&layout=edit&id=' . (int) $this->item->id); ?>"
     method="post" name="adminForm" id="adminForm" class="form-validate">
     <div class="form-horizontal">

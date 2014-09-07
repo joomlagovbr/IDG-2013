@@ -12,6 +12,8 @@ defined('_JEXEC') or die;
  
 // load tooltip behavior
 JHtml::_('behavior.tooltip');
+JHtml::_('behavior.multiselect');
+JHtml::_('formbehavior.chosen', 'select');
 ?>
 <script type="text/javascript">
         Joomla.orderTable = function()

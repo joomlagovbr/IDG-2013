@@ -12,6 +12,8 @@ defined('_JEXEC') or die;
  
 // load tooltip behavior
 JHtml::_('behavior.tooltip');
+JHtml::_('behavior.multiselect');
+JHtml::_('formbehavior.chosen', 'select');
 ?>
 <form action="<?php echo JRoute::_('index.php?option=com_agendadirigentes'); ?>" method="post" name="adminForm" id="adminForm">
         <?php if (!empty( $this->sidebar)) : ?>

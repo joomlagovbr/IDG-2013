@@ -90,7 +90,7 @@ DROP TABLE IF EXISTS `#__agendadirigentes_compromissos`;
 CREATE TABLE `#__agendadirigentes_compromissos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) DEFAULT NULL,
-  `catid` int(11) DEFAULT 0,
+  -- `catid` int(11) DEFAULT 0,
   `state` int(11) DEFAULT 0,
   `data_inicial` date DEFAULT '0000-00-00',
   `horario_inicio` time DEFAULT '00:00:00',

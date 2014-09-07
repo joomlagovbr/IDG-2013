@@ -37,9 +37,9 @@ JHtml::_('behavior.tooltip');
                         (<?php echo $item->cargoOwner; ?>)
                         <?php endif; ?>
                 </td>
-                <td>
+              <!--   <td>
                         <?php echo $item->titleCategory; ?>
-                </td>
+                </td> -->
                 <td>
                         <?php echo $item->state; ?>
                 </td>

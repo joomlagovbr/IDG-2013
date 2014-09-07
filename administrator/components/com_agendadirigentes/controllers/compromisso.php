@@ -18,4 +18,9 @@ jimport('joomla.application.component.controllerform');
  */
 class AgendaDirigentesControllerCompromisso extends JControllerForm
 {
+	// function save($key = NULL, $urlVar = NULL)
+	// {
+	// 	var_dump($_POST);
+	// 	die();
+	// }
 }

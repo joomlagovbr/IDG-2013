@@ -29,14 +29,14 @@ class AgendaDirigentesModelCompromissos extends JModelList
                 $query = $db->getQuery(true);
                 // Select some fields from the compromissos table
                 $query
-                    ->select('DISTINCT(comp.id), comp.catid, comp.checked_out, comp.title, comp.data_inicial')
+                    ->select('DISTINCT(comp.id), comp.checked_out, comp.title, comp.data_inicial') //comp.catid, 
                     ->select(' comp.data_final, comp.horario_inicio, comp.horario_fim, comp.description, comp.local')
                     ->select(' comp.params, comp.ordering')
                     ->select(' comp.state, comp.dia_todo')
                     ->select(' dc.sobreposto, dc.owner')
                     ->select(' dir.name AS nameOwner, dir.id AS idOwner')
                     ->select(' car.name AS cargoOwner')
-                    ->select(' cat.title AS titleCategory')
+                    // ->select(' cat.title AS titleCategory')
                     ->from( $db->quoteName('#__agendadirigentes_compromissos', 'comp') )
                     ->join( 'LEFT',
                         $db->quoteName('#__agendadirigentes_dirigentes_compromissos', 'dc')
@@ -46,10 +46,10 @@ class AgendaDirigentesModelCompromissos extends JModelList
                         .' ON (' . $db->quoteName('dc.owner') . ' = ' . $db->quoteName('dir.id') . ')' )
                     ->join( 'LEFT',
                         $db->quoteName('#__agendadirigentes_cargos', 'car')
-                        .' ON (' . $db->quoteName('dir.cargo_id') . ' = ' . $db->quoteName('car.id') . ')' )
-                    ->join( 'LEFT',
-                        $db->quoteName('#__categories', 'cat')
-                        .' ON (' . $db->quoteName('comp.catid') . ' = ' . $db->quoteName('cat.id') . ')' );
+                        .' ON (' . $db->quoteName('dir.cargo_id') . ' = ' . $db->quoteName('car.id') . ')' );
+                    // ->join( 'LEFT',
+                    //     $db->quoteName('#__categories', 'cat')
+                    //     .' ON (' . $db->quoteName('comp.catid') . ' = ' . $db->quoteName('cat.id') . ')' );
 
                 return $query;
         }
