@@ -37,6 +37,7 @@ class JFormFieldCargo extends JFormFieldList
                 $query = $db->getQuery(true);
                 $query->select('id,name');
                 $query->from('#__agendadirigentes_cargos');
+                $query->order('name');
                 $db->setQuery((string)$query);
                 $cargos = $db->loadObjectList();
                 $options = array();

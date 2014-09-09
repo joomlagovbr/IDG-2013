@@ -17,6 +17,29 @@ jimport('joomla.application.component.modellist');
  */
 class AgendaDirigentesModelCompromissos extends JModelList
 {
+        public function __construct($config = array())
+        {
+            if (empty($config['filter_fields']))
+            {
+                $config['filter_fields'] = array(
+                    'comp.id', 'id', 
+                    'comp.title', 'title', 
+                    'dc.owner', 'owner', 
+                    'dc.owner', 'owner', 
+                    'comp.state', 'state', 
+                    'comp.data_inicial', 'data_inicial', 
+                    'comp.data_final', 'data_final', 
+                    'comp.dia_todo', 'dia_todo', 
+                    'comp.horario_inicio', 'horario_inicio', 
+                    'comp.horario_fim', 'horario_fim', 
+                    'comp.local', 'local', 
+                    'comp.ordering', 'ordering', 
+                    'car.name', 'name'
+                );
+            }
+            parent::__construct($config);
+        }
+
         /**
          * Method to build an SQL query to load the list data.
          *
@@ -50,6 +73,11 @@ class AgendaDirigentesModelCompromissos extends JModelList
                     // ->join( 'LEFT',
                     //     $db->quoteName('#__categories', 'cat')
                     //     .' ON (' . $db->quoteName('comp.catid') . ' = ' . $db->quoteName('cat.id') . ')' );
+                
+                // Add the list ordering clause.
+                $orderCol = $this->state->get('list.ordering', 'comp.id');
+                $orderDirn = $this->state->get('list.direction', 'DESC');
+                $query->order($db->escape($orderCol . ' ' . $orderDirn));
 
                 return $query;
         }

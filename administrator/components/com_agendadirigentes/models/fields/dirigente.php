@@ -17,14 +17,14 @@ JFormHelper::loadFieldClass('list');
 /**
  * Dirigentes Form Field class for the AgendaDirigentes component
  */
-class JFormFieldDirigentes extends JFormFieldList
+class JFormFieldDirigente extends JFormFieldList
 {
         /**
          * The field type.
          *
          * @var         string
          */
-        protected $type = 'Dirigentes';
+        protected $type = 'Dirigente';
  
         /**
          * Method to get a list of options for a list input.
@@ -39,17 +39,34 @@ class JFormFieldDirigentes extends JFormFieldList
                         ->from( $db->quoteName('#__agendadirigentes_dirigentes', 'dir') )
                         ->join('INNER', $db->quoteName('#__categories', 'cat')
                                 . ' ON (' . $db->quoteName('dir.catid') . ' = ' . $db->quoteName('cat.id') . ')');
+                
+                if(intval($this->getAttribute('showcategory'))==1)
+                        $query->order('cat.title ASC, dir.name ASC');
+                else
+                        $query->order('dir.name ASC');    
+
                 $db->setQuery((string)$query);
                 $dirigentes = $db->loadObjectList();
                 $options = array();
+                $options[] = JHtml::_('select.option', '', JText::_('COM_AGENDADIRIGENTES_SELECT_DIRIGENTE'));
+
                 if ($dirigentes)
                 {
                         foreach($dirigentes as $dirigente) 
                         {
-                                $options[] = JHtml::_('select.option', $dirigente->id,
-                                        '('.$dirigente->category_title.') '.$dirigente->name);
+                                if(intval($this->getAttribute('showcategory'))==1)
+                                {
+                                        $options[] = JHtml::_('select.option', $dirigente->id,
+                                                $dirigente->category_title.' - '.$dirigente->name);                                        
+                                }
+                                else
+                                {
+                                        $options[] = JHtml::_('select.option', $dirigente->id, $dirigente->name);          
+                                }
                         }
                 }
+
+
                 $options = array_merge(parent::getOptions(), $options);
                 return $options;
         }

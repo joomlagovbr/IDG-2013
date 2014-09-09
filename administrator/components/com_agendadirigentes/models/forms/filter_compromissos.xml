@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fields name="filter" addfieldpath="/administrator/components/com_agendadirigentes/models/fields">
+		<field
+			name="search"
+			type="text"
+			label="titulo compromisso"
+			hint="JSEARCH_FILTER"
+			class="js-stools-search-string"
+		/>
+		<field
+			name="state"
+			type="status"
+			label="JOPTION_SELECT_PUBLISHED"
+			statuses="*,0,1,2,-2"
+			description="JOPTION_SELECT_PUBLISHED_DESC"
+			onchange="this.form.submit();"
+			>
+			<option value="">JOPTION_SELECT_PUBLISHED</option>
+		</field>
+		<field
+			name="catid"
+			type="category"
+			label="JOPTION_FILTER_CATEGORY"
+			extension="com_agendadirigentes"
+			description="JOPTION_FILTER_CATEGORY_DESC"
+			onchange="this.form.submit();"
+			>
+			<option value="">JOPTION_SELECT_CATEGORY</option>
+		</field>
+        <field
+                name="cargo_id"
+                type="cargo"
+                label="COM_AGENDADIRIGENTES_DIRIGENTES_CARGO_ID_LABEL"
+                description="COM_AGENDADIRIGENTES_DIRIGENTES_CARGO_ID_DESC"
+                onchange="this.form.submit();"
+        />
+        <field
+                name="dirigente_id"
+                type="dirigente"
+                label="COM_AGENDADIRIGENTES_DIRIGENTES_DIRIGENTE_ID_LABEL"
+                description="COM_AGENDADIRIGENTES_DIRIGENTES_DIRIGENTE_ID_DESC"
+                onchange="this.form.submit();"
+                showcategory="0"
+        />
+	</fields>
+	<fields name="list">
+		<field
+			name="fullordering"
+			type="list"
+			label="JGLOBAL_SORT_BY"
+			statuses="*,0,1,2,-2"
+			description="JGLOBAL_SORT_BY"
+			onchange="this.form.submit();"
+			default="comp.id DESC"
+			>
+			<option value="">JGLOBAL_SORT_BY</option>
+            <option value="comp.id ASC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_ID_ASC</option>
+            <option value="comp.id DESC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_ID_DESC</option>
+            <option value="comp.title ASC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_TITLE_ASC</option>
+            <option value="comp.title DESC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_TITLE_DESC</option>
+            <option value="dc.owner ASC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_OWNER_ASC</option>
+            <option value="dc.owner DESC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_OWNER_DESC</option>
+            <option value="dc.owner ASC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_CATEGORIA_ASC</option>
+            <option value="dc.owner DESC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_CATEGORIA_DESC</option>
+            <option value="comp.state ASC">JSTATUS_ASC</option>
+            <option value="comp.state DESC">JSTATUS_DESC</option>
+            <option value="comp.data_inicial ASC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_DATA_INICIAL_ASC</option>
+            <option value="comp.data_inicial DESC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_DATA_INICIAL_DESC</option>
+            <option value="comp.data_final ASC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_DATA_FINAL_ASC</option>
+            <option value="comp.data_final DESC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_DATA_FINAL_DESC</option>
+            <option value="comp.dia_todo ASC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_DIA_TODO_ASC</option>
+            <option value="comp.dia_todo DESC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_DIA_TODO_DESC</option>
+            <option value="comp.horario_inicio ASC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_HORARIO_INICIO_ASC</option>
+            <option value="comp.horario_inicio DESC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_HORARIO_INICIO_DESC</option>
+            <option value="comp.horario_fim ASC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_HORARIO_FIM_ASC</option>
+            <option value="comp.horario_fim DESC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_HORARIO_FIM_DESC</option>
+            <option value="comp.local ASC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_LOCAL_ASC</option>
+            <option value="comp.local DESC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_LOCAL_DESC</option>
+            <option value="comp.ordering ASC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_ORDERING_ASC</option>
+            <option value="comp.ordering DESC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_ORDERING_DESC</option>
+            <option value="car.name ASC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_OWNER_CARGO_ASC</option>
+            <option value="car.name DESC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_OWNER_CARGO_DESC</option>
+		</field>
+		<field
+			name="limit"
+			type="limitbox"
+			class="input-mini"
+			default="20"
+			label="COM_AGENDADIRIGENTES_LIST_LIMIT"
+			description="COM_AGENDADIRIGENTES_LIST_LIMIT_DESC"
+			onchange="this.form.submit();"
+		/>
+	</fields>
+</form>

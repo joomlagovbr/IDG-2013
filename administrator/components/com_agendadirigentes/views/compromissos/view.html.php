@@ -33,8 +33,12 @@ class AgendaDirigentesViewCompromissos extends JViewLegacy
                 }
 
                 // Get data from the model
-                $items = $this->get('Items');
-                $pagination = $this->get('Pagination');
+                $this->state = $this->get('State');
+                $this->items = $this->get('Items');
+                $this->pagination = $this->get('Pagination');
+                $this->filterForm = $this->get('FilterForm');
+                $this->activeFilters = $this->get('ActiveFilters');
+
                 AgendaDirigentesHelper::addSubmenu('compromissos');
 
                 // Check for errors.
@@ -43,10 +47,13 @@ class AgendaDirigentesViewCompromissos extends JViewLegacy
                         JError::raiseError(500, implode('<br />', $errors));
                         return false;
                 }
-                // Assign data to the view
-                $this->items = $items;
-                $this->pagination = $pagination;
- 
+                 // Assign data to the view
+                $this->user = JFactory::getUser();
+                $this->listOrder = $this->escape($this->state->get('list.ordering', 'a.id'));
+                $this->listDirn  = $this->escape($this->state->get('list.direction', 'DESC'));
+                $this->archived  = $this->state->get('filter.state') == 2 ? true : false;
+                $this->trashed   = $this->state->get('filter.state') == -2 ? true : false;
+
                 // Set the toolbar
                 $this->addToolBar($this->pagination->total);
 
@@ -94,5 +101,31 @@ class AgendaDirigentesViewCompromissos extends JViewLegacy
         {
                 $document = JFactory::getDocument();
                 $document->setTitle(JText::_('COM_AGENDADIRIGENTES_MANAGER_COMPROMISSOS'));
+        }
+
+        /**
+         * Returns an array of fields the table can be sorted by
+         *
+         * @return  array  Array containing the field name to sort by as the key and display text as value
+         *
+         * @since   3.0
+         */
+        protected function getSortFields()
+        {
+            return array(
+                'comp.id' => JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_ID'),
+                'comp.title' => JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_TITLE'),
+                'dc.owner' => JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_OWNER'),
+                'dc.owner' => JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_CATEGORIA'),
+                'comp.state' => JText::_('JSTATUS'),
+                'comp.data_inicial' => JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_DATA_INICIAL'),
+                'comp.data_final' => JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_DATA_FINAL'),
+                'comp.dia_todo' => JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_DIA_TODO'),
+                'comp.horario_inicio' => JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_HORARIO_INICIO'),
+                'comp.horario_fim' => JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_HORARIO_FIM'),
+                'comp.local' => JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_LOCAL'),
+                'comp.ordering' => JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_ORDERING'),
+                'car.name' => JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_OWNER_CARGO')
+            );
         }
 }
