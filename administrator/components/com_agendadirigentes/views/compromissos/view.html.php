@@ -53,6 +53,7 @@ class AgendaDirigentesViewCompromissos extends JViewLegacy
                 $this->listDirn  = $this->escape($this->state->get('list.direction', 'DESC'));
                 $this->archived  = $this->state->get('filter.state') == 2 ? true : false;
                 $this->trashed   = $this->state->get('filter.state') == -2 ? true : false;
+                $this->status_dono_compromisso = $this->state->get('list.status_dono_compromisso');
 
                 // Set the toolbar
                 $this->addToolBar($this->pagination->total);

@@ -34,7 +34,8 @@ class AgendaDirigentesModelCompromissos extends JModelList
                     'comp.horario_fim', 'horario_fim', 
                     'comp.local', 'local', 
                     'comp.ordering', 'ordering', 
-                    'car.name', 'name'
+                    'car.name', 'name',
+                    'participante_id', 'dirigente_id', 'dates'
                 );
             }
             parent::__construct($config);
@@ -52,7 +53,7 @@ class AgendaDirigentesModelCompromissos extends JModelList
                 $query = $db->getQuery(true);
                 // Select some fields from the compromissos table
                 $query
-                    ->select('DISTINCT(comp.id), comp.checked_out, comp.title, comp.data_inicial') //comp.catid, 
+                    ->select(' comp.id, comp.checked_out, comp.title, comp.data_inicial') //comp.catid, 
                     ->select(' comp.data_final, comp.horario_inicio, comp.horario_fim, comp.description, comp.local')
                     ->select(' comp.params, comp.ordering')
                     ->select(' comp.state, comp.dia_todo')
@@ -60,37 +61,198 @@ class AgendaDirigentesModelCompromissos extends JModelList
                     ->select(' dir.name AS nameOwner, dir.id AS idOwner')
                     ->select(' car.name AS cargoOwner')
                     // ->select(' cat.title AS titleCategory')
-                    ->from( $db->quoteName('#__agendadirigentes_compromissos', 'comp') )
-                    ->join( 'LEFT',
+                    ->from( $db->quoteName('#__agendadirigentes_compromissos', 'comp') );
+
+                $participante_id = $this->getState('filter.participante_id');
+                if (is_numeric($participante_id))
+                {
+                    $query->where('dc.dirigente_id = ' . (int) $participante_id);
+                    $this->setState('list.status_dono_compromisso', 0);
+                }
+
+                $status_dono_compromisso = $this->getState('list.status_dono_compromisso', 1);
+                if ($status_dono_compromisso == 0) //1 compromisso por participante
+                {
+                    $query->join( 'LEFT',
                         $db->quoteName('#__agendadirigentes_dirigentes_compromissos', 'dc')
-                        .' ON (' . $db->quoteName('comp.id') . ' = ' . $db->quoteName('dc.compromisso_id') . ')' )
+                        .' ON (' . $db->quoteName('comp.id') . ' = ' . $db->quoteName('dc.compromisso_id') . ')' );
+                }
+                else //filtrar por dono
+                {
+                    $query->join( 'LEFT',
+                        $db->quoteName('#__agendadirigentes_dirigentes_compromissos', 'dc')
+                        .' ON (' . $db->quoteName('comp.id') . ' = ' . $db->quoteName('dc.compromisso_id') . ' AND dc.owner = 1)' );
+                }
+
+                $query
                     ->join( 'LEFT',
                         $db->quoteName('#__agendadirigentes_dirigentes', 'dir')
-                        .' ON (' . $db->quoteName('dc.owner') . ' = ' . $db->quoteName('dir.id') . ')' )
+                        .' ON (' . $db->quoteName('dc.dirigente_id') . ' = ' . $db->quoteName('dir.id') . ')' )
                     ->join( 'LEFT',
                         $db->quoteName('#__agendadirigentes_cargos', 'car')
                         .' ON (' . $db->quoteName('dir.cargo_id') . ' = ' . $db->quoteName('car.id') . ')' );
                     // ->join( 'LEFT',
                     //     $db->quoteName('#__categories', 'cat')
-                    //     .' ON (' . $db->quoteName('comp.catid') . ' = ' . $db->quoteName('cat.id') . ')' );
-                
+                    //     .' ON (' . $db->quoteName('dir.catid') . ' = ' . $db->quoteName('cat.id') . ')' );
+ 
+                // Filter by state
+                $state = $this->state->get('filter.state');
+                if (is_numeric($state))
+                {
+                    $query->where('comp.state = ' . (int) $state);
+                }
+                elseif ($state === '')
+                {
+                    $query->where('(comp.state IN (0, 1))');
+                }
+
+                // Filter by category.
+                $catid = $this->getState('filter.catid');
+                if (is_numeric($catid))
+                {
+                    $query->where('dir.catid = ' . (int) $catid);
+                }
+
+                // Filter by cargo.
+                $cargo_id = $this->getState('filter.cargo_id');
+                if (is_numeric($cargo_id))
+                {
+                    $query->where('dir.cargo_id = ' . (int) $cargo_id);
+                }
+
+                // Filter by dirigente.
+                $dirigente_id = $this->getState('filter.dirigente_id');
+                if (is_numeric($dirigente_id))
+                {
+                    $query->where('dir.id = ' . (int) $dirigente_id);
+                }
+
+                // Filter by data inicial | data final.
+                $data_inicial = $this->getState('dates.data_inicial');
+                $data_final = $this->getState('dates.data_final');
+                if (!empty($data_inicial) || !empty($data_final))
+                {
+                    require_once( JPATH_COMPONENT .'/models/rules/databrasil.php' );
+                    $dateVerify = new JFormRuleDataBrasil();
+
+                    if (preg_match($dateVerify->getRegex(), $data_inicial)) {
+                        $data_inicial = $this->format_date_mysql($data_inicial);
+                        $clause = $db->quoteName('data_inicial') . ' >= '.$db->Quote($data_inicial);
+                        $query->where($clause);
+                    }
+
+                    if (preg_match($dateVerify->getRegex(), $data_final)) {
+                        $data_final = $this->format_date_mysql($data_final);
+                        $clause = '('.$db->quoteName('data_final') . ' <= '.$db->Quote($data_final);
+                        $clause .= ' OR ';
+                        $clause .= $db->quoteName('data_final') . ' = '.$db->Quote('0000-00-00').')';
+                        $query->where($clause);
+                    }
+                }
+
+                // Filter by search in title
+                $search = $this->getState('filter.search');
+                if (!empty($search))
+                {
+                    if (stripos($search, 'id:') === 0)
+                    {
+                        $query->where('comp.id = ' . (int) substr($search, 3));
+                    }
+                    else
+                    {
+                        $search = $db->quote('%' . $db->escape($search, true) . '%');
+                        $query->where('(comp.title LIKE ' . $search . ')');
+                    }
+                }
+
+                // $query->where('dir.id = ' . (int) $dirigente_id);
+
                 // Add the list ordering clause.
                 $orderCol = $this->state->get('list.ordering', 'comp.id');
                 $orderDirn = $this->state->get('list.direction', 'DESC');
-                $query->order($db->escape($orderCol . ' ' . $orderDirn));
 
+                if($orderCol == 'comp.data_inicial' || $orderCol == 'comp.data_final')
+                    $ordering = $db->escape($orderCol . ' ' . $orderDirn . ', comp.horario_inicio ASC');
+                else
+                    $ordering = $db->escape($orderCol . ' ' . $orderDirn);
+
+                $query->order( $ordering );
+
+                // echo $query->dump();
                 return $query;
         }
+
+        /**
+         * Method to auto-populate the model state.
+         *
+         * Note. Calling getState in this method will result in recursion.
+         *
+         * @param   string  $ordering   An optional ordering field.
+         * @param   string  $direction  An optional direction (asc|desc).
+         *
+         * @return  void
+         *
+         * @since   1.6
+         */
+        protected function populateState($ordering = null, $direction = null)
+        {
+            // Load the filter state.
+            $search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
+            $this->setState('filter.search', $search);
+
+            $published = $this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state', '', 'string');
+            $this->setState('filter.state', $published);
+
+            $catid = $this->getUserStateFromRequest($this->context . '.filter.catid', 'filter_catid', '');
+            $this->setState('filter.catid', $catid);
+
+            $cargo_id = $this->getUserStateFromRequest($this->context . '.filter.cargo_id', 'filter_cargo_id', '');
+            $this->setState('filter.cargo_id', $cargo_id);
+
+            $dirigente_id = $this->getUserStateFromRequest($this->context . '.filter.dirigente_id', 'filter_dirigente_id', '');
+            $this->setState('filter.dirigente_id', $dirigente_id);
+
+            $participante_id = $this->getUserStateFromRequest($this->context . '.filter.participante_id', 'filter_participante_id', '');
+            $this->setState('filter.participante_id', $participante_id);
+
+            //alterando valor de lista se participante_id estiver preenchido
+            $app = JFactory::getApplication();
+            $input = $app->input;
+            @$participante_id = intval($input->get('filter', '', 'ARRAY')['participante_id']);
+            if($participante_id>0)
+            {
+                $lists = $input->get('list', '', 'ARRAY');
+                if(@isset($lists['status_dono_compromisso']))
+                {
+                 $lists['status_dono_compromisso'] = 0;
+                 $input->set('list', $lists);   
+                }
+            }
+
+            $dates = $this->getUserStateFromRequest($this->context . '.dates', 'dates', array(), '');            
+            foreach ($dates as $k => $date) {
+                /*if(!empty($date))
+                {
+                    $date = explode('/', $date);
+                    if(count($date)==3)
+                        $date = $date[2].'-'.$date[1].'-'.$date[0];
+                    else
+                        $date = '';
+                }*/ 
+                $this->setState('dates.'.$k, $date);   
+            }            
+
+            // List state information.
+            parent::populateState('comp.id', 'DESC');
+        }
+
+        protected function format_date_mysql( $date )
+        {
+            $date = explode('/', $date);
+            if(count($date)==3)
+                $date = $date[2].'-'.$date[1].'-'.$date[0];
+            else
+                $date = '';
+            return $date;
+        }
 }
-
-/*
-SELECT
-
-FROM `x3dts_agendadirigentes_compromissos` AS comp
-LEFT JOIN `x3dts_agendadirigentes_dirigentes_compromissos` AS dc ON comp.id = dc.compromisso_id
-LEFT JOIN `x3dts_agendadirigentes_dirigentes` AS dir ON dc.owner = dir.id
-LEFT JOIN `x3dts_agendadirigentes_cargos` AS car ON dir.cargo_id = car.id
-
-ORDER BY comp.id desc
-
-//*/

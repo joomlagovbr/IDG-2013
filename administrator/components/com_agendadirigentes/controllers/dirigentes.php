@@ -22,7 +22,7 @@ class AgendaDirigentesControllerDirigentes extends JControllerAdmin
          * Proxy for getModel.
          * @since       2.5
          */
-        public function getModel($name = 'Dirigente', $prefix = 'AgendaDirigentesModel') 
+        public function getModel($name = 'Dirigente', $prefix = 'AgendaDirigentesModel', $config = array()) 
         {
                 $model = parent::getModel($name, $prefix, array('ignore_request' => true));
                 return $model;

@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
+	<fields name="dates">
+       <field
+                name="data_inicial"
+                type="calendar"
+                format="%d/%m/%Y"
+                label="COM_AGENDADIRIGENTES_COMPROMISSOS_DATA_INICIAL_LABEL"
+                description="COM_AGENDADIRIGENTES_COMPROMISSOS_DATA_INICIAL_DESC"
+                default=""
+                hint="COM_AGENDADIRIGENTES_COMPROMISSOS_DATA_INICIAL_LABEL"
+        />
+        <field
+                name="data_final"
+                type="calendar"
+                format="%d/%m/%Y"
+                label="COM_AGENDADIRIGENTES_COMPROMISSOS_DATA_FINAL_LABEL"
+                description="COM_AGENDADIRIGENTES_COMPROMISSOS_DATA_FINAL_DESC"
+                default=""
+                hint="COM_AGENDADIRIGENTES_COMPROMISSOS_DATA_FINAL_LABEL"
+        />
+	</fields>
 	<fields name="filter" addfieldpath="/administrator/components/com_agendadirigentes/models/fields">
 		<field
 			name="search"
@@ -42,9 +62,30 @@
                 description="COM_AGENDADIRIGENTES_DIRIGENTES_DIRIGENTE_ID_DESC"
                 onchange="this.form.submit();"
                 showcategory="0"
+                alt_item_0="COM_AGENDADIRIGENTES_SELECT_DIRIGENTE_OWNER"
+        />
+        <field
+                name="participante_id"
+                type="dirigente"
+                label="COM_AGENDADIRIGENTES_DIRIGENTES_PARTICIPANTE_ID_LABEL"
+                description="COM_AGENDADIRIGENTES_DIRIGENTES_PARTICIPANTE_ID_DESC"
+                onchange="this.form.submit();"
+                showcategory="0"
+                alt_item_0="COM_AGENDADIRIGENTES_SELECT_DIRIGENTE_PARTICIPANTE"
         />
 	</fields>
 	<fields name="list">
+		<field
+			name="status_dono_compromisso"
+			type="list"
+			label="COM_AGENDADIRIGENTES_DIRIGENTES_DONOCOMPROMISSO_LABEL"
+			description="COM_AGENDADIRIGENTES_DIRIGENTES_DONOCOMPROMISSO_DESC"
+			onchange="this.form.submit();"
+			default="1"
+			>
+			<option value="1">COM_AGENDADIRIGENTES_DIRIGENTES_DONOCOMPROMISSO_SOMENTEDONO</option>
+			<option value="0">COM_AGENDADIRIGENTES_DIRIGENTES_DONOCOMPROMISSO_TODOS</option>
+		</field>
 		<field
 			name="fullordering"
 			type="list"

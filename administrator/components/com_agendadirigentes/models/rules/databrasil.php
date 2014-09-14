@@ -18,4 +18,9 @@ class JFormRuleDataBrasil extends JFormRule
          * @since       2.5
          */
         protected $regex = '^\d{2}\/\d{2}\/\d{4}$';
+
+        public function getRegex()
+        {
+        	return '/'.$this->regex.'/';
+        }
 }

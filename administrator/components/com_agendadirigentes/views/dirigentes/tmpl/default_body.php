@@ -9,9 +9,6 @@
  
 // impedir acesso direto ao arquivo
 defined('_JEXEC') or die;
- 
-// load tooltip behavior
-JHtml::_('behavior.tooltip');
 $user = JFactory::getUser();
 ?>
 <?php foreach($this->items as $i => $item):

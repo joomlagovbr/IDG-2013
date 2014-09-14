@@ -40,10 +40,10 @@ JHtml::_('formbehavior.chosen', 'select');
         <div id="j-main-container" class="span10">
 <?php else : ?>
         <div id="j-main-container">
-<?php endif;?>     
-                <?php
-                // Search tools bar
-                echo JLayoutHelper::render('joomla.searchtools.default', array('view' => $this));
+<?php endif;?>  
+                <?php                
+                // Search tools bar                
+                echo $this->loadTemplate('filters');                
                 ?>
                 <?php if (empty($this->items)) : ?>
                         <div class="alert alert-no-items">
@@ -55,6 +55,9 @@ JHtml::_('formbehavior.chosen', 'select');
                                 <tfoot><?php echo $this->loadTemplate('foot');?></tfoot>
                                 <tbody><?php echo $this->loadTemplate('body');?></tbody>
                         </table>
+                        <?php if ( $this->status_dono_compromisso==0): ?>
+                        <div align="right">* donos dos compromissos listados</div>
+                        <?php endif; ?>
                 <?php endif; ?>
                 <div>
                         <input type="hidden" name="task" value="" />
