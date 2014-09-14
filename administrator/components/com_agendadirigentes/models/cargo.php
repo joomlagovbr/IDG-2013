@@ -71,4 +71,19 @@ class AgendaDirigentesModelCargo extends JModelAdmin
 
             return false;
         }
+
+        public function save($data)
+        {
+                $result = parent::save($data);
+                if(!$result)
+                        return false;
+
+                // if (@isset($data['id'])!==false && )
+                // {
+                        // if(!$this->updateCompromissosDirigentes($data))
+                                // return false;
+                // }
+
+                return     true;           
+        }
 }

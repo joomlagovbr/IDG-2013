@@ -26,9 +26,9 @@ defined('_JEXEC') or die;
         </th>
         <th>
                 <?php if ($this->status_dono_compromisso): ?>
-                        <?php echo JHtml::_('searchtools.sort', 'COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_OWNER', 'dc.owner', $this->listDirn, $this->listOrder); ?>
+                        <?php echo JHtml::_('searchtools.sort', 'COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_OWNER', 'dir.name', $this->listDirn, $this->listOrder); ?>
                 <?php else: ?>
-                        <?php echo JHtml::_('searchtools.sort', 'COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_DIRIGENTE', 'dc.owner', $this->listDirn, $this->listOrder); ?>
+                        <?php echo JHtml::_('searchtools.sort', 'COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_DIRIGENTE', 'dir.name', $this->listDirn, $this->listOrder); ?>
                 <?php endif ?>
         </th>
         <!-- <th>

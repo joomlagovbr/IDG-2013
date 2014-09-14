@@ -45,6 +45,13 @@
                         <option value="1">JPUBLISHED</option>
                         <option value="0">JUNPUBLISHED</option>
                 </field>
+                <field name="ordering"
+                        type="cargoordering"
+                        label="JFIELD_ORDERING_LABEL"
+                        description="JFIELD_ORDERING_DESC"
+                        filter="string"
+                        default="0"
+                />
         </fieldset>
         <fieldset name="accesscontrol">
                 <field name="asset_id" type="hidden" filter="unset" />

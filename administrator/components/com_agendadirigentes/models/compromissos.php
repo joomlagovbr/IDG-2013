@@ -24,7 +24,7 @@ class AgendaDirigentesModelCompromissos extends JModelList
                 $config['filter_fields'] = array(
                     'comp.id', 'id', 
                     'comp.title', 'title', 
-                    'dc.owner', 'owner', 
+                    'dir.name', 'owner', 
                     'dc.owner', 'owner', 
                     'comp.state', 'state', 
                     'comp.data_inicial', 'data_inicial', 
@@ -35,7 +35,8 @@ class AgendaDirigentesModelCompromissos extends JModelList
                     'comp.local', 'local', 
                     'comp.ordering', 'ordering', 
                     'car.name', 'name',
-                    'participante_id', 'dirigente_id', 'dates'
+                    'participante_id', 'dirigente_id',
+                    'dates', 'duracao'
                 );
             }
             parent::__construct($config);
@@ -120,6 +121,22 @@ class AgendaDirigentesModelCompromissos extends JModelList
                     $query->where('dir.cargo_id = ' . (int) $cargo_id);
                 }
 
+                // Filter by dia todo.
+                $dia_todo = $this->getState('filter.dia_todo');
+                if (is_numeric($dia_todo))
+                {
+                    $query->where('comp.dia_todo = ' . (int) $dia_todo);
+                }
+
+                //filter by 1 dia ou mais de compromisso
+                $duracao = $this->getState('filter.duracao');               
+                if (intval($duracao) == 1) {
+                    $query->where($db->quoteName('data_inicial') . ' = ' . $db->quoteName('data_final'));
+                }
+                elseif (intval($duracao) == 2) {
+                    $query->where($db->quoteName('data_inicial') . ' <> ' . $db->quoteName('data_final'));
+                }
+                
                 // Filter by dirigente.
                 $dirigente_id = $this->getState('filter.dirigente_id');
                 if (is_numeric($dirigente_id))
@@ -214,6 +231,12 @@ class AgendaDirigentesModelCompromissos extends JModelList
 
             $participante_id = $this->getUserStateFromRequest($this->context . '.filter.participante_id', 'filter_participante_id', '');
             $this->setState('filter.participante_id', $participante_id);
+
+            $dia_todo = $this->getUserStateFromRequest($this->context . '.filter.dia_todo', 'filter_dia_todo', '');
+            $this->setState('filter.dia_todo', $dia_todo);
+
+            $duracao = $this->getUserStateFromRequest($this->context . '.filter.duracao', 'filter_duracao', '');
+            $this->setState('filter.duracao', $duracao);
 
             //alterando valor de lista se participante_id estiver preenchido
             $app = JFactory::getApplication();

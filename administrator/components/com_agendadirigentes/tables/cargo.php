@@ -120,4 +120,49 @@ class AgendaDirigentesTableCargo extends JTable
                 }
                 return $assetParentId;
         }
+
+        function check()
+        {
+                if(empty($this->id))
+                {
+                        $query = $this->_db->getQuery(true);
+                        $query->select('MAX(ordering)+1');
+                        $query->from( $this->_db->quoteName('#__agendadirigentes_cargos') );
+                        $query->where( $this->_db->quoteName('catid') . '=' .$this->catid );
+                        $this->_db->setQuery((string)$query);
+
+                        $this->ordering = intval( $this->_db->loadResult() );
+                }
+                else
+                {
+                        if($this->ordering == 0)
+                        {
+                               $query = $this->_db->getQuery(true);
+                               $fields = array();
+                               $fields[] =  $this->_db->quoteName('ordering') . ' = ' . $this->_db->quoteName('ordering') . ' + 1';
+                                $conditions = array();
+                               $conditions[] = $this->_db->quoteName('catid') . ' = ' . (int) $this->catid;
+                               $conditions[] = $this->_db->quoteName('id') . ' <> ' . (int) $this->id;
+                               
+                               $query
+                                        ->update($this->_db->quoteName('#__agendadirigentes_cargos'))
+                                        ->set($fields)
+                                        ->where($conditions);
+
+                                $this->_db->setQuery((string) $query);
+                                $this->_db->query();
+                        }
+                        else
+                        {
+                                @list($new_ordering, $id_item) = explode(':', $this->ordering);
+                                if($id_item == $this->id || empty($id_item))
+                                        $this->ordering = (int) $new_ordering;
+                                else
+                                        $this->ordering = intval($new_ordering) + 1;
+                        }
+                        
+                }
+
+                return parent::check();
+        }
 }

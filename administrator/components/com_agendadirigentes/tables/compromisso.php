@@ -70,6 +70,26 @@ class AgendaDirigentesTableCompromisso extends JTable
         	$this->data_inicial = $this->data_inicial[2]."-".$this->data_inicial[1]."-".$this->data_inicial[0];
         	$this->data_final = explode("/", $this->data_final);
         	$this->data_final = $this->data_final[2]."-".$this->data_final[1]."-".$this->data_final[0];
+
+            if( $this->dia_todo == 1 )
+            {
+                $this->horario_inicio = '08:00:00';
+                $this->horario_fim = '18:00:00';
+            }
+            else
+            {
+                $length_horario_inicio = strlen($this->horario_inicio);
+                if($length_horario_inicio<5)
+                    $this->horario_inicio = '08:00:00';
+                else if($length_horario_inicio==5)
+                     $this->horario_inicio .= ':00';
+
+                $length_horario_fim = strlen($this->horario_fim);
+                if($length_horario_fim<5)
+                    $this->horario_fim = '18:00:00';
+                else if($length_horario_fim==5)
+                     $this->horario_fim .= ':00';
+            }
         	
         	if(empty($this->created) || $this->created=="0000-00-00 00:00:00")
         		$this->created = date('Y-m-d H:i:s');

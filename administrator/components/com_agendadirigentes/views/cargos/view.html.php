@@ -104,6 +104,7 @@ class AgendaDirigentesViewCargos extends JViewLegacy
                 'a.id' => JText::_('COM_AGENDADIRIGENTES_CARGOS_HEADING_ID'),
                 'a.published' => JText::_('COM_AGENDADIRIGENTES_CARGOS_HEADING_PUBLISHED'),
                 'a.name' => JText::_('COM_AGENDADIRIGENTES_CARGOS_HEADING_CARGO'),
+                'a.ordering' => JText::_('COM_AGENDADIRIGENTES_CARGOS_HEADING_ORDERING'),
                 'b.title' => JText::_('COM_AGENDADIRIGENTES_CARGOS_HEADING_CATEGORIA')
             );
         }

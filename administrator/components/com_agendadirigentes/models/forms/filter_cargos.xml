@@ -48,6 +48,8 @@
 			<option value="a.published DESC">COM_AGENDADIRIGENTES_CARGOS_HEADING_PUBLISHED_DESC</option>
 			<option value="a.name ASC">COM_AGENDADIRIGENTES_CARGOS_HEADING_CARGO_ASC</option>
 			<option value="a.name DESC">COM_AGENDADIRIGENTES_CARGOS_HEADING_CARGO_DESC</option>
+			<option value="a.ordering ASC">COM_AGENDADIRIGENTES_CARGOS_HEADING_ORDERING_ASC</option>
+			<option value="a.ordering DESC">COM_AGENDADIRIGENTES_CARGOS_HEADING_ORDERING_DESC</option>
 			<option value="b.title ASC">COM_AGENDADIRIGENTES_CARGOS_HEADING_CATEGORIA_ASC</option>
 			<option value="b.title DESC">COM_AGENDADIRIGENTES_CARGOS_HEADING_CATEGORIA_DESC</option>
 		</field>

@@ -116,8 +116,8 @@ class AgendaDirigentesViewCompromissos extends JViewLegacy
             return array(
                 'comp.id' => JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_ID'),
                 'comp.title' => JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_TITLE'),
-                'dc.owner' => JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_OWNER'),
-                'dc.owner' => JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_CATEGORIA'),
+                'dir.name' => JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_OWNER'),
+                'dir.name' => JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_DIRIGENTE'),
                 'comp.state' => JText::_('JSTATUS'),
                 'comp.data_inicial' => JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_DATA_INICIAL'),
                 'comp.data_final' => JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_DATA_FINAL'),

@@ -12,13 +12,16 @@ defined('_JEXEC') or die;
  
 ?>
 <tr>
-        <th width="35">
+        <th width="1%" class="nowrap center hidden-phone">
+                <?php echo JHtml::_('searchtools.sort', '', 'a.ordering', $this->listDirn, $this->listOrder, null, 'asc', 'JGRID_HEADING_ORDERING', 'icon-menu-2'); ?>
+        </th>
+        <th width="1%" class="nowrap">
                 <?php echo JHtml::_('searchtools.sort', 'COM_AGENDADIRIGENTES_CARGOS_HEADING_ID', 'a.id', $this->listDirn, $this->listOrder); ?>
         </th>
-        <th width="20">
+        <th width="1%" class="hidden-phone">
                 <?php echo JHtml::_('grid.checkall'); ?>
         </th>
-        <th width="80">
+        <th width="1%" class="nowrap center">
                 <?php echo JHtml::_('searchtools.sort', 'COM_AGENDADIRIGENTES_CARGOS_HEADING_PUBLISHED', 'a.published', $this->listDirn, $this->listOrder); ?>
         </th>
         <th>
@@ -26,5 +29,5 @@ defined('_JEXEC') or die;
         </th>
         <th>
                 <?php echo JHtml::_('searchtools.sort', 'COM_AGENDADIRIGENTES_CARGOS_HEADING_CATEGORIA', 'b.title', $this->listDirn, $this->listOrder); ?>
-        </th>
+        </th>        
 </tr>

@@ -17,14 +17,14 @@ JFormHelper::loadFieldClass('list');
 /**
  * HelloWorld Form Field class for the HelloWorld component
  */
-class JFormFieldDirigenteordering extends JFormFieldList
+class JFormFieldCargoordering extends JFormFieldList
 {
         /**
          * The field type.
          *
          * @var         string
          */
-        protected $type = 'Dirigenteordering';
+        protected $type = 'Cargoordering';
  
         /**
          * Method to get a list of options for a list input.
@@ -44,29 +44,38 @@ class JFormFieldDirigenteordering extends JFormFieldList
                 }
 
                 JTable::addIncludePath(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_agendadirigentes'.DS.'tables');
-                $table = JTable::getInstance('dirigente', 'AgendaDirigentesTable');
+                $table = JTable::getInstance('cargo', 'AgendaDirigentesTable');
                 $table->load($id);
                 
                 $db = JFactory::getDBO();
                 $query = $db->getQuery(true);
-                $query->select('dir.ordering, dir.name')
-                        ->from( $db->quoteName('#__agendadirigentes_dirigentes', 'dir') )
+                $query->select('car.ordering, car.name, car.id')
+                        ->from( $db->quoteName('#__agendadirigentes_cargos', 'car') )
                         ->join('INNER', $db->quoteName('#__categories', 'cat')
-                                . ' ON (' . $db->quoteName('dir.catid') . ' = ' . $db->quoteName('cat.id') . ')')
-                        ->where('dir.catid = '.intval($table->catid))
-                        ->where('dir.id <> '.intval($id));
-                $query->order( 'dir.ordering ASC, dir.name ASC' );
+                                . ' ON (' . $db->quoteName('car.catid') . ' = ' . $db->quoteName('cat.id') . ')')
+                        ->where('car.catid = '.intval($table->catid));
+                        // ->where('dir.id <> '.intval($id));
+                $query->order( 'car.ordering ASC, car.name ASC' );
+
                 $db->setQuery((string)$query);
-                $dirigentes = $db->loadObjectList();
+                $cargos = $db->loadObjectList();
                 $options = array();
-                
-                if ($dirigentes)
+                $this->setValue( $table->ordering. ':' . $table->id );
+                if ($cargos)
                 {
                         $options[] = JHtml::_('select.option', 0, ' - Primeiro - ');
-                        foreach($dirigentes as $dirigente) 
+                        // $last = 0;
+                        foreach($cargos as $cargo) 
                         {
-                                $options[] = JHtml::_('select.option', $dirigente->ordering, $dirigente->name);
+                            if($cargo->id == $table->id)
+                                $options[] = JHtml::_('select.option', $cargo->ordering . ':' . $cargo->id, '-> '.$cargo->name.' <-');
+                            else
+                                $options[] = JHtml::_('select.option', $cargo->ordering . ':' . $cargo->id, $cargo->name);
+
+                            // if($cargo->ordering > $last)
+                            //     $last = $cargo->ordering;
                         }
+                        // $options[] = JHtml::_('select.option', $last+1, ' - &Uacute;ltimo - ');
                 }
                 else
                 {

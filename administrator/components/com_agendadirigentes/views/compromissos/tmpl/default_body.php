@@ -93,7 +93,7 @@ $user = JFactory::getUser();
                         <?php echo $data_final; ?> <?php echo substr($item->horario_fim, 0, 5); ?>
                 </td>
                 <td>
-                        <?php echo $item->dia_todo; ?>
+                        <?php echo ($item->dia_todo==1)? 'Sim' : 'N&atilde;o'; ?>
                 </td>
                 <td>
                         <?php echo $item->ordering; ?>

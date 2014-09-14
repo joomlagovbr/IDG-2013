@@ -14,6 +14,18 @@ defined('_JEXEC') or die;
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('formbehavior.chosen', 'select');
+$app            = JFactory::getApplication();
+$user           = JFactory::getUser();
+$userId         = $user->get('id');
+$listOrder      = $this->escape($this->state->get('list.ordering'));
+$listDirn       = $this->escape($this->state->get('list.direction'));
+$this->saveOrder      = $listOrder == 'a.ordering';
+if ($this->saveOrder)
+{
+        $saveOrderingUrl = 'index.php?option=com_agendadirigentes&task=cargos.saveOrderAjax&tmpl=component';
+        JHtml::_('sortablelist.sortable', 'articleList', 'adminForm', strtolower($listDirn), $saveOrderingUrl);
+}
+$sortFields = $this->getSortFields();
 ?>
 <script type="text/javascript">
         Joomla.orderTable = function()
@@ -50,7 +62,7 @@ JHtml::_('formbehavior.chosen', 'select');
                                 <?php echo JText::_('JGLOBAL_NO_MATCHING_RESULTS'); ?>
                         </div>
                 <?php else : ?>
-                        <table class="table table-striped">
+                        <table id="articleList" class="table table-striped">
                                 <thead><?php echo $this->loadTemplate('head');?></thead>
                                 <tfoot><?php echo $this->loadTemplate('foot');?></tfoot>
                                 <tbody><?php echo $this->loadTemplate('body');?></tbody>
