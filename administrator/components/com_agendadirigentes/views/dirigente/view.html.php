@@ -37,6 +37,10 @@ class AgendaDirigentesViewDirigente extends JViewLegacy
                     $app->redirect('index.php');
                   }
                 }
+                else
+                {
+                  $this->canDo  = JHelperContent::getActions('com_agendadirigentes');
+                }
 
                 // Check for errors.
                 if (count($errors = $this->get('Errors'))) 
@@ -63,13 +67,37 @@ class AgendaDirigentesViewDirigente extends JViewLegacy
          */
         protected function addToolBar() 
         {
-                $input = JFactory::getApplication()->input;
-                $input->set('hidemainmenu', true);
-                $isNew = ($this->item->id == 0);
-                JToolBarHelper::title($isNew ? JText::_('COM_AGENDADIRIGENTES_MANAGER_DIRIGENTE_NEW')
-                                             : JText::_('COM_AGENDADIRIGENTES_MANAGER_DIRIGENTE_EDIT'), 'compromisso');
-                JToolBarHelper::save('dirigente.save');
-                JToolBarHelper::cancel('dirigente.cancel', $isNew ? 'JTOOLBAR_CANCEL' : 'JTOOLBAR_CLOSE');
+          $input = JFactory::getApplication()->input;
+          $input->set('hidemainmenu', true);
+          $isNew = ($this->item->id == 0);
+          JToolBarHelper::title($isNew ? JText::_('COM_AGENDADIRIGENTES_MANAGER_DIRIGENTE_NEW')
+                                       : JText::_('COM_AGENDADIRIGENTES_MANAGER_DIRIGENTE_EDIT'), 'compromisso');
+
+          if ($isNew)
+          {
+              if ($this->canDo->get('core.create'))
+              {
+                  JToolBarHelper::apply('dirigente.apply');
+                  JToolBarHelper::save('dirigente.save');
+                  JToolBarHelper::save2new('dirigente.save2new');
+              }                   
+          }
+          else
+          {
+              if ($this->canDo->get('cargos.manage'))
+              {
+                  JToolBarHelper::apply('dirigente.apply');
+                  JToolBarHelper::save('dirigente.save');
+                  JToolBarHelper::save2new('dirigente.save2new');
+              }
+
+              if ($this->canDo->get('core.create'))
+              {
+                  JToolBarHelper::save2copy('dirigente.save2copy');
+              }                     
+          }
+
+          JToolBarHelper::cancel('dirigente.cancel', $isNew ? 'JTOOLBAR_CANCEL' : 'JTOOLBAR_CLOSE');
         }
 
         /**

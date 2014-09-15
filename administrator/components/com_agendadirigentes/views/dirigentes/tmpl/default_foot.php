@@ -14,5 +14,5 @@ defined('_JEXEC') or die;
 JHtml::_('behavior.tooltip');
 ?>
 <tr>
-        <td colspan="8"><?php echo $this->pagination->getListFooter(); ?></td>
+        <td colspan="6"><?php echo $this->pagination->getListFooter(); ?></td>
 </tr>

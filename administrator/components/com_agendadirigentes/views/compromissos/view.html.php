@@ -85,6 +85,9 @@ class AgendaDirigentesViewCompromissos extends JViewLegacy
                 if ($this->canDo->get('core.edit')) 
                     JToolBarHelper::editList('compromisso.edit');
 
+                    // JToolbarHelper::custom('dirigentes.featured', 'featured.png', 'featured_f2.png', 'JFEATURED', true);
+                
+
                 if ($this->canDo->get('core.delete')) 
                     JToolBarHelper::deleteList('', 'compromissos.delete');
 

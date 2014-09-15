@@ -17,5 +17,5 @@ class JFormRuleCatid extends JFormRule
          * @var         string
          * @since       2.5
          */
-        protected $regex = '[^0]+$';
+        protected $regex = '[0-9]+$';
 }

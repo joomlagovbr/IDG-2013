@@ -23,8 +23,6 @@ CREATE TABLE `#__agendadirigentes_dirigentes` (
   `catid` int(11) NOT NULL,
   `cargo_id` int(11) NOT NULL,
   `state` TINYINT(3) NOT NULL DEFAULT '0',
-  `block` int(1) unsigned NOT NULL DEFAULT '0',
-  `ordering` int(3) unsigned NOT NULL DEFAULT '0',
   `interino` int(1) unsigned NOT NULL DEFAULT '0',
   `em_atividade` int(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),

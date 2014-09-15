@@ -29,8 +29,6 @@ class AgendaDirigentesModelDirigentes extends JModelList
                     'd.title', 'title', 
                     'a.proprietario', 'proprietario', 
                     'a.habilitados' , 'habilitados', 
-                    'a.block', 'block', 
-                    'a.ordering', 'ordering',
                     'catid', 'cargo_id'
                 );
             }
@@ -118,16 +116,16 @@ class AgendaDirigentesModelDirigentes extends JModelList
         protected function populateState($ordering = null, $direction = null)
         {
             // Load the filter state.
-            $search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
+            @$search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
             $this->setState('filter.search', $search);
 
-            $published = $this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state', '', 'string');
+            @$published = $this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state', '', 'string');
             $this->setState('filter.state', $published);
 
-            $catid = $this->getUserStateFromRequest($this->context . '.filter.catid', 'filter_catid', '');
+            @$catid = $this->getUserStateFromRequest($this->context . '.filter.catid', 'filter_catid', '');
             $this->setState('filter.catid', $catid);
 
-            $cargo_id = $this->getUserStateFromRequest($this->context . '.filter.cargo_id', 'filter_cargo_id', '');
+            @$cargo_id = $this->getUserStateFromRequest($this->context . '.filter.cargo_id', 'filter_cargo_id', '');
             $this->setState('filter.cargo_id', $cargo_id);
 
             // List state information.

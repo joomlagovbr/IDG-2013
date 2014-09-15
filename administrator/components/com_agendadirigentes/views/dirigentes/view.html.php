@@ -73,9 +73,32 @@ class AgendaDirigentesViewDirigentes extends JViewLegacy
                         //Reflect number of items in title!
                         ($total?' <span style="font-size: 0.5em; vertical-align: middle;">('.$total.')</span>':'')
                         , 'compromisso');
-                JToolBarHelper::addNew('dirigente.add');
-                JToolBarHelper::editList('dirigente.edit');
-                JToolBarHelper::deleteList('', 'dirigentes.delete');
+
+                if ($this->canDo->get('core.create'))
+                    JToolBarHelper::addNew('dirigente.add');
+
+                if (($this->canDo->get('core.edit')) || ($this->canDo->get('core.edit.own')))
+                {
+                    JToolBarHelper::editList('dirigente.edit');
+                }                
+
+                if ($this->canDo->get('core.edit.state'))
+                {
+                    JToolBarHelper::publishList('dirigentes.publish');
+                    JToolBarHelper::unpublishList('dirigentes.unpublish');
+                    JToolbarHelper::archiveList('dirigentes.archive');                    
+                }
+
+                if ($this->state->get('filter.state') == -2 && $this->canDo->get('core.delete'))
+                {
+                    JToolbarHelper::deleteList('', 'dirigentes.delete');
+                }
+                elseif ($this->canDo->get('core.edit.state'))
+                {
+                    JToolbarHelper::trash('dirigentes.trash');
+                }
+
+                // JToolBarHelper::deleteList('', 'dirigentes.delete');
                 JToolBarHelper::preferences('com_agendadirigentes');
         }
 
@@ -104,9 +127,7 @@ class AgendaDirigentesViewDirigentes extends JViewLegacy
                 'a.name' => JText::_('COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_NOME'),
                 'a.state' => JText::_('COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_STATE'),
                 'c.name' => JText::_('COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_CARGO'),
-                'd.title' => JText::_('COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_CATEGORIA'),
-                'a.block' => JText::_('COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_BLOQUEADO'),
-                'a.ordering' => JText::_('COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_ORDEM')
+                'd.title' => JText::_('COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_CATEGORIA')
             );
         }
 }

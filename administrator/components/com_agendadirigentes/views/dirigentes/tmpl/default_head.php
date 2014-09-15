@@ -11,13 +11,13 @@
 defined('_JEXEC') or die;
 ?>
 <tr>
-        <th width="35">
+        <th width="1%" class="nowrap">
                 <?php echo JHtml::_('searchtools.sort', 'COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_ID', 'a.id', $this->listDirn, $this->listOrder); ?>
         </th>
-        <th width="20">
+        <th width="1%" class="hidden-phone">
                 <?php echo JHtml::_('grid.checkall'); ?>
         </th>
-        <th>
+        <th width="1%" class="nowrap center">
                 <?php echo JHtml::_('searchtools.sort', 'COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_STATE', 'a.state', $this->listDirn, $this->listOrder); ?>
         </th>
         <th>
@@ -28,14 +28,5 @@ defined('_JEXEC') or die;
         </th>
         <th>
                 <?php echo JHtml::_('searchtools.sort', 'COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_CARGO', 'c.name', $this->listDirn, $this->listOrder); ?>
-        </th>
-        <th>
-                <?php echo JHtml::_('searchtools.sort', 'COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_ORDEM', 'a.ordering', $this->listDirn, $this->listOrder); ?>
-        </th>
-<!--         <th>
-                <?php echo JHtml::_('searchtools.sort', 'COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_USUARIOS_HABILITADOS', '', $this->listDirn, $this->listOrder); ?>
-        </th> -->
-        <th>
-                <?php echo JHtml::_('searchtools.sort', 'COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_BLOQUEADO', 'a.block', $this->listDirn, $this->listOrder); ?>
         </th>
 </tr>

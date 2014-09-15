@@ -10,6 +10,7 @@
 // impedir acesso direto ao arquivo
 defined('_JEXEC') or die;
 $user = JFactory::getUser();
+JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 ?>
 <?php foreach($this->items as $i => $item):
         // $canManage = $user->authorise( "compromissos.manage", "com_agendadirigentes.category." . $item->catid );
@@ -30,9 +31,14 @@ $user = JFactory::getUser();
                     <div class="btn-group">
                         <?php
                         $canChange = true;
-                        echo JHtml::_('jgrid.published', $item->state, $i, 'compromissos.', $canChange, 'cb'); ?>
+                        echo JHtml::_('jgrid.published', $item->state, $i, 'compromissos.', $canChange, 'cb');
+                        echo JHtml::_('agendadirigenteshelper.featured', $item->featured, $i, $canChange);
+                        ?>
                         <?php
                         // Create dropdown items
+                        // $action = $item->featured ? 'unfeature' : 'feature';
+                        // JHtml::_('actionsdropdown.' . $action, 'cb' . $i, 'compromissos');
+
                         $action = $this->archived ? 'unarchive' : 'archive';
                         JHtml::_('actionsdropdown.' . $action, 'cb' . $i, 'compromissos');
 

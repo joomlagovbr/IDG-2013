@@ -64,6 +64,18 @@ class AgendaDirigentesModelCargo extends JModelAdmin
          */
         protected function canDelete($item)
         {
+            
+            $model = $this->getInstance('dirigentes', 'AgendaDirigentesModel');            
+            $app = JFactory::getApplication();
+            $app->input->set('filter_cargo_id', $item->id);
+            $nDirigentes = $model->getTotal();
+
+            if($nDirigentes > 0)
+            {
+                $app->enqueueMessage('H&aacute; '.$nDirigentes.' dirigente(s) vinculado(s) a este cargo. Remova-o(s) ou troque seu(s) cargo(s) para apagar este item.');
+                return false;
+            }
+
             if( !empty( $item->catid ) ){
                 $user = JFactory::getUser();
                 return $user->authorise( "cargos.manage", "com_agendadirigentes.category." . $item->catid );

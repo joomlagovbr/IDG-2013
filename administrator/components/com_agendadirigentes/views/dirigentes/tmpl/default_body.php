@@ -58,15 +58,6 @@ $user = JFactory::getUser();
                 </td>
                 <td>
                         <?php echo $item->cargo; ?>
-                </td>
-                <td>
-                        <?php echo $item->ordering; ?>
-                </td>
-                <!-- <td>
-                        <?php //echo $item->categoria; ?>
-                </td> -->
-                <td>
-                        <?php echo $item->block; ?>
-                </td>
+                </td>                
         </tr>
 <?php endforeach; ?>

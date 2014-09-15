@@ -52,7 +52,7 @@
                         <option value="2">JARCHIVED</option>
                         <option value="-2">JTRASHED</option>
                 </field>
-                <field
+                <!-- <field
                         name="block"
                         type="radio"
                         label="COM_AGENDADIRIGENTES_DIRIGENTES_BLOCK_LABEL"
@@ -71,7 +71,7 @@
                         description="COM_AGENDADIRIGENTES_DIRIGENTES_ORDERING_DESC"
                         default="0"
                         filter="integer"
-                />
+                /> -->
                 <field
                         name="interino"
                         type="radio"
