@@ -151,12 +151,6 @@
                         filter="string"
                 />
                 <field
-                        name="ordering"
-                        type="hidden"
-                        default="0"
-                        filter="integer"
-                />
-                <field
                         name="description"
                         type="editor"
                         label="COM_AGENDADIRIGENTES_COMPROMISSOS_DESCRIPTION_LABEL"
@@ -165,6 +159,14 @@
                         readonly="true"
                         filter="raw"
                 />
+                <!-- <field
+                        name="tags"
+                        type="tag"
+                        label="JTAG"
+                        description="JTAG_DESC"
+                        mode="ajax"
+                        class="inputbox span12 small"
+                /> -->
                 <field
                         name="created"
                         type="text"

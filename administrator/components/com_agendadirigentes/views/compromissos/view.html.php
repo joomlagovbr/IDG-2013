@@ -82,14 +82,27 @@ class AgendaDirigentesViewCompromissos extends JViewLegacy
                 if ($this->canDo->get('core.create')) 
                     JToolBarHelper::addNew('compromisso.add');
 
-                if ($this->canDo->get('core.edit')) 
+                if (($this->canDo->get('core.edit')) || ($this->canDo->get('core.edit.own')))
+                {
                     JToolBarHelper::editList('compromisso.edit');
+                }
 
-                    // JToolbarHelper::custom('dirigentes.featured', 'featured.png', 'featured_f2.png', 'JFEATURED', true);
+                if ($this->canDo->get('core.edit.state'))
+                {
+                    JToolBarHelper::publishList('compromissos.publish');
+                    JToolBarHelper::unpublishList('compromissos.unpublish');
+                    JToolbarHelper::custom('compromissos.featured', 'featured.png', 'featured_f2.png', 'JFEATURED', true);
+                    JToolbarHelper::archiveList('compromissos.archive');                    
+                }
                 
-
-                if ($this->canDo->get('core.delete')) 
-                    JToolBarHelper::deleteList('', 'compromissos.delete');
+                if ($this->state->get('filter.state') == -2 && $this->canDo->get('core.delete'))
+                {
+                    JToolbarHelper::deleteList('', 'compromissos.delete');
+                }
+                elseif ($this->canDo->get('core.edit.state'))
+                {
+                    JToolbarHelper::trash('compromissos.trash');
+                }
 
                 // Options button.
                 if ($this->canDo->get('core.admin')) 
@@ -128,7 +141,6 @@ class AgendaDirigentesViewCompromissos extends JViewLegacy
                 'comp.horario_inicio' => JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_HORARIO_INICIO'),
                 'comp.horario_fim' => JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_HORARIO_FIM'),
                 'comp.local' => JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_LOCAL'),
-                'comp.ordering' => JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_ORDERING'),
                 'car.name' => JText::_('COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_OWNER_CARGO')
             );
         }

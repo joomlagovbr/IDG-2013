@@ -72,7 +72,7 @@ JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
               <!--   <td>
                         <?php echo $item->titleCategory; ?>
                 </td> -->
-                <td>
+                <td class="nowrap">
                         <?php 
                         if ($item->data_inicial == '0000-00-00' || empty($item->data_inicial)) {
                             $data_inicial = 'N&atilde;o informado.';
@@ -85,7 +85,7 @@ JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
                         ?>
                         <?php echo $data_inicial; ?> <?php echo substr($item->horario_inicio, 0, 5); ?>
                 </td>
-                <td>
+                <td class="nowrap">
                         <?php 
                         if ($item->data_final == '0000-00-00' || empty($item->data_final)) {
                             $data_final = $data_inicial;
@@ -98,14 +98,8 @@ JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
                         ?>
                         <?php echo $data_final; ?> <?php echo substr($item->horario_fim, 0, 5); ?>
                 </td>
-                <td>
+                <td class="center">
                         <?php echo ($item->dia_todo==1)? 'Sim' : 'N&atilde;o'; ?>
                 </td>
-                <td>
-                        <?php echo $item->ordering; ?>
-                </td>
-               <!--  <td>
-                        <?php echo $item->local; ?>
-                </td> -->
         </tr>
 <?php endforeach; ?>

@@ -27,7 +27,7 @@ defined('_JEXEC') or die;
         <th>
                 <?php echo JHtml::_('searchtools.sort', 'COM_AGENDADIRIGENTES_CARGOS_HEADING_CARGO', 'a.name', $this->listDirn, $this->listOrder); ?>
         </th>
-        <th>
+        <th width="30%" class="nowrap">
                 <?php echo JHtml::_('searchtools.sort', 'COM_AGENDADIRIGENTES_CARGOS_HEADING_CATEGORIA', 'b.title', $this->listDirn, $this->listOrder); ?>
         </th>        
 </tr>

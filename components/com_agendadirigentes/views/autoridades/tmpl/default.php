@@ -7,12 +7,13 @@
 * @license GNU General Public License version 2 or later; see LICENSE.txt
 */
  
-// impedir acesso direto ao arquivo
 defined('_JEXEC') or die;
- 
-// load tooltip behavior
-JHtml::_('behavior.tooltip');
+
+JHtml::addIncludePath(JPATH_COMPONENT . '/helpers');
+JHtml::_('behavior.caption');
+
+echo JLayoutHelper::render('joomla.content.categories_default', $this);
+
+echo $this->loadTemplate('items');
 ?>
-<tr>
-        <td colspan="10"><?php echo $this->pagination->getListFooter(); ?></td>
-</tr>
+</div>

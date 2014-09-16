@@ -23,10 +23,10 @@ defined('_JEXEC') or die;
         <th>
                 <?php echo JHtml::_('searchtools.sort', 'COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_NOME', 'a.name', $this->listDirn, $this->listOrder); ?>
         </th>
-        <th>
+        <th width="25%">
                 <?php echo JHtml::_('searchtools.sort', 'COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_CATEGORIA', 'd.title', $this->listDirn, $this->listOrder); ?>
         </th>
-        <th>
+        <th width="25%">
                 <?php echo JHtml::_('searchtools.sort', 'COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_CARGO', 'c.name', $this->listDirn, $this->listOrder); ?>
         </th>
 </tr>

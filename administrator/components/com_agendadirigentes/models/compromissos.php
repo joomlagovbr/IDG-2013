@@ -32,8 +32,7 @@ class AgendaDirigentesModelCompromissos extends JModelList
                     'comp.dia_todo', 'dia_todo', 
                     'comp.horario_inicio', 'horario_inicio', 
                     'comp.horario_fim', 'horario_fim', 
-                    'comp.local', 'local', 
-                    'comp.ordering', 'ordering', 
+                    'comp.local', 'local',                     
                     'car.name', 'name',
                     'participante_id', 'dirigente_id',
                     'dates', 'duracao'
@@ -56,7 +55,7 @@ class AgendaDirigentesModelCompromissos extends JModelList
                 $query
                     ->select(' comp.id, comp.checked_out, comp.title, comp.data_inicial') //comp.catid, 
                     ->select(' comp.data_final, comp.horario_inicio, comp.horario_fim, comp.description, comp.local')
-                    ->select(' comp.params, comp.ordering, comp.featured')
+                    ->select(' comp.params, comp.featured')
                     ->select(' comp.state, comp.dia_todo')
                     ->select(' dc.sobreposto, dc.owner')
                     ->select(' dir.name AS nameOwner, dir.id AS idOwner')

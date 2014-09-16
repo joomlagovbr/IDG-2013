@@ -56,8 +56,16 @@ class AgendaDirigentesModelCompromisso extends JModelAdmin
                 if (empty($data)) 
                 {
                         $data = $this->getItem();
-                        $data->owner = $this->getOwner($data);
-                        $data->dirigentes = $this->getParticipantes($data);
+                        if(@isset($data->id))
+                        {                            
+                            $data->owner = $this->getOwner($data);
+                            $data->dirigentes = $this->getParticipantes($data);
+                        }
+                        else
+                        {
+                            $data->owner = NULL;
+                            $data->dirigentes = array();
+                        }
                 }
                 return $data;
         }
@@ -223,4 +231,21 @@ class AgendaDirigentesModelCompromisso extends JModelAdmin
 
             return true;
         }
+
+        // public function getCategoriesFromIds( $pks = array() )
+        // {
+        //     foreach ($pks as &$pk) {
+        //         $pk = intval($pk);
+        //     }
+        //     $items = implode(', ', $pks);
+            
+        //     $db = JFactory::getDBO();
+        //     $query = $db->getQuery(true);
+        //     $query->select('id, catid')
+        //           ->from('#__agendadirigentes_compromissos')
+        //           ->where('id IN ('.$items.')');
+            
+        //     $db->setQuery((string)$query);
+        //     return $db->loadObjectList('id');
+        // }
 }

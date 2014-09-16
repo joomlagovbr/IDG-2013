@@ -51,12 +51,16 @@ class AgendaDirigentesControllerCompromissos extends JControllerAdmin
 			$task   = $this->getTask();
 			$value  = JArrayHelper::getValue($values, $task, 0, 'int');
 
-			// Access checks.
+			$model = $this->getModel();
+			// $categories = $model->getCategoriesFromIds($ids);
+			
 			foreach ($ids as $i => $id)
 			{
-				if (!$user->authorise('core.edit.state', 'com_content.article.'.(int) $id))
+				// if(@isset($categories[$id]->catid)===false)
+				// 	continue;
+
+				if (!$user->authorise('core.edit.state', 'com_agendadirigentes.component'))
 				{
-					// Prune items that you can't change.
 					unset($ids[$i]);
 					JError::raiseNotice(403, JText::_('JLIB_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
 				}

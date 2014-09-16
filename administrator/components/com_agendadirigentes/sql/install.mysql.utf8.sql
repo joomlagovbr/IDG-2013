@@ -99,7 +99,6 @@ CREATE TABLE `#__agendadirigentes_compromissos` (
   `local` varchar(255) DEFAULT NULL,
   `compromisso_alterado` int(1) DEFAULT 0,
   `description` text,
-  `ordering` int(5) DEFAULT NULL,
   `params` tinytext,
   `created` datetime DEFAULT '0000-00-00 00:00:00',
   `created_by` int(11) DEFAULT 0,

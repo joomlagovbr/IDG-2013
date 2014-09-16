@@ -39,7 +39,7 @@ class JFormFieldDirigentesTags extends JFormFieldTag
 
 		$db		= JFactory::getDbo();
 		$query	= $db->getQuery(true)
-			->select('a.id AS value, CONCAT(c.title, " - ", b.name, " " ,a.name) AS text, \'\' AS path, 1 AS level, a.state AS published')
+			->select('a.id AS value, CONCAT(c.title, " - ", b.name, " - " ,a.name) AS text, \'\' AS path, 1 AS level, a.state AS published')
 			->from( $db->quoteName('#__agendadirigentes_dirigentes', 'a') )
 			->join('INNER', $db->quoteName('#__agendadirigentes_cargos', 'b')
 				.' ON (' . $db->quoteName('a.cargo_id') . ' = ' . $db->quoteName('b.id') . ')' )

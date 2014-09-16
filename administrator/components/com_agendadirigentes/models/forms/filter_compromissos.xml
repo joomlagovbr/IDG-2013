@@ -140,8 +140,6 @@
             <option value="comp.horario_fim DESC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_HORARIO_FIM_DESC</option>
             <option value="comp.local ASC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_LOCAL_ASC</option>
             <option value="comp.local DESC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_LOCAL_DESC</option>
-            <option value="comp.ordering ASC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_ORDERING_ASC</option>
-            <option value="comp.ordering DESC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_ORDERING_DESC</option>
             <option value="car.name ASC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_OWNER_CARGO_ASC</option>
             <option value="car.name DESC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_OWNER_CARGO_DESC</option>
 		</field>
