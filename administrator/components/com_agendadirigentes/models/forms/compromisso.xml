@@ -48,7 +48,7 @@
                         class="span12"
                         multiple="false"
                         required="true"
-                        emptyfirst="true"
+                        emptyfirst="true"                        
                         onchange="removeselected(this, 'dirigentes');"
                 />
                 <field
@@ -58,6 +58,7 @@
                         description="COM_AGENDADIRIGENTES_DIRIGENTES_PARTICIPANTES_DESC"                                             
                         class="span12"
                         multiple="true"
+                        add_participantes_externos="true"
                 />
                         <!-- required="true" -->
 
@@ -159,14 +160,11 @@
                         readonly="true"
                         filter="raw"
                 />
-                <!-- <field
-                        name="tags"
-                        type="tag"
-                        label="JTAG"
-                        description="JTAG_DESC"
-                        mode="ajax"
-                        class="inputbox span12 small"
-                /> -->
+                <field
+                        name="participantes_externos"
+                        type="hidden"
+                        filter="string"
+                />
                 <field
                         name="created"
                         type="text"

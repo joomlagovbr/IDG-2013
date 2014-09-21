@@ -69,7 +69,7 @@ class JFormFieldDirigentesTags extends JFormFieldTag
 		$query->order('c.title, b.name, a.name');
 
 		// Get the options.
-		$db->setQuery($query);
+		$db->setQuery((string)$query);
 
 		$options = array();
 		if ($this->element['emptyfirst'])
@@ -90,10 +90,64 @@ class JFormFieldDirigentesTags extends JFormFieldTag
 		{
 			return false;
 		}
+// var_dump($this->element['add_participantes_externos']);
+
+		if ( $this->getAttribute('add_participantes_externos', false) )
+		{
+
+			$input = JFactory::getApplication()->input;
+			$id = $input->get('id', 0, 'int');
+			$query	= $db->getQuery(true)
+						 ->select(
+						 	$db->quoteName('participantes_externos')
+						 )
+						 ->from(
+						 	$db->quoteName('#__agendadirigentes_compromissos')
+						 )
+						 ->where(
+						 	$db->quoteName('id') . ' = ' . $id
+						 );
+			$db->setQuery( (string)$query );
+			$participantes_externos = $db->loadResult();
+			$participantes_externos = explode(';', $participantes_externos);
+
+			$opt_externos = array();
+			for ($i=0, $limit = count($participantes_externos); $i < $limit; $i++) { 
+				$opt_externos[$i] = new StdClass();
+				$opt_externos[$i]->value = trim($participantes_externos[$i]);
+				$opt_externos[$i]->text = trim($participantes_externos[$i]);
+				$opt_externos[$i]->path = "";
+				$opt_externos[$i]->level = 1;
+				$opt_externos[$i]->published = 1;
+			}
+			
+			try
+			{
+				$options = array_merge($options, $opt_externos);
+			}
+			catch (RuntimeException $e)
+			{
+				return false;
+			}
+		}
 
 		$options = JHelperTags::convertPathsToNames($options);
 
 		return $options;
 	}
+
+	/*protected function getInput()
+	{
+		$input = parent::getInput();
+		if ( $this->getAttribute('add_participantes_externos', false) )
+		{
+			$element = 'jform_' . $this->addAttribute('name');
+			$script = 'jQuery(#'.$element.').append("<option value=\'teste\' selected=\'selected\'>teste</option>");
+					   ';
+			// $html = '<script>window.alert("teste")</script>';
+			// $input = $input . $html;			
+		}
+		return $input;
+	}*/
  
 }

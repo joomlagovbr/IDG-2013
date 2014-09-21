@@ -4,6 +4,24 @@
                 name="general"
                 label="COM_AGENDADIRIGENTES_CONFIG_GENERAL_SETTINGS_LABEL"
         >
+                <field
+                        name="fonte_nome_orgao"
+                        type="list"
+                        label="Nome do órgão"
+                        description="Fonte do nome do órgão"
+                        default="custom"
+                        >                                
+                        <option value="custom">Digite abaixo</option>
+                        <option value="site_name">Nome do site</option>
+                        <option value="tmpl_padraogoverno01">Template do portal padrão VR 01</option>
+                </field>
+                <field
+                        name="custom_nome_orgao"
+                        type="text"
+                        label="Digite o nome do órgão"
+                        description="Nome do órgão que ficará entre o brasão da república e o nome da autoridade"
+                        default="Órgão do Poder Executivo Federal"
+                />
                 <!-- description="COM_AGENDADIRIGENTES_CONFIG_GENERAL_SETTINGS_DESC" -->
                 <field
                         name="email_administrators"
@@ -50,6 +68,40 @@
                         <option value="0">JHIDE</option>
                         <option value="1">JSHOW</option>
                 </field>
+        </fieldset>
+        <fieldset
+                name="sharing"
+                label="Compartilhamento"
+                description="Descrição compartilhamento"
+        >
+                <field
+                        name="sharing_type"
+                        type="list"
+                        label="Tipo"
+                        description="Tipo desc"
+                        default="module"
+                >                                
+                        <option value="none">Ocultar</option>
+                        <option value="html">Código HTML</option>
+                        <option value="module">Módulo</option>
+                </field>
+                <field
+                        name="sharing_code"
+                        type="textarea"
+                        cols="40"
+                        rows="6"
+                        label="Código para compartilhamento (tipo código HTML)"
+                        description="Somente para compartilhamento do tipo código HTML"
+                        default=""
+                        filter="raw"
+                />  
+                <field
+                        name="sharing_mod_position"
+                        type="text"
+                        label="Posição do módulo (tipo módulo)"
+                        description="Somente para compartilhamento do tipo módulo"
+                        default="com_agendadirigentes-aut-btns-social"
+                />  
         </fieldset>
         <fieldset
                 name="permissions"

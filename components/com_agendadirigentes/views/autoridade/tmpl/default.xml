@@ -5,4 +5,15 @@
 			<![CDATA[COM_AGENDADIRIGENTES_AUTORIDADE_VIEW_DEFAULT_DESC]]>
 		</message>
 	</layout>
+	<fields name="request">
+		<fieldset name="request" addfieldpath="/administrator/components/com_agendadirigentes/models/fields">
+			<field
+				name="dia"
+				type="calendar"
+				label="Dia padrão"
+				description="Dia padrão. Se não informado, será a data atual."
+				default=""
+			/>
+		</fieldset>
+	</fields>
 </metadata>

@@ -1,0 +1,19 @@
+/* com_agendadirigentes; frontend */
+/* baseado na estrutura do portal padrao */
+
+.autoridades-item-destaque h2,
+.autoridades-categoria { line-height:1.6em; font-size: 1.2em !important; }
+.autoridades-item-destaque .link-nome-autoridade { position: relative; left: 26px }
+
+.autoridade-header { text-align: center; border-bottom: 1px solid #CCC }
+.autoridade-header .brasao-republica { display:block; margin-left: auto; margin-right: auto }
+.autoridade-header strong { display: block }
+
+.autoridade-compromisso-pauta { margin-bottom: 15px; font-size: 1.2em }
+.autoridade-compromisso-local { margin-bottom: 20px }
+
+.autoridade-compromisso-link-calendario { color:#717782; font-size: 0.9em }
+.autoridade-compromisso-link-calendario i { color:#1b9501 }
+
+.autoridade-list-actions { margin-left: 20px; list-style: none !important; list-style-type: none !important }
+.autoridade-list-actions li { list-style: none !important; list-style-type: none !important }

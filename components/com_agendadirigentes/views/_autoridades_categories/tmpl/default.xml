@@ -7,7 +7,7 @@
 	</layout>
 	<fields name="request">
 		<fieldset name="request" addfieldpath="/administrator/components/com_agendadirigentes/models/fields">
-			<!-- <field
+			<field
 				name="show_compromissos"
 				type="list"
 				label="COM_AGENDADIRIGENTES_AGENDADIRIGENTES_FIELD_SHOWCOMPROMISSOS_LABEL"
@@ -22,27 +22,14 @@
 				label="COM_AGENDADIRIGENTES_AGENDADIRIGENTES_FIELD_DATA_LABEL"
 				description="COM_AGENDADIRIGENTES_AGENDADIRIGENTES_FIELD_DATA_DESC"
 				default="" />
+			<!-- testes -->
 			<field
                                 name="id"
                                 type="dirigentes"
                                 label="teste"
                                 description="teste"
-                        /> -->
-            <field
-            name="introtext"
-            type="editor"
-            label="COM_AGENDADIRIGENTES_DIRIGENTES_FIELD_DESCRICAO_LABEL"
-            description="COM_AGENDADIRIGENTES_DIRIGENTES_FIELD_DESCRICAO_DESC"
-			default=""
-			filter="raw"
-			/>
-			<field
-				name="dia"
-				type="calendar"
-				label="Dia padrão"
-				description="Dia padrão. Se não informado, será a data atual."
-				default=""
-			/>
+                        />
+			<!-- fim testes -->
 		</fieldset>
 	</fields>
 </metadata>

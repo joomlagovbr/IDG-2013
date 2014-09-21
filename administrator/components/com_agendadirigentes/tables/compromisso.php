@@ -36,6 +36,7 @@ class AgendaDirigentesTableCompromisso extends JTable
                         $parameter->loadArray($array['params']);
                         $array['params'] = (string)$parameter;
                 }
+
                 return parent::bind($array, $ignore);
         }
 
@@ -48,14 +49,16 @@ class AgendaDirigentesTableCompromisso extends JTable
          * @see JTable:load
          */
         public function load($pk = null, $reset = true) 
-        {
+        {            
             if (parent::load($pk, $reset)) 
-            {
+            {                
                 // Convert the params field to a registry.
                 $params = new JRegistry;                 
                 $params->loadString($this->params, 'JSON');
-
                 $this->params = $params;
+
+
+
                 return true;
             }
             else
@@ -66,10 +69,44 @@ class AgendaDirigentesTableCompromisso extends JTable
 
         function check()
         {
-        	$this->data_inicial = explode("/", $this->data_inicial);
-        	$this->data_inicial = $this->data_inicial[2]."-".$this->data_inicial[1]."-".$this->data_inicial[0];
-        	$this->data_final = explode("/", $this->data_final);
-        	$this->data_final = $this->data_final[2]."-".$this->data_final[1]."-".$this->data_final[0];
+            //separacao dos dados para gravar em campo participantes_externos (que nao precisa de mapeamento no form)
+            $input = JFactory::getApplication()->input;
+            @$dirigentes = $input->get('jform', array(), 'ARRAY')['dirigentes'];
+            if (isset($dirigentes) && is_array($dirigentes)) {
+
+                $arr_dirigentes = array();
+                $arr_participantes_externos = array();
+                $replace_dirigentes = array('#new#', ',', ';');
+
+                for ($i=0, $count_dirigentes = count($dirigentes); $i < $count_dirigentes; $i++) { 
+                    if (is_numeric($dirigentes[$i]))
+                    {
+                        $arr_dirigentes[] = $dirigentes[$i];
+                    }
+                    else if(!empty($dirigentes[$i]))
+                    {                        
+                        $arr_participantes_externos[] = str_replace( $replace_dirigentes, '', $dirigentes[$i] );
+                    }
+                }
+                if($count_dirigentes)
+                {
+                    $this->participantes_externos = implode('; ', $arr_participantes_externos);
+                    $input->set('dirigentes', $arr_dirigentes);
+                }
+
+            }
+
+            //verificacoes de data e horario
+            if (strpos($this->data_inicial, '/')!==false)
+            {
+                $this->data_inicial = explode("/", $this->data_inicial);
+                $this->data_inicial = $this->data_inicial[2]."-".$this->data_inicial[1]."-".$this->data_inicial[0];
+            }
+            if (strpos($this->data_final, '/')!==false)
+            {
+            	$this->data_final = explode("/", $this->data_final);
+            	$this->data_final = $this->data_final[2]."-".$this->data_final[1]."-".$this->data_final[0];                
+            }
 
             if( $this->dia_todo == 1 )
             {
@@ -91,6 +128,7 @@ class AgendaDirigentesTableCompromisso extends JTable
                      $this->horario_fim .= ':00';
             }
         	
+            //verificacao de informacoes de controle
         	if(empty($this->created) || $this->created=="0000-00-00 00:00:00")
         		$this->created = date('Y-m-d H:i:s');
         	
@@ -101,6 +139,7 @@ class AgendaDirigentesTableCompromisso extends JTable
        		$this->modified_by = JFactory::getUser()->get("id");
         	$this->version += 1;
 
+            //check padrao
         	return parent::check();
         }
 

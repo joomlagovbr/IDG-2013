@@ -7,16 +7,13 @@
 * @license GNU General Public License version 2 or later; see LICENSE.txt
 */
  
-// impedir acesso direto ao arquivo
 defined('_JEXEC') or die;
- 
-// import Joomla controllerform library
-jimport('joomla.application.component.controllerform');
- 
-/**
- * AgendaDirigentes Controller
- */
-class AgendaDirigentesControllerCompromisso extends JControllerForm
-{
 
-}
+JHtml::addIncludePath(JPATH_COMPONENT . '/helpers');
+JHtml::_('behavior.caption');
+
+echo JLayoutHelper::render('joomla.content.categories_default', $this);
+
+echo $this->loadTemplate('items');
+?>
+</div>

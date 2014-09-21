@@ -9,9 +9,10 @@
  
 // impedir acesso direto ao arquivo
 defined('_JEXEC') or die;
+require_once( JPATH_COMPONENT .'/helpers/models.php' );
 
 /**
- * This models supports retrieving lists of dirigentes categories.
+ * This models supports retrieving lists of dirigentes .
  *
  * @package     Joomla.Site
  * @subpackage  com_agendadirigentes
@@ -19,108 +20,74 @@ defined('_JEXEC') or die;
  */
 class AgendaDirigentesModelAutoridades extends JModelList
 {
-        /**
-         * Model context string.
-         *
-         * @var         string
-         */
-        public $_context = 'com_agendadirigentes.categories';
-
-        /**
-         * The category context (allows other extensions to derived from this model).
-         *
-         * @var         string
-         */
-        protected $_extension = 'com_agendadirigentes';
-
-        private $_parent = null;
-
-        private $_items = null;
-
-        /**
-         * Method to auto-populate the model state.
-         *
-         * Note. Calling getState in this method will result in recursion.
-         *
-         * @since   1.6
-         */
-        protected function populateState($ordering = null, $direction = null)
+        protected function populateState($ordering = NULL, $direction = NULL) 
         {
                 $app = JFactory::getApplication();
-                $this->setState('filter.extension', $this->_extension);
+                $input = $app->input;
 
-                // Get the parent id if defined.
-                $parentId = $app->input->getInt('id');
-                $this->setState('filter.parentId', $parentId);
-
+                AgendadirigentesModels::setParamBeforeSetState( 'dia', 'DataBanco', date('Y-m-d') );
                 $params = $app->getParams();
+                $params->set('introtext', $app->input->get('introtext', '', 'HTML'));
+
+
                 $this->setState('params', $params);
-
-                $this->setState('filter.published',     1);
-                $this->setState('filter.access',        true);
+                parent::populateState();
         }
 
         /**
-         * Method to get a store id based on model configuration state.
+         * Method to build an SQL query to load the list data.
          *
-         * This is necessary because the model is used by the component and
-         * different modules that might need different sets of data or different
-         * ordering requirements.
-         *
-         * @param   string  $id A prefix for the store id.
-         *
-         * @return  string  A store id.
+         * @return  string    An SQL query
+         * @since   1.6
          */
-        protected function getStoreId($id = '')
+        protected function getListQuery()
         {
-                // Compile the store id.
-                $id     .= ':'.$this->getState('filter.extension');
-                $id     .= ':'.$this->getState('filter.published');
-                $id     .= ':'.$this->getState('filter.access');
-                $id     .= ':'.$this->getState('filter.parentId');
 
-                return parent::getStoreId($id);
-        }
+            // $user = JFactory::getUser();
+            // $groups = implode(',', $user->getAuthorisedViewLevels());
 
-        /**
-         * redefine the function an add some properties to make the styling more easy
-         *
-         * @return mixed An array of data items on success, false on failure.
-         */
-        public function getItems()
-        {
-                if (!count($this->_items))
-                {
-                        $app = JFactory::getApplication();
-                        $menu = $app->getMenu();
-                        $active = $menu->getActive();
-                        $params = new JRegistry;
-                        if ($active)
-                        {
-                                $params->loadString($active->params);
-                        }
-                        $options = array();
-                        $options['countItems'] = $params->get('show_cat_items_cat', 1) || !$params->get('show_empty_categories_cat', 0);
-                        $categories = JCategories::getInstance('Agendadirigentes', $options);
+            // Create a new query object.
+            $db = $this->getDBO();
+            $query = $db->getQuery(true);
+            $query->select(
+                    $db->quoteName('car.featured', 'cargo_featured') . ', ' .
+                    // $db->quoteName('cat.lft') . ', ' .
+                    // $db->quoteName('car.ordering') . ', ' .
+                    $db->quoteName('car.id', 'cargo_id') . ', ' .
+                    $db->quoteName('car.name', 'cargo_name') . ', ' .
+                    $db->quoteName('car.catid') . ', ' .
+                    $db->quoteName('cat.level') . ', ' .
+                    $db->quoteName('cat.path') . ', ' .
+                    $db->quoteName('cat.title', 'cat_title') . ', ' .
+                    $db->quoteName('cat.alias') . ', ' .
+                    $db->quoteName('dir.id', 'dir_id') . ', ' .
+                    $db->quoteName('dir.name', 'dir_name') . ', ' .
+                    $db->quoteName('dir.interino') . ', ' .
+                    $db->quoteName('dir.em_atividade')
+                    )->from(
+                    $db->quoteName('#__agendadirigentes_cargos', 'car')
+                    )->join(
+                    'INNER',
+                    $db->quoteName('#__categories', 'cat')
+                    . ' ON (' . $db->quoteName('car.catid') . ' = ' . $db->quoteName('cat.id') . ')' 
+                    )->join(
+                    'INNER',
+                    $db->quoteName('#__agendadirigentes_dirigentes', 'dir')
+                    . ' ON (' . $db->quoteName('dir.cargo_id') . ' = ' . $db->quoteName('car.id') . ')'                         
+                    )->where(
+                    $db->quoteName('car.published') . ' = 1'
+                    )->where(
+                    $db->quoteName('cat.published') . ' = 1'
+                    )->where(
+                    $db->quoteName('dir.state') . ' IN (1,2)'
+                    )->order(
+                    $db->quoteName('car.featured') . ' DESC, ' .
+                    $db->quoteName('cat.lft') . ', ' .
+                    $db->quoteName('car.ordering') . ', ' .
+                    $db->quoteName('dir.name')
+                    );
 
-                        $this->_parent = $categories->get($this->getState('filter.parentId', 'root'));
-                        if (is_object($this->_parent))
-                        {
-                                $this->_items = $this->_parent->getChildren();
-                        } else {
-                                $this->_items = false;
-                        }
-                }
+            return $query;
 
-                return $this->_items;
-        }
-
-        public function getParent()
-        {
-                if (!is_object($this->_parent))
-                {
-                        $this->getItems();
-                }
-                return $this->_parent;
         }
 }

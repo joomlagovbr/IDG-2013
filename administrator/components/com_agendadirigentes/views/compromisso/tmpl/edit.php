@@ -28,8 +28,19 @@ function removeselected(elm, aim)
         } 
     });
 }
+function injectSelected(elm, aim)
+{
+    items = jQuery(elm).val();
+    items = items.split(';');
+    for (var i = 0; i < items.length; i++) {
+        items[i] = items[i].replace(/^\s+|\s+$/gm,''); //trim
+        jQuery('#jform_'+aim).find('option[value="'+items[i]+'"]').attr('selected', true);
+        jQuery('#jform_'+aim).trigger('liszt:updated');
+    };
+}
 jQuery(document).ready(function(){
-    removeselected("#jform_owner", 'dirigentes');    
+    removeselected("#jform_owner", 'dirigentes');
+    injectSelected('#jform_participantes_externos', 'dirigentes');  
 });
 </script>
 <form action="<?php echo JRoute::_('index.php?option=com_agendadirigentes&layout=edit&id=' . (int) $this->item->id); ?>"

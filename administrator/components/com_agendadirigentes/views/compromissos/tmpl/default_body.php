@@ -32,7 +32,7 @@ JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
                         <?php
                         $canChange = true;
                         echo JHtml::_('jgrid.published', $item->state, $i, 'compromissos.', $canChange, 'cb');
-                        echo JHtml::_('agendadirigenteshelper.featured', $item->featured, $i, $canChange);
+                        echo JHtml::_('agendadirigenteshelper.featured', $item->featured, $i, $canChange, 'compromissos');
                         ?>
                         <?php
                         // Create dropdown items

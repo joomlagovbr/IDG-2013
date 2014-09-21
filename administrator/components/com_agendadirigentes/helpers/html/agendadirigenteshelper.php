@@ -5,14 +5,14 @@ JLoader::register('AgendaDirigentesHelper', JPATH_ADMINISTRATOR . '/components/c
 
 abstract class JHtmlAgendaDirigentesHelper
 {
-	public static function featured($value = 0, $i, $canChange = true)
+	public static function featured($value = 0, $i, $canChange = true, $context = 'compromissos')
 	{
 		JHtml::_('bootstrap.tooltip');
 
 		// Array of image, task, title, action
 		$states	= array(
-			0	=> array('unfeatured',	'compromissos.featured',	'COM_AGENDADIRIGENTES_HELPER_UNFEATURED',	'COM_AGENDADIRIGENTES_HELPER_TOGGLE_TO_FEATURE'),
-			1	=> array('featured',	'compromissos.unfeatured',	'COM_AGENDADIRIGENTES_HELPER_FEATURED',		'COM_AGENDADIRIGENTES_HELPER_TOGGLE_TO_UNFEATURE'),
+			0	=> array('unfeatured',	$context . '.featured',	'COM_AGENDADIRIGENTES_HELPER_UNFEATURED',	'COM_AGENDADIRIGENTES_HELPER_TOGGLE_TO_FEATURE'),
+			1	=> array('featured',	$context . '.unfeatured',	'COM_AGENDADIRIGENTES_HELPER_FEATURED',		'COM_AGENDADIRIGENTES_HELPER_TOGGLE_TO_UNFEATURE'),
 		);
 		$state	= JArrayHelper::getValue($states, (int) $value, $states[1]);
 		$icon	= $state[0];

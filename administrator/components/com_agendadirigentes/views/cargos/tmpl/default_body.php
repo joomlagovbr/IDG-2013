@@ -9,6 +9,7 @@
  
 // impedir acesso direto ao arquivo
 defined('_JEXEC') or die;
+JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 ?>
 <?php foreach($this->items as $i => $item):
         
@@ -49,7 +50,9 @@ defined('_JEXEC') or die;
                 <td class="center">
                         <?php
                         $canChange = true;
-                        echo JHtml::_('jgrid.published', $item->published, $i, 'cargos.', $canChange, 'cb'); ?>
+                        echo JHtml::_('jgrid.published', $item->published, $i, 'cargos.', $canChange, 'cb');
+                        echo JHtml::_('agendadirigenteshelper.featured', $item->featured, $i, $canChange, 'cargos');
+                        ?>
                 </td>
                 <td>
                     <?php 

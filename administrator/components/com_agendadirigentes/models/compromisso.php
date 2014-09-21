@@ -106,6 +106,8 @@ class AgendaDirigentesModelCompromisso extends JModelAdmin
 
         public function save($data)
         {
+
+
                 $result = parent::save($data);
                 if(!$result)
                         return false;
@@ -164,12 +166,14 @@ class AgendaDirigentesModelCompromisso extends JModelAdmin
                 $dirigentes = @$data['dirigentes'];
                 if (is_array($dirigentes)) {
                         for ($i=0, $limit = count($dirigentes); $i < $limit; $i++) { 
+                            if (is_numeric($dirigentes[$i])) { //grava somente os itens que possuem ID, ou seja, dirigentes cadastrados
                                 $items[] = array(
                                         'dirigente_id' => $dirigentes[$i],
-                                        'compromisso_id' => intval($data['id']),
+                                        'compromisso_id' => $data['id'],
                                         'owner' => 0,
                                         'sobreposto' => 0
                                 );
+                            }
                         }
                 }
 

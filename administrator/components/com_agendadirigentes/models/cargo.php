@@ -98,4 +98,46 @@ class AgendaDirigentesModelCargo extends JModelAdmin
 
                 return     true;           
         }
+
+       /**
+         * Method to toggle the featured setting of articles.
+         *
+         * @param   array    The ids of the items to toggle.
+         * @param   integer  The value to toggle to.
+         *
+         * @return  boolean  True on success.
+         */
+        public function featured($pks, $value = 0)
+        {
+            // Sanitize the ids.
+            $pks = (array) $pks;
+            JArrayHelper::toInteger($pks);
+
+            if (empty($pks))
+            {
+                $this->setError(JText::_('COM_AGENDADIRIGENTES_NENHUM_ITEM_SELECIONADO'));
+                return false;
+            }
+
+            try
+            {
+                $db = $this->getDbo();
+                $query = $db->getQuery(true)
+                            ->update($db->quoteName('#__agendadirigentes_cargos'))
+                            ->set('featured = ' . (int) $value)
+                            ->where('id IN (' . implode(',', $pks) . ')');
+                $db->setQuery($query);
+                $db->execute();
+
+            }
+            catch (Exception $e)
+            {
+                $this->setError($e->getMessage());
+                return false;
+            }
+
+            $this->cleanCache();
+
+            return true;
+        }
 }
