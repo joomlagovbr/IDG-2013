@@ -76,7 +76,8 @@ class AgendaDirigentesModelCompromissos extends JModelList
        		$db->quoteName('#__agendadirigentes_dirigentes', 'dir')
         	. ' ON (' . $db->quoteName('dc.dirigente_id') . ' = ' . $db->quoteName('dir.id') . ')' 
         )->where(
-        	$db->quoteName('dir.id') . ' = ' . 1,
+        	array(
+            $db->quoteName('dir.id') . ' = ' . 1,
         	$db->quoteName('comp.data_inicial') . ' <= ' . $dia,
         	'('.
         		$db->quoteName('comp.data_final') . ' >= ' . $dia . ' OR ' .
@@ -84,6 +85,7 @@ class AgendaDirigentesModelCompromissos extends JModelList
         	.')',
         	$db->quoteName('comp.state') . ' > ' . 0,
         	$db->quoteName('dc.sobreposto') . ' = ' . 0
+            )
         )->order(
         	 $db->quoteName('comp.horario_inicio') . ' ASC'
         );
@@ -103,12 +105,18 @@ class AgendaDirigentesModelCompromissos extends JModelList
 			$compromissos_id_list[] = $compromissos[$i]->id;
 		}
 		$input->set('compromissos', $compromissos_id_list);
-		$participantesModel = $this->getInstance('participantes', 'AgendaDirigentesModel');
-		$participantes = $participantesModel->getItems();
-		
+
+        if (count($compromissos_id_list))
+        {
+    	   $participantesModel = $this->getInstance('participantes', 'AgendaDirigentesModel');
+	   	   $participantes = $participantesModel->getItems();
+        }
+        else
+            $participantes = array();
+
 		//formatando dirigentes 
 		$arr_participantes = array();
-		for ($i=0, $limit = count($participantes); $i < $limit; $i++) { 
+		for ($i=0, $limit = count($participantes); $i < $limit; $i++) {             
 			if(@isset($arr_participantes[$participantes[$i]->compromisso_id])===false)
 			{
 				$arr_participantes[$participantes[$i]->compromisso_id] = array();

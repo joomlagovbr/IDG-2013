@@ -60,9 +60,11 @@ class AgendaDirigentesModelParticipantes extends JModelList
        		$db->quoteName('#__agendadirigentes_cargos', 'car')
         	. ' ON (' . $db->quoteName('car.id') . ' = ' . $db->quoteName('dir.cargo_id') . ')' 
         )->where(
+            array(
         	$db->quoteName('dc.compromisso_id') . ' IN (' . $compromissos . ')',
-        	$db->quoteName('comp.state') . ' > ' . 0,
+        	$db->quoteName('dir.state') . ' > ' . 0,
             $db->quoteName('dc.owner') . ' = ' . 0
+            )
         );
 
         return $query;

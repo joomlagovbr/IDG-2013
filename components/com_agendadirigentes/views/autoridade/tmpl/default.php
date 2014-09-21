@@ -9,12 +9,32 @@
  
 // impedir acesso direto ao arquivo
 defined('_JEXEC') or die;
-$this->document->addStylesheet( JURI::root().'media/com_agendadirigentes/css/frontend.css' );
-
+if($this->templatevar != 'system'):
+	$this->document->addStylesheet( JURI::root().'media/com_agendadirigentes/fullcalendar/fullcalendar.css' );
+	$this->document->addStylesheet( JURI::root().'media/com_agendadirigentes/css/frontend.css' );
+	$this->document->addScript( JURI::root().'media/com_agendadirigentes/fullcalendar/lib/jquery-ui.custom.min.js' );
+	$this->document->addScript( JURI::root().'media/com_agendadirigentes/fullcalendar/lib/moment.min.js' );
+	$this->document->addScript( JURI::root().'media/com_agendadirigentes/fullcalendar/fullcalendar.min.js' );
+	$this->document->addScript( JURI::root().'media/com_agendadirigentes/fullcalendar/lang/pt-br.js' );
+	$this->document->addScript( JURI::root().'media/com_agendadirigentes/js/frontend.js' );
+	$script = "<script type=\"text/javascript\">\n"
+				."jQuery(document).ready(function() {\n"
+					."setCalendar('#autoridade-calendario', '".$this->params->get("dia")."', '".JURI::root()."index.php?option=com_agendadirigentes&view=autoridade&dia={DATA}&id=".$this->autoridade->id."&Itemid=".$this->Itemid."');\n"
+				."});\n"
+			  ."</script>\n";
+	$this->document->addCustomTag($script);
+else:
+	$style = "<link href='".JURI::root()."media/com_agendadirigentes/css/frontend.print.css' rel='stylesheet' media='all' />";
+	$this->document->addCustomTag( $style );
+	$script = "<script type=\"text/javascript\">\n"
+				."window.print();\n"
+			  ."</script>\n";
+	$this->document->addCustomTag($script);
+endif;
 ?>
 <div class="item-page<?php //echo $this->pageclass_sfx?> row-fluid autoridade-page">
 	<div class="span8">
-		<h1 class="secondaryHeading">
+		<h1 class="secondaryHeading autoridade-title">
 			<?php echo $this->page_heading; ?>
 		</h1>
 		<?php if (!empty($this->sharing)): ?>
@@ -75,10 +95,11 @@ $this->document->addStylesheet( JURI::root().'media/com_agendadirigentes/css/fro
 							<b>Local:</b> <?php echo $compromisso->local; ?>
 						</div>
 						<?php endif ?>
-
+						<?php if($this->templatevar != 'system'): ?>
 						<div class="autoridade-compromisso-rodape">
 							<a class="autoridade-compromisso-link-calendario" href="<?php echo $link_vcalendar ?>"><i class="icon-fixed-width icon-calendar"></i> Adicionar ao meu calend&aacute;rio</a>
 						</div>
+						<?php endif; ?>
 		          	</div>
 					<div class="span3 tileInfo autoridade-compromisso-horario">
 						<ul>		
@@ -92,16 +113,69 @@ $this->document->addStylesheet( JURI::root().'media/com_agendadirigentes/css/fro
 					</div>			
 				</div>
 				<!-- fim .autoridade-compromisso -->
-			<?php endfor; ?>			
+			<?php endfor; ?>
+			<?php if ($count_compromissos==0): ?>
+			<div id="system-message-container">
+				<div id="system-message">
+					<div class="alert alert-warning">
+					<div>
+						<p>Sem compromissos oficiais.</p>
+					</div>
+					</div>
+				</div>
+			</div>
+			<?php endif ?>	
 		</div>
+		<?php if($this->templatevar != 'system'): ?>
 		<div class="below-content">
 			<ul class="autoridade-list-actions">
-				<li><span><a href="/joomla-3.x.dev/index.php/ultimas-noticias" class="link-categoria"><i class="icon-fixed-width icon-print"></i> Imprimir</a></span></li>
-				<li><span><a href="/joomla-3.x.dev/index.php/ultimas-noticias" class="link-categoria"><i class="icon-fixed-width icon-bar-chart"></i> Reportar erro</a></span></li>
+				<li><span><a href="<?php echo JURI::getInstance()->toString()."&template=system"; ?>" target="_blank" class="link-categoria"><i class="icon-fixed-width icon-print"></i> Imprimir</a></span></li>
+				<?php if(!empty($this->link_reportar_erro)): ?>				
+				<li><span><a href="<?php echo $this->link_reportar_erro; ?>" class="link-categoria"><i class="icon-fixed-width icon-warning-sign"></i> Reportar erro</a></span></li>
+				<?php endif; ?>
 			</ul>			
 		</div>
+		<?php endif; ?>
 	</div>
-	<div class="span4" style="background:grey">
-		teste
+	<?php if($this->templatevar != 'system'): ?>
+	<div class="span4">
+		<div class="module-box-01 module variacao-module-00 autoridade-calendario-container">
+			<div class="header">
+				<h2 class="title">Agenda</h2>	        					
+			</div>
+			<div id="autoridade-calendario">
+				<div class="footer hide">
+					<button class="fc-today-button fc-button fc-state-default fc-corner-left fc-corner-right" type="button">Ver m&ecirc;s atual</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="module-box-01 module variacao-module-00 autoridade-busca-container">
+			<div class="header">
+				<h2 class="title">Busca de agenda</h2>	        					
+			</div>
+			<div class="formated-description autoridade-busca">
+				<p>Faça buscas de agenda por palavras-chave</p>
+				<form action="index.php" method="get" role="search">
+					<div class="search">						
+						<input type="hidden" name="view" value="search">
+						<input type="hidden" name="option" value="com_search">
+						<input type="hidden" name="ordering" value="newest">
+						<input type="hidden" name="searchprase" value="all">
+						<input type="hidden" name="limit" value="80">
+						<input type="hidden" name="areas[]" value="agendadirigentes">
+						<input type="hidden" name="Itemid" value="181">
+						<input type="hidden" name="filtro_autoridade" value="<?php echo $this->autoridade->id; ?>">
+						<div class="input-append">
+        					<label class="hide" for="portal-searchbox-field">Busca: </label>
+        					<input type="text" name="searchword" title="Buscar na agenda" placeholder="Buscar na agenda" class="inputbox searchField" maxlength="20" >       
+            				<button class="btn searchButton" type="submit"><span class="hide">Buscar</span><i class="icon-search"></i></button>
+						</div>
+					</div>
+				</form>
+			</div>			
+		</div>
+		
 	</div>
+	<?php endif; ?>
 </div>

@@ -33,7 +33,7 @@ class AgendaDirigentesViewAutoridade extends JViewLegacy
                 $this->autoridade = $this->get('Item');
                 $this->compromissos = $this->get('Compromissos');
                 $this->params = $this->state->get('params');
-
+                
                 if(@$this->autoridade->state < 1 || empty($this->autoridade))
                 {
                         JLog::add('Autoridade n&atilde;o encontrada', JLog::WARNING, 'jerror');
@@ -61,9 +61,12 @@ class AgendaDirigentesViewAutoridade extends JViewLegacy
                 $title          = null;
                 $activeMenu = $menus->getActive();
                 $template   = $app->getTemplate(true);
+                $this->templatevar = $app->input->getCmd('template');
+
+                $this->Itemid = $app->input->getInt('Itemid', 0);
                 
                 //page_heading
-                if(@empty($this->params->get('page_title', '')) || @$this->params->get('page_title', '')==$activeMenu->title)
+                if(@empty($this->params->get('page_title', '')) || @$this->params->get('page_title', '')==@$activeMenu->title)
                 {
                         if(@isset($this->autoridade->car_name)===false || @isset($this->autoridade->dir_name)===false)
                                 $this->page_heading = 'Agenda de Autoridade';
@@ -78,6 +81,9 @@ class AgendaDirigentesViewAutoridade extends JViewLegacy
                 
                 $this->page_heading = $this->escape($this->page_heading);
                 $pathway->addItem($this->page_heading);
+
+                if( $this->templatevar =='system')
+                    $this->document->setTitle( $this->page_heading );
 
                 //sharing
                 $this->sharing = '';
@@ -116,6 +122,20 @@ class AgendaDirigentesViewAutoridade extends JViewLegacy
                 {
                     $this->nome_orgao = $template->params->get('denominacao', '')
                                         . ' '. $template->params->get('nome_principal', '');
+                }
+
+                //link reporte erro                
+                if( !empty($this->params->get('link_reportar_erro', '')) )
+                {
+                    $this->link_reportar_erro = str_replace('{SITE}/', JURI::root(),
+                                                            $this->params->get('link_reportar_erro', '') );
+                    
+                    if(strpos($this->link_reportar_erro, '{SITE}')!==false)
+                        $this->link_reportar_erro = str_replace('{SITE}', JURI::root(), $this->link_reportar_erro );
+                }
+                else
+                {
+                    $this->link_reportar_erro = '';
                 }
 
                 //dia por extenso

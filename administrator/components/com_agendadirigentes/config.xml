@@ -32,6 +32,15 @@
                         description="COM_AGENDADIRIGENTES_EMAIL_ADMINISTRATORS_DESC"
                         default=""
                 />
+                <field
+                        name="link_reportar_erro"
+                        type="textarea"
+                        cols="40"
+                        rows="4"
+                        label="Reportar Erro"
+                        description="Link para reporte de erro"
+                        default=""
+                />
         </fieldset>
         <fieldset
                 name="compromissos"

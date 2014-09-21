@@ -42,6 +42,7 @@ class AgendaDirigentesModelAutoridade extends JModelItem
 			$db = $this->_db;
 			$query = $db->getQuery(true);
 			$query->select(
+						$db->quoteName('dir.id') . ', '.
 						$db->quoteName('dir.name', 'dir_name') . ', '.
 						$db->quoteName('dir.interino') . ', '.
 						$db->quoteName('dir.state') . ', '.

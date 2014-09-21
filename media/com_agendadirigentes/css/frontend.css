@@ -5,7 +5,8 @@
 .autoridades-categoria { line-height:1.6em; font-size: 1.2em !important; }
 .autoridades-item-destaque .link-nome-autoridade { position: relative; left: 26px }
 
-.autoridade-header { text-align: center; border-bottom: 1px solid #CCC }
+.autoridade-title { border-bottom:1px dotted #e8e7e7; padding-bottom: 15px }
+.autoridade-header { text-align: center; border-bottom: 1px solid #e8e7e7 }
 .autoridade-header .brasao-republica { display:block; margin-left: auto; margin-right: auto }
 .autoridade-header strong { display: block }
 
@@ -15,5 +16,33 @@
 .autoridade-compromisso-link-calendario { color:#717782; font-size: 0.9em }
 .autoridade-compromisso-link-calendario i { color:#1b9501 }
 
-.autoridade-list-actions { margin-left: 20px; list-style: none !important; list-style-type: none !important }
-.autoridade-list-actions li { list-style: none !important; list-style-type: none !important }
+ul.autoridade-list-actions { margin:10px 0 0 20px }
+#content.internas ul.autoridade-list-actions li { list-style: none !important; display: inline !important; margin-right: 25px }
+ul.autoridade-list-actions li a { color:#717782; }
+ul.autoridade-list-actions li a i { color:#1b9501; }
+
+/*formatacao do calendario*/
+.autoridade-calendario-container .header { border-bottom:none !important; }
+#autoridade-calendario .fc-toolbar { margin-bottom:none !important; height: 20px }
+#autoridade-calendario .fc-left { font-size:10px; height:20px }
+#autoridade-calendario .fc-today { background: #FFF }
+/*#autoridade-calendario .fc-center h2 { font-size: 1em !important; position: relative; top:-20px; }*/
+#autoridade-calendario .fc-right { font-size:10px; height:20px }
+#autoridade-calendario table { border:none }
+#autoridade-calendario .fc-basic-view > table { border:none; }
+#autoridade-calendario .fc-month-view .fc-widget-header { border:none !important; padding:0 !important }
+#autoridade-calendario .fc-month-view .fc-widget-header table { border:none !important; }
+#autoridade-calendario .fc-month-view .fc-day-header { border:none; }
+#autoridade-calendario .fc-widget-content { padding:0 !important; border-left:none !important; border-top:none !important; }
+#autoridade-calendario .fc-basic-view tbody .fc-row { min-height: 18px !important }
+#autoridade-calendario .fc-day { padding:0 !important }
+#autoridade-calendario .fc-content-skeleton { padding:0 !important; border: none !important }
+#autoridade-calendario .fc-content-skeleton tbody { display: none !important }
+#autoridade-calendario .fc-content-skeleton td { border: none !important }
+#autoridade-calendario .fc-day-number { cursor: pointer; }
+#autoridade-calendario .active { font-weight: bold; text-decoration: underline; cursor: default !important; color:#000 !important; }
+#autoridade-calendario .footer { padding-top: 12px; text-align: right }
+
+.autoridade-busca-container .header { border-bottom:none !important }
+.autoridade-busca { padding:0 10px }
+.autoridade-busca .searchField { width:160px; }
