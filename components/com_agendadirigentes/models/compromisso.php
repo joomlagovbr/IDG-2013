@@ -1,6 +1,7 @@
 <?php
 defined('_JEXEC') or die;
-require_once( JPATH_COMPONENT .'/helpers/models.php' );
+//caminho alterado devido à chamada de modulo
+require_once( JPATH_ROOT .'/components/com_agendadirigentes/helpers/models.php' );
 
 class AgendaDirigentesModelCompromisso extends JModelItem
 {

@@ -9,7 +9,8 @@
  
 // impedir acesso direto ao arquivo
 defined('_JEXEC') or die;
-require_once( JPATH_COMPONENT .'/helpers/models.php' );
+//caminho alterado devido à chamada de modulo
+require_once( JPATH_ROOT .'/components/com_agendadirigentes/helpers/models.php' );
 
 /**
  * This models supports retrieving lists of compromissos
@@ -26,7 +27,9 @@ class AgendaDirigentesModelCompromissos extends JModelList
     	AgendadirigentesModels::setParamBeforeSetState( 'dia', 'DataBanco', date('Y-m-d') );
 
 		$id	= $app->input->getInt('id');
-		$this->setState('autoridade.id', $id);    	
+		$this->setState('autoridade.id', $id);
+
+        $this->setState('participantes.load', true); 	
 
     	$params = $app->getParams();
         $this->setState('params', $params);
@@ -98,65 +101,86 @@ class AgendaDirigentesModelCompromissos extends JModelList
     	$input = JFactory::getApplication()->input;
 		$compromissos = parent::getItems();
 
-		//formatando ids de compromissos
-		//obtendo participantes
-		$compromissos_id_list = array();		
-		for ($i=0, $limit = count($compromissos); $i < $limit; $i++) { 
-			$compromissos_id_list[] = $compromissos[$i]->id;
-		}
-		$input->set('compromissos', $compromissos_id_list);
+        if ($this->state->get('participantes.load')):
+    		//formatando ids de compromissos
+    		//obtendo participantes
+    		$compromissos_id_list = array();		
+    		for ($i=0, $limit = count($compromissos); $i < $limit; $i++) { 
+    			$compromissos_id_list[] = $compromissos[$i]->id;
+    		}
+    		$input->set('compromissos', $compromissos_id_list);
 
-        if (count($compromissos_id_list))
-        {
-    	   $participantesModel = $this->getInstance('participantes', 'AgendaDirigentesModel');
-	   	   $participantes = $participantesModel->getItems();
-        }
-        else
-            $participantes = array();
+            if (count($compromissos_id_list))
+            {
+        	   $participantesModel = $this->getInstance('participantes', 'AgendaDirigentesModel');
+    	   	   $participantes = $participantesModel->getItems();
+            }
+            else
+                $participantes = array();
 
-		//formatando dirigentes 
-		$arr_participantes = array();
-		for ($i=0, $limit = count($participantes); $i < $limit; $i++) {             
-			if(@isset($arr_participantes[$participantes[$i]->compromisso_id])===false)
-			{
-				$arr_participantes[$participantes[$i]->compromisso_id] = array();
-			}
-			$count = count( $arr_participantes[$participantes[$i]->compromisso_id] );
-			$arr =& $arr_participantes[$participantes[$i]->compromisso_id][$count];
-			$arr = new StdClass();
-			$arr->dirigente_name = $participantes[$i]->dirigente_name;
-			$arr->cargo_name = $participantes[$i]->cargo_name;
-		}
-		
-		//merging de participantes externos e dirigentes
-		for ($i=0, $limit = count($compromissos); $i < $limit; $i++) { 
+    		//formatando dirigentes 
+    		$arr_participantes = array();
+    		for ($i=0, $limit = count($participantes); $i < $limit; $i++) {             
+    			if(@isset($arr_participantes[$participantes[$i]->compromisso_id])===false)
+    			{
+    				$arr_participantes[$participantes[$i]->compromisso_id] = array();
+    			}
+    			$count = count( $arr_participantes[$participantes[$i]->compromisso_id] );
+    			$arr =& $arr_participantes[$participantes[$i]->compromisso_id][$count];
+    			$arr = new StdClass();
+    			$arr->dirigente_name = $participantes[$i]->dirigente_name;
+    			$arr->cargo_name = $participantes[$i]->cargo_name;
+    		}
+    		
+    		//merging de participantes externos e dirigentes
+    		for ($i=0, $limit = count($compromissos); $i < $limit; $i++) { 
 
-			//formatando participantes
-			if(!empty($compromissos[$i]->participantes_externos))
-				$arr_participantes_externos = explode(';', $compromissos[$i]->participantes_externos);
-			else
-				$arr_participantes_externos = array();
+    			//formatando participantes
+    			if(!empty($compromissos[$i]->participantes_externos))
+    				$arr_participantes_externos = explode(';', $compromissos[$i]->participantes_externos);
+    			else
+    				$arr_participantes_externos = array();
 
-			for ($j=0,$jlimit = count($arr_participantes_externos); $j < $jlimit; $j++) { 
+    			for ($j=0,$jlimit = count($arr_participantes_externos); $j < $jlimit; $j++) { 
 
-				$participante_nome = trim($arr_participantes_externos[$j]);
-				$arr_participantes_externos[$j] = new StdClass();
-				$arr_participantes_externos[$j]->dirigente_name = $participante_nome;
-				$arr_participantes_externos[$j]->cargo_name = NULL;
+    				$participante_nome = trim($arr_participantes_externos[$j]);
+    				$arr_participantes_externos[$j] = new StdClass();
+    				$arr_participantes_externos[$j]->dirigente_name = $participante_nome;
+    				$arr_participantes_externos[$j]->cargo_name = NULL;
 
-			}
+    			}
 
-			$arr_participantes[$compromissos[$i]->id] = array_merge( 
-															$arr_participantes[$compromissos[$i]->id],
-															$arr_participantes_externos
-														);
+                if(isset($arr_participantes[$compromissos[$i]->id]))
+                {
+        			$arr_participantes[$compromissos[$i]->id] = array_merge( 
+        															$arr_participantes[$compromissos[$i]->id],
+        															$arr_participantes_externos
+        														);                    
+                }
+                else if(count($arr_participantes_externos))
+                {
+                    $arr_participantes[$compromissos[$i]->id] = $arr_participantes_externos;
+                }
+                else
+                {
+                    $arr_participantes[$compromissos[$i]->id] = array();                    
+                }
 
-			$compromissos[$i]->participantes = $arr_participantes[$compromissos[$i]->id];			
+    			$compromissos[$i]->participantes = $arr_participantes[$compromissos[$i]->id];			
 
-			//formatando horas
-			$compromissos[$i]->horario_inicio = substr($compromissos[$i]->horario_inicio, 0, 5);
-			$compromissos[$i]->horario_fim = substr($compromissos[$i]->horario_fim, 0, 5);
-		}
+    			//formatando horas
+    			$compromissos[$i]->horario_inicio = substr($compromissos[$i]->horario_inicio, 0, 5);
+    			$compromissos[$i]->horario_fim = substr($compromissos[$i]->horario_fim, 0, 5);
+    		}
+        else:
+
+            //formatando horas
+            for ($i=0, $limit = count($compromissos); $i < $limit; $i++) {
+                $compromissos[$i]->horario_inicio = substr($compromissos[$i]->horario_inicio, 0, 5);
+                $compromissos[$i]->horario_fim = substr($compromissos[$i]->horario_fim, 0, 5);
+            }
+
+        endif;
 
 		return $compromissos;
     }
