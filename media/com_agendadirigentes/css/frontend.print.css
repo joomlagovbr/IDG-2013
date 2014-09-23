@@ -3,10 +3,10 @@
 .brasao-republica { display: block; margin:0 auto }
 .autoridade-header { text-align: center }
 .autoridade-header strong { display: block }
-.autoridade-compromisso-titulo { border-bottom:1px solid #999; margin:20px 0 0 0 }
+.autoridade-compromisso-titulo { border-bottom:1px solid #999; margin:30px 0 0 0 }
 .autoridade-compromisso-titulo,
 .autoridade-compromisso-participantes, 
 .autoridade-compromisso-pauta,
 .autoridade-compromisso-local,
 .autoridade-compromisso-horario { margin-left:50px; margin-right:50px; }
-.autoridade-compromisso { border-bottom:1px dotted #999; }
+.autoridade-compromisso { /*border-bottom:1px dotted #999;*/ }

@@ -8,19 +8,25 @@
  */
 
 defined('_JEXEC') or die;
+$document->addStylesheet( JURI::root().'media/mod_agendadirigentes/css/portalpadrao01.default.css' );
 ?>
-<p class="period">
-	<?php echo $dia_por_extenso; ?>
-</p>
-<ul class="compromissos-list">
-	<?php foreach ($items as $item): ?>
-	<li>
-		<div class="timestamp-cell">
-			<span class="timestamp"><?php echo $item->horario_inicio ?></span>
-		</div>
-		<a class="title-item" href="#">
-			<?php echo $item->title ?>
-		</a>
-	</li>
-	<?php endforeach ?>
-</ul>
+<div class="compromissos-container">
+	<p class="period">
+		<?php echo $dia_por_extenso; ?>
+	</p>
+	<ul class="compromissos-lista">
+		<?php foreach ($items as $item): ?>
+		<li>
+			<div class="compromisso-horario-inicio">
+				<i class="icon-fixed-width icon-time"><span class="hide">A partir de:</span></i><span class="timestamp"><?php echo $item->horario_inicio ?></span>
+			</div>
+			<a class="compromisso-link" href="#">
+				<?php echo $item->title ?>
+			</a>
+		</li>
+		<?php endforeach ?>
+	</ul>
+</div>
+<div class="footer">
+<a class="link" href="<?php echo JURI::root() ?>index.php?option=com_agendadirigentes&view=autoridades&Itemid=<?php echo $params->get('itemid') ?>">Acesse todas as agendas</a>
+</div>

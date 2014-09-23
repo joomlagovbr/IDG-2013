@@ -13,5 +13,6 @@ defined('_JEXEC') or die;
 require_once __DIR__ . '/helper.php';
 $items = ModAgendaDirigentesHelper::getItems($params);
 $dia_por_extenso = ModAgendaDirigentesHelper::getFormatedDate($params);
+$document = JFactory::getDocument();
 
 require JModuleHelper::getLayoutPath('mod_agendadirigentes', $params->get('layout', 'default') );
