@@ -8,7 +8,7 @@
  */
 
 defined('_JEXEC') or die;
-echo $teste;
+//echo $teste;
 if ($correcoes_css == 1 && $endereco_js != "") {
 	$style = '<style type="text/css">'."\n";
 	$style .= '#barra-brasil li { line-height:inherit; }'."\n";

@@ -194,17 +194,19 @@ class InstallerModelInstall extends JModelLegacy
 	/**
 	 * Works out an installation package from a HTTP upload
 	 *
-	 * @return package definition or false on failure
+	 * @return array package definition or false on failure
 	 */
 	protected function _getPackageFromUpload()
 	{
 		// Get the uploaded file information
-		$userfile = JRequest::getVar('install_package', null, 'files', 'array');
+		$input    = JFactory::getApplication()->input;
+		$userfile = $input->files->get('install_package', null, 'array');
 
 		// Make sure that file uploads are enabled in php
 		if (!(bool) ini_get('file_uploads'))
 		{
 			JError::raiseWarning('', JText::_('COM_INSTALLER_MSG_INSTALL_WARNINSTALLFILE'));
+
 			return false;
 		}
 
@@ -212,6 +214,7 @@ class InstallerModelInstall extends JModelLegacy
 		if (!extension_loaded('zlib'))
 		{
 			JError::raiseWarning('', JText::_('COM_INSTALLER_MSG_INSTALL_WARNINSTALLZLIB'));
+
 			return false;
 		}
 
@@ -219,13 +222,31 @@ class InstallerModelInstall extends JModelLegacy
 		if (!is_array($userfile))
 		{
 			JError::raiseWarning('', JText::_('COM_INSTALLER_MSG_INSTALL_NO_FILE_SELECTED'));
+
 			return false;
 		}
 
-		// Check if there was a problem uploading the file.
+		// Is the PHP tmp directory missing?
+		if ($userfile['error'] && ($userfile['error'] == UPLOAD_ERR_NO_TMP_DIR))
+		{
+			JError::raiseWarning('', JText::_('COM_INSTALLER_MSG_INSTALL_WARNINSTALLUPLOADERROR') . '<br/>' . JText::_('COM_INSTALLER_MSG_WARNINGS_PHPUPLOADNOTSET'));
+
+			return false;
+		}
+
+		// Is the max upload size too small in php.ini?
+		if ($userfile['error'] && ($userfile['error'] == UPLOAD_ERR_INI_SIZE))
+		{
+			JError::raiseWarning('', JText::_('COM_INSTALLER_MSG_INSTALL_WARNINSTALLUPLOADERROR') . '<br/>' . JText::_('COM_INSTALLER_MSG_WARNINGS_SMALLUPLOADSIZE'));
+
+			return false;
+		}
+
+		// Check if there was a different problem uploading the file.
 		if ($userfile['error'] || $userfile['size'] < 1)
 		{
 			JError::raiseWarning('', JText::_('COM_INSTALLER_MSG_INSTALL_WARNINSTALLUPLOADERROR'));
+
 			return false;
 		}
 
@@ -263,6 +284,7 @@ class InstallerModelInstall extends JModelLegacy
 		if (!is_dir($p_dir))
 		{
 			JError::raiseWarning('', JText::_('COM_INSTALLER_MSG_INSTALL_PLEASE_ENTER_A_PACKAGE_DIRECTORY'));
+
 			return false;
 		}
 
@@ -301,6 +323,7 @@ class InstallerModelInstall extends JModelLegacy
 		if (!$url)
 		{
 			JError::raiseWarning('', JText::_('COM_INSTALLER_MSG_INSTALL_ENTER_A_URL'));
+
 			return false;
 		}
 
@@ -311,10 +334,12 @@ class InstallerModelInstall extends JModelLegacy
 			$update = new JUpdate;
 			$update->loadFromXML($url);
 			$package_url = trim($update->get('downloadurl', false)->_data);
+
 			if ($package_url)
 			{
 				$url = $package_url;
 			}
+
 			unset($update);
 		}
 
@@ -325,6 +350,7 @@ class InstallerModelInstall extends JModelLegacy
 		if (!$p_file)
 		{
 			JError::raiseWarning('', JText::_('COM_INSTALLER_MSG_INSTALL_INVALID_URL'));
+
 			return false;
 		}
 

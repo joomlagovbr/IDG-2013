@@ -20,7 +20,7 @@ $document->addStylesheet( JURI::root().'media/mod_agendadirigentes/css/portalpad
 			<div class="compromisso-horario-inicio">
 				<i class="icon-fixed-width icon-time"><span class="hide">A partir de:</span></i><span class="timestamp"><?php echo $item->horario_inicio ?></span>
 			</div>
-			<a class="compromisso-link" href="#">
+			<a class="compromisso-link" href="<?php echo JURI::root() ?>index.php?option=com_agendadirigentes&view=autoridade&id=<?php echo $params->get('autoridade', 0); ?>&Itemid=<?php echo $params->get('itemid') ?>&dia=<?php echo $params->get('dia'); ?>">
 				<?php echo $item->title ?>
 			</a>
 		</li>
