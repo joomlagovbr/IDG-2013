@@ -14,6 +14,7 @@ $document->addStylesheet( JURI::root().'media/mod_agendadirigentes/css/portalpad
 	<p class="period">
 		<?php echo $dia_por_extenso; ?>
 	</p>
+	<?php if (count($items)): ?>
 	<ul class="compromissos-lista">
 		<?php foreach ($items as $item): ?>
 		<li>
@@ -26,6 +27,12 @@ $document->addStylesheet( JURI::root().'media/mod_agendadirigentes/css/portalpad
 		</li>
 		<?php endforeach ?>
 	</ul>
+	<?php else: ?>
+	<ul class="compromissos-lista">
+		<li class="sem-compromissos-oficiais">Sem compromissos oficiais.</li>
+	</ul>		
+	<?php endif ?>
+
 </div>
 <div class="footer">
 <a class="link" href="<?php echo JURI::root() ?>index.php?option=com_agendadirigentes&view=autoridades&Itemid=<?php echo $params->get('itemid') ?>">Acesse todas as agendas</a>
