@@ -106,19 +106,17 @@ class AgendaDirigentesModelCompromisso extends JModelAdmin
 
         public function save($data)
         {
+            $result = parent::save($data);
+            if(!$result)
+                return false;
 
+            if($data['id']==0)
+                $data['id'] = $this->_db->insertid();
 
-                $result = parent::save($data);
-                if(!$result)
-                        return false;
+            if(!$this->updateCompromissosDirigentes($data))
+                return false;
 
-                // if (@isset($data['id'])!==false && )
-                // {
-                        if(!$this->updateCompromissosDirigentes($data))
-                                return false;
-                // }
-
-                return true;                
+            return true;
         }
 
         protected function updateCompromissosDirigentes($data)
@@ -165,16 +163,16 @@ class AgendaDirigentesModelCompromisso extends JModelAdmin
 
                 $dirigentes = @$data['dirigentes'];
                 if (is_array($dirigentes)) {
-                        for ($i=0, $limit = count($dirigentes); $i < $limit; $i++) { 
-                            if (is_numeric($dirigentes[$i])) { //grava somente os itens que possuem ID, ou seja, dirigentes cadastrados
-                                $items[] = array(
-                                        'dirigente_id' => $dirigentes[$i],
-                                        'compromisso_id' => $data['id'],
-                                        'owner' => 0,
-                                        'sobreposto' => 0
-                                );
-                            }
+                    for ($i=0, $limit = count($dirigentes); $i < $limit; $i++) { 
+                        if (is_numeric($dirigentes[$i])) { //grava somente os itens que possuem ID, ou seja, dirigentes cadastrados
+                            $items[] = array(
+                                    'dirigente_id' => $dirigentes[$i],
+                                    'compromisso_id' => $data['id'],
+                                    'owner' => 0,
+                                    'sobreposto' => 0
+                            );
                         }
+                    }
                 }
 
                 for ($i=0, $limit = count($items); $i < $limit; $i++) { 
@@ -185,7 +183,7 @@ class AgendaDirigentesModelCompromisso extends JModelAdmin
                             ->insert($this->_db->quoteName('#__agendadirigentes_dirigentes_compromissos'))
                             ->columns($this->_db->quoteName($columns))
                             ->values(implode(',', $values));
-                        $this->_db->setQuery($query);
+                        $this->_db->setQuery((string)$query);
                         if (!$this->_db->query()) {
                             return false;
                         }
