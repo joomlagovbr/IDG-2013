@@ -35,9 +35,30 @@ class JFormFieldCargo extends JFormFieldList
         {
                 $db = JFactory::getDBO();
                 $query = $db->getQuery(true);
-                $query->select('id,name');
-                $query->from('#__agendadirigentes_cargos');
-                $query->order('name');
+
+                $query->select(
+                        $db->quoteName('car.id') . ', ' .
+                        $db->quoteName('car.name')
+                );
+                $query->from(
+                        $db->quoteName('#__agendadirigentes_cargos', 'car')
+                );
+                if ( $this->getAttribute('includecategory', false) )
+                {
+                        $query->select(
+                                $db->quoteName('cat.title', 'category_name')
+                        );
+                        $query->join(
+                                'INNER',
+                                $db->quoteName('#__categories', 'cat')
+                                . ' ON '.$db->quoteName('car.catid') . ' = ' . $db->quoteName('cat.id')
+                        );
+                        $query->order(
+                                $db->quoteName('cat.title') . ', ' .
+                                $db->quoteName('car.name')
+                        );
+                }
+
                 $db->setQuery((string)$query);
                 $cargos = $db->loadObjectList();
                 $options = array();
@@ -46,7 +67,14 @@ class JFormFieldCargo extends JFormFieldList
                 {
                         foreach($cargos as $cargo) 
                         {
-                                $options[] = JHtml::_('select.option', $cargo->id, $cargo->name);
+                                if ( $this->getAttribute('includecategory', false) )
+                                {
+                                        $options[] = JHtml::_('select.option', $cargo->id, $cargo->category_name . ' - ' . $cargo->name);                                        
+                                }
+                                else
+                                {
+                                        $options[] = JHtml::_('select.option', $cargo->id, $cargo->name);                                        
+                                }
                         }
                 }
                 $options = array_merge(parent::getOptions(), $options);

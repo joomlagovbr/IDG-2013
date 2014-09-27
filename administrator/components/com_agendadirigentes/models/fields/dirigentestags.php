@@ -40,20 +40,18 @@ class JFormFieldDirigentesTags extends JFormFieldTag
 		$db		= JFactory::getDbo();
 		$query	= $db->getQuery(true)
 			->select('a.id AS value, CONCAT(c.title, " - ", b.name, " - " ,a.name) AS text, \'\' AS path, 1 AS level, a.state AS published')
-			->from( $db->quoteName('#__agendadirigentes_dirigentes', 'a') )
-			->join('INNER', $db->quoteName('#__agendadirigentes_cargos', 'b')
-				.' ON (' . $db->quoteName('a.cargo_id') . ' = ' . $db->quoteName('b.id') . ')' )
-			->join('INNER', $db->quoteName('#__categories', 'c')
-				.' ON (' . $db->quoteName('a.catid') . ' = ' . $db->quoteName('c.id') . ')' );
-		/*
-		SELECT
-		a.id AS value, a.name AS text, '' AS path, 1 AS level, a.state AS published
-		FROM x3dts_agendadirigentes_dirigentes AS a
-		INNER JOIN x3dts_agendadirigentes_cargos AS b
-		ON a.cargo_id = b.id
-		INNER JOIN x3dts_categories AS c
-		ON a.catid = c.id
-		*/
+			->from(
+				$db->quoteName('#__agendadirigentes_dirigentes', 'a')
+			)->join(
+				'INNER',
+				$db->quoteName('#__agendadirigentes_cargos', 'b')
+				.' ON (' . $db->quoteName('a.cargo_id') . ' = ' . $db->quoteName('b.id') . ')'
+			)->join(
+				'INNER',
+				$db->quoteName('#__categories', 'c')
+				.' ON (' . $db->quoteName('b.catid') . ' = ' . $db->quoteName('c.id') . ')'
+			);
+
 
 		// Filter on the published state
 		if (is_numeric($published))
@@ -90,7 +88,6 @@ class JFormFieldDirigentesTags extends JFormFieldTag
 		{
 			return false;
 		}
-// var_dump($this->element['add_participantes_externos']);
 
 		if ( $this->getAttribute('add_participantes_externos', false) )
 		{
@@ -135,19 +132,5 @@ class JFormFieldDirigentesTags extends JFormFieldTag
 
 		return $options;
 	}
-
-	/*protected function getInput()
-	{
-		$input = parent::getInput();
-		if ( $this->getAttribute('add_participantes_externos', false) )
-		{
-			$element = 'jform_' . $this->addAttribute('name');
-			$script = 'jQuery(#'.$element.').append("<option value=\'teste\' selected=\'selected\'>teste</option>");
-					   ';
-			// $html = '<script>window.alert("teste")</script>';
-			// $input = $input . $html;			
-		}
-		return $input;
-	}*/
  
 }

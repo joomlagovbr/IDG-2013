@@ -55,13 +55,15 @@ JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
                         ?>
                 </td>
                 <td>
-                    <?php 
-                        if ( $canManage ) : ?>
+                    <?php if ( $canManage ) : ?>
                         <a href="<?php echo JRoute::_('index.php?option=com_agendadirigentes&task=cargo.edit&id=' . (int) $item->id); ?>">
                             <?php echo $this->escape($item->name); ?></a>
                     <?php else : ?>
                         <?php echo $this->escape($item->name); ?>
                     <?php endif; ?>
+                    <?php if (!empty($item->name_f)): ?>
+                        <small style="color:#999"><small>/ <?php echo $item->name_f; ?></small></small>
+                    <?php endif ?>
                 </td>
                 <td>
                         <?php echo $item->titleCategory; ?>

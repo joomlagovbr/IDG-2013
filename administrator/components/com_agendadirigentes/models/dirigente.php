@@ -69,4 +69,40 @@ class AgendaDirigentesModelDirigente extends JModelAdmin
                 return $user->authorise( "dirigentes.delete", "com_agendadirigentes.cargo." . $dirigente->cargo_id );
             }
         }
+
+        public function getItem()
+        {
+            $item = parent::getItem();
+
+            if (is_null($item) || !is_object($item)) {
+                return 0;
+            }
+
+            if(empty($item->cargo_id)) {
+                return 0;
+            }
+
+            $db = $this->_db;
+            $query = $db->getQuery(true);
+
+            $query->select(
+                    $db->quoteName('cat.id')
+                )->from(
+                    $db->quoteName('#__categories', 'cat')
+                )->join(
+                    'INNER',
+                    $db->quoteName('#__agendadirigentes_cargos', 'car')
+                    . ' ON ' . $db->quoteName('car.catid') . ' = ' . $db->quoteName('cat.id')
+                )->where(
+                    $db->quoteName('car.id') . ' = ' . (int) $item->cargo_id
+                );
+
+            $db->setQuery((string)$query);
+            $item->catid = $db->loadResult();
+
+            if(empty($item->sexo))
+                $item->sexo = 'M';
+
+            return $item;
+        }
 }

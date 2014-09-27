@@ -20,6 +20,18 @@
                         filter="string"
                 />
                 <field
+                        name="name_f"
+                        type="text"
+                        label="COM_AGENDADIRIGENTES_CARGOS_F_NAME_LABEL"
+                        description="COM_AGENDADIRIGENTES_CARGOS_F_NAME_DESC"
+                        size="40"
+                        maxlength="255"
+                        class="inputbox validate-cargo-name"
+                        default=""
+                        validate="titleorname"
+                        filter="string"
+                />
+                <field
                         name="catid"
                         type="category"
                         extension="com_agendadirigentes"

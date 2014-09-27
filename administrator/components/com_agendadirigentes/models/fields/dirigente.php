@@ -35,10 +35,21 @@ class JFormFieldDirigente extends JFormFieldList
         {
                 $db = JFactory::getDBO();
                 $query = $db->getQuery(true);
-                $query->select('dir.id, dir.name, cat.title AS category_title')
-                        ->from( $db->quoteName('#__agendadirigentes_dirigentes', 'dir') )
-                        ->join('INNER', $db->quoteName('#__categories', 'cat')
-                                . ' ON (' . $db->quoteName('dir.catid') . ' = ' . $db->quoteName('cat.id') . ')');
+                $query->select(
+                        $db->quoteName('dir.id') . ', ' .
+                        $db->quoteName('dir.name') . ', ' .
+                        $db->quoteName('cat.title', 'category_title')
+                    )->from(
+                        $db->quoteName('#__agendadirigentes_dirigentes', 'dir')
+                    )->join(
+                        'INNER',
+                        $db->quoteName('#__agendadirigentes_cargos', 'car')
+                        . ' ON (' . $db->quoteName('dir.cargo_id') . ' = ' . $db->quoteName('car.id') . ')'
+                    )->join(
+                        'INNER',
+                        $db->quoteName('#__categories', 'cat')
+                        . ' ON (' . $db->quoteName('car.catid') . ' = ' . $db->quoteName('cat.id') . ')'
+                    );
                 
                 if(intval($this->getAttribute('showcategory'))==1)
                         $query->order('cat.title ASC, dir.name ASC');

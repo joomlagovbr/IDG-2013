@@ -57,7 +57,11 @@ $user = JFactory::getUser();
                         <?php echo $item->categoria; ?>
                 </td>
                 <td>
+                    <?php if($item->sexo=='M' || empty($item->cargo_f)): ?>
                         <?php echo $item->cargo; ?>
+                    <?php else: ?>
+                        <?php echo $item->cargo_f; ?>
+                    <?php endif; ?>
                 </td>                
         </tr>
 <?php endforeach; ?>

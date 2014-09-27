@@ -47,10 +47,10 @@ class AgendaDirigentesModelDirigentes extends JModelList
                 $query = $db->getQuery(true);
                 // Select some fields from the hello table
                 $query
-                    ->select('a.*, c.name as cargo, d.title as categoria') //, e.name as proprietario
+                    ->select('a.*, c.name as cargo, c.name_f as cargo_f, d.title as categoria') //, e.name as proprietario
                     ->from( $db->quoteName('#__agendadirigentes_dirigentes', 'a') )
                     ->join('LEFT', $db->quoteName('#__agendadirigentes_cargos', 'c') . ' ON (' . $db->quoteName('c.id') . ' = ' . $db->quoteName('a.cargo_id') . ')')
-                    ->join('INNER', $db->quoteName('#__categories', 'd') . ' ON (' . $db->quoteName('d.id') . ' = ' . $db->quoteName('a.catid') . ')')
+                    ->join('INNER', $db->quoteName('#__categories', 'd') . ' ON (' . $db->quoteName('d.id') . ' = ' . $db->quoteName('c.catid') . ')')
                     ;
                 
                 // Filter by state
@@ -68,7 +68,7 @@ class AgendaDirigentesModelDirigentes extends JModelList
                 $catid = $this->getState('filter.catid');
                 if (is_numeric($catid))
                 {
-                    $query->where('a.catid = ' . (int) $catid);
+                    $query->where('c.catid = ' . (int) $catid);
                 }
 
                 // Filter by cargo.

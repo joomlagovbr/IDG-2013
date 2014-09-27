@@ -26,20 +26,6 @@
                         required="true"
                         filter="string"
                 />
-               <!--  <field
-                        name="catid"
-                        type="category"                        
-                        extension="com_agendadirigentes"
-                        label="COM_AGENDADIRIGENTES_COMPROMISSOS_CATID_LABEL"
-                        description="COM_AGENDADIRIGENTES_COMPROMISSOS_CATID_DESC"
-                        default=""
-                        class="inputbox validate-compromisso-catid"
-                        required="true"
-                        validate="catid"
-                        filter="integer"
-                >
-                        <option value="0">COM_AGENDADIRIGENTES_LIST_SELECT</option>
-                </field> -->
                 <field
                         name="owner"
                         type="dirigentestags"
@@ -50,6 +36,7 @@
                         required="true"
                         emptyfirst="true"                        
                         onchange="removeselected(this, 'dirigentes');"
+                        mode="nested"
                 />
                 <field
                         name="dirigentes"
@@ -59,9 +46,8 @@
                         class="span12"
                         multiple="true"
                         add_participantes_externos="true"
+                        mode="nested"
                 />
-                        <!-- required="true" -->
-
                 <field name="state" type="list"
                         label="JSTATUS" description="COM_AGENDADIRIGENTES_FIELD_STATE_DESC"
                         class="chzn-color-state"

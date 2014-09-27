@@ -19,20 +19,6 @@
                         filter="string"
                 />
                 <field
-                        name="catid"
-                        type="category"
-                        extension="com_agendadirigentes"
-                        label="COM_AGENDADIRIGENTES_DIRIGENTES_CATID_LABEL"
-                        description="COM_AGENDADIRIGENTES_DIRIGENTES_CATID_DESC"
-                        default=""
-                        class="inputbox validate-dirigente-catid"
-                        required="true"
-                        validate="catid"
-                        filter="integer"
-                >
-                        <option value="0">COM_AGENDADIRIGENTES_LIST_SELECT</option>
-                </field>
-                <field
                         name="cargo_id"
                         type="cargo"
                         label="COM_AGENDADIRIGENTES_DIRIGENTES_CARGO_ID_LABEL"
@@ -42,6 +28,7 @@
                         required="true"
                         validate="cargo"
                         filter="integer"
+                        includecategory="true"
                 />
                 <field name="state" type="list"
                         label="JSTATUS" description="COM_AGENDADIRIGENTES_FIELD_STATE_DESC"
@@ -95,6 +82,17 @@
                         >
                         <option value="0">JNO</option>
                         <option value="1">JYES</option>
+                </field>
+                <field
+                        name="sexo"
+                        type="radio"
+                        label="COM_AGENDADIRIGENTES_DIRIGENTES_GENERO_LABEL"
+                        description="COM_AGENDADIRIGENTES_DIRIGENTES_GENERO_DESC"
+                        default="M"
+                        filter="string"
+                        >
+                        <option value="M">OM_AGENDADIRIGENTES_DIRIGENTES_GENERO_MASC</option>
+                        <option value="F">OM_AGENDADIRIGENTES_DIRIGENTES_GENERO_FEM</option>
                 </field>
         </fieldset>
 </form>
