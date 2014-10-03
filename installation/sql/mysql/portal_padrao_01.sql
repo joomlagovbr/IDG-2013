@@ -884,7 +884,7 @@ INSERT INTO `#__extensions` VALUES  (1,'com_mailto','component','com_mailto','',
  (100,'PHPMailer','library','phpmailer','',0,1,1,1,'{\"name\":\"PHPMailer\",\"type\":\"library\",\"creationDate\":\"2001\",\"author\":\"PHPMailer\",\"copyright\":\"(c) 2001-2003, Brent R. Matzelle, (c) 2004-2009, Andy Prevost. All Rights Reserved., (c) 2010-2013, Jim Jagielski. All Rights Reserved.\",\"authorEmail\":\"jimjag@gmail.com\",\"authorUrl\":\"https:\\/\\/github.com\\/PHPMailer\\/PHPMailer\",\"version\":\"5.2.6\",\"description\":\"LIB_PHPMAILER_XML_DESCRIPTION\",\"group\":\"\"}','','','',0,'0000-00-00 00:00:00',0,0),
  (101,'SimplePie','library','simplepie','',0,1,1,1,'{\"name\":\"SimplePie\",\"type\":\"library\",\"creationDate\":\"2004\",\"author\":\"SimplePie\",\"copyright\":\"Copyright (c) 2004-2009, Ryan Parman and Geoffrey Sneddon\",\"authorEmail\":\"\",\"authorUrl\":\"http:\\/\\/simplepie.org\\/\",\"version\":\"1.2\",\"description\":\"LIB_SIMPLEPIE_XML_DESCRIPTION\",\"group\":\"\"}','','','',0,'0000-00-00 00:00:00',0,0),
  (102,'phputf8','library','phputf8','',0,1,1,1,'{\"name\":\"phputf8\",\"type\":\"library\",\"creationDate\":\"2006\",\"author\":\"Harry Fuecks\",\"copyright\":\"Copyright various authors\",\"authorEmail\":\"hfuecks@gmail.com\",\"authorUrl\":\"http:\\/\\/sourceforge.net\\/projects\\/phputf8\",\"version\":\"0.5\",\"description\":\"LIB_PHPUTF8_XML_DESCRIPTION\",\"group\":\"\"}','','','',0,'0000-00-00 00:00:00',0,0),
- (103,'Joomla! Platform','library','joomla','',0,1,1,1,'{\"name\":\"Joomla! Platform\",\"type\":\"library\",\"creationDate\":\"2008\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2014 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"http:\\/\\/www.joomla.org\",\"version\":\"13.1\",\"description\":\"LIB_JOOMLA_XML_DESCRIPTION\",\"group\":\"\"}','{\"mediaversion\":\"c978ea4eb7cc97fd30ef404676bd3030\"}','','',0,'0000-00-00 00:00:00',0,0),
+ (103,'Joomla! Platform','library','joomla','',0,1,1,1,'{\"name\":\"Joomla! Platform\",\"type\":\"library\",\"creationDate\":\"2008\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2014 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"http:\\/\\/www.joomla.org\",\"version\":\"13.1\",\"description\":\"LIB_JOOMLA_XML_DESCRIPTION\",\"group\":\"\"}','{\"mediaversion\":\"893b2b25bc9b762e3ea4129a94242020\"}','','',0,'0000-00-00 00:00:00',0,0),
  (104,'IDNA Convert','library','idna_convert','',0,1,1,1,'{\"name\":\"IDNA Convert\",\"type\":\"library\",\"creationDate\":\"2004\",\"author\":\"phlyLabs\",\"copyright\":\"2004-2011 phlyLabs Berlin, http:\\/\\/phlylabs.de\",\"authorEmail\":\"phlymail@phlylabs.de\",\"authorUrl\":\"http:\\/\\/phlylabs.de\",\"version\":\"0.8.0\",\"description\":\"LIB_IDNA_XML_DESCRIPTION\",\"group\":\"\"}','','','',0,'0000-00-00 00:00:00',0,0),
  (105,'FOF','library','fof','',0,1,1,1,'{\"name\":\"FOF\",\"type\":\"library\",\"creationDate\":\"2014-03-09 12:54:48\",\"author\":\"Nicholas K. Dionysopoulos \\/ Akeeba Ltd\",\"copyright\":\"(C)2011-2014 Nicholas K. Dionysopoulos\",\"authorEmail\":\"nicholas@akeebabackup.com\",\"authorUrl\":\"https:\\/\\/www.akeebabackup.com\",\"version\":\"2.2.1\",\"description\":\"LIB_FOF_XML_DESCRIPTION\",\"group\":\"\"}','{}','','',0,'0000-00-00 00:00:00',0,0),
  (106,'PHPass','library','phpass','',0,1,1,1,'{\"name\":\"PHPass\",\"type\":\"library\",\"creationDate\":\"2004-2006\",\"author\":\"Solar Designer\",\"copyright\":\"\",\"authorEmail\":\"solar@openwall.com\",\"authorUrl\":\"http:\\/\\/www.openwall.com\\/phpass\\/\",\"version\":\"0.3\",\"description\":\"LIB_PHPASS_XML_DESCRIPTION\",\"group\":\"\"}','{}','','',0,'0000-00-00 00:00:00',0,0),
@@ -985,7 +985,7 @@ INSERT INTO `#__extensions` VALUES  (439,'plg_captcha_recaptcha','plugin','recap
  (504,'hathor','template','hathor','',1,1,1,0,'{\"name\":\"hathor\",\"type\":\"template\",\"creationDate\":\"May 2010\",\"author\":\"Andrea Tarr\",\"copyright\":\"Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.\",\"authorEmail\":\"hathor@tarrconsulting.com\",\"authorUrl\":\"http:\\/\\/www.tarrconsulting.com\",\"version\":\"3.0.0\",\"description\":\"TPL_HATHOR_XML_DESCRIPTION\",\"group\":\"\"}','{\"showSiteName\":\"0\",\"colourChoice\":\"0\",\"boldText\":\"0\"}','','',0,'0000-00-00 00:00:00',0,0),
  (600,'English (United Kingdom)','language','en-GB','',0,1,1,1,'{\"name\":\"English (United Kingdom)\",\"type\":\"language\",\"creationDate\":\"2013-03-07\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2014 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.3.1\",\"description\":\"en-GB site language\",\"group\":\"\"}','','','',0,'0000-00-00 00:00:00',0,0),
  (601,'English (United Kingdom)','language','en-GB','',1,1,1,1,'{\"name\":\"English (United Kingdom)\",\"type\":\"language\",\"creationDate\":\"2013-03-07\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2014 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.3.1\",\"description\":\"en-GB administrator language\",\"group\":\"\"}','','','',0,'0000-00-00 00:00:00',0,0),
- (700,'files_joomla','file','joomla','',0,1,1,1,'{\"name\":\"files_joomla\",\"type\":\"file\",\"creationDate\":\"July 2014\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2014 Open Source Matters. All rights reserved\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.3.5\",\"description\":\"FILES_JOOMLA_XML_DESCRIPTION\",\"group\":\"\"}','','','',0,'0000-00-00 00:00:00',0,0),
+ (700,'files_joomla','file','joomla','',0,1,1,1,'{\"name\":\"files_joomla\",\"type\":\"file\",\"creationDate\":\"September 2014\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2014 Open Source Matters. All rights reserved\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.3.6\",\"description\":\"FILES_JOOMLA_XML_DESCRIPTION\",\"group\":\"\"}','','','',0,'0000-00-00 00:00:00',0,0),
  (10002,'pt-BR','package','pkg_pt-BR','',0,1,1,0,'{\"name\":\"Portuguese Brazil Language Pack\",\"type\":\"package\",\"creationDate\":\"Jan 2013\",\"author\":\"Joomla Brasil\",\"copyright\":\"Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.\",\"authorEmail\":\"traducao@joomla.com.br\",\"authorUrl\":\"http:\\/\\/www.joomla.com.br\",\"version\":\"3.2.0.1\",\"description\":\"\\n\\t\\t<h3><strong>Instala\\u00e7\\u00e3o do pacote de idioma Portugu\\u00eas (Brasil) para o CMS Joomla! 3.x e o editor TinyMCE 3.5.6 foram conclu\\u00eddos com sucesso.<\\/strong><\\/h3>\\n\\t\\t<p>Copyright 2005 - 2013 Open Source Matters. Todos os Direitos Reservados. Copyright Translation 2005 - 2013 Joomla Brasil. Todos os Direitos Reservados.<br\\/>\\n\\t\\tDe acordo com termo de licenciamento de <a href=\\\"http:\\/\\/www.opensourcematters.org\\\" target=\\\"_blank\\\">OpenSourceMatters<\\/a> e <a href=\\\"http:\\/\\/www.joomla.org\\\" target=\\\"_blank\\\">Joomla!<\\/a> todos os arquivos de idioma devem ser licenciados sob a <a href=\\\"http:\\/\\/www.gnu.org\\/licenses\\/gpl-2.0.html\\\" target=\\\"_blank\\\">licen\\u00e7a GNU\\/GPL (v.2.0)<\\/a>. Esta tradu\\u00e7\\u00e3o est\\u00e1 licenciada sob esta licen\\u00e7a. Se voc\\u00ea encontrar algum erro de digita\\u00e7\\u00e3o, tradu\\u00e7\\u00f5es incorretas ou se deseja sugerir melhorias, entre em contato com o <a href=\\\"mailto:traducao@joomla.com.br\\\"><strong>coordenador<\\/strong><\\/a> da tradu\\u00e7\\u00e3o.<\\/p>\\n\\t\\t<p>N\\u00e3o se esque\\u00e7a de selecionar o idioma para PT <a href=\\\"index.php?option=com_plugins&amp;view=plugins&amp;filter_search=TinyMCE\\\"><strong>Gerenciamento de plug-in TinyMCE<\\/strong><\\/a><br \\/>\\n\\t\\tSe voc\\u00ea usar a detec\\u00e7\\u00e3o autom\\u00e1tica, certifique-se de que est\\u00e3o instalados os pacotes de idiomas diferentes para TinyMCE correspondentes aos instalado para o Joomla !<\\/p>\\n\\t\",\"group\":\"\"}','{}','','',0,'0000-00-00 00:00:00',0,0),
  (10007,'padraogoverno01','template','padraogoverno01','',0,1,1,0,'{\"legacy\":false,\"name\":\"padraogoverno01\",\"type\":\"template\",\"creationDate\":\"Outubro 2013\",\"author\":\"Comunidade Joomla Calango e Grupo de Trabalho de Minist\\u00e9rios\",\"copyright\":\"Copyright (C) 2013 Comunidade Joomla Calango e Grupo de Trabalho de Minist\\u00e9rios.\",\"authorEmail\":\"joomlagovbr@gmail.com\",\"authorUrl\":\"https:\\/\\/github.com\\/joomlagovbr\",\"version\":\"2.5.0\",\"description\":\"Mais informacoes na URL do github.\",\"group\":\"\"}','{\"wrapperSmall\":\"53\",\"wrapperLarge\":\"72\",\"sitetitle\":\"\",\"sitedescription\":\"\",\"navposition\":\"center\",\"templatecolor\":\"nature\"}','','',0,'0000-00-00 00:00:00',0,0),
  (10008,'mod_container','module','mod_container','',0,1,1,0,'{\"legacy\":false,\"name\":\"mod_container\",\"type\":\"module\",\"creationDate\":\"Outubro 2013\",\"author\":\"Comunidade Joomla Calango e Grupo de Trabalho de Minist\\u00e9rios\",\"copyright\":\"Copyright (C) 2013 Comunidade Joomla Calango e Grupo de Trabalho de Minist\\u00e9rios\",\"authorEmail\":\"joomlagovbr@gmail.com\",\"authorUrl\":\"https:\\/\\/github.com\\/joomlagovbr\",\"version\":\"1.0\",\"description\":\"Mais informacoes na url do github.\",\"group\":\"\"}','{\"posicao\":\"\",\"cache\":\"1\",\"cache_time\":\"900\"}','','',0,'0000-00-00 00:00:00',0,0),
@@ -7746,7 +7746,7 @@ CREATE TABLE  `#__schemas` (
 
 /*!40000 ALTER TABLE `#__schemas` DISABLE KEYS */;
 LOCK TABLES `#__schemas` WRITE;
-INSERT INTO `#__schemas` VALUES  (700,'3.3.4-2014-08-03'),
+INSERT INTO `#__schemas` VALUES  (700,'3.3.6-2014-09-30'),
  (10030,'3.5.8');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `#__schemas` ENABLE KEYS */;
@@ -8004,7 +8004,7 @@ CREATE TABLE  `#__update_sites` (
   `last_check_timestamp` bigint(20) DEFAULT '0',
   `extra_query` varchar(1000) DEFAULT '',
   PRIMARY KEY (`update_site_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='Update Sites';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='Update Sites';
 
 --
 -- Dumping data for table `#__update_sites`
@@ -8012,12 +8012,14 @@ CREATE TABLE  `#__update_sites` (
 
 /*!40000 ALTER TABLE `#__update_sites` DISABLE KEYS */;
 LOCK TABLES `#__update_sites` WRITE;
-INSERT INTO `#__update_sites` VALUES  (1,'Joomla Core','collection','http://update.joomla.org/core/sts/list_sts.xml',1,0,''),
- (2,'Joomla Extension Directory','collection','http://update.joomla.org/jed/list.xml',1,1408191586,''),
- (3,'Accredited Joomla! Translations','collection','http://update.joomla.org/language/translationlist_3.xml',1,1408191586,''),
- (5,'Blackdale','extension','http://updates.blackdale.com/update/modblank250/modblank250.xml',1,1408191584,''),
- (6,'K2 Updates','extension','http://getk2.org/update.xml',1,1408191584,''),
- (7,'AllVideos','extension','http://www.joomlaworks.net/updates/jw_allvideos.xml',1,1408191586,'');
+INSERT INTO `#__update_sites` VALUES  (1,'Joomla Core','collection','http://update.joomla.org/core/sts/list_sts.xml',1,1412303237,''),
+ (2,'Joomla Extension Directory','collection','http://update.joomla.org/jed/list.xml',1,1412303237,''),
+ (3,'Accredited Joomla! Translations','collection','http://update.joomla.org/language/translationlist_3.xml',1,0,''),
+ (5,'Blackdale','extension','http://updates.blackdale.com/update/modblank250/modblank250.xml',1,0,''),
+ (6,'K2 Updates','extension','http://getk2.org/update.xml',1,1412303235,''),
+ (7,'AllVideos','extension','http://www.joomlaworks.net/updates/jw_allvideos.xml',1,1412303235,''),
+ (8,'Joomla! Update Component Update Site','extension','http://update.joomla.org/core/extensions/com_joomlaupdate.xml',1,1412303235,''),
+ (9,'','collection','http://update.joomla.org/core/list.xml',1,1412303235,'');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `#__update_sites` ENABLE KEYS */;
 
@@ -8045,7 +8047,9 @@ INSERT INTO `#__update_sites_extensions` VALUES  (1,700),
  (3,10002),
  (5,10014),
  (6,10035),
- (7,10050);
+ (7,10050),
+ (8,28),
+ (9,700);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `#__update_sites_extensions` ENABLE KEYS */;
 
