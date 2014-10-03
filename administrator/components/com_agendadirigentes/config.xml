@@ -41,6 +41,14 @@
                         description="Link para reporte de erro"
                         default=""
                 />
+                <field
+                        name="busca_itemid"
+                        type="menuitem"
+                        label="Itemid de busca"
+                        description="Itemid da página de busca"
+                        >
+                        <option value="">Selecione</option>
+                </field>
         </fieldset>
         <fieldset
                 name="compromissos"
@@ -77,6 +85,56 @@
                         <option value="0">JHIDE</option>
                         <option value="1">JSHOW</option>
                 </field>
+                <field
+                        name="exibir_pauta"
+                        type="list"
+                        label="COM_AGENDADIRIGENTES_COMPROMISSO_PARAM_EXIBIR_PAUTA_LABEL"
+                        description="COM_AGENDADIRIGENTES_COMPROMISSO_PARAM_EXIBIR_PAUTA_DESC"
+                        default="1"
+                >                                
+                        <option value="0">JHIDE</option>
+                        <option value="1">JSHOW</option>
+                </field>
+                <field
+                        name="exibir_participantes_locais"
+                        type="list"
+                        label="COM_AGENDADIRIGENTES_COMPROMISSO_PARAM_EXIBIR_PARTICIPANTES_LOCAIS_LABEL"
+                        description="COM_AGENDADIRIGENTES_COMPROMISSO_PARAM_EXIBIR_PARTICIPANTES_LOCAIS_DESC"
+                        default="1"
+                        >
+                        <option value="0">JHIDE</option>
+                        <option value="1">JSHOW</option>
+                </field>
+                <field
+                        name="exibir_participantes_externos"
+                        type="list"
+                        label="COM_AGENDADIRIGENTES_COMPROMISSO_PARAM_EXIBIR_PARTICIPANTES_EXTERNOS_LABEL"
+                        description="COM_AGENDADIRIGENTES_COMPROMISSO_PARAM_EXIBIR_PARTICIPANTES_EXTERNOS_DESC"
+                        default="1"
+                        >
+                        <option value="0">JHIDE</option>
+                        <option value="1">JSHOW</option>
+                </field>  
+                <field
+                        name="permitir_sobreposicao"
+                        type="list"
+                        label="COM_AGENDADIRIGENTES_COMPROMISSO_PARAM_PERMITIR_SOBREPOSICAO_LABEL"
+                        description="COM_AGENDADIRIGENTES_COMPROMISSO_PARAM_PERMITIR_SOBREPOSICAO_DESC"
+                        default="1"
+                        >
+                        <option value="0">JNO</option>
+                        <option value="1">JYES</option>
+                </field>
+                <field
+                        name="permitir_vcard"
+                        type="list"
+                        label="Permitir VCARD"
+                        description="Permitir ou não VCARD"
+                        default="1"
+                >                                
+                        <option value="0">JNO</option>
+                        <option value="1">JYES</option>
+                </field>
         </fieldset>
         <fieldset
                 name="sharing"
@@ -110,7 +168,7 @@
                         label="Posição do módulo (tipo módulo)"
                         description="Somente para compartilhamento do tipo módulo"
                         default="com_agendadirigentes-aut-btns-social"
-                />  
+                />
         </fieldset>
         <fieldset
                 name="permissions"

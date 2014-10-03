@@ -70,12 +70,14 @@ class AgendaDirigentesViewCargos extends JViewLegacy
          */
         protected function addToolBar( $total = NULL ) 
         {
-            JToolBarHelper::title(JText::_('COM_AGENDADIRIGENTES_MANAGER_CARGOS').
+            JToolBarHelper::title(
+                    JText::_('COM_AGENDADIRIGENTES') . ': ' .
+                    JText::_('COM_AGENDADIRIGENTES_MANAGER_CARGOS').
                     //Reflect number of items in title!
-                    ($total?' <span style="font-size: 0.5em; vertical-align: middle;">('.$total.')</span>':'')
-                    , 'compromisso');
+                    ($total?' <span style="font-size: 0.5em; vertical-align: middle;">('.$total.' itens)</span>':'')
+                    );
 
-            if ($this->canDo->get('core.create'))
+            if ( $this->canDo->get('core.create') && $this->canDo->get('cargos.add') )
                 JToolBarHelper::addNew('cargo.add');
 
             if (($this->canDo->get('core.edit')) || ($this->canDo->get('core.edit.own')))

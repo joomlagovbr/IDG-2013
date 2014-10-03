@@ -16,19 +16,30 @@ class AgendaDirigentesHelper extends JHelperContent
         public static function addSubmenu($submenu = NULL, $canDo = NULL)
         {
             if(is_null($canDo))
-                $canDo  = JHelperContent::getActions('com_agendadirigentes');
+                $canDo  = self::getActions('com_agendadirigentes');
 
-            JHtmlSidebar::addEntry(
-                JText::_('COM_AGENDADIRIGENTES_SUBMENU_COMPROMISSOS'),
-                'index.php?option=com_agendadirigentes&view=compromissos',
-                $submenu == 'compromissos'
-            );
-            JHtmlSidebar::addEntry(
-                JText::_('COM_AGENDADIRIGENTES_SUBMENU_CATEGORIES'),
-                'index.php?option=com_categories&extension=com_agendadirigentes',
-                $submenu == 'categories');
+            $can_categories_list = $canDo->get('categories.list');
+            $can_dirigentes_list = $canDo->get('dirigentes.list');
+            $can_cargos_list = $canDo->get('cargos.list');
 
-            if ($canDo->get('dirigentes.list')) 
+            if ($can_categories_list || $can_dirigentes_list || $can_cargos_list)
+            {
+                JHtmlSidebar::addEntry(
+                    JText::_('COM_AGENDADIRIGENTES_SUBMENU_COMPROMISSOS'),
+                    'index.php?option=com_agendadirigentes&view=compromissos',
+                    $submenu == 'compromissos'
+                );
+            }
+
+            if ($can_categories_list) 
+            {
+                JHtmlSidebar::addEntry(
+                    JText::_('COM_AGENDADIRIGENTES_SUBMENU_CATEGORIES'),
+                    'index.php?option=com_categories&extension=com_agendadirigentes',
+                    $submenu == 'categories');
+            }
+
+            if ($can_dirigentes_list) 
             {
                 JHtmlSidebar::addEntry(
                     JText::_('COM_AGENDADIRIGENTES_SUBMENU_DIRIGENTES'),
@@ -37,7 +48,7 @@ class AgendaDirigentesHelper extends JHelperContent
                 );  
             }
 
-            if ($canDo->get('cargos.list')) 
+            if ($can_cargos_list) 
             {
                 JHtmlSidebar::addEntry(
                     JText::_('COM_AGENDADIRIGENTES_SUBMENU_CARGOS'),
@@ -45,40 +56,8 @@ class AgendaDirigentesHelper extends JHelperContent
                     $submenu == 'cargos'
                 );                  
             }
-            // configurando algumas propriedades da pagina de categorias
-            // $document = JFactory::getDocument();
-            // $document->addStyleDeclaration('.agendadirigentes-categories ' .
-            //                                '{ background-image: url(../media/com_agendadirigentes/images/icon-calendar.png);}');
-            //nao eh preciso usar o titulo no j3.3
-            /*
-            if ($submenu == 'categories') 
-            {                
-                    // $document->setTitle('teste'.JText::_('COM_AGENDADIRIGENTES_ADMINISTRATION_CATEGORIES'));
-                $document->setTitle('testes');
-            }*/
+            
         }
-
-        /*deprecated in joomla 3... remover na documentacao depois (mas ha um erro na funcao original, que ainda precisarah ser comitado)
-        public static function getActions($compromissoId = 0)
-        {
-            jimport('joomla.access.access');
-            $user   = JFactory::getUser();
-            $result = new JObject;
-            if (empty($compromissoId))
-            { 
-                $assetName = 'com_agendadirigentes';
-            }
-            else
-            {
-                $assetName = 'com_agendadirigentes.compromisso.'.(int) $compromissoId;
-            }
-            $actions = JAccess::getActions('com_agendadirigentes', 'component');
-            foreach ($actions as $action) { 
-                $result->set($action->name, $user->authorise($action->name, $assetName));
-            }
-            return $result;
-        }
-        */
 
         // nova getAtions, necessaria mesmo no joomla 3. Codigo se baseia na funcao original JHelperContent::getActions
         public static function getActions($component = '', $section = '', $id = 0)

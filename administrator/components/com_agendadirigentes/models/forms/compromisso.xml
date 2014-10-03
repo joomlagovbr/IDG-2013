@@ -210,7 +210,7 @@
                 <fieldset
                         name="display"
                         label="JGLOBAL_FIELDSET_DISPLAY_OPTIONS"
-                >
+                        >
                         <field
                                 name="exibir_horario_inicio"
                                 type="list"
@@ -239,7 +239,40 @@
                                 label="COM_AGENDADIRIGENTES_COMPROMISSO_PARAM_EXIBIR_LOCAL_LABEL"
                                 description="COM_AGENDADIRIGENTES_COMPROMISSO_PARAM_EXIBIR_LOCAL_DESC"
                                 default=""
-                        >
+                                >
+                                <option value="">JGLOBAL_USE_GLOBAL</option>
+                                <option value="0">JHIDE</option>
+                                <option value="1">JSHOW</option>
+                        </field>
+                        <field
+                                name="exibir_pauta"
+                                type="list"
+                                label="COM_AGENDADIRIGENTES_COMPROMISSO_PARAM_EXIBIR_PAUTA_LABEL"
+                                description="COM_AGENDADIRIGENTES_COMPROMISSO_PARAM_EXIBIR_PAUTA_DESC"
+                                default=""
+                                >
+                                <option value="">JGLOBAL_USE_GLOBAL</option>
+                                <option value="0">JHIDE</option>
+                                <option value="1">JSHOW</option>
+                        </field>
+                        <field
+                                name="exibir_participantes_locais"
+                                type="list"
+                                label="COM_AGENDADIRIGENTES_COMPROMISSO_PARAM_EXIBIR_PARTICIPANTES_LOCAIS_LABEL"
+                                description="COM_AGENDADIRIGENTES_COMPROMISSO_PARAM_EXIBIR_PARTICIPANTES_LOCAIS_DESC"
+                                default=""
+                                >
+                                <option value="">JGLOBAL_USE_GLOBAL</option>
+                                <option value="0">JHIDE</option>
+                                <option value="1">JSHOW</option>
+                        </field>
+                        <field
+                                name="exibir_participantes_externos"
+                                type="list"
+                                label="COM_AGENDADIRIGENTES_COMPROMISSO_PARAM_EXIBIR_PARTICIPANTES_EXTERNOS_LABEL"
+                                description="COM_AGENDADIRIGENTES_COMPROMISSO_PARAM_EXIBIR_PARTICIPANTES_EXTERNOS_DESC"
+                                default=""
+                                >
                                 <option value="">JGLOBAL_USE_GLOBAL</option>
                                 <option value="0">JHIDE</option>
                                 <option value="1">JSHOW</option>

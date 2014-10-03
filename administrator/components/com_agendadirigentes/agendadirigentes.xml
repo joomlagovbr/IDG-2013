@@ -55,7 +55,6 @@
                         <menu view="dirigentes" link="option=com_agendadirigentes&amp;view=dirigentes">COM_AGENDADIRIGENTES_MENU_DIRIGENTES</menu>
                         <menu view="categorias" link="option=com_categories&amp;extension=com_agendadirigentes">COM_AGENDADIRIGENTES_MENU_CATEGORIAS</menu>
                         <menu view="cargos" link="option=com_agendadirigentes&amp;view=cargos">COM_AGENDADIRIGENTES_MENU_CARGOS</menu>
-                        <!-- <menu view="agendas_anteriores" link="option=com_agendadirigentes&amp;view=agendas_anteriores">COM_AGENDADIRIGENTES_AGENDASANTERIORES</menu> -->
                 </submenu>
                 <files folder="admin">
                         <filename>index.html</filename>

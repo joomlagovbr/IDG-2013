@@ -57,7 +57,8 @@ class AgendaDirigentesTableCompromisso extends JTable
                 $params->loadString($this->params, 'JSON');
                 $this->params = $params;
 
-
+                if($this->horario_fim == '00:00:00')
+                    $this->horario_fim = '';
 
                 return true;
             }
@@ -72,6 +73,7 @@ class AgendaDirigentesTableCompromisso extends JTable
             //separacao dos dados para gravar em campo participantes_externos (que nao precisa de mapeamento no form)
             $input = JFactory::getApplication()->input;
             @$dirigentes = $input->get('jform', array(), 'ARRAY')['dirigentes'];
+
             if (isset($dirigentes) && is_array($dirigentes)) {
 
                 $arr_dirigentes = array();
@@ -93,7 +95,11 @@ class AgendaDirigentesTableCompromisso extends JTable
                     $this->participantes_externos = implode('; ', $arr_participantes_externos);
                     $input->set('dirigentes', $arr_dirigentes);
                 }
-
+            }
+            else
+            {
+                $this->participantes_externos = '';
+                $input->set('dirigentes', array() );
             }
 
             //verificacoes de data e horario
@@ -122,7 +128,7 @@ class AgendaDirigentesTableCompromisso extends JTable
                      $this->horario_inicio .= ':00';
 
                 $length_horario_fim = strlen($this->horario_fim);
-                if($length_horario_fim<5)
+                if($length_horario_fim<5 && $length_horario_fim > 0)
                     $this->horario_fim = '18:00:00';
                 else if($length_horario_fim==5)
                      $this->horario_fim .= ':00';

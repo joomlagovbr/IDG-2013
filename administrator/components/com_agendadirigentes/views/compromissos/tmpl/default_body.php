@@ -9,12 +9,31 @@
  
 // impedir acesso direto ao arquivo
 defined('_JEXEC') or die;
-$user = JFactory::getUser();
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
+// $coreEdit = $this->user->authorise( "core.edit", "com_agendadirigentes" );
+// $coreEditOwn = $this->user->authorise( "core.edit.own", "com_agendadirigentes" );
 ?>
 <?php foreach($this->items as $i => $item):
+
+        $canManage = $this->user->authorise( "core.edit", "com_agendadirigentes.category." . $item->catid );
+        
+        if(!$canManage)
+            $canManage = $this->user->authorise( "core.edit.own", "com_agendadirigentes.category." . $item->catid ) && ($this->user->id == $item->created_by);
+
+        if(!$canManage)
+            $canChange = $this->user->authorise( "core.edit.state", "com_agendadirigentes.category." . $item->catid );
+        else
+            $canChange = true;
+
+        // if(!$coreEdit)
+        //     $canEdit = $coreEditOwn && ($this->user->id == $item->created_by);
+        // else
+        //     $canEdit = $coreEdit;
+        
+        
+        // $categoryCanEditOwn = $user->authorise( "compromissos.manage", "com_agendadirigentes.category." . $item->catid );
         // $canManage = $user->authorise( "compromissos.manage", "com_agendadirigentes.category." . $item->catid );
-        $canManage = true;
+        // $canManage = true;
         ?>
         <tr class="row<?php echo $i % 2; ?>">
                 <td>
@@ -30,7 +49,6 @@ JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
                 <td class="center">
                     <div class="btn-group">
                         <?php
-                        $canChange = true;
                         echo JHtml::_('jgrid.published', $item->state, $i, 'compromissos.', $canChange, 'cb');
                         echo JHtml::_('agendadirigenteshelper.featured', $item->featured, $i, $canChange, 'compromissos');
                         ?>
@@ -51,9 +69,7 @@ JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
                     </div>
                 </td>
                 <td>
-                    <?php 
-                        $canEdit = true;
-                        if ($canEdit) : ?>
+                    <?php if ($canManage) : ?>
                         <a href="<?php echo JRoute::_('index.php?option=com_agendadirigentes&task=compromisso.edit&id=' . (int) $item->id); ?>">
                             <?php echo $this->escape($item->title); ?></a>
                     <?php else : ?>

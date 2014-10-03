@@ -53,13 +53,16 @@ class AgendaDirigentesViewCompromissos extends JViewLegacy
                 $this->listDirn  = $this->escape($this->state->get('list.direction', 'DESC'));
                 $this->archived  = $this->state->get('filter.state') == 2 ? true : false;
                 $this->trashed   = $this->state->get('filter.state') == -2 ? true : false;
-                $this->status_dono_compromisso = $this->state->get('list.status_dono_compromisso');
+                $this->status_dono_compromisso = $this->state->get('list.status_dono_compromisso', 1);
 
                 // Set the toolbar
                 $this->addToolBar($this->pagination->total);
 
                 //set sidebar menu
                 $this->sidebar = JHtmlSidebar::render();
+                
+                if(strpos($this->sidebar, 'id="submenu"')===false)
+                    $this->sidebar = '';
 
                 // Display the template
                 parent::display($tpl);
@@ -73,10 +76,12 @@ class AgendaDirigentesViewCompromissos extends JViewLegacy
          */
         protected function addToolBar( $total = NULL ) 
         {
-                JToolBarHelper::title(JText::_('COM_AGENDADIRIGENTES_MANAGER_COMPROMISSOS').
+                JToolBarHelper::title(
+                        JText::_('COM_AGENDADIRIGENTES') . ': ' .
+                        JText::_('COM_AGENDADIRIGENTES_MANAGER_COMPROMISSOS').
                         //Reflect number of items in title!
-                        ($total?' <span style="font-size: 0.5em; vertical-align: middle;">('.$total.')</span>':'')
-                        , 'compromisso');
+                        ($total?' <span style="font-size: 0.5em; vertical-align: middle;">('.$total.' itens)</span>':'')
+                        );
 
 
                 if ($this->canDo->get('core.create')) 

@@ -38,9 +38,19 @@ class JFormFieldDirigentesTags extends JFormFieldTag
 		$published = $this->element['published']? $this->element['published'] : array(0,1);
 
 		$db		= JFactory::getDbo();
-		$query	= $db->getQuery(true)
-			->select('a.id AS value, CONCAT(c.title, " - ", b.name, " - " ,a.name) AS text, \'\' AS path, 1 AS level, a.state AS published')
-			->from(
+		$query	= $db->getQuery(true);
+		if ($this->getAttribute('show_category', 1) == 1)
+		{
+			$query->select('a.id AS value, CONCAT(c.title, " - ", b.name, " - " ,a.name) AS text, \'\' AS path, 1 AS level, a.state AS published');
+			$query->order('c.title, b.name, a.name');
+		}
+		else
+		{
+			$query->select('a.id AS value, CONCAT(b.name, " - " ,a.name) AS text, \'\' AS path, 1 AS level, a.state AS published');
+			$query->order('b.name, a.name');
+		}
+		
+		$query->from(
 				$db->quoteName('#__agendadirigentes_dirigentes', 'a')
 			)->join(
 				'INNER',
@@ -64,7 +74,6 @@ class JFormFieldDirigentesTags extends JFormFieldTag
 			$query->where('a.state IN (' . implode(',', $published) . ')');
 		}
 
-		$query->order('c.title, b.name, a.name');
 
 		// Get the options.
 		$db->setQuery((string)$query);
@@ -132,5 +141,87 @@ class JFormFieldDirigentesTags extends JFormFieldTag
 
 		return $options;
 	}
- 
+	/**
+	 * Method to get the field input for a tag field.
+	 *
+	 * @return  string  The field input.
+	 *
+	 * @since   3.1
+	 */
+	protected function getInput()
+	{
+		if( $this->getAttribute('multiple', false) == "true" )
+		{
+			$id    = isset($this->element['id']) ? $this->element['id'] : null;
+			$cssId = '#' . $this->getId($id, $this->element['name']);			
+			$this->ajaxfieldCustomTag($cssId);
+		}
+		
+		$input = parent::getInput();
+
+		return $input;
+	} 
+
+	protected function ajaxfieldCustomTag($selector='#jform_tags', $minTermLength = 5)
+	{
+		JFactory::getDocument()->addScriptDeclaration("
+			(function($){
+				$(document).ready(function () {
+
+					var customTagPrefix = '#new#';
+
+					// Method to add tags pressing enter
+					$('" . $selector . "_chzn input').keyup(function(event) {
+
+						// Tag is greater than 3 chars and enter pressed
+						if (this.value.length >= " . $minTermLength . " && (event.which === 13 || event.which === 188)) {
+
+							// Search an highlighted result
+							var highlighted = $('" . $selector . "_chzn').find('li.active-result.highlighted').first();
+
+							// Add the highlighted option
+							if (event.which === 13 && highlighted.text() !== '')
+							{
+								// Extra check. If we have added a custom tag with this text remove it
+								var customOptionValue = customTagPrefix + highlighted.text();
+								$('" . $selector . " option').filter(function () { return $(this).val() == customOptionValue; }).remove();
+
+								// Select the highlighted result
+								var tagOption = $('" . $selector . " option').filter(function () { return $(this).html() == highlighted.text(); });
+								tagOption.attr('selected', 'selected');
+							}
+							// Add the custom tag option
+							else
+							{
+								var customTag = this.value;
+
+								// Extra check. Search if the custom tag already exists (typed faster than AJAX ready)
+								var tagOption = $('" . $selector . " option').filter(function () { return $(this).html() == customTag; });
+								if (tagOption.text() !== '')
+								{
+									tagOption.attr('selected', 'selected');
+								}
+								else
+								{
+									var option = $('<option>');
+									option.text(this.value).val(customTagPrefix + this.value);
+									option.attr('selected','selected');
+
+									// Append the option an repopulate the chosen field
+									$('" . $selector . "').append(option);
+								}
+							}
+
+							this.value = '';
+							$('" . $selector . "').trigger('liszt:updated');
+							event.preventDefault();
+
+						}
+					});
+				});
+			})(jQuery);
+			"
+		);
+
+	}
 }
