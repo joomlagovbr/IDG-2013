@@ -46,23 +46,64 @@ class AgendaDirigentesControllerCompromissos extends JControllerAdmin
 			JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
 			$user   = JFactory::getUser();
+			$isSuperUser = (array_search(8, $user->groups)!==false);
+			
 			$ids    = $this->input->get('cid', array(), 'array');
 			$values = array('featured' => 1, 'unfeatured' => 0);
 			$task   = $this->getTask();
 			$value  = JArrayHelper::getValue($values, $task, 0, 'int');
 
 			$model = $this->getModel();
-			// $categories = $model->getCategoriesFromIds($ids);
-			
+			$fields = array('car.catid', 'comp.id', 'comp.created_by');
+			$dataFromIds = $model->getDataFromIds($ids, $fields);
+
+			$params = JComponentHelper::getParams( $this->option );
+			$allowFeature = $params->get('allowFeature', 'state');
+
+			if (empty($ids))
+			{
+				JError::raiseWarning(500, JText::_('JERROR_NO_ITEMS_SELECTED'));
+			}
+
 			foreach ($ids as $i => $id)
 			{
-				// if(@isset($categories[$id]->catid)===false)
-				// 	continue;
+				$item = $dataFromIds[$id];
 
-				if (!$user->authorise('core.edit.state', 'com_agendadirigentes.component'))
+				if( !isset($item->catid) )
 				{
 					unset($ids[$i]);
-					JError::raiseNotice(403, JText::_('JLIB_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
+					continue;
+				}
+
+				if($allowFeature == 'superuser')
+				{
+					if($isSuperUser)
+						continue;
+					else
+					{
+						$ids = NULL;
+						JError::raiseNotice(403, JText::_('JLIB_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
+						break;
+					}
+				}
+
+				if($allowFeature == 'state')
+				{
+					list($canManage, $canChange) = AgendaDirigentesHelper::getGranularPermissions('compromissos', $item );
+					if (! $canChange )
+					{
+						unset($ids[$i]);
+						JError::raiseNotice(403, JText::_('JLIB_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
+					}					
+				}
+				else if($allowFeature == 'edit')
+				{					 
+					//informacao canManage eh sobreposta por permissoes de edicao de proprios itens e a linha abaixo nao
+					if (! $user->authorise( "core.edit", "com_agendadirigentes.category." . $item->catid ) )
+					{
+						unset($ids[$i]);
+						JError::raiseNotice(403, JText::_('JLIB_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
+					}	
 				}
 			}
 

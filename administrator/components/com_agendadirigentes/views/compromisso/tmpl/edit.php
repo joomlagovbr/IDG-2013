@@ -14,6 +14,8 @@ JHtml::_('behavior.tooltip');
 JHtml::_('behavior.formvalidation');
 JHtml::_('behavior.multiselect');
 JHtml::_('formbehavior.chosen', 'select');
+
+JHtml::addIncludePath(JPATH_COMPONENT . '/helpers');
 ?>
 <script type="text/javascript">
 function removeselected(elm, aim)
@@ -53,6 +55,13 @@ jQuery(document).ready(function(){
                     <?php foreach ($this->form->getFieldset('details') as $field): ?>
                         <div class="control-group">
                             <?php if (!$field->hidden): ?>
+                                <?php if($field->fieldname=='state'): ?>
+                                <?php
+                                list($canManage, $canChange) = AgendaDirigentesHelper::getGranularPermissions('compromissos', $this->item );
+                                if(! $canChange)
+                                    $field->readonly = true;
+                                ?>
+                                <?php endif; ?>
                             <div class="control-label"><?php echo $field->label; ?></div>
                             <?php endif; ?>
                             <div class="controls"><?php echo $field->input; ?></div>

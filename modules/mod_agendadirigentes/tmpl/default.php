@@ -18,9 +18,15 @@ $document->addStylesheet( JURI::root().'media/mod_agendadirigentes/css/portalpad
 	<ul class="compromissos-lista">
 		<?php foreach ($items as $item): ?>
 		<li>
+			<?php if ($item->dia_todo == 1): ?>
+			<div class="compromisso-horario-inicio">
+				<i class="icon-fixed-width icon-time"><span class="hide"></span></i><span class="timestamp">Dia todo</span>
+			</div>
+			<?php else: ?>
 			<div class="compromisso-horario-inicio">
 				<i class="icon-fixed-width icon-time"><span class="hide">A partir de:</span></i><span class="timestamp"><?php echo $item->horario_inicio ?></span>
 			</div>
+			<?php endif ?>
 			<a class="compromisso-link" href="<?php echo JURI::root() ?>index.php?option=com_agendadirigentes&view=autoridade&id=<?php echo $params->get('autoridade', 0); ?>&Itemid=<?php echo $params->get('itemid') ?>&dia=<?php echo $params->get('dia'); ?>">
 				<?php echo $item->title ?>
 			</a>

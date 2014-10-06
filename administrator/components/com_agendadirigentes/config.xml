@@ -49,6 +49,37 @@
                         >
                         <option value="">Selecione</option>
                 </field>
+                <field
+                        name="permissionsType"
+                        type="list"
+                        label="Tipo de permissao"
+                        description="Permissoes implicitas ou explicitas."
+                        default="implicit"
+                >                                
+                        <option value="implicit">Implícita</option>
+                        <option value="explicit">Explícita</option>
+                </field>
+                <field
+                        name="editOwnState"
+                        type="list"
+                        label="Editar estado de itens proprios"
+                        description="Permitir edicao de estado de itens proprios, se edicao de itens proprios estiver liberada"
+                        default="0"
+                >                                
+                        <option value="0">JNO</option>
+                        <option value="1">JYES</option>
+                </field>
+                <field
+                        name="allowFeature"
+                        type="list"
+                        label="Permitir marcar como destaque"
+                        description="Escolher opção referente ao destaque ou não de itens"
+                        default="state"
+                >                                
+                        <option value="state">Permissão de alterar estado</option>
+                        <option value="edit">Permissão de editar</option>
+                        <option value="superuser">Somente super users</option>
+                </field>
         </fieldset>
         <fieldset
                 name="compromissos"

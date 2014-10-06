@@ -38,7 +38,9 @@ class ModAgendaDirigentesHelper
 	public static function getDia( &$params )
 	{
 		if(empty($params->get('dia', '')))
-			$params->set('dia', date('Y-m-d'));
+		{		
+			$params->set('dia', self::getDate());
+		}
 
 		return $params->get('dia');
 	}
@@ -53,8 +55,15 @@ class ModAgendaDirigentesHelper
 		@$dia_por_extenso = new JDate( $dia );
 		
 		if(is_null($dia_por_extenso))
-			$dia_por_extenso = new JDate( date('Y-m-d') );
+			$dia_por_extenso = new JDate( self::getDate() );
 
 		return strtolower( $dia_por_extenso->format( 'd \d\e F \d\e Y' ) );
+	}
+
+	public static function getDate()
+	{
+		$app = JFactory::getApplication();
+		$date = new JDate();
+		return $date->format('Y-m-d', $app->getCfg('offset'));	
 	}
 }

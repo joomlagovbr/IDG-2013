@@ -212,6 +212,11 @@ class AgendaDirigentesModelCompromisso extends JModelAdmin
                 return false;
             }
 
+            foreach($pks as &$pk)
+            {
+                $pk = intval($pk);
+            }
+
             try
             {
                 $db = $this->getDbo();
@@ -234,20 +239,119 @@ class AgendaDirigentesModelCompromisso extends JModelAdmin
             return true;
         }
 
-        // public function getCategoriesFromIds( $pks = array() )
-        // {
-        //     foreach ($pks as &$pk) {
-        //         $pk = intval($pk);
-        //     }
-        //     $items = implode(', ', $pks);
+        protected function canEditState($record)
+        {
+            $user = JFactory::getUser();
+
+            $coreEditState = $user->authorise( "core.edit.state", $this->option );
+            $categoryEditState = $user->authorise( "core.edit.state", $this->option . ".category." . $record->catid );
+
+            $params = JComponentHelper::getParams( $this->option ); 
+            $permissionType = $params->get('permissionsType', 'implicit');
+            $editOwnState = $params->get('editOwnState', 0);
+
+            if( $permissionType == 'implicit' )
+            {
+                if($coreEditState && $categoryEditState !== false)
+                {
+                    return true;
+                }
+
+                if($editOwnState)
+                {
+                    $coreEditOwn = $user->authorise( "core.edit.own", $this->option );
+                    $categoryEditOwn = $user->authorise( "core.edit.own", $this->option . ".category." . $record->catid );
+    
+                    if($coreEditOwn && $categoryEditOwn !== false && $record->created_by == $user->id)
+                    {
+                        return true;
+                    }           
+                }
+
+            }
+            elseif( $permissionType == 'explicit' )
+            {
+                if($coreEditState && $categoryEditState)
+                {
+                    return true;
+                }
+
+                if($editOwnState)
+                {
+                    $coreEditOwn = $user->authorise( "core.edit.own", $this->option );
+                    $categoryEditOwn = $user->authorise( "core.edit.own", $this->option . ".category." . $record->catid );
+    
+                    if($coreEditOwn && $categoryEditOwn && $record->created_by == $user->id)
+                    {
+                        return true;
+                    }           
+                } 
+            }
             
-        //     $db = JFactory::getDBO();
-        //     $query = $db->getQuery(true);
-        //     $query->select('id, catid')
-        //           ->from('#__agendadirigentes_compromissos')
-        //           ->where('id IN ('.$items.')');
+            return false;
             
-        //     $db->setQuery((string)$query);
-        //     return $db->loadObjectList('id');
-        // }
+        }
+
+        public function getDataFromIds( $pks = array(), $fields = array() )
+        {
+            foreach ($pks as &$pk) {
+                $pk = intval($pk);
+            }
+            $items = implode(', ', $pks);
+
+            if(count($fields)==0)
+                return NULL;
+
+            $db = JFactory::getDBO();
+
+            foreach($fields as &$field)
+            {
+                $field = $db->quoteName( $field );
+            }
+
+            $fields = implode(', ', $fields);
+            
+            $query = $db->getQuery(true);
+
+            $query->select(
+                        $fields
+                    )
+                    ->from(
+                        $db->quoteName('#__agendadirigentes_compromissos', 'comp')
+                    )
+                    ->join(
+                        'INNER',
+                        $db->quoteName('#__agendadirigentes_dirigentes_compromissos', 'dc')
+                        . ' ON (' . 
+                        $db->quoteName('comp.id')
+                        . ' = ' . 
+                        $db->quoteName('dc.compromisso_id')
+                        . ' AND ' .
+                        $db->quoteName('dc.owner') . ' = 1 )' 
+                    )
+                    ->join(
+                        'INNER',
+                        $db->quoteName('#__agendadirigentes_dirigentes', 'dir')
+                        . ' ON ' . 
+                        $db->quoteName('dc.dirigente_id')
+                        . ' = ' . 
+                        $db->quoteName('dir.id')
+                    )
+                    ->join(
+                        'INNER',
+                        $db->quoteName('#__agendadirigentes_cargos', 'car')
+                        . ' ON ' . 
+                        $db->quoteName('dir.cargo_id')
+                        . ' = ' . 
+                        $db->quoteName('car.id')
+                    )
+                    ->where(
+                        $db->quoteName('comp.id') . ' IN (' . $items . ')'
+                        // . ' AND ' .
+                        // $this->_db->quoteName('dc.owner') . ' = 1'
+                    );
+            
+            $db->setQuery((string)$query);
+            return $db->loadObjectList('id');
+        }
 }

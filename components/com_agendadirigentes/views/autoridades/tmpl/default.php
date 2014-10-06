@@ -28,6 +28,8 @@ $this->document->addStylesheet( JURI::root().'media/com_agendadirigentes/css/fro
 		$item = $this->items[$i];
 		$next = (@isset($this->items[$i+1]))? $this->items[$i+1] : NULL;
 		$prev = (@isset($this->items[$i-1]))? $this->items[$i-1] : NULL;
+		$item->level = ($item->level > 5)? 5 : $item->level;
+		$next->level = ($next->level > 5)? 5 : $next->level;
 		?>
 
 		<?php if($item->cargo_featured): ?>
@@ -35,10 +37,10 @@ $this->document->addStylesheet( JURI::root().'media/com_agendadirigentes/css/fro
 			<h2><?php echo $item->cargo_name; ?><br />
 			<a href="index.php?option=com_agendadirigentes&view=autoridade&id=<?php echo $item->dir_id ?>&dia=<?php echo $this->params->get('dia', ''); ?>" class="link-nome-autoridade"><?php echo $item->dir_name ?></a></h2>
 		</div>
-		<?php else: ?>
-			
+		<?php else: ?>			
 			<?php if(is_null($prev) || !$opened): ?>
-			<h2 class="autoridades-categoria"><?php echo $item->cat_title ?></h2>
+			<div class="container-autoridades-<?php echo $item->level ?>">
+			<h<?php echo $item->level + 1 ?> class="autoridades-categoria"><?php echo $item->cat_title ?></h<?php echo $item->level + 1 ?>>
 			<ul class="autoridades-lista">
 			<?php $opened = true; ?>
 			<?php endif; ?>
@@ -49,10 +51,11 @@ $this->document->addStylesheet( JURI::root().'media/com_agendadirigentes/css/fro
 			</li>
 
 			<?php if(is_null($next)): ?>
-			</ul>
+			</ul></div>
 			<?php elseif($next->cat_title != $item->cat_title): ?>
-			</ul>
-			<h2 class="autoridades-categoria"><?php echo $next->cat_title ?></h2>
+			</ul></div>
+			<div class="container-autoridades-<?php echo $next->level ?>">
+			<h<?php echo $next->level + 1 ?> class="autoridades-categoria"><?php echo $next->cat_title ?></h<?php echo $next->level + 1 ?>>
 			<ul>
 			<?php endif; ?>
 

@@ -51,7 +51,7 @@
                 <field name="state" type="list"
                         label="JSTATUS" description="COM_AGENDADIRIGENTES_FIELD_STATE_DESC"
                         class="chzn-color-state"
-                        size="1" default="1">
+                        size="1" default="0">
                         <option value="1">JPUBLISHED</option>
                         <option value="0">JUNPUBLISHED</option>
                         <option value="2">JARCHIVED</option>

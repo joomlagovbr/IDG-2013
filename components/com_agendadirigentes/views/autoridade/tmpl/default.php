@@ -37,7 +37,7 @@ endif;
 		<h1 class="secondaryHeading autoridade-title">
 			<?php echo $this->page_heading; ?>
 		</h1>
-		<?php if (!empty($this->sharing)): ?>
+		<?php if (!empty($this->sharing) && $this->templatevar != 'system'): ?>
 		<div class="autoridade-sharing-options">
 			<?php echo $this->sharing; ?>
 		</div>			
@@ -51,7 +51,11 @@ endif;
 			</strong>
 			<?php endif; ?>				
 			<strong class="autoridade-nome-e-cargo">
-				Agenda do(a) <?php echo $this->autoridade->car_name; ?>
+				<?php if ($this->autoridade->sexo == 'M'): ?>
+				Agenda do <?php echo $this->autoridade->car_name; ?>
+				<?php else: ?>
+				Agenda da <?php echo $this->autoridade->car_name_f; ?>
+				<?php endif ?>
 				<br>
 				<?php echo $this->autoridade->dir_name; ?>
 			</strong>
@@ -64,51 +68,65 @@ endif;
 			<?php for ($i=0, $count_compromissos = count($this->compromissos); $i < $count_compromissos; $i++): ?> 
 				<?php
 				$compromisso =& $this->compromissos[$i];
-				$compromisso->horario_inicio = str_replace(':', 'h', $compromisso->horario_inicio);
-				$compromisso->horario_fim = str_replace(':', 'h', $compromisso->horario_fim);
-				$link_vcalendar = JURI::root() . 'index.php?option=com_agendadirigentes&view=compromisso&format=vcs&id=' . $compromisso->id;
+				$compromisso = $this->prepararCompromisso( $compromisso );
 				?>
 				<div class="tileItem autoridade-compromisso">
 					<div class="span9 tileContent">										
 						<h3 class="tileHeadline autoridade-compromisso-titulo">
 		              		<?php echo $compromisso->title ?>
 		          		</h3>
-		          		<div class="description autoridade-compromisso-participantes">
+		          		<div class="description autoridade-compromisso-participantes">		          			
 		          			<ul>
 		          				<?php foreach ($compromisso->participantes as $participante): ?>
-		          					<?php
-		          					$title = (!empty($participante->cargo_name))? 'title="' . $participante->cargo_name . '"' : '';
-		          					?>
-		          					<li <?php echo $title; ?>><?php echo $participante->dirigente_name ?></li>
+		          					<?php if (!empty($participante->cargo_name) && $compromisso->params->get('exibir_participantes_locais', 1) == 1):
+		          						//participantes locais (cadastrados no sistema) possuem sempre cargo
+		          						?>
+			          					<?php $title = 'title="' . $participante->cargo_name . '"'; ?>
+			          					<li <?php echo $title; ?>><?php echo $participante->dirigente_name ?></li>
+		          					<?php elseif($compromisso->params->get('exibir_participantes_externos', 1) == 1):
+		          						//participantes externos (cadastrados no compromisso mas não como dirigente) não possuem cargo
+		          						?>
+		          						<li><?php echo $participante->dirigente_name ?></li>
+		          					<?php endif; ?>
 		          				<?php endforeach; ?>
 		          			</ul>
 						</div>
 
-						<?php if (!empty($compromisso->description)): ?>
+						<?php if (!empty($compromisso->description) && $compromisso->params->get('exibir_pauta', 1) == 1): ?>
 						<div class="keywords autoridade-compromisso-pauta">
 							<?php echo $compromisso->description; ?>
 						</div> 							
 						<?php endif ?>
 
-						<?php if (!empty($compromisso->local)): ?>
+						<?php if (!empty($compromisso->local) && $compromisso->params->get('exibir_local', 1) == 1): ?>
 						<div class="keywords autoridade-compromisso-local">
 							<b>Local:</b> <?php echo $compromisso->local; ?>
 						</div>
 						<?php endif ?>
-						<?php if($this->templatevar != 'system'): ?>
+						<?php if($this->templatevar != 'system' && $compromisso->params->get('permitir_vcard', 1) == 1): ?>
 						<div class="autoridade-compromisso-rodape">
-							<a class="autoridade-compromisso-link-calendario" href="<?php echo $link_vcalendar ?>"><i class="icon-fixed-width icon-calendar"></i> Adicionar ao meu calend&aacute;rio</a>
+							<a class="autoridade-compromisso-link-calendario" href="<?php echo $compromisso->link_vcalendar; ?>"><i class="icon-fixed-width icon-calendar"></i> Adicionar ao meu calend&aacute;rio</a>
 						</div>
 						<?php endif; ?>
 		          	</div>
 					<div class="span3 tileInfo autoridade-compromisso-horario">
-						<ul>		
+						<ul>
+							<?php if ($compromisso->dia_todo && $compromisso->params->get('exibir_horario_inicio', 1) == 1 ): ?>
 							<li class="autoridade-compromisso-inicio">
-								<i class="icon-fixed-width icon-time"><span class="hide">Início:</span></i> <?php echo $compromisso->horario_inicio; ?>
-							</li>						
-							<li class="autoridade-compromisso-fim">
-								<i class="icon-fixed-width icon-time"><span class="hide">Fim:</span></i> <?php echo $compromisso->horario_fim; ?>
-							</li>						
+								<i class="icon-fixed-width icon-time"><span class="hide"></span></i> Dia todo
+							</li>
+							<?php else: ?>
+								<?php if ( $compromisso->params->get('exibir_horario_inicio', 1) == 1 ): ?>
+								<li class="autoridade-compromisso-inicio">
+									<i class="icon-fixed-width icon-time"><span class="hide">Início:</span></i> <?php echo $compromisso->horario_inicio; ?>
+								</li>								
+								<?php endif ?>
+								<?php if ( $compromisso->params->get('exibir_horario_fim', 1) == 1 ): ?>
+								<li class="autoridade-compromisso-fim">
+									<i class="icon-fixed-width icon-time"><span class="hide">Fim:</span></i> <?php echo $compromisso->horario_fim; ?>
+								</li>							
+								<?php endif; ?>
+							<?php endif; ?>
 						</ul>							            								
 					</div>			
 				</div>
@@ -164,7 +182,7 @@ endif;
 						<input type="hidden" name="searchprase" value="all">
 						<input type="hidden" name="limit" value="80">
 						<input type="hidden" name="areas[]" value="agendadirigentes">
-						<input type="hidden" name="Itemid" value="181">
+						<input type="hidden" name="Itemid" value="<?php echo $this->params->get('busca_itemid', "") ?>">
 						<input type="hidden" name="filtro_autoridade" value="<?php echo $this->autoridade->id; ?>">
 						<div class="input-append">
         					<label class="hide" for="portal-searchbox-field">Busca: </label>

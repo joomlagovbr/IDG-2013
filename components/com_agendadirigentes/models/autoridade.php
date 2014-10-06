@@ -22,7 +22,7 @@ class AgendaDirigentesModelAutoridade extends JModelItem
 		$id	= $app->input->getInt('id');
 		$this->setState('autoridade.id', $id);
 
-		AgendadirigentesModels::setParamBeforeSetState( 'dia', 'DataBanco', date('Y-m-d') );
+		AgendadirigentesModels::setParamBeforeSetState( 'dia', 'DataBanco', $this->getDate() );
 		$params	= $app->getParams();
 
 		// Load the parameters.
@@ -47,7 +47,9 @@ class AgendaDirigentesModelAutoridade extends JModelItem
 						$db->quoteName('dir.name', 'dir_name') . ', '.
 						$db->quoteName('dir.interino') . ', '.
 						$db->quoteName('dir.state') . ', '.
-						$db->quoteName('car.name', 'car_name')
+						$db->quoteName('dir.sexo') . ', '.
+						$db->quoteName('car.name', 'car_name') . ', '.
+						$db->quoteName('car.name_f', 'car_name_f')
 					)
 					->from(
 						$db->quoteName('#__agendadirigentes_dirigentes', 'dir')
@@ -80,6 +82,13 @@ class AgendaDirigentesModelAutoridade extends JModelItem
 	{
 		$compromissosModel = $this->getInstance('compromissos', 'AgendaDirigentesModel');
 		return $compromissosModel->getItems();
+	}
+
+	public static function getDate()
+	{
+		$app = JFactory::getApplication();
+		$date = new JDate();
+		return $date->format('Y-m-d', $app->getCfg('offset'));	
 	}
 
 }

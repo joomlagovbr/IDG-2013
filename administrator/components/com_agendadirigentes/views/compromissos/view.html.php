@@ -76,6 +76,7 @@ class AgendaDirigentesViewCompromissos extends JViewLegacy
          */
         protected function addToolBar( $total = NULL ) 
         {
+    
                 JToolBarHelper::title(
                         JText::_('COM_AGENDADIRIGENTES') . ': ' .
                         JText::_('COM_AGENDADIRIGENTES_MANAGER_COMPROMISSOS').
@@ -94,9 +95,15 @@ class AgendaDirigentesViewCompromissos extends JViewLegacy
 
                 if ($this->canDo->get('core.edit.state'))
                 {
+                    $allowFeature = $this->state->get('params')->get('allowFeature', 'state');
+                    $isSuperUser = (array_search(8, $this->user->groups)!==false);
+
                     JToolBarHelper::publishList('compromissos.publish');
                     JToolBarHelper::unpublishList('compromissos.unpublish');
-                    JToolbarHelper::custom('compromissos.featured', 'featured.png', 'featured_f2.png', 'JFEATURED', true);
+
+                    if($allowFeature == 'state' || ($allowFeature == 'edit' && $this->canDo->get('core.edit')) || ($allowFeature == 'superuser' && $isSuperUser))
+                        JToolbarHelper::custom('compromissos.featured', 'featured.png', 'featured_f2.png', 'JFEATURED', true);
+                    
                     JToolbarHelper::archiveList('compromissos.archive');                    
                 }
                 

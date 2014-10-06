@@ -60,6 +60,41 @@ class AgendaDirigentesTableCompromisso extends JTable
                 if($this->horario_fim == '00:00:00')
                     $this->horario_fim = '';
 
+                if(!isset($this->catid))
+                {
+                    $query = $this->_db->getQuery(true);
+                    $query->select(
+                                $this->_db->quoteName('car.catid')
+                            )
+                            ->from(
+                                $this->_db->quoteName('#__agendadirigentes_dirigentes_compromissos', 'dc')
+                            )
+                            ->join(
+                                'INNER',
+                                $this->_db->quoteName('#__agendadirigentes_dirigentes', 'dir')
+                                . ' ON ' . 
+                                $this->_db->quoteName('dc.dirigente_id')
+                                . ' = ' . 
+                                $this->_db->quoteName('dir.id')
+                            )
+                            ->join(
+                                'INNER',
+                                $this->_db->quoteName('#__agendadirigentes_cargos', 'car')
+                                . ' ON ' . 
+                                $this->_db->quoteName('dir.cargo_id')
+                                . ' = ' . 
+                                $this->_db->quoteName('car.id')
+                            )
+                            ->where(
+                                $this->_db->quoteName('dc.compromisso_id') . ' = ' . intval($pk)
+                                . ' AND ' .
+                                $this->_db->quoteName('dc.owner') . ' = 1'
+                            );
+
+                    $this->_db->setQuery((string)$query);
+                    $this->catid = $this->_db->loadResult();
+                }
+
                 return true;
             }
             else
@@ -144,6 +179,9 @@ class AgendaDirigentesTableCompromisso extends JTable
        		$this->modified = date('Y-m-d H:i:s');    	
        		$this->modified_by = JFactory::getUser()->get("id");
         	$this->version += 1;
+
+            //item retirado antes de salvamento. utilizado somente para fins de controle de permissoes ao carregar um item.
+            unset($this->catid);
 
             //check padrao
         	return parent::check();

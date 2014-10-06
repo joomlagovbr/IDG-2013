@@ -71,8 +71,18 @@ class AgendaDirigentesViewAutoridade extends JViewLegacy
                         if(@isset($this->autoridade->car_name)===false || @isset($this->autoridade->dir_name)===false)
                                 $this->page_heading = 'Agenda de Autoridade';
                         else
-                                $this->page_heading = 'Agenda do(a) ' . $this->autoridade->car_name
+                        {
+                            if($this->autoridade->sexo == 'M')
+                            {
+                                $this->page_heading = 'Agenda do ' . $this->autoridade->car_name
                                                         . ' ' . $this->autoridade->dir_name;
+                            }
+                            else
+                            {
+                                $this->page_heading = 'Agenda da ' . $this->autoridade->car_name_f
+                                                        . ' ' . $this->autoridade->dir_name;
+                            }                            
+                        }
                 }
                 else
                 {
@@ -149,6 +159,36 @@ class AgendaDirigentesViewAutoridade extends JViewLegacy
                 }
 
 
+        }
+
+        public function mergeParams($app_params, $item_params)
+        {
+           
+            if(!is_object($app_params))
+            {
+                $params = new JRegistry;
+                $params->loadString( $app_params );
+                $app_params = $params;
+            }
+
+            if(!is_object($item_params))
+            {
+                $params = new JRegistry;
+                $params->loadString( $item_params );
+                $item_params = $params;
+            }
+
+            $app_params->merge( $item_params );
+            return $app_params;
+        }
+
+        public function prepararCompromisso( $compromisso )
+        {
+            $compromisso->horario_inicio = str_replace(':', 'h', $compromisso->horario_inicio);
+            $compromisso->horario_fim = str_replace(':', 'h', $compromisso->horario_fim);
+            $compromisso->params = $this->mergeParams($this->params, $compromisso->params);             
+            $compromisso->link_vcalendar = JURI::root() . 'index.php?option=com_agendadirigentes&view=compromisso&format=vcs&id=' . $compromisso->id;
+            return $compromisso;
         }
 
 }

@@ -9,31 +9,15 @@
  
 // impedir acesso direto ao arquivo
 defined('_JEXEC') or die;
+JHtml::addIncludePath(JPATH_COMPONENT . '/helpers');
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
-// $coreEdit = $this->user->authorise( "core.edit", "com_agendadirigentes" );
-// $coreEditOwn = $this->user->authorise( "core.edit.own", "com_agendadirigentes" );
 ?>
 <?php foreach($this->items as $i => $item):
+ 
+        list($canManage, $canChange) = AgendaDirigentesHelper::getGranularPermissions('compromissos', $item );
+        $allowFeature = $this->state->get('params')->get('allowFeature', 'state');
+        $isSuperUser = (array_search(8, $this->user->groups)!==false);
 
-        $canManage = $this->user->authorise( "core.edit", "com_agendadirigentes.category." . $item->catid );
-        
-        if(!$canManage)
-            $canManage = $this->user->authorise( "core.edit.own", "com_agendadirigentes.category." . $item->catid ) && ($this->user->id == $item->created_by);
-
-        if(!$canManage)
-            $canChange = $this->user->authorise( "core.edit.state", "com_agendadirigentes.category." . $item->catid );
-        else
-            $canChange = true;
-
-        // if(!$coreEdit)
-        //     $canEdit = $coreEditOwn && ($this->user->id == $item->created_by);
-        // else
-        //     $canEdit = $coreEdit;
-        
-        
-        // $categoryCanEditOwn = $user->authorise( "compromissos.manage", "com_agendadirigentes.category." . $item->catid );
-        // $canManage = $user->authorise( "compromissos.manage", "com_agendadirigentes.category." . $item->catid );
-        // $canManage = true;
         ?>
         <tr class="row<?php echo $i % 2; ?>">
                 <td>
@@ -42,7 +26,7 @@ JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
                     <?php endif; ?>
                 </td>
                 <td>
-                    <?php if ( $canManage ) : ?>
+                    <?php if ( $canManage || $canChange ) : ?>
                         <?php echo JHtml::_('grid.id', $i, $item->id); ?>
                     <?php endif; ?>
                 </td>
@@ -50,21 +34,23 @@ JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
                     <div class="btn-group">
                         <?php
                         echo JHtml::_('jgrid.published', $item->state, $i, 'compromissos.', $canChange, 'cb');
-                        echo JHtml::_('agendadirigenteshelper.featured', $item->featured, $i, $canChange, 'compromissos');
+                        if( ($allowFeature == 'state' && $canChange) || ($allowFeature == 'edit' && $canManage) || ($allowFeature == 'superuser' && $isSuperUser))
+                            echo JHtml::_('agendadirigenteshelper.featured', $item->featured, $i, $canChange, 'compromissos');
                         ?>
                         <?php
                         // Create dropdown items
-                        // $action = $item->featured ? 'unfeature' : 'feature';
-                        // JHtml::_('actionsdropdown.' . $action, 'cb' . $i, 'compromissos');
+                        if($canChange):
 
-                        $action = $this->archived ? 'unarchive' : 'archive';
-                        JHtml::_('actionsdropdown.' . $action, 'cb' . $i, 'compromissos');
+                            $action = $this->archived ? 'unarchive' : 'archive';
+                            JHtml::_('actionsdropdown.' . $action, 'cb' . $i, 'compromissos');
 
-                        $action = $this->trashed ? 'untrash' : 'trash';
-                        JHtml::_('actionsdropdown.' . $action, 'cb' . $i, 'compromissos');
+                            $action = $this->trashed ? 'untrash' : 'trash';
+                            JHtml::_('actionsdropdown.' . $action, 'cb' . $i, 'compromissos');
 
-                        // Render dropdown list
-                        echo JHtml::_('actionsdropdown.render', $this->escape($item->title));
+                            // Render dropdown list
+                            echo JHtml::_('actionsdropdown.render', $this->escape($item->title));
+
+                        endif;
                         ?>
                     </div>
                 </td>

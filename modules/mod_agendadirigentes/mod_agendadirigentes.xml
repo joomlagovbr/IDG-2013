@@ -23,13 +23,18 @@
 	</files>
 	<config>
 		<fields name="params">
-			<fieldset name="basic">	
-				<field
-					name="autoridade"
-					type="text"
-					label="Autoridade"
-					description="Escolha a autoridade a ser exibida."
-					default="" />				
+			<fieldset name="basic" addfieldpath="/administrator/components/com_agendadirigentes/models/fields">	
+                <field
+	                name="autoridade"
+	                type="dirigentestags"
+	                label="Autoridade"
+	                description="Escolha a autoridade a ser exibida." 
+	                multiple="false"                        
+	                emptyfirst="true"                        
+	                mode="nested"
+	                default=""
+	                show_category="0"
+                />
 				<field name="modo_agenda" type="list" default="dia_atual" label="Modo de agenda" description="Modo da agenda">
 					<option value="dia_atual">Dia atual</option>		
 					<option value="dia_util">Dia útil</option>		

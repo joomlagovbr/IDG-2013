@@ -59,7 +59,7 @@ class AgendaDirigentesModelCompromissos extends JModelList
                     ->select(' comp.state, comp.dia_todo')
                     ->select(' dc.sobreposto, dc.owner')
                     ->select(' dir.name AS nameOwner, dir.id AS idOwner')
-                    ->select(' car.name AS cargoOwner')
+                    ->select(' car.name AS cargoOwner, car.catid')
                     // ->select(' cat.title AS titleCategory')
                     ->from( $db->quoteName('#__agendadirigentes_compromissos', 'comp') );
 
@@ -110,7 +110,7 @@ class AgendaDirigentesModelCompromissos extends JModelList
                 $catid = $this->getState('filter.catid');
                 if (is_numeric($catid))
                 {
-                    $query->where('dir.catid = ' . (int) $catid);
+                    $query->where('car.catid = ' . (int) $catid);
                 }
 
                 // Filter by cargo.
@@ -250,6 +250,9 @@ class AgendaDirigentesModelCompromissos extends JModelList
                  $input->set('list', $lists);   
                 }
             }
+
+            $params = JComponentHelper::getParams( $this->option );
+            $this->setState('params', $params);
 
             $dates = $this->getUserStateFromRequest($this->context . '.dates', 'dates', array(), '');            
             foreach ($dates as $k => $date) {

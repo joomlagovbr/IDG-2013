@@ -3,6 +3,11 @@
 
 .autoridades-item-destaque h2,
 .autoridades-categoria { line-height:1.6em; font-size: 1.2em !important; }
+/*h2.autoridades-categoria {  }*/
+h3.autoridades-categoria { font-weight: normal !important }
+h4.autoridades-categoria { font-size:14px !important; font-style: italic }
+h5.autoridades-categoria { font-size:14px !important; font-weight: normal; text-decoration:underline; font-style: italic }
+h6.autoridades-categoria { font-size:12px !important; font-weight: normal; text-decoration:underline; font-style: italic }
 .autoridades-item-destaque .link-nome-autoridade { position: relative; left: 26px }
 
 .autoridade-title { border-bottom:1px dotted #e8e7e7; padding-bottom: 15px }
@@ -46,3 +51,8 @@ ul.autoridade-list-actions li a i { color:#1b9501; }
 .autoridade-busca-container .header { border-bottom:none !important }
 .autoridade-busca { padding:0 10px }
 .autoridade-busca .searchField { width:160px; }
+.container-autoridades-2 { margin-left:40px; }
+.container-autoridades-3 { margin-left:60px; }
+.container-autoridades-4 { margin-left:80px; }
+.container-autoridades-5 { margin-left:100px; }
+.container-autoridades-6 { margin-left:120px; }
