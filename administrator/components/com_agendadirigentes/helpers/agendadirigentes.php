@@ -9,12 +9,13 @@ class AgendaDirigentesHelper extends JHelperContent
 {
 
     public static $extension = 'com_agendadirigentes';
-    public static $coreEdit = 'notset';
-    public static $coreEditOwn = 'notset';
-    public static $coreEditState = 'notset';
+    public static $coreEdit = array();
+    public static $coreEditOwn = array();
+    public static $coreEditState = array();
     public static $permissions = array();
     public static $assets = array();
     public static $user = NULL;
+    public static $isSuperUser = NULL;
     public static $cmp_params = NULL;
     public static $permissionType = NULL;
     public static $editOwnState = NULL;
@@ -127,7 +128,7 @@ class AgendaDirigentesHelper extends JHelperContent
 
             $categoryEdit = self::getPermission( 'core.edit', 'category', $catid ); 
             $categoryEditOwn = self::getPermission( 'core.edit.own', 'category', $catid ); 
-            $categoryEditState = self::getPermission( 'core.edit.state', 'category', $catid ); 
+            $categoryEditState = self::getPermission( 'core.edit.state', 'category', $catid );             
 
             if($permissionType == 'implicit')
             {
@@ -171,6 +172,43 @@ class AgendaDirigentesHelper extends JHelperContent
                 }  
             }
         }
+        elseif( $type == 'cargos' )
+        {
+            $coreEdit = self::getCoreEdit( 'cargos' );
+            $coreEditState = self::getCoreEditState( 'cargos' );
+
+            $permissionType = self::getPermissionType();
+            @$catid = $item->catid;
+
+            $categoryEdit = self::getPermission( 'cargos.edit', 'category', $catid ); 
+            $categoryEditState = self::getPermission( 'cargos.edit.state', 'category', $catid );  
+
+            if($permissionType == 'implicit')
+            {
+                if($coreEdit && $categoryEdit !== false)
+                {
+                    $canManage = true;
+                }
+
+                if($coreEditState && $categoryEditState !== false)
+                {
+                    $canChange = true;
+                }                
+            }
+            elseif( $permissionType == 'explicit' )
+            {
+                if($coreEdit && $categoryEdit)
+                {
+                    $canManage = true;
+                }
+
+                if($coreEditState && $categoryEditState)
+                {
+                    $canChange = true;
+                }  
+            }
+
+        }
 
         return array($canManage, $canChange);
     }
@@ -183,43 +221,43 @@ class AgendaDirigentesHelper extends JHelperContent
         return self::$user;
     }
 
-    protected static function getCoreEdit()
+    protected static function getCoreEdit( $scope = 'core' )
     {
         $user = self::getUser();
 
-        if(self::$coreEdit == 'notset')
+        if( ! array_key_exists($scope, self::$coreEdit) )
         {
-            self::$coreEdit = $user->authorise( "core.edit", self::$extension );
+            self::$coreEdit[$scope] = $user->authorise( $scope . '.edit', self::$extension );
         }
 
-        return self::$coreEdit;
+        return self::$coreEdit[$scope];
     }
 
-    protected static function getCoreEditOwn()
+    protected static function getCoreEditOwn( $scope = 'core' )
     {
         $user = self::getUser();
 
-        if(self::$coreEditOwn == 'notset')
+        if( ! array_key_exists($scope, self::$coreEditOwn) )
         {
-            self::$coreEditOwn = $user->authorise( "core.edit.own", self::$extension );
+            self::$coreEditOwn[$scope] = $user->authorise( $scope . '.edit.own', self::$extension );
         }
 
-        return self::$coreEditOwn;
+        return self::$coreEditOwn[$scope];
     }
 
-    protected static function getCoreEditState()
+    protected static function getCoreEditState( $scope = 'core' )
     {
         $user = self::getUser();
 
-        if(self::$coreEditState == 'notset')
+        if( ! array_key_exists($scope, self::$coreEditState) )
         {
-            self::$coreEditState = $user->authorise( "core.edit.state", self::$extension );
+            self::$coreEditState[$scope] = $user->authorise( $scope . '.edit.state', self::$extension );
         }
 
-        return self::$coreEditState;
+        return self::$coreEditState[$scope];
     }
 
-    protected static function getParams()
+    public static function getParams()
     {
         if( is_null(self::$cmp_params) )
         {
@@ -249,6 +287,17 @@ class AgendaDirigentesHelper extends JHelperContent
         }
 
         return self::$editOwnState;
+    }
+
+    public static function isSuperUser()
+    {
+        if( is_null(self::$isSuperUser) )
+        {
+            $user = self::getUser();
+            self::$isSuperUser = (array_search(8, $user->groups)!==false);
+        }
+
+        return self::$isSuperUser; 
     }
 
     public static function getPermission( $action = 'core.edit', $context = 'category', $id = 0 )
@@ -291,6 +340,11 @@ class AgendaDirigentesHelper extends JHelperContent
 
         $asset = strtolower(preg_replace('#[\s\-]+#', '.', trim($asset)));
         $action = strtolower(preg_replace('#[\s\-]+#', '.', trim($action)));
+        
+        if( self::isSuperUser() )
+        {
+            return true;
+        }
 
         if(! array_key_exists($asset, self::$assets))
         {

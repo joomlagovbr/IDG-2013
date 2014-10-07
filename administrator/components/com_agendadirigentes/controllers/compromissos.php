@@ -46,7 +46,7 @@ class AgendaDirigentesControllerCompromissos extends JControllerAdmin
 			JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
 			$user   = JFactory::getUser();
-			$isSuperUser = (array_search(8, $user->groups)!==false);
+			$isSuperUser = AgendaDirigentesHelper::isSuperUser();
 			
 			$ids    = $this->input->get('cid', array(), 'array');
 			$values = array('featured' => 1, 'unfeatured' => 0);

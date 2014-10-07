@@ -35,7 +35,7 @@ class AgendaDirigentesModelCompromissos extends JModelList
                     'comp.local', 'local',                     
                     'car.name', 'name',
                     'participante_id', 'dirigente_id',
-                    'dates', 'duracao'
+                    'dates', 'duracao', 'catid'
                 );
             }
             parent::__construct($config);
@@ -181,7 +181,28 @@ class AgendaDirigentesModelCompromissos extends JModelList
                     }
                 }
 
-                // $query->where('dir.id = ' . (int) $dirigente_id);
+                //restringir de acordo com as permissoes de usuario
+                if($this->state->get('params')->get('restricted_list', 0) == 1 && ! AgendaDirigentesHelper::isSuperUser() )
+                {                    
+                    $formatedToGetPermissions = true;
+                    $categories = $this->getCategories( $formatedToGetPermissions );
+
+                    $allowed_categories = array();
+                    for ($i=0, $limit = count($categories); $i < $limit; $i++)
+                    { 
+                        list($canManage, $canChange) = AgendaDirigentesHelper::getGranularPermissions('compromissos', $categories[$i] );
+                        if($canManage || $canChange)
+                            $allowed_categories[] = $categories[$i]->catid;
+                    }
+
+                    if(count($allowed_categories))
+                    {
+                        $allowed_categories = implode(', ', $allowed_categories);
+                        $query->where(
+                            $db->quoteName('car.catid') . ' IN (' . $allowed_categories . ')'
+                        );
+                    }                    
+                }
 
                 // Add the list ordering clause.
                 $orderCol = $this->state->get('list.ordering', 'comp.id');
@@ -279,5 +300,30 @@ class AgendaDirigentesModelCompromissos extends JModelList
             else
                 $date = '';
             return $date;
+        }
+
+        protected function getCategories( $formatedToGetPermissions = false )
+        {
+            $db = JFactory::getDBO();
+            $query = $db->getQuery(true);
+            $query->select(
+                ($formatedToGetPermissions)? $db->quoteName('id', 'catid') : $db->quoteName('id')
+            )
+            ->from(
+                $db->quoteName('#__categories')
+            )
+            ->where(
+                $db->quoteName('extension')
+                . ' = ' .
+                $db->Quote( $this->option )
+            );
+            $db->setQuery((string)$query);
+            $objList = $db->loadObjectList( ($formatedToGetPermissions)? NULL : 'id' );
+
+            if($formatedToGetPermissions)
+                return $objList;
+            
+            $array = array_keys($objList);            
+            return $array;
         }
 }

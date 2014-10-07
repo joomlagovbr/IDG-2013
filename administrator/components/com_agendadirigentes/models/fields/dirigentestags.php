@@ -13,7 +13,8 @@ defined('_JEXEC') or die;
 // import the list field type
 jimport('joomla.form.helper');
 JFormHelper::loadFieldClass('tag');
- 
+JHtml::addIncludePath(JPATH_COMPONENT . '/helpers');
+
 /**
  * DirigentesTags Form Field class for the AgendaDirigentes component
  */
@@ -41,12 +42,12 @@ class JFormFieldDirigentesTags extends JFormFieldTag
 		$query	= $db->getQuery(true);
 		if ($this->getAttribute('show_category', 1) == 1)
 		{
-			$query->select('a.id AS value, CONCAT(c.title, " - ", b.name, " - " ,a.name) AS text, \'\' AS path, 1 AS level, a.state AS published');
+			$query->select('a.id AS value, CONCAT(c.title, " - ", b.name, " - " ,a.name) AS text, \'\' AS path, 1 AS level, a.state AS published, b.catid');
 			$query->order('c.title, b.name, a.name');
 		}
 		else
 		{
-			$query->select('a.id AS value, CONCAT(b.name, " - " ,a.name) AS text, \'\' AS path, 1 AS level, a.state AS published');
+			$query->select('a.id AS value, CONCAT(b.name, " - " ,a.name) AS text, \'\' AS path, 1 AS level, a.state AS published, b.catid');
 			$query->order('b.name, a.name');
 		}
 		
@@ -77,6 +78,7 @@ class JFormFieldDirigentesTags extends JFormFieldTag
 
 		// Get the options.
 		$db->setQuery((string)$query);
+		$categories = $db->loadObjectList();
 
 		$options = array();
 		if ($this->element['emptyfirst'])
@@ -89,14 +91,32 @@ class JFormFieldDirigentesTags extends JFormFieldTag
 			$options[0]->published = 1;
 		}
 
+		//restringir de acordo com as permissoes de usuario
+		$componentParams = AgendaDirigentesHelper::getParams();
+		if( $componentParams->get('restricted_list', 0) == 1 && ! AgendaDirigentesHelper::isSuperUser() )
+		{
+			$allowedCategories = array();
+			for ($i=0, $limit = count($categories); $i < $limit; $i++)
+			{ 
+				list($canManage, $canChange) = AgendaDirigentesHelper::getGranularPermissions('compromissos', $categories[$i] );
+				if ($canManage || $canChange)
+				{
+					$allowedCategories[] = $categories[$i];
+				}
+			}
+			$categories = $allowedCategories;
+		}
+		//fim restricao de acordo com as permissoes de usuario
+
 		try
 		{
-			$options = array_merge($options, $db->loadObjectList());
+			$options = array_merge($options, $categories);
 		}
 		catch (RuntimeException $e)
 		{
 			return false;
 		}
+
 
 		if ( $this->getAttribute('add_participantes_externos', false) )
 		{

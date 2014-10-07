@@ -9,12 +9,15 @@
  
 // impedir acesso direto ao arquivo
 defined('_JEXEC') or die;
+JHtml::addIncludePath(JPATH_COMPONENT . '/helpers');
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 ?>
 <?php foreach($this->items as $i => $item):
-        
-       $canManage = $this->user->authorise( "dirigentes.manage", "com_agendadirigentes.category." . $item->catid );
-       $canChange = true;
+
+        list($canManage, $canChange) = AgendaDirigentesHelper::getGranularPermissions('cargos', $item );
+        $allowFeature = $this->state->get('params')->get('allowFeature', 'state');
+        $isSuperUser = AgendaDirigentesHelper::isSuperUser();
+
         ?>
         <tr class="row<?php echo $i % 2; ?>" sortable-group-id="<?php echo $item->catid; ?>">
                 <td class="order nowrap center hidden-phone">
@@ -49,9 +52,9 @@ JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
                 </td>
                 <td class="center">
                         <?php
-                        $canChange = true;
                         echo JHtml::_('jgrid.published', $item->published, $i, 'cargos.', $canChange, 'cb');
-                        echo JHtml::_('agendadirigenteshelper.featured', $item->featured, $i, $canChange, 'cargos');
+                        if( ($allowFeature == 'state' && $canChange) || ($allowFeature == 'edit' && $canManage) || ($allowFeature == 'superuser' && $isSuperUser) )
+                            echo JHtml::_('agendadirigenteshelper.featured', $item->featured, $i, $canChange, 'cargos');
                         ?>
                 </td>
                 <td>

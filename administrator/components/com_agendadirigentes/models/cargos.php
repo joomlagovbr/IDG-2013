@@ -117,6 +117,9 @@ class AgendaDirigentesModelCargos extends JModelList
             $catid = $this->getUserStateFromRequest($this->context . '.filter.catid', 'filter_catid', '');
             $this->setState('filter.catid', $catid);
 
+            $params = JComponentHelper::getParams( $this->option );
+            $this->setState('params', $params);
+
             // List state information.
             parent::populateState('a.id', 'DESC');
         }

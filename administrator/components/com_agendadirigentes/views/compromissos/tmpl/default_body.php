@@ -16,7 +16,7 @@ JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
  
         list($canManage, $canChange) = AgendaDirigentesHelper::getGranularPermissions('compromissos', $item );
         $allowFeature = $this->state->get('params')->get('allowFeature', 'state');
-        $isSuperUser = (array_search(8, $this->user->groups)!==false);
+        $isSuperUser = AgendaDirigentesHelper::isSuperUser();
 
         ?>
         <tr class="row<?php echo $i % 2; ?>">

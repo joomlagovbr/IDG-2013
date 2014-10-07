@@ -10,7 +10,10 @@
         <action name="core.edit.own" title="JACTION_EDITOWN" description="JACTION_EDITOWN_COMPONENT_DESC"/>
 		<action name="categories.list" title="categories list" description="" />
 		<action name="cargos.list" title="cargos list" description="" />
-		<action name="cargos.add" title="cargos add" description="" />
+		<action name="cargos.create" title="cargos create" description="" />
+		<action name="cargos.delete" title="cargos delete" description="" />
+		<action name="cargos.edit" title="cargos edit" description="" />
+		<action name="cargos.edit.state" title="cargos edit.state" description="" />
 		<action name="dirigentes.list" title="dirigentes list" description="" />
 		<action name="dirigentes.add" title="dirigentes add" description="" />
 	</section>
@@ -20,9 +23,10 @@
 		<action name="core.edit" title="JACTION_EDIT" description="COM_CATEGORIES_ACCESS_EDIT_DESC" />
 		<action name="core.edit.state" title="JACTION_EDITSTATE" description="COM_CATEGORIES_ACCESS_EDITSTATE_DESC" />
 		<action name="core.edit.own" title="JACTION_EDITOWN" description="JACTION_EDITOWN_COMPONENT_DESC"/>
-		<action name="compromissos.list" title="compromissos list" description="" />
-		<action name="cargos.admin" title="cargos admin" description="" />
-		<action name="cargos.manage" title="cargos manage" description="" />
+		<action name="cargos.create" title="cargos create" description="" />
+		<action name="cargos.delete" title="cargos delete" description="" />
+		<action name="cargos.edit" title="cargos edit" description="" />
+		<action name="cargos.edit.state" title="cargos edit.state" description="" />
 		<action name="dirigentes.manage" title="dirigentes manage" description="" />
 	</section>
     <section name="cargo">

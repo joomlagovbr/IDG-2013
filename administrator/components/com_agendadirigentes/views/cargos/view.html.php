@@ -77,19 +77,19 @@ class AgendaDirigentesViewCargos extends JViewLegacy
                     ($total?' <span style="font-size: 0.5em; vertical-align: middle;">('.$total.' itens)</span>':'')
                     );
 
-            if ( $this->canDo->get('core.create') && $this->canDo->get('cargos.add') )
+            if ( $this->canDo->get('cargos.create') )
                 JToolBarHelper::addNew('cargo.add');
 
-            if (($this->canDo->get('core.edit')) || ($this->canDo->get('core.edit.own')))
+            if ( $this->canDo->get('cargos.edit') )
                 JToolBarHelper::editList('cargo.edit');
 
-            if ($this->canDo->get('core.edit.state'))
+            if ($this->canDo->get('cargos.edit.state'))
             {
                 JToolBarHelper::publishList('cargos.publish');
                 JToolBarHelper::unpublishList('cargos.unpublish');
             }
 
-            if ($this->canDo->get('core.delete'))
+            if ($this->canDo->get('cargos.delete'))
             {
                 JToolBarHelper::deleteList('', 'cargos.delete');
             }
