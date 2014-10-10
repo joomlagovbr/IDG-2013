@@ -76,26 +76,26 @@ class AgendaDirigentesViewDirigentes extends JViewLegacy
                         ($total?' <span style="font-size: 0.5em; vertical-align: middle;">('.$total.' itens)</span>':'')
                         );
 
-                if ( $this->canDo->get('core.create') && $this->canDo->get('dirigentes.add') )
+                if ( $this->canDo->get('dirigentes.create') )
                     JToolBarHelper::addNew('dirigente.add');
 
-                if (($this->canDo->get('core.edit')) || ($this->canDo->get('core.edit.own')))
+                if (($this->canDo->get('dirigentes.edit')) || ($this->canDo->get('dirigentes.edit.own')))
                 {
                     JToolBarHelper::editList('dirigente.edit');
                 }
 
-                if ($this->canDo->get('core.edit.state'))
+                if ($this->canDo->get('dirigentes.edit.state'))
                 {
                     JToolBarHelper::publishList('dirigentes.publish');
                     JToolBarHelper::unpublishList('dirigentes.unpublish');
                     JToolbarHelper::archiveList('dirigentes.archive');                    
                 }
 
-                if ($this->state->get('filter.state') == -2 && $this->canDo->get('core.delete'))
+                if ($this->state->get('filter.state') == -2 && $this->canDo->get('dirigentes.delete'))
                 {
                     JToolbarHelper::deleteList('', 'dirigentes.delete');
                 }
-                elseif ($this->canDo->get('core.edit.state'))
+                elseif ($this->canDo->get('dirigentes.edit.state'))
                 {
                     JToolbarHelper::trash('dirigentes.trash');
                 }

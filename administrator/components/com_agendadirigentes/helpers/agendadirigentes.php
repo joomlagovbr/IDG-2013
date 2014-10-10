@@ -9,6 +9,8 @@ class AgendaDirigentesHelper extends JHelperContent
 {
 
     public static $extension = 'com_agendadirigentes';
+    public static $coreCreate = array();
+    public static $coreDelete = array();
     public static $coreEdit = array();
     public static $coreEditOwn = array();
     public static $coreEditState = array();
@@ -102,115 +104,212 @@ class AgendaDirigentesHelper extends JHelperContent
         return $result;
     }
 
-    public static function getGranularPermissions($type = 'compromissos', $item = NULL )
+    public static function getGranularPermissions($type = 'compromissos', $item = NULL, $action = 'manage')
     {
         $canManage = false;
         $canChange = false;
+        $canCreate = false;
+        $canDelete = false;
 
         if(!$item)
         {
-            JFactory::getApplication()->enqueueMessage('AgendaDirigentesHelper::getGranularPermissions -> Item não carregado.', 'error');
+            JFactory::getApplication()->enqueueMessage('AgendaDirigentesHelper::getGranularPermissions -> Item não carregado ou não numérico.', 'error');
             return array($canManage, $canChange);
         }
 
+        @$catid = (is_object($item))? $item->catid : intval($item);                
+        @$created_by = (is_object($item))? $item->created_by : 0;
+        $permissionType = self::getPermissionType();
+
         if($type == 'compromissos')
         {
-            $coreEdit = self::getCoreEdit();
-            $coreEditOwn = self::getCoreEditOwn();
-            $coreEditState = self::getCoreEditState();
-
-            $permissionType = self::getPermissionType();
-            $editOwnState = self::getEditOwnState();
-            $user = self::getUser();
-            
-            @$catid = $item->catid;
-            @$created_by = $item->created_by;
-
-            $categoryEdit = self::getPermission( 'core.edit', 'category', $catid ); 
-            $categoryEditOwn = self::getPermission( 'core.edit.own', 'category', $catid ); 
-            $categoryEditState = self::getPermission( 'core.edit.state', 'category', $catid );             
-
-            if($permissionType == 'implicit')
+            if($action == 'manage')
             {
-                if($coreEdit && $categoryEdit !== false)
+                $coreEdit = self::getCoreEdit();
+                $coreEditOwn = self::getCoreEditOwn();
+                $coreEditState = self::getCoreEditState();
+                $editOwnState = self::getEditOwnState();
+
+                $user = self::getUser();
+
+                $categoryEdit = self::getPermission( 'core.edit', 'category', $catid ); 
+                $categoryEditOwn = self::getPermission( 'core.edit.own', 'category', $catid ); 
+                $categoryEditState = self::getPermission( 'core.edit.state', 'category', $catid );             
+
+                if($permissionType == 'implicit')
                 {
-                    $canManage = true;
+                    if($coreEdit && $categoryEdit !== false)
+                    {
+                        $canManage = true;
+                    }
+                    else if($coreEditOwn && $categoryEditOwn !== false && $item->created_by == $user->id)
+                    {
+                        $canManage = true;
+                    }
+
+                    if(!$canManage && $coreEditState && $categoryEditState !== false)
+                    {
+                        $canChange = true;
+                    }
+                    else if($canManage && ($editOwnState || ($coreEditState && $categoryEditState !== false)))
+                    {
+                        $canChange = true;
+                    }
+
                 }
-                else if($coreEditOwn && $categoryEditOwn !== false && $item->created_by == $user->id)
+                elseif( $permissionType == 'explicit' )
                 {
-                    $canManage = true;
+                    if($coreEdit && $categoryEdit)
+                    {
+                        $canManage = true;
+                    }
+                    else if($coreEditOwn && $categoryEditOwn && $item->created_by == $user->id)
+                    {
+                        $canManage = true;
+                    }
+
+                    if(!$canManage && $coreEditState && $categoryEditState)
+                    {
+                        $canChange = true;
+                    }
+                    else if($canManage && ($editOwnState || ($coreEditState && $categoryEditState)))
+                    {
+                        $canChange = true;
+                    }  
                 }
 
-                if(!$canManage && $coreEditState && $categoryEditState !== false)
-                {
-                    $canChange = true;
-                }
-                else if($canManage && ($editOwnState || ($coreEditState && $categoryEditState !== false)))
-                {
-                    $canChange = true;
-                }
+                return array($canManage, $canChange);
 
             }
-            elseif( $permissionType == 'explicit' )
+            elseif ($action == 'create')
             {
-                if($coreEdit && $categoryEdit)
+                $coreCreate = self::getCoreCreate();                
+                $categoryCreate = self::getPermission( 'core.create', 'category', $catid );
+
+                if($permissionType == 'implicit')
                 {
-                    $canManage = true;
+                    if($coreCreate && $categoryCreate !== false)
+                    {
+                        $canCreate = true;
+                    }             
                 }
-                else if($coreEditOwn && $categoryEditOwn && $item->created_by == $user->id)
+                elseif( $permissionType == 'explicit' )
                 {
-                    $canManage = true;
+                    if($coreCreate && $categoryCreate)
+                    {
+                        $canCreate = true;
+                    }
                 }
 
-                if(!$canManage && $coreEditState && $categoryEditState)
+                return $canCreate;
+            }
+            elseif ($action == 'delete')
+            {
+                $coreDelete = self::getCoreDelete();                
+                $categoryDelete = self::getPermission( 'core.delete', 'category', $catid );
+
+                if($permissionType == 'implicit')
                 {
-                    $canChange = true;
+                    if($coreDelete && $categoryDelete !== false)
+                    {
+                        $canDelete = true;
+                    }             
                 }
-                else if($canManage && ($editOwnState || ($coreEditState && $categoryEditState)))
+                elseif( $permissionType == 'explicit' )
                 {
-                    $canChange = true;
-                }  
+                    if($coreDelete && $categoryDelete)
+                    {
+                        $canDelete = true;
+                    }
+                }
+
+                return $canDelete;
             }
         }
         elseif( $type == 'cargos' )
         {
-            $coreEdit = self::getCoreEdit( 'cargos' );
-            $coreEditState = self::getCoreEditState( 'cargos' );
-
-            $permissionType = self::getPermissionType();
-            @$catid = $item->catid;
-
-            $categoryEdit = self::getPermission( 'cargos.edit', 'category', $catid ); 
-            $categoryEditState = self::getPermission( 'cargos.edit.state', 'category', $catid );  
-
-            if($permissionType == 'implicit')
+            if($action == 'manage')
             {
-                if($coreEdit && $categoryEdit !== false)
+                $coreEdit = self::getCoreEdit( 'cargos' );
+                $coreEditState = self::getCoreEditState( 'cargos' );
+                $categoryEdit = self::getPermission( 'cargos.edit', 'category', $catid ); 
+                $categoryEditState = self::getPermission( 'cargos.edit.state', 'category', $catid );  
+
+                if($permissionType == 'implicit')
                 {
-                    $canManage = true;
+                    if($coreEdit && $categoryEdit !== false)
+                    {
+                        $canManage = true;
+                    }
+
+                    if($coreEditState && $categoryEditState !== false)
+                    {
+                        $canChange = true;
+                    }                
+                }
+                elseif( $permissionType == 'explicit' )
+                {
+                    if($coreEdit && $categoryEdit)
+                    {
+                        $canManage = true;
+                    }
+
+                    if($coreEditState && $categoryEditState)
+                    {
+                        $canChange = true;
+                    }  
                 }
 
-                if($coreEditState && $categoryEditState !== false)
-                {
-                    $canChange = true;
-                }                
+                return array($canManage, $canChange);
+
             }
-            elseif( $permissionType == 'explicit' )
+            elseif ($action == 'create')
             {
-                if($coreEdit && $categoryEdit)
+                $coreCreate = self::getCoreCreate( 'cargos' );
+                $categoryCreate = self::getPermission( 'cargos.create', 'category', $catid );
+                
+                if($permissionType == 'implicit')
                 {
-                    $canManage = true;
+                    if($coreCreate && $categoryCreate !== false)
+                    {
+                        $canCreate = true;
+                    }             
+                }
+                elseif( $permissionType == 'explicit' )
+                {
+                    if($coreCreate && $categoryCreate)
+                    {
+                        $canCreate = true;
+                    }
                 }
 
-                if($coreEditState && $categoryEditState)
-                {
-                    $canChange = true;
-                }  
+                return $canCreate;
             }
+            elseif ($action == 'delete')
+            {
+                $coreDelete = self::getCoreDelete( 'cargos' );
+                $categoryDelete = self::getPermission( 'cargos.delete', 'category', $catid );
+                
+                if($permissionType == 'implicit')
+                {
+                    if($coreDelete && $categoryDelete !== false)
+                    {
+                        $canDelete = true;
+                    }             
+                }
+                elseif( $permissionType == 'explicit' )
+                {
+                    if($coreDelete && $categoryDelete)
+                    {
+                        $canDelete = true;
+                    }
+                }
 
+                return $canDelete;
+            }
         }
 
-        return array($canManage, $canChange);
+        return 0;
     }
 
     protected static function getUser()
@@ -219,6 +318,30 @@ class AgendaDirigentesHelper extends JHelperContent
             self::$user = JFactory::getUser();
 
         return self::$user;
+    }
+
+    protected static function getCoreCreate( $scope = 'core' )
+    {
+        $user = self::getUser();
+
+        if( ! array_key_exists($scope, self::$coreCreate) )
+        {
+            self::$coreCreate[$scope] = $user->authorise( $scope . '.create', self::$extension );
+        }
+
+        return self::$coreCreate[$scope];
+    }
+
+    protected static function getCoreDelete( $scope = 'core' )
+    {
+        $user = self::getUser();
+
+        if( ! array_key_exists($scope, self::$coreDelete) )
+        {
+            self::$coreDelete[$scope] = $user->authorise( $scope . '.delete', self::$extension );
+        }
+
+        return self::$coreDelete[$scope];
     }
 
     protected static function getCoreEdit( $scope = 'core' )

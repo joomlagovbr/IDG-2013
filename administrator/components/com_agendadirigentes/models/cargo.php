@@ -64,7 +64,6 @@ class AgendaDirigentesModelCargo extends JModelAdmin
          */
         protected function canDelete($item)
         {
-            
             $model = $this->getInstance('dirigentes', 'AgendaDirigentesModel');            
             $app = JFactory::getApplication();
             $app->input->set('filter_cargo_id', $item->id);
@@ -76,9 +75,9 @@ class AgendaDirigentesModelCargo extends JModelAdmin
                 return false;
             }
 
-            if( !empty( $item->catid ) ){
-                $user = JFactory::getUser();
-                return $user->authorise( "cargos.manage", "com_agendadirigentes.category." . $item->catid );
+            if( !empty( $item->catid ) )
+            {
+                return AgendaDirigentesHelper::getGranularPermissions( 'cargos', $item->catid, 'delete' );
             }
 
             return false;

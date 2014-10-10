@@ -33,7 +33,7 @@ class AgendaDirigentesViewCargo extends JViewLegacy
           if ( !empty($item->catid) ) {
             //sempre que section != 'component', essa devera ser a funcao de getActions
             $this->canDo = AgendaDirigentesHelper::getActions('com_agendadirigentes', 'category', $item->catid);
-            if (!$this->canDo->get('cargos.manage')) {
+            if (!$this->canDo->get('cargos.edit')) {
               JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
               $app = JFactory::getApplication();
               $app->redirect('index.php');
@@ -43,7 +43,7 @@ class AgendaDirigentesViewCargo extends JViewLegacy
           {
             $this->canDo  = JHelperContent::getActions('com_agendadirigentes');
             
-            if (!$this->canDo->get('cargos.add')) {
+            if (!$this->canDo->get('cargos.create')) {
                 return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
             }
           }

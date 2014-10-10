@@ -182,7 +182,7 @@ class AgendaDirigentesModelCompromissos extends JModelList
                 }
 
                 //restringir de acordo com as permissoes de usuario
-                if($this->state->get('params')->get('restricted_list', 0) == 1 && ! AgendaDirigentesHelper::isSuperUser() )
+                if($this->state->get('params')->get('restricted_list_compromissos', 0) == 1 && ! AgendaDirigentesHelper::isSuperUser() )
                 {                    
                     $formatedToGetPermissions = true;
                     $categories = $this->getCategories( $formatedToGetPermissions );
@@ -201,7 +201,14 @@ class AgendaDirigentesModelCompromissos extends JModelList
                         $query->where(
                             $db->quoteName('car.catid') . ' IN (' . $allowed_categories . ')'
                         );
-                    }                    
+                    } 
+                    else
+                    {
+                        $allowed_categories = 0;
+                        $query->where(
+                            $db->quoteName('car.catid') . ' IN (' . $allowed_categories . ')'
+                        );
+                    }                   
                 }
 
                 // Add the list ordering clause.
@@ -302,7 +309,7 @@ class AgendaDirigentesModelCompromissos extends JModelList
             return $date;
         }
 
-        protected function getCategories( $formatedToGetPermissions = false )
+        public function getCategories( $formatedToGetPermissions = false )
         {
             $db = JFactory::getDBO();
             $query = $db->getQuery(true);

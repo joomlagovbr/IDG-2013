@@ -239,6 +239,30 @@ class AgendaDirigentesModelCompromisso extends JModelAdmin
             return true;
         }
 
+        /**
+         * Method to check if it's OK to delete a message. Overwrites JModelAdmin::canDelete
+         */
+        protected function canDelete($item)
+        {
+            // $model = $this->getInstance('dirigentes', 'AgendaDirigentesModel');            
+            // $app = JFactory::getApplication();
+            // $app->input->set('filter_cargo_id', $item->id);
+            // $nDirigentes = $model->getTotal();
+
+            // if($nDirigentes > 0)
+            // {
+            //     $app->enqueueMessage('H&aacute; '.$nDirigentes.' dirigente(s) vinculado(s) a este cargo. Remova-o(s) ou troque seu(s) cargo(s) para apagar este item.');
+            //     return false;
+            // }
+            
+            if( !empty( $item->catid ) )
+            {
+                return AgendaDirigentesHelper::getGranularPermissions( 'compromissos', $item->catid, 'delete' );
+            }
+
+            return false;
+        }
+
         protected function canEditState($record)
         {
             $user = JFactory::getUser();
@@ -354,4 +378,6 @@ class AgendaDirigentesModelCompromisso extends JModelAdmin
             $db->setQuery((string)$query);
             return $db->loadObjectList('id');
         }
+
+
 }

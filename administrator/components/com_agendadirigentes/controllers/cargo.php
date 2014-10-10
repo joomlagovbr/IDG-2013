@@ -40,13 +40,38 @@ class AgendaDirigentesControllerCargo extends JControllerForm
      * @param string $key
      * @return bool
      */
-    protected function allowEdit($data = array(), $key = 'catid')
+    protected function allowEdit($data = array(), $key = 'id')
     {
-        $key = 'catid';
-        $id = isset( $data[ $key ] ) ? $data[ $key ] : 0;        
-        if( !empty( $id ) ){
+        $id = isset( $data[ $key ] ) ? $data[ $key ] : 0;
+        if( !empty( $id ) )
+        {
+            $model = $this->getModel();
+            $item = $model->getTable();
+            $item->load( $id );
+      
             $user = JFactory::getUser();
-            return $user->authorise( "cargos.manage", "com_agendadirigentes.category." . $id );
+            $coreEdit = $user->authorise( "core.edit", $this->option );
+            $categoryEdit = $user->authorise( "cargos.edit", $this->option . ".category." . $item->catid );
+
+            $params = JComponentHelper::getParams( $this->option );
+            $permissionType = $params->get('permissionsType', 'implicit');
+            
+            if($permissionType == 'implicit')
+            {
+                if($coreEdit && $categoryEdit !== false)
+                {
+                    return true;
+                }       
+
+            }
+            elseif( $permissionType == 'explicit' )
+            {
+                if($coreEdit && $categoryEdit)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         return true;

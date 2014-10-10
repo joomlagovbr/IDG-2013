@@ -85,6 +85,36 @@ class AgendaDirigentesModelCargos extends JModelList
                     }
                 }
 
+                //restringir de acordo com as permissoes de usuario
+                if($this->state->get('params')->get('restricted_list_cargos', 0) == 1 && ! AgendaDirigentesHelper::isSuperUser() )
+                {
+                    $formatedToGetPermissions = true;
+                    $categories = $this->getCategories( $formatedToGetPermissions );
+
+                    $allowed_categories = array();
+                    for ($i=0, $limit = count($categories); $i < $limit; $i++)
+                    { 
+                        list($canManage, $canChange) = AgendaDirigentesHelper::getGranularPermissions('cargos', $categories[$i] );
+                        if($canManage || $canChange)
+                            $allowed_categories[] = $categories[$i]->catid;
+                    }
+
+                    if(count($allowed_categories))
+                    {
+                        $allowed_categories = implode(', ', $allowed_categories);
+                        $query->where(
+                            $db->quoteName('a.catid') . ' IN (' . $allowed_categories . ')'
+                        );
+                    }
+                    else
+                    {
+                        $allowed_categories = 0;
+                        $query->where(
+                            $db->quoteName('a.catid') . ' IN (' . $allowed_categories . ')'
+                        );
+                    }  
+                }
+
                 // Add the list ordering clause.
                 $orderCol = $this->state->get('list.ordering', 'a.id');
                 $orderDirn = $this->state->get('list.direction', 'DESC');
@@ -122,5 +152,11 @@ class AgendaDirigentesModelCargos extends JModelList
 
             // List state information.
             parent::populateState('a.id', 'DESC');
+        }
+
+        protected function getCategories( $formatedToGetPermissions = false )
+        {
+            $compromissosModel = $this->getInstance( 'compromissos', 'AgendaDirigentesModel' );
+            return $compromissosModel->getCategories( $formatedToGetPermissions );
         }
 }

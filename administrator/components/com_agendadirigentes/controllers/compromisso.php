@@ -23,8 +23,8 @@ class AgendaDirigentesControllerCompromisso extends JControllerForm
 	{
 		@$id = (int) $data['id'];
 
-		if( ! $id )
-			return false;
+		if( $id == 0 )
+			return true;
 
 		$model = $this->getModel();
 		$item = $model->getTable();

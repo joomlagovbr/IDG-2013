@@ -33,7 +33,7 @@
                 />
                 <field
                         name="catid"
-                        type="category"
+                        type="categoriasrestritas"
                         extension="com_agendadirigentes"
                         label="COM_AGENDADIRIGENTES_CARGOS_CATID_LABEL"
                         description="COM_AGENDADIRIGENTES_CARGOS_CATID_DESC"
@@ -42,6 +42,7 @@
                         required="true"
                         validate="catid"
                         filter="integer"
+                        restrictType="cargos"
                 >
                         <option value="0">COM_AGENDADIRIGENTES_LIST_SELECT</option>
                 </field>

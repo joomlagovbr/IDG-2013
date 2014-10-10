@@ -93,15 +93,32 @@ class JFormFieldDirigentesTags extends JFormFieldTag
 
 		//restringir de acordo com as permissoes de usuario
 		$componentParams = AgendaDirigentesHelper::getParams();
-		if( $componentParams->get('restricted_list', 0) == 1 && ! AgendaDirigentesHelper::isSuperUser() )
+		if( $componentParams->get('restricted_list_compromissos', 0) == 1 && ! AgendaDirigentesHelper::isSuperUser() )
 		{
 			$allowedCategories = array();
-			for ($i=0, $limit = count($categories); $i < $limit; $i++)
-			{ 
-				list($canManage, $canChange) = AgendaDirigentesHelper::getGranularPermissions('compromissos', $categories[$i] );
-				if ($canManage || $canChange)
+			$input = JFactory::getApplication()->input;
+			$id = $input->getInt('id', 0);
+
+			if(empty($id)) //new
+			{
+				for ($i=0, $limit = count($categories); $i < $limit; $i++)
 				{
-					$allowedCategories[] = $categories[$i];
+					$canCreate = AgendaDirigentesHelper::getGranularPermissions('compromissos', $categories[$i], 'create' );
+					if ( $canCreate )
+					{
+						$allowedCategories[] = $categories[$i];
+					}
+				}
+			}
+			else //edit
+			{
+				for ($i=0, $limit = count($categories); $i < $limit; $i++)
+				{ 
+					list($canManage, $canChange) = AgendaDirigentesHelper::getGranularPermissions('compromissos', $categories[$i], 'manage' );
+					if ($canManage || $canChange)
+					{
+						$allowedCategories[] = $categories[$i];
+					}
 				}
 			}
 			$categories = $allowedCategories;

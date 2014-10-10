@@ -81,10 +81,30 @@
                         <option value="superuser">Somente super users</option>
                 </field>
                 <field
-                        name="restricted_list"
+                        name="restricted_list_compromissos"
                         type="list"
                         label="Restringir lista de compromissos"
                         description="Restringe lista de compromissos de acordo com os itens para os quais se tem permissão."
+                        default="0"
+                >
+                        <option value="0">JNO</option>
+                        <option value="1">JYES</option>
+                </field>
+                <field
+                        name="restricted_list_cargos"
+                        type="list"
+                        label="Restringir lista de cargos"
+                        description="Restringe lista de cargos de acordo com os itens para os quais se tem permissão."
+                        default="0"
+                >
+                        <option value="0">JNO</option>
+                        <option value="1">JYES</option>
+                </field>
+                <field
+                        name="restricted_list_dirigentes"
+                        type="list"
+                        label="Restringir lista de dirigentes"
+                        description="Restringe lista de cargos de acordo com os itens para os quais se tem permissão."
                         default="0"
                 >
                         <option value="0">JNO</option>
