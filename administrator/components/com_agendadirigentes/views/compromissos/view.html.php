@@ -28,8 +28,8 @@ class AgendaDirigentesViewCompromissos extends JViewLegacy
         {
                 $this->canDo  = JHelperContent::getActions('com_agendadirigentes');
                 
-                if (!$this->canDo->get('cargos.list')) {
-                    
+                if (!$this->canDo->get('core.manage')) {
+                    return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
                 }
 
                 // Get data from the model

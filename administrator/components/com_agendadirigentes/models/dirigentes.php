@@ -22,14 +22,13 @@ class AgendaDirigentesModelDirigentes extends JModelList
             if (empty($config['filter_fields']))
             {
                 $config['filter_fields'] = array(
-                    'a.id', 'id', 
-                    'a.name', 'name', 
-                    'a.state', 'state',
-                    'c.name', 'name', 
-                    'd.title', 'title', 
-                    'a.proprietario', 'proprietario', 
-                    'a.habilitados' , 'habilitados', 
-                    'catid', 'cargo_id'
+                    'dir.id', 'id', 
+                    'dir.name', 'name', 
+                    'dir.state', 'state',
+                    'car.name', 'name', 
+                    'car.catid', 'catid',
+                    'car.cargo_id', 'cargo_id',
+                    'cat.title', 'title'              
                 );
             }
             parent::__construct($config);
@@ -45,37 +44,60 @@ class AgendaDirigentesModelDirigentes extends JModelList
                 // Create a new query object.           
                 $db = JFactory::getDBO();
                 $query = $db->getQuery(true);
-                // Select some fields from the hello table
+
                 $query
-                    ->select('a.*, c.name as cargo, c.name_f as cargo_f, d.title as categoria') //, e.name as proprietario
-                    ->from( $db->quoteName('#__agendadirigentes_dirigentes', 'a') )
-                    ->join('LEFT', $db->quoteName('#__agendadirigentes_cargos', 'c') . ' ON (' . $db->quoteName('c.id') . ' = ' . $db->quoteName('a.cargo_id') . ')')
-                    ->join('INNER', $db->quoteName('#__categories', 'd') . ' ON (' . $db->quoteName('d.id') . ' = ' . $db->quoteName('c.catid') . ')')
-                    ;
+                    ->select(
+                        $db->quoteName('dir.id') . ', ' .
+                        $db->quoteName('dir.asset_id') . ', ' .
+                        $db->quoteName('dir.name') . ', ' .
+                        $db->quoteName('dir.cargo_id') . ', ' .
+                        $db->quoteName('dir.state') . ', ' .
+                        $db->quoteName('dir.interino') . ', ' .
+                        $db->quoteName('dir.em_atividade') . ', ' .
+                        $db->quoteName('dir.sexo') . ', ' .
+                        $db->quoteName('car.catid') . ', ' .
+                        $db->quoteName('car.name', 'cargo') . ', ' .
+                        $db->quoteName('car.name_f', 'cargo_f') . ', ' .
+                        $db->quoteName('cat.title', 'categoria') . ', ' .
+                        $db->quoteName('cat.title', 'categoria')                        
+                    )
+                    ->from(
+                        $db->quoteName('#__agendadirigentes_dirigentes', 'dir')
+                    )
+                    ->join(
+                        'LEFT',
+                        $db->quoteName('#__agendadirigentes_cargos', 'car')
+                        . ' ON (' . $db->quoteName('car.id') . ' = ' . $db->quoteName('dir.cargo_id') . ')'
+                    )
+                    ->join(
+                        'INNER',
+                        $db->quoteName('#__categories', 'cat')
+                        . ' ON (' . $db->quoteName('cat.id') . ' = ' . $db->quoteName('car.catid') . ')'
+                    );
                 
                 // Filter by state
                 $state = $this->state->get('filter.state');
                 if (is_numeric($state))
                 {
-                    $query->where('a.state = ' . (int) $state);
+                    $query->where('dir.state = ' . (int) $state);
                 }
                 elseif ($state === '')
                 {
-                    $query->where('(a.state IN (0, 1))');
+                    $query->where('(dir.state IN (0, 1))');
                 }
 
                 // Filter by category.
                 $catid = $this->getState('filter.catid');
                 if (is_numeric($catid))
                 {
-                    $query->where('c.catid = ' . (int) $catid);
+                    $query->where('car.catid = ' . (int) $catid);
                 }
 
                 // Filter by cargo.
                 $cargo_id = $this->getState('filter.cargo_id');
                 if (is_numeric($cargo_id))
                 {
-                    $query->where('a.cargo_id = ' . (int) $cargo_id);
+                    $query->where('dir.cargo_id = ' . (int) $cargo_id);
                 }
 
                 // Filter by search in title
@@ -84,20 +106,51 @@ class AgendaDirigentesModelDirigentes extends JModelList
                 {
                     if (stripos($search, 'id:') === 0)
                     {
-                        $query->where('a.id = ' . (int) substr($search, 3));
+                        $query->where('dir.id = ' . (int) substr($search, 3));
                     }
                     else
                     {
                         $search = $db->quote('%' . $db->escape($search, true) . '%');
-                        $query->where('(a.name LIKE ' . $search . ')');
+                        $query->where('(dir.name LIKE ' . $search . ')');
                     }
                 }
 
+                //restringir de acordo com as permissoes de usuario
+                if($this->state->get('params')->get('restricted_list_dirigentes', 0) == 1 && ! AgendaDirigentesHelper::isSuperUser() )
+                {
+                    $formatedToGetPermissions = true;
+                    $categories = $this->getCategories( $formatedToGetPermissions );
+
+                    $allowed_categories = array();
+                    for ($i=0, $limit = count($categories); $i < $limit; $i++)
+                    { 
+                        list($canManage, $canChange) = AgendaDirigentesHelper::getGranularPermissions('dirigentes', $categories[$i] );
+                        if($canManage || $canChange)
+                            $allowed_categories[] = $categories[$i]->catid;
+                    }
+
+                    if(count($allowed_categories))
+                    {
+                        $allowed_categories = implode(', ', $allowed_categories);
+                        $query->where(
+                            $db->quoteName('car.catid') . ' IN (' . $allowed_categories . ')'
+                        );
+                    }
+                    else
+                    {
+                        $allowed_categories = 0;
+                        $query->where(
+                            $db->quoteName('car.catid') . ' IN (' . $allowed_categories . ')'
+                        );
+                    }  
+                }
+
                 // Add the list ordering clause.
-                $orderCol = $this->state->get('list.ordering', 'a.id');
-                $orderDirn = $this->state->get('list.direction', 'DESC');
+                $orderCol = $this->state->get('list.ordering', 'dir.name');
+                $orderDirn = $this->state->get('list.direction', 'ASC');
                 $query->order($db->escape($orderCol . ' ' . $orderDirn));
 
+                // echo $query->dump();die();
                 return $query;
         }
 
@@ -128,7 +181,16 @@ class AgendaDirigentesModelDirigentes extends JModelList
             @$cargo_id = $this->getUserStateFromRequest($this->context . '.filter.cargo_id', 'filter_cargo_id', '');
             $this->setState('filter.cargo_id', $cargo_id);
 
+            $params = JComponentHelper::getParams( $this->option );
+            $this->setState('params', $params);
+
             // List state information.
-            parent::populateState('a.id', 'DESC');
+            parent::populateState('dir.name', 'ASC');
+        }
+
+        protected function getCategories( $formatedToGetPermissions = false )
+        {
+            $compromissosModel = $this->getInstance( 'compromissos', 'AgendaDirigentesModel' );
+            return $compromissosModel->getCategories( $formatedToGetPermissions );
         }
 }

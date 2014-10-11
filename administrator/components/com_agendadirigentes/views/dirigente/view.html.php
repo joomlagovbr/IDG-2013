@@ -24,42 +24,52 @@ class AgendaDirigentesViewDirigente extends JViewLegacy
          */
         public function display($tpl = null) 
         {
-                // get the Data
-                $form = $this->get('Form');
-                $item = $this->get('Item');
-                
-                if ( !empty($item->catid) ) {
-                  //sempre que section != 'component', essa devera ser a funcao de getActions
-                  $this->canDo = AgendaDirigentesHelper::getActions('com_agendadirigentes', 'category', $item->catid);
-                  if (!$this->canDo->get('dirigentes.manage')) {
-                    JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
-                    $app = JFactory::getApplication();
-                    $app->redirect('index.php');
-                  }
-                }
-                else
-                {
-                  $this->canDo  = JHelperContent::getActions('com_agendadirigentes');
-                }
+          // get the Data
+          $this->form = $this->get('Form');
+          $this->item = $this->get('Item');
+          $this->isNew = ($this->item->id == 0);
+          $app = JFactory::getApplication();
+          
+          // Check for errors.
+          if (count($errors = $this->get('Errors'))) 
+          {
+                  JError::raiseError(500, implode('<br />', $errors));
+                  return false;
+          }
 
-                // Check for errors.
-                if (count($errors = $this->get('Errors'))) 
-                {
-                        JError::raiseError(500, implode('<br />', $errors));
-                        return false;
-                }
-                // Assign the Data
-                $this->form = $form;
-                $this->item = $item;
- 
-                // Set the toolbar
-                $this->addToolBar();
- 
-                // Display the template
-                parent::display($tpl);
+          $this->canDo = JHelperContent::getActions('com_agendadirigentes');
+          $this->canCreate = $this->canDo->get('dirigentes.create');
 
-                // Set the document
-                $this->setDocument();
+          if ($this->isNew)
+          {
+              if(!$this->canCreate)
+              {
+                JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+                $app->redirect('index.php');
+              }
+              //$this->canManage = $this->canDo->get('dirigentes.edit') || $this->canDo->get('dirigentes.edit.own');
+              $this->canChange = $this->canDo->get('dirigentes.edit.state');
+          }
+          else
+          {
+              list($canManage, $canChange) = AgendaDirigentesHelper::getGranularPermissions('dirigentes', $this->item, 'manage' );
+              $this->canManage = $canManage;
+              $this->canChange = $canChange;
+  
+              if (!$this->canManage) {
+                JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+                $app->redirect('index.php');
+              }
+          }
+
+          // Set the toolbar
+          $this->addToolBar();
+
+          // Display the template
+          parent::display($tpl);
+
+          // Set the document
+          $this->setDocument();
         }
  
         /**
@@ -69,35 +79,34 @@ class AgendaDirigentesViewDirigente extends JViewLegacy
         {
           $input = JFactory::getApplication()->input;
           $input->set('hidemainmenu', true);
-          $isNew = ($this->item->id == 0);
-          JToolBarHelper::title($isNew ? JText::_('COM_AGENDADIRIGENTES_MANAGER_DIRIGENTE_NEW')
+          JToolBarHelper::title($this->isNew ? JText::_('COM_AGENDADIRIGENTES_MANAGER_DIRIGENTE_NEW')
                                        : JText::_('COM_AGENDADIRIGENTES_MANAGER_DIRIGENTE_EDIT'), 'compromisso');
 
-          if ($isNew)
+          if ($this->isNew)
           {
-              if ($this->canDo->get('core.create'))
-              {
-                  JToolBarHelper::apply('dirigente.apply');
-                  JToolBarHelper::save('dirigente.save');
-                  JToolBarHelper::save2new('dirigente.save2new');
-              }                   
+            if ($this->canCreate)
+            {
+              JToolBarHelper::apply('dirigente.apply');
+              JToolBarHelper::save('dirigente.save');
+              JToolBarHelper::save2new('dirigente.save2new');
+            }
           }
           else
           {
-              if ($this->canDo->get('cargos.manage'))
-              {
-                  JToolBarHelper::apply('dirigente.apply');
-                  JToolBarHelper::save('dirigente.save');
-                  JToolBarHelper::save2new('dirigente.save2new');
-              }
+            if ($this->canManage)
+            {
+                JToolBarHelper::apply('dirigente.apply');
+                JToolBarHelper::save('dirigente.save');
+                JToolBarHelper::save2new('dirigente.save2new');
+            }
 
-              if ($this->canDo->get('core.create'))
-              {
-                  JToolBarHelper::save2copy('dirigente.save2copy');
-              }                     
+            if ($this->canCreate)
+            {
+                JToolBarHelper::save2copy('dirigente.save2copy');
+            }  
           }
 
-          JToolBarHelper::cancel('dirigente.cancel', $isNew ? 'JTOOLBAR_CANCEL' : 'JTOOLBAR_CLOSE');
+          JToolBarHelper::cancel('dirigente.cancel', $this->isNew ? 'JTOOLBAR_CANCEL' : 'JTOOLBAR_CLOSE');
         }
 
         /**
@@ -107,9 +116,8 @@ class AgendaDirigentesViewDirigente extends JViewLegacy
          */
         protected function setDocument() 
         {
-                $isNew = ($this->item->id < 1);
                 $document = JFactory::getDocument();
-                $document->setTitle($isNew ? JText::_('COM_AGENDADIRIGENTES_MANAGER_DIRIGENTE_NEW')
+                $document->setTitle($this->isNew ? JText::_('COM_AGENDADIRIGENTES_MANAGER_DIRIGENTE_NEW')
                                            : JText::_('COM_AGENDADIRIGENTES_MANAGER_DIRIGENTE_EDIT'));
                 //regras de validacao
                 $document->addScript(JURI::root() . "/administrator/components/com_agendadirigentes"

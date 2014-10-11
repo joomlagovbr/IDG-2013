@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
  
 // import Joomla view library
-jimport('joomla.application.component.view');
+jimport('joomldir.application.component.view');
  
 /**
  * Dirigentes View
@@ -47,8 +47,8 @@ class AgendaDirigentesViewDirigentes extends JViewLegacy
                 }
                 // Assign data to the view
                 $this->user = JFactory::getUser();
-                $this->listOrder = $this->escape($this->state->get('list.ordering', 'a.id'));
-                $this->listDirn  = $this->escape($this->state->get('list.direction', 'DESC'));
+                $this->listOrder = $this->escape($this->state->get('list.ordering', 'dir.name'));
+                $this->listDirn  = $this->escape($this->state->get('list.direction', 'ASC'));
                 $this->archived  = $this->state->get('filter.state') == 2 ? true : false;
                 $this->trashed   = $this->state->get('filter.state') == -2 ? true : false;
                 // Set the toolbar
@@ -100,7 +100,6 @@ class AgendaDirigentesViewDirigentes extends JViewLegacy
                     JToolbarHelper::trash('dirigentes.trash');
                 }
 
-                // JToolBarHelper::deleteList('', 'dirigentes.delete');
                 JToolBarHelper::preferences('com_agendadirigentes');
         }
 
@@ -125,11 +124,11 @@ class AgendaDirigentesViewDirigentes extends JViewLegacy
         protected function getSortFields()
         {
             return array(
-                'a.id' => JText::_('COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_ID'),
-                'a.name' => JText::_('COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_NOME'),
-                'a.state' => JText::_('COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_STATE'),
-                'c.name' => JText::_('COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_CARGO'),
-                'd.title' => JText::_('COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_CATEGORIA')
+                'dir.id' => JText::_('COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_ID'),
+                'dir.name' => JText::_('COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_NOME'),
+                'dir.state' => JText::_('COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_STATE'),
+                'car.name' => JText::_('COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_CARGO'),
+                'cat.title' => JText::_('COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_CATEGORIA')
             );
         }
 }

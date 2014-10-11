@@ -222,7 +222,7 @@ class AgendaDirigentesModelCompromissos extends JModelList
 
                 $query->order( $ordering );
 
-                // echo $query->dump();
+                // echo $query->dump();die();
                 return $query;
         }
 

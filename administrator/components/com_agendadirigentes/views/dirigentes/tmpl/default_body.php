@@ -9,12 +9,13 @@
  
 // impedir acesso direto ao arquivo
 defined('_JEXEC') or die;
-$user = JFactory::getUser();
 ?>
 <?php foreach($this->items as $i => $item):
-                
+
         // $canDo = AgendaDirigentesHelper::getActions('com_agendadirigentes', 'category', $item->catid);
-        $canManage = $user->authorise( "dirigentes.manage", "com_agendadirigentes.category." . $item->catid );
+        // $canManage = $this->user->authorise( "dirigentes.manage", "com_agendadirigentes.category." . $item->catid );
+        list($canManage, $canChange) = AgendaDirigentesHelper::getGranularPermissions('dirigentes', $item );
+
         ?>
         <tr class="row<?php echo $i % 2; ?>">
                 <td>
@@ -23,25 +24,28 @@ $user = JFactory::getUser();
                     <?php endif; ?>
                 </td>
                 <td>
-                    <?php if ( $canManage ) : ?>
+                    <?php if ( $canManage || $canChange ) : ?>
                         <?php echo JHtml::_('grid.id', $i, $item->id); ?>
                     <?php endif; ?>
                 </td>
                 <td class="center">
                     <div class="btn-group">
                         <?php
-                        $canChange = true;
                         echo JHtml::_('jgrid.published', $item->state, $i, 'dirigentes.', $canChange, 'cb'); ?>
                         <?php
-                        // Create dropdown items
-                        $action = $this->archived ? 'unarchive' : 'archive';
-                        JHtml::_('actionsdropdown.' . $action, 'cb' . $i, 'dirigentes');
+                        if($canChange):
 
-                        $action = $this->trashed ? 'untrash' : 'trash';
-                        JHtml::_('actionsdropdown.' . $action, 'cb' . $i, 'dirigentes');
+                            // Create dropdown items
+                            $action = $this->archived ? 'unarchive' : 'archive';
+                            JHtml::_('actionsdropdown.' . $action, 'cb' . $i, 'dirigentes');
 
-                        // Render dropdown list
-                        echo JHtml::_('actionsdropdown.render', $this->escape($item->name));
+                            $action = $this->trashed ? 'untrash' : 'trash';
+                            JHtml::_('actionsdropdown.' . $action, 'cb' . $i, 'dirigentes');
+
+                            // Render dropdown list
+                            echo JHtml::_('actionsdropdown.render', $this->escape($item->name));
+
+                        endif;
                         ?>
                     </div>
                 </td>

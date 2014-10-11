@@ -21,12 +21,19 @@ JHtml::_('behavior.formvalidation');
             <div class="row-fluid">
                 <div class="span6">
                     <?php foreach ($this->form->getFieldset('details') as $field): ?>
+                      <?php if($field->fieldname!='featured' || $this->showFeatured): ?>
                         <div class="control-group">
-                            <?php if (!$field->hidden): ?>
-                            <div class="control-label"><?php echo $field->label; ?></div>
-                            <?php endif; ?>
-                            <div class="controls"><?php echo $field->input; ?></div>
+                          <?php if($field->fieldname=='published'):
+                              if(! $this->canChange) $field->readonly = true;
+                          endif; ?>
+                          <?php if (!$field->hidden): ?>
+                          <div class="control-label"><?php echo $field->label; ?></div>
+                          <?php endif; ?>
+                          <div class="controls"><?php echo $field->input; ?></div>
                         </div>
+                      <?php else: ?>
+                        <input type="hidden" name="jform[featured]" value="<?php echo $field->value; ?>" />
+                      <?php endif; ?>
                     <?php endforeach; ?>
                 </div>
             </div>

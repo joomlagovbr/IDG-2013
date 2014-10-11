@@ -53,19 +53,19 @@ jQuery(document).ready(function(){
             <div class="row-fluid">
                 <div class="span8">
                     <?php foreach ($this->form->getFieldset('details') as $field): ?>
-                        <div class="control-group">
-                            <?php if (!$field->hidden): ?>
-                                <?php if($field->fieldname=='state'): ?>
-                                <?php
-                                list($canManage, $canChange) = AgendaDirigentesHelper::getGranularPermissions('compromissos', $this->item );
-                                if(! $canChange)
-                                    $field->readonly = true;
-                                ?>
+                        <?php if($field->fieldname!='featured' || $this->showFeatured): ?>
+                            <div class="control-group">
+                                <?php if (!$field->hidden): ?>
+                                    <?php if($field->fieldname=='state'):                          
+                                        if(! $this->canChange) $field->readonly = true;
+                                    endif; ?>
+                                <div class="control-label"><?php echo $field->label; ?></div>
                                 <?php endif; ?>
-                            <div class="control-label"><?php echo $field->label; ?></div>
-                            <?php endif; ?>
-                            <div class="controls"><?php echo $field->input; ?></div>
-                        </div>
+                                <div class="controls"><?php echo $field->input; ?></div>
+                            </div>
+                        <?php else: ?>
+                            <input type="hidden" name="jform[featured]" value="<?php echo $field->value; ?>" />
+                        <?php endif; ?>                            
                     <?php endforeach; ?>
                 </div>
                 <div class="span4">

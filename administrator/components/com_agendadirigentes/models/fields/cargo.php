@@ -43,20 +43,26 @@ class JFormFieldCargo extends JFormFieldList
                 $query->from(
                         $db->quoteName('#__agendadirigentes_cargos', 'car')
                 );
-                if ( $this->getAttribute('includecategory', false) )
+                if ( $this->getAttribute('includecategory', false) == true )
                 {
-                        $query->select(
-                                $db->quoteName('cat.title', 'category_name')
-                        );
-                        $query->join(
-                                'INNER',
-                                $db->quoteName('#__categories', 'cat')
-                                . ' ON '.$db->quoteName('car.catid') . ' = ' . $db->quoteName('cat.id')
-                        );
-                        $query->order(
-                                $db->quoteName('cat.title') . ', ' .
-                                $db->quoteName('car.name')
-                        );
+                    $query->select(
+                            $db->quoteName('cat.title', 'category_name')
+                    );
+                    $query->join(
+                            'INNER',
+                            $db->quoteName('#__categories', 'cat')
+                            . ' ON '.$db->quoteName('car.catid') . ' = ' . $db->quoteName('cat.id')
+                    );
+                    $query->order(
+                            $db->quoteName('cat.title') . 'ASC, ' .
+                            $db->quoteName('car.name') . ' ASC'
+                    );
+                }
+                else
+                {
+                    $query->order(
+                            $db->quoteName('car.name') . ' ASC'
+                    );
                 }
 
                 $db->setQuery((string)$query);

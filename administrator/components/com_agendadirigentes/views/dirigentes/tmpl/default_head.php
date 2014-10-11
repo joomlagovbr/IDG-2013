@@ -12,21 +12,21 @@ defined('_JEXEC') or die;
 ?>
 <tr>
         <th width="1%" class="nowrap">
-                <?php echo JHtml::_('searchtools.sort', 'COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_ID', 'a.id', $this->listDirn, $this->listOrder); ?>
+                <?php echo JHtml::_('searchtools.sort', 'COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_ID', 'dir.id', $this->listDirn, $this->listOrder); ?>
         </th>
         <th width="1%" class="hidden-phone">
                 <?php echo JHtml::_('grid.checkall'); ?>
         </th>
         <th width="1%" class="nowrap center">
-                <?php echo JHtml::_('searchtools.sort', 'COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_STATE', 'a.state', $this->listDirn, $this->listOrder); ?>
+                <?php echo JHtml::_('searchtools.sort', 'COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_STATE', 'dir.state', $this->listDirn, $this->listOrder); ?>
         </th>
         <th>
-                <?php echo JHtml::_('searchtools.sort', 'COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_NOME', 'a.name', $this->listDirn, $this->listOrder); ?>
+                <?php echo JHtml::_('searchtools.sort', 'COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_NOME', 'dir.name', $this->listDirn, $this->listOrder); ?>
         </th>
         <th width="25%">
-                <?php echo JHtml::_('searchtools.sort', 'COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_CATEGORIA', 'd.title', $this->listDirn, $this->listOrder); ?>
+                <?php echo JHtml::_('searchtools.sort', 'COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_CATEGORIA', 'cat.title', $this->listDirn, $this->listOrder); ?>
         </th>
         <th width="25%">
-                <?php echo JHtml::_('searchtools.sort', 'COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_CARGO', 'c.name', $this->listDirn, $this->listOrder); ?>
+                <?php echo JHtml::_('searchtools.sort', 'COM_AGENDADIRIGENTES_DIRIGENTES_HEADING_CARGO', 'car.name', $this->listDirn, $this->listOrder); ?>
         </th>
 </tr>

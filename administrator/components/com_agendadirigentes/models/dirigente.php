@@ -62,12 +62,68 @@ class AgendaDirigentesModelDirigente extends JModelAdmin
         /**
          * Method to check if it's OK to delete a message. Overwrites JModelAdmin::canDelete
          */
-        protected function canDelete($dirigente)
+        protected function canDelete( $item )
         {
-            if( !empty( $dirigente->id ) ){
-                $user = JFactory::getUser();
-                return $user->authorise( "dirigentes.delete", "com_agendadirigentes.cargo." . $dirigente->cargo_id );
+            $app = JFactory::getApplication();
+            $model = $this->getInstance('compromissos', 'AgendaDirigentesModel');            
+
+            $params = $model->getState('params'); 
+            $params->set('restricted_list_compromissos', 0);
+            $model->setState('params', $params);
+            $model->setState('filter.dirigente_id', $item->id);
+            $model->setState('filter.state', '*');
+            $model->setState('list.status_dono_compromisso', 1);
+            $nCompromissos = $model->getTotal();
+
+            if($nCompromissos > 0)
+            {
+                $app->enqueueMessage('H&aacute; '.$nCompromissos.' compromisso(s) vinculado(s) a esta(s) autoridade(s). Remova-o(s) ou troque o(s) seu(s) respons&aacute;vel(is) para apagar, mesmo que esteja(m) na Lixeira.');
+                return false;
             }
+
+            if( !empty( $item->catid ) )
+            {
+                return AgendaDirigentesHelper::getGranularPermissions( 'dirigentes', $item->catid, 'delete' );
+            }
+
+            return false;
+        }
+
+        protected function canEditState($item)
+        {
+            list($canManage, $canChange) = AgendaDirigentesHelper::getGranularPermissions('dirigentes', $item, 'manage' );
+            
+            if($canChange)
+                return true;
+            
+            return false;
+        }
+
+        public function delete(&$pks)
+        {
+            $pks = (array) $pks;
+
+            if( parent::delete($pks) )
+            {
+                //apaga compromissos dos quais o dirigente era somente participante ou convidado
+                $query = $this->_db->getQuery(true);
+                $query->delete(
+                        $this->_db->quoteName('#__agendadirigentes_dirigentes_compromissos')
+                    )
+                    ->where(
+                        $this->_db->quoteName('dirigente_id')
+                        . ' IN ( ' .
+                        implode(', ', $pks)
+                        . ' ) AND ' .    
+                        $this->_db->quoteName('owner') . ' = 0 '    
+                    );
+
+                $this->_db->setQuery( (string) $query );
+                return $this->_db->query();
+
+            }
+
+            return false;
         }
 
         public function getItem()
@@ -81,27 +137,6 @@ class AgendaDirigentesModelDirigente extends JModelAdmin
             if(empty($item->cargo_id)) {
                 return 0;
             }
-
-            $db = $this->_db;
-            $query = $db->getQuery(true);
-
-            $query->select(
-                    $db->quoteName('cat.id')
-                )->from(
-                    $db->quoteName('#__categories', 'cat')
-                )->join(
-                    'INNER',
-                    $db->quoteName('#__agendadirigentes_cargos', 'car')
-                    . ' ON ' . $db->quoteName('car.catid') . ' = ' . $db->quoteName('cat.id')
-                )->where(
-                    $db->quoteName('car.id') . ' = ' . (int) $item->cargo_id
-                );
-
-            $db->setQuery((string)$query);
-            $item->catid = $db->loadResult();
-
-            if(empty($item->sexo))
-                $item->sexo = 'M';
 
             return $item;
         }

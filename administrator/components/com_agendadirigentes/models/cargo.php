@@ -64,9 +64,14 @@ class AgendaDirigentesModelCargo extends JModelAdmin
          */
         protected function canDelete($item)
         {
-            $model = $this->getInstance('dirigentes', 'AgendaDirigentesModel');            
             $app = JFactory::getApplication();
-            $app->input->set('filter_cargo_id', $item->id);
+            $model = $this->getInstance('dirigentes', 'AgendaDirigentesModel');
+            
+            $params = $model->getState('params'); 
+            $params->set('restricted_list_dirigentes', 0);
+            $model->setState('params', $params);
+            $model->setState('filter.cargo_id', $item->id);
+            $model->setState('filter.state', '*');
             $nDirigentes = $model->getTotal();
 
             if($nDirigentes > 0)
@@ -83,19 +88,14 @@ class AgendaDirigentesModelCargo extends JModelAdmin
             return false;
         }
 
-        public function save($data)
+        protected function canEditState($item)
         {
-                $result = parent::save($data);
-                if(!$result)
-                        return false;
+            list($canManage, $canChange) = AgendaDirigentesHelper::getGranularPermissions('cargos', $item, 'manage' );
 
-                // if (@isset($data['id'])!==false && )
-                // {
-                        // if(!$this->updateCompromissosDirigentes($data))
-                                // return false;
-                // }
-
-                return     true;           
+            if($canChange)
+                return true;
+            
+            return false;
         }
 
        /**

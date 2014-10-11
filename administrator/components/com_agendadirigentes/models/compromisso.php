@@ -243,18 +243,7 @@ class AgendaDirigentesModelCompromisso extends JModelAdmin
          * Method to check if it's OK to delete a message. Overwrites JModelAdmin::canDelete
          */
         protected function canDelete($item)
-        {
-            // $model = $this->getInstance('dirigentes', 'AgendaDirigentesModel');            
-            // $app = JFactory::getApplication();
-            // $app->input->set('filter_cargo_id', $item->id);
-            // $nDirigentes = $model->getTotal();
-
-            // if($nDirigentes > 0)
-            // {
-            //     $app->enqueueMessage('H&aacute; '.$nDirigentes.' dirigente(s) vinculado(s) a este cargo. Remova-o(s) ou troque seu(s) cargo(s) para apagar este item.');
-            //     return false;
-            // }
-            
+        {            
             if( !empty( $item->catid ) )
             {
                 return AgendaDirigentesHelper::getGranularPermissions( 'compromissos', $item->catid, 'delete' );
@@ -263,57 +252,40 @@ class AgendaDirigentesModelCompromisso extends JModelAdmin
             return false;
         }
 
-        protected function canEditState($record)
+        protected function canEditState($item)
         {
-            $user = JFactory::getUser();
+            list($canManage, $canChange) = AgendaDirigentesHelper::getGranularPermissions('compromissos', $item, 'manage' );
 
-            $coreEditState = $user->authorise( "core.edit.state", $this->option );
-            $categoryEditState = $user->authorise( "core.edit.state", $this->option . ".category." . $record->catid );
-
-            $params = JComponentHelper::getParams( $this->option ); 
-            $permissionType = $params->get('permissionsType', 'implicit');
-            $editOwnState = $params->get('editOwnState', 0);
-
-            if( $permissionType == 'implicit' )
-            {
-                if($coreEditState && $categoryEditState !== false)
-                {
-                    return true;
-                }
-
-                if($editOwnState)
-                {
-                    $coreEditOwn = $user->authorise( "core.edit.own", $this->option );
-                    $categoryEditOwn = $user->authorise( "core.edit.own", $this->option . ".category." . $record->catid );
-    
-                    if($coreEditOwn && $categoryEditOwn !== false && $record->created_by == $user->id)
-                    {
-                        return true;
-                    }           
-                }
-
-            }
-            elseif( $permissionType == 'explicit' )
-            {
-                if($coreEditState && $categoryEditState)
-                {
-                    return true;
-                }
-
-                if($editOwnState)
-                {
-                    $coreEditOwn = $user->authorise( "core.edit.own", $this->option );
-                    $categoryEditOwn = $user->authorise( "core.edit.own", $this->option . ".category." . $record->catid );
-    
-                    if($coreEditOwn && $categoryEditOwn && $record->created_by == $user->id)
-                    {
-                        return true;
-                    }           
-                } 
-            }
+            if($canChange)
+                return true;
             
             return false;
-            
+        }
+
+        public function delete(&$pks)
+        {
+            $pks = (array) $pks;
+
+            if( parent::delete($pks) )
+            {
+                //apaga relacionamentos do(s) compromisso(s)
+                $query = $this->_db->getQuery(true);
+                $query->delete(
+                        $this->_db->quoteName('#__agendadirigentes_dirigentes_compromissos')
+                    )
+                    ->where(
+                        $this->_db->quoteName('compromisso_id')
+                        . ' IN ( ' .
+                        implode(', ', $pks)
+                        . ' ) '    
+                    );
+
+                $this->_db->setQuery( (string) $query );
+                return $this->_db->query();
+
+            }
+
+            return false;
         }
 
         public function getDataFromIds( $pks = array(), $fields = array() )

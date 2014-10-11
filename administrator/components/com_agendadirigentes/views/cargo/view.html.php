@@ -27,26 +27,8 @@ class AgendaDirigentesViewCargo extends JViewLegacy
         public function display($tpl = null) 
         {
           // get the Data
-          $form = $this->get('Form');
-          $item = $this->get('Item');
-
-          if ( !empty($item->catid) ) {
-            //sempre que section != 'component', essa devera ser a funcao de getActions
-            $this->canDo = AgendaDirigentesHelper::getActions('com_agendadirigentes', 'category', $item->catid);
-            if (!$this->canDo->get('cargos.edit')) {
-              JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
-              $app = JFactory::getApplication();
-              $app->redirect('index.php');
-            }
-          }
-          else
-          {
-            $this->canDo  = JHelperContent::getActions('com_agendadirigentes');
-            
-            if (!$this->canDo->get('cargos.create')) {
-                return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
-            }
-          }
+          $this->form = $this->get('Form');
+          $this->item = $this->get('Item');
 
           // Check for errors.
           if (count($errors = $this->get('Errors'))) 
@@ -54,9 +36,38 @@ class AgendaDirigentesViewCargo extends JViewLegacy
                   JError::raiseError(500, implode('<br />', $errors));
                   return false;
           }
-          // Assign the Data
-          $this->form = $form;
-          $this->item = $item;
+
+          $this->isNew = ($this->item->id == 0);
+          $app = JFactory::getApplication();
+          $this->canDo = JHelperContent::getActions('com_agendadirigentes');
+          $this->canCreate = $this->canDo->get('cargos.create');
+
+          if ($this->isNew)
+          {
+              if(!$this->canCreate)
+              {
+                JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+                $app->redirect('index.php');
+              }
+              $this->canManage = $this->canDo->get('cargos.edit') || $this->canDo->get('cargos.edit.own');
+              $this->canChange = $this->canDo->get('cargos.edit.state');
+          }
+          else
+          {
+              list($canManage, $canChange) = AgendaDirigentesHelper::getGranularPermissions('cargos', $this->item, 'manage' );
+              $this->canManage = $canManage;
+              $this->canChange = $canChange;
+  
+              if (!$this->canManage) {
+                JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+                $app->redirect('index.php');
+              }
+          }
+
+          $isSuperUser = AgendaDirigentesHelper::isSuperUser();
+          $params = JComponentHelper::getParams( 'com_agendadirigentes' );
+          $allowFeature = $params->get('allowFeature', 'state');
+          $this->showFeatured = ($allowFeature == 'state' && $this->canChange) || ($allowFeature == 'edit' && $this->canManage) || ($allowFeature == 'superuser' && $isSuperUser);
 
           // Set the toolbar
           $this->addToolBar();
@@ -73,16 +84,36 @@ class AgendaDirigentesViewCargo extends JViewLegacy
          */
         protected function addToolBar() 
         {
-                $input = JFactory::getApplication()->input;
-                $input->set('hidemainmenu', true);
-                $isNew = ($this->item->id == 0);
-                JToolBarHelper::title($isNew ? JText::_('COM_AGENDADIRIGENTES_MANAGER_CARGO_NEW')
-                                             : JText::_('COM_AGENDADIRIGENTES_MANAGER_CARGO_EDIT'), 'compromisso');
+          $input = JFactory::getApplication()->input;
+          $input->set('hidemainmenu', true);
+          JToolBarHelper::title($this->isNew ? JText::_('COM_AGENDADIRIGENTES_MANAGER_CARGO_NEW')
+                                       : JText::_('COM_AGENDADIRIGENTES_MANAGER_CARGO_EDIT'), 'compromisso');
+
+          if ($this->isNew)
+          {
+            if ($this->canCreate)
+            {
+              JToolBarHelper::apply('cargo.apply');
+              JToolBarHelper::save('cargo.save');
+              JToolBarHelper::save2new('cargo.save2new');
+            }
+          }
+          else
+          {
+            if ($this->canManage)
+            {
                 JToolBarHelper::apply('cargo.apply');
                 JToolBarHelper::save('cargo.save');
                 JToolBarHelper::save2new('cargo.save2new');
+            }
+
+            if ($this->canCreate)
+            {
                 JToolBarHelper::save2copy('cargo.save2copy');
-                JToolBarHelper::cancel('cargo.cancel', $isNew ? 'JTOOLBAR_CANCEL' : 'JTOOLBAR_CLOSE');
+            }  
+          }
+
+          JToolBarHelper::cancel('cargo.cancel', $this->isNew ? 'JTOOLBAR_CANCEL' : 'JTOOLBAR_CLOSE');
         }
 
         /**
@@ -92,9 +123,8 @@ class AgendaDirigentesViewCargo extends JViewLegacy
          */
         protected function setDocument() 
         {
-                $isNew = ($this->item->id < 1);
                 $document = JFactory::getDocument();
-                $document->setTitle($isNew ? JText::_('COM_AGENDADIRIGENTES_MANAGER_CARGO_NEW')
+                $document->setTitle($this->isNew ? JText::_('COM_AGENDADIRIGENTES_MANAGER_CARGO_NEW')
                                            : JText::_('COM_AGENDADIRIGENTES_MANAGER_CARGO_EDIT'));
                 //regras de validacao
                 $document->addScript(JURI::root() . "/administrator/components/com_agendadirigentes"
