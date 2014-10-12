@@ -30,19 +30,13 @@
 		<action name="cargos.delete" title="cargos delete" description="" />
 		<action name="cargos.edit" title="cargos edit" description="" />
 		<action name="cargos.edit.state" title="cargos edit.state" description="" />
-		<!-- <action name="dirigentes.manage" title="dirigentes manage" description="" /> -->
 		<action name="dirigentes.create" title="dirigentes create" description="" />
 		<action name="dirigentes.delete" title="dirigentes delete" description="" />
 		<action name="dirigentes.edit" title="dirigentes edit" description="" />
 		<action name="dirigentes.edit.state" title="dirigentes edit.state" description="" />
 	</section>
-    <section name="cargo">
-    		<action name="dirigentes.delete" title="dirigentes delete" description="" />
-    		<action name="dirigentes.edit" title="dirigentes edit" description="" />
-    		<action name="dirigentes.add" title="dirigentes add" description="" />
-            <action name="compromissos.list" title="compromissos list" description="" />
-            <action name="compromissos.manage" title="compromissos manage" description="" />
-            <action name="compromissos.overrideall" title="compromissos override diferentes niveis" description="" />
-            <action name="compromissos.override" title="compromissos override niveis abaixo" description="" />
+    <section name="cargo">    		
+        <action name="compromissos.overrideall" title="compromissos override diferentes niveis" description="" />
+        <action name="compromissos.override" title="compromissos override niveis abaixo" description="" />
     </section>
 </access>

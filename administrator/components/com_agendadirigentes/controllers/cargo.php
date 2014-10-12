@@ -21,7 +21,6 @@ class AgendaDirigentesControllerCargo extends JControllerForm
 	 /**
      * Implement to allowAdd or not
      *
-     * Not used at this time (but you can look at how other components use it....)
      * Overwrites: JControllerForm::allowAdd
      *
      * @param array $data
@@ -29,7 +28,13 @@ class AgendaDirigentesControllerCargo extends JControllerForm
      */
     protected function allowAdd($data = array())
     {
-        return parent::allowAdd($data);
+        $canDo = JHelperContent::getActions('com_agendadirigentes');
+        $canCreate = $canDo->get('cargos.create');
+
+        if( $canCreate )
+            return true;
+        
+        return false;
     }
 
     /**
@@ -43,35 +48,16 @@ class AgendaDirigentesControllerCargo extends JControllerForm
     protected function allowEdit($data = array(), $key = 'id')
     {
         $id = isset( $data[ $key ] ) ? $data[ $key ] : 0;
+        
         if( !empty( $id ) )
         {
             $model = $this->getModel();
             $item = $model->getTable();
             $item->load( $id );
-      
-            $user = JFactory::getUser();
-            $coreEdit = $user->authorise( "core.edit", $this->option );
-            $categoryEdit = $user->authorise( "cargos.edit", $this->option . ".category." . $item->catid );
-
-            $params = JComponentHelper::getParams( $this->option );
-            $permissionType = $params->get('permissionsType', 'implicit');
             
-            if($permissionType == 'implicit')
-            {
-                if($coreEdit && $categoryEdit !== false)
-                {
-                    return true;
-                }       
-
-            }
-            elseif( $permissionType == 'explicit' )
-            {
-                if($coreEdit && $categoryEdit)
-                {
-                    return true;
-                }
-            }
-            return false;
+            list($canManage, $canChange) = AgendaDirigentesHelper::getGranularPermissions('cargos', $item, 'manage' );
+            
+            return $canManage;
         }
 
         return true;

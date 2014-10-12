@@ -18,59 +18,31 @@ jimport('joomla.application.component.controllerform');
  */
 class AgendaDirigentesControllerCompromisso extends JControllerForm
 {
-
+    /**
+     * Implement to allow edit or not
+     * Overwrites: JControllerForm::allowEdit
+     *
+     * @param array $data
+     * @param string $key
+     * @return bool
+     */
+    
 	protected function allowEdit($data = array(), $key = 'id')
 	{
-		@$id = (int) $data['id'];
+		$id = isset( $data[ $key ] ) ? $data[ $key ] : 0;
 
-		if( $id == 0 )
-			return true;
-
-		$model = $this->getModel();
-		$item = $model->getTable();
-		$item->load( $id );
-		
-		if( !isset($item->catid) )
-			return false;
-
-		$user = JFactory::getUser();
-		$coreEdit = $user->authorise( "core.edit", $this->option );
-		$coreEditOwn = $user->authorise( "core.edit.own", $this->option );
-		$categoryEdit = $user->authorise( "core.edit", $this->option . ".category." . $item->catid );
-		$categoryEditOwn = $user->authorise( "core.edit.own", $this->option . ".category." . $item->catid );
-
-		$params = JComponentHelper::getParams( $this->option );
-        $permissionType = $params->get('permissionsType', 'implicit');
-
-        if($permissionType == 'implicit')
+        if( !empty( $id ) )
         {
-			if($coreEdit && $categoryEdit !== false)
-			{
-				return true;
-			}
-
-			if($coreEditOwn && $categoryEditOwn !== false && $item->created_by == $user->id)
-			{
-				return true;
-			}			
-
+            $model = $this->getModel();
+            $item = $model->getTable();
+            $item->load( $id );
+            
+            list($canManage, $canChange) = AgendaDirigentesHelper::getGranularPermissions('dirigentes', $item, 'manage' );
+            
+            return $canManage;          
         }
-		elseif( $permissionType == 'explicit' )
-		{
-			if($coreEdit && $categoryEdit)
-			{
-				return true;
-			}
 
-			if($coreEditOwn && $categoryEditOwn && $item->created_by == $user->id)
-			{
-				return true;
-			}	
-		}
-
-		return false;
+        return true;
 	}
-
-	
 
 }

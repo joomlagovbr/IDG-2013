@@ -36,95 +36,109 @@ class JFormFieldDirigentesTags extends JFormFieldTag
 	 */
 	protected function getOptions()
 	{
+		$componentParams = AgendaDirigentesHelper::getParams();
 		$published = $this->element['published']? $this->element['published'] : array(0,1);
+		$db = JFactory::getDbo();
 
-		$db		= JFactory::getDbo();
-		$query	= $db->getQuery(true);
-		if ($this->getAttribute('show_category', 1) == 1)
+		if($componentParams->get('permitir_participantes_locais', 1) == 1 || $this->getAttribute('name', '') == 'owner' )
 		{
-			$query->select('a.id AS value, CONCAT(c.title, " - ", b.name, " - " ,a.name) AS text, \'\' AS path, 1 AS level, a.state AS published, b.catid');
-			$query->order('c.title, b.name, a.name');
+			$query	= $db->getQuery(true);
+			if ($this->getAttribute('show_category', 1) == 1)
+			{
+				$query->select('a.id AS value, CONCAT(c.title, " - ", b.name, " - " ,a.name) AS text, \'\' AS path, 1 AS level, a.state AS published, b.catid');
+				$query->order('c.title, b.name, a.name');
+			}
+			else
+			{
+				$query->select('a.id AS value, CONCAT(b.name, " - " ,a.name) AS text, \'\' AS path, 1 AS level, a.state AS published, b.catid');
+				$query->order('b.name, a.name');
+			}
+			
+			$query->from(
+					$db->quoteName('#__agendadirigentes_dirigentes', 'a')
+				)->join(
+					'INNER',
+					$db->quoteName('#__agendadirigentes_cargos', 'b')
+					.' ON (' . $db->quoteName('a.cargo_id') . ' = ' . $db->quoteName('b.id') . ')'
+				)->join(
+					'INNER',
+					$db->quoteName('#__categories', 'c')
+					.' ON (' . $db->quoteName('b.catid') . ' = ' . $db->quoteName('c.id') . ')'
+				);
+
+			// Filter on the published state
+			if (is_numeric($published))
+			{
+				$query->where('a.state = ' . (int) $published);
+			}
+			elseif (is_array($published))
+			{
+				JArrayHelper::toInteger($published);
+				$query->where('a.state IN (' . implode(',', $published) . ')');
+			}
+
+			if($this->getAttribute('name', '') != 'owner')
+			{
+				$query->where('b.sobrepor = 1');
+			}
+
+			// Get the options.
+			$db->setQuery((string)$query);
+			$categories = $db->loadObjectList();
 		}
 		else
 		{
-			$query->select('a.id AS value, CONCAT(b.name, " - " ,a.name) AS text, \'\' AS path, 1 AS level, a.state AS published, b.catid');
-			$query->order('b.name, a.name');
+			$categories = array();
 		}
-		
-		$query->from(
-				$db->quoteName('#__agendadirigentes_dirigentes', 'a')
-			)->join(
-				'INNER',
-				$db->quoteName('#__agendadirigentes_cargos', 'b')
-				.' ON (' . $db->quoteName('a.cargo_id') . ' = ' . $db->quoteName('b.id') . ')'
-			)->join(
-				'INNER',
-				$db->quoteName('#__categories', 'c')
-				.' ON (' . $db->quoteName('b.catid') . ' = ' . $db->quoteName('c.id') . ')'
-			);
-
-
-		// Filter on the published state
-		if (is_numeric($published))
-		{
-			$query->where('a.state = ' . (int) $published);
-		}
-		elseif (is_array($published))
-		{
-			JArrayHelper::toInteger($published);
-			$query->where('a.state IN (' . implode(',', $published) . ')');
-		}
-
-
-		// Get the options.
-		$db->setQuery((string)$query);
-		$categories = $db->loadObjectList();
 
 		$options = array();
-		if ($this->element['emptyfirst'])
+		if ( $this->getAttribute('name', '') == 'owner')
 		{
 			$options[0] = new StdClass();
 			$options[0]->value = "";
-			$options[0]->text = " - Selecione - ";
 			$options[0]->path = "";
 			$options[0]->level = 1;
 			$options[0]->published = 1;
+			$options[0]->text = " - Selecione - ";
 		}
 
-		//restringir de acordo com as permissoes de usuario
-		$componentParams = AgendaDirigentesHelper::getParams();
-		if( $componentParams->get('restricted_list_compromissos', 0) == 1 && ! AgendaDirigentesHelper::isSuperUser() )
+		if( $this->getAttribute('name', '') == 'owner' )
 		{
-			$allowedCategories = array();
-			$input = JFactory::getApplication()->input;
-			$id = $input->getInt('id', 0);
 
-			if(empty($id)) //new
+			//restringir de acordo com as permissoes de usuario
+			if( $componentParams->get('restricted_list_compromissos', 0) == 1 && ! AgendaDirigentesHelper::isSuperUser() )
 			{
-				for ($i=0, $limit = count($categories); $i < $limit; $i++)
+				$allowedCategories = array();
+				$input = JFactory::getApplication()->input;
+				$id = $input->getInt('id', 0);
+
+				if(empty($id)) //new
 				{
-					$canCreate = AgendaDirigentesHelper::getGranularPermissions('compromissos', $categories[$i], 'create' );
-					if ( $canCreate )
+					for ($i=0, $limit = count($categories); $i < $limit; $i++)
 					{
-						$allowedCategories[] = $categories[$i];
+						$canCreate = AgendaDirigentesHelper::getGranularPermissions('compromissos', $categories[$i], 'create' );
+						if ( $canCreate )
+						{
+							$allowedCategories[] = $categories[$i];
+						}
 					}
 				}
-			}
-			else //edit
-			{
-				for ($i=0, $limit = count($categories); $i < $limit; $i++)
-				{ 
-					list($canManage, $canChange) = AgendaDirigentesHelper::getGranularPermissions('compromissos', $categories[$i], 'manage' );
-					if ($canManage || $canChange)
-					{
-						$allowedCategories[] = $categories[$i];
+				else //edit
+				{
+					for ($i=0, $limit = count($categories); $i < $limit; $i++)
+					{ 
+						list($canManage, $canChange) = AgendaDirigentesHelper::getGranularPermissions('compromissos', $categories[$i], 'manage' );
+						if ($canManage || $canChange)
+						{
+							$allowedCategories[] = $categories[$i];
+						}
 					}
 				}
+				$categories = $allowedCategories;
 			}
-			$categories = $allowedCategories;
+			//fim restricao de acordo com as permissoes de usuario
 		}
-		//fim restricao de acordo com as permissoes de usuario
-
+		
 		try
 		{
 			$options = array_merge($options, $categories);
@@ -134,8 +148,9 @@ class JFormFieldDirigentesTags extends JFormFieldTag
 			return false;
 		}
 
-
-		if ( $this->getAttribute('add_participantes_externos', false) )
+		if ( $this->getAttribute('add_participantes_externos', false) == true
+			&& $componentParams->get('permitir_participantes_externos', 1) == 1
+			&& $this->getAttribute('name', '') != 'owner' )
 		{
 
 			$input = JFactory::getApplication()->input;
@@ -187,11 +202,16 @@ class JFormFieldDirigentesTags extends JFormFieldTag
 	 */
 	protected function getInput()
 	{
-		if( $this->getAttribute('multiple', false) == "true" )
+		$componentParams = AgendaDirigentesHelper::getParams();
+
+		if( $this->getAttribute('multiple', false) == "true"
+			&& ($componentParams->get('permitir_participantes_locais', 1) == 1
+				|| $componentParams->get('permitir_participantes_externos', 1) == 1)
+		)
 		{
 			$id    = isset($this->element['id']) ? $this->element['id'] : null;
 			$cssId = '#' . $this->getId($id, $this->element['name']);			
-			$this->ajaxfieldCustomTag($cssId);
+			$this->ajaxfieldCustomTag($cssId, 5, ($componentParams->get('permitir_participantes_externos', 1)==1)? 'true' : 'false' );
 		}
 		
 		$input = parent::getInput();
@@ -199,12 +219,12 @@ class JFormFieldDirigentesTags extends JFormFieldTag
 		return $input;
 	} 
 
-	protected function ajaxfieldCustomTag($selector='#jform_tags', $minTermLength = 5)
+	protected function ajaxfieldCustomTag($selector='#jform_tags', $minTermLength = 5, $customTags = 'true')
 	{
 		JFactory::getDocument()->addScriptDeclaration("
 			(function($){
 				$(document).ready(function () {
-
+					var allowCustomTags = " . $customTags . ";
 					var customTagPrefix = '#new#';
 
 					// Method to add tags pressing enter
@@ -228,7 +248,7 @@ class JFormFieldDirigentesTags extends JFormFieldTag
 								tagOption.attr('selected', 'selected');
 							}
 							// Add the custom tag option
-							else
+							else if( allowCustomTags == true )
 							{
 								var customTag = this.value;
 

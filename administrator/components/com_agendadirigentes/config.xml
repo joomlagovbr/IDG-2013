@@ -110,6 +110,26 @@
                         <option value="0">JNO</option>
                         <option value="1">JYES</option>
                 </field>
+                <field
+                        name="permitir_participantes_locais"
+                        type="list"
+                        label="Permitir participantes locais / sobreposição"
+                        description=""
+                        default="1"
+                        >
+                        <option value="0">JNO</option>
+                        <option value="1">JYES</option>
+                </field>
+                <field
+                        name="permitir_participantes_externos"
+                        type="list"
+                        label="Permitir participantes externos"
+                        description=""
+                        default="1"
+                        >
+                        <option value="0">JNO</option>
+                        <option value="1">JYES</option>
+                </field>
         </fieldset>
         <fieldset
                 name="compromissos"

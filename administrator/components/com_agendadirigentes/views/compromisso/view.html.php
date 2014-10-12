@@ -75,6 +75,8 @@ class AgendaDirigentesViewCompromisso extends JViewLegacy
             $params = JComponentHelper::getParams( 'com_agendadirigentes' );
             $allowFeature = $params->get('allowFeature', 'state');            
             $this->showFeatured = ($allowFeature == 'state' && $this->canChange) || ($allowFeature == 'edit' && $this->canManage) || ($allowFeature == 'superuser' && $isSuperUser);
+            $this->permitir_participantes_locais = $params->get('permitir_participantes_locais', 1);
+            $this->permitir_participantes_externos = $params->get('permitir_participantes_externos', 1);
 
             // Set the toolbar
             $this->addToolBar();

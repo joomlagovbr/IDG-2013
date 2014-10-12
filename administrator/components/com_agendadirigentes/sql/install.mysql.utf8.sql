@@ -60,6 +60,7 @@ CREATE TABLE `#__agendadirigentes_cargos` (
   `catid` int(11) NOT NULL DEFAULT '0',
   `ordering` int(11) NOT NULL DEFAULT '0',
   `featured` INT(1) NOT NULL DEFAULT '0',
+  `sobrepor` INT(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `idx_catid` (`catid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

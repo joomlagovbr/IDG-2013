@@ -77,12 +77,24 @@
                         <option value="0">JNO</option>
                         <option value="1">JYES</option>
                 </field>
+                <field
+                        name="sobrepor"
+                        type="radio"
+                        label="Permitir sobreposição?"
+                        description=""
+                        default="1"
+                        validate="boolean"
+                        filter="integer"
+                        >
+                        <option value="0">JNO</option>
+                        <option value="1">JYES</option>
+                </field>
         </fieldset>
         <fieldset name="accesscontrol">
                 <field name="asset_id" type="hidden" filter="unset" />
                 <field name="rules"
                         type="rules"
-                        label="JFIELD_RULES_LABEL"
+                        label="Permissões de cargos"
                         translate_label="false"
                         filter="rules"
                         validate="rules"

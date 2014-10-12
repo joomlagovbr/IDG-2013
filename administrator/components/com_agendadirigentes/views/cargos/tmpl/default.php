@@ -67,6 +67,9 @@ $sortFields = $this->getSortFields();
                                 <tfoot><?php echo $this->loadTemplate('foot');?></tfoot>
                                 <tbody><?php echo $this->loadTemplate('body');?></tbody>
                         </table>
+                        <?php if ($this->sobreposicaoBloqueada): ?>
+                        <div align="right">* itens com asterisco n&atilde;o permitem sobreposi&ccedil;&atilde;o de compromissos.</div>
+                        <?php endif; ?>
                 <?php endif; ?>
                 <div>
                         <input type="hidden" name="task" value="" />

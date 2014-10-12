@@ -34,7 +34,6 @@
                         class="span12"
                         multiple="false"
                         required="true"
-                        emptyfirst="true"                        
                         onchange="removeselected(this, 'dirigentes');"
                         mode="nested"
                 />

@@ -53,7 +53,7 @@ jQuery(document).ready(function(){
             <div class="row-fluid">
                 <div class="span8">
                     <?php foreach ($this->form->getFieldset('details') as $field): ?>
-                        <?php if($field->fieldname!='featured' || $this->showFeatured): ?>
+                        <?php if(($field->fieldname!='featured' || $this->showFeatured) && $field->fieldname!='dirigentes' ): ?>
                             <div class="control-group">
                                 <?php if (!$field->hidden): ?>
                                     <?php if($field->fieldname=='state'):                          
@@ -63,7 +63,16 @@ jQuery(document).ready(function(){
                                 <?php endif; ?>
                                 <div class="controls"><?php echo $field->input; ?></div>
                             </div>
-                        <?php else: ?>
+                        <?php elseif($field->fieldname=='dirigentes'): ?>
+                            <?php if (!$this->permitir_participantes_locais && !$this->permitir_participantes_externos): ?>
+                                <input type="hidden" name="jform[dirigentes]" value="" />
+                            <?php else: ?>
+                                <div class="control-group">
+                                    <div class="control-label"><?php echo $field->label; ?></div>
+                                    <div class="controls"><?php echo $field->input; ?></div>
+                                </div>
+                            <?php endif; ?>
+                        <?php elseif($field->fieldname=='featured'): ?>
                             <input type="hidden" name="jform[featured]" value="<?php echo $field->value; ?>" />
                         <?php endif; ?>                            
                     <?php endforeach; ?>
@@ -77,13 +86,7 @@ jQuery(document).ready(function(){
                             <div class="controls"><?php echo $field->input; ?></div>
                         </div>
                     <?php endforeach; ?>
-                    <?php //echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'display')); ?>
-                    <?php //echo JLayoutHelper::render('joomla.edit.params', $this); ?>
-                    <?php //echo JHtml::_('bootstrap.endTabSet'); ?>
                 </div>
-                <!-- <div class="span3">
-                    <?php //echo JLayoutHelper::render('joomla.edit.global', $this); ?>
-                </div> -->
             </div>
         </fieldset>
     </div>

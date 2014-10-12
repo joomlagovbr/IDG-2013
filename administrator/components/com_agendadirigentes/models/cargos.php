@@ -46,7 +46,7 @@ class AgendaDirigentesModelCargos extends JModelList
                 $query = $db->getQuery(true);
                 // Select some fields from the cargos table
                 $query
-                    ->select('DISTINCT a.id, a.name, a.name_f, a.catid, a.published, a.featured, b.title AS titleCategory, a.ordering')
+                    ->select('DISTINCT a.id, a.name, a.name_f, a.catid, a.published, a.featured, b.title AS titleCategory, a.ordering, a.sobrepor')
                     ->from( $db->quoteName('#__agendadirigentes_cargos', 'a') )
                     ->join('INNER', $db->quoteName('#__categories', 'b')
                         . ' ON (' . $db->quoteName('b.id') . ' = ' . $db->quoteName('a.catid') . ')'

@@ -1,7 +1,7 @@
 jQuery('document').ready(function() {
         document.formvalidator.setHandler('compromisso-title',
                 function (value) {
-                        regex=/^[^0-9]+$/;
+                        regex=/^[^\<\>\=\n\t\r]+$/;
                         return regex.test(value);
         });
         document.formvalidator.setHandler('compromisso-catid',

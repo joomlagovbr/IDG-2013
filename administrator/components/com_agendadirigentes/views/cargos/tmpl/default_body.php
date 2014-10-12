@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers');
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
+$this->sobreposicaoBloqueada = false;
 ?>
 <?php foreach($this->items as $i => $item):
 
@@ -67,6 +68,10 @@ JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
                     <?php if (!empty($item->name_f)): ?>
                         <small style="color:#999"><small>/ <?php echo $item->name_f; ?></small></small>
                     <?php endif ?>
+                    <?php if ($item->sobrepor == 0): ?>
+                        *
+                        <?php $this->sobreposicaoBloqueada = true; ?>
+                    <?php endif; ?>
                 </td>
                 <td>
                         <?php echo $item->titleCategory; ?>

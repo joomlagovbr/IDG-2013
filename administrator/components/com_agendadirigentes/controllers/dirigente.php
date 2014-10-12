@@ -21,7 +21,6 @@ class AgendaDirigentesControllerDirigente extends JControllerForm
  	/**
      * Implement to allowAdd or not
      *
-     * Not used at this time (but you can look at how other components use it....)
      * Overwrites: JControllerForm::allowAdd
      *
      * @param array $data
@@ -29,7 +28,13 @@ class AgendaDirigentesControllerDirigente extends JControllerForm
      */
     protected function allowAdd($data = array())
     {
-        return parent::allowAdd($data);
+        $canDo = JHelperContent::getActions('com_agendadirigentes');
+        $canCreate = $canDo->get('dirigentes.create');
+
+        if( $canCreate )
+            return true;
+        
+        return false;
     }
  
     /**
@@ -40,12 +45,22 @@ class AgendaDirigentesControllerDirigente extends JControllerForm
      * @param string $key
      * @return bool
      */
-    protected function allowEdit($data = array(), $key = 'cargo_id')
+    protected function allowEdit($data = array(), $key = 'id')
     {
-        $cargo_id = isset( $data[ $key ] ) ? $data[ $key ] : 0;
-        if( !empty( $cargo_id ) ){
-            $user = JFactory::getUser();
-            return $user->authorise( "dirigentes.edit", "com_agendadirigentes.cargo." . $cargo_id );
+        $id = isset( $data[ $key ] ) ? $data[ $key ] : 0;
+        
+        if( !empty( $id ) )
+        {
+            $model = $this->getModel();
+            $item = $model->getTable();
+            $item->load( $id );
+            
+            list($canManage, $canChange) = AgendaDirigentesHelper::getGranularPermissions('dirigentes', $item, 'manage' );
+            
+            return $canManage;
         }
+
+        return true;
     }
+
 }
