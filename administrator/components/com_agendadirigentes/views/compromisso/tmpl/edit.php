@@ -16,6 +16,7 @@ JHtml::_('behavior.multiselect');
 JHtml::_('formbehavior.chosen', 'select');
 
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers');
+JHtml::script( JURI::base() . 'components/com_agendadirigentes/assets/js/jquery.maskedinput.min.js');
 ?>
 <script type="text/javascript">
 function removeselected(elm, aim)
@@ -41,8 +42,10 @@ function injectSelected(elm, aim)
     };
 }
 jQuery(document).ready(function(){
-    removeselected("#jform_owner", 'dirigentes');
-    injectSelected('#jform_participantes_externos', 'dirigentes');  
+    removeselected('#jform_owner', 'dirigentes');
+    injectSelected('#jform_participantes_externos', 'dirigentes');
+    jQuery('#jform_horario_inicio').mask("99:99");
+    jQuery('#jform_horario_fim').mask("99:99");
 });
 </script>
 <form action="<?php echo JRoute::_('index.php?option=com_agendadirigentes&layout=edit&id=' . (int) $this->item->id); ?>"

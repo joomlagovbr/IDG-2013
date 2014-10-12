@@ -81,7 +81,8 @@ class AgendaDirigentesModelAutoridade extends JModelItem
 	public function getCompromissos()
 	{
 		$compromissosModel = $this->getInstance('compromissos', 'AgendaDirigentesModel');
-		return $compromissosModel->getItems();
+		$options = array( 'exclude_dirigente_id' => $this->getState('autoridade.id') );
+		return $compromissosModel->getItems( $options );
 	}
 
 	public static function getDate()

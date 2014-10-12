@@ -61,6 +61,9 @@ JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
                     <?php else : ?>
                         <?php echo $this->escape($item->title); ?>
                     <?php endif; ?>
+                    <?php if($item->sobreposto == 1): ?>
+                    <br /><small style="color:red">(sobreposto por compromisso ID:<?php echo $item->sobreposto_por ?>)</small>
+                    <?php endif; ?>
                 </td>
                 <td>
                         <?php echo $item->nameOwner; ?>

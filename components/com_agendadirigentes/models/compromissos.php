@@ -80,7 +80,7 @@ class AgendaDirigentesModelCompromissos extends JModelList
         	. ' ON (' . $db->quoteName('dc.dirigente_id') . ' = ' . $db->quoteName('dir.id') . ')' 
         )->where(
         	array(
-            $db->quoteName('dir.id') . ' = ' . 1,
+            $db->quoteName('dir.id') . ' = ' . $autoridade_id,
         	$db->quoteName('comp.data_inicial') . ' <= ' . $dia,
         	'('.
         		$db->quoteName('comp.data_final') . ' >= ' . $dia . ' OR ' .
@@ -96,24 +96,30 @@ class AgendaDirigentesModelCompromissos extends JModelList
         return $query;
     }
 
-    public function getItems()
+    public function getItems( $options = array() )
     {
     	$input = JFactory::getApplication()->input;
 		$compromissos = parent::getItems();
 
         if ($this->state->get('participantes.load')):
-    		//formatando ids de compromissos
-    		//obtendo participantes
-    		$compromissos_id_list = array();		
-    		for ($i=0, $limit = count($compromissos); $i < $limit; $i++) { 
-    			$compromissos_id_list[] = $compromissos[$i]->id;
-    		}
-    		$input->set('compromissos', $compromissos_id_list);
+            //formatando ids de compromissos
+            //obtendo participantes
+            $compromissos_id_list = array();        
+            for ($i=0, $limit = count($compromissos); $i < $limit; $i++) { 
+                $compromissos_id_list[] = $compromissos[$i]->id;
+            }
+            $input->set('compromissos', $compromissos_id_list);
 
             if (count($compromissos_id_list))
             {
-        	   $participantesModel = $this->getInstance('participantes', 'AgendaDirigentesModel');
-    	   	   $participantes = $participantesModel->getItems();
+                $participantesModel = $this->getInstance('participantes', 'AgendaDirigentesModel');
+                if(array_key_exists('exclude_dirigente_id', $options))
+                {                
+                    $input->set('participantes_filter_owner', false);
+                    $exclude_dirigentes_list = explode(',', $options['exclude_dirigente_id']); 
+                    $input->set('exclude_dirigentes_list', $exclude_dirigentes_list);
+                }
+                $participantes = $participantesModel->getItems();
             }
             else
                 $participantes = array();

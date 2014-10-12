@@ -57,7 +57,7 @@ class AgendaDirigentesModelCompromissos extends JModelList
                     ->select(' comp.data_final, comp.horario_inicio, comp.horario_fim, comp.description, comp.local')
                     ->select(' comp.params, comp.featured, comp.created_by')
                     ->select(' comp.state, comp.dia_todo')
-                    ->select(' dc.sobreposto, dc.owner')
+                    ->select(' dc.sobreposto, dc.owner, dc.sobreposto_por')
                     ->select(' dir.name AS nameOwner, dir.id AS idOwner')
                     ->select(' car.name AS cargoOwner, car.catid')
                     // ->select(' cat.title AS titleCategory')

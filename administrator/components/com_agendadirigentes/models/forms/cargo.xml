@@ -78,9 +78,33 @@
                         <option value="1">JYES</option>
                 </field>
                 <field
-                        name="sobrepor"
+                        name="permitir_sobreposicao"
                         type="radio"
-                        label="Permitir sobreposição?"
+                        label="Permitir que os compromissos desta autoridade sejam sobrepostos?"
+                        description=""
+                        default="1"
+                        validate="boolean"
+                        filter="integer"
+                        >
+                        <option value="0">JNO</option>
+                        <option value="1">JYES</option>
+                </field>
+                <field
+                        name="sobrepor_mesma_categoria"
+                        type="radio"
+                        label="Sobrepor compromissos de autoridades da mesma categoria?"
+                        description=""
+                        default="1"
+                        validate="boolean"
+                        filter="integer"
+                        >
+                        <option value="0">JNO</option>
+                        <option value="1">JYES</option>
+                </field>
+                <field
+                        name="sobrepor_todos"
+                        type="radio"
+                        label="Sobrepor compromissos de qualquer autoridade do sistema?"
                         description=""
                         default="1"
                         validate="boolean"

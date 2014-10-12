@@ -30,6 +30,9 @@ class AgendaDirigentesModelParticipantes extends JModelList
             $compromissos[$i] = intval($compromissos[$i]);
         }
         $this->setState('compromissos', $compromissos);
+
+        $this->setState('filter_owner', $app->input->get('participantes_filter_owner', true) );
+        $this->setState('exclude_dirigentes_list', $app->input->get('exclude_dirigentes_list', array(), 'ARRAY' ) );
     	
     	parent::populateState();
     }
@@ -49,7 +52,8 @@ class AgendaDirigentesModelParticipantes extends JModelList
         $query->select(
              $db->quoteName('dir.name', 'dirigente_name') . ', ' .
              $db->quoteName('car.name', 'cargo_name') . ', ' .
-        	 $db->quoteName('dc.compromisso_id')
+             $db->quoteName('dc.compromisso_id') . ', ' .
+        	 $db->quoteName('dc.dirigente_id')
         )->from(
         	$db->quoteName('#__agendadirigentes_dirigentes', 'dir')
         )->join(
@@ -63,10 +67,29 @@ class AgendaDirigentesModelParticipantes extends JModelList
         )->where(
             array(
         	$db->quoteName('dc.compromisso_id') . ' IN (' . $compromissos . ')',
-        	$db->quoteName('dir.state') . ' > ' . 0,
-            $db->quoteName('dc.owner') . ' = ' . 0
+        	$db->quoteName('dir.state') . ' > ' . 0
             )
         );
+
+        if( $this->state->get('filter_owner', true) == true )
+        {
+            $query->where(
+                $db->quoteName('dc.owner') . ' = 0'
+            );
+        }
+
+        if(! is_array( $this->state->get('exclude_dirigentes_list') ) )
+                $this->state->set('exclude_dirigentes_list', array( (int) $this->state->get('exclude_dirigentes_list') ) );
+            
+        if( count( $this->state->get('exclude_dirigentes_list') ) > 0 )
+        {
+            $query->where(
+                $db->quoteName('dc.dirigente_id')
+                . ' NOT IN (' .
+                implode(', ', $this->state->get('exclude_dirigentes_list') )
+                . ')'
+            );
+        }
 
         return $query;
     }

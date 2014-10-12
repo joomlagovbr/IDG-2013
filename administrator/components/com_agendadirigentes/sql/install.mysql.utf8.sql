@@ -38,7 +38,8 @@ CREATE TABLE `#__agendadirigentes_dirigentes_compromissos` (
   `dirigente_id` int(11) NOT NULL,
   `compromisso_id` int(11) NOT NULL,
   `owner` int(11) DEFAULT '0',
-  `sobreposto` int(11) NOT NULL DEFAULT '0' COMMENT 'Compromissos sobrepostos não são exibidos porque uma autoridade convocou outra para reunião.',
+  `sobreposto` int(1) NOT NULL DEFAULT '0' COMMENT 'Compromissos sobrepostos não são exibidos porque uma autoridade convocou outra para reunião.',
+  `sobreposto_por` int(11) NOT NULL DEFAULT '0' COMMENT 'ID do compromisso que causou a sobreposição',
   PRIMARY KEY (`dirigente_id`,`compromisso_id`),
   KEY `idx_owner` (`owner`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -60,7 +61,9 @@ CREATE TABLE `#__agendadirigentes_cargos` (
   `catid` int(11) NOT NULL DEFAULT '0',
   `ordering` int(11) NOT NULL DEFAULT '0',
   `featured` INT(1) NOT NULL DEFAULT '0',
-  `sobrepor` INT(1) NOT NULL DEFAULT '1',
+  `permitir_sobreposicao` INT(1) NOT NULL DEFAULT '1',
+  `sobrepor_mesma_categoria` INT(1) NOT NULL DEFAULT '0',
+  `sobrepor_todos` INT(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `idx_catid` (`catid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

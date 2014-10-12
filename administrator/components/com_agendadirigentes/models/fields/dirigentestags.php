@@ -79,7 +79,7 @@ class JFormFieldDirigentesTags extends JFormFieldTag
 
 			if($this->getAttribute('name', '') != 'owner')
 			{
-				$query->where('b.sobrepor = 1');
+				$query->where('b.permitir_sobreposicao = 1');
 			}
 
 			// Get the options.

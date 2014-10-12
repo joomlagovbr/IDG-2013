@@ -60,6 +60,9 @@ class AgendaDirigentesTableCompromisso extends JTable
                 if($this->horario_fim == '00:00:00')
                     $this->horario_fim = '';
 
+                $this->horario_inicio = substr($this->horario_inicio, 0, 5);
+                $this->horario_fim = substr($this->horario_fim, 0, 5);
+
                 if(!isset($this->catid))
                 {
                     $query = $this->_db->getQuery(true);

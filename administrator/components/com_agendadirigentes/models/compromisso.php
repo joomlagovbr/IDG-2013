@@ -121,75 +121,304 @@ class AgendaDirigentesModelCompromisso extends JModelAdmin
 
         protected function updateCompromissosDirigentes($data)
         {
-                if (@isset($data['id'])===false) {
-                        return false;
-                }
+                if (@isset($data['id'])===false)
+                    return false;
 
                 if(!$this->clearCompromissosDirigentes($data))
-                        return false;
+                    return false;
 
                 if(!$this->insertCompromissosDirigentes($data))
-                        return false;
+                    return false;
 
                 return true;
         }
 
         protected function clearCompromissosDirigentes($data)
         {
-                $query = $this->_db->getQuery(true);
-                $query->delete( $this->_db->quoteName('#__agendadirigentes_dirigentes_compromissos') );
-                $query->where( $this->_db->quoteName('compromisso_id') .' = '.intval($data['id']) );
-                $this->_db->setQuery($query);
-                return $this->_db->query();
+            $db = $this->_db;
+
+            //preparando input para array
+            if( is_array($data) && isset($data['id']) )
+            {
+                $ids = array( (int) $data['id'] );
+            }
+            elseif( is_array($data) )
+            {
+                $ids = $data;
+            }
+            else
+            {
+                $ids = array( (int) $data );
+            }
+
+            $ids = implode(', ', $ids);
+
+            //removendo sobreposicoes
+            $query = $db->getQuery(true);
+            $fields = array(
+                    $db->quoteName('sobreposto') . ' = 0',
+                    $db->quoteName('sobreposto_por') . ' = 0'
+                );
+            $conditions = array(
+                    $db->quoteName('sobreposto_por') . ' IN (' . $ids . ')'
+                );
+
+            $query->update(
+                    $db->quoteName('#__agendadirigentes_dirigentes_compromissos')
+                )->set( $fields )->where( $conditions );
+
+            $db->setQuery((string)$query);
+
+            if( ! $db->query() )
+                return false;
+
+            // limpando registros de participantes para o compromisso em questao
+            $query = $db->getQuery(true);
+            $query->delete(
+                $db->quoteName('#__agendadirigentes_dirigentes_compromissos')
+            );
+            $query->where(
+                $db->quoteName('compromisso_id') .' IN (' . $ids . ')'
+            );
+            $db->setQuery($query);
+
+            return $db->query();
         }
 
         protected function insertCompromissosDirigentes($data)
         {
-                $owner = @$data['owner'];
-                if (is_array($owner)) {
-                        $owner = (int) $owner[0];
-                }
-                $owner = (int) $owner;
-                if($owner==0)
-                        return false;
+            $owner = @$data['owner'];
+            $app = JFactory::getApplication();
+            $db = $this->_db;
 
-                $items = array();
-                $items[] = array(
-                                'dirigente_id' => $owner,
-                                'compromisso_id' => intval($data['id']),
-                                'owner' => 1,
-                                'sobreposto' => 0
+            if (is_array($owner)) {
+                    $owner = (int) $owner[0];
+            }
+            $owner = (int) $owner;
+            
+            if($owner==0)
+                return false;
+
+            //montagem dos itens que serao inseridos na tabela #__agendadirigentes_dirigentes_compromissos
+            $items = array();
+            $items[] = array(
+                            'dirigente_id' => $owner,
+                            'compromisso_id' => intval($data['id']),
+                            'owner' => 1,
+                            'sobreposto' => 0,
+                            'sobreposto_por' => 0
+                    );
+
+            $dirigentes = @$data['dirigentes'];
+            $ids_dirigentes = array();
+
+            if (is_array($dirigentes)) {
+                for ($i=0, $limit = count($dirigentes); $i < $limit; $i++) { 
+                    if (is_numeric($dirigentes[$i])) { //grava somente os itens que possuem ID, ou seja, dirigentes cadastrados
+                        $items[] = array(
+                                'dirigente_id' => $dirigentes[$i],
+                                'compromisso_id' => $data['id'],
+                                'owner' => 0,
+                                'sobreposto' => 0,
+                                'sobreposto_por' => 0
                         );
+                        $ids_dirigentes[ $dirigentes[$i] ] = $dirigentes[$i];
+                    }
+                }
+            }
 
-                $dirigentes = @$data['dirigentes'];
-                if (is_array($dirigentes)) {
-                    for ($i=0, $limit = count($dirigentes); $i < $limit; $i++) { 
-                        if (is_numeric($dirigentes[$i])) { //grava somente os itens que possuem ID, ou seja, dirigentes cadastrados
-                            $items[] = array(
-                                    'dirigente_id' => $dirigentes[$i],
-                                    'compromisso_id' => $data['id'],
-                                    'owner' => 0,
-                                    'sobreposto' => 0
-                            );
-                        }
+            if (count($ids_dirigentes))
+            {
+                //verificar se ha dirigentes que nao podem ter compromissos sobrepostos
+                $query = $db->getQuery(true);
+                $query->select(
+                        $db->quoteName('dir.id') . ', ' .
+                        $db->quoteName('dir.name')
+                    )
+                    ->from(
+                        $db->quoteName('#__agendadirigentes_dirigentes', 'dir')
+                    )
+                    ->join(
+                        'INNER',
+                        $db->quoteName('#__agendadirigentes_cargos', 'car')
+                        .' ON (' . $db->quoteName('dir.cargo_id') . ' = ' . $db->quoteName('car.id') . ')'
+                    )
+                    ->where(
+                        $db->quoteName('permitir_sobreposicao') . ' = 0'
+                        . ' AND ' .
+                        $db->quoteName('dir.id') . ' IN (' . implode(', ', $ids_dirigentes) . ')'
+                    );
+                $db->setQuery((string)$query);
+                $dirigentes_nao_permitem_sobrepor = $db->loadObjectList('id');
+                
+                //avisar sobre dirigentes que nao podem ter compromissos sobrepostos e remover do array de ids de ids_dirigentes
+                foreach ($dirigentes_nao_permitem_sobrepor as $id => $obj) {
+                    if( array_key_exists($id, $ids_dirigentes) )
+                    {
+                        unset( $ids_dirigentes[ $id ] );
+                        $nomeDirigente = $obj->name;
+                        $app->enqueueMessage('O cargo de '.$nomeDirigente.' n&atilde;o permite sobreposi&ccedil;&atilde;o.', 'Warning');
                     }
                 }
 
-                for ($i=0, $limit = count($items); $i < $limit; $i++) { 
-                        $columns = array_keys($items[$i]);
-                        $values = array_values($items[$i]);
-                        $query = $this->_db->getQuery(true);
-                        $query
-                            ->insert($this->_db->quoteName('#__agendadirigentes_dirigentes_compromissos'))
-                            ->columns($this->_db->quoteName($columns))
-                            ->values(implode(',', $values));
-                        $this->_db->setQuery((string)$query);
-                        if (!$this->_db->query()) {
-                            return false;
-                        }
+                //formatando datas para as proximas acoes
+                $data_inicial = explode('/', $data['data_inicial']);
+                $data_inicial = $data_inicial[2]."-".$data_inicial[1]."-".$data_inicial[0];
+                $data_final = explode('/', $data['data_final']);
+                $data_final = $data_final[2]."-".$data_final[1]."-".$data_final[0];
+
+                //verificar ids dos itens que serao sobrepostos, aproveitando array atualizado de ids_dirigentes
+                //essa verificacao precisa ser feita antes para impedir insercao de itens que ja foram sobrepostos por outros compromissos
+                $query = $db->getQuery(true);
+                $query->select(
+                        $db->quoteName('dc.compromisso_id') . ', ' .
+                        $db->quoteName('dc.dirigente_id') . ', ' .
+                        $db->quoteName('dc.owner') . ', ' .
+                        $db->quoteName('dc.sobreposto') . ', ' .
+                        $db->quoteName('dc.sobreposto_por') . ', ' .
+                        $db->quoteName('comp.title', 'compromisso_title') . ', ' .
+                        $db->quoteName('dir.name', 'dirigente_name')
+                    )
+                    ->from(
+                        $db->quoteName('#__agendadirigentes_dirigentes', 'dir')
+                    )
+                    ->join(
+                        'INNER',
+                        $db->quoteName('#__agendadirigentes_dirigentes_compromissos', 'dc')
+                        .' ON (' . $db->quoteName('dir.id') . ' = ' . $db->quoteName('dc.dirigente_id') . ')'
+                    )
+                    ->join(
+                        'INNER',
+                        $db->quoteName('#__agendadirigentes_compromissos', 'comp')
+                        .' ON (' . $db->quoteName('comp.id') . ' = ' . $db->quoteName('dc.compromisso_id') . ')'
+                    )
+                    ->where(
+                        $db->quoteName('comp.data_inicial') . ' >= ' .
+                        $db->Quote( $data_inicial )
+                        . ' AND ' .
+                        $db->quoteName('comp.data_final') . ' <= ' .
+                        $db->Quote( $data_final )
+                        . ' AND ' .
+                        $db->quoteName('comp.horario_inicio') . ' >= ' .
+                        $db->Quote( $data['horario_inicio'] )
+                        . ' AND ' .
+                        $db->quoteName('comp.horario_fim') . ' <= ' .
+                        $db->Quote( $data['horario_fim'] )
+                        . ' AND ' .
+                        $db->quoteName('dir.id') . ' IN (' . implode(', ', $ids_dirigentes) . ')'
+                        . ' AND ' .
+                        $db->quoteName( 'comp.id' ) . ' <> ' . (int) $data['id']
+                    );
+                $db->setQuery((string) $query);
+                $sobrepostos = $db->loadObjectList();
+                $compromissos_nao_permitem_sobrepor = array();
+
+                for ($i=0, $limit = count($sobrepostos); $i < $limit; $i++) { 
+                    if($sobrepostos[$i]->sobreposto == 1)
+                    {
+                        $key = $sobrepostos[$i]->compromisso_id . '.' . $sobrepostos[$i]->dirigente_id;
+                        $compromissos_nao_permitem_sobrepor[ $key ] = array();
+                        $compromissos_nao_permitem_sobrepor[ $key ]['dirigente_name'] = $sobrepostos[$i]->dirigente_name;
+                    }
+                }
+            }
+            else
+            {
+                $dirigentes_nao_permitem_sobrepor = array();
+                $sobrepostos = array();
+                $compromissos_nao_permitem_sobrepor = array();
+            }
+            //fim if else count(dirigentes)
+
+            //inserir os itens que puderem ser inseridos, de acordo com as regras
+            for ($i=0, $limit = count($items); $i < $limit; $i++)
+            {
+                //nao insere compromissos de dirigentes que nao permitem sobreposicao...
+                if( array_key_exists($items[$i]['dirigente_id'],  $dirigentes_nao_permitem_sobrepor) )
+                    continue;
+
+                //nao insere compromissos para dirigentes quando esses compromissos ja foram sobrepostos
+                $tmp_key = $items[$i]['compromisso_id'] . '.' . $items[$i]['dirigente_id'];
+                if( array_key_exists($tmp_key,  $compromissos_nao_permitem_sobrepor) )
+                {
+                    $nomeDirigente = $compromissos_nao_permitem_sobrepor[$tmp_key]['dirigente_name'];
+                    $app->enqueueMessage('O compromisso de '.$nomeDirigente.' nesse(s) mesmo(s) dia(s) e hor&aacute;rio(s) n&atilde;o permite(m) sobreposi&ccedil;&atilde;o.', 'Warning');
+                    continue;
                 }
 
+                //insere os itens que podem ser inseridos
+                $columns = array_keys($items[$i]);
+                $values = array_values($items[$i]);
+                $query = $db->getQuery(true);
+                $query
+                    ->insert($db->quoteName('#__agendadirigentes_dirigentes_compromissos'))
+                    ->columns($db->quoteName($columns))
+                    ->values(implode(',', $values));
+
+                $db->setQuery((string)$query);
+
+                if (!$db->query()) {
+                    return false;
+                }
+
+            } //fim for() insert compromissos x dirigentes
+
+            //sobrepoe somente se o compromisso estiver publicado (problema com troca de estados fora da edicao)
+            if ( $data['state'] != 1)
+            {
+                $app->enqueueMessage('Sobreposi&ccedil;&otilde;es de agendas ocorrem somente no ato da publica&ccedil;&atilde;o do compromisso.', 'Warning');
                 return true;
+            }
+
+            // sobrepoe de acordo com os resultados do array de itens sobrepostos
+            $compromissos_sobrepostos = array();
+
+            for ($i=0, $limit = count($sobrepostos); $i < $limit; $i++)
+            { 
+                $item = $sobrepostos[$i];
+
+                if( $item->sobreposto==1 ) //item ja foi sobreposto por outro compromisso
+                    continue;
+
+                if(in_array($item->compromisso_id, $compromissos_sobrepostos)) //sobreposicao completa ja realizada...
+                    continue;
+
+                $query = $db->getQuery(true);
+                $fields = array(
+                        $db->quoteName('sobreposto') . ' = 1',
+                        $db->quoteName('sobreposto_por') . ' = ' . (int) $data['id']
+                    );
+                
+                if( $item->owner == 1 ) //se sobrepor um compromisso do owner, todos os demais devem ser sobrepostos (sobreposicao completa)
+                {
+                    $conditions = array(
+                            $db->quoteName('compromisso_id') . ' = ' . (int) $item->compromisso_id
+                        );
+                    $compromissos_sobrepostos[] = $item->compromisso_id;
+                }
+                else //se sobrepor compromisso sem owner, somente ele precisa ser sobreposto
+                {
+                    $conditions = array(
+                            $db->quoteName('compromisso_id') . ' = ' . (int) $item->compromisso_id,
+                            $db->quoteName('dirigente_id') . ' = ' . (int) $item->dirigente_id
+                        );
+                }
+                
+                //executar sobreposicao
+                $query->update(
+                        $db->quoteName('#__agendadirigentes_dirigentes_compromissos')
+                    )->set( $fields )->where( $conditions );
+
+                $db->setQuery((string)$query);
+                $db->query();
+
+                if($i == 0)
+                {
+                    $app->enqueueMessage('Ao menos um dos participantes teve um compromisso de data e hor&aacute;rio convergentes sobreposto.', 'Warning');
+                }
+            } // fim for() sobrepostos
+
+            return true;
         }
 
         /**
@@ -269,20 +498,7 @@ class AgendaDirigentesModelCompromisso extends JModelAdmin
             if( parent::delete($pks) )
             {
                 //apaga relacionamentos do(s) compromisso(s)
-                $query = $this->_db->getQuery(true);
-                $query->delete(
-                        $this->_db->quoteName('#__agendadirigentes_dirigentes_compromissos')
-                    )
-                    ->where(
-                        $this->_db->quoteName('compromisso_id')
-                        . ' IN ( ' .
-                        implode(', ', $pks)
-                        . ' ) '    
-                    );
-
-                $this->_db->setQuery( (string) $query );
-                return $this->_db->query();
-
+                return $this->clearCompromissosDirigentes( $pks );
             }
 
             return false;

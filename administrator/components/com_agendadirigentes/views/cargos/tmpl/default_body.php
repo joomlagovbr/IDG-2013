@@ -68,7 +68,7 @@ $this->sobreposicaoBloqueada = false;
                     <?php if (!empty($item->name_f)): ?>
                         <small style="color:#999"><small>/ <?php echo $item->name_f; ?></small></small>
                     <?php endif ?>
-                    <?php if ($item->sobrepor == 0): ?>
+                    <?php if ($item->permitir_sobreposicao == 0): ?>
                         *
                         <?php $this->sobreposicaoBloqueada = true; ?>
                     <?php endif; ?>
