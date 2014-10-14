@@ -150,7 +150,7 @@ class ModeloPhoca_gallery
 			$params->set('quantidade', 1);
 		}
 		
-		$query->order('cont.'.$params->get('ordem'), $params->get('ordem_direction'));
+		$query->order('cont.'.$params->get('ordem').' '.$params->get('ordem_direction'));
 		$db->setQuery($query,0,$params->get('quantidade'));
 
 		$lista = $db->loadObjectList();

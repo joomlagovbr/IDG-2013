@@ -97,7 +97,7 @@ class ModeloYoutubegallery
 			break;
 		}
 		
-		$query->order('cont.'.$params->get('ordem'), $params->get('ordem_direction'));
+		$query->order('cont.'.$params->get('ordem').' '.$params->get('ordem_direction'));
 		$db->setQuery($query,0,$params->get('quantidade'));
 
 		$lista = $db->loadObjectList();
