@@ -130,10 +130,6 @@ class ModeloArticle_k2
 					$query->where('cont.catid = '.$cat);				
 				}
 			}
-
-// var_dump($params->get('buscar_cat_tag'));
-// var_dump($params->get('tags'));
-// 			die();
 			
 			
 			//Verifica se irá filtrar por tag
@@ -173,7 +169,7 @@ class ModeloArticle_k2
 			$params->set('quantidade', 1);
 		}
 		
-		$query->order('cont.'.$params->get('ordem'), $params->get('ordem_direction'));
+		$query->order('cont.'.$params->get('ordem').' '.$params->get('ordem_direction'));
 		$db->setQuery($query,0,$params->get('quantidade'));
 
 
