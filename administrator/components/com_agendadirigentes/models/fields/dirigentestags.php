@@ -36,10 +36,56 @@ class JFormFieldDirigentesTags extends JFormFieldTag
 	 */
 	protected function getOptions()
 	{
+		$input = JFactory::getApplication()->input;
 		$componentParams = AgendaDirigentesHelper::getParams();
 		$published = $this->element['published']? $this->element['published'] : array(0,1);
 		$db = JFactory::getDbo();
+		
+		//inicializando variavel para receber opcoes do combo
+		$options = array();
 
+		//bloqueio para restringir lista de usuarios ao dono do evento selecionado.
+		if( $this->getAttribute('name', '') != 'owner' )
+		{
+			$compromisso_id = $input->getInt('id', 0);
+			if( $compromisso_id == 0 && $componentParams->get('permitir_participantes_locais', 1) == 1)
+			{
+				$options[0] = new StdClass();
+				$options[0]->value = "";
+				$options[0]->path = "";
+				$options[0]->level = 1;
+				$options[0]->published = 0;
+				$options[0]->text = "Escolha o dono do compromisso e salve para incluir participantes.";
+				$options = JHelperTags::convertPathsToNames($options);
+				return $options;
+			}
+			else if($componentParams->get('permitir_participantes_locais', 1) == 1)
+			{
+				$ownerData = $this->getOwnerDataFromCompromissoId( $compromisso_id );
+				$valid_catid_list = $this->getCategoriesScope( $ownerData );
+			}
+			else
+			{
+				$valid_catid_list = array();
+			}
+
+			if( ((count($valid_catid_list) == 1 && @$valid_catid_list[0] == 0) || is_null($valid_catid_list) )
+				&& $componentParams->get('permitir_participantes_externos', 1) == 0 )			
+			{
+				$options[0] = new StdClass();
+				$options[0]->value = "";
+				$options[0]->path = "";
+				$options[0]->level = 1;
+				$options[0]->published = 0;
+				$options[0]->text = "N&atilde;o h&aacute; permiss&otilde;es suficientes para cadastrar participantes.";
+				$options = JHelperTags::convertPathsToNames($options);
+				return $options;
+			}
+		}
+
+		//se componente configurado para inclusao de participantes cadastrados no sistema e por isso locais (do mesmo orgao)
+		//ou se nome do campo equivale a owner (responsavel pelo compromisso ou dono)
+		// entao busque por dirigentes para povoar as opcoes do combo...
 		if($componentParams->get('permitir_participantes_locais', 1) == 1 || $this->getAttribute('name', '') == 'owner' )
 		{
 			$query	= $db->getQuery(true);
@@ -77,22 +123,35 @@ class JFormFieldDirigentesTags extends JFormFieldTag
 				$query->where('a.state IN (' . implode(',', $published) . ')');
 			}
 
+			//se esta permitida a inclusao de participantes locais e o campo
+			//nao se refere ao campo de escolha do dono do compromisso, entao flag permitir_sobreposicao = 1
 			if($this->getAttribute('name', '') != 'owner')
 			{
 				$query->where('b.permitir_sobreposicao = 1');
+				
+				if($valid_catid_list != '*') // != all
+				{
+					if(is_null($valid_catid_list))
+					{
+						$valid_catid_list = array(0);
+						JFactory::getApplication()->enqueueMessage('Lista de categorias em COMPONENT/models/fields/dirigentestags.php inv&aacute;lida.', 'Warning');
+					}
+					
+					$query->where('b.catid IN (' . implode(', ', $valid_catid_list ) . ')');
+				}
 			}
 
 			// Get the options.
 			$db->setQuery((string)$query);
 			$categories = $db->loadObjectList();
 		}
-		else
+		else //se nao forem permitidos participantes locais e nome do campo != owner
 		{
 			$categories = array();
 		}
 
-		$options = array();
-		if ( $this->getAttribute('name', '') == 'owner')
+		//se campo == owner, incluir primeira opcao vazia
+		if ( $this->getAttribute('name', '') == 'owner') 
 		{
 			$options[0] = new StdClass();
 			$options[0]->value = "";
@@ -100,19 +159,15 @@ class JFormFieldDirigentesTags extends JFormFieldTag
 			$options[0]->level = 1;
 			$options[0]->published = 1;
 			$options[0]->text = " - Selecione - ";
-		}
 
-		if( $this->getAttribute('name', '') == 'owner' )
-		{
-
-			//restringir de acordo com as permissoes de usuario
+			//restringir de acordo com as permissoes de usuario, para que a escolha do owner respeite o que foi cadastrado como permissao
+			//so ocorre se componente configurado para restringir ou usuario nao for superuser
 			if( $componentParams->get('restricted_list_compromissos', 0) == 1 && ! AgendaDirigentesHelper::isSuperUser() )
 			{
 				$allowedCategories = array();
-				$input = JFactory::getApplication()->input;
 				$id = $input->getInt('id', 0);
 
-				if(empty($id)) //new
+				if(empty($id)) //novo item, verifica permissoes de criacao
 				{
 					for ($i=0, $limit = count($categories); $i < $limit; $i++)
 					{
@@ -123,7 +178,7 @@ class JFormFieldDirigentesTags extends JFormFieldTag
 						}
 					}
 				}
-				else //edit
+				else //item em edicao, verifica permissoes de edicao / mudanca de estado
 				{
 					for ($i=0, $limit = count($categories); $i < $limit; $i++)
 					{ 
@@ -137,7 +192,7 @@ class JFormFieldDirigentesTags extends JFormFieldTag
 				$categories = $allowedCategories;
 			}
 			//fim restricao de acordo com as permissoes de usuario
-		}
+		} // fim se campo == owner
 		
 		try
 		{
@@ -148,6 +203,10 @@ class JFormFieldDirigentesTags extends JFormFieldTag
 			return false;
 		}
 
+		//se incluir participantes externos = true na configuracao do field
+		//e se for possivel permitir participantes externos = 1 na configuracao do componente
+		//e se nome do campo for diferente de owner, entao leia campo de participantes externos
+		//e os inclua
 		if ( $this->getAttribute('add_participantes_externos', false) == true
 			&& $componentParams->get('permitir_participantes_externos', 1) == 1
 			&& $this->getAttribute('name', '') != 'owner' )
@@ -204,6 +263,9 @@ class JFormFieldDirigentesTags extends JFormFieldTag
 	{
 		$componentParams = AgendaDirigentesHelper::getParams();
 
+		// se campo for do tipo multipla escolha e permitir participantes locais
+		// ou se campo for do tipo multipla escolha e permitir participantes externos
+		// entao incluir script
 		if( $this->getAttribute('multiple', false) == "true"
 			&& ($componentParams->get('permitir_participantes_locais', 1) == 1
 				|| $componentParams->get('permitir_participantes_externos', 1) == 1)
@@ -219,6 +281,9 @@ class JFormFieldDirigentesTags extends JFormFieldTag
 		return $input;
 	} 
 
+	/*
+	inclui script para inclusao de dirigentes em formato de tags.
+	*/
 	protected function ajaxfieldCustomTag($selector='#jform_tags', $minTermLength = 5, $customTags = 'true')
 	{
 		JFactory::getDocument()->addScriptDeclaration("
@@ -279,6 +344,94 @@ class JFormFieldDirigentesTags extends JFormFieldTag
 			})(jQuery);
 			"
 		);
+	}
 
+	protected function getOwnerDataFromCompromissoId( $compromisso_id = 0 )
+	{
+		if(empty($compromisso_id))
+			return NULL;
+
+		$db = JFactory::getDBO();
+		$query = $db->getQuery(true);
+		$query->select(
+				$db->quoteName('car.realizar_sobreposicao') . ', ' .
+				$db->quoteName('car.catid') . ', ' .
+				$db->quoteName('dir.cargo_id') . ', ' .
+				$db->quoteName('dir.id') . ', ' .
+				$db->quoteName('cat.lft') . ', ' .
+				$db->quoteName('cat.rgt')
+			)->from(
+				$db->quoteName('#__agendadirigentes_cargos', 'car')
+			)->join(
+				'INNER',
+				$db->quoteName('#__agendadirigentes_dirigentes', 'dir')
+				. ' ON ' . $db->quoteName('car.id') . ' = ' . $db->quoteName('dir.cargo_id')
+			)->join(
+				'INNER',
+				$db->quoteName('#__agendadirigentes_dirigentes_compromissos', 'dc')
+				. ' ON ' . $db->quoteName('dc.dirigente_id') . ' = ' . $db->quoteName('dir.id')
+				. ' AND ' . $db->quoteName('dc.owner') . ' =  1 '
+			)
+			->join(
+				'INNER',
+				$db->quoteName('#__agendadirigentes_compromissos', 'comp')
+				. ' ON ' . $db->quoteName('dc.compromisso_id') . ' = ' . $db->quoteName('comp.id')
+			)
+			->join(
+				'INNER',
+				$db->quoteName('#__categories', 'cat')
+				. ' ON ' . $db->quoteName('car.catid') . ' = ' . $db->quoteName('cat.id')
+			)
+			->where(
+				$db->quoteName('comp.id') . ' = ' . (int) $compromisso_id
+			);
+
+		$db->setQuery( (string) $query );
+
+		//car.realizar_sobreposicao:
+		//0 = nao permtir
+		//1 = somente na categoria
+		//* = todos
+		return $db->loadObject();
+	}
+
+	protected function getCategoriesScope( $ownerData )
+	{
+		if(! is_object($ownerData) )
+			return NULL;
+
+		if( $ownerData->realizar_sobreposicao == '*' ) //todas as categorias
+		{
+			return $ownerData->realizar_sobreposicao;
+		}
+		else if( $ownerData->realizar_sobreposicao == 0 ) //nenhuma categoria
+		{
+			return array(0);
+		}
+		elseif( $ownerData->realizar_sobreposicao != 1 )
+		{
+			return NULL;
+		}
+
+		//$ownerData->realizar_sobreposicao == 1 (somente daquela categoria e filhas dela)
+		$db = JFactory::getDBO();
+		$query = $db->getQuery( true );
+		$query->select(
+				$db->quoteName('id')
+			)->from(
+				$db->quoteName('#__categories')
+			)->where(
+				$db->quoteName('lft') . ' >= ' . (int) $ownerData->lft
+				. ' AND ' .
+				$db->quoteName('rgt') . ' <= ' . (int) $ownerData->rgt
+			);
+
+		$db->setQuery( (string) $query );
+		$result = $db->loadObjectList('id');
+
+		if(!is_array($result))
+			return array(0);
+
+		return array_keys($result);
 	}
 }

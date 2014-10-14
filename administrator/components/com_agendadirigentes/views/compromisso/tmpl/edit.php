@@ -19,8 +19,35 @@ JHtml::addIncludePath(JPATH_COMPONENT . '/helpers');
 JHtml::script( JURI::base() . 'components/com_agendadirigentes/assets/js/jquery.maskedinput.min.js');
 ?>
 <script type="text/javascript">
+function disableField(aim, message)
+{
+    if(jQuery('#permitir_participantes_locais').val()==1)
+    {
+        if(message == '' || message == null)
+            message = true;
+        else
+            message = window.confirm(message);
+
+        if(!message)
+        {
+            jQuery('#jform_owner').val( document.owner_old_val );
+            jQuery('#jform_owner').trigger('liszt:updated');
+            return;
+        }
+
+        jQuery('#jform_'+aim+' option').each(function(){
+            if ( isNaN(jQuery(this).val())==false )
+            {
+                jQuery(this).remove();                                 
+            } 
+        });
+        jQuery('#jform_'+aim).trigger('liszt:updated');
+        jQuery('#jform_'+aim+'_chzn').html('Salve ou atualize a página para habilitar participantes.');
+    }    
+}
+//onchange="removeselected(this, 'dirigentes');"
 function removeselected(elm, aim)
-{ 
+{
     jQuery('#jform_'+aim+' option:disabled').attr("disabled", false);
     jQuery('#jform_'+aim+' option').each(function(){
         if (jQuery(this).val()==jQuery(elm).val())
@@ -46,6 +73,7 @@ jQuery(document).ready(function(){
     injectSelected('#jform_participantes_externos', 'dirigentes');
     jQuery('#jform_horario_inicio').mask("99:99");
     jQuery('#jform_horario_fim').mask("99:99");
+    document.owner_old_val = jQuery('#jform_owner').val();
 });
 </script>
 <form action="<?php echo JRoute::_('index.php?option=com_agendadirigentes&layout=edit&id=' . (int) $this->item->id); ?>"
@@ -94,5 +122,7 @@ jQuery(document).ready(function(){
         </fieldset>
     </div>
     <input type="hidden" name="task" value="compromisso.edit" />
+    <input type="hidden" name="permitir_participantes_locais" id="permitir_participantes_locais" value="<?php echo $this->permitir_participantes_locais; ?>" />
+    <input type="hidden" name="permitir_participantes_externos" id="permitir_participantes_externos" value="<?php echo $this->permitir_participantes_externos; ?>" />
     <?php echo JHtml::_('form.token'); ?>
 </form>

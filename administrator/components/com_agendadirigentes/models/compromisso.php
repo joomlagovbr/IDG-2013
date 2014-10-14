@@ -187,10 +187,12 @@ class AgendaDirigentesModelCompromisso extends JModelAdmin
 
         protected function insertCompromissosDirigentes($data)
         {
+            //variaveis iniciais de input
             $owner = @$data['owner'];
             $app = JFactory::getApplication();
             $db = $this->_db;
 
+            //formatando owner e finalizando execucao quando valor for indevido
             if (is_array($owner)) {
                     $owner = (int) $owner[0];
             }
@@ -214,7 +216,7 @@ class AgendaDirigentesModelCompromisso extends JModelAdmin
 
             if (is_array($dirigentes)) {
                 for ($i=0, $limit = count($dirigentes); $i < $limit; $i++) { 
-                    if (is_numeric($dirigentes[$i])) { //grava somente os itens que possuem ID, ou seja, dirigentes cadastrados
+                    if (is_numeric($dirigentes[$i])) { //grava somente os itens que possuem ID, ou seja, dirigentes cadastrados. Itens nao numericos sao participantes externos
                         $items[] = array(
                                 'dirigente_id' => $dirigentes[$i],
                                 'compromisso_id' => $data['id'],
@@ -268,7 +270,7 @@ class AgendaDirigentesModelCompromisso extends JModelAdmin
                 $data_final = $data_final[2]."-".$data_final[1]."-".$data_final[0];
 
                 //verificar ids dos itens que serao sobrepostos, aproveitando array atualizado de ids_dirigentes
-                //essa verificacao precisa ser feita antes para impedir insercao de itens que ja foram sobrepostos por outros compromissos
+                //essa verificacao precisa ser feita antes para impedir a insercao de itens que ja foram sobrepostos por outros compromissos
                 $query = $db->getQuery(true);
                 $query->select(
                         $db->quoteName('dc.compromisso_id') . ', ' .
@@ -311,14 +313,23 @@ class AgendaDirigentesModelCompromisso extends JModelAdmin
                     );
                 $db->setQuery((string) $query);
                 $sobrepostos = $db->loadObjectList();
-                $compromissos_nao_permitem_sobrepor = array();
 
+                //inclui na lista de dirigentes sem sobreposicao aqueles com compromissos ja sobrepostos para a data pretendida
                 for ($i=0, $limit = count($sobrepostos); $i < $limit; $i++) { 
                     if($sobrepostos[$i]->sobreposto == 1)
                     {
-                        $key = $sobrepostos[$i]->compromisso_id . '.' . $sobrepostos[$i]->dirigente_id;
-                        $compromissos_nao_permitem_sobrepor[ $key ] = array();
-                        $compromissos_nao_permitem_sobrepor[ $key ]['dirigente_name'] = $sobrepostos[$i]->dirigente_name;
+                        if( ! array_key_exists($sobrepostos[$i]->dirigente_id,  $dirigentes_nao_permitem_sobrepor) )
+                        {
+                            $key = $sobrepostos[$i]->dirigente_id;
+                            $dirigentes_nao_permitem_sobrepor[ $key ] = new StdClass();
+                            $dirigentes_nao_permitem_sobrepor[ $key ]->id = $sobrepostos[$i]->dirigente_id;
+                            $dirigentes_nao_permitem_sobrepor[ $key ]->name = $sobrepostos[$i]->dirigente_name;
+
+                            $app->enqueueMessage( $sobrepostos[$i]->dirigente_name
+                                . ' j&aacute; possui compromisso(s) sobreposto(s) nesse(s) mesmo(s) dia(s) e hor&aacute;rio(s).'
+                                . ' Entre em contato com o respons&aacute;vel pela agenda dessa autoridade.'
+                                , 'Warning');
+                        }                        
                     }
                 }
             }
@@ -333,18 +344,9 @@ class AgendaDirigentesModelCompromisso extends JModelAdmin
             //inserir os itens que puderem ser inseridos, de acordo com as regras
             for ($i=0, $limit = count($items); $i < $limit; $i++)
             {
-                //nao insere compromissos de dirigentes que nao permitem sobreposicao...
+                //nao insere compromissos de dirigentes que nao permitem sobreposicao ou ja tiveram compromissos sobrepostos para mesmo dia e horario
                 if( array_key_exists($items[$i]['dirigente_id'],  $dirigentes_nao_permitem_sobrepor) )
                     continue;
-
-                //nao insere compromissos para dirigentes quando esses compromissos ja foram sobrepostos
-                $tmp_key = $items[$i]['compromisso_id'] . '.' . $items[$i]['dirigente_id'];
-                if( array_key_exists($tmp_key,  $compromissos_nao_permitem_sobrepor) )
-                {
-                    $nomeDirigente = $compromissos_nao_permitem_sobrepor[$tmp_key]['dirigente_name'];
-                    $app->enqueueMessage('O compromisso de '.$nomeDirigente.' nesse(s) mesmo(s) dia(s) e hor&aacute;rio(s) n&atilde;o permite(m) sobreposi&ccedil;&atilde;o.', 'Warning');
-                    continue;
-                }
 
                 //insere os itens que podem ser inseridos
                 $columns = array_keys($items[$i]);
@@ -364,7 +366,7 @@ class AgendaDirigentesModelCompromisso extends JModelAdmin
             } //fim for() insert compromissos x dirigentes
 
             //sobrepoe somente se o compromisso estiver publicado (problema com troca de estados fora da edicao)
-            if ( $data['state'] != 1)
+            if ( $data['state'] != 1 && count($ids_dirigentes) > 0)
             {
                 $app->enqueueMessage('Sobreposi&ccedil;&otilde;es de agendas ocorrem somente no ato da publica&ccedil;&atilde;o do compromisso.', 'Warning');
                 return true;
