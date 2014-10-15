@@ -102,42 +102,5 @@
                         <option value="1">Mesma categoria</option>
                         <option value="*">Todos</option>
                 </field>
-                <field
-                        name="sobrepor_mesma_categoria"
-                        type="radio"
-                        label="Sobrepor compromissos de autoridades da mesma categoria?"
-                        description=""
-                        default="1"
-                        validate="boolean"
-                        filter="integer"
-                        >
-                        <option value="0">JNO</option>
-                        <option value="1">JYES</option>
-                </field>
-                <field
-                        name="sobrepor_todos"
-                        type="radio"
-                        label="Sobrepor compromissos de qualquer autoridade do sistema?"
-                        description=""
-                        default="1"
-                        validate="boolean"
-                        filter="integer"
-                        >
-                        <option value="0">JNO</option>
-                        <option value="1">JYES</option>
-                </field>
-        </fieldset>
-        <fieldset name="accesscontrol">
-                <field name="asset_id" type="hidden" filter="unset" />
-                <field name="rules"
-                        type="rules"
-                        label="Permissões de cargos"
-                        translate_label="false"
-                        filter="rules"
-                        validate="rules"
-                        class="inputbox"
-                        component="com_agendadirigentes"
-                        section="cargo"
-                />
         </fieldset>
 </form>

@@ -191,6 +191,7 @@ class AgendaDirigentesModelCompromisso extends JModelAdmin
             $owner = @$data['owner'];
             $app = JFactory::getApplication();
             $db = $this->_db;
+            $session = JFactory::getSession();
 
             //formatando owner e finalizando execucao quando valor for indevido
             if (is_array($owner)) {
@@ -264,11 +265,16 @@ class AgendaDirigentesModelCompromisso extends JModelAdmin
                 }
 
                 //formatando datas para as proximas acoes
-                $data_inicial = explode('/', $data['data_inicial']);
-                $data_inicial = $data_inicial[2]."-".$data_inicial[1]."-".$data_inicial[0];
-                $data_final = explode('/', $data['data_final']);
-                $data_final = $data_final[2]."-".$data_final[1]."-".$data_final[0];
-
+                if( strpos($data['data_inicial'], '/')!==false )
+                {
+                    $data_inicial = explode('/', $data['data_inicial']);
+                    $data['data_inicial'] = $data_inicial[2]."-".$data_inicial[1]."-".$data_inicial[0];
+                }
+                if( strpos($data['data_final'], '/')!==false )
+                {
+                    $data_final = explode('/', $data['data_final']);
+                    $data['data_final'] = $data_final[2]."-".$data_final[1]."-".$data_final[0];
+                }
                 //verificar ids dos itens que serao sobrepostos, aproveitando array atualizado de ids_dirigentes
                 //essa verificacao precisa ser feita antes para impedir a insercao de itens que ja foram sobrepostos por outros compromissos
                 $query = $db->getQuery(true);
@@ -296,10 +302,10 @@ class AgendaDirigentesModelCompromisso extends JModelAdmin
                     )
                     ->where(
                         $db->quoteName('comp.data_inicial') . ' >= ' .
-                        $db->Quote( $data_inicial )
+                        $db->Quote( $data['data_inicial'] )
                         . ' AND ' .
                         $db->quoteName('comp.data_final') . ' <= ' .
-                        $db->Quote( $data_final )
+                        $db->Quote( $data['data_final'] )
                         . ' AND ' .
                         $db->quoteName('comp.horario_inicio') . ' >= ' .
                         $db->Quote( $data['horario_inicio'] )
@@ -366,9 +372,10 @@ class AgendaDirigentesModelCompromisso extends JModelAdmin
             } //fim for() insert compromissos x dirigentes
 
             //sobrepoe somente se o compromisso estiver publicado (problema com troca de estados fora da edicao)
-            if ( $data['state'] != 1 && count($ids_dirigentes) > 0)
+            if ( $data['state'] != 1 && count($ids_dirigentes) > 0 && $session->get('msg_sobreposicoes_na_publicacao', 0) == 0)
             {
                 $app->enqueueMessage('Sobreposi&ccedil;&otilde;es de agendas ocorrem somente no ato da publica&ccedil;&atilde;o do compromisso.', 'Warning');
+                $session->set('msg_sobreposicoes_na_publicacao', 1);
                 return true;
             }
 
@@ -414,8 +421,9 @@ class AgendaDirigentesModelCompromisso extends JModelAdmin
                 $db->setQuery((string)$query);
                 $db->query();
 
-                if($i == 0)
+                if($i == 0  && $session->get('msg_ao_menos_um_sobreposto', 0) == 0)
                 {
+                    $session->set('msg_ao_menos_um_sobreposto', 1);
                     $app->enqueueMessage('Ao menos um dos participantes teve um compromisso de data e hor&aacute;rio convergentes sobreposto.', 'Warning');
                 }
             } // fim for() sobrepostos
@@ -569,5 +577,34 @@ class AgendaDirigentesModelCompromisso extends JModelAdmin
             return $db->loadObjectList('id');
         }
 
+        public function publish(&$pks, $value = 1)
+        {
+            $publish = parent::publish($pks, $value);
 
+            if(! $publish )
+                return false;
+
+            $data = $this->getTable();
+            $session = JFactory::getSession();
+            
+            //processamento necessario para manter relacoes de sobreposicao ou retirada de sobreposicao
+            foreach($pks as $pk)
+            {
+                $data->load( (int) $pk );
+                $data->owner = $this->getOwner( $data );
+                $data->dirigentes = $this->getParticipantes( $data );
+                $data = (array) $data;
+
+                if(!$this->updateCompromissosDirigentes($data))
+                {
+                    $session->set('msg_ao_menos_um_sobreposto', 0);
+                    $session->set('msg_sobreposicoes_na_publicacao', 0);
+                    return false;
+                }
+            }
+
+            $session->set('msg_ao_menos_um_sobreposto', 0);
+            $session->set('msg_sobreposicoes_na_publicacao', 0);
+            return true;
+        }
 }

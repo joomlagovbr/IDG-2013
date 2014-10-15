@@ -43,20 +43,6 @@ JHtml::_('behavior.formvalidation');
  
    <div class="clr"></div>
  
-   <?php if ($this->canDo->get('cargos.admin') || $this->canDo->get('core.admin')): ?>
-      <div class="row-fluid"><div class="span12">
-         <?php //echo JHtml::_('sliders.start', 'permissions-sliders-'.$this->item->id, array()); //'useCookie'=>1 ?>
- 
-            <?php //echo JHtml::_('sliders.panel', JText::_('COM_AGENDADIRIGENTES_FIELDSET_RULES'), 'access-rules'); ?>
-            <fieldset class="panelform">
-               <?php echo $this->form->getLabel('rules'); ?>
-               <?php echo $this->form->getInput('rules'); ?>
-            </fieldset>
- 
-         <?php //echo JHtml::_('sliders.end'); ?>
-      </div></div>
-   <?php endif; ?>
- 
    <!-- end ACL definition-->
     <input type="hidden" name="task" value="cargo.edit" />
     <?php echo JHtml::_('form.token'); ?>

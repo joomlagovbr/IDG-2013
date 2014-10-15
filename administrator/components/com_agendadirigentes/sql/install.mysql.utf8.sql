@@ -62,8 +62,7 @@ CREATE TABLE `#__agendadirigentes_cargos` (
   `ordering` int(11) NOT NULL DEFAULT '0',
   `featured` INT(1) NOT NULL DEFAULT '0',
   `permitir_sobreposicao` INT(1) NOT NULL DEFAULT '1',
-  `sobrepor_mesma_categoria` INT(1) NOT NULL DEFAULT '0',
-  `sobrepor_todos` INT(1) NOT NULL DEFAULT '0',
+  `realizar_sobreposicao` CHAR(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `idx_catid` (`catid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
