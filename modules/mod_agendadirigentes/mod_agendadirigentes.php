@@ -14,9 +14,12 @@ require_once __DIR__ . '/helper.php';
 $items = ModAgendaDirigentesHelper::getItems($params);
 $dia_por_extenso = ModAgendaDirigentesHelper::getFormatedDate($params);
 $document = JFactory::getDocument();
-$featured_compromissos = $params->get('featured_compromissos', '');
-$altura_lista = ModAgendaDirigentesHelper::getAlturaLista($params);
 
+$featured_compromissos = $params->get('featured_compromissos', '');
+if(!empty($featured_compromissos) && !is_numeric($featured_compromissos))
+	$featured_compromissos = '';
+
+$altura_lista = ModAgendaDirigentesHelper::getAlturaLista($params);
 if(!empty($altura_lista))
 	$style_altura_lista = 'style="height: '.$altura_lista.'px; overflow:auto"';
 else

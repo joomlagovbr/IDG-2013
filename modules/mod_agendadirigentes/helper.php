@@ -20,6 +20,9 @@ class ModAgendaDirigentesHelper
 		$params_dia = $params->get('dia', '');
 		$featured = $params->get('featured_compromissos', '');
 
+		if(!empty($featured) && !is_numeric($featured))
+			$featured = '';
+
 		if( empty($params_dia) )
 			$params->set('dia', self::getDia($params) );
 
