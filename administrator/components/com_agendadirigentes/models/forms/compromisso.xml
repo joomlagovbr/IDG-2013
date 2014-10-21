@@ -56,7 +56,13 @@
                         <option value="2">JARCHIVED</option>
                         <option value="-2">JTRASHED</option>
                 </field>
-
+                <field
+                        name="published_once"
+                        type="hidden"
+                        default="0"
+                        validate="boolean"
+                        filter="integer"
+                />
                 <field
                         name="featured"
                         type="radio"

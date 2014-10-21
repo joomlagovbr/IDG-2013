@@ -1,18 +1,12 @@
 #compromissos anteriores
-DROP TABLE IF EXISTS `#__agendadirigentes_compromissos_anteriores`;
-CREATE TABLE `#__agendadirigentes_compromissos_anteriores` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `dirigente_id` int(10) unsigned NOT NULL,
-  `src` varchar(255) NOT NULL,
-  `data_inicial` date NOT NULL,
-  `data_final` date NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `published` int(1) DEFAULT 0,
-  PRIMARY KEY (`id`),
-  KEY `idx_dirigente_id` (`dirigente_id`),
-  KEY `idx_inicio_validade` (`data_inicial`),
-  KEY `idx_fim_validade` (`data_final`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `#__agendadirigentes_agendaalterada`;
+CREATE TABLE `#__agendadirigentes_agendaalterada` (
+  `id_dirigente` int(11) NOT NULL,
+  `data` date NOT NULL,
+  `qtd_alteracoes` int(4) NOT NULL DEFAULT '0',
+  `data_alteracao` DATETIME NOT NULL,
+  PRIMARY KEY (`id_dirigente`,`data`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #tabela de dirigentes
 DROP TABLE IF EXISTS `#__agendadirigentes_dirigentes`;
@@ -112,6 +106,7 @@ CREATE TABLE `#__agendadirigentes_compromissos` (
   `checked_out` int(11) DEFAULT '0',
   `checked_out_time` datetime DEFAULT '0000-00-00 00:00:00',
   `featured` int(1) DEFAULT 0,
+  `published_once` INT(1) DEFAULT 0,
   `language` char(7) DEFAULT NULL,
   `version` INTEGER DEFAULT 1,
   PRIMARY KEY (`id`),

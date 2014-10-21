@@ -109,8 +109,10 @@ class AgendaDirigentesTableCompromisso extends JTable
         function check()
         {
             //separacao dos dados para gravar em campo participantes_externos (que nao precisa de mapeamento no form)
-            $input = JFactory::getApplication()->input;
+            $app = JFactory::getApplication();
+            $input = $app->input;
             @$dirigentes = $input->get('jform', array(), 'ARRAY')['dirigentes'];
+            $JDate = new JDate('now', $app->getCfg('offset'));
 
             if (isset($dirigentes) && is_array($dirigentes)) {
 
@@ -174,14 +176,18 @@ class AgendaDirigentesTableCompromisso extends JTable
         	
             //verificacao de informacoes de controle
         	if(empty($this->created) || $this->created=="0000-00-00 00:00:00")
-        		$this->created = date('Y-m-d H:i:s');
+        		$this->created = $JDate->format('Y-m-d H:i:s', $app->getCfg('offset'));
         	
         	if(empty($this->created_by) || $this->created_by==0)
         		$this->created_by = JFactory::getUser()->get("id");
         	
-       		$this->modified = date('Y-m-d H:i:s');    	
+       		$this->modified = $JDate->format('Y-m-d H:i:s', $app->getCfg('offset'));   	
        		$this->modified_by = JFactory::getUser()->get("id");
         	$this->version += 1;
+
+            //se alguma vez publicado, entao informar em coluna de flag
+            if($this->state == 1)
+                $this->published_once = 1;
 
             //item retirado antes de salvamento. utilizado somente para fins de controle de permissoes ao carregar um item.
             unset($this->catid);
