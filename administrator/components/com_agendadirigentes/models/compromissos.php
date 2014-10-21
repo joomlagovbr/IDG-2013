@@ -140,6 +140,12 @@ class AgendaDirigentesModelCompromissos extends JModelList
                     $query->where('dir.id = ' . (int) $dirigente_id);
                 }
 
+                $featured = $this->getState('filter.featured', '');
+                if( $featured != '' )
+                {
+                    $query->where('comp.featured = ' . (int) $featured);
+                }
+
                 // Filter by data inicial | data final.
                 $data_inicial = $this->getState('dates.data_inicial');
                 $data_final = $this->getState('dates.data_final');
@@ -260,6 +266,9 @@ class AgendaDirigentesModelCompromissos extends JModelList
 
             $duracao = $this->getUserStateFromRequest($this->context . '.filter.duracao', 'filter_duracao', '');
             $this->setState('filter.duracao', $duracao);
+
+            $featured = $this->getUserStateFromRequest($this->context . '.filter.featured', 'filter_featured', '');
+            $this->setState('filter.featured', $featured);
 
             //alterando valor de lista se participante_id estiver preenchido
             $app = JFactory::getApplication();

@@ -29,7 +29,8 @@ class AgendaDirigentesModelCompromissos extends JModelList
 		$id	= $app->input->getInt('id');
 		$this->setState('autoridade.id', $id);
 
-        $this->setState('participantes.load', true); 	
+        $this->setState('participantes.load', true);
+        $this->setState('filter.featured', '');
 
     	$params = $app->getParams();
         $this->setState('params', $params);
@@ -54,7 +55,7 @@ class AgendaDirigentesModelCompromissos extends JModelList
         $dia = $db->Quote( $params->get('dia') );
         $nullDate = $db->Quote( '0000-00-00' );
         $autoridade_id = (int) $this->state->get('autoridade.id');
-
+                
         $query->select(
         	 $db->quoteName('comp.id') . ', ' .
         	 $db->quoteName('comp.title') . ', ' .
@@ -91,6 +92,12 @@ class AgendaDirigentesModelCompromissos extends JModelList
         )->order(
         	 $db->quoteName('comp.horario_inicio') . ' ASC'
         );
+
+        $featured = $this->getState('filter.featured', '');
+        if( $featured != '' )
+        {
+            $query->where('comp.featured = ' . (int) $featured);
+        }
 
         return $query;
     }
