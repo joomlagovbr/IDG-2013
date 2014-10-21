@@ -7,13 +7,6 @@
                         filter="integer"
                 />
                 <field
-                        name="compromisso_alterado"
-                        type="hidden"
-                        default="0"
-                        validate="boolean"
-                        filter="integer"
-                />
-                <field
                         name="title"
                         type="textarea"
                         label="COM_AGENDADIRIGENTES_COMPROMISSOS_TITLE_LABEL"
@@ -24,7 +17,7 @@
                         default=""
                         required="true"
                         filter="string"
-                /><!--  validate="titleorname" -->
+                />
                 <field
                         name="owner"
                         type="dirigentestags"

@@ -64,7 +64,6 @@ class AgendaDirigentesModelCompromissos extends JModelList
         	 $db->quoteName('comp.horario_fim') . ', ' .
         	 $db->quoteName('comp.dia_todo') . ', ' .
         	 $db->quoteName('comp.local') . ', ' .
-        	 $db->quoteName('comp.compromisso_alterado') . ', ' .
         	 $db->quoteName('comp.description') . ', ' .
         	 $db->quoteName('comp.participantes_externos') . ', ' .
         	 $db->quoteName('comp.params')

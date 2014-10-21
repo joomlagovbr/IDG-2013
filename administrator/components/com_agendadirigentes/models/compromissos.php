@@ -91,9 +91,6 @@ class AgendaDirigentesModelCompromissos extends JModelList
                     ->join( 'LEFT',
                         $db->quoteName('#__agendadirigentes_cargos', 'car')
                         .' ON (' . $db->quoteName('dir.cargo_id') . ' = ' . $db->quoteName('car.id') . ')' );
-                    // ->join( 'LEFT',
-                    //     $db->quoteName('#__categories', 'cat')
-                    //     .' ON (' . $db->quoteName('dir.catid') . ' = ' . $db->quoteName('cat.id') . ')' );
  
                 // Filter by state
                 $state = $this->state->get('filter.state');
@@ -222,7 +219,6 @@ class AgendaDirigentesModelCompromissos extends JModelList
 
                 $query->order( $ordering );
 
-                // echo $query->dump();die();
                 return $query;
         }
 
@@ -284,14 +280,6 @@ class AgendaDirigentesModelCompromissos extends JModelList
 
             $dates = $this->getUserStateFromRequest($this->context . '.dates', 'dates', array(), '');            
             foreach ($dates as $k => $date) {
-                /*if(!empty($date))
-                {
-                    $date = explode('/', $date);
-                    if(count($date)==3)
-                        $date = $date[2].'-'.$date[1].'-'.$date[0];
-                    else
-                        $date = '';
-                }*/ 
                 $this->setState('dates.'.$k, $date);   
             }            
 

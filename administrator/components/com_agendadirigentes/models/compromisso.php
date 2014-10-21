@@ -1098,8 +1098,6 @@ class AgendaDirigentesModelCompromisso extends JModelAdmin
 
         $ignore_fields = array(
                             'id',
-                            'compromisso_alterado',
-                            // 'participantes_externos',
                             'created',
                             'created_by',
                             'params',

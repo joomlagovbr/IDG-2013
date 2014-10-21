@@ -74,7 +74,6 @@ CREATE TABLE `#__agendadedirigentes_compromissos` (
   `dia_todo` int(1) unsigned DEFAULT 0,
   `local` varchar(255) DEFAULT NULL,
   `exibir_local` int(1) DEFAULT 1,
-  `compromisso_alterado` int(1) DEFAULT 0,
   `description` text,
   `ordering` int(5) DEFAULT NULL,
   `params` tinytext,
@@ -94,7 +93,7 @@ CREATE TABLE `#__agendadedirigentes_compromissos` (
   KEY `idx_horario_fim` (`horario_fim`),
   KEY `idx_published` (`published`),
   KEY `idx_catid` (`catid`),
-  KEY `idx_outros` (`dia_todo`,`compromisso_alterado`,`featured`)
+  KEY `idx_outros` (`dia_todo`, `featured`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 #servers cadastro, tabela também será eliminada na versão mais recente
