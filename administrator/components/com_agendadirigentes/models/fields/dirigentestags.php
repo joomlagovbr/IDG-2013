@@ -13,8 +13,7 @@ defined('_JEXEC') or die;
 // import the list field type
 jimport('joomla.form.helper');
 JFormHelper::loadFieldClass('tag');
-JHtml::addIncludePath(JPATH_COMPONENT . '/helpers');
-
+require_once JPATH_ROOT . '/administrator/components/com_agendadirigentes/helpers/agendadirigentes.php';
 /**
  * DirigentesTags Form Field class for the AgendaDirigentes component
  */
@@ -40,12 +39,13 @@ class JFormFieldDirigentesTags extends JFormFieldTag
 		$componentParams = AgendaDirigentesHelper::getParams();
 		$published = $this->element['published']? $this->element['published'] : array(0,1);
 		$db = JFactory::getDbo();
+		$attr_name = $this->getAttribute('name', '');
 		
 		//inicializando variavel para receber opcoes do combo
 		$options = array();
 
 		//bloqueio para restringir lista de usuarios ao dono do evento selecionado.
-		if( $this->getAttribute('name', '') != 'owner' )
+		if( $attr_name != 'owner' &&  $attr_name != 'autoridade' )
 		{
 			$compromisso_id = $input->getInt('id', 0);
 			if( $compromisso_id == 0 && $componentParams->get('permitir_participantes_locais', 1) == 1)
@@ -86,7 +86,7 @@ class JFormFieldDirigentesTags extends JFormFieldTag
 		//se componente configurado para inclusao de participantes cadastrados no sistema e por isso locais (do mesmo orgao)
 		//ou se nome do campo equivale a owner (responsavel pelo compromisso ou dono)
 		// entao busque por dirigentes para povoar as opcoes do combo...
-		if($componentParams->get('permitir_participantes_locais', 1) == 1 || $this->getAttribute('name', '') == 'owner' )
+		if($componentParams->get('permitir_participantes_locais', 1) == 1 || $attr_name == 'owner' || $attr_name == 'autoridade' )
 		{
 			$query	= $db->getQuery(true);
 			if ($this->getAttribute('show_category', 1) == 1)
@@ -125,7 +125,7 @@ class JFormFieldDirigentesTags extends JFormFieldTag
 
 			//se esta permitida a inclusao de participantes locais e o campo
 			//nao se refere ao campo de escolha do dono do compromisso, entao flag permitir_sobreposicao = 1
-			if($this->getAttribute('name', '') != 'owner')
+			if($attr_name != 'owner' && $attr_name != 'autoridade')
 			{
 				$query->where('b.permitir_sobreposicao = 1');
 				
@@ -151,7 +151,7 @@ class JFormFieldDirigentesTags extends JFormFieldTag
 		}
 
 		//se campo == owner, incluir primeira opcao vazia
-		if ( $this->getAttribute('name', '') == 'owner') 
+		if ( $attr_name == 'owner' || $attr_name == 'autoridade' ) 
 		{
 			$options[0] = new StdClass();
 			$options[0]->value = "";
@@ -162,7 +162,7 @@ class JFormFieldDirigentesTags extends JFormFieldTag
 
 			//restringir de acordo com as permissoes de usuario, para que a escolha do owner respeite o que foi cadastrado como permissao
 			//so ocorre se componente configurado para restringir ou usuario nao for superuser
-			if( $componentParams->get('restricted_list_compromissos', 0) == 1 && ! AgendaDirigentesHelper::isSuperUser() )
+			if( $componentParams->get('restricted_list_compromissos', 0) == 1 && ! AgendaDirigentesHelper::isSuperUser() && $attr_name == 'owner' )
 			{
 				$allowedCategories = array();
 				$id = $input->getInt('id', 0);
@@ -209,7 +209,7 @@ class JFormFieldDirigentesTags extends JFormFieldTag
 		//e os inclua
 		if ( $this->getAttribute('add_participantes_externos', false) == true
 			&& $componentParams->get('permitir_participantes_externos', 1) == 1
-			&& $this->getAttribute('name', '') != 'owner' )
+			&&  $attr_name != 'owner' &&  $attr_name != 'autoridade' )
 		{
 
 			$input = JFactory::getApplication()->input;

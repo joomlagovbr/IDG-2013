@@ -23,17 +23,21 @@ function disableField(aim, message)
 {
     if(jQuery('#permitir_participantes_locais').val()==1)
     {
-        if(message == '' || message == null)
-            message = true;
-        else
-            message = window.confirm(message);
-
-        if(!message)
+        if(document.owner_old_val != '')
         {
-            jQuery('#jform_owner').val( document.owner_old_val );
-            jQuery('#jform_owner').trigger('liszt:updated');
-            return;
+            if(message == '' || message == null)
+                message = true;
+            else
+                message = window.confirm(message);
+
+            if(!message)
+            {
+                jQuery('#jform_owner').val( document.owner_old_val );
+                jQuery('#jform_owner').trigger('liszt:updated');
+                return;
+            }
         }
+        document.owner_old_val = jQuery('#jform_owner').val();
 
         jQuery('#jform_'+aim+' option').each(function(){
             if ( isNaN(jQuery(this).val())==false )
