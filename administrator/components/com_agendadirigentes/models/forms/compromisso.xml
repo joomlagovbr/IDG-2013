@@ -21,11 +21,10 @@
                         cols="40"
                         rows="5"
                         class="span12 validate-compromisso-title"
-                        validate="titleorname"
                         default=""
                         required="true"
                         filter="string"
-                />
+                /><!--  validate="titleorname" -->
                 <field
                         name="owner"
                         type="dirigentestags"

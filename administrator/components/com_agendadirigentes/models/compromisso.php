@@ -55,10 +55,12 @@ class AgendaDirigentesModelCompromisso extends JModelAdmin
     {
             // Check the session for previously entered form data.
             $data = JFactory::getApplication()->getUserState('com_agendadirigentes.edit.compromisso.data', array());
+
             if (empty($data)) 
             {
                 $data = $this->getItemExtended();
             }
+
             return $data;
     }
 
@@ -1001,7 +1003,6 @@ class AgendaDirigentesModelCompromisso extends JModelAdmin
         $time_inicial = strtotime($data_inicial);
         $time_final = strtotime($data_final);
         $daysecs = 86400;
-
         do {
             $date = date('Y-m-d', $time_inicial);
 
@@ -1012,7 +1013,7 @@ class AgendaDirigentesModelCompromisso extends JModelAdmin
                 if (empty( $dirigente ))
                     continue;
 
-                if (array_key_exists($dirigente, $this->dirigentes_agendas_alteradas))
+                if (array_key_exists($dirigente. '-' . $date, $this->dirigentes_agendas_alteradas))
                     continue;
 
                 $query = $db->getQuery( true );
@@ -1045,13 +1046,12 @@ class AgendaDirigentesModelCompromisso extends JModelAdmin
                     if(! $db->updateObject('#__agendadirigentes_agendaalterada', $obj, array('id_dirigente','data')) )
                         return false;
                 }
-
-                $this->dirigentes_agendas_alteradas[ $dirigente ] = $obj->qtd_alteracoes;
+                $this->dirigentes_agendas_alteradas[ $dirigente . '-' . $date ] = $obj->qtd_alteracoes;
             }
 
             $time_inicial += $daysecs;
         }
-        while ( $time_inicial <  $time_final );
+        while ( $time_inicial <=  $time_final );
         
         return true;
 

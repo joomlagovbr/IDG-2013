@@ -94,9 +94,8 @@
                         type="radio"
                         label="Realizar sobreposição sobre compromissos de outras autoridades?"
                         description=""
-                        default="0"
-                        validate="boolean"
-                        filter="integer"
+                        default="0"                        
+                        filter="string"
                         >
                         <option value="0">JNO</option>
                         <option value="1">Mesma categoria</option>
