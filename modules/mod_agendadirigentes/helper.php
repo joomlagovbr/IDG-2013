@@ -15,10 +15,11 @@ class ModAgendaDirigentesHelper
 	{
 		$id = (int) $params->get('autoridade', 0);
 		$modo = $params->get('modo_agenda', '');
-		$limit = (int) $params->get('limit_compromissos', 0);
+		$limit = (int) $params->get('limit_compromissos', -1);
 		$order = $params->get('order_compromissos', 'NEXT_DESC');
 		$params_dia = $params->get('dia', '');
-		
+		$featured = $params->get('featured_compromissos', '');
+
 		if( empty($params_dia) )
 			$params->set('dia', self::getDia($params) );
 
@@ -26,7 +27,11 @@ class ModAgendaDirigentesHelper
 		$model = JModelLegacy::getInstance('Compromissos', 'AgendaDirigentesModel', array('ignore_request' => true));
 		$model->setState('autoridade.id', $id);
 		$model->setState('participantes.load', false);
+		$model->setState('filter.featured', $featured);
 		$model->setState('params', $params);
+
+		if($limit > -1)
+			$model->setState('list.limit', $limit);
 
 		$items = $model->getItems();
 		for ($i=0, $limit=count($items); $i < $limit; $i++) { 
@@ -70,5 +75,20 @@ class ModAgendaDirigentesHelper
 		$app = JFactory::getApplication();
 		$date = new JDate();
 		return $date->format('Y-m-d', $app->getCfg('offset'));	
+	}
+
+	public static function getAlturaLista( $params )
+	{
+		$altura_lista = $params->get('altura_lista', '');
+		if(empty($altura_lista))
+			return '';
+
+		$altura_lista = preg_replace('/[^0-9]/', '', $altura_lista);
+		$altura_lista = (int) $altura_lista;
+
+		if($altura_lista == 0)
+			return '';
+
+		return $altura_lista;
 	}
 }

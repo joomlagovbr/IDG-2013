@@ -52,17 +52,29 @@
 					>
 					<option value="">JDEFAULT</option>
 		  		</field>
-				<field name="featured_compromissos" type="list" default="all" label="Mostrar compromissos:" description="">
-					<option value="all">Todos</option>		
-					<option value="featured">Em destaque</option>		
-					<option value="unfeatured">Sem destaque</option>		
+				<field name="featured_compromissos" type="list" default="" label="Mostrar compromissos:" description="">
+					<option value="">Todos</option>		
+					<option value="1">Em destaque</option>		
+					<option value="0">Sem destaque</option>		
 		  		</field>
 				<field
 					name="limit_compromissos"
 					type="text"
 					label="Limite de compromissos"
 					description="Limite de compromissos para o dia em questão. Informe -1 para todos os compromissos."
-					default="3" />
+					default="-1" />
+				<field
+					name="limit_title_compromissos"
+					type="text"
+					label="Limite de caracteres de compromissos"
+					description="Deixe em branco ou zero para sem limite. Busca considerar espaços, para não cortar palavras."
+					default="" />
+				<field
+					name="delimiter_title_compromissos"
+					type="text"
+					label="Delimitador da quantidade de caracteres"
+					description="Caracteres delimitadores do texto, quando este é limitado"
+					default=" [...]" />
 				<field name="order_compromissos" type="list" default="ASC" label="Ordem dos compromissos" description="Ordem de exibição dos compromissos">
 					<option value="ASC">ASC</option>		
 					<option value="DESC">DESC</option>		
@@ -72,7 +84,13 @@
 			</fieldset>
 			<fieldset
 				name="advanced">
-		  		
+				<field
+					name="altura_lista"
+					type="text"
+					label="Altura da lista"
+					description="Limita a altura da lista de itens por meio de css overflow. Exemplo: 50px"
+					default="" />
+
 				<field
 					name="moduleclass_sfx"
 					type="textarea" rows="3"
