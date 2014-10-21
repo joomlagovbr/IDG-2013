@@ -13,8 +13,10 @@ class AgendadirigentesModels
 		$app = JFactory::getApplication();
         $params = $app->getParams();
         $input = $app->input;
+        $input_var = $input->get( $var, '');
+        $params_var = $params->get( $var, '');
 
-        if ( !empty($input->get( $var, '')) || !empty($params->get( $var, '')) )
+        if ( !empty($input_var) || !empty($params_var) )
         {
         	if(!is_file(JPATH_COMPONENT_ADMINISTRATOR .'/models/rules/' . strtolower($format) .'.php'))
         	{
@@ -26,17 +28,17 @@ class AgendadirigentesModels
             $object = 'JFormRule' . $format;
             $rule = new $object();
 
-            if ( !empty($input->get( $var, '')) )
+            if ( !empty($input_var) )
             {
-                if (preg_match($rule->getRegex(), $input->get( $var, '')))
+                if (preg_match($rule->getRegex(), $input_var))
                     $params->set( $var, $input->get( $var));
             }
-            elseif(!empty($params->get( $var, '')) && !preg_match($rule->getRegex(), $params->get( $var, '')))
+            elseif(!empty($params_var) && !preg_match($rule->getRegex(), $params_var))
             {
                 $params->set( $var, '');
             }
         }
-        if ( empty($input->get( $var, '')) && empty($params->get( $var, '')) )
+        if ( empty($input_var) && empty($params_var) )
         {
             $params->set( $var, $emptyValue );
         }

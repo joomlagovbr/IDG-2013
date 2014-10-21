@@ -111,14 +111,15 @@ class AgendaDirigentesTableCompromisso extends JTable
             //separacao dos dados para gravar em campo participantes_externos (que nao precisa de mapeamento no form)
             $app = JFactory::getApplication();
             $input = $app->input;
-            @$dirigentes = $input->get('jform', array(), 'ARRAY')['dirigentes'];
+            $jform = $input->get('jform', array(), 'ARRAY');
+            @$dirigentes = $jform['dirigentes'];
             $JDate = new JDate('now', $app->getCfg('offset'));
 
             if (isset($dirigentes) && is_array($dirigentes)) {
 
                 $arr_dirigentes = array();
                 $arr_participantes_externos = array();
-                $replace_dirigentes = array('#new#', ',', ';');
+                $replace_dirigentes = array('#new#', ',', ';', '=', '"', '\'', '/', '\\');
 
                 for ($i=0, $count_dirigentes = count($dirigentes); $i < $count_dirigentes; $i++) { 
                     if (is_numeric($dirigentes[$i]))

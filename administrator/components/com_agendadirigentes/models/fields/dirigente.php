@@ -59,11 +59,12 @@ class JFormFieldDirigente extends JFormFieldList
                 $db->setQuery((string)$query);
                 $dirigentes = $db->loadObjectList();
                 $options = array();
-                
-                if(empty($this->getAttribute('alt_item_0', '')))
+                $attribute_alt_item_0 = $this->getAttribute('alt_item_0', '');
+
+                if( empty($attribute_alt_item_0) )
                     $options[] = JHtml::_('select.option', '', JText::_('COM_AGENDADIRIGENTES_SELECT_DIRIGENTE'));
                 else
-                    $options[] = JHtml::_('select.option', '', JText::_($this->getAttribute('alt_item_0')));
+                    $options[] = JHtml::_('select.option', '', JText::_( $attribute_alt_item_0 ));
 
                 if ($dirigentes)
                 {

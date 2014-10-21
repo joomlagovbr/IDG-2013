@@ -29,135 +29,138 @@ class AgendaDirigentesViewAutoridade extends JViewLegacy
          */
         public function display($tpl = null) 
         {
-                $this->state = $this->get('State');
-                $this->autoridade = $this->get('Item');
-                $this->compromissos = $this->get('Compromissos');
-                $this->params = $this->state->get('params');
-                
-                if(@$this->autoridade->state < 1 || empty($this->autoridade))
-                {
-                        JLog::add('Autoridade n&atilde;o encontrada', JLog::WARNING, 'jerror');
-                        return false;                        
-                }
+            $this->state = $this->get('State');
+            $this->autoridade = $this->get('Item');
+            $this->compromissos = $this->get('Compromissos');
+            $this->params = $this->state->get('params');
+            
+            if(@$this->autoridade->state < 1 || empty($this->autoridade))
+            {
+                    JLog::add('Autoridade n&atilde;o encontrada', JLog::WARNING, 'jerror');
+                    return false;                        
+            }
 
 
-                // Check for errors.
-                if (count($errors = $this->get('Errors'))) 
-                {
-                        JLog::add(implode('<br />', $errors), JLog::WARNING, 'jerror');
-                        return false;
-                }
-                $this->_prepareDocument();
+            // Check for errors.
+            if (count($errors = $this->get('Errors'))) 
+            {
+                    JLog::add(implode('<br />', $errors), JLog::WARNING, 'jerror');
+                    return false;
+            }
+            $this->_prepareDocument();
 
-                // Display the view
-                parent::display($tpl);
+            // Display the view
+            parent::display($tpl);
         }
 
         protected function _prepareDocument()
         {
-                $app            = JFactory::getApplication();
-                $menus          = $app->getMenu();
-                $pathway        = $app->getPathway();
-                $title          = null;
-                $activeMenu = $menus->getActive();
-                $template   = $app->getTemplate(true);
-                $this->templatevar = $app->input->getCmd('template');
+            $app            = JFactory::getApplication();
+            $menus          = $app->getMenu();
+            $pathway        = $app->getPathway();
+            $title          = null;
+            $activeMenu = $menus->getActive();
+            $template   = $app->getTemplate(true);
+            $this->templatevar = $app->input->getCmd('template');
 
-                $this->Itemid = $app->input->getInt('Itemid', 0);
-                
-                //page_heading
-                if(@empty($this->params->get('page_title', '')) || @$this->params->get('page_title', '')==@$activeMenu->title)
-                {
-                        if(@isset($this->autoridade->car_name)===false || @isset($this->autoridade->dir_name)===false)
-                                $this->page_heading = 'Agenda de Autoridade';
+            $this->Itemid = $app->input->getInt('Itemid', 0);
+            
+            //page_heading
+            @$params_page_title = $this->params->get('page_title', '');
+            @$activeMenu_title = $activeMenu->title;
+
+            if( empty($params_page_title) || $params_page_title==$activeMenu_title )
+            {
+                    if(@isset($this->autoridade->car_name)===false || @isset($this->autoridade->dir_name)===false)
+                            $this->page_heading = 'Agenda de Autoridade';
+                    else
+                    {
+                        if($this->autoridade->sexo == 'M')
+                        {
+                            $this->page_heading = 'Agenda do ' . $this->autoridade->car_name
+                                                    . ' ' . $this->autoridade->dir_name;
+                        }
                         else
                         {
-                            if($this->autoridade->sexo == 'M')
-                            {
-                                $this->page_heading = 'Agenda do ' . $this->autoridade->car_name
-                                                        . ' ' . $this->autoridade->dir_name;
-                            }
-                            else
-                            {
-                                $this->page_heading = 'Agenda da ' . $this->autoridade->car_name_f
-                                                        . ' ' . $this->autoridade->dir_name;
-                            }                            
-                        }
-                }
-                else
-                {
-                        $this->page_heading = $this->params->get('page_title', '');
-                }
-                
-                $this->page_heading = $this->escape($this->page_heading);
-                $pathway->addItem($this->page_heading);
-
-                if( $this->templatevar =='system')
-                    $this->document->setTitle( $this->page_heading );
-
-                //sharing
-                $this->sharing = '';
-                if ( $this->params->get('sharing_type')=='html' )
-                {
-                    $this->sharing = $this->params->get('sharing_code', '');
-                }
-                elseif ( $this->params->get('sharing_type')=='module' )
-                {
-                    @$modulesSocial = JModuleHelper::getModules( $this->params->get('sharing_mod_position') );
-                    $countModulesSocial = count($modulesSocial);
-                    if ($countModulesSocial)
-                    {
-                        $moduleSocialTmpl = $this->loadTemplate('sharingmodule');
-                        for ($i=0; $i < $countModulesSocial; $i++)
-                        { 
-                            $module = JModuleHelper::renderModule( $modulesSocial[$i] );
-                            $module = str_replace('{SITE}', JURI::root(), $module);
-                            $module = str_replace('{MODULE}', $module, $moduleSocialTmpl);
-                            $this->sharing .= $module . "\n";
-                        }                    
+                            $this->page_heading = 'Agenda da ' . $this->autoridade->car_name_f
+                                                    . ' ' . $this->autoridade->dir_name;
+                        }                            
                     }
-                }
+            }
+            else
+            {
+                    $this->page_heading = $this->params->get('page_title', '');
+            }
+            
+            $this->page_heading = $this->escape($this->page_heading);
+            $pathway->addItem($this->page_heading);
 
-                //nome_orgao
-                $this->nome_orgao = '';
-                if ($this->params->get('fonte_nome_orgao')=='custom')
-                {
-                    $this->nome_orgao = $this->params->get('custom_nome_orgao', '');                    
-                }
-                elseif($this->params->get('fonte_nome_orgao')=='site_name')
-                {
-                    $this->nome_orgao = $app->getCfg('sitename');
-                }
-                elseif($this->params->get('fonte_nome_orgao')=='tmpl_padraogoverno01')
-                {
-                    $this->nome_orgao = $template->params->get('denominacao', '')
-                                        . ' '. $template->params->get('nome_principal', '');
-                }
+            if( $this->templatevar =='system')
+                $this->document->setTitle( $this->page_heading );
 
-                //link reporte erro                
-                if( !empty($this->params->get('link_reportar_erro', '')) )
+            //sharing
+            $this->sharing = '';
+            if ( $this->params->get('sharing_type')=='html' )
+            {
+                $this->sharing = $this->params->get('sharing_code', '');
+            }
+            elseif ( $this->params->get('sharing_type')=='module' )
+            {
+                @$modulesSocial = JModuleHelper::getModules( $this->params->get('sharing_mod_position') );
+                $countModulesSocial = count($modulesSocial);
+                if ($countModulesSocial)
                 {
-                    $this->link_reportar_erro = str_replace('{SITE}/', JURI::root(),
-                                                            $this->params->get('link_reportar_erro', '') );
-                    
-                    if(strpos($this->link_reportar_erro, '{SITE}')!==false)
-                        $this->link_reportar_erro = str_replace('{SITE}', JURI::root(), $this->link_reportar_erro );
+                    $moduleSocialTmpl = $this->loadTemplate('sharingmodule');
+                    for ($i=0; $i < $countModulesSocial; $i++)
+                    { 
+                        $module = JModuleHelper::renderModule( $modulesSocial[$i] );
+                        $module = str_replace('{SITE}', JURI::root(), $module);
+                        $module = str_replace('{MODULE}', $module, $moduleSocialTmpl);
+                        $this->sharing .= $module . "\n";
+                    }                    
                 }
-                else
-                {
-                    $this->link_reportar_erro = '';
-                }
+            }
 
-                //dia por extenso
-                $this->dia_por_extenso = '';
-                @$dia_por_extenso = new JDate( $this->params->get('dia') );
-                if (@$dia_por_extenso)
-                {
-                    $this->dia_por_extenso = $dia_por_extenso->format( 'l, ' )
-                                            . strtolower( $dia_por_extenso->format( 'd \d\e F \d\e Y' ) );
-                
-                }
+            //nome_orgao
+            $this->nome_orgao = '';
+            if ($this->params->get('fonte_nome_orgao')=='custom')
+            {
+                $this->nome_orgao = $this->params->get('custom_nome_orgao', '');                    
+            }
+            elseif($this->params->get('fonte_nome_orgao')=='site_name')
+            {
+                $this->nome_orgao = $app->getCfg('sitename');
+            }
+            elseif($this->params->get('fonte_nome_orgao')=='tmpl_padraogoverno01')
+            {
+                $this->nome_orgao = $template->params->get('denominacao', '')
+                                    . ' '. $template->params->get('nome_principal', '');
+            }
 
+            //link reporte erro
+            $this->link_reportar_erro = $this->params->get('link_reportar_erro', '');
+
+            if( !empty($this->link_reportar_erro) )
+            {
+                $this->link_reportar_erro = str_replace('{SITE}/', JURI::root(), $this->link_reportar_erro );
+
+                if(strpos($this->link_reportar_erro, '{SITE}')!==false)
+                    $this->link_reportar_erro = str_replace('{SITE}', JURI::root(), $this->link_reportar_erro );
+            }
+            else
+            {
+                $this->link_reportar_erro = '';
+            }
+
+            //dia por extenso
+            $this->dia_por_extenso = '';
+            @$dia_por_extenso = new JDate( $this->params->get('dia') );
+            if ( !empty($dia_por_extenso) )
+            {
+                $this->dia_por_extenso = $dia_por_extenso->format( 'l, ' )
+                                        . strtolower( $dia_por_extenso->format( 'd \d\e F \d\e Y' ) );
+            
+            }
 
         }
 

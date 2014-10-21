@@ -264,7 +264,9 @@ class AgendaDirigentesModelCompromissos extends JModelList
             //alterando valor de lista se participante_id estiver preenchido
             $app = JFactory::getApplication();
             $input = $app->input;
-            @$participante_id = intval($input->get('filter', '', 'ARRAY')['participante_id']);
+            $filter = $input->get('filter', '', 'ARRAY');
+
+            @$participante_id = intval($filter['participante_id']);
             if($participante_id>0)
             {
                 $lists = $input->get('list', '', 'ARRAY');

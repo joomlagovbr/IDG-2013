@@ -17,8 +17,9 @@ class ModAgendaDirigentesHelper
 		$modo = $params->get('modo_agenda', '');
 		$limit = (int) $params->get('limit_compromissos', 0);
 		$order = $params->get('order_compromissos', 'NEXT_DESC');
-
-		if(empty($params->get('dia', '')))
+		$params_dia = $params->get('dia', '');
+		
+		if( empty($params_dia) )
 			$params->set('dia', self::getDia($params) );
 
 		JModelLegacy::addIncludePath(JPATH_ROOT . '/components/com_agendadirigentes/models', 'AgendaDirigentesModel');
@@ -37,7 +38,9 @@ class ModAgendaDirigentesHelper
 
 	public static function getDia( &$params )
 	{
-		if(empty($params->get('dia', '')))
+		$params_dia = $params->get('dia', '');
+
+		if( empty($params_dia) )
 		{		
 			$params->set('dia', self::getDate());
 		}
@@ -47,7 +50,9 @@ class ModAgendaDirigentesHelper
 
 	public static function getFormatedDate( &$params )
 	{
-		if(empty($params->get('dia', '')))
+		$params_dia = $params->get('dia', '');
+
+		if( empty($params_dia) )
 			$dia = self::getDia($params);
 		else
 			$dia = $params->get('dia');
