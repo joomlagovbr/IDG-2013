@@ -42,6 +42,8 @@ class AgendaDirigentesModelAutoridade extends JModelItem
 
 			$db = $this->_db;
 			$query = $db->getQuery(true);
+			$dia = $this->state->get('params')->get('dia');
+
 			$query->select(
 						$db->quoteName('dir.id') . ', '.
 						$db->quoteName('dir.name', 'dir_name') . ', '.
@@ -49,7 +51,8 @@ class AgendaDirigentesModelAutoridade extends JModelItem
 						$db->quoteName('dir.state') . ', '.
 						$db->quoteName('dir.sexo') . ', '.
 						$db->quoteName('car.name', 'car_name') . ', '.
-						$db->quoteName('car.name_f', 'car_name_f')
+						$db->quoteName('car.name_f', 'car_name_f') . ', '.
+						$db->quoteName('alt.qtd_alteracoes', 'qtd_alteracoes_agenda')
 					)
 					->from(
 						$db->quoteName('#__agendadirigentes_dirigentes', 'dir')
@@ -58,13 +61,18 @@ class AgendaDirigentesModelAutoridade extends JModelItem
 						$db->quoteName('#__agendadirigentes_cargos', 'car')
 						. ' ON dir.cargo_id = car.id'
 					)
+					->join('LEFT',
+						$db->quoteName('#__agendadirigentes_agendaalterada', 'alt')
+						. ' ON ( dir.id = alt.id_dirigente '
+						. ' AND alt.data = '. $db->Quote($dia) .' )'
+					)
 					->where(
 						$db->quoteName('dir.id') . ' = ' . $id
 					);
 
 			$query->where(
 				$db->quoteName('dir.state') . ' IN (1,2)'
-			);	
+			);
 
 			$db->setQuery( (string)$query );
 			$this->_item = $db->loadObject();

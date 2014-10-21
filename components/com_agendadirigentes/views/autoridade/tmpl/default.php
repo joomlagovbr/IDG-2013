@@ -62,8 +62,12 @@ endif;
 			<?php if (!empty($this->dia_por_extenso)): ?>
 			<h2><?php echo $this->dia_por_extenso; ?></h2>
 			<?php endif; ?>				
+			<?php if (! is_null($this->autoridade->qtd_alteracoes_agenda) ): ?>
+				<span class="autoridade-agenda-alterada">
+					Agenda alterada
+				</span>
+			<?php endif ?>
 		</div>
-
 		<div class="autoridade-compromissos tile-list-1">
 			<?php for ($i=0, $count_compromissos = count($this->compromissos); $i < $count_compromissos; $i++): ?> 
 				<?php

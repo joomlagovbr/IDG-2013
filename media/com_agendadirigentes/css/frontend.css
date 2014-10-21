@@ -14,6 +14,7 @@ h6.autoridades-categoria { font-size:12px !important; font-weight: normal; text-
 .autoridade-header { text-align: center; border-bottom: 1px solid #e8e7e7 }
 .autoridade-header .brasao-republica { display:block; margin-left: auto; margin-right: auto }
 .autoridade-header strong { display: block }
+.autoridade-header .autoridade-agenda-alterada { display:block; text-align: left !important; font-size: 0.82em }
 
 .autoridade-compromisso-pauta { margin-bottom: 15px; font-size: 1.2em }
 .autoridade-compromisso-local { margin-bottom: 20px }
