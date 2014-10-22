@@ -154,7 +154,7 @@ class AgendaDirigentesViewAutoridade extends JViewLegacy
 
             //dia por extenso
             $this->dia_por_extenso = '';
-            @$dia_por_extenso = new JDate( $this->params->get('dia') );
+            @$dia_por_extenso = new JDate( $this->params->get('dia'), $app->getCfg('offset') );
             if ( !empty($dia_por_extenso) )
             {
                 $this->dia_por_extenso = $dia_por_extenso->format( 'l, ' )

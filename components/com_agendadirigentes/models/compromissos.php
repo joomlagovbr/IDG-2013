@@ -24,7 +24,7 @@ class AgendaDirigentesModelCompromissos extends JModelList
 	protected function populateState($ordering = NULL, $direction = NULL) 
     {
     	$app = JFactory::getApplication();
-    	AgendadirigentesModels::setParamBeforeSetState( 'dia', 'DataBanco', date('Y-m-d') );
+    	AgendadirigentesModels::setParamBeforeSetState( 'dia', 'DataBanco', $this->getDate() );
 
 		$id	= $app->input->getInt('id');
 		$this->setState('autoridade.id', $id);
@@ -195,6 +195,13 @@ class AgendaDirigentesModelCompromissos extends JModelList
         endif;
 
 		return $compromissos;
+    }
+
+    public static function getDate()
+    {
+        $app = JFactory::getApplication();
+        $date = new JDate('now', $app->getCfg('offset'));
+        return $date->format('Y-m-d', $app->getCfg('offset'));  
     }
 }
 ?>

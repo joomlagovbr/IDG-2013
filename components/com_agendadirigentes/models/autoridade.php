@@ -96,7 +96,7 @@ class AgendaDirigentesModelAutoridade extends JModelItem
 	public static function getDate()
 	{
 		$app = JFactory::getApplication();
-		$date = new JDate();
+		$date = new JDate('now', $app->getCfg('offset'));
 		return $date->format('Y-m-d', $app->getCfg('offset'));	
 	}
 
