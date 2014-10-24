@@ -7,63 +7,53 @@
                 <field
                         name="fonte_nome_orgao"
                         type="list"
-                        label="Nome do órgão"
-                        description="Fonte do nome do órgão"
+                        label="COM_AGENDADIRIGENTES_CONFIG_SOURCE_ORG_NAME_LABEL"
+                        description="COM_AGENDADIRIGENTES_CONFIG_SOURCE_ORG_NAME_DESC"
                         default="custom"
                         >                                
-                        <option value="custom">Digite abaixo</option>
-                        <option value="site_name">Nome do site</option>
-                        <option value="tmpl_padraogoverno01">Template do portal padrão VR 01</option>
+                        <option value="custom">COM_AGENDADIRIGENTES_CONFIG_SOURCE_ORG_NAME_CUSTOM</option>
+                        <option value="site_name">COM_AGENDADIRIGENTES_CONFIG_SOURCE_ORG_NAME_SITE_NAME</option>
+                        <option value="tmpl_padraogoverno01">COM_AGENDADIRIGENTES_CONFIG_SOURCE_ORG_NAME_SITE_TMPL_PG01</option>
                 </field>
                 <field
                         name="custom_nome_orgao"
                         type="text"
-                        label="Digite o nome do órgão"
-                        description="Nome do órgão que ficará entre o brasão da república e o nome da autoridade"
+                        label="COM_AGENDADIRIGENTES_CONFIG_DESC_ORGAO_LABEL"
+                        description="COM_AGENDADIRIGENTES_CONFIG_DESC_ORGAO_DESC"
                         default="Órgão do Poder Executivo Federal"
-                />
-                <!-- description="COM_AGENDADIRIGENTES_CONFIG_GENERAL_SETTINGS_DESC" -->
-                <field
-                        name="email_administrators"
-                        type="textarea"
-                        cols="40"
-                        rows="4"
-                        label="COM_AGENDADIRIGENTES_EMAIL_ADMINISTRATORS_LABEL"
-                        description="COM_AGENDADIRIGENTES_EMAIL_ADMINISTRATORS_DESC"
-                        default=""
                 />
                 <field
                         name="link_reportar_erro"
                         type="textarea"
                         cols="40"
                         rows="4"
-                        label="Reportar Erro"
-                        description="Link para reporte de erro"
+                        label="COM_AGENDADIRIGENTES_CONFIG_LINK_REPORTE_ERRO_LABEL"
+                        description="COM_AGENDADIRIGENTES_CONFIG_LINK_REPORTE_ERRO_DESC"
                         default=""
                 />
                 <field
                         name="busca_itemid"
                         type="menuitem"
-                        label="Itemid de busca"
-                        description="Itemid da página de busca"
+                        label="COM_AGENDADIRIGENTES_CONFIG_BUSCA_ITEMID_LABEL"
+                        description="COM_AGENDADIRIGENTES_CONFIG_BUSCA_ITEMID_DESC"
                         >
-                        <option value="">Selecione</option>
+                        <option value="">JGLOBAL_SELECT_AN_OPTION</option>
                 </field>
                 <field
                         name="permissionsType"
                         type="list"
-                        label="Tipo de permissao"
-                        description="Permissoes implicitas ou explicitas."
+                        label="COM_AGENDADIRIGENTES_CONFIG_PERMISSION_TYPE_LABEL"
+                        description="COM_AGENDADIRIGENTES_CONFIG_PERMISSION_TYPE_DESC"
                         default="implicit"
                 >                                
-                        <option value="implicit">Implícita</option>
-                        <option value="explicit">Explícita</option>
+                        <option value="implicit">COM_AGENDADIRIGENTES_CONFIG_PERMISSION_TYPE_IMPLICIT</option>
+                        <option value="explicit">COM_AGENDADIRIGENTES_CONFIG_PERMISSION_TYPE_EXPLICIT</option>
                 </field>
                 <field
                         name="editOwnState"
                         type="list"
-                        label="Editar estado de itens proprios"
-                        description="Permitir edicao de estado de itens proprios, se edicao de itens proprios estiver liberada"
+                        label="COM_AGENDADIRIGENTES_CONFIG_EDITOWNSTATE_LABEL"
+                        description="COM_AGENDADIRIGENTES_CONFIG_EDITOWNSTATE_DESC"
                         default="0"
                 >                                
                         <option value="0">JNO</option>
@@ -72,19 +62,19 @@
                 <field
                         name="allowFeature"
                         type="list"
-                        label="Permitir marcar como destaque"
-                        description="Escolher opção referente ao destaque ou não de itens"
+                        label="COM_AGENDADIRIGENTES_CONFIG_ALLOWFEATURE_LABEL"
+                        description="COM_AGENDADIRIGENTES_CONFIG_ALLOWFEATURE_DESC"
                         default="state"
                 >                                
-                        <option value="state">Permissão de alterar estado</option>
-                        <option value="edit">Permissão de editar</option>
-                        <option value="superuser">Somente super users</option>
+                        <option value="state">COM_AGENDADIRIGENTES_CONFIG_ALLOWFEATURE_ONCHANGESTATE</option>
+                        <option value="edit">COM_AGENDADIRIGENTES_CONFIG_ALLOWFEATURE_ONEDIT</option>
+                        <option value="superuser">COM_AGENDADIRIGENTES_CONFIG_ALLOWFEATURE_ONLYSUPER</option>
                 </field>
                 <field
                         name="restricted_list_compromissos"
                         type="list"
-                        label="Restringir lista de compromissos"
-                        description="Restringe lista de compromissos de acordo com os itens para os quais se tem permissão."
+                        label="COM_AGENDADIRIGENTES_CONFIG_RESTICTEDLIST_COMPROMISSOS_LABEL"
+                        description="COM_AGENDADIRIGENTES_CONFIG_RESTICTEDLIST_COMPROMISSOS_DESC"
                         default="0"
                 >
                         <option value="0">JNO</option>
@@ -93,8 +83,8 @@
                 <field
                         name="restricted_list_cargos"
                         type="list"
-                        label="Restringir lista de cargos"
-                        description="Restringe lista de cargos de acordo com os itens para os quais se tem permissão."
+                        label="COM_AGENDADIRIGENTES_CONFIG_RESTICTEDLIST_CARGOS_LABEL"
+                        description="COM_AGENDADIRIGENTES_CONFIG_RESTICTEDLIST_CARGOS_DESC"
                         default="0"
                 >
                         <option value="0">JNO</option>
@@ -103,8 +93,8 @@
                 <field
                         name="restricted_list_dirigentes"
                         type="list"
-                        label="Restringir lista de dirigentes"
-                        description="Restringe lista de cargos de acordo com os itens para os quais se tem permissão."
+                        label="COM_AGENDADIRIGENTES_CONFIG_RESTICTEDLIST_DIRIGENTES_LABEL"
+                        description="COM_AGENDADIRIGENTES_CONFIG_RESTICTEDLIST_DIRIGENTES_DESC"
                         default="0"
                 >
                         <option value="0">JNO</option>
@@ -113,8 +103,8 @@
                 <field
                         name="permitir_participantes_locais"
                         type="list"
-                        label="Permitir participantes locais / sobreposição"
-                        description=""
+                        label="COM_AGENDADIRIGENTES_CONFIG_ALLOW_OVERRIDE_LABEL"
+                        description="COM_AGENDADIRIGENTES_CONFIG_ALLOW_OVERRIDE_DESC"
                         default="1"
                         >
                         <option value="0">JNO</option>
@@ -123,8 +113,8 @@
                 <field
                         name="permitir_participantes_externos"
                         type="list"
-                        label="Permitir participantes externos"
-                        description=""
+                        label="COM_AGENDADIRIGENTES_CONFIG_ALLOW_EXTERNAL_LABEL"
+                        description="COM_AGENDADIRIGENTES_CONFIG_ALLOW_EXTERNAL_DESC"
                         default="1"
                         >
                         <option value="0">JNO</option>
@@ -135,7 +125,6 @@
                 name="compromissos"
                 label="COM_AGENDADIRIGENTES_CONFIG_COMPROMISSOS_SETTINGS_LABEL"
         >
-                <!-- description="COM_AGENDADIRIGENTES_CONFIG_COMPROMISSOS_SETTINGS_DESC" -->
                 <field
                         name="exibir_horario_inicio"
                         type="list"
@@ -209,8 +198,8 @@
                 <field
                         name="permitir_vcard"
                         type="list"
-                        label="Permitir VCARD"
-                        description="Permitir ou não VCARD"
+                        label="COM_AGENDADIRIGENTES_CONFIG_ALLOW_VCARD_LABEL"
+                        description="COM_AGENDADIRIGENTES_CONFIG_ALLOW_VCARD_DESC"
                         default="1"
                 >                                
                         <option value="0">JNO</option>
