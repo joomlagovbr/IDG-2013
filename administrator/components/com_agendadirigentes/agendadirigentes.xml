@@ -2,12 +2,12 @@
 <extension type="component" version="3.2" method="upgrade">
         <name>COM_AGENDADIRIGENTES</name>
         <creationDate>Agosto 2014</creationDate>
-        <author>Joomla Calango</author>
+        <author>JUG Joomla Calango</author>
         <authorEmail>rafaelberlanda@gmail.com</authorEmail>
         <authorUrl>http://portalpadrao.joomlacalango.org</authorUrl>
         <copyright>Copyright (c) 2013 - 2014 JUG Joomla Calango. Todos os direitos reservados.</copyright>
         <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-        <version>0.0.7</version>
+        <version>1.0.0</version>
         <description>COM_AGENDADIRIGENTES_DESCRIPTION</description> 
         <install> <!-- Runs on install -->
                 <sql>
@@ -70,7 +70,6 @@
                         <folder>views</folder>
                 </files>
         </administration> 
-
         <!-- UPDATESERVER DEFINITION -->
         <!-- <updateservers<name />
                 <server type="extension" priority="1" name="AgendaDirigentes Update Site">http://yourdomain.com/update/helloworld-update.xml</server>

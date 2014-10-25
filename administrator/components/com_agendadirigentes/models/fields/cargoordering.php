@@ -14,9 +14,6 @@ defined('_JEXEC') or die;
 jimport('joomla.form.helper');
 JFormHelper::loadFieldClass('list');
  
-/**
- * HelloWorld Form Field class for the HelloWorld component
- */
 class JFormFieldCargoordering extends JFormFieldList
 {
         /**
@@ -54,7 +51,7 @@ class JFormFieldCargoordering extends JFormFieldList
                         ->join('INNER', $db->quoteName('#__categories', 'cat')
                                 . ' ON (' . $db->quoteName('car.catid') . ' = ' . $db->quoteName('cat.id') . ')')
                         ->where('car.catid = '.intval($table->catid));
-                        // ->where('dir.id <> '.intval($id));
+
                 $query->order( 'car.ordering ASC, car.name ASC' );
 
                 $db->setQuery((string)$query);
@@ -63,19 +60,15 @@ class JFormFieldCargoordering extends JFormFieldList
                 $this->setValue( $table->ordering. ':' . $table->id );
                 if ($cargos)
                 {
-                        $options[] = JHtml::_('select.option', 0, ' - Primeiro - ');
-                        // $last = 0;
+
+                        $options[] = JHtml::_('select.option', 0, JText::_('COM_AGENDADIRIGENTES_FIELD_CARGOORD_FIRST'));
                         foreach($cargos as $cargo) 
                         {
                             if($cargo->id == $table->id)
                                 $options[] = JHtml::_('select.option', $cargo->ordering . ':' . $cargo->id, '-> '.$cargo->name.' <-');
                             else
                                 $options[] = JHtml::_('select.option', $cargo->ordering . ':' . $cargo->id, $cargo->name);
-
-                            // if($cargo->ordering > $last)
-                            //     $last = $cargo->ordering;
                         }
-                        // $options[] = JHtml::_('select.option', $last+1, ' - &Uacute;ltimo - ');
                 }
                 else
                 {

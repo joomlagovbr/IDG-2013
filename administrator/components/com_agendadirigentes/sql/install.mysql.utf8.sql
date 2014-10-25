@@ -38,14 +38,6 @@ CREATE TABLE `#__agendadirigentes_dirigentes_compromissos` (
   KEY `idx_owner` (`owner`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-#autorizacoes de cadastro
-DROP TABLE IF EXISTS `#__agendadirigentes_dirigentes_permissoes`;
-CREATE TABLE `#__agendadirigentes_dirigentes_permissoes` (
-  `user_id` int(11) NOT NULL,
-  `dirigente_id` int(11) NOT NULL,
-  PRIMARY KEY (`user_id`,`dirigente_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 #cargos de dirigentes
 DROP TABLE IF EXISTS `#__agendadirigentes_cargos`;
 CREATE TABLE `#__agendadirigentes_cargos` (
@@ -62,20 +54,20 @@ CREATE TABLE `#__agendadirigentes_cargos` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 #insercoes temporarias, pacote padrao
- INSERT INTO `portal_modelo_3xdev`.`x3dts_assets` VALUES 
+ INSERT INTO `#__assets` VALUES 
  (227,1,409,418,1,'com_agendadirigentes','com_agendadirigentes','{}'),
  (228,227,410,411,2,'com_agendadirigentes.category.49','Gabinete do Ministro',''),
  (229,227,412,413,2,'com_agendadirigentes.category.50','Secretaria Executiva',''),
  (230,227,414,417,2,'com_agendadirigentes.category.51','Diretoria A',''),
  (231,230,415,416,3,'com_agendadirigentes.category.52','Coordenação B','');
 
- INSERT INTO `portal_modelo_3xdev`.`x3dts_categories` VALUES  
+ INSERT INTO `#__categories` VALUES  
  (49,228,1,79,80,1,'gabinete-do-ministro','com_agendadirigentes','Gabinete do Ministro',0x676162696E6574652D646F2D6D696E697374726F,'','',1,0,'0000-00-00 00:00:00',1,'{\"category_layout\":\"\",\"image\":\"\"}','','','{\"author\":\"\",\"robots\":\"\"}',430,'2014-08-20 03:04:04',0,'0000-00-00 00:00:00',0,'*',1),
  (50,229,1,81,82,1,'secretaria-executiva','com_agendadirigentes','Secretaria Executiva',0x736563726574617269612D657865637574697661,'','',1,0,'0000-00-00 00:00:00',1,'{\"category_layout\":\"\",\"image\":\"\"}','','','{\"author\":\"\",\"robots\":\"\"}',430,'2014-08-20 03:04:11',0,'0000-00-00 00:00:00',0,'*',1),
  (51,230,1,83,86,1,'diretoria-a','com_agendadirigentes','Diretoria A',0x64697265746F7269612D61,'','',1,0,'0000-00-00 00:00:00',1,'{\"category_layout\":\"\",\"image\":\"\"}','','','{\"author\":\"\",\"robots\":\"\"}',430,'2014-08-20 03:04:18',0,'0000-00-00 00:00:00',0,'*',1),
  (52,231,51,84,85,2,'diretoria-a/coordenacao-b','com_agendadirigentes','Coordenação B',0x636F6F7264656E6163616F2D62,'','',1,0,'0000-00-00 00:00:00',1,'{\"category_layout\":\"\",\"image\":\"\"}','','','{\"author\":\"\",\"robots\":\"\"}',430,'2014-08-20 03:04:26',0,'0000-00-00 00:00:00',0,'*',1);
 
-INSERT INTO `portal_modelo_3xdev`.`x3dts_agendadirigentes_cargos` VALUES 
+INSERT INTO `#__agendadirigentes_cargos` VALUES 
  (1,'Ministro',49),
  (2,'Chefe de Gabinete',49),
  (3,'Secretário Executivo',50),
@@ -116,12 +108,4 @@ CREATE TABLE `#__agendadirigentes_compromissos` (
   KEY `idx_published` (`published`),
   KEY `idx_catid` (`catid`),
   KEY `idx_outros` (`dia_todo`, `featured`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
-#servers cadastro, tabela também será eliminada na versão mais recente
-DROP TABLE IF EXISTS `#__agendadirigentes_servers_cadastro`;
-CREATE TABLE `#__agendadirigentes_servers_cadastro` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `server_ip` varchar(65) NOT NULL,
-  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

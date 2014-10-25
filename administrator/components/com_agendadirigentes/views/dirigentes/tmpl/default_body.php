@@ -12,8 +12,6 @@ defined('_JEXEC') or die;
 ?>
 <?php foreach($this->items as $i => $item):
 
-        // $canDo = AgendaDirigentesHelper::getActions('com_agendadirigentes', 'category', $item->catid);
-        // $canManage = $this->user->authorise( "dirigentes.manage", "com_agendadirigentes.category." . $item->catid );
         list($canManage, $canChange) = AgendaDirigentesHelper::getGranularPermissions('dirigentes', $item );
 
         ?>

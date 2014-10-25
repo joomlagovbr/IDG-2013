@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <updates>
-   <update>
+   <!--<update>
       <name>agendaDirigentes</name>
       <description>agendaDirigentes Component</description>
       <element>com_agendaDirigentes</element>
@@ -120,6 +120,5 @@
       <maintainerurl>http://yourdomain.com</maintainerurl>
       <section>some-section</section>
       <targetplatform name="joomla" version="2.5" />
-   </update>
- 
+   </update>-->
 </updates>

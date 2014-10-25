@@ -26,7 +26,7 @@
                         class="span12"
                         multiple="false"
                         required="true"
-                        onchange="disableField('dirigentes','Alterar o dono faz com que os participantes do órgão neste compromisso tenham que ser informados novamente. Continuar?');"
+                        onchange="disableField('dirigentes');"
                         mode="nested"
                 />                
                 <field

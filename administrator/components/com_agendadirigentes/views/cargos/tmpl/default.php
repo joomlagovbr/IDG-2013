@@ -68,7 +68,7 @@ $sortFields = $this->getSortFields();
                                 <tbody><?php echo $this->loadTemplate('body');?></tbody>
                         </table>
                         <?php if ($this->sobreposicaoBloqueada): ?>
-                        <div align="right">* itens com asterisco n&atilde;o permitem sobreposi&ccedil;&atilde;o de compromissos.</div>
+                        <div align="right"><?php echo JText::_('COM_AGENDADIRIGENTES_CARGOS_NO_OVERRIDE'); ?></div>
                         <?php endif; ?>
                 <?php endif; ?>
                 <div>

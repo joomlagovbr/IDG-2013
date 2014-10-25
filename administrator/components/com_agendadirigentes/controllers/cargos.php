@@ -52,7 +52,6 @@ class AgendaDirigentesControllerCargos extends JControllerAdmin
 			$value  = JArrayHelper::getValue($values, $task, 0, 'int');
 
 			$model = $this->getModel();
-			// $categories = $model->getCategoriesFromIds($ids);
 			
 			foreach ($ids as $i => $id)
 			{

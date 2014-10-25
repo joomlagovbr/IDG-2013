@@ -74,7 +74,7 @@ class AgendaDirigentesViewCargos extends JViewLegacy
                     JText::_('COM_AGENDADIRIGENTES') . ': ' .
                     JText::_('COM_AGENDADIRIGENTES_MANAGER_CARGOS').
                     //Reflect number of items in title!
-                    ($total?' <span style="font-size: 0.5em; vertical-align: middle;">('.$total.' itens)</span>':'')
+                    ($total?' <span style="font-size: 0.5em; vertical-align: middle;">('.$total.' '.JText::_('COM_AGENDADIRIGENTES_ITEMS').')</span>':'')
                     );
 
             if ( $this->canDo->get('cargos.create') )

@@ -76,7 +76,7 @@ class AgendaDirigentesModelCargo extends JModelAdmin
 
             if($nDirigentes > 0)
             {
-                $app->enqueueMessage('H&aacute; '.$nDirigentes.' dirigente(s) vinculado(s) a este cargo. Remova-o(s) ou troque seu(s) cargo(s) para apagar este item.');
+                $app->enqueueMessage( sprintf(JText::_('COM_AGENDADIRIGENTES_MODELS_CARGO_CANT_DELETE'), $nDirigentes) );
                 return false;
             }
 

@@ -41,30 +41,6 @@ class AgendaDirigentesTableCargo extends JTable
         }
  
         /**
-         * Overridden load function
-         *
-         * @param       int $pk primary key
-         * @param       boolean $reset reset data
-         * @return      boolean
-         * @see JTable:load
-         */
-        // public function load($pk = null, $reset = true) 
-        // {
-        //         if (parent::load($pk, $reset)) 
-        //         {
-        //                 // Convert the params field to a registry.
-        //                 $params = new JRegistry;
-        //                 $params->loadJSON($this->params);
-        //                 $this->params = $params;
-        //                 return true;
-        //         }
-        //         else
-        //         {
-        //                 return false;
-        //         }
-        // }
- 
-        /**
          * Method to compute the default name of the asset.
          * The default name is in the form `table_name.id`
          * where id is the value of the primary key of the table.

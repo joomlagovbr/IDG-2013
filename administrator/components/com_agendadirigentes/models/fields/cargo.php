@@ -14,9 +14,6 @@ defined('_JEXEC') or die;
 jimport('joomla.form.helper');
 JFormHelper::loadFieldClass('list');
  
-/**
- * HelloWorld Form Field class for the HelloWorld component
- */
 class JFormFieldCargo extends JFormFieldList
 {
         /**

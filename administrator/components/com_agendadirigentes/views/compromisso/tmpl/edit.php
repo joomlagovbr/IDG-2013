@@ -21,6 +21,7 @@ JHtml::script( JURI::base() . 'components/com_agendadirigentes/assets/js/jquery.
 <script type="text/javascript">
 function disableField(aim, message)
 {
+    message = "<?php echo JText::_('COM_AGENDADIRIGENTES_COMPROMISSO_VIEW_DISABLE_MESSAGE'); ?>";
     if(jQuery('#permitir_participantes_locais').val()==1)
     {
         if(document.owner_old_val != '')
@@ -46,10 +47,9 @@ function disableField(aim, message)
             } 
         });
         jQuery('#jform_'+aim).trigger('liszt:updated');
-        jQuery('#jform_'+aim+'_chzn').html('Salve ou atualize a página para habilitar participantes.');
+        jQuery('#jform_'+aim+'_chzn').html('<?php echo JText::_("COM_AGENDADIRIGENTES_COMPROMISSO_VIEW_SAVE_OR_UPDATE_PAGE") ?>');
     }    
 }
-//onchange="removeselected(this, 'dirigentes');"
 function removeselected(elm, aim)
 {
     jQuery('#jform_'+aim+' option:disabled').attr("disabled", false);

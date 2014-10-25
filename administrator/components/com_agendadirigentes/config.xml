@@ -208,35 +208,35 @@
         </fieldset>
         <fieldset
                 name="sharing"
-                label="Compartilhamento"
-                description="Descrição compartilhamento"
+                label="COM_AGENDADIRIGENTES_CONFIG_SHARING_OPTIONS_LABEL"
+                description="COM_AGENDADIRIGENTES_CONFIG_SHARING_OPTIONS_DESC"
         >
                 <field
                         name="sharing_type"
                         type="list"
-                        label="Tipo"
-                        description="Tipo desc"
+                        label="COM_AGENDADIRIGENTES_CONFIG_SHARING_TYPE_LABEL"
+                        description="COM_AGENDADIRIGENTES_CONFIG_SHARING_TYPE_DESC"
                         default="module"
                 >                                
-                        <option value="none">Ocultar</option>
-                        <option value="html">Código HTML</option>
-                        <option value="module">Módulo</option>
+                        <option value="none">COM_AGENDADIRIGENTES_CONFIG_SHARING_OPT_NONE</option>
+                        <option value="html">COM_AGENDADIRIGENTES_CONFIG_SHARING_OPT_HTML</option>
+                        <option value="module">COM_AGENDADIRIGENTES_CONFIG_SHARING_OPT_MODULE</option>
                 </field>
                 <field
                         name="sharing_code"
                         type="textarea"
                         cols="40"
                         rows="6"
-                        label="Código para compartilhamento (tipo código HTML)"
-                        description="Somente para compartilhamento do tipo código HTML"
+                        label="COM_AGENDADIRIGENTES_CONFIG_SHARING_CODE_LABEL"
+                        description="COM_AGENDADIRIGENTES_CONFIG_SHARING_CODE_DESC"
                         default=""
                         filter="raw"
                 />  
                 <field
                         name="sharing_mod_position"
                         type="text"
-                        label="Posição do módulo (tipo módulo)"
-                        description="Somente para compartilhamento do tipo módulo"
+                        label="COM_AGENDADIRIGENTES_CONFIG_SHARING_MODPOS_LABEL"
+                        description="COM_AGENDADIRIGENTES_CONFIG_SHARING_MODPOS_DESC"
                         default="com_agendadirigentes-aut-btns-social"
                 />
         </fieldset>

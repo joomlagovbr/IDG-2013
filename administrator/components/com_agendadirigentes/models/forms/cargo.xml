@@ -80,8 +80,8 @@
                 <field
                         name="permitir_sobreposicao"
                         type="radio"
-                        label="Permitir que os compromissos desta autoridade sejam sobrepostos?"
-                        description=""
+                        label="COM_AGENDADIRIGENTES_CARGOS_ALLOW_TO_BE_OVERRIDDEN_LABEL"
+                        description="COM_AGENDADIRIGENTES_CARGOS_ALLOW_TO_BE_OVERRIDDEN_DESC"
                         default="1"
                         validate="boolean"
                         filter="integer"
@@ -92,14 +92,14 @@
                 <field
                         name="realizar_sobreposicao"
                         type="radio"
-                        label="Realizar sobreposição sobre compromissos de outras autoridades?"
-                        description=""
+                        label="COM_AGENDADIRIGENTES_CARGOS_ALLOW_TO_OVERRIDE_LABEL"
+                        description="COM_AGENDADIRIGENTES_CARGOS_ALLOW_TO_OVERRIDE_DESC"
                         default="0"                        
                         filter="string"
                         >
                         <option value="0">JNO</option>
-                        <option value="1">Mesma categoria</option>
-                        <option value="*">Todos</option>
+                        <option value="1">COM_AGENDADIRIGENTES_CARGOS_ALLOW_TO_OVERRIDE_CATEGORY</option>
+                        <option value="*">COM_AGENDADIRIGENTES_CARGOS_ALLOW_TO_OVERRIDE_ALL</option>
                 </field>
         </fieldset>
 </form>

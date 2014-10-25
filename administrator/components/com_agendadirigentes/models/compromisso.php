@@ -521,7 +521,7 @@ class AgendaDirigentesModelCompromisso extends JModelAdmin
                 {
                     unset( $ids_dirigentes[ $id ] );
                     $nomeDirigente = $obj->name;
-                    $app->enqueueMessage('O cargo de '.$nomeDirigente.' n&atilde;o permite sobreposi&ccedil;&atilde;o.', 'Warning');
+                    $app->enqueueMessage(JText::_('COM_AGENDADIRIGENTES_MODELS_COMPROMISSO_NO_OVERRIDE'), 'Warning');
                 }
             }
 
@@ -585,10 +585,10 @@ class AgendaDirigentesModelCompromisso extends JModelAdmin
                         $dirigentes_nao_permitem_sobrepor[ $key ]->id = $sobrepostos[$i]->dirigente_id;
                         $dirigentes_nao_permitem_sobrepor[ $key ]->name = $sobrepostos[$i]->dirigente_name;
 
-                        $app->enqueueMessage( $sobrepostos[$i]->dirigente_name
-                            . ' j&aacute; possui compromisso(s) sobreposto(s) nesse(s) mesmo(s) dia(s) e hor&aacute;rio(s).'
-                            . ' Entre em contato com o respons&aacute;vel pela agenda dessa autoridade.'
+                        $app->enqueueMessage( 
+                            sprintf( JText::_('COM_AGENDADIRIGENTES_MODELS_COMPROMISSO_ALREADY_OVERRIDDEN'), $sobrepostos[$i]->dirigente_name)
                             , 'Warning');
+                        
                     }                        
                 }
             }
@@ -700,7 +700,7 @@ class AgendaDirigentesModelCompromisso extends JModelAdmin
         {
             if( $session->get('msg_sobreposicoes_na_publicacao', 0) == 0 )
             {
-                $app->enqueueMessage('Sobreposi&ccedil;&otilde;es de agendas ocorrem somente no ato da publica&ccedil;&atilde;o do compromisso.', 'Warning');
+                $app->enqueueMessage( JText::_('COM_AGENDADIRIGENTES_MODELS_COMPROMISSO_ONLY_OVERRIDE_ON_PUBLISH'), 'Warning' );
                 $session->set('msg_sobreposicoes_na_publicacao', 1);                
             }
             // return true;
@@ -757,7 +757,7 @@ class AgendaDirigentesModelCompromisso extends JModelAdmin
                 if($i == 0  && $session->get('msg_ao_menos_um_sobreposto', 0) == 0)
                 {
                     $session->set('msg_ao_menos_um_sobreposto', 1);
-                    $app->enqueueMessage('Ao menos um dos participantes teve um compromisso de data e hor&aacute;rio convergentes sobreposto.', 'Warning');
+                    $app->enqueueMessage( JText::_('COM_AGENDADIRIGENTES_MODELS_COMPROMISSO_ATLEAST_ONE_OVERRIDE'), 'Warning');
                 }
             }
 
@@ -926,8 +926,6 @@ class AgendaDirigentesModelCompromisso extends JModelAdmin
                 )
                 ->where(
                     $db->quoteName('comp.id') . ' IN (' . $items . ')'
-                    // . ' AND ' .
-                    // $this->_db->quoteName('dc.owner') . ' = 1'
                 );
         
         $db->setQuery((string)$query);

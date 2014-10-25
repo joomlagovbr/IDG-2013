@@ -31,9 +31,6 @@ defined('_JEXEC') or die;
                         <?php echo JHtml::_('searchtools.sort', 'COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_DIRIGENTE', 'dir.name', $this->listDirn, $this->listOrder); ?>
                 <?php endif ?>
         </th>
-        <!-- <th>
-                <?php echo JHtml::_('searchtools.sort', 'COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_CATEGORIA', 'dc.owner', $this->listDirn, $this->listOrder); ?>
-        </th> -->
         <th width="1%" class="nowrap">
                 <?php echo JHtml::_('searchtools.sort', 'COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_DATA_INICIAL', 'comp.data_inicial', $this->listDirn, $this->listOrder); ?>
                 &nbsp;|<?php echo JHtml::_('searchtools.sort', 'COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_HORARIO_INICIO', 'comp.horario_inicio', $this->listDirn, $this->listOrder); ?>

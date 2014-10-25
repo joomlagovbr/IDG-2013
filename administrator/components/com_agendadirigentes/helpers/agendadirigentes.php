@@ -113,7 +113,7 @@ class AgendaDirigentesHelper extends JHelperContent
 
         if(!$item)
         {
-            JFactory::getApplication()->enqueueMessage('AgendaDirigentesHelper::getGranularPermissions -> Item não carregado ou não numérico.', 'error');
+            JFactory::getApplication()->enqueueMessage( JText::_('COM_AGENDADIRIGENTES_HELPER_NOTLOADED_OR_NOTNUMBER'), 'error');
             return array($canManage, $canChange);
         }
 
@@ -444,7 +444,7 @@ class AgendaDirigentesHelper extends JHelperContent
             if($permissionType == 'implicit')
             {
                 $permission = $user->authorise( $action, self::$extension . "." . $context . "." . $id );
-                    // = $user->authorise( "core.edit", "com_agendadirigentes.category." . $catid );
+                //EQUIVALE A: $user->authorise( "core.edit", "com_agendadirigentes.category." . $catid );
             }
             else
             {

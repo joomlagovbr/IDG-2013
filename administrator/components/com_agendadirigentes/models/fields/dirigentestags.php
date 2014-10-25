@@ -55,7 +55,7 @@ class JFormFieldDirigentesTags extends JFormFieldTag
 				$options[0]->path = "";
 				$options[0]->level = 1;
 				$options[0]->published = 0;
-				$options[0]->text = "Escolha o dono do compromisso e salve para incluir participantes.";
+				$options[0]->text = JText::_('COM_AGENDADIRIGENTES_FIELD_DIRTAGS_CHOOSE_OWNER');
 				$options = JHelperTags::convertPathsToNames($options);
 				return $options;
 			}
@@ -77,7 +77,7 @@ class JFormFieldDirigentesTags extends JFormFieldTag
 				$options[0]->path = "";
 				$options[0]->level = 1;
 				$options[0]->published = 0;
-				$options[0]->text = "N&atilde;o h&aacute; permiss&otilde;es suficientes para cadastrar participantes.";
+				$options[0]->text = JText::_('COM_AGENDADIRIGENTES_FIELD_DIRTAGS_NO_ENOUGH_PERMISSIONS');
 				$options = JHelperTags::convertPathsToNames($options);
 				return $options;
 			}
@@ -134,7 +134,7 @@ class JFormFieldDirigentesTags extends JFormFieldTag
 					if(is_null($valid_catid_list))
 					{
 						$valid_catid_list = array(0);
-						JFactory::getApplication()->enqueueMessage('Lista de categorias em COMPONENT/models/fields/dirigentestags.php inv&aacute;lida.', 'Warning');
+						JFactory::getApplication()->enqueueMessage(JText::_('COM_AGENDADIRIGENTES_FIELD_DIRTAGS_INVALID_CATEGORY_LIST'), 'Warning');
 					}
 					
 					$query->where('b.catid IN (' . implode(', ', $valid_catid_list ) . ')');

@@ -47,7 +47,6 @@ class AgendaDirigentesViewDirigente extends JViewLegacy
                 JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
                 $app->redirect('index.php');
               }
-              //$this->canManage = $this->canDo->get('dirigentes.edit') || $this->canDo->get('dirigentes.edit.own');
               $this->canChange = $this->canDo->get('dirigentes.edit.state');
           }
           else

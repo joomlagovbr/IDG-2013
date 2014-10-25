@@ -62,7 +62,7 @@ JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
                         <?php echo $this->escape($item->title); ?>
                     <?php endif; ?>
                     <?php if($item->sobreposto == 1): ?>
-                    <br /><small style="color:red">(sobreposto por compromisso ID:<?php echo $item->sobreposto_por ?>)</small>
+                    <br /><small style="color:red"><?php echo sprintf(JTEXT::_('COM_AGENDADIRIGENTES_COMPROMISSOS_INFO_SOBREPOSTO'), $item->sobreposto_por); ?></small>
                     <?php endif; ?>
                 </td>
                 <td>
@@ -74,13 +74,10 @@ JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
                         *
                         <?php endif; ?>
                 </td>
-              <!--   <td>
-                        <?php echo $item->titleCategory; ?>
-                </td> -->
                 <td class="nowrap">
                         <?php 
                         if ($item->data_inicial == '0000-00-00' || empty($item->data_inicial)) {
-                            $data_inicial = 'N&atilde;o informado.';
+                            $data_inicial = JText::_('COM_AGENDADIRIGENTES_NOT_INFO');
                         }
                         else
                         {
@@ -104,7 +101,7 @@ JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
                         <?php echo $data_final; ?> <?php echo substr($item->horario_fim, 0, 5); ?>
                 </td>
                 <td class="center">
-                        <?php echo ($item->dia_todo==1)? 'Sim' : 'N&atilde;o'; ?>
+                        <?php echo ($item->dia_todo==1)? JText::_('JYES') : JText::_('JNO'); ?>
                 </td>
         </tr>
 <?php endforeach; ?>

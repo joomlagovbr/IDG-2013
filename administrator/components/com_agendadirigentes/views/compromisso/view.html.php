@@ -143,5 +143,6 @@ class AgendaDirigentesViewCompromisso extends JViewLegacy
                                               . "/assets/js/submitbutton.js");
             //strings a serem traduzidas nos arquivos js
             JText::script('COM_AGENDADIRIGENTES_FORMVALIDATOR_ERROR_UNACCEPTABLE');
+            JText::script('COM_AGENDADIRIGENTES_FORMVALIDATOR_DATAFINAL_MENORQUE_DATAINICIAL');
         }
 }
