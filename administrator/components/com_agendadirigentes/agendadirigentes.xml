@@ -39,7 +39,10 @@
         </languages>
         <media destination="com_agendadirigentes" folder="media">
                 <filename>index.html</filename>
+                <folder>css</folder>
+                <folder>fullcalendar</folder>
                 <folder>images</folder>
+                <folder>js</folder>
         </media>
         <administration>
                 <languages folder="language">
