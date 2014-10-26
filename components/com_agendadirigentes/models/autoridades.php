@@ -43,17 +43,11 @@ class AgendaDirigentesModelAutoridades extends JModelList
      */
     protected function getListQuery()
     {
-
-        // $user = JFactory::getUser();
-        // $groups = implode(',', $user->getAuthorisedViewLevels());
-
         // Create a new query object.
         $db = $this->getDBO();
         $query = $db->getQuery(true);
         $query->select(
                 $db->quoteName('car.featured', 'cargo_featured') . ', ' .
-                // $db->quoteName('cat.lft') . ', ' .
-                // $db->quoteName('car.ordering') . ', ' .
                 $db->quoteName('car.id', 'cargo_id') . ', ' .
                 $db->quoteName('car.name', 'cargo_name') . ', ' .
                 $db->quoteName('car.catid') . ', ' .

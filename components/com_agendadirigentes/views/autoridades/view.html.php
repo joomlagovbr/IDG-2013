@@ -49,11 +49,11 @@ class AgendaDirigentesViewAutoridades extends JViewLegacy
 
             if( empty($params_page_title) )
             {
-                $this->page_heading = 'Agenda de Autoridades';
+                $this->page_heading = JText::_('COM_AGENDADIRIGENTES_VIEW_AUTORIDADES_DEFAULT_PAGE_HEADING');
             }
             else
             {
-                $this->page_heading = $this->params->get('page_title', '');
+                $this->page_heading = $params_page_title;
             }
 
             $this->introtext = $this->params->get('introtext', '');

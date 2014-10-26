@@ -20,7 +20,7 @@ class AgendadirigentesModels
         {
         	if(!is_file(JPATH_COMPONENT_ADMINISTRATOR .'/models/rules/' . strtolower($format) .'.php'))
         	{
-        		JLog::add('Erro na helper do arquivo models.php. Arquivo de formato nao encontrado.', JLog::WARNING, 'jerror');
+        		JLog::add( JText::_('COM_AGENDADIRIGENTES_HELPER_MODELS_ERROR'), JLog::WARNING, 'jerror');
                 return false;
         	}
 

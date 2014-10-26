@@ -3,7 +3,6 @@
 
 .autoridades-item-destaque h2,
 .autoridades-categoria { line-height:1.6em; font-size: 1.2em !important; }
-/*h2.autoridades-categoria {  }*/
 h3.autoridades-categoria { font-weight: normal !important }
 h4.autoridades-categoria { font-size:14px !important; font-style: italic }
 h5.autoridades-categoria { font-size:14px !important; font-weight: normal; text-decoration:underline; font-style: italic }
@@ -32,7 +31,6 @@ ul.autoridade-list-actions li a i { color:#1b9501; }
 #autoridade-calendario .fc-toolbar { margin-bottom:none !important; height: 20px }
 #autoridade-calendario .fc-left { font-size:10px; height:20px }
 #autoridade-calendario .fc-today { background: #FFF }
-/*#autoridade-calendario .fc-center h2 { font-size: 1em !important; position: relative; top:-20px; }*/
 #autoridade-calendario .fc-right { font-size:10px; height:20px }
 #autoridade-calendario table { border:none }
 #autoridade-calendario .fc-basic-view > table { border:none; }

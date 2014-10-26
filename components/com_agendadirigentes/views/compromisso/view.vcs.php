@@ -40,7 +40,7 @@ class AgendaDirigentesViewCompromisso extends JViewLegacy
             header("Content-Disposition: inline; filename=compromisso-da-autoridade-"
                     . $this->compromisso->id . ".vcs"); ?>
 BEGIN:VCALENDAR
-PRODID:-//<?php echo $this->nome_orgao ?>//Agenda de Autoridades//PT-BR
+PRODID:-//<?php echo $this->nome_orgao ?>//<?php echo JText::_('COM_AGENDADIRIGENTES_VIEW_COMPROMISSO_DEFAULT_TITLE') ?>//<?php echo JText::_('COM_AGENDADIRIGENTES_VIEW_COMPROMISSO_LANG_PREFIX') . "\n"; ?>
 VERSION:1.0
 BEGIN:VEVENT
 DTSTART:<?php echo $this->dtstart . "\n"; ?>
@@ -99,11 +99,11 @@ END:VCALENDAR
 
             if ($this->compromisso->state > 0)
             {
-                $this->status = 'CONFIRMED';
+                $this->status = JText::_('COM_AGENDADIRIGENTES_VIEW_COMPROMISSO_STATUS_CONFIRMED');
             }
             else
             {
-                $this->status = 'CANCELLED';
+                $this->status = JText::_('COM_AGENDADIRIGENTES_VIEW_COMPROMISSO_STATUS_CANCELLED');
             }
            
         }

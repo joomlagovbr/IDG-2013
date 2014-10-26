@@ -36,7 +36,7 @@ class AgendaDirigentesViewAutoridade extends JViewLegacy
             
             if(@$this->autoridade->state < 1 || empty($this->autoridade))
             {
-                    JLog::add('Autoridade n&atilde;o encontrada', JLog::WARNING, 'jerror');
+                    JLog::add( JText::_('COM_AGENDADIRIGENTES_VIEW_AUTORIDADE_NOTFOUND'), JLog::WARNING, 'jerror');
                     return false;                        
             }
 
@@ -72,18 +72,25 @@ class AgendaDirigentesViewAutoridade extends JViewLegacy
             if( empty($params_page_title) || $params_page_title==$activeMenu_title )
             {
                     if(@isset($this->autoridade->car_name)===false || @isset($this->autoridade->dir_name)===false)
-                            $this->page_heading = 'Agenda de Autoridade';
+                            $this->page_heading = JText::_('COM_AGENDADIRIGENTES_VIEW_AUTORIDADE_PAGE_HEADING');
                     else
                     {
                         if($this->autoridade->sexo == 'M')
                         {
-                            $this->page_heading = 'Agenda do ' . $this->autoridade->car_name
-                                                    . ' ' . $this->autoridade->dir_name;
+
+                            $this->page_heading = sprintf(
+                                                        JText::_('COM_AGENDADIRIGENTES_VIEW_AUTORIDADE_PAGE_HEADING_PART2_M')
+                                                        , $this->autoridade->car_name
+                                                        , $this->autoridade->dir_name
+                                                    );
                         }
                         else
                         {
-                            $this->page_heading = 'Agenda da ' . $this->autoridade->car_name_f
-                                                    . ' ' . $this->autoridade->dir_name;
+                            $this->page_heading = sprintf(
+                                                        JText::_('COM_AGENDADIRIGENTES_VIEW_AUTORIDADE_PAGE_HEADING_PART2_F')
+                                                        , $this->autoridade->car_name
+                                                        , $this->autoridade->dir_name
+                                                    );
                         }                            
                     }
             }
@@ -157,8 +164,8 @@ class AgendaDirigentesViewAutoridade extends JViewLegacy
             @$dia_por_extenso = new JDate( $this->params->get('dia'), $app->getCfg('offset') );
             if ( !empty($dia_por_extenso) )
             {
-                $this->dia_por_extenso = $dia_por_extenso->format( 'l, ' )
-                                        . strtolower( $dia_por_extenso->format( 'd \d\e F \d\e Y' ) );
+                $this->dia_por_extenso = $dia_por_extenso->format( JText::_('COM_AGENDADIRIGENTES_VIEW_AUTORIDADE_DIA_POR_EXTENSO_P1') )
+                                        . strtolower( $dia_por_extenso->format( JText::_('COM_AGENDADIRIGENTES_VIEW_AUTORIDADE_DIA_POR_EXTENSO_P2') ) );
             
             }
 

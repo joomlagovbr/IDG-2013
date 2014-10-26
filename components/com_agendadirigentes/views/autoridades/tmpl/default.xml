@@ -1,46 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-	<layout title="COM_AGENDADIRIGENTES_AGENDADIRIGENTES_VIEW_DEFAULT_TITLE">
+	<layout title="COM_AGENDADIRIGENTES_AUTORIDADES_VIEW_DEFAULT_TITLE">
 		<message>
-			<![CDATA[COM_AGENDADIRIGENTES_AGENDADIRIGENTES_VIEW_DEFAULT_DESC]]>
+			<![CDATA[COM_AGENDADIRIGENTES_AUTORIDADES_VIEW_DEFAULT_DESC]]>
 		</message>
 	</layout>
 	<fields name="request">
 		<fieldset name="request" addfieldpath="/administrator/components/com_agendadirigentes/models/fields">
-			<!-- <field
-				name="show_compromissos"
-				type="list"
-				label="COM_AGENDADIRIGENTES_AGENDADIRIGENTES_FIELD_SHOWCOMPROMISSOS_LABEL"
-				description="COM_AGENDADIRIGENTES_AGENDADIRIGENTES_FIELD_SHOWCOMPROMISSOS_DESC"
-				default="0">
-				<option value="0">COM_AGENDADIRIGENTES_AGENDADIRIGENTES_FIELD_NOSHOW</option>
-				<option value="1">COM_AGENDADIRIGENTES_AGENDADIRIGENTES_FIELD_SHOW</option>
-			</field>
-			<field
-				name="data"
-				type="calendar"
-				label="COM_AGENDADIRIGENTES_AGENDADIRIGENTES_FIELD_DATA_LABEL"
-				description="COM_AGENDADIRIGENTES_AGENDADIRIGENTES_FIELD_DATA_DESC"
-				default="" />
-			<field
-                                name="id"
-                                type="dirigentes"
-                                label="teste"
-                                description="teste"
-                        /> -->
             <field
             name="introtext"
             type="editor"
-            label="COM_AGENDADIRIGENTES_DIRIGENTES_FIELD_DESCRICAO_LABEL"
-            description="COM_AGENDADIRIGENTES_DIRIGENTES_FIELD_DESCRICAO_DESC"
+            label="COM_AGENDADIRIGENTES_AUTORIDADES_VIEW_INTROTEXT_LABEL"
+            description="COM_AGENDADIRIGENTES_AUTORIDADES_VIEW_INTROTEXT_DESC"
 			default=""
 			filter="raw"
 			/>
 			<field
 				name="dia"
 				type="calendar"
-				label="Dia padrão"
-				description="Dia padrão. Se não informado, será a data atual."
+				label="COM_AGENDADIRIGENTES_AUTORIDADES_VIEW_DEFAULT_DATE_LABEL"
+				description="COM_AGENDADIRIGENTES_AUTORIDADES_VIEW_DEFAULT_DATE_DESC"
 				default=""
 			/>
 		</fieldset>

@@ -10,8 +10,8 @@
 			<field
 				name="dia"
 				type="calendar"
-				label="Dia padrão"
-				description="Dia padrão. Se não informado, será a data atual."
+				label="COM_AGENDADIRIGENTES_AUTORIDADES_VIEW_DEFAULT_DATE_LABEL"
+				description="COM_AGENDADIRIGENTES_AUTORIDADES_VIEW_DEFAULT_DATE_DESC"
 				default=""
 			/>
 		</fieldset>
