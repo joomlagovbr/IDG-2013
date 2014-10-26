@@ -48,7 +48,6 @@ class AgendaDirigentesModelDirigentes extends JModelList
             $query
                 ->select(
                     $db->quoteName('dir.id') . ', ' .
-                    $db->quoteName('dir.asset_id') . ', ' .
                     $db->quoteName('dir.name') . ', ' .
                     $db->quoteName('dir.cargo_id') . ', ' .
                     $db->quoteName('dir.state') . ', ' .

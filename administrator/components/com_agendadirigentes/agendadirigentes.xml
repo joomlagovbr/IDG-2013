@@ -27,11 +27,12 @@
                 </schemas>
         </update> 
         <files folder="site">
-                <filename>index.html</filename>
                 <filename>agendadirigentes.php</filename>
                 <filename>controller.php</filename>
-                <folder>views</folder>
+                <filename>index.html</filename>
+                <folder>helpers</folder>
                 <folder>models</folder>
+                <folder>views</folder>
         </files>
         <languages folder="site/language">
                 <language tag="en-GB">en-GB.com_agendadirigentes.ini</language>
@@ -45,7 +46,7 @@
                 <folder>js</folder>
         </media>
         <administration>
-                <languages folder="language">
+                <languages folder="administrator/language">
                         <language tag="en-GB">en-GB.com_agendadirigentes.ini</language>
                         <language tag="en-GB">en-GB.com_agendadirigentes.sys.ini</language>
                         <language tag="pt-BR">pt-BR.com_agendadirigentes.ini</language>
@@ -60,10 +61,12 @@
                         <menu view="cargos" link="option=com_agendadirigentes&amp;view=cargos">COM_AGENDADIRIGENTES_MENU_CARGOS</menu>
                 </submenu>
                 <files folder="admin">
-                        <filename>index.html</filename>
-                        <filename>agendadirigentes.php</filename>
                         <filename>access.xml</filename>
+                        <filename>agendadirigentes.php</filename>
+                        <filename>config.xml</filename>
                         <filename>controller.php</filename>
+                        <filename>index.html</filename>
+                        <filename>script.php</filename>
                         <folder>assets</folder>
                         <folder>controllers</folder>
                         <folder>helpers</folder>
