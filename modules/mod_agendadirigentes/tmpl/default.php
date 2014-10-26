@@ -20,11 +20,11 @@ $document->addStylesheet( JURI::root().'media/mod_agendadirigentes/css/portalpad
 		<li>
 			<?php if ($item->dia_todo == 1): ?>
 			<div class="compromisso-horario-inicio">
-				<i class="icon-fixed-width icon-time"><span class="hide"></span></i><span class="timestamp">Dia todo</span>
+				<i class="icon-fixed-width icon-time"><span class="hide"></span></i><span class="timestamp"><?php echo JText::_('MOD_AGENDADIRIGENTES_ALL_DAY'); ?></span>
 			</div>
 			<?php else: ?>
 			<div class="compromisso-horario-inicio">
-				<i class="icon-fixed-width icon-time"><span class="hide">A partir de:</span></i><span class="timestamp"><?php echo $item->horario_inicio ?></span>
+				<i class="icon-fixed-width icon-time"><span class="hide"><?php echo JText::_('MOD_AGENDADIRIGENTES_FROM'); ?></span></i><span class="timestamp"><?php echo $item->horario_inicio ?></span>
 			</div>
 			<?php endif ?>
 			<a class="compromisso-link" href="<?php echo JURI::root() ?>index.php?option=com_agendadirigentes&view=autoridade&id=<?php echo $params->get('autoridade', 0); ?>&Itemid=<?php echo $params->get('itemid') ?>&dia=<?php echo $params->get('dia'); ?>">
@@ -36,16 +36,16 @@ $document->addStylesheet( JURI::root().'media/mod_agendadirigentes/css/portalpad
 	<?php else: ?>
 	<ul class="compromissos-lista" <?php echo $style_altura_lista; ?>>
 		<?php if($featured_compromissos==''): ?>
-		<li class="sem-compromissos-oficiais">Sem compromissos oficiais.</li>
+		<li class="sem-compromissos-oficiais"><?php echo JText::_('MOD_AGENDADIRIGENTES_NO_ITEMS'); ?></li>
 		<?php elseif($featured_compromissos==1): ?>
-		<li class="sem-compromissos-oficiais">Sem compromissos em destaque.</li>
+		<li class="sem-compromissos-oficiais"><?php echo JText::_('MOD_AGENDADIRIGENTES_NO_FEATURED_ITEMS'); ?></li>
 		<?php elseif($featured_compromissos==0): ?>
-		<li class="sem-compromissos-oficiais">N&atilde;o h&aacute; itens dispon&iacute;veis de acordo com a consulta.</li>
+		<li class="sem-compromissos-oficiais"><?php echo JText::_('MOD_AGENDADIRIGENTES_NO_UNFEATURED_ITEMS'); ?></li>
 		<?php endif; ?>
 	</ul>		
 	<?php endif ?>
 
 </div>
 <div class="footer">
-<a class="link" href="<?php echo JURI::root() ?>index.php?option=com_agendadirigentes&view=autoridades&Itemid=<?php echo $params->get('itemid') ?>">Acesse todas as agendas</a>
+<a class="link" href="<?php echo JURI::root() ?>index.php?option=com_agendadirigentes&view=autoridades&Itemid=<?php echo $params->get('itemid') ?>"><?php echo JText::_('MOD_AGENDADIRIGENTES_LINK_VIEW_ALL'); ?></a>
 </div>

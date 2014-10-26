@@ -13,10 +13,10 @@
 		<filename plugin="agendadirigentes">agendadirigentes.php</filename>
 		<filename>index.html</filename>
 	</files>
-	<!-- <languages>
-		<language tag="en-GB">en-GB.plg_search_contacts.ini</language>
-		<language tag="en-GB">en-GB.plg_search_contacts.sys.ini</language>
-	</languages> -->
+	<languages>
+		<language tag="en-GB">en-GB.plg_search_agendadirigentes.ini</language>
+		<language tag="pt-BR">pt-BR.plg_search_agendadirigentes.ini</language>
+	</languages>
 	<config>
 		<fields name="params">
 

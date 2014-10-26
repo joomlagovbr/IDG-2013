@@ -1,65 +1,32 @@
 <?php
 /**
- * @package     Joomla.Plugin
- * @subpackage  Search.contacts
- *
- * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @subpackage  Search.agendadirigentes
  */
 
 defined('_JEXEC') or die;
 
 /**
- * Contacts search plugin.
+ * agendadirigentes search plugin.
  *
  * @package     Joomla.Plugin
- * @subpackage  Search.contacts
- * @since       1.6
+ * @subpackage  Search.agendadirigentes
  */
 class PlgSearchAgendadirigentes extends JPlugin
 {
-	/**
-	 * Load the language file on instantiation.
-	 *
-	 * @var    boolean
-	 * @since  3.1
-	 */
+
 	protected $autoloadLanguage = true;
 
-	/**
-	 * Determine areas searchable by this plugin.
-	 *
-	 * @return  array  An array of search areas.
-	 *
-	 * @since   1.6
-	 */
 	public function onContentSearchAreas()
 	{
 		static $areas = array(
-			'agendadirigentes' => 'Agenda de autoridades'
+			'agendadirigentes' => PLG_SEARCH_AGENDADIRIGENTES_NAME
 		);
 
 		return $areas;
 	}
 
-	/**
-	 * Search content (contacts).
-	 *
-	 * The SQL must return the following fields that are used in a common display
-	 * routine: href, title, section, created, text, browsernav.
-	 *
-	 * @param   string  $text      Target search string.
-	 * @param   string  $phrase    Matching option (possible values: exact|any|all).  Default is "any".
-	 * @param   string  $ordering  Ordering option (possible values: newest|oldest|popular|alpha|category).  Default is "newest".
-	 * @param   string  $areas     An array if the search is to be restricted to areas or null to search all areas.
-	 *
-	 * @return  array  Search results.
-	 *
-	 * @since   1.6
-	 */
 	public function onContentSearch($text, $phrase = '', $ordering = '', $areas = null)
 	{
-		// require_once JPATH_SITE . '/components/com_contact/helpers/route.php';
 
 		$db = JFactory::getDbo();
 		$app = JFactory::getApplication();
@@ -84,7 +51,7 @@ class PlgSearchAgendadirigentes extends JPlugin
 			return array();
 		}
 
-		$section = JText::_('Agenda de autoridades');
+		$section = JText::_('PLG_SEARCH_AGENDADIRIGENTES_NAME');
 
 		switch ($ordering)
 		{
@@ -107,30 +74,11 @@ class PlgSearchAgendadirigentes extends JPlugin
 		$text = $db->quote('%' . $db->escape($text, true) . '%', false);
 
 		$query = $db->getQuery(true);
-
-		/*
-SELECT
-comp.title, comp.description AS text,
-CONCAT('Agenda do(a) ', car.name, ' - ', dir.name) AS section,
-comp.data_inicial AS 'created', comp.data_inicial, dir.id AS 'autoridade_id'
-FROM x3dts_agendadirigentes_compromissos comp
-INNER JOIN x3dts_agendadirigentes_dirigentes_compromissos dc
-ON dc.compromisso_id = comp.id
-INNER JOIN x3dts_agendadirigentes_dirigentes dir
-ON (dc.dirigente_id = dir.id AND dc.owner = 1)
-INNER JOIN x3dts_agendadirigentes_cargos car
-ON car.id = dir.cargo_id
-WHERE 
-comp.title LIKE "%teste%" OR
-comp.description LIKE "%teste%" OR
-comp.participantes_externos LIKE "%teste%" OR
-dir.name LIKE "%teste%"
-		*/
 		
 		$query->select(
 				$db->quoteName('comp.title') . ', ' .
 				$db->quoteName('comp.description', 'text') . ', ' .
-				'CONCAT('.$db->Quote('Agenda do(a) ').', '.$db->quoteName('car.name').', '.$db->Quote(' ').', '.$db->quoteName('dir.name').') AS section, ' .
+				'CONCAT('.$db->Quote(JText::_('PLG_SEARCH_AGENDADIRIGENTES_CARGO_INTRO').' ').', '.$db->quoteName('car.name').', '.$db->Quote('(a) ').', '.$db->quoteName('dir.name').') AS section, ' .
 				$db->quoteName('comp.data_inicial', 'created') . ', ' .
 				$db->quoteName('comp.data_inicial') . ', ' .
 				$db->quoteName('dir.id', 'autoridade_id') 

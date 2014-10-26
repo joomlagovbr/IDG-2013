@@ -70,7 +70,7 @@ class ModAgendaDirigentesHelper
 		if(is_null($dia_por_extenso))
 			$dia_por_extenso = new JDate( self::getDate() );
 
-		return strtolower( $dia_por_extenso->format( 'd \d\e F \d\e Y' ) );
+		return strtolower( $dia_por_extenso->format( JText::_('MOD_AGENDADIRIGENTES_HELPER_DATE_FORMAT') ) );
 	}
 
 	public static function getDate()
