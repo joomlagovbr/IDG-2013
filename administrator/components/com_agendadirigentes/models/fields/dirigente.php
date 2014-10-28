@@ -49,6 +49,12 @@ class JFormFieldDirigente extends JFormFieldList
                         'INNER',
                         $db->quoteName('#__categories', 'cat')
                         . ' ON (' . $db->quoteName('car.catid') . ' = ' . $db->quoteName('cat.id') . ')'
+                    )->where(
+                        $db->quoteName('dir.state') . ' > 0'
+                        . ' AND ' .
+                        $db->quoteName('car.published') . ' = 1'
+                        . ' AND ' .
+                        $db->quoteName('cat.published') . ' = 1'
                     );
                 
                 if(intval($this->getAttribute('showcategory'))==1)

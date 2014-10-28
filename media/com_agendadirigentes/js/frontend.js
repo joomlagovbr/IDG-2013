@@ -15,12 +15,12 @@ function setCalendar(elm, dia_atual, url)
 		height:"auto",
 		year: ano,
 		month: mes,
-		date: dia,
+		day: dia,
 		dayClick: function(date){
 			url = url.replace('{DATA}', jQuery(this).attr("data-date"));			
 			window.location = url;
 		}			
-	});
+	}).fullCalendar('gotoDate', dia_atual);
 
 	jQuery(elm).find('td').each(function(){
 		if(jQuery(this).attr('data-date') == dia_atual)

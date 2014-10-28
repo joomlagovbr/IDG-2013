@@ -15,9 +15,12 @@ class AgendadirigentesModels
         $input = $app->input;
         $input_var = $input->get( $var, '');
         $params_var = $params->get( $var, '');
-
         if ( !empty($input_var) || !empty($params_var) )
         {
+            //limitando tamanho para YYYY-mm-dd (10)
+            $input_var = substr($input_var, 0, 10);
+            $params_var = substr($params_var, 0, 10);
+
         	if(!is_file(JPATH_COMPONENT_ADMINISTRATOR .'/models/rules/' . strtolower($format) .'.php'))
         	{
         		JLog::add( JText::_('COM_AGENDADIRIGENTES_HELPER_MODELS_ERROR'), JLog::WARNING, 'jerror');

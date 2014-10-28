@@ -29,7 +29,8 @@ $this->document->addStylesheet( JURI::root().'media/com_agendadirigentes/css/fro
 		$next = (@isset($this->items[$i+1]))? $this->items[$i+1] : NULL;
 		$prev = (@isset($this->items[$i-1]))? $this->items[$i-1] : NULL;
 		$item->level = ($item->level > 5)? 5 : $item->level;
-		$next->level = ($next->level > 5)? 5 : $next->level;
+		if(!is_null($next))
+			$next->level = ($next->level > 5)? 5 : $next->level;
 		?>
 
 		<?php if($item->cargo_featured): ?>

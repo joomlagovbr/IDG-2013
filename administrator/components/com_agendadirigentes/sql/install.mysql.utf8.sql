@@ -64,6 +64,7 @@ CREATE TABLE `#__agendadirigentes_compromissos` (
   `dia_todo` int(1) unsigned DEFAULT 0,
   `local` varchar(255) DEFAULT NULL,
   `description` text,
+  `participantes_externos` text,  
   `params` tinytext,
   `created` datetime DEFAULT '0000-00-00 00:00:00',
   `created_by` int(11) DEFAULT 0,

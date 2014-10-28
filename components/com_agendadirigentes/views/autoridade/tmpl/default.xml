@@ -8,11 +8,22 @@
 	<fields name="request">
 		<fieldset name="request" addfieldpath="/administrator/components/com_agendadirigentes/models/fields">
 			<field
+				name="id"
+				type="dirigente"
+				label="COM_AGENDADIRIGENTES_AUTORIDADES_VIEW_ID_LABEL"
+				description="COM_AGENDADIRIGENTES_AUTORIDADES_VIEW_ID_DESC"
+				default=""
+				showcategory="1"
+				filter="integer"
+			/>			
+			<field
 				name="dia"
 				type="calendar"
 				label="COM_AGENDADIRIGENTES_AUTORIDADES_VIEW_DEFAULT_DATE_LABEL"
 				description="COM_AGENDADIRIGENTES_AUTORIDADES_VIEW_DEFAULT_DATE_DESC"
 				default=""
+				format="%Y-%m-%d"
+				filter="user_utc"
 			/>
 		</fieldset>
 	</fields>
