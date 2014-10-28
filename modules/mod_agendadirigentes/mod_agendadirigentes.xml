@@ -15,7 +15,6 @@
 	<description>Módulo que exibe agenda de autoridades</description>
 	<files>
 		<filename module="mod_agendadirigentes">mod_agendadirigentes.php</filename>
-		<folder>assets</folder>
 		<folder>tmpl</folder>
 		<filename>helper.php</filename>
 		<filename>index.html</filename>
@@ -25,6 +24,10 @@
 		<language tag="en-GB">en-GB.mod_agendadirigentes.ini</language>
 		<language tag="pt-BR">pt-BR.mod_agendadirigentes.ini</language>
 	</languages>
+	<media destination="mod_agendadirigentes" folder="media">
+		<filename>index.html</filename>
+		<folder>css</folder>
+	</media>
 	<config>
 		<fields name="params">
 			<fieldset name="basic" addfieldpath="/administrator/components/com_agendadirigentes/models/fields">	

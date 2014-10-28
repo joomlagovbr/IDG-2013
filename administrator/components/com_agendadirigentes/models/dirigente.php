@@ -126,9 +126,9 @@ class AgendaDirigentesModelDirigente extends JModelAdmin
         return false;
     }
 
-    public function getItem()
+    public function getItem( $pk = NULL )
     {
-        $item = parent::getItem();
+        $item = parent::getItem( $pk );
 
         if (is_null($item) || !is_object($item)) {
             return 0;

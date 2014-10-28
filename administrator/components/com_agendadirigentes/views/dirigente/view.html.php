@@ -27,6 +27,13 @@ class AgendaDirigentesViewDirigente extends JViewLegacy
           // get the Data
           $this->form = $this->get('Form');
           $this->item = $this->get('Item');
+          
+          if(is_null($this->item) || $this->item == 0)
+          {
+            $this->item = new StdClass();
+            $this->item->id = 0;
+          }
+
           $this->isNew = ($this->item->id == 0);
           $app = JFactory::getApplication();
           

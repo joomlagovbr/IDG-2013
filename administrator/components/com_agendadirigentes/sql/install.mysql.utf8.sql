@@ -42,6 +42,7 @@ CREATE TABLE `#__agendadirigentes_cargos` (
   `name` varchar(255) DEFAULT NULL,
   `name_f` VARCHAR(255) DEFAULT NULL,
   `catid` int(11) NOT NULL DEFAULT '0',
+  `published` int(1) NOT NULL DEFAULT '0',
   `ordering` int(11) NOT NULL DEFAULT '0',
   `featured` INT(1) NOT NULL DEFAULT '0',
   `permitir_sobreposicao` INT(1) NOT NULL DEFAULT '1',

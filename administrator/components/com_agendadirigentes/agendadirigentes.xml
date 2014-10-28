@@ -46,7 +46,7 @@
                 <folder>js</folder>
         </media>
         <administration>
-                <languages folder="administrator/language">
+                <languages folder="admin/language">
                         <language tag="en-GB">en-GB.com_agendadirigentes.ini</language>
                         <language tag="en-GB">en-GB.com_agendadirigentes.sys.ini</language>
                         <language tag="pt-BR">pt-BR.com_agendadirigentes.ini</language>
