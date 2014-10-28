@@ -177,7 +177,7 @@ endif;
 				</div>
 			</div>
 		</div>
-
+		<?php if(! empty($this->allow_search_field)): ?>
 		<div class="module-box-01 module variacao-module-00 autoridade-busca-container">
 			<div class="header">
 				<h2 class="title"><?php echo JText::_('COM_AGENDADIRIGENTES_TMPL_AUTORIDADE_SEARCH_TITLE'); ?></h2>
@@ -203,6 +203,7 @@ endif;
 				</form>
 			</div>			
 		</div>
+		<?php endif; ?>
 	</div>
 	<?php endif; ?>
 </div>

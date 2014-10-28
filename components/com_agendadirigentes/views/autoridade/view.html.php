@@ -169,6 +169,9 @@ class AgendaDirigentesViewAutoridade extends JViewLegacy
             
             }
 
+            //exibicao da caixa de busca
+            $this->allow_search_field = $this->params->get('allow_search_field', 0);
+
         }
 
         public function mergeParams($app_params, $item_params)

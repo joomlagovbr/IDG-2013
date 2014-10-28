@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <extension type="package" version="3.0">
+ <name>Agenda de Autoridades - Pacote de Instalação</name>
+ <author>JUG Joomla Calango</author>
+ <creationDate>Outubro 2014</creationDate>
+ <packagename>agendadirigentes</packagename>
+ <version>1.0.0</version>
+ <url>http://portalpadrao.joomlacalango.org</url>
+ <packager>JUG Joomla calango</packager>
+ <packagerurl>http://www.github.com/joomlagovbr/agenda-de-autoridades</packagerurl>
+ <description>Pacote de instalação do componente, módulo e plugin de agenda de autoridades.</description>
+ <update>http://www.github.com/joomlagovbr/agenda-de-autoridades</update>
+ <files folder="packages">
+   <file type="component" id="agendadirigentes" >com_agendadirigentes.zip</file>
+   <file type="module" id="agendadirigentes" client="site">mod_agendadirigentes.zip</file>
+   <file type="plugin" id="agendadirigentes" group="search">plg_search_agendadirigentes.zip</file>
+ </files>
+ </extension>

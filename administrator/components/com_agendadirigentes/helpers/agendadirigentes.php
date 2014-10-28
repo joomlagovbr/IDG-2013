@@ -21,6 +21,7 @@ class AgendaDirigentesHelper extends JHelperContent
     public static $cmp_params = NULL;
     public static $permissionType = NULL;
     public static $editOwnState = NULL;
+    public static $pluginActive = NULL;
 
     /**
      * Configure the Linkbar.
@@ -514,6 +515,55 @@ class AgendaDirigentesHelper extends JHelperContent
 
         return $return;
 
+    }
+
+    public static function isPluginActive()
+    {
+        if( is_null(self::$pluginActive) )
+        {
+            $db = JFactory::getDBO();
+            $query = $db->getQuery(true);
+            $query->select(
+                    $db->quoteName('enabled')
+                )->from(
+                    $db->quoteName('#__extensions')
+                )->where(
+                    $db->quoteName('type') . ' = ' . $db->Quote('plugin')
+                    . ' AND ' .
+                    $db->quoteName('element') . ' = ' . $db->Quote('agendadirigentes')
+                    . ' AND ' .
+                    $db->quoteName('folder') . ' = ' . $db->Quote('search')
+                );
+            $db->setQuery((string) $query);
+
+            self::$pluginActive = $db->loadResult();
+        }
+
+        return self::$pluginActive; 
+    }
+
+    public static function verifySearchPlugin()
+    {
+        $params = self::getParams();
+        $plugin = self::isPluginActive();
+        $allow_search = (int) $params->get('allow_search_field', 0);
+        
+        if(is_numeric($plugin))
+            $plugin = (int) $plugin;
+
+        if($allow_search == 0 && $plugin == 1)
+        {
+            JFactory::getApplication()->enqueueMessage( JText::_('COM_AGENDADIRIGENTES_HELPER_PLUGIN_ENABLED'), 'warning');            
+        }
+        else if($allow_search == 1 && is_null($plugin))
+        {
+            JFactory::getApplication()->enqueueMessage( JText::_('COM_AGENDADIRIGENTES_HELPER_PLUGIN_NOT_FOUND'), 'warning');            
+        }     
+        else if($allow_search == 1 && $plugin == 0)
+        {
+            JFactory::getApplication()->enqueueMessage( JText::_('COM_AGENDADIRIGENTES_HELPER_PLUGIN_DISABLED'), 'warning');            
+        }
+         
     }
 
 }

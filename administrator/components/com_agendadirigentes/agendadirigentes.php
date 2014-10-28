@@ -23,6 +23,9 @@ JLoader::register('AgendaDirigentesHelper', JPATH_COMPONENT. '/helpers/agendadir
 $document = JFactory::getDocument();
 $document->addStyleDeclaration('.icon-compromisso {background-image: url(../media/com_agendadirigentes/images/icon-calendar.png);}');
  
+//verificacoes globais
+AgendaDirigentesHelper::verifySearchPlugin();
+
 // import joomla controller library
 jimport('joomla.application.component.controller');
  
