@@ -204,6 +204,11 @@ endif;
 			</div>			
 		</div>
 		<?php endif; ?>
+		<?php if (!empty($this->sidebar_custom_modules) && $this->templatevar != 'system'): ?>
+		<div class="autoridade-custom-modules">
+			<?php echo $this->sidebar_custom_modules; ?>
+		</div>
+		<?php endif; ?>
 	</div>
 	<?php endif; ?>
 </div>

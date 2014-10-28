@@ -172,6 +172,24 @@ class AgendaDirigentesViewAutoridade extends JViewLegacy
             //exibicao da caixa de busca
             $this->allow_search_field = $this->params->get('allow_search_field', 0);
 
+            //modulos adicionais da area lateral
+            $this->sidebar_custom_modules = '';
+            $pos_sidebar = $this->params->get('sidebar_custom_position', '');
+            if(!empty($pos_sidebar))
+            {
+                @$modulesSidebar = JModuleHelper::getModules( $pos_sidebar );
+                $countModulesSidebar = count($modulesSidebar);
+                if ($countModulesSidebar)
+                {
+                    for ($i=0; $i < $countModulesSidebar; $i++)
+                    { 
+                        $module = JModuleHelper::renderModule( $modulesSidebar[$i] );
+                        $module = str_replace('{SITE}', JURI::root(), $module);
+                        $this->sidebar_custom_modules .= $module . "\n";
+                    }                    
+                }
+            }
+
         }
 
         public function mergeParams($app_params, $item_params)
