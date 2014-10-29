@@ -15,6 +15,220 @@
 
 
 --
+-- Definition of table `#__agendadirigentes_agendaalterada`
+--
+
+DROP TABLE IF EXISTS `#__agendadirigentes_agendaalterada`;
+CREATE TABLE  `#__agendadirigentes_agendaalterada` (
+  `id_dirigente` int(11) NOT NULL,
+  `data` date NOT NULL,
+  `qtd_alteracoes` int(4) NOT NULL DEFAULT '0',
+  `data_alteracao` datetime NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_dirigente`,`data`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `#__agendadirigentes_agendaalterada`
+--
+
+/*!40000 ALTER TABLE `#__agendadirigentes_agendaalterada` DISABLE KEYS */;
+LOCK TABLES `#__agendadirigentes_agendaalterada` WRITE;
+INSERT INTO `#__agendadirigentes_agendaalterada` VALUES  (1,'2014-10-31',2,'2014-10-29 00:15:02',576),
+ (1,'2014-11-01',2,'2014-10-29 00:15:02',576),
+ (2,'2014-10-31',1,'2014-10-29 00:15:02',576),
+ (2,'2014-11-01',1,'2014-10-29 00:15:02',576),
+ (3,'2014-09-25',2,'2014-10-29 00:01:17',576),
+ (4,'2014-10-13',1,'2014-10-29 00:07:04',576),
+ (4,'2014-10-31',1,'2014-10-29 00:15:02',576),
+ (4,'2014-11-01',1,'2014-10-29 00:15:02',576),
+ (5,'2014-10-31',1,'2014-10-29 00:15:02',576),
+ (5,'2014-11-01',1,'2014-10-29 00:15:02',576),
+ (6,'2014-10-31',1,'2014-10-29 00:15:02',576),
+ (6,'2014-11-01',1,'2014-10-29 00:15:02',576),
+ (7,'2014-10-27',1,'2014-10-29 00:09:49',576),
+ (7,'2014-10-31',1,'2014-10-29 00:15:02',576),
+ (7,'2014-11-01',1,'2014-10-29 00:15:02',576);
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `#__agendadirigentes_agendaalterada` ENABLE KEYS */;
+
+
+--
+-- Definition of table `#__agendadirigentes_cargos`
+--
+
+DROP TABLE IF EXISTS `#__agendadirigentes_cargos`;
+CREATE TABLE  `#__agendadirigentes_cargos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `name_f` varchar(255) DEFAULT NULL,
+  `catid` int(11) NOT NULL DEFAULT '0',
+  `published` int(1) NOT NULL DEFAULT '0',
+  `ordering` int(11) NOT NULL DEFAULT '0',
+  `featured` int(1) NOT NULL DEFAULT '0',
+  `permitir_sobreposicao` int(1) NOT NULL DEFAULT '1',
+  `realizar_sobreposicao` char(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `idx_catid` (`catid`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `#__agendadirigentes_cargos`
+--
+
+/*!40000 ALTER TABLE `#__agendadirigentes_cargos` DISABLE KEYS */;
+LOCK TABLES `#__agendadirigentes_cargos` WRITE;
+INSERT INTO `#__agendadirigentes_cargos` VALUES  (1,'Ministro','Ministra',45,1,0,1,0,'*'),
+ (2,'Chefe de Gabinete','Chefe de Gabinete',45,1,1,0,1,'1'),
+ (3,'Secretário Executivo','Secretária Executiva',46,1,0,0,1,'0'),
+ (4,'Diretor de Tecnologia','Diretora de Tecnologia',47,1,0,0,1,'0'),
+ (5,'Coordenador de Infraestrutura','Coordenadora de Infraestrutura',48,1,0,0,1,'0'),
+ (6,'Secretário Executivo Adjunto','Secretária Executiva Adjunta',49,1,0,0,1,'0'),
+ (7,'Secretário da Secretaria A','Secretária da Secretaria A',50,1,0,0,1,'0'),
+ (8,'Secretário da Secretaria B','Secretária da Secretaria B',51,1,0,0,1,'0');
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `#__agendadirigentes_cargos` ENABLE KEYS */;
+
+
+--
+-- Definition of table `#__agendadirigentes_compromissos`
+--
+
+DROP TABLE IF EXISTS `#__agendadirigentes_compromissos`;
+CREATE TABLE  `#__agendadirigentes_compromissos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) DEFAULT NULL,
+  `state` int(11) DEFAULT '0',
+  `data_inicial` date DEFAULT '0000-00-00',
+  `horario_inicio` time DEFAULT '00:00:00',
+  `data_final` date DEFAULT '0000-00-00',
+  `horario_fim` time DEFAULT '00:00:00',
+  `dia_todo` int(1) unsigned DEFAULT '0',
+  `local` varchar(255) DEFAULT NULL,
+  `description` text,
+  `participantes_externos` text,
+  `params` tinytext,
+  `created` datetime DEFAULT '0000-00-00 00:00:00',
+  `created_by` int(11) DEFAULT '0',
+  `modified` datetime DEFAULT '0000-00-00 00:00:00',
+  `modified_by` int(11) DEFAULT '0',
+  `checked_out` int(11) DEFAULT '0',
+  `checked_out_time` datetime DEFAULT '0000-00-00 00:00:00',
+  `featured` int(1) DEFAULT '0',
+  `published_once` int(1) DEFAULT '0',
+  `language` char(7) DEFAULT NULL,
+  `version` int(11) DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `idx_data_inicial` (`data_inicial`),
+  KEY `idx_horario_inicio` (`horario_inicio`),
+  KEY `idx_data_final` (`data_final`),
+  KEY `idx_horario_fim` (`horario_fim`),
+  KEY `idx_state` (`state`),
+  KEY `idx_outros` (`dia_todo`,`featured`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `#__agendadirigentes_compromissos`
+--
+
+/*!40000 ALTER TABLE `#__agendadirigentes_compromissos` DISABLE KEYS */;
+LOCK TABLES `#__agendadirigentes_compromissos` WRITE;
+INSERT INTO `#__agendadirigentes_compromissos` VALUES  (1,'Reuniões internas',1,'2014-10-30','10:00:00','2014-10-30','12:00:00',0,'Local teste.','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non<br />proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>','','{\"exibir_horario_inicio\":\"\",\"exibir_horario_fim\":\"\",\"exibir_local\":\"\",\"exibir_pauta\":\"\",\"exibir_participantes_locais\":\"\",\"exibir_participantes_externos\":\"\"}','2014-10-28 23:52:18',576,'2014-10-28 23:52:22',576,0,'0000-00-00 00:00:00',0,1,'pt-BR',2),
+ (2,'Reuniões e despachos internos',1,'2014-09-25','08:00:00','2014-09-25','18:00:00',1,'Local do evento','<p>Teste de descrição do <strong>compromisso</strong>.</p>','Teste de indivíduo externo 1; Teste de indivíduo externo 2; Teste de indivíduo externo 3','{\"exibir_horario_inicio\":\"\",\"exibir_horario_fim\":\"\",\"exibir_local\":\"\",\"exibir_pauta\":\"\",\"exibir_participantes_locais\":\"\",\"exibir_participantes_externos\":\"\"}','2014-10-28 23:54:49',576,'2014-10-29 00:01:17',576,0,'0000-00-00 00:00:00',0,1,'pt-BR',5),
+ (3,'Partida para viagem Internacional',1,'2014-09-01','20:00:00','2014-09-01','00:00:00',0,'','<p>Descrição do compromisso com pauta.</p>','','{\"exibir_horario_inicio\":\"\",\"exibir_horario_fim\":\"\",\"exibir_local\":\"\",\"exibir_pauta\":\"\",\"exibir_participantes_locais\":\"\",\"exibir_participantes_externos\":\"\"}','2014-10-29 00:02:45',576,'2014-10-29 00:02:45',576,0,'0000-00-00 00:00:00',0,1,'pt-BR',1),
+ (4,'Despachos internos',1,'2014-09-23','08:00:00','2014-09-23','12:00:00',0,'Brasília, Sede do Ministério','<p>Descrição da pauta.</p>','','{\"exibir_horario_inicio\":\"\",\"exibir_horario_fim\":\"\",\"exibir_local\":\"\",\"exibir_pauta\":\"\",\"exibir_participantes_locais\":\"\",\"exibir_participantes_externos\":\"\"}','2014-10-29 00:04:03',576,'2014-10-29 00:04:03',576,0,'0000-00-00 00:00:00',0,1,'pt-BR',1),
+ (5,'Reunião de trabalho na Advocacia Geral da União (AGU)',1,'2014-09-25','10:00:00','2014-09-25','12:00:00',0,'Sede da AGU','','','{\"exibir_horario_inicio\":\"\",\"exibir_horario_fim\":\"\",\"exibir_local\":\"\",\"exibir_pauta\":\"\",\"exibir_participantes_locais\":\"\",\"exibir_participantes_externos\":\"\"}','2014-10-29 00:05:01',576,'2014-10-29 00:05:01',576,0,'0000-00-00 00:00:00',0,1,'pt-BR',1),
+ (6,'Audiência com representantes de movimentos sociais',1,'2014-10-28','08:00:00','2014-10-28','18:00:00',0,'','','','{\"exibir_horario_inicio\":\"\",\"exibir_horario_fim\":\"\",\"exibir_local\":\"\",\"exibir_pauta\":\"\",\"exibir_participantes_locais\":\"\",\"exibir_participantes_externos\":\"\"}','2014-10-29 00:06:15',576,'2014-10-29 00:06:15',576,0,'0000-00-00 00:00:00',0,1,'pt-BR',1),
+ (7,'Seção solene de posse no Ministério',1,'2014-10-13','08:00:00','2014-10-13','18:00:00',0,'','','','{\"exibir_horario_inicio\":\"\",\"exibir_horario_fim\":\"\",\"exibir_local\":\"\",\"exibir_pauta\":\"\",\"exibir_participantes_locais\":\"\",\"exibir_participantes_externos\":\"\"}','2014-10-29 00:06:56',576,'2014-10-29 00:07:16',576,0,'0000-00-00 00:00:00',0,1,'pt-BR',3),
+ (8,'Despachos internos dois',0,'2014-10-27','08:00:00','2014-10-27','18:00:00',1,'Brasília, Sede do Ministério','<p>Descrição da pauta.</p>','','{\"exibir_horario_inicio\":\"\",\"exibir_horario_fim\":\"\",\"exibir_local\":\"\",\"exibir_pauta\":\"\",\"exibir_participantes_locais\":\"\",\"exibir_participantes_externos\":\"\"}','2014-10-29 00:09:34',576,'2014-10-29 00:09:49',576,0,'0000-00-00 00:00:00',0,0,'pt-BR',2),
+ (9,'teste',1,'2014-09-30','08:00:00','2014-09-30','00:00:00',0,'','','','{\"exibir_horario_inicio\":\"\",\"exibir_horario_fim\":\"\",\"exibir_local\":\"\",\"exibir_pauta\":\"\",\"exibir_participantes_locais\":\"\",\"exibir_participantes_externos\":\"\"}','2014-10-29 00:10:38',576,'2014-10-29 00:10:38',576,0,'0000-00-00 00:00:00',1,1,'pt-BR',1),
+ (10,'Compromisso que será sobreposto',1,'2014-10-31','10:00:00','2014-10-31','11:15:00',0,'','','','{\"exibir_horario_inicio\":\"\",\"exibir_horario_fim\":\"\",\"exibir_local\":\"\",\"exibir_pauta\":\"\",\"exibir_participantes_locais\":\"\",\"exibir_participantes_externos\":\"\"}','2014-10-29 00:11:31',576,'2014-10-29 00:11:31',576,0,'0000-00-00 00:00:00',0,1,'pt-BR',1),
+ (11,'Sobrepor compromisso de ID 10 no sistema.',1,'2014-10-31','08:00:00','2014-11-01','12:00:00',0,'','','','{\"exibir_horario_inicio\":\"\",\"exibir_horario_fim\":\"\",\"exibir_local\":\"\",\"exibir_pauta\":\"\",\"exibir_participantes_locais\":\"\",\"exibir_participantes_externos\":\"\"}','2014-10-29 00:12:45',576,'2014-10-29 00:15:02',576,0,'0000-00-00 00:00:00',0,1,'pt-BR',3),
+ (12,'Nome do compromisso',1,'2014-10-31','10:00:00','2014-10-31','11:15:00',0,'Local do evento.','','','{\"exibir_horario_inicio\":\"\",\"exibir_horario_fim\":\"\",\"exibir_local\":\"\",\"exibir_pauta\":\"\",\"exibir_participantes_locais\":\"\",\"exibir_participantes_externos\":\"\"}','2014-10-29 00:17:50',576,'2014-10-29 00:17:50',576,0,'0000-00-00 00:00:00',0,1,'pt-BR',1),
+ (13,'Teste',0,'2014-11-17','08:00:00','2014-11-18','20:00:00',0,'','','','{\"exibir_horario_inicio\":\"\",\"exibir_horario_fim\":\"\",\"exibir_local\":\"\",\"exibir_pauta\":\"\",\"exibir_participantes_locais\":\"\",\"exibir_participantes_externos\":\"\"}','2014-10-29 00:19:08',576,'2014-10-29 00:19:08',576,0,'0000-00-00 00:00:00',0,0,'pt-BR',1);
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `#__agendadirigentes_compromissos` ENABLE KEYS */;
+
+
+--
+-- Definition of table `#__agendadirigentes_dirigentes`
+--
+
+DROP TABLE IF EXISTS `#__agendadirigentes_dirigentes`;
+CREATE TABLE  `#__agendadirigentes_dirigentes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `cargo_id` int(11) NOT NULL,
+  `state` tinyint(3) NOT NULL DEFAULT '0',
+  `interino` int(1) unsigned NOT NULL DEFAULT '0',
+  `em_atividade` int(1) unsigned NOT NULL DEFAULT '0',
+  `sexo` char(1) NOT NULL DEFAULT 'M',
+  PRIMARY KEY (`id`),
+  KEY `idx_cargo_id` (`cargo_id`),
+  KEY `idx_em_atividade` (`em_atividade`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `#__agendadirigentes_dirigentes`
+--
+
+/*!40000 ALTER TABLE `#__agendadirigentes_dirigentes` DISABLE KEYS */;
+LOCK TABLES `#__agendadirigentes_dirigentes` WRITE;
+INSERT INTO `#__agendadirigentes_dirigentes` VALUES  (1,'José Silva',1,1,0,1,'M'),
+ (2,'Fulano Alves',4,1,0,0,'M'),
+ (3,'Maria Souza',6,1,0,0,'F'),
+ (4,'Beltrana Souza',8,1,0,0,'F'),
+ (5,'Ana de B. e Silvas',2,1,0,0,'F'),
+ (6,'Pedro de C. Oliveiras',5,1,0,0,'M'),
+ (7,'Siclano Sás',3,1,0,0,'M');
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `#__agendadirigentes_dirigentes` ENABLE KEYS */;
+
+
+--
+-- Definition of table `#__agendadirigentes_dirigentes_compromissos`
+--
+
+DROP TABLE IF EXISTS `#__agendadirigentes_dirigentes_compromissos`;
+CREATE TABLE  `#__agendadirigentes_dirigentes_compromissos` (
+  `dirigente_id` int(11) NOT NULL,
+  `compromisso_id` int(11) NOT NULL,
+  `owner` int(11) DEFAULT '0',
+  `sobreposto` int(1) NOT NULL DEFAULT '0' COMMENT 'Compromissos sobrepostos não são exibidos porque uma autoridade convocou outra para reunião.',
+  `sobreposto_por` int(11) NOT NULL DEFAULT '0' COMMENT 'ID do compromisso que causou a sobreposição',
+  PRIMARY KEY (`dirigente_id`,`compromisso_id`),
+  KEY `idx_owner` (`owner`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `#__agendadirigentes_dirigentes_compromissos`
+--
+
+/*!40000 ALTER TABLE `#__agendadirigentes_dirigentes_compromissos` DISABLE KEYS */;
+LOCK TABLES `#__agendadirigentes_dirigentes_compromissos` WRITE;
+INSERT INTO `#__agendadirigentes_dirigentes_compromissos` VALUES  (1,3,1,0,0),
+ (1,4,1,0,0),
+ (1,11,1,0,0),
+ (2,11,0,0,0),
+ (3,1,1,0,0),
+ (3,2,1,0,0),
+ (3,6,1,0,0),
+ (3,12,1,0,0),
+ (4,5,1,0,0),
+ (4,7,1,0,0),
+ (4,11,0,0,0),
+ (5,10,1,1,11),
+ (5,11,0,0,0),
+ (6,9,1,0,0),
+ (6,11,0,0,0),
+ (6,13,1,0,0),
+ (7,8,1,0,0),
+ (7,11,0,0,0);
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `#__agendadirigentes_dirigentes_compromissos` ENABLE KEYS */;
+
+
+--
 -- Definition of table `#__assets`
 --
 
@@ -32,7 +246,7 @@ CREATE TABLE  `#__assets` (
   UNIQUE KEY `idx_asset_name` (`name`),
   KEY `idx_lft_rgt` (`lft`,`rgt`),
   KEY `idx_parent_id` (`parent_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=222 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=235 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `#__assets`
@@ -40,7 +254,7 @@ CREATE TABLE  `#__assets` (
 
 /*!40000 ALTER TABLE `#__assets` DISABLE KEYS */;
 LOCK TABLES `#__assets` WRITE;
-INSERT INTO `#__assets` VALUES  (1,0,1,409,0,'root.1','Root Asset','{\"core.login.site\":{\"6\":1,\"2\":1},\"core.login.admin\":{\"6\":1,\"9\":1},\"core.login.offline\":{\"6\":1},\"core.admin\":{\"8\":1},\"core.manage\":{\"7\":1},\"core.create\":{\"6\":1,\"3\":1},\"core.delete\":{\"6\":1},\"core.edit\":{\"6\":1,\"4\":1},\"core.edit.state\":{\"6\":1,\"5\":1},\"core.edit.own\":{\"6\":1,\"3\":1}}'),
+INSERT INTO `#__assets` VALUES  (1,0,1,435,0,'root.1','Root Asset','{\"core.login.site\":{\"6\":1,\"2\":1},\"core.login.admin\":{\"6\":1,\"13\":1},\"core.login.offline\":{\"6\":1},\"core.admin\":{\"8\":1},\"core.manage\":{\"7\":1},\"core.create\":{\"6\":1,\"3\":1},\"core.delete\":{\"6\":1},\"core.edit\":{\"6\":1,\"4\":1},\"core.edit.state\":{\"6\":1,\"5\":1},\"core.edit.own\":{\"6\":1,\"3\":1}}'),
  (2,1,1,2,1,'com_admin','com_admin','{}'),
  (3,1,3,6,1,'com_banners','com_banners','{\"core.admin\":{\"7\":1},\"core.manage\":{\"6\":1,\"9\":1},\"core.create\":[],\"core.delete\":[],\"core.edit\":[],\"core.edit.state\":[]}'),
  (4,1,7,8,1,'com_cache','com_cache','{\"core.admin\":{\"7\":1},\"core.manage\":{\"7\":1}}'),
@@ -57,23 +271,23 @@ INSERT INTO `#__assets` VALUES  (1,0,1,409,0,'root.1','Root Asset','{\"core.logi
  (15,1,221,222,1,'com_media','com_media','{\"core.admin\":{\"7\":1},\"core.manage\":{\"6\":1},\"core.create\":{\"3\":1},\"core.delete\":{\"5\":1}}'),
  (16,1,223,224,1,'com_menus','com_menus','{\"core.admin\":{\"7\":1},\"core.manage\":[],\"core.create\":[],\"core.delete\":[],\"core.edit\":[],\"core.edit.state\":[]}'),
  (17,1,225,226,1,'com_messages','com_messages','{\"core.admin\":{\"7\":1},\"core.manage\":{\"7\":1}}'),
- (18,1,227,366,1,'com_modules','com_modules','{\"core.admin\":{\"7\":1},\"core.manage\":[],\"core.create\":[],\"core.delete\":[],\"core.edit\":[],\"core.edit.state\":[]}'),
- (19,1,367,370,1,'com_newsfeeds','com_newsfeeds','{\"core.admin\":{\"7\":1},\"core.manage\":{\"6\":1},\"core.create\":[],\"core.delete\":[],\"core.edit\":[],\"core.edit.state\":[],\"core.edit.own\":[]}'),
- (20,1,371,372,1,'com_plugins','com_plugins','{\"core.admin\":{\"7\":1},\"core.manage\":[],\"core.edit\":[],\"core.edit.state\":[]}'),
- (21,1,373,374,1,'com_redirect','com_redirect','{\"core.admin\":{\"7\":1},\"core.manage\":[]}'),
- (22,1,375,376,1,'com_search','com_search','{\"core.admin\":{\"7\":1},\"core.manage\":{\"6\":1}}'),
- (23,1,377,378,1,'com_templates','com_templates','{\"core.admin\":{\"7\":1},\"core.manage\":[],\"core.create\":[],\"core.delete\":[],\"core.edit\":[],\"core.edit.state\":[]}'),
- (24,1,379,382,1,'com_users','com_users','{\"core.admin\":{\"7\":1},\"core.manage\":[],\"core.create\":[],\"core.delete\":[],\"core.edit\":[],\"core.edit.state\":[]}'),
- (25,1,383,386,1,'com_weblinks','com_weblinks','{\"core.admin\":{\"7\":1},\"core.manage\":{\"6\":1},\"core.create\":{\"3\":1},\"core.delete\":[],\"core.edit\":{\"4\":1},\"core.edit.state\":{\"5\":1},\"core.edit.own\":[]}'),
- (26,1,387,388,1,'com_wrapper','com_wrapper','{}'),
+ (18,1,227,376,1,'com_modules','com_modules','{\"core.admin\":{\"7\":1},\"core.manage\":[],\"core.create\":[],\"core.delete\":[],\"core.edit\":[],\"core.edit.state\":[]}'),
+ (19,1,377,380,1,'com_newsfeeds','com_newsfeeds','{\"core.admin\":{\"7\":1},\"core.manage\":{\"6\":1},\"core.create\":[],\"core.delete\":[],\"core.edit\":[],\"core.edit.state\":[],\"core.edit.own\":[]}'),
+ (20,1,381,382,1,'com_plugins','com_plugins','{\"core.admin\":{\"7\":1},\"core.manage\":[],\"core.edit\":[],\"core.edit.state\":[]}'),
+ (21,1,383,384,1,'com_redirect','com_redirect','{\"core.admin\":{\"7\":1},\"core.manage\":[]}'),
+ (22,1,385,386,1,'com_search','com_search','{\"core.admin\":{\"7\":1},\"core.manage\":{\"6\":1}}'),
+ (23,1,387,388,1,'com_templates','com_templates','{\"core.admin\":{\"7\":1},\"core.manage\":[],\"core.create\":[],\"core.delete\":[],\"core.edit\":[],\"core.edit.state\":[]}'),
+ (24,1,389,392,1,'com_users','com_users','{\"core.admin\":{\"7\":1},\"core.manage\":[],\"core.create\":[],\"core.delete\":[],\"core.edit\":[],\"core.edit.state\":[]}'),
+ (25,1,393,396,1,'com_weblinks','com_weblinks','{\"core.admin\":{\"7\":1},\"core.manage\":{\"6\":1},\"core.create\":{\"3\":1},\"core.delete\":[],\"core.edit\":{\"4\":1},\"core.edit.state\":{\"5\":1},\"core.edit.own\":[]}'),
+ (26,1,397,398,1,'com_wrapper','com_wrapper','{}'),
  (27,8,20,31,2,'com_content.category.2','Uncategorised','{\"core.create\":[],\"core.delete\":[],\"core.edit\":[],\"core.edit.state\":[],\"core.edit.own\":[]}'),
  (28,3,4,5,2,'com_banners.category.3','Uncategorised','{\"core.create\":[],\"core.delete\":[],\"core.edit\":[],\"core.edit.state\":[]}'),
  (29,7,14,15,2,'com_contact.category.4','Uncategorised','{\"core.create\":[],\"core.delete\":[],\"core.edit\":[],\"core.edit.state\":[],\"core.edit.own\":[]}'),
- (30,19,368,369,2,'com_newsfeeds.category.5','Uncategorised','{\"core.create\":[],\"core.delete\":[],\"core.edit\":[],\"core.edit.state\":[],\"core.edit.own\":[]}'),
- (31,25,384,385,2,'com_weblinks.category.6','Uncategorised','{\"core.create\":[],\"core.delete\":[],\"core.edit\":[],\"core.edit.state\":[],\"core.edit.own\":[]}'),
- (32,24,380,381,1,'com_users.category.7','Uncategorised','{\"core.create\":[],\"core.delete\":[],\"core.edit\":[],\"core.edit.state\":[]}'),
- (33,1,389,390,1,'com_finder','com_finder','{\"core.admin\":{\"7\":1},\"core.manage\":{\"6\":1}}'),
- (34,1,391,392,1,'com_joomlaupdate','com_joomlaupdate','{\"core.admin\":[],\"core.manage\":[],\"core.delete\":[],\"core.edit.state\":[]}'),
+ (30,19,378,379,2,'com_newsfeeds.category.5','Uncategorised','{\"core.create\":[],\"core.delete\":[],\"core.edit\":[],\"core.edit.state\":[],\"core.edit.own\":[]}'),
+ (31,25,394,395,2,'com_weblinks.category.6','Uncategorised','{\"core.create\":[],\"core.delete\":[],\"core.edit\":[],\"core.edit.state\":[],\"core.edit.own\":[]}'),
+ (32,24,390,391,1,'com_users.category.7','Uncategorised','{\"core.create\":[],\"core.delete\":[],\"core.edit\":[],\"core.edit.state\":[]}'),
+ (33,1,399,400,1,'com_finder','com_finder','{\"core.admin\":{\"7\":1},\"core.manage\":{\"6\":1}}'),
+ (34,1,401,402,1,'com_joomlaupdate','com_joomlaupdate','{\"core.admin\":[],\"core.manage\":[],\"core.delete\":[],\"core.edit.state\":[]}'),
  (37,8,32,89,2,'com_content.category.8','Assuntos','{\"core.create\":{\"6\":1,\"3\":1},\"core.delete\":{\"6\":1},\"core.edit\":{\"6\":1,\"4\":1},\"core.edit.state\":{\"6\":1,\"5\":1},\"core.edit.own\":{\"6\":1,\"3\":1}}'),
  (38,37,33,34,3,'com_content.article.2','Pagina 1: titulo do texto institucional','{\"core.delete\":{\"6\":1},\"core.edit\":{\"6\":1,\"4\":1},\"core.edit.state\":{\"6\":1,\"5\":1}}'),
  (39,43,42,43,6,'com_content.article.3','Página 2: título do texto institucional','{\"core.delete\":{\"6\":1},\"core.edit\":{\"6\":1,\"4\":1},\"core.edit.state\":{\"6\":1,\"5\":1}}'),
@@ -135,12 +349,12 @@ INSERT INTO `#__assets` VALUES  (1,0,1,409,0,'root.1','Root Asset','{\"core.logi
  (107,104,154,155,4,'com_content.article.41','Imagem 3: título com até 45 caracteres','{\"core.delete\":[],\"core.edit\":[],\"core.edit.state\":[]}'),
  (108,104,156,157,4,'com_content.article.42','Imagem 4: título com até 45 caracteres','{\"core.delete\":[],\"core.edit\":[],\"core.edit.state\":[]}'),
  (109,104,158,159,4,'com_content.article.43','SEM Imagem: título com até 45 caracteres','{\"core.delete\":[],\"core.edit\":[],\"core.edit.state\":[]}'),
- (111,1,393,394,1,'com_tags','com_tags','{}'),
- (112,1,395,396,1,'com_contenthistory','com_contenthistory','{}'),
- (113,1,397,398,1,'com_ajax','com_ajax','{}'),
- (114,1,399,400,1,'com_postinstall','com_postinstall','{}'),
+ (111,1,403,404,1,'com_tags','com_tags','{}'),
+ (112,1,405,406,1,'com_contenthistory','com_contenthistory','{}'),
+ (113,1,407,408,1,'com_ajax','com_ajax','{}'),
+ (114,1,409,410,1,'com_postinstall','com_postinstall','{}'),
  (115,18,228,229,2,'com_modules.module.138','Botões de compartilhamento, páginas internas','{\"core.delete\":{\"6\":1},\"core.edit\":{\"6\":1,\"4\":1},\"core.edit.state\":{\"6\":1,\"5\":1}}'),
- (116,1,401,402,1,'com_blankcomponent','blankcomponent','{}'),
+ (116,1,411,412,1,'com_blankcomponent','blankcomponent','{}'),
  (117,18,230,231,2,'com_modules.module.139','Mapa do site: Título e Descrição','{\"core.delete\":{\"6\":1},\"core.edit\":{\"6\":1,\"4\":1},\"core.edit.state\":{\"6\":1,\"5\":1}}'),
  (118,18,232,233,2,'com_modules.module.140','Outros links','{\"core.delete\":{\"6\":1},\"core.edit\":{\"6\":1,\"4\":1},\"core.edit.state\":{\"6\":1,\"5\":1}}'),
  (119,18,234,235,2,'com_modules.module.141','Serviços','{\"core.delete\":{\"6\":1},\"core.edit\":{\"6\":1,\"4\":1},\"core.edit.state\":{\"6\":1,\"5\":1}}'),
@@ -162,7 +376,7 @@ INSERT INTO `#__assets` VALUES  (1,0,1,409,0,'root.1','Root Asset','{\"core.logi
  (135,7,16,17,2,'com_contact.category.38','Contatos principais','{\"core.create\":{\"6\":1,\"3\":1},\"core.delete\":{\"6\":1},\"core.edit\":{\"6\":1,\"4\":1},\"core.edit.state\":{\"6\":1,\"5\":1},\"core.edit.own\":{\"6\":1,\"3\":1}}'),
  (136,18,266,267,2,'com_modules.module.94','Serviços','{\"core.delete\":{\"6\":1},\"core.edit\":{\"6\":1,\"4\":1},\"core.edit.state\":{\"6\":1,\"5\":1}}'),
  (137,18,268,269,2,'com_modules.module.151','Youtube Gallery Module',''),
- (138,1,403,404,1,'com_youtubegallery','com_youtubegallery','{}'),
+ (138,1,413,414,1,'com_youtubegallery','com_youtubegallery','{}'),
  (139,18,270,271,2,'com_modules.module.152','ÁREA DE IMPRENSA','{\"core.delete\":{\"6\":1},\"core.edit\":{\"6\":1,\"4\":1},\"core.edit.state\":{\"6\":1,\"5\":1}}'),
  (140,18,272,273,2,'com_modules.module.153','Notícias','{\"core.delete\":{\"6\":1},\"core.edit\":{\"6\":1,\"4\":1},\"core.edit.state\":{\"6\":1,\"5\":1}}'),
  (141,18,274,275,2,'com_modules.module.154','Releases','{\"core.delete\":{\"6\":1},\"core.edit\":{\"6\":1,\"4\":1},\"core.edit.state\":{\"6\":1,\"5\":1}}'),
@@ -178,12 +392,12 @@ INSERT INTO `#__assets` VALUES  (1,0,1,409,0,'root.1','Root Asset','{\"core.logi
  (151,18,282,283,2,'com_modules.module.158','Redes Sociais - Módulo twitter e facebook da área de imprensa','{\"core.delete\":{\"6\":1},\"core.edit\":{\"6\":1,\"4\":1},\"core.edit.state\":{\"6\":1,\"5\":1}}'),
  (152,18,284,285,2,'com_modules.module.159','Vídeos','{\"core.delete\":{\"6\":1},\"core.edit\":{\"6\":1,\"4\":1},\"core.edit.state\":{\"6\":1,\"5\":1}}'),
  (153,18,286,287,2,'com_modules.module.160','Galeria de vídeos alternativa','{\"core.delete\":{\"6\":1},\"core.edit\":{\"6\":1,\"4\":1},\"core.edit.state\":{\"6\":1,\"5\":1}}'),
- (154,1,405,406,1,'com_phocagallery','com_phocagallery','{\"core.admin\":[],\"core.manage\":[],\"core.create\":[],\"core.delete\":[],\"core.edit\":[],\"core.edit.state\":[]}'),
+ (154,1,415,416,1,'com_phocagallery','com_phocagallery','{\"core.admin\":[],\"core.manage\":[],\"core.create\":[],\"core.delete\":[],\"core.edit\":[],\"core.edit.state\":[]}'),
  (155,18,288,289,2,'com_modules.module.161','Título Banco de imagens','{\"core.delete\":{\"6\":1},\"core.edit\":{\"6\":1,\"4\":1},\"core.edit.state\":{\"6\":1,\"5\":1}}'),
  (156,18,290,291,2,'com_modules.module.162','Banco de imagens','{\"core.delete\":{\"6\":1},\"core.edit\":{\"6\":1,\"4\":1},\"core.edit.state\":{\"6\":1,\"5\":1}}'),
  (157,18,292,293,2,'com_modules.module.163','Manuais','{\"core.delete\":{\"6\":1},\"core.edit\":{\"6\":1,\"4\":1},\"core.edit.state\":{\"6\":1,\"5\":1}}'),
  (158,18,294,295,2,'com_modules.module.164','Outros manuais','{\"core.delete\":{\"6\":1},\"core.edit\":{\"6\":1,\"4\":1},\"core.edit.state\":{\"6\":1,\"5\":1}}'),
- (159,1,407,408,1,'com_k2','com_k2','{}'),
+ (159,1,417,418,1,'com_k2','com_k2','{}'),
  (160,18,296,297,2,'com_modules.module.165','K2 Comments',''),
  (161,18,298,299,2,'com_modules.module.166','K2 Content',''),
  (162,18,300,301,2,'com_modules.module.167','K2 Tools',''),
@@ -244,7 +458,20 @@ INSERT INTO `#__assets` VALUES  (1,0,1,409,0,'root.1','Root Asset','{\"core.logi
  (218,216,164,165,4,'com_content.article.66','Imagem 2: título com até 45 caracteres',''),
  (219,216,166,167,4,'com_content.article.67','Imagem 3: título com até 45 caracteres',''),
  (220,216,168,169,4,'com_content.article.68','Imagem 4: título com até 45 caracteres',''),
- (221,216,170,171,4,'com_content.article.69','SEM Imagem: título com até 45 caracteres','');
+ (221,216,170,171,4,'com_content.article.69','SEM Imagem: título com até 45 caracteres',''),
+ (222,1,419,434,1,'com_agendadirigentes','com_agendadirigentes','{\"core.admin\":[],\"core.manage\":{\"13\":1},\"core.create\":[],\"core.delete\":{\"13\":1},\"core.edit\":{\"13\":1},\"core.edit.state\":{\"13\":1},\"core.edit.own\":[],\"categories.list\":{\"13\":1},\"cargos.list\":{\"13\":1},\"cargos.create\":{\"13\":1},\"cargos.delete\":{\"13\":1},\"cargos.edit\":{\"13\":1},\"cargos.edit.state\":{\"13\":1},\"dirigentes.list\":{\"13\":1},\"dirigentes.create\":{\"13\":1},\"dirigentes.delete\":{\"13\":1},\"dirigentes.edit\":{\"13\":1},\"dirigentes.edit.state\":{\"13\":1}}'),
+ (223,18,366,367,2,'com_modules.module.198','Agenda do Ministro','{\"core.delete\":[],\"core.edit\":[],\"core.edit.state\":[]}'),
+ (224,222,420,421,2,'com_agendadirigentes.category.45','Gabinete do Ministro','{\"core.create\":{\"6\":1,\"3\":1,\"13\":1},\"core.delete\":{\"6\":1,\"13\":1},\"core.edit\":{\"6\":1,\"13\":1,\"4\":1},\"core.edit.state\":{\"6\":1,\"13\":1,\"5\":1},\"core.edit.own\":{\"6\":1,\"3\":1,\"13\":1},\"cargos.create\":{\"13\":1},\"cargos.delete\":{\"13\":1},\"cargos.edit\":{\"13\":1},\"cargos.edit.state\":{\"13\":1},\"dirigentes.create\":{\"13\":1},\"dirigentes.delete\":{\"13\":1},\"dirigentes.edit\":{\"13\":1},\"dirigentes.edit.state\":{\"13\":1}}'),
+ (225,222,422,427,2,'com_agendadirigentes.category.46','Secretaria Executiva','{\"core.create\":{\"6\":1,\"3\":1},\"core.delete\":{\"6\":1},\"core.edit\":{\"6\":1,\"4\":1},\"core.edit.state\":{\"6\":1,\"5\":1},\"core.edit.own\":{\"6\":1,\"3\":1},\"cargos.create\":[],\"cargos.delete\":[],\"cargos.edit\":[],\"cargos.edit.state\":[],\"dirigentes.create\":[],\"dirigentes.delete\":[],\"dirigentes.edit\":[],\"dirigentes.edit.state\":[]}'),
+ (226,225,423,426,3,'com_agendadirigentes.category.47','Diretoria de Tecnologia da Informação','{\"core.create\":{\"6\":1,\"3\":1},\"core.delete\":{\"6\":1},\"core.edit\":{\"6\":1,\"4\":1},\"core.edit.state\":{\"6\":1,\"5\":1},\"core.edit.own\":{\"6\":1,\"3\":1},\"cargos.create\":[],\"cargos.delete\":[],\"cargos.edit\":[],\"cargos.edit.state\":[],\"dirigentes.create\":[],\"dirigentes.delete\":[],\"dirigentes.edit\":[],\"dirigentes.edit.state\":[]}'),
+ (227,226,424,425,4,'com_agendadirigentes.category.48','Coordenação Geral de Infraestrutura','{\"core.create\":{\"6\":1,\"3\":1},\"core.delete\":{\"6\":1},\"core.edit\":{\"6\":1,\"4\":1},\"core.edit.state\":{\"6\":1,\"5\":1},\"core.edit.own\":{\"6\":1,\"3\":1},\"cargos.create\":[],\"cargos.delete\":[],\"cargos.edit\":[],\"cargos.edit.state\":[],\"dirigentes.create\":[],\"dirigentes.delete\":[],\"dirigentes.edit\":[],\"dirigentes.edit.state\":[]}'),
+ (228,222,428,429,2,'com_agendadirigentes.category.49','Secretaria Executiva Adjunta','{\"core.create\":{\"6\":1,\"3\":1},\"core.delete\":{\"6\":1},\"core.edit\":{\"6\":1,\"4\":1},\"core.edit.state\":{\"6\":1,\"5\":1},\"core.edit.own\":{\"6\":1,\"3\":1},\"cargos.create\":[],\"cargos.delete\":[],\"cargos.edit\":[],\"cargos.edit.state\":[],\"dirigentes.create\":[],\"dirigentes.delete\":[],\"dirigentes.edit\":[],\"dirigentes.edit.state\":[]}'),
+ (229,222,430,431,2,'com_agendadirigentes.category.50','Secretaria A','{\"core.create\":{\"6\":1,\"3\":1},\"core.delete\":{\"6\":1},\"core.edit\":{\"6\":1,\"4\":1},\"core.edit.state\":{\"6\":1,\"5\":1},\"core.edit.own\":{\"6\":1,\"3\":1},\"cargos.create\":[],\"cargos.delete\":[],\"cargos.edit\":[],\"cargos.edit.state\":[],\"dirigentes.create\":[],\"dirigentes.delete\":[],\"dirigentes.edit\":[],\"dirigentes.edit.state\":[]}'),
+ (230,222,432,433,2,'com_agendadirigentes.category.51','Secretaria B','{\"core.create\":{\"6\":1,\"3\":1},\"core.delete\":{\"6\":1},\"core.edit\":{\"6\":1,\"4\":1},\"core.edit.state\":{\"6\":1,\"5\":1},\"core.edit.own\":{\"6\":1,\"3\":1},\"cargos.create\":[],\"cargos.delete\":[],\"cargos.edit\":[],\"cargos.edit.state\":[],\"dirigentes.create\":[],\"dirigentes.delete\":[],\"dirigentes.edit\":[],\"dirigentes.edit.state\":[]}'),
+ (231,18,368,369,2,'com_modules.module.130','Planejamento',''),
+ (232,18,370,371,2,'com_modules.module.131','Lei de acesso à informação',''),
+ (233,18,372,373,2,'com_modules.module.132','Agenda',''),
+ (234,18,374,375,2,'com_modules.module.111','linha 02','{\"core.delete\":{\"6\":1},\"core.edit\":{\"6\":1,\"4\":1},\"core.edit.state\":{\"6\":1,\"5\":1}}');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `#__assets` ENABLE KEYS */;
 
@@ -432,7 +659,7 @@ CREATE TABLE  `#__categories` (
   KEY `idx_left_right` (`lft`,`rgt`),
   KEY `idx_alias` (`alias`),
   KEY `idx_language` (`language`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `#__categories`
@@ -440,13 +667,13 @@ CREATE TABLE  `#__categories` (
 
 /*!40000 ALTER TABLE `#__categories` DISABLE KEYS */;
 LOCK TABLES `#__categories` WRITE;
-INSERT INTO `#__categories` VALUES  (1,0,0,0,71,0,'','system','ROOT',0x726F6F74,'','',1,0,'0000-00-00 00:00:00',1,'{}','','','',0,'2009-10-18 16:07:09',0,'0000-00-00 00:00:00',0,'*',1),
- (2,27,1,1,2,1,'uncategorised','com_content','Uncategorised',0x756E63617465676F7269736564,'','',1,0,'0000-00-00 00:00:00',1,'{\"target\":\"\",\"image\":\"\"}','','','{\"page_title\":\"\",\"author\":\"\",\"robots\":\"\"}',42,'2010-06-28 13:26:37',0,'0000-00-00 00:00:00',4,'*',1),
- (3,28,1,3,4,1,'uncategorised','com_banners','Uncategorised',0x756E63617465676F7269736564,'','',1,0,'0000-00-00 00:00:00',1,'{\"target\":\"\",\"image\":\"\",\"foobar\":\"\"}','','','{\"page_title\":\"\",\"author\":\"\",\"robots\":\"\"}',42,'2010-06-28 13:27:35',0,'0000-00-00 00:00:00',0,'*',1),
- (4,29,1,5,6,1,'uncategorised','com_contact','Uncategorised',0x756E63617465676F7269736564,'','',1,0,'0000-00-00 00:00:00',1,'{\"target\":\"\",\"image\":\"\"}','','','{\"page_title\":\"\",\"author\":\"\",\"robots\":\"\"}',42,'2010-06-28 13:27:57',0,'0000-00-00 00:00:00',0,'*',1),
- (5,30,1,7,8,1,'uncategorised','com_newsfeeds','Uncategorised',0x756E63617465676F7269736564,'','',1,0,'0000-00-00 00:00:00',1,'{\"target\":\"\",\"image\":\"\"}','','','{\"page_title\":\"\",\"author\":\"\",\"robots\":\"\"}',42,'2010-06-28 13:28:15',0,'0000-00-00 00:00:00',0,'*',1),
- (6,31,1,9,10,1,'uncategorised','com_weblinks','Uncategorised',0x756E63617465676F7269736564,'','',1,0,'0000-00-00 00:00:00',1,'{\"target\":\"\",\"image\":\"\"}','','','{\"page_title\":\"\",\"author\":\"\",\"robots\":\"\"}',42,'2010-06-28 13:28:33',0,'0000-00-00 00:00:00',0,'*',1),
- (7,32,1,11,12,1,'uncategorised','com_users','Uncategorised',0x756E63617465676F7269736564,'','',1,0,'0000-00-00 00:00:00',1,'{\"target\":\"\",\"image\":\"\"}','','','{\"page_title\":\"\",\"author\":\"\",\"robots\":\"\"}',42,'2010-06-28 13:28:33',0,'0000-00-00 00:00:00',0,'*',1),
+INSERT INTO `#__categories` VALUES  (1,0,0,0,85,0,'','system','ROOT',0x726F6F74,'','',1,0,'0000-00-00 00:00:00',1,'{}','','','',576,'2009-10-18 16:07:09',0,'0000-00-00 00:00:00',0,'*',1),
+ (2,27,1,1,2,1,'uncategorised','com_content','Uncategorised',0x756E63617465676F7269736564,'','',1,0,'0000-00-00 00:00:00',1,'{\"target\":\"\",\"image\":\"\"}','','','{\"page_title\":\"\",\"author\":\"\",\"robots\":\"\"}',576,'2010-06-28 13:26:37',0,'0000-00-00 00:00:00',4,'*',1),
+ (3,28,1,3,4,1,'uncategorised','com_banners','Uncategorised',0x756E63617465676F7269736564,'','',1,0,'0000-00-00 00:00:00',1,'{\"target\":\"\",\"image\":\"\",\"foobar\":\"\"}','','','{\"page_title\":\"\",\"author\":\"\",\"robots\":\"\"}',576,'2010-06-28 13:27:35',0,'0000-00-00 00:00:00',0,'*',1),
+ (4,29,1,5,6,1,'uncategorised','com_contact','Uncategorised',0x756E63617465676F7269736564,'','',1,0,'0000-00-00 00:00:00',1,'{\"target\":\"\",\"image\":\"\"}','','','{\"page_title\":\"\",\"author\":\"\",\"robots\":\"\"}',576,'2010-06-28 13:27:57',0,'0000-00-00 00:00:00',0,'*',1),
+ (5,30,1,7,8,1,'uncategorised','com_newsfeeds','Uncategorised',0x756E63617465676F7269736564,'','',1,0,'0000-00-00 00:00:00',1,'{\"target\":\"\",\"image\":\"\"}','','','{\"page_title\":\"\",\"author\":\"\",\"robots\":\"\"}',576,'2010-06-28 13:28:15',0,'0000-00-00 00:00:00',0,'*',1),
+ (6,31,1,9,10,1,'uncategorised','com_weblinks','Uncategorised',0x756E63617465676F7269736564,'','',1,0,'0000-00-00 00:00:00',1,'{\"target\":\"\",\"image\":\"\"}','','','{\"page_title\":\"\",\"author\":\"\",\"robots\":\"\"}',576,'2010-06-28 13:28:33',0,'0000-00-00 00:00:00',0,'*',1),
+ (7,32,1,11,12,1,'uncategorised','com_users','Uncategorised',0x756E63617465676F7269736564,'','',1,0,'0000-00-00 00:00:00',1,'{\"target\":\"\",\"image\":\"\"}','','','{\"page_title\":\"\",\"author\":\"\",\"robots\":\"\"}',576,'2010-06-28 13:28:33',0,'0000-00-00 00:00:00',0,'*',1),
  (8,37,1,13,32,1,'assuntos','com_content','Assuntos',0x617373756E746F73,'','',1,0,'0000-00-00 00:00:00',1,'{\"category_layout\":\"\",\"image\":\"\"}','','','{\"author\":\"\",\"robots\":\"\"}',576,'2013-10-21 17:09:55',0,'0000-00-00 00:00:00',0,'*',1),
  (9,41,8,14,27,2,'assuntos/editoria-a','com_content','Editoria A',0x656469746F7269612D61,'','',1,0,'0000-00-00 00:00:00',1,'{\"category_layout\":\"\",\"image\":\"\"}','','','{\"author\":\"\",\"robots\":\"\"}',576,'2013-10-21 17:15:48',0,'0000-00-00 00:00:00',0,'*',1),
  (10,42,9,15,22,3,'assuntos/editoria-a/menu-de-2-nivel','com_content','Menu de 2. Nivel',0x6D656E752D64652D322D6E6976656C,'','',1,0,'0000-00-00 00:00:00',1,'{\"category_layout\":\"\",\"image\":\"\"}','','','{\"author\":\"\",\"robots\":\"\"}',576,'2013-10-21 17:17:17',0,'0000-00-00 00:00:00',0,'*',1),
@@ -475,7 +702,14 @@ INSERT INTO `#__categories` VALUES  (1,0,0,0,71,0,'','system','ROOT',0x726F6F74,
  (41,172,40,68,69,2,'lei-de-acesso-a-informacao/perguntas-frequentes','com_content','Perguntas frequentes',0x70657267756E7461732D6672657175656E746573,'','',1,0,'0000-00-00 00:00:00',1,'{\"category_layout\":\"\",\"image\":\"\"}','','','{\"author\":\"\",\"robots\":\"\"}',576,'2013-12-22 17:48:36',0,'0000-00-00 00:00:00',0,'*',1),
  (42,180,9,23,24,3,'assuntos/editoria-a/assuntos','com_content','Assuntos',0x617373756E746F73,'','',1,0,'0000-00-00 00:00:00',1,'{\"category_layout\":\"\",\"image\":\"\"}','','','{\"author\":\"\",\"robots\":\"\"}',576,'2013-12-24 22:13:37',0,'0000-00-00 00:00:00',0,'*',1),
  (43,181,9,25,26,3,'assuntos/editoria-a/institucional','com_content','Institucional',0x696E737469747563696F6E616C,'','',1,0,'0000-00-00 00:00:00',1,'{\"category_layout\":\"\",\"image\":\"\"}','','','{\"author\":\"\",\"robots\":\"\"}',576,'2013-12-24 22:13:46',576,'2013-12-24 22:17:14',0,'*',1),
- (44,216,36,60,61,2,'galeria-de-imagens/galeria-2','com_content','Galeria 2',0x67616C657269612D32,'','',1,0,'0000-00-00 00:00:00',1,'{\"category_layout\":\"\",\"image\":\"\"}','','','{\"author\":\"\",\"robots\":\"\"}',576,'2014-01-08 20:13:42',576,'2014-01-08 20:13:58',0,'*',1);
+ (44,216,36,60,61,2,'galeria-de-imagens/galeria-2','com_content','Galeria 2',0x67616C657269612D32,'','',1,0,'0000-00-00 00:00:00',1,'{\"category_layout\":\"\",\"image\":\"\"}','','','{\"author\":\"\",\"robots\":\"\"}',576,'2014-01-08 20:13:42',576,'2014-01-08 20:13:58',0,'*',1),
+ (45,224,1,71,72,1,'gabinete-do-ministro','com_agendadirigentes','Gabinete do Ministro',0x676162696E6574652D646F2D6D696E697374726F,'','',1,0,'0000-00-00 00:00:00',1,'{\"category_layout\":\"\",\"image\":\"\"}','','','{\"author\":\"\",\"robots\":\"\"}',576,'2014-10-28 22:24:47',576,'2014-10-29 00:25:01',0,'*',1),
+ (46,225,1,73,78,1,'secretaria-executiva','com_agendadirigentes','Secretaria Executiva',0x736563726574617269612D657865637574697661,'','',1,0,'0000-00-00 00:00:00',1,'{\"category_layout\":\"\",\"image\":\"\"}','','','{\"author\":\"\",\"robots\":\"\"}',576,'2014-10-28 22:25:01',0,'0000-00-00 00:00:00',0,'*',1),
+ (47,226,46,74,77,2,'secretaria-executiva/diretoria-de-tecnologia-da-informacao','com_agendadirigentes','Diretoria de Tecnologia da Informação',0x64697265746F7269612D64652D7465636E6F6C6F6769612D64612D696E666F726D6163616F,'','',1,0,'0000-00-00 00:00:00',1,'{\"category_layout\":\"\",\"image\":\"\"}','','','{\"author\":\"\",\"robots\":\"\"}',576,'2014-10-28 22:25:19',0,'0000-00-00 00:00:00',0,'*',1),
+ (48,227,47,75,76,3,'secretaria-executiva/diretoria-de-tecnologia-da-informacao/coordenacao-geral-de-infraestrutura','com_agendadirigentes','Coordenação Geral de Infraestrutura',0x636F6F7264656E6163616F2D676572616C2D64652D696E667261657374727574757261,'','',1,0,'0000-00-00 00:00:00',1,'{\"category_layout\":\"\",\"image\":\"\"}','','','{\"author\":\"\",\"robots\":\"\"}',576,'2014-10-28 22:25:44',0,'0000-00-00 00:00:00',0,'*',1),
+ (49,228,1,79,80,1,'secretaria-executiva-adjunta','com_agendadirigentes','Secretaria Executiva Adjunta',0x736563726574617269612D6578656375746976612D61646A756E7461,'','',1,0,'0000-00-00 00:00:00',1,'{\"category_layout\":\"\",\"image\":\"\"}','','','{\"author\":\"\",\"robots\":\"\"}',576,'2014-10-28 22:26:03',0,'0000-00-00 00:00:00',0,'*',1),
+ (50,229,1,81,82,1,'secretaria-a','com_agendadirigentes','Secretaria A',0x736563726574617269612D61,'','',1,0,'0000-00-00 00:00:00',1,'{\"category_layout\":\"\",\"image\":\"\"}','','','{\"author\":\"\",\"robots\":\"\"}',576,'2014-10-28 22:26:18',0,'0000-00-00 00:00:00',0,'*',1),
+ (51,230,1,83,84,1,'secretaria-b','com_agendadirigentes','Secretaria B',0x736563726574617269612D62,'','',1,0,'0000-00-00 00:00:00',1,'{\"category_layout\":\"\",\"image\":\"\"}','','','{\"author\":\"\",\"robots\":\"\"}',576,'2014-10-28 22:26:28',0,'0000-00-00 00:00:00',0,'*',1);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `#__categories` ENABLE KEYS */;
 
@@ -842,7 +1076,7 @@ CREATE TABLE  `#__extensions` (
   KEY `element_clientid` (`element`,`client_id`),
   KEY `element_folder_clientid` (`element`,`folder`,`client_id`),
   KEY `extension` (`type`,`element`,`folder`,`client_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10051 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10055 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `#__extensions`
@@ -872,7 +1106,7 @@ INSERT INTO `#__extensions` VALUES  (1,'com_mailto','component','com_mailto','',
  (20,'com_templates','component','com_templates','',1,1,1,1,'{\"name\":\"com_templates\",\"type\":\"component\",\"creationDate\":\"April 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2014 Open Source Matters. All rights reserved.\\t\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"COM_TEMPLATES_XML_DESCRIPTION\",\"group\":\"\"}','{\"template_positions_display\":\"0\",\"upload_limit\":\"2\",\"image_formats\":\"gif,bmp,jpg,jpeg,png\",\"source_formats\":\"txt,less,ini,xml,js,php,css\",\"font_formats\":\"woff,ttf,otf\",\"compressed_formats\":\"zip\"}','','',0,'0000-00-00 00:00:00',0,0),
  (21,'com_weblinks','component','com_weblinks','',1,1,1,0,'{\"name\":\"com_weblinks\",\"type\":\"component\",\"creationDate\":\"April 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2014 Open Source Matters. All rights reserved.\\n\\t\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"COM_WEBLINKS_XML_DESCRIPTION\",\"group\":\"\"}','{\"show_comp_description\":\"1\",\"comp_description\":\"\",\"show_link_hits\":\"1\",\"show_link_description\":\"1\",\"show_other_cats\":\"0\",\"show_headings\":\"0\",\"show_numbers\":\"0\",\"show_report\":\"1\",\"count_clicks\":\"1\",\"target\":\"0\",\"link_icons\":\"\"}','','',0,'0000-00-00 00:00:00',0,0),
  (22,'com_content','component','com_content','',1,1,0,1,'{\"name\":\"com_content\",\"type\":\"component\",\"creationDate\":\"April 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2014 Open Source Matters. All rights reserved.\\t\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"COM_CONTENT_XML_DESCRIPTION\",\"group\":\"\"}','{\"article_layout\":\"_:default\",\"show_title\":\"1\",\"link_titles\":\"1\",\"show_intro\":\"1\",\"info_block_position\":\"0\",\"show_category\":\"1\",\"link_category\":\"1\",\"show_parent_category\":\"0\",\"link_parent_category\":\"0\",\"show_author\":\"0\",\"link_author\":\"0\",\"show_create_date\":\"0\",\"show_modify_date\":\"1\",\"show_publish_date\":\"1\",\"show_item_navigation\":\"0\",\"show_vote\":\"0\",\"show_readmore\":\"1\",\"show_readmore_title\":\"1\",\"readmore_limit\":\"100\",\"show_tags\":\"1\",\"show_icons\":\"1\",\"show_print_icon\":\"1\",\"show_email_icon\":\"1\",\"show_hits\":\"1\",\"show_noauth\":\"0\",\"urls_position\":\"0\",\"show_publishing_options\":\"1\",\"show_article_options\":\"1\",\"save_history\":\"0\",\"history_limit\":10,\"show_urls_images_frontend\":\"0\",\"show_urls_images_backend\":\"1\",\"targeta\":0,\"targetb\":0,\"targetc\":0,\"float_intro\":\"left\",\"float_fulltext\":\"left\",\"category_layout\":\"_:blog\",\"show_category_heading_title_text\":\"1\",\"show_category_title\":\"0\",\"show_description\":\"0\",\"show_description_image\":\"0\",\"maxLevel\":\"1\",\"show_empty_categories\":\"0\",\"show_no_articles\":\"1\",\"show_subcat_desc\":\"1\",\"show_cat_num_articles\":\"0\",\"show_base_description\":\"1\",\"maxLevelcat\":\"-1\",\"show_empty_categories_cat\":\"0\",\"show_subcat_desc_cat\":\"1\",\"show_cat_num_articles_cat\":\"1\",\"num_leading_articles\":\"1\",\"num_intro_articles\":\"4\",\"num_columns\":\"2\",\"num_links\":\"4\",\"multi_column_order\":\"0\",\"show_subcategory_content\":\"0\",\"show_pagination_limit\":\"1\",\"filter_field\":\"hide\",\"show_headings\":\"1\",\"list_show_date\":\"0\",\"date_format\":\"\",\"list_show_hits\":\"1\",\"list_show_author\":\"1\",\"orderby_pri\":\"order\",\"orderby_sec\":\"rdate\",\"order_date\":\"published\",\"show_pagination\":\"2\",\"show_pagination_results\":\"1\",\"show_feed_link\":\"1\",\"feed_summary\":\"0\",\"feed_show_readmore\":\"0\"}','','',0,'0000-00-00 00:00:00',0,0),
- (23,'com_config','component','com_config','',1,1,0,1,'{\"name\":\"com_config\",\"type\":\"component\",\"creationDate\":\"April 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2014 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"COM_CONFIG_XML_DESCRIPTION\",\"group\":\"\"}','{\"filters\":{\"1\":{\"filter_type\":\"NH\",\"filter_tags\":\"\",\"filter_attributes\":\"\"},\"6\":{\"filter_type\":\"BL\",\"filter_tags\":\"\",\"filter_attributes\":\"\"},\"7\":{\"filter_type\":\"NONE\",\"filter_tags\":\"\",\"filter_attributes\":\"\"},\"2\":{\"filter_type\":\"NH\",\"filter_tags\":\"\",\"filter_attributes\":\"\"},\"3\":{\"filter_type\":\"BL\",\"filter_tags\":\"\",\"filter_attributes\":\"\"},\"9\":{\"filter_type\":\"BL\",\"filter_tags\":\"\",\"filter_attributes\":\"\"},\"10\":{\"filter_type\":\"BL\",\"filter_tags\":\"\",\"filter_attributes\":\"\"},\"11\":{\"filter_type\":\"BL\",\"filter_tags\":\"\",\"filter_attributes\":\"\"},\"12\":{\"filter_type\":\"BL\",\"filter_tags\":\"\",\"filter_attributes\":\"\"},\"4\":{\"filter_type\":\"BL\",\"filter_tags\":\"\",\"filter_attributes\":\"\"},\"5\":{\"filter_type\":\"BL\",\"filter_tags\":\"\",\"filter_attributes\":\"\"},\"8\":{\"filter_type\":\"NONE\",\"filter_tags\":\"\",\"filter_attributes\":\"\"}}}','','',0,'0000-00-00 00:00:00',0,0),
+ (23,'com_config','component','com_config','',1,1,0,1,'{\"name\":\"com_config\",\"type\":\"component\",\"creationDate\":\"April 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2014 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"COM_CONFIG_XML_DESCRIPTION\",\"group\":\"\"}','{\"filters\":{\"1\":{\"filter_type\":\"NH\",\"filter_tags\":\"\",\"filter_attributes\":\"\"},\"6\":{\"filter_type\":\"BL\",\"filter_tags\":\"\",\"filter_attributes\":\"\"},\"7\":{\"filter_type\":\"NONE\",\"filter_tags\":\"\",\"filter_attributes\":\"\"},\"2\":{\"filter_type\":\"NH\",\"filter_tags\":\"\",\"filter_attributes\":\"\"},\"3\":{\"filter_type\":\"BL\",\"filter_tags\":\"\",\"filter_attributes\":\"\"},\"13\":{\"filter_type\":\"BL\",\"filter_tags\":\"\",\"filter_attributes\":\"\"},\"4\":{\"filter_type\":\"BL\",\"filter_tags\":\"\",\"filter_attributes\":\"\"},\"5\":{\"filter_type\":\"BL\",\"filter_tags\":\"\",\"filter_attributes\":\"\"},\"8\":{\"filter_type\":\"NONE\",\"filter_tags\":\"\",\"filter_attributes\":\"\"}}}','','',0,'0000-00-00 00:00:00',0,0),
  (24,'com_redirect','component','com_redirect','',1,1,0,1,'{\"name\":\"com_redirect\",\"type\":\"component\",\"creationDate\":\"April 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2014 Open Source Matters. All rights reserved.\\t\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"COM_REDIRECT_XML_DESCRIPTION\",\"group\":\"\"}','{}','','',0,'0000-00-00 00:00:00',0,0),
  (25,'com_users','component','com_users','',1,1,0,1,'{\"name\":\"com_users\",\"type\":\"component\",\"creationDate\":\"April 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2014 Open Source Matters. All rights reserved.\\t\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"COM_USERS_XML_DESCRIPTION\",\"group\":\"\"}','{\"allowUserRegistration\":\"1\",\"new_usertype\":\"2\",\"guest_usergroup\":\"1\",\"sendpassword\":\"1\",\"useractivation\":\"2\",\"mail_to_admin\":\"1\",\"captcha\":\"\",\"frontend_userparams\":\"1\",\"site_language\":\"0\",\"change_login_name\":\"0\",\"reset_count\":\"10\",\"reset_time\":\"1\",\"mailSubjectPrefix\":\"\",\"mailBodySuffix\":\"\"}','','',0,'0000-00-00 00:00:00',0,0),
  (27,'com_finder','component','com_finder','',1,1,0,0,'{\"legacy\":false,\"name\":\"com_finder\",\"type\":\"component\",\"creationDate\":\"August 2011\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2013 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"2.5.0\",\"description\":\"COM_FINDER_XML_DESCRIPTION\",\"group\":\"\"}','{\"show_description\":\"1\",\"description_length\":255,\"allow_empty_query\":\"0\",\"show_url\":\"1\",\"show_advanced\":\"1\",\"expand_advanced\":\"0\",\"show_date_filters\":\"0\",\"highlight_terms\":\"1\",\"opensearch_name\":\"\",\"opensearch_description\":\"\",\"batch_size\":\"50\",\"memory_table_limit\":30000,\"title_multiplier\":\"1.7\",\"text_multiplier\":\"0.7\",\"meta_multiplier\":\"1.2\",\"path_multiplier\":\"2.0\",\"misc_multiplier\":\"0.3\",\"stemmer\":\"snowball\"}','','',0,'0000-00-00 00:00:00',0,0),
@@ -884,7 +1118,7 @@ INSERT INTO `#__extensions` VALUES  (1,'com_mailto','component','com_mailto','',
  (100,'PHPMailer','library','phpmailer','',0,1,1,1,'{\"name\":\"PHPMailer\",\"type\":\"library\",\"creationDate\":\"2001\",\"author\":\"PHPMailer\",\"copyright\":\"(c) 2001-2003, Brent R. Matzelle, (c) 2004-2009, Andy Prevost. All Rights Reserved., (c) 2010-2013, Jim Jagielski. All Rights Reserved.\",\"authorEmail\":\"jimjag@gmail.com\",\"authorUrl\":\"https:\\/\\/github.com\\/PHPMailer\\/PHPMailer\",\"version\":\"5.2.6\",\"description\":\"LIB_PHPMAILER_XML_DESCRIPTION\",\"group\":\"\"}','','','',0,'0000-00-00 00:00:00',0,0),
  (101,'SimplePie','library','simplepie','',0,1,1,1,'{\"name\":\"SimplePie\",\"type\":\"library\",\"creationDate\":\"2004\",\"author\":\"SimplePie\",\"copyright\":\"Copyright (c) 2004-2009, Ryan Parman and Geoffrey Sneddon\",\"authorEmail\":\"\",\"authorUrl\":\"http:\\/\\/simplepie.org\\/\",\"version\":\"1.2\",\"description\":\"LIB_SIMPLEPIE_XML_DESCRIPTION\",\"group\":\"\"}','','','',0,'0000-00-00 00:00:00',0,0),
  (102,'phputf8','library','phputf8','',0,1,1,1,'{\"name\":\"phputf8\",\"type\":\"library\",\"creationDate\":\"2006\",\"author\":\"Harry Fuecks\",\"copyright\":\"Copyright various authors\",\"authorEmail\":\"hfuecks@gmail.com\",\"authorUrl\":\"http:\\/\\/sourceforge.net\\/projects\\/phputf8\",\"version\":\"0.5\",\"description\":\"LIB_PHPUTF8_XML_DESCRIPTION\",\"group\":\"\"}','','','',0,'0000-00-00 00:00:00',0,0),
- (103,'Joomla! Platform','library','joomla','',0,1,1,1,'{\"name\":\"Joomla! Platform\",\"type\":\"library\",\"creationDate\":\"2008\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2014 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"http:\\/\\/www.joomla.org\",\"version\":\"13.1\",\"description\":\"LIB_JOOMLA_XML_DESCRIPTION\",\"group\":\"\"}','{\"mediaversion\":\"893b2b25bc9b762e3ea4129a94242020\"}','','',0,'0000-00-00 00:00:00',0,0),
+ (103,'Joomla! Platform','library','joomla','',0,1,1,1,'{\"name\":\"Joomla! Platform\",\"type\":\"library\",\"creationDate\":\"2008\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2014 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"http:\\/\\/www.joomla.org\",\"version\":\"13.1\",\"description\":\"LIB_JOOMLA_XML_DESCRIPTION\",\"group\":\"\"}','{\"mediaversion\":\"8283b6731bdc97b940ac7c6e4a0f0635\"}','','',0,'0000-00-00 00:00:00',0,0),
  (104,'IDNA Convert','library','idna_convert','',0,1,1,1,'{\"name\":\"IDNA Convert\",\"type\":\"library\",\"creationDate\":\"2004\",\"author\":\"phlyLabs\",\"copyright\":\"2004-2011 phlyLabs Berlin, http:\\/\\/phlylabs.de\",\"authorEmail\":\"phlymail@phlylabs.de\",\"authorUrl\":\"http:\\/\\/phlylabs.de\",\"version\":\"0.8.0\",\"description\":\"LIB_IDNA_XML_DESCRIPTION\",\"group\":\"\"}','','','',0,'0000-00-00 00:00:00',0,0),
  (105,'FOF','library','fof','',0,1,1,1,'{\"name\":\"FOF\",\"type\":\"library\",\"creationDate\":\"2014-03-09 12:54:48\",\"author\":\"Nicholas K. Dionysopoulos \\/ Akeeba Ltd\",\"copyright\":\"(C)2011-2014 Nicholas K. Dionysopoulos\",\"authorEmail\":\"nicholas@akeebabackup.com\",\"authorUrl\":\"https:\\/\\/www.akeebabackup.com\",\"version\":\"2.2.1\",\"description\":\"LIB_FOF_XML_DESCRIPTION\",\"group\":\"\"}','{}','','',0,'0000-00-00 00:00:00',0,0),
  (106,'PHPass','library','phpass','',0,1,1,1,'{\"name\":\"PHPass\",\"type\":\"library\",\"creationDate\":\"2004-2006\",\"author\":\"Solar Designer\",\"copyright\":\"\",\"authorEmail\":\"solar@openwall.com\",\"authorUrl\":\"http:\\/\\/www.openwall.com\\/phpass\\/\",\"version\":\"0.3\",\"description\":\"LIB_PHPASS_XML_DESCRIPTION\",\"group\":\"\"}','{}','','',0,'0000-00-00 00:00:00',0,0),
@@ -967,9 +1201,9 @@ INSERT INTO `#__extensions` VALUES  (1,'com_mailto','component','com_mailto','',
  (435,'plg_content_joomla','plugin','joomla','content',0,1,1,0,'{\"name\":\"plg_content_joomla\",\"type\":\"plugin\",\"creationDate\":\"November 2010\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2014 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_CONTENT_JOOMLA_XML_DESCRIPTION\",\"group\":\"\"}','{}','','',0,'0000-00-00 00:00:00',0,0),
  (436,'plg_system_languagecode','plugin','languagecode','system',0,0,1,0,'{\"name\":\"plg_system_languagecode\",\"type\":\"plugin\",\"creationDate\":\"November 2011\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2014 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_SYSTEM_LANGUAGECODE_XML_DESCRIPTION\",\"group\":\"\"}','{}','','',0,'0000-00-00 00:00:00',10,0),
  (437,'plg_quickicon_joomlaupdate','plugin','joomlaupdate','quickicon',0,1,1,1,'{\"name\":\"plg_quickicon_joomlaupdate\",\"type\":\"plugin\",\"creationDate\":\"August 2011\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2014 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_QUICKICON_JOOMLAUPDATE_XML_DESCRIPTION\",\"group\":\"\"}','{}','','',0,'0000-00-00 00:00:00',0,0),
- (438,'plg_quickicon_extensionupdate','plugin','extensionupdate','quickicon',0,1,1,1,'{\"name\":\"plg_quickicon_extensionupdate\",\"type\":\"plugin\",\"creationDate\":\"August 2011\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2014 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_QUICKICON_EXTENSIONUPDATE_XML_DESCRIPTION\",\"group\":\"\"}','{}','','',0,'0000-00-00 00:00:00',0,0);
-INSERT INTO `#__extensions` VALUES  (439,'plg_captcha_recaptcha','plugin','recaptcha','captcha',0,0,1,0,'{\"name\":\"plg_captcha_recaptcha\",\"type\":\"plugin\",\"creationDate\":\"December 2011\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2014 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_CAPTCHA_RECAPTCHA_XML_DESCRIPTION\",\"group\":\"\"}','{\"public_key\":\"\",\"private_key\":\"\",\"theme\":\"clean\"}','','',0,'0000-00-00 00:00:00',0,0),
- (440,'plg_system_highlight','plugin','highlight','system',0,1,1,0,'{\"legacy\":false,\"name\":\"plg_system_highlight\",\"type\":\"plugin\",\"creationDate\":\"August 2011\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2013 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"2.5.0\",\"description\":\"PLG_SYSTEM_HIGHLIGHT_XML_DESCRIPTION\",\"group\":\"\"}','{}','','',0,'0000-00-00 00:00:00',7,0),
+ (438,'plg_quickicon_extensionupdate','plugin','extensionupdate','quickicon',0,1,1,1,'{\"name\":\"plg_quickicon_extensionupdate\",\"type\":\"plugin\",\"creationDate\":\"August 2011\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2014 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_QUICKICON_EXTENSIONUPDATE_XML_DESCRIPTION\",\"group\":\"\"}','{}','','',0,'0000-00-00 00:00:00',0,0),
+ (439,'plg_captcha_recaptcha','plugin','recaptcha','captcha',0,0,1,0,'{\"name\":\"plg_captcha_recaptcha\",\"type\":\"plugin\",\"creationDate\":\"December 2011\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2014 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_CAPTCHA_RECAPTCHA_XML_DESCRIPTION\",\"group\":\"\"}','{\"public_key\":\"\",\"private_key\":\"\",\"theme\":\"clean\"}','','',0,'0000-00-00 00:00:00',0,0);
+INSERT INTO `#__extensions` VALUES  (440,'plg_system_highlight','plugin','highlight','system',0,1,1,0,'{\"legacy\":false,\"name\":\"plg_system_highlight\",\"type\":\"plugin\",\"creationDate\":\"August 2011\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2013 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"2.5.0\",\"description\":\"PLG_SYSTEM_HIGHLIGHT_XML_DESCRIPTION\",\"group\":\"\"}','{}','','',0,'0000-00-00 00:00:00',7,0),
  (441,'plg_content_finder','plugin','finder','content',0,0,1,0,'{\"legacy\":false,\"name\":\"plg_content_finder\",\"type\":\"plugin\",\"creationDate\":\"December 2011\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2013 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"2.5.0\",\"description\":\"PLG_CONTENT_FINDER_XML_DESCRIPTION\",\"group\":\"\"}','{}','','',0,'0000-00-00 00:00:00',0,0),
  (442,'plg_finder_categories','plugin','categories','finder',0,1,1,0,'{\"name\":\"plg_finder_categories\",\"type\":\"plugin\",\"creationDate\":\"August 2011\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2014 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_FINDER_CATEGORIES_XML_DESCRIPTION\",\"group\":\"\"}','{}','','',0,'0000-00-00 00:00:00',1,0),
  (443,'plg_finder_contacts','plugin','contacts','finder',0,1,1,0,'{\"name\":\"plg_finder_contacts\",\"type\":\"plugin\",\"creationDate\":\"August 2011\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2014 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_FINDER_CONTACTS_XML_DESCRIPTION\",\"group\":\"\"}','{}','','',0,'0000-00-00 00:00:00',2,0),
@@ -1022,7 +1256,11 @@ INSERT INTO `#__extensions` VALUES  (439,'plg_captcha_recaptcha','plugin','recap
  (10047,'K2 Quick Icons (admin)','module','mod_k2_quickicons','',1,1,2,0,'{\"name\":\"K2 Quick Icons (admin)\",\"type\":\"module\",\"creationDate\":\"July 8th, 2013\",\"author\":\"JoomlaWorks\",\"copyright\":\"Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.\",\"authorEmail\":\"please-use-the-contact-form@joomlaworks.net\",\"authorUrl\":\"www.joomlaworks.net\",\"version\":\"2.6.7\",\"description\":\"K2_QUICKICONS_FOR_USE_IN_THE_JOOMLA_CONTROL_PANEL_DASHBOARD_PAGE\",\"group\":\"\"}','{\"modCSSStyling\":\"1\",\"modLogo\":\"1\",\"cache\":\"0\",\"cache_time\":\"900\"}','','',0,'0000-00-00 00:00:00',0,0),
  (10048,'K2 Stats (admin)','module','mod_k2_stats','',1,1,2,0,'{\"name\":\"K2 Stats (admin)\",\"type\":\"module\",\"creationDate\":\"July 8th, 2013\",\"author\":\"JoomlaWorks\",\"copyright\":\"Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.\",\"authorEmail\":\"please-use-the-contact-form@joomlaworks.net\",\"authorUrl\":\"www.joomlaworks.net\",\"version\":\"2.6.7\",\"description\":\"K2_STATS_FOR_USE_IN_THE_K2_DASHBOARD_PAGE\",\"group\":\"\"}','{\"latestItems\":\"1\",\"popularItems\":\"1\",\"mostCommentedItems\":\"1\",\"latestComments\":\"1\",\"statistics\":\"1\",\"cache\":\"0\",\"cache_time\":\"900\"}','','',0,'0000-00-00 00:00:00',0,0),
  (10049,'Portuguese (Brazil) language pack for K2','file','_install','',0,1,0,0,'{\"name\":\"Portuguese (Brazil) language pack for K2\",\"type\":\"file\",\"creationDate\":\"December 22, 2013\",\"author\":\"getk2.org\",\"copyright\":\"Copyright (c) 2006 - 2011 JoomlaWorks Ltd. All rights reserved.\",\"authorEmail\":\"nospam@getk2.org\",\"authorUrl\":\"getk2.org\",\"version\":\"2.5.0\",\"description\":\"Portuguese (Brazil) language pack for K2\",\"group\":\"\"}','','','',0,'0000-00-00 00:00:00',0,0),
- (10050,'AllVideos (by JoomlaWorks)','plugin','jw_allvideos','content',0,1,1,0,'{\"name\":\"AllVideos (by JoomlaWorks)\",\"type\":\"plugin\",\"creationDate\":\"February 27th, 2013\",\"author\":\"JoomlaWorks\",\"copyright\":\"Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.\",\"authorEmail\":\"contact@joomlaworks.net\",\"authorUrl\":\"www.joomlaworks.net\",\"version\":\"4.5.0\",\"description\":\"JW_PLG_AV_XML_DESC\",\"group\":\"\"}','{\"playerTemplate\":\"Classic\",\"vfolder\":\"media\\/k2\\/videos\",\"vwidth\":\"400\",\"vheight\":\"300\",\"transparency\":\"transparent\",\"background\":\"#010101\",\"controlBarLocation\":\"bottom\",\"backgroundQT\":\"black\",\"afolder\":\"media\\/k2\\/audio\",\"awidth\":\"480\",\"aheight\":\"24\",\"abackground\":\"#010101\",\"afrontcolor\":\"#FFFFFF\",\"alightcolor\":\"#00ADE3\",\"allowAudioDownloading\":\"0\",\"autoplay\":\"0\",\"gzipScripts\":\"0\"}','','',0,'0000-00-00 00:00:00',0,0);
+ (10050,'AllVideos (by JoomlaWorks)','plugin','jw_allvideos','content',0,1,1,0,'{\"name\":\"AllVideos (by JoomlaWorks)\",\"type\":\"plugin\",\"creationDate\":\"February 27th, 2013\",\"author\":\"JoomlaWorks\",\"copyright\":\"Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.\",\"authorEmail\":\"contact@joomlaworks.net\",\"authorUrl\":\"www.joomlaworks.net\",\"version\":\"4.5.0\",\"description\":\"JW_PLG_AV_XML_DESC\",\"group\":\"\"}','{\"playerTemplate\":\"Classic\",\"vfolder\":\"media\\/k2\\/videos\",\"vwidth\":\"400\",\"vheight\":\"300\",\"transparency\":\"transparent\",\"background\":\"#010101\",\"controlBarLocation\":\"bottom\",\"backgroundQT\":\"black\",\"afolder\":\"media\\/k2\\/audio\",\"awidth\":\"480\",\"aheight\":\"24\",\"abackground\":\"#010101\",\"afrontcolor\":\"#FFFFFF\",\"alightcolor\":\"#00ADE3\",\"allowAudioDownloading\":\"0\",\"autoplay\":\"0\",\"gzipScripts\":\"0\"}','','',0,'0000-00-00 00:00:00',0,0),
+ (10051,'com_agendadirigentes','component','com_agendadirigentes','',1,1,0,0,'{\"name\":\"COM_AGENDADIRIGENTES\",\"type\":\"component\",\"creationDate\":\"Agosto 2014\",\"author\":\"JUG Joomla Calango\",\"copyright\":\"Copyright (c) 2013 - 2014 JUG Joomla Calango. Todos os direitos reservados.\",\"authorEmail\":\"rafaelberlanda@gmail.com\",\"authorUrl\":\"http:\\/\\/portalpadrao.joomlacalango.org\",\"version\":\"1.0.0\",\"description\":\"COM_AGENDADIRIGENTES_DESCRIPTION\",\"group\":\"\"}','{\"fonte_nome_orgao\":\"custom\",\"custom_nome_orgao\":\"\\u00d3rg\\u00e3o do Poder Executivo Federal\",\"link_reportar_erro\":\"{SITE}\\/index.php\\/contato\\/formulario-de-contato\\/\",\"busca_itemid\":\"181\",\"permissionsType\":\"explicit\",\"editOwnState\":\"1\",\"allowFeature\":\"state\",\"restricted_list_compromissos\":\"1\",\"restricted_list_cargos\":\"1\",\"restricted_list_dirigentes\":\"1\",\"permitir_participantes_locais\":\"1\",\"permitir_participantes_externos\":\"1\",\"exibir_horario_inicio\":\"1\",\"exibir_horario_fim\":\"1\",\"exibir_local\":\"1\",\"exibir_pauta\":\"1\",\"exibir_participantes_locais\":\"1\",\"exibir_participantes_externos\":\"1\",\"permitir_sobreposicao\":\"1\",\"permitir_vcard\":\"1\",\"allow_search_field\":\"1\",\"sidebar_custom_position\":\"com_agendadirigentes-sidebar\",\"sharing_type\":\"module\",\"sharing_code\":\"\",\"sharing_mod_position\":\"com_agendadirigentes-aut-btns-social\"}','','',0,'0000-00-00 00:00:00',0,0),
+ (10052,'Módulo de Exibição de agendas de autoridades','module','mod_agendadirigentes','',0,1,0,0,'{\"name\":\"M\\u00f3dulo de Exibi\\u00e7\\u00e3o de agendas de autoridades\",\"type\":\"module\",\"creationDate\":\"Setembro 2014\",\"author\":\"Comunidade Joomla Calango e Grupo de Trabalho de Minist\\u00e9rios\",\"copyright\":\"Copyright (C) 2014 Comunidade Joomla Calango\",\"authorEmail\":\"rafaelberlanda@gmail.com\",\"authorUrl\":\"https:\\/\\/github.com\\/joomlagovbr\",\"version\":\"1.0\",\"description\":\"M\\u00f3dulo que exibe agenda de autoridades\",\"group\":\"\"}','{\"autoridade\":\"\",\"modo_agenda\":\"dia_atual\",\"link_todas_as_agendas\":\"1\",\"featured_compromissos\":\"\",\"limit_compromissos\":\"-1\",\"limit_title_compromissos\":\"\",\"delimiter_title_compromissos\":\" [...]\",\"order_compromissos\":\"ASC\",\"altura_lista\":\"\",\"cache\":\"1\",\"cache_time\":\"900\"}','','',0,'0000-00-00 00:00:00',0,0),
+ (10053,'plg_search_agendadirigentes','plugin','agendadirigentes','search',0,1,1,0,'{\"name\":\"plg_search_agendadirigentes\",\"type\":\"plugin\",\"creationDate\":\"Setembro 2014\",\"author\":\"Joomla Calango\",\"copyright\":\"Copyright (c) 2013 - 2014 JUG Joomla Calango. Todos os direitos reservados.\",\"authorEmail\":\"rafaelberlanda@gmail.com\",\"authorUrl\":\"http:\\/\\/portalpadrao.joomlacalango.org\",\"version\":\"0.1.0\",\"description\":\"PLG_SEARCH_AGENDADIRIGENTES_XML_DESCRIPTION\",\"group\":\"\"}','{\"search_limit\":\"50\",\"default_itemid\":\"0\"}','','',0,'0000-00-00 00:00:00',0,0),
+ (10054,'agendadirigentes','package','pkg_agendadirigentes','',0,1,1,0,'{\"name\":\"Agenda de Autoridades - Pacote de Instala\\u00e7\\u00e3o\",\"type\":\"package\",\"creationDate\":\"Outubro 2014\",\"author\":\"JUG Joomla Calango\",\"copyright\":\"\",\"authorEmail\":\"\",\"authorUrl\":\"\",\"version\":\"1.0.0\",\"description\":\"Pacote de instala\\u00e7\\u00e3o do componente, m\\u00f3dulo e plugin de agenda de autoridades.\",\"group\":\"\"}','{}','','',0,'0000-00-00 00:00:00',0,0);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `#__extensions` ENABLE KEYS */;
 
@@ -2294,7 +2532,7 @@ CREATE TABLE  `#__menu` (
   KEY `idx_alias` (`alias`),
   KEY `idx_path` (`path`(255)),
   KEY `idx_language` (`language`)
-) ENGINE=InnoDB AUTO_INCREMENT=230 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=236 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `#__menu`
@@ -2302,7 +2540,7 @@ CREATE TABLE  `#__menu` (
 
 /*!40000 ALTER TABLE `#__menu` DISABLE KEYS */;
 LOCK TABLES `#__menu` WRITE;
-INSERT INTO `#__menu` VALUES  (1,'','Menu_Item_Root',0x726F6F74,'','','','',1,0,0,0,0,'0000-00-00 00:00:00',0,0,'',0,'',0,271,0,'*',0),
+INSERT INTO `#__menu` VALUES  (1,'','Menu_Item_Root',0x726F6F74,'','','','',1,0,0,0,0,'0000-00-00 00:00:00',0,0,'',0,'',0,283,0,'*',0),
  (2,'menu','com_banners',0x42616E6E657273,'','Banners','index.php?option=com_banners','component',0,1,1,4,0,'0000-00-00 00:00:00',0,0,'class:banners',0,'',3,12,0,'*',1),
  (3,'menu','com_banners',0x42616E6E657273,'','Banners/Banners','index.php?option=com_banners','component',0,2,2,4,0,'0000-00-00 00:00:00',0,0,'class:banners',0,'',4,5,0,'*',1),
  (4,'menu','com_banners_categories',0x43617465676F72696573,'','Banners/Categories','index.php?option=com_categories&extension=com_banners','component',0,2,2,6,0,'0000-00-00 00:00:00',0,0,'class:banners-cat',0,'',6,7,0,'*',1),
@@ -2437,7 +2675,13 @@ INSERT INTO `#__menu` VALUES  (215,'mainmenu','Galeria de imagens utilizando con
  (226,'midias-sociais','RSS',0x323031342D30332D32322D31332D35382D3536,'rss-sign','2014-03-22-13-58-56','#','url',0,1,1,0,0,'0000-00-00 00:00:00',0,1,'',0,'{\"menu-anchor_title\":\"\",\"menu-anchor_css\":\"\",\"menu_image\":\"\",\"menu_text\":1}',263,264,0,'*',0),
  (227,'midias-sociais','Slide Share',0x323031342D30332D32322D31332D35382D3537,'share-sign','2014-03-22-13-58-57','#','url',0,1,1,0,0,'0000-00-00 00:00:00',0,1,'',0,'{\"menu-anchor_title\":\"\",\"menu-anchor_css\":\"\",\"menu_image\":\"\",\"menu_text\":1}',265,266,0,'*',0),
  (228,'midias-sociais','Sound Cloud',0x323031342D30332D32322D31332D35382D3538,'cloud','2014-03-22-13-58-58','#','url',0,1,1,0,0,'0000-00-00 00:00:00',0,1,'',0,'{\"menu-anchor_title\":\"\",\"menu-anchor_css\":\"\",\"menu_image\":\"\",\"menu_text\":1}',267,268,0,'*',0),
- (229,'central-de-conteudos','Imagens (2)',0x696D6167656E732D32,'icon-picture','imagens-2','index.php?option=com_phocagallery&view=category&id=1','component',-2,1,1,10034,0,'0000-00-00 00:00:00',0,1,'',0,'{\"show_pagination_categories\":\"0\",\"show_pagination_category\":\"1\",\"show_pagination_limit_categories\":\"0\",\"show_pagination_limit_category\":\"1\",\"show_ordering_categories\":\"0\",\"show_ordering_images\":\"1\",\"display_cat_name_title\":\"1\",\"display_cat_name_breadcrumbs\":\"0\",\"menu-anchor_title\":\"\",\"menu-anchor_css\":\"imagens\",\"menu_image\":\"\",\"menu_text\":1,\"page_title\":\"Central de Imagens\",\"show_page_heading\":1,\"page_heading\":\"\",\"pageclass_sfx\":\"\",\"menu-meta_description\":\"\",\"menu-meta_keywords\":\"\",\"robots\":\"\",\"secure\":0}',269,270,0,'*',0);
+ (229,'central-de-conteudos','Imagens (2)',0x696D6167656E732D32,'icon-picture','imagens-2','index.php?option=com_phocagallery&view=category&id=1','component',-2,1,1,10034,0,'0000-00-00 00:00:00',0,1,'',0,'{\"show_pagination_categories\":\"0\",\"show_pagination_category\":\"1\",\"show_pagination_limit_categories\":\"0\",\"show_pagination_limit_category\":\"1\",\"show_ordering_categories\":\"0\",\"show_ordering_images\":\"1\",\"display_cat_name_title\":\"1\",\"display_cat_name_breadcrumbs\":\"0\",\"menu-anchor_title\":\"\",\"menu-anchor_css\":\"imagens\",\"menu_image\":\"\",\"menu_text\":1,\"page_title\":\"Central de Imagens\",\"show_page_heading\":1,\"page_heading\":\"\",\"pageclass_sfx\":\"\",\"menu-meta_description\":\"\",\"menu-meta_keywords\":\"\",\"robots\":\"\",\"secure\":0}',269,270,0,'*',0),
+ (230,'main','COM_AGENDADIRIGENTES_MENU',0x636F6D2D6167656E64616469726967656E7465732D6D656E75,'','com-agendadirigentes-menu','index.php?option=com_agendadirigentes','component',0,1,1,10051,0,'0000-00-00 00:00:00',0,1,'../media/com_agendadirigentes/images/icon-calendar.png',0,'',271,280,0,'',1),
+ (231,'main','COM_AGENDADIRIGENTES_MENU_COMPROMISSOS',0x636F6D2D6167656E64616469726967656E7465732D6D656E752D636F6D70726F6D6973736F73,'','com-agendadirigentes-menu/com-agendadirigentes-menu-compromissos','index.php?option=com_agendadirigentes&view=compromissos','component',0,230,2,10051,0,'0000-00-00 00:00:00',0,1,'class:component',0,'',272,273,0,'',1),
+ (232,'main','COM_AGENDADIRIGENTES_MENU_DIRIGENTES',0x636F6D2D6167656E64616469726967656E7465732D6D656E752D6469726967656E746573,'','com-agendadirigentes-menu/com-agendadirigentes-menu-dirigentes','index.php?option=com_agendadirigentes&view=dirigentes','component',0,230,2,10051,0,'0000-00-00 00:00:00',0,1,'class:component',0,'',274,275,0,'',1),
+ (233,'main','COM_AGENDADIRIGENTES_MENU_CATEGORIAS',0x636F6D2D6167656E64616469726967656E7465732D6D656E752D63617465676F72696173,'','com-agendadirigentes-menu/com-agendadirigentes-menu-categorias','index.php?option=com_categories&extension=com_agendadirigentes','component',0,230,2,10051,0,'0000-00-00 00:00:00',0,1,'class:component',0,'',276,277,0,'',1),
+ (234,'main','COM_AGENDADIRIGENTES_MENU_CARGOS',0x636F6D2D6167656E64616469726967656E7465732D6D656E752D636172676F73,'','com-agendadirigentes-menu/com-agendadirigentes-menu-cargos','index.php?option=com_agendadirigentes&view=cargos','component',0,230,2,10051,0,'0000-00-00 00:00:00',0,1,'class:component',0,'',278,279,0,'',1),
+ (235,'menu-de-relevancia','Agenda de Autoridades',0x6167656E64612D64652D6175746F72696461646573,'','agenda-de-autoridades','index.php?option=com_agendadirigentes&view=autoridades','component',1,1,1,10051,0,'0000-00-00 00:00:00',0,1,'',0,'{\"menu-anchor_title\":\"\",\"menu-anchor_css\":\"\",\"menu_image\":\"\",\"menu_text\":1,\"page_title\":\"\",\"show_page_heading\":0,\"page_heading\":\"\",\"pageclass_sfx\":\"\",\"menu-meta_description\":\"\",\"menu-meta_keywords\":\"\",\"robots\":\"\",\"secure\":0}',281,282,0,'*',0);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `#__menu` ENABLE KEYS */;
 
@@ -2557,7 +2801,7 @@ CREATE TABLE  `#__modules` (
   KEY `published` (`published`,`access`),
   KEY `newsfeeds` (`module`,`published`),
   KEY `idx_language` (`language`)
-) ENGINE=InnoDB AUTO_INCREMENT=198 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=199 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `#__modules`
@@ -2594,14 +2838,14 @@ INSERT INTO `#__modules` VALUES  (1,128,'Menu de Relevância','Antigo módulo re
  (105,0,'RSS','','',5,'menus-rodape',0,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',1,'mod_menu',1,1,'{\"menutype\":\"rss\",\"startLevel\":\"1\",\"endLevel\":\"1\",\"showAllChildren\":\"0\",\"tag_id\":\"\",\"class_sfx\":\"span3\",\"window_open\":\"\",\"layout\":\"padraogoverno01:menusrodape\",\"moduleclass_sfx\":\"rss\",\"cache\":\"1\",\"cache_time\":\"900\",\"cachemode\":\"itemid\"}',0,'*'),
  (106,0,'Sobre o site','','',6,'menus-rodape',0,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',1,'mod_menu',1,1,'{\"menutype\":\"sobre-o-site\",\"startLevel\":\"1\",\"endLevel\":\"1\",\"showAllChildren\":\"0\",\"tag_id\":\"\",\"class_sfx\":\"span3\",\"window_open\":\"\",\"layout\":\"padraogoverno01:menusrodape\",\"moduleclass_sfx\":\"sobre\",\"cache\":\"1\",\"cache_time\":\"900\",\"cachemode\":\"itemid\"}',0,'*'),
  (107,0,'Buscar no portal','','',1,'header-meio-direita',0,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',1,'mod_search',1,1,'{\"label\":\"\",\"width\":\"20\",\"text\":\"\",\"button\":\"\",\"button_pos\":\"right\",\"imagebutton\":\"\",\"button_text\":\"\",\"opensearch\":\"1\",\"opensearch_title\":\"\",\"set_itemid\":\"\",\"layout\":\"_:default\",\"moduleclass_sfx\":\"portal-searchbox\",\"cache\":\"1\",\"cache_time\":\"900\",\"cachemode\":\"itemid\"}',0,'*'),
- (111,0,'linha 02','pagina-inicial-container1','',4,'pagina-inicial',0,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',1,'mod_container',1,0,'{\"posicao\":\"pagina-inicial-container1\",\"moduleclass_sfx\":\"row-fluid\",\"alternative_title\":\"\",\"title_outstanding\":\"1\",\"text_link_title\":\"\",\"url_link_title\":\"\",\"show_footer\":\"0\",\"text_link_footer\":\"\",\"url_link_footer\":\"\",\"disposicao\":\"linhas\",\"auto_divisor\":\"1\",\"title_outstanding_column1\":\"1\",\"text_link_title_column1\":\"\",\"url_link_title_column1\":\"\",\"footer_outstanding_column1\":\"0\",\"text_link_footer_column1\":\"\",\"url_link_footer_column1\":\"\",\"title_outstanding_column2\":\"1\",\"text_link_title_column2\":\"\",\"url_link_title_column2\":\"\",\"footer_outstanding_column2\":\"0\",\"text_link_footer_column2\":\"\",\"url_link_footer_column2\":\"\",\"title_outstanding_column3\":\"1\",\"text_link_title_column3\":\"\",\"url_link_title_column3\":\"\",\"footer_outstanding_column3\":\"0\",\"text_link_footer_column3\":\"\",\"url_link_footer_column3\":\"\",\"container_level1\":\"div\",\"container_level2\":\"div\",\"layout\":\"_:default\",\"cache\":\"1\",\"cache_time\":\"900\",\"numero_limite_colunas\":\"\"}',0,'*'),
+ (111,234,'linha 02','pagina-inicial-container1','',4,'pagina-inicial',0,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',1,'mod_container',1,0,'{\"posicao\":\"pagina-inicial-container1\",\"moduleclass_sfx\":\"row-fluid\",\"alternative_title\":\"\",\"title_outstanding\":\"1\",\"text_link_title\":\"\",\"url_link_title\":\"\",\"show_footer\":\"0\",\"text_link_footer\":\"\",\"url_link_footer\":\"\",\"disposicao\":\"linhas\",\"auto_divisor\":\"1\",\"title_outstanding_column1\":\"1\",\"text_link_title_column1\":\"\",\"url_link_title_column1\":\"\",\"footer_outstanding_column1\":\"0\",\"text_link_footer_column1\":\"\",\"url_link_footer_column1\":\"\",\"title_outstanding_column2\":\"1\",\"text_link_title_column2\":\"\",\"url_link_title_column2\":\"\",\"footer_outstanding_column2\":\"0\",\"text_link_footer_column2\":\"\",\"url_link_footer_column2\":\"\",\"title_outstanding_column3\":\"0\",\"text_link_title_column3\":\"\",\"url_link_title_column3\":\"\",\"footer_outstanding_column3\":\"0\",\"text_link_footer_column3\":\"\",\"url_link_footer_column3\":\"\",\"container_level1\":\"div\",\"container_level2\":\"div\",\"layout\":\"_:default\",\"cache\":\"1\",\"cache_time\":\"900\",\"numero_limite_colunas\":\"\",\"module_tag\":\"div\",\"bootstrap_size\":\"0\",\"header_tag\":\"h3\",\"header_class\":\"\",\"style\":\"0\"}',0,'*'),
  (119,0,'linha 04','pagina-inicial-container3','',6,'pagina-inicial',0,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',1,'mod_container',1,0,'{\"posicao\":\"pagina-inicial-container3\",\"title_outstanding\":\"0\",\"title_outstanding_level2\":\"0\",\"moduleclass_sfx\":\"row-fluid\",\"auto_divisor\":\"0\",\"show_footer\":\"0\",\"footer_outstanding\":\"0\",\"texto_link_title\":\"\",\"url_link_title\":\"\",\"texto_link_footer\":\"\",\"link_footer\":\"\",\"container_level1\":\"div\",\"container_level2\":\"div\",\"layout\":\"_:default\",\"cache\":\"1\",\"cache_time\":\"900\"}',0,'*'),
  (123,0,'linha 03','pagina-inicial-container2','',5,'pagina-inicial',0,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',1,'mod_container',1,0,'{\"posicao\":\"pagina-inicial-container2\",\"moduleclass_sfx\":\"row-fluid\",\"alternative_title\":\"\",\"title_outstanding\":\"0\",\"text_link_title\":\"\",\"url_link_title\":\"\",\"show_footer\":\"0\",\"text_link_footer\":\"\",\"url_link_footer\":\"\",\"auto_divisor\":\"0\",\"title_outstanding_column1\":\"1\",\"text_link_title_column1\":\"\",\"url_link_title_column1\":\"\",\"footer_outstanding_column1\":\"0\",\"text_link_footer_column1\":\"\",\"url_link_footer_column1\":\"\",\"title_outstanding_column2\":\"0\",\"text_link_title_column2\":\"\",\"url_link_title_column2\":\"\",\"footer_outstanding_column2\":\"0\",\"text_link_footer_column2\":\"\",\"url_link_footer_column2\":\"\",\"title_outstanding_column3\":\"1\",\"text_link_title_column3\":\"\",\"url_link_title_column3\":\"\",\"footer_outstanding_column3\":\"0\",\"text_link_footer_column3\":\"\",\"url_link_footer_column3\":\"\",\"container_level1\":\"div\",\"container_level2\":\"div\",\"layout\":\"_:default\",\"cache\":\"1\",\"cache_time\":\"900\"}',0,'*'),
  (126,0,'mod_barradogoverno','','',1,'barra-do-governo',576,'2014-05-24 15:14:59','0000-00-00 00:00:00','0000-00-00 00:00:00',1,'mod_barradogoverno',1,0,'{\"layout\":\"_:default\",\"anexar_js_2014\":\"0\",\"endereco_js_2014\":\"http:\\/\\/barra.brasil.gov.br\\/barra.js?cor=verde\",\"mensagem_ie6_2014\":\"Seu navegador \\u00e9 incompat\\u00edvel com os novos padr\\u00f5es de tecnologia e por isso voc\\u00ea n\\u00e3o pode visualizar a nova barra do Governo Federal. Atualize ou troque seu navegador.\",\"correcoes_ie8_2014\":\"show_css\",\"link_css_ie8_2014\":\"{URL_SITE}\\/modules\\/mod_barradogoverno\\/assets\\/2014\\/css\\/ie8.css\",\"anexar_css_2012\":\"1\",\"cor_2012\":\"\",\"acesso_a_informacao_2012\":\"1\",\"largura_barra_2012\":\"970\",\"alinhamento_barra_2012\":\"\",\"link_acesso_a_informacao_2012\":\"http:\\/\\/www.acessoainformacao.gov.br\\/acessoainformacaogov\\/\",\"link_portal_brasil_2012\":\"http:\\/\\/www.brasil.gov.br\\/\",\"target_links_2012\":\"_blank\",\"head_manual\":\"\",\"html_manual\":\"\",\"anexar_head\":\"\",\"moduleclass_sfx\":\"\",\"cache\":\"1\",\"cache_time\":\"900\"}',0,'*'),
  (128,0,'Portal Padrão','','',3,'pagina-inicial',0,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',1,'mod_chamadas',1,1,'{\"layout\":\"padraogoverno01:manchete-texto-lateral\",\"variacao\":\"0\",\"modelo\":\"article_content\",\"quantidade\":\"1\",\"id_article_unico\":\"26\",\"id_item_unico\":0,\"titulo_alternativo\":\"\",\"link_saiba_mais\":\"\",\"link_saiba_mais_menu\":\"\",\"link_saiba_mais_article\":\"\",\"texto_saiba_mais\":\"\",\"habilitar_mensagem_vazia\":\"0\",\"mensagem_vazia\":\"\",\"chapeu\":\"cont.xreference\",\"destaque\":\"0\",\"somente_imagem\":\"0\",\"buscar_cat_tag\":\"1\",\"tags\":[\"\"],\"catid\":[\"2\"],\"visualizar_filho\":\"0\",\"nivel\":\"10\",\"ordem\":\"title\",\"ordem_direction\":\"ASC\",\"chapeu_item1\":\"\",\"title_item1\":\"Conhe\\u00e7a o novo modelo de plataforma digital\",\"desc_item1\":\"\",\"image_item1\":\"\",\"image_item1_align\":\"\",\"image_item1_alt\":\"\",\"url_simple_item1\":\"\",\"url_menu_item1\":\"\",\"url_article_item1\":\"\",\"ordering_item1\":\"1\",\"chapeu_item2\":\"\",\"title_item2\":\"\",\"desc_item2\":\"\",\"image_item2\":\"\",\"image_item2_align\":\"\",\"image_item2_alt\":\"\",\"url_simple_item2\":\"\",\"url_menu_item2\":\"\",\"url_article_item2\":\"\",\"ordering_item2\":\"2\",\"chapeu_item3\":\"\",\"title_item3\":\"\",\"desc_item3\":\"\",\"image_item3\":\"\",\"image_item3_align\":\"\",\"image_item3_alt\":\"\",\"url_simple_item3\":\"\",\"url_menu_item3\":\"\",\"url_article_item3\":\"8\",\"ordering_item3\":\"3\",\"limitar_caractere\":\"0\",\"limite_caractere\":\"\",\"exibir_imagem\":\"1\",\"exibir_introtext\":\"1\",\"exibir_title\":\"1\",\"header_tag\":\"h1\",\"moduleclass_sfx\":\"\",\"owncache\":\"1\",\"cache_time\":\"900\",\"MOD_CHAMADA_FIELD_LIMITE_ITENS\":\"\"}',0,'*'),
- (130,0,'Planejamento','','',3,'pagina-inicial-container1',0,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',1,'mod_chamadas',1,1,'{\"layout\":\"padraogoverno01:chamada-secundaria\",\"variacao\":\"1\",\"modelo\":\"manual\",\"quantidade\":\"1\",\"id_article_unico\":\"\",\"id_item_unico\":0,\"titulo_alternativo\":\"\",\"link_saiba_mais\":\"\",\"link_saiba_mais_menu\":\"\",\"link_saiba_mais_article\":\"\",\"texto_saiba_mais\":\"\",\"habilitar_mensagem_vazia\":\"0\",\"mensagem_vazia\":\"\",\"chapeu\":\"cont.xreference\",\"destaque\":\"0\",\"somente_imagem\":\"0\",\"buscar_cat_tag\":\"1\",\"visualizar_filho\":\"0\",\"nivel\":\"10\",\"ordem\":\"title\",\"ordem_direction\":\"ASC\",\"chapeu_item1\":\"\",\"title_item1\":\"Conhe\\u00e7a as etapas para o desenvolvimento de portais\",\"desc_item1\":\"<p>Apresenta\\u00e7\\u00e3o mostra como desenvolver um site de acordo com a Identidade digital do governo federal<\\/p>\",\"image_item1\":\"\",\"image_item1_align\":\"\",\"image_item1_alt\":\"\",\"url_simple_item1\":\"{site}\\/images\\/manuais\\/apresentacao_identidade_digital_governo_federal_20131102.pdf\",\"url_menu_item1\":\"\",\"url_article_item1\":\"\",\"ordering_item1\":\"1\",\"chapeu_item2\":\"\",\"title_item2\":\"\",\"desc_item2\":\"\",\"image_item2\":\"\",\"image_item2_align\":\"\",\"image_item2_alt\":\"\",\"url_simple_item2\":\"\",\"url_menu_item2\":\"\",\"url_article_item2\":\"\",\"ordering_item2\":\"2\",\"chapeu_item3\":\"\",\"title_item3\":\"\",\"desc_item3\":\"\",\"image_item3\":\"\",\"image_item3_align\":\"\",\"image_item3_alt\":\"\",\"url_simple_item3\":\"\",\"url_menu_item3\":\"\",\"url_article_item3\":\"\",\"ordering_item3\":\"3\",\"limitar_caractere\":\"0\",\"limite_caractere\":\"\",\"exibir_imagem\":\"1\",\"exibir_introtext\":\"1\",\"exibir_title\":\"1\",\"subitem_class\":\"\",\"header_tag\":\"h3\",\"moduleclass_sfx\":\"\",\"owncache\":\"1\",\"cache_time\":\"900\",\"limite_campos_preenchimento_manual\":\"\",\"module_tag\":\"div\",\"bootstrap_size\":\"0\",\"header_class\":\"\",\"style\":\"0\"}',0,'*'),
- (131,0,'Lei de acesso à informação','','',4,'pagina-inicial-container1',0,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',1,'mod_chamadas',1,1,'{\"layout\":\"padraogoverno01:chamada-secundaria\",\"variacao\":\"2\",\"modelo\":\"article_content\",\"quantidade\":\"1\",\"id_article_unico\":\"34\",\"id_item_unico\":0,\"titulo_alternativo\":\"\",\"link_saiba_mais\":\"\",\"link_saiba_mais_menu\":\"\",\"link_saiba_mais_article\":\"\",\"texto_saiba_mais\":\"\",\"habilitar_mensagem_vazia\":\"0\",\"mensagem_vazia\":\"\",\"chapeu\":\"0\",\"destaque\":\"0\",\"somente_imagem\":\"0\",\"buscar_cat_tag\":\"1\",\"tags\":[\"\"],\"visualizar_filho\":\"0\",\"nivel\":\"10\",\"ordem\":\"title\",\"ordem_direction\":\"ASC\",\"chapeu_item1\":\"\",\"title_item1\":\"\",\"desc_item1\":\"<p>\\u00d3rg\\u00e3os do governo federal devem disponibilizar em seu site um menu especificado pela legisla\\u00e7\\u00e3o<\\/p>\",\"image_item1\":\"\",\"image_item1_align\":\"\",\"image_item1_alt\":\"\",\"url_simple_item1\":\"\",\"url_menu_item1\":\"\",\"url_article_item1\":\"\",\"ordering_item1\":\"1\",\"chapeu_item2\":\"\",\"title_item2\":\"\",\"desc_item2\":\"\",\"image_item2\":\"\",\"image_item2_align\":\"\",\"image_item2_alt\":\"\",\"url_simple_item2\":\"\",\"url_menu_item2\":\"\",\"url_article_item2\":\"\",\"ordering_item2\":\"2\",\"chapeu_item3\":\"\",\"title_item3\":\"\",\"desc_item3\":\"\",\"image_item3\":\"\",\"image_item3_align\":\"\",\"image_item3_alt\":\"\",\"url_simple_item3\":\"\",\"url_menu_item3\":\"\",\"url_article_item3\":\"\",\"ordering_item3\":\"3\",\"limitar_caractere\":\"0\",\"limite_caractere\":\"\",\"exibir_imagem\":\"1\",\"exibir_introtext\":\"1\",\"exibir_title\":\"1\",\"header_tag\":\"h3\",\"moduleclass_sfx\":\"\",\"owncache\":\"1\",\"cache_time\":\"900\",\"limite_campos_preenchimento_manual\":\"\"}',0,'*'),
- (132,0,'Agenda','','',7,'pagina-inicial-container1',0,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',1,'mod_chamadas',1,1,'{\"layout\":\"padraogoverno01:chamada-secundaria\",\"variacao\":\"0\",\"modelo\":\"manual\",\"quantidade\":\"1\",\"id_article_unico\":\"\",\"id_item_unico\":0,\"titulo_alternativo\":\"\",\"link_saiba_mais\":\"\",\"link_saiba_mais_menu\":\"\",\"link_saiba_mais_article\":\"\",\"texto_saiba_mais\":\"\",\"habilitar_mensagem_vazia\":\"0\",\"mensagem_vazia\":\"\",\"chapeu\":\"cont.xreference\",\"destaque\":\"0\",\"somente_imagem\":\"0\",\"buscar_cat_tag\":\"1\",\"tags\":[\"\"],\"visualizar_filho\":\"0\",\"nivel\":\"10\",\"ordem\":\"title\",\"ordem_direction\":\"ASC\",\"chapeu_item1\":\"\",\"title_item1\":\"\",\"desc_item1\":\"<p>O m\\u00f3dulo agenda, que ocupar\\u00e1 este espa\\u00e7o est\\u00e1 em desenvolvimento e ficar\\u00e1 dispon\\u00edvel at\\u00e9 o fim do m\\u00eas de outubro.<\\/p>\",\"image_item1\":\"\",\"image_item1_align\":\"\",\"image_item1_alt\":\"\",\"url_simple_item1\":\"\",\"url_menu_item1\":\"\",\"url_article_item1\":\"\",\"ordering_item1\":\"1\",\"chapeu_item2\":\"\",\"title_item2\":\"\",\"desc_item2\":\"\",\"image_item2\":\"\",\"image_item2_align\":\"\",\"image_item2_alt\":\"\",\"url_simple_item2\":\"\",\"url_menu_item2\":\"\",\"url_article_item2\":\"\",\"ordering_item2\":\"2\",\"chapeu_item3\":\"\",\"title_item3\":\"\",\"desc_item3\":\"\",\"image_item3\":\"\",\"image_item3_align\":\"\",\"image_item3_alt\":\"\",\"url_simple_item3\":\"\",\"url_menu_item3\":\"\",\"url_article_item3\":\"\",\"ordering_item3\":\"3\",\"limitar_caractere\":\"0\",\"limite_caractere\":\"\",\"exibir_imagem\":\"1\",\"exibir_introtext\":\"1\",\"exibir_title\":\"1\",\"header_tag\":\"h3\",\"moduleclass_sfx\":\"\",\"owncache\":\"1\",\"cache_time\":\"900\",\"limite_campos_preenchimento_manual\":\"\"}',0,'*'),
+ (130,231,'Planejamento','','',1,'pagina-inicial-container1',0,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',1,'mod_chamadas',1,1,'{\"layout\":\"padraogoverno01:chamada-secundaria\",\"variacao\":\"1\",\"modelo\":\"manual\",\"quantidade\":\"1\",\"id_article_unico\":\"\",\"id_item_unico\":0,\"titulo_alternativo\":\"\",\"link_saiba_mais\":\"\",\"link_saiba_mais_menu\":\"\",\"link_saiba_mais_article\":\"\",\"texto_saiba_mais\":\"\",\"habilitar_mensagem_vazia\":\"0\",\"mensagem_vazia\":\"\",\"chapeu\":\"cont.xreference\",\"destaque\":\"0\",\"somente_imagem\":\"0\",\"buscar_cat_tag\":\"1\",\"visualizar_filho\":\"0\",\"nivel\":\"10\",\"ordem\":\"title\",\"ordem_direction\":\"ASC\",\"chapeu_item1\":\"\",\"title_item1\":\"Conhe\\u00e7a as etapas para o desenvolvimento de portais\",\"desc_item1\":\"<p>Apresenta\\u00e7\\u00e3o mostra como desenvolver um site de acordo com a Identidade digital do governo federal<\\/p>\",\"image_item1\":\"\",\"image_item1_align\":\"\",\"image_item1_alt\":\"\",\"url_simple_item1\":\"{site}\\/images\\/manuais\\/apresentacao_identidade_digital_governo_federal_20131102.pdf\",\"url_menu_item1\":\"\",\"url_article_item1\":\"\",\"ordering_item1\":\"1\",\"chapeu_item2\":\"\",\"title_item2\":\"\",\"desc_item2\":\"\",\"image_item2\":\"\",\"image_item2_align\":\"\",\"image_item2_alt\":\"\",\"url_simple_item2\":\"\",\"url_menu_item2\":\"\",\"url_article_item2\":\"\",\"ordering_item2\":\"2\",\"chapeu_item3\":\"\",\"title_item3\":\"\",\"desc_item3\":\"\",\"image_item3\":\"\",\"image_item3_align\":\"\",\"image_item3_alt\":\"\",\"url_simple_item3\":\"\",\"url_menu_item3\":\"\",\"url_article_item3\":\"\",\"ordering_item3\":\"3\",\"limitar_caractere\":\"0\",\"limite_caractere\":\"\",\"exibir_imagem\":\"1\",\"exibir_introtext\":\"1\",\"exibir_title\":\"1\",\"subitem_class\":\"\",\"header_tag\":\"h3\",\"moduleclass_sfx\":\"\",\"owncache\":\"1\",\"cache_time\":\"900\",\"limite_campos_preenchimento_manual\":\"\",\"module_tag\":\"div\",\"bootstrap_size\":\"0\",\"header_class\":\"\",\"style\":\"0\"}',0,'*'),
+ (131,232,'Lei de acesso à informação','','',2,'pagina-inicial-container1',0,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',1,'mod_chamadas',1,1,'{\"layout\":\"padraogoverno01:chamada-secundaria\",\"variacao\":\"2\",\"modelo\":\"article_content\",\"quantidade\":\"1\",\"id_article_unico\":\"34\",\"id_item_unico\":0,\"titulo_alternativo\":\"\",\"link_saiba_mais\":\"\",\"link_saiba_mais_menu\":\"\",\"link_saiba_mais_article\":\"\",\"texto_saiba_mais\":\"\",\"habilitar_mensagem_vazia\":\"0\",\"mensagem_vazia\":\"\",\"chapeu\":\"0\",\"destaque\":\"0\",\"somente_imagem\":\"0\",\"buscar_cat_tag\":\"1\",\"tags\":[\"\"],\"visualizar_filho\":\"0\",\"nivel\":\"10\",\"ordem\":\"title\",\"ordem_direction\":\"ASC\",\"chapeu_item1\":\"\",\"title_item1\":\"\",\"desc_item1\":\"<p>\\u00d3rg\\u00e3os do governo federal devem disponibilizar em seu site um menu especificado pela legisla\\u00e7\\u00e3o<\\/p>\",\"image_item1\":\"\",\"image_item1_align\":\"\",\"image_item1_alt\":\"\",\"url_simple_item1\":\"\",\"url_menu_item1\":\"\",\"url_article_item1\":\"\",\"ordering_item1\":\"1\",\"chapeu_item2\":\"\",\"title_item2\":\"\",\"desc_item2\":\"\",\"image_item2\":\"\",\"image_item2_align\":\"\",\"image_item2_alt\":\"\",\"url_simple_item2\":\"\",\"url_menu_item2\":\"\",\"url_article_item2\":\"\",\"ordering_item2\":\"2\",\"chapeu_item3\":\"\",\"title_item3\":\"\",\"desc_item3\":\"\",\"image_item3\":\"\",\"image_item3_align\":\"\",\"image_item3_alt\":\"\",\"url_simple_item3\":\"\",\"url_menu_item3\":\"\",\"url_article_item3\":\"\",\"ordering_item3\":\"3\",\"limitar_caractere\":\"0\",\"limite_caractere\":\"\",\"exibir_imagem\":\"1\",\"exibir_introtext\":\"1\",\"exibir_title\":\"1\",\"header_tag\":\"h3\",\"moduleclass_sfx\":\"\",\"owncache\":\"1\",\"cache_time\":\"900\",\"limite_campos_preenchimento_manual\":\"\"}',0,'*'),
+ (132,233,'Agenda','','',3,'pagina-inicial-container1',0,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',0,'mod_chamadas',1,1,'{\"layout\":\"padraogoverno01:chamada-secundaria\",\"variacao\":\"0\",\"modelo\":\"manual\",\"quantidade\":\"1\",\"id_article_unico\":\"\",\"id_item_unico\":0,\"titulo_alternativo\":\"\",\"link_saiba_mais\":\"\",\"link_saiba_mais_menu\":\"\",\"link_saiba_mais_article\":\"\",\"texto_saiba_mais\":\"\",\"habilitar_mensagem_vazia\":\"0\",\"mensagem_vazia\":\"\",\"chapeu\":\"cont.xreference\",\"destaque\":\"0\",\"somente_imagem\":\"0\",\"buscar_cat_tag\":\"1\",\"tags\":[\"\"],\"visualizar_filho\":\"0\",\"nivel\":\"10\",\"ordem\":\"title\",\"ordem_direction\":\"ASC\",\"chapeu_item1\":\"\",\"title_item1\":\"\",\"desc_item1\":\"<p>O m\\u00f3dulo agenda, que ocupar\\u00e1 este espa\\u00e7o est\\u00e1 em desenvolvimento e ficar\\u00e1 dispon\\u00edvel at\\u00e9 o fim do m\\u00eas de outubro.<\\/p>\",\"image_item1\":\"\",\"image_item1_align\":\"\",\"image_item1_alt\":\"\",\"url_simple_item1\":\"\",\"url_menu_item1\":\"\",\"url_article_item1\":\"\",\"ordering_item1\":\"1\",\"chapeu_item2\":\"\",\"title_item2\":\"\",\"desc_item2\":\"\",\"image_item2\":\"\",\"image_item2_align\":\"\",\"image_item2_alt\":\"\",\"url_simple_item2\":\"\",\"url_menu_item2\":\"\",\"url_article_item2\":\"\",\"ordering_item2\":\"2\",\"chapeu_item3\":\"\",\"title_item3\":\"\",\"desc_item3\":\"\",\"image_item3\":\"\",\"image_item3_align\":\"\",\"image_item3_alt\":\"\",\"url_simple_item3\":\"\",\"url_menu_item3\":\"\",\"url_article_item3\":\"\",\"ordering_item3\":\"3\",\"limitar_caractere\":\"0\",\"limite_caractere\":\"\",\"exibir_imagem\":\"1\",\"exibir_introtext\":\"1\",\"exibir_title\":\"1\",\"header_tag\":\"h3\",\"moduleclass_sfx\":\"\",\"owncache\":\"1\",\"cache_time\":\"900\",\"limite_campos_preenchimento_manual\":\"\"}',0,'*'),
  (134,0,'linha 05','','',9,'pagina-inicial',0,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',1,'mod_chamadas',1,1,'{\"layout\":\"padraogoverno01:chamada-secundaria\",\"variacao\":\"0\",\"modelo\":\"article_content\",\"quantidade\":\"4\",\"id_article_unico\":\"\",\"id_item_unico\":0,\"titulo_alternativo\":\"Programas\",\"link_saiba_mais\":\"\",\"link_saiba_mais_menu\":\"\",\"link_saiba_mais_article\":\"\",\"texto_saiba_mais\":\"\",\"habilitar_mensagem_vazia\":\"0\",\"mensagem_vazia\":\"\",\"chapeu\":\"cont.xreference\",\"destaque\":\"0\",\"somente_imagem\":\"0\",\"buscar_cat_tag\":\"1\",\"tags\":[\"\"],\"catid\":[\"35\"],\"visualizar_filho\":\"0\",\"nivel\":\"10\",\"ordem\":\"ordering\",\"ordem_direction\":\"ASC\",\"chapeu_item1\":\"\",\"title_item1\":\"\",\"desc_item1\":\"\",\"image_item1\":\"\",\"image_item1_align\":\"\",\"image_item1_alt\":\"\",\"url_simple_item1\":\"\",\"url_menu_item1\":\"\",\"url_article_item1\":\"\",\"ordering_item1\":\"1\",\"chapeu_item2\":\"\",\"title_item2\":\"\",\"desc_item2\":\"\",\"image_item2\":\"\",\"image_item2_align\":\"\",\"image_item2_alt\":\"\",\"url_simple_item2\":\"\",\"url_menu_item2\":\"\",\"url_article_item2\":\"\",\"ordering_item2\":\"2\",\"chapeu_item3\":\"\",\"title_item3\":\"\",\"desc_item3\":\"\",\"image_item3\":\"\",\"image_item3_align\":\"\",\"image_item3_alt\":\"\",\"url_simple_item3\":\"\",\"url_menu_item3\":\"\",\"url_article_item3\":\"\",\"ordering_item3\":\"3\",\"limitar_caractere\":\"0\",\"limite_caractere\":\"\",\"exibir_imagem\":\"1\",\"exibir_introtext\":\"1\",\"exibir_title\":\"1\",\"header_tag\":\"h3\",\"moduleclass_sfx\":\"\",\"owncache\":\"1\",\"cache_time\":\"900\",\"limite_campos_preenchimento_manual\":\"\"}',0,'*'),
  (135,0,'Últimas notícias','','',4,'pagina-inicial-container2',0,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',1,'mod_chamadas',1,1,'{\"layout\":\"padraogoverno01:listagem-box01\",\"variacao\":\"0\",\"modelo\":\"article_content\",\"quantidade\":\"8\",\"id_article_unico\":\"\",\"id_item_unico\":0,\"titulo_alternativo\":\"\",\"link_saiba_mais\":\"\",\"link_saiba_mais_menu\":\"121\",\"link_saiba_mais_article\":\"\",\"texto_saiba_mais\":\"Acesse a lista completa\",\"habilitar_mensagem_vazia\":\"0\",\"mensagem_vazia\":\"\",\"chapeu\":\"cont.xreference\",\"destaque\":\"0\",\"somente_imagem\":\"0\",\"buscar_cat_tag\":\"1\",\"tags\":[\"\"],\"catid\":[\"17\"],\"visualizar_filho\":\"0\",\"nivel\":\"10\",\"ordem\":\"title\",\"ordem_direction\":\"ASC\",\"chapeu_item1\":\"\",\"title_item1\":\"\",\"desc_item1\":\"\",\"image_item1\":\"\",\"image_item1_align\":\"\",\"image_item1_alt\":\"\",\"url_simple_item1\":\"\",\"url_menu_item1\":\"\",\"url_article_item1\":\"\",\"ordering_item1\":\"1\",\"chapeu_item2\":\"\",\"title_item2\":\"\",\"desc_item2\":\"\",\"image_item2\":\"\",\"image_item2_align\":\"\",\"image_item2_alt\":\"\",\"url_simple_item2\":\"\",\"url_menu_item2\":\"\",\"url_article_item2\":\"\",\"ordering_item2\":\"2\",\"chapeu_item3\":\"\",\"title_item3\":\"\",\"desc_item3\":\"\",\"image_item3\":\"\",\"image_item3_align\":\"\",\"image_item3_alt\":\"\",\"url_simple_item3\":\"\",\"url_menu_item3\":\"\",\"url_article_item3\":\"\",\"ordering_item3\":\"3\",\"limitar_caractere\":\"1\",\"limite_caractere\":\"90\",\"exibir_imagem\":\"1\",\"exibir_introtext\":\"1\",\"exibir_title\":\"1\",\"subitem_class\":\"span4\",\"header_tag\":\"h3\",\"moduleclass_sfx\":\"module-box-01 span8\",\"owncache\":\"1\",\"cache_time\":\"900\",\"limite_campos_preenchimento_manual\":\"\"}',0,'*'),
  (136,170,'Galeria de imagens','','',4,'pagina-inicial-container3',0,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',1,'mod_chamadas',1,1,'{\"layout\":\"padraogoverno01:listagem-box01-galeria\",\"variacao\":\"0\",\"modelo\":\"phoca_gallery\",\"quantidade\":\"4\",\"id_article_unico\":\"\",\"id_item_unico\":0,\"titulo_alternativo\":\"\",\"link_saiba_mais\":\"\",\"link_saiba_mais_menu\":\"145\",\"link_saiba_mais_article\":\"\",\"texto_saiba_mais\":\"Acesse a lista completa\",\"habilitar_mensagem_vazia\":\"0\",\"mensagem_vazia\":\"\",\"chapeu\":\"cont.xreference\",\"destaque\":\"0\",\"somente_imagem\":\"0\",\"buscar_cat_tag\":\"1\",\"catid_components\":\"1\",\"visualizar_filho\":\"1\",\"nivel\":\"3\",\"ordem\":\"title\",\"ordem_direction\":\"ASC\",\"chapeu_item1\":\"\",\"title_item1\":\"\",\"desc_item1\":\"\",\"show_image_item1\":\"\",\"image_item1\":\"\",\"image_item1_align\":\"\",\"image_item1_alt\":\"\",\"url_simple_item1\":\"\",\"url_menu_item1\":\"\",\"url_article_item1\":\"\",\"ordering_item1\":\"1\",\"variacao_item1\":\"0\",\"chapeu_item2\":\"\",\"title_item2\":\"\",\"desc_item2\":\"\",\"show_image_item2\":\"\",\"image_item2\":\"\",\"image_item2_align\":\"\",\"image_item2_alt\":\"\",\"url_simple_item2\":\"\",\"url_menu_item2\":\"\",\"url_article_item2\":\"\",\"ordering_item2\":\"2\",\"variacao_item2\":\"0\",\"chapeu_item3\":\"\",\"title_item3\":\"\",\"desc_item3\":\"\",\"show_image_item3\":\"\",\"image_item3\":\"\",\"image_item3_align\":\"\",\"image_item3_alt\":\"\",\"url_simple_item3\":\"\",\"url_menu_item3\":\"\",\"url_article_item3\":\"\",\"ordering_item3\":\"3\",\"variacao_item3\":\"0\",\"chapeu_item4\":\"\",\"title_item4\":\"\",\"desc_item4\":\"\",\"show_image_item4\":\"\",\"image_item4\":\"\",\"image_item4_align\":\"\",\"image_item4_alt\":\"\",\"url_simple_item4\":\"\",\"url_menu_item4\":\"\",\"url_article_item4\":\"\",\"ordering_item4\":\"4\",\"variacao_item4\":\"0\",\"limitar_caractere\":\"1\",\"limite_caractere\":\"190\",\"exibir_imagem\":\"1\",\"exibir_introtext\":\"1\",\"exibir_title\":\"1\",\"subitem_class\":\"\",\"header_tag\":\"h3\",\"moduleclass_sfx\":\"module-box-01 span8\",\"owncache\":\"1\",\"cache_time\":\"900\",\"limite_campos_preenchimento_manual\":\"\",\"module_tag\":\"div\",\"bootstrap_size\":\"0\",\"header_class\":\"\",\"style\":\"0\"}',0,'*'),
@@ -2665,7 +2909,8 @@ INSERT INTO `#__modules` VALUES  (166,161,'K2 Content','','',0,'',576,'2014-05-3
  (194,212,'Manchete principal','','',1,'pagina-interna-capa-editoria-d',0,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',1,'mod_chamadas',1,1,'{\"layout\":\"padraogoverno01:manchete-principal\",\"variacao\":\"0\",\"modelo\":\"article_content\",\"quantidade\":\"6\",\"id_article_unico\":\"\",\"id_item_unico\":0,\"titulo_alternativo\":\"\",\"link_saiba_mais\":\"#\",\"link_saiba_mais_menu\":\"\",\"link_saiba_mais_article\":\"\",\"texto_saiba_mais\":\"\",\"habilitar_mensagem_vazia\":\"0\",\"mensagem_vazia\":\"\",\"chapeu\":\"cont.xreference\",\"destaque\":\"0\",\"somente_imagem\":\"0\",\"buscar_cat_tag\":\"1\",\"catid\":[\"17\"],\"catid_components\":\"\",\"visualizar_filho\":\"0\",\"nivel\":\"10\",\"ordem\":\"publish_up\",\"ordem_direction\":\"DESC\",\"chapeu_item1\":\"Tempo e clima\",\"title_item1\":\"Minist\\u00e9rio inaugura radar meteorol\\u00f3gico em Natal (RN)\",\"desc_item1\":\"<p>Aparelho atender\\u00e1 a uma das metas do Plano Nacional de Gest\\u00e3o de Riscos e Alertas de Desastres Naturais<\\/p>\",\"show_image_item1\":\"\",\"image_item1\":\"images\\/chamadas\\/foto_chamada_grande.jpg\",\"image_item1_align\":\"right\",\"image_item1_alt\":\"\",\"url_simple_item1\":\"\",\"url_menu_item1\":\"\",\"url_article_item1\":\"\",\"ordering_item1\":\"1\",\"variacao_item1\":\"0\",\"chapeu_item2\":\"\",\"title_item2\":\"\",\"desc_item2\":\"\",\"show_image_item2\":\"\",\"image_item2\":\"images\\/conteudo\\/imagem-conteudo-200x130-a.jpg\",\"image_item2_align\":\"\",\"image_item2_alt\":\"\",\"url_simple_item2\":\"\",\"url_menu_item2\":\"\",\"url_article_item2\":\"\",\"ordering_item2\":\"2\",\"variacao_item2\":\"0\",\"chapeu_item3\":\"\",\"title_item3\":\"\",\"desc_item3\":\"\",\"show_image_item3\":\"\",\"image_item3\":\"\",\"image_item3_align\":\"\",\"image_item3_alt\":\"\",\"url_simple_item3\":\"\",\"url_menu_item3\":\"\",\"url_article_item3\":\"\",\"ordering_item3\":\"3\",\"variacao_item3\":\"0\",\"chapeu_item4\":\"\",\"title_item4\":\"\",\"desc_item4\":\"\",\"show_image_item4\":\"\",\"image_item4\":\"\",\"image_item4_align\":\"\",\"image_item4_alt\":\"\",\"url_simple_item4\":\"\",\"url_menu_item4\":\"\",\"url_article_item4\":\"\",\"ordering_item4\":\"4\",\"variacao_item4\":\"0\",\"limitar_caractere\":\"0\",\"limite_caractere\":\"\",\"exibir_imagem\":\"1\",\"exibir_introtext\":\"1\",\"exibir_title\":\"1\",\"subitem_class\":\"\",\"header_tag\":\"h1\",\"moduleclass_sfx\":\"outstanding-02\",\"owncache\":\"1\",\"cache_time\":\"900\",\"limite_campos_preenchimento_manual\":\"\",\"module_tag\":\"div\",\"bootstrap_size\":\"0\",\"header_class\":\"\",\"style\":\"0\"}',0,'*'),
  (195,213,'Manchete principal (2)','','',2,'pagina-interna-capa-editoria-d',0,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',1,'mod_chamadas',1,1,'{\"layout\":\"padraogoverno01:manchete-principal\",\"variacao\":\"0\",\"modelo\":\"article_content\",\"quantidade\":\"1\",\"id_article_unico\":\"\",\"id_item_unico\":0,\"titulo_alternativo\":\"chap\\u00e9u por t\\u00edtulo alternativo\",\"link_saiba_mais\":\"#\",\"link_saiba_mais_menu\":\"\",\"link_saiba_mais_article\":\"\",\"texto_saiba_mais\":\"\",\"habilitar_mensagem_vazia\":\"0\",\"mensagem_vazia\":\"\",\"chapeu\":\"cont.xreference\",\"destaque\":\"0\",\"somente_imagem\":\"0\",\"buscar_cat_tag\":\"1\",\"catid\":[\"17\"],\"catid_components\":\"\",\"visualizar_filho\":\"0\",\"nivel\":\"10\",\"ordem\":\"publish_up\",\"ordem_direction\":\"DESC\",\"chapeu_item1\":\"Tempo e clima\",\"title_item1\":\"Minist\\u00e9rio inaugura radar meteorol\\u00f3gico em Natal (RN)\",\"desc_item1\":\"<p>Aparelho atender\\u00e1 a uma das metas do Plano Nacional de Gest\\u00e3o de Riscos e Alertas de Desastres Naturais<\\/p>\",\"show_image_item1\":\"0\",\"image_item1\":\"\",\"image_item1_align\":\"right\",\"image_item1_alt\":\"\",\"url_simple_item1\":\"\",\"url_menu_item1\":\"\",\"url_article_item1\":\"\",\"ordering_item1\":\"1\",\"variacao_item1\":\"0\",\"chapeu_item2\":\"\",\"title_item2\":\"\",\"desc_item2\":\"\",\"show_image_item2\":\"\",\"image_item2\":\"images\\/conteudo\\/imagem-conteudo-200x130-a.jpg\",\"image_item2_align\":\"\",\"image_item2_alt\":\"\",\"url_simple_item2\":\"\",\"url_menu_item2\":\"\",\"url_article_item2\":\"\",\"ordering_item2\":\"2\",\"variacao_item2\":\"0\",\"chapeu_item3\":\"\",\"title_item3\":\"\",\"desc_item3\":\"\",\"show_image_item3\":\"\",\"image_item3\":\"\",\"image_item3_align\":\"\",\"image_item3_alt\":\"\",\"url_simple_item3\":\"\",\"url_menu_item3\":\"\",\"url_article_item3\":\"\",\"ordering_item3\":\"3\",\"variacao_item3\":\"0\",\"chapeu_item4\":\"\",\"title_item4\":\"\",\"desc_item4\":\"\",\"show_image_item4\":\"\",\"image_item4\":\"\",\"image_item4_align\":\"\",\"image_item4_alt\":\"\",\"url_simple_item4\":\"\",\"url_menu_item4\":\"\",\"url_article_item4\":\"\",\"ordering_item4\":\"4\",\"variacao_item4\":\"0\",\"limitar_caractere\":\"0\",\"limite_caractere\":\"\",\"exibir_imagem\":\"1\",\"exibir_introtext\":\"1\",\"exibir_title\":\"1\",\"subitem_class\":\"\",\"header_tag\":\"h1\",\"moduleclass_sfx\":\"outstanding-02\",\"owncache\":\"1\",\"cache_time\":\"900\",\"limite_campos_preenchimento_manual\":\"\",\"module_tag\":\"div\",\"bootstrap_size\":\"0\",\"header_class\":\"\",\"style\":\"0\"}',0,'*'),
  (196,214,'Módulo de manchete lateral','','',3,'pagina-interna-capa-editoria-d',0,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',1,'mod_chamadas',1,1,'{\"layout\":\"padraogoverno01:manchete-texto-lateral\",\"variacao\":\"0\",\"modelo\":\"article_content\",\"quantidade\":\"6\",\"id_article_unico\":\"\",\"id_item_unico\":0,\"titulo_alternativo\":\"\",\"link_saiba_mais\":\"#\",\"link_saiba_mais_menu\":\"\",\"link_saiba_mais_article\":\"\",\"texto_saiba_mais\":\"\",\"habilitar_mensagem_vazia\":\"0\",\"mensagem_vazia\":\"\",\"chapeu\":\"cont.xreference\",\"destaque\":\"0\",\"somente_imagem\":\"0\",\"buscar_cat_tag\":\"1\",\"catid\":[\"17\"],\"catid_components\":\"\",\"visualizar_filho\":\"0\",\"nivel\":\"10\",\"ordem\":\"publish_up\",\"ordem_direction\":\"DESC\",\"chapeu_item1\":\"Tempo e clima\",\"title_item1\":\"Minist\\u00e9rio inaugura radar meteorol\\u00f3gico em Natal (RN)\",\"desc_item1\":\"<p>Aparelho atender\\u00e1 a uma das metas do Plano Nacional de Gest\\u00e3o de Riscos e Alertas de Desastres Naturais<\\/p>\",\"show_image_item1\":\"\",\"image_item1\":\"images\\/chamadas\\/foto_chamada_grande.jpg\",\"image_item1_align\":\"right\",\"image_item1_alt\":\"\",\"url_simple_item1\":\"\",\"url_menu_item1\":\"\",\"url_article_item1\":\"\",\"ordering_item1\":\"1\",\"variacao_item1\":\"0\",\"chapeu_item2\":\"\",\"title_item2\":\"\",\"desc_item2\":\"\",\"show_image_item2\":\"\",\"image_item2\":\"images\\/conteudo\\/imagem-conteudo-200x130-a.jpg\",\"image_item2_align\":\"\",\"image_item2_alt\":\"\",\"url_simple_item2\":\"\",\"url_menu_item2\":\"\",\"url_article_item2\":\"\",\"ordering_item2\":\"2\",\"variacao_item2\":\"0\",\"chapeu_item3\":\"\",\"title_item3\":\"\",\"desc_item3\":\"\",\"show_image_item3\":\"\",\"image_item3\":\"\",\"image_item3_align\":\"\",\"image_item3_alt\":\"\",\"url_simple_item3\":\"\",\"url_menu_item3\":\"\",\"url_article_item3\":\"\",\"ordering_item3\":\"3\",\"variacao_item3\":\"0\",\"chapeu_item4\":\"\",\"title_item4\":\"\",\"desc_item4\":\"\",\"show_image_item4\":\"\",\"image_item4\":\"\",\"image_item4_align\":\"\",\"image_item4_alt\":\"\",\"url_simple_item4\":\"\",\"url_menu_item4\":\"\",\"url_article_item4\":\"\",\"ordering_item4\":\"4\",\"variacao_item4\":\"0\",\"limitar_caractere\":\"0\",\"limite_caractere\":\"\",\"exibir_imagem\":\"1\",\"exibir_introtext\":\"1\",\"exibir_title\":\"1\",\"subitem_class\":\"\",\"header_tag\":\"h1\",\"moduleclass_sfx\":\"manchete-lateral-tit-menor\",\"owncache\":\"1\",\"cache_time\":\"900\",\"limite_campos_preenchimento_manual\":\"\",\"module_tag\":\"div\",\"bootstrap_size\":\"0\",\"header_class\":\"\",\"style\":\"0\"}',0,'*'),
- (197,215,'Módulo de manchete lateral - outro exemplo','','',4,'pagina-interna-capa-editoria-d',0,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',1,'mod_chamadas',1,1,'{\"layout\":\"padraogoverno01:manchete-texto-lateral\",\"variacao\":\"0\",\"modelo\":\"article_content\",\"quantidade\":\"4\",\"id_article_unico\":\"\",\"id_item_unico\":0,\"titulo_alternativo\":\"\",\"link_saiba_mais\":\"#\",\"link_saiba_mais_menu\":\"\",\"link_saiba_mais_article\":\"\",\"texto_saiba_mais\":\"Simula\\u00e7\\u00e3o de link de rodap\\u00e9 do m\\u00f3dulo\",\"habilitar_mensagem_vazia\":\"0\",\"mensagem_vazia\":\"\",\"chapeu\":\"nenhum\",\"destaque\":\"0\",\"somente_imagem\":\"0\",\"buscar_cat_tag\":\"1\",\"catid\":[\"17\"],\"catid_components\":\"\",\"visualizar_filho\":\"0\",\"nivel\":\"10\",\"ordem\":\"publish_up\",\"ordem_direction\":\"DESC\",\"chapeu_item1\":\"Tempo e clima\",\"title_item1\":\"Minist\\u00e9rio inaugura radar meteorol\\u00f3gico em Natal (RN)\",\"desc_item1\":\"<p>Aparelho atender\\u00e1 a uma das metas do Plano Nacional de Gest\\u00e3o de Riscos e Alertas de Desastres Naturais<\\/p>\",\"show_image_item1\":\"1\",\"image_item1\":\"images\\/chamadas\\/foto_chamada_grande.jpg\",\"image_item1_align\":\"right\",\"image_item1_alt\":\"\",\"url_simple_item1\":\"\",\"url_menu_item1\":\"\",\"url_article_item1\":\"\",\"ordering_item1\":\"1\",\"variacao_item1\":\"0\",\"chapeu_item2\":\"\",\"title_item2\":\"\",\"desc_item2\":\"\",\"show_image_item2\":\"\",\"image_item2\":\"\",\"image_item2_align\":\"\",\"image_item2_alt\":\"\",\"url_simple_item2\":\"\",\"url_menu_item2\":\"\",\"url_article_item2\":\"\",\"ordering_item2\":\"2\",\"variacao_item2\":\"0\",\"chapeu_item3\":\"\",\"title_item3\":\"\",\"desc_item3\":\"\",\"show_image_item3\":\"\",\"image_item3\":\"\",\"image_item3_align\":\"\",\"image_item3_alt\":\"\",\"url_simple_item3\":\"\",\"url_menu_item3\":\"\",\"url_article_item3\":\"\",\"ordering_item3\":\"3\",\"variacao_item3\":\"0\",\"chapeu_item4\":\"\",\"title_item4\":\"\",\"desc_item4\":\"\",\"show_image_item4\":\"\",\"image_item4\":\"\",\"image_item4_align\":\"\",\"image_item4_alt\":\"\",\"url_simple_item4\":\"\",\"url_menu_item4\":\"\",\"url_article_item4\":\"\",\"ordering_item4\":\"4\",\"variacao_item4\":\"0\",\"limitar_caractere\":\"0\",\"limite_caractere\":\"\",\"exibir_imagem\":\"0\",\"exibir_introtext\":\"1\",\"exibir_title\":\"1\",\"subitem_class\":\"\",\"header_tag\":\"h1\",\"moduleclass_sfx\":\"manchete-lateral-tit-menor outstanding-02\",\"owncache\":\"1\",\"cache_time\":\"900\",\"limite_campos_preenchimento_manual\":\"\",\"module_tag\":\"div\",\"bootstrap_size\":\"0\",\"header_class\":\"\",\"style\":\"0\"}',0,'*');
+ (197,215,'Módulo de manchete lateral - outro exemplo','','',4,'pagina-interna-capa-editoria-d',0,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',1,'mod_chamadas',1,1,'{\"layout\":\"padraogoverno01:manchete-texto-lateral\",\"variacao\":\"0\",\"modelo\":\"article_content\",\"quantidade\":\"4\",\"id_article_unico\":\"\",\"id_item_unico\":0,\"titulo_alternativo\":\"\",\"link_saiba_mais\":\"#\",\"link_saiba_mais_menu\":\"\",\"link_saiba_mais_article\":\"\",\"texto_saiba_mais\":\"Simula\\u00e7\\u00e3o de link de rodap\\u00e9 do m\\u00f3dulo\",\"habilitar_mensagem_vazia\":\"0\",\"mensagem_vazia\":\"\",\"chapeu\":\"nenhum\",\"destaque\":\"0\",\"somente_imagem\":\"0\",\"buscar_cat_tag\":\"1\",\"catid\":[\"17\"],\"catid_components\":\"\",\"visualizar_filho\":\"0\",\"nivel\":\"10\",\"ordem\":\"publish_up\",\"ordem_direction\":\"DESC\",\"chapeu_item1\":\"Tempo e clima\",\"title_item1\":\"Minist\\u00e9rio inaugura radar meteorol\\u00f3gico em Natal (RN)\",\"desc_item1\":\"<p>Aparelho atender\\u00e1 a uma das metas do Plano Nacional de Gest\\u00e3o de Riscos e Alertas de Desastres Naturais<\\/p>\",\"show_image_item1\":\"1\",\"image_item1\":\"images\\/chamadas\\/foto_chamada_grande.jpg\",\"image_item1_align\":\"right\",\"image_item1_alt\":\"\",\"url_simple_item1\":\"\",\"url_menu_item1\":\"\",\"url_article_item1\":\"\",\"ordering_item1\":\"1\",\"variacao_item1\":\"0\",\"chapeu_item2\":\"\",\"title_item2\":\"\",\"desc_item2\":\"\",\"show_image_item2\":\"\",\"image_item2\":\"\",\"image_item2_align\":\"\",\"image_item2_alt\":\"\",\"url_simple_item2\":\"\",\"url_menu_item2\":\"\",\"url_article_item2\":\"\",\"ordering_item2\":\"2\",\"variacao_item2\":\"0\",\"chapeu_item3\":\"\",\"title_item3\":\"\",\"desc_item3\":\"\",\"show_image_item3\":\"\",\"image_item3\":\"\",\"image_item3_align\":\"\",\"image_item3_alt\":\"\",\"url_simple_item3\":\"\",\"url_menu_item3\":\"\",\"url_article_item3\":\"\",\"ordering_item3\":\"3\",\"variacao_item3\":\"0\",\"chapeu_item4\":\"\",\"title_item4\":\"\",\"desc_item4\":\"\",\"show_image_item4\":\"\",\"image_item4\":\"\",\"image_item4_align\":\"\",\"image_item4_alt\":\"\",\"url_simple_item4\":\"\",\"url_menu_item4\":\"\",\"url_article_item4\":\"\",\"ordering_item4\":\"4\",\"variacao_item4\":\"0\",\"limitar_caractere\":\"0\",\"limite_caractere\":\"\",\"exibir_imagem\":\"0\",\"exibir_introtext\":\"1\",\"exibir_title\":\"1\",\"subitem_class\":\"\",\"header_tag\":\"h1\",\"moduleclass_sfx\":\"manchete-lateral-tit-menor outstanding-02\",\"owncache\":\"1\",\"cache_time\":\"900\",\"limite_campos_preenchimento_manual\":\"\",\"module_tag\":\"div\",\"bootstrap_size\":\"0\",\"header_class\":\"\",\"style\":\"0\"}',0,'*'),
+ (198,223,'Agenda do Ministro','','',4,'pagina-inicial-container1',0,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',1,'mod_agendadirigentes',1,1,'{\"autoridade\":\"1\",\"modo_agenda\":\"dia_atual\",\"link_todas_as_agendas\":\"1\",\"itemid\":\"235\",\"featured_compromissos\":\"\",\"limit_compromissos\":\"3\",\"limit_title_compromissos\":\"\",\"delimiter_title_compromissos\":\" [...]\",\"order_compromissos\":\"ASC\",\"altura_lista\":\"\",\"moduleclass_sfx\":\"module-box-01\",\"cache\":\"1\",\"cache_time\":\"900\",\"module_tag\":\"div\",\"bootstrap_size\":\"0\",\"header_tag\":\"h3\",\"header_class\":\"\",\"style\":\"0\"}',0,'*');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `#__modules` ENABLE KEYS */;
 
@@ -2789,7 +3034,8 @@ INSERT INTO `#__modules_menu` VALUES  (1,-181),
  (194,0),
  (195,0),
  (196,0),
- (197,0);
+ (197,0),
+ (198,0);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `#__modules_menu` ENABLE KEYS */;
 
@@ -7747,7 +7993,8 @@ CREATE TABLE  `#__schemas` (
 /*!40000 ALTER TABLE `#__schemas` DISABLE KEYS */;
 LOCK TABLES `#__schemas` WRITE;
 INSERT INTO `#__schemas` VALUES  (700,'3.3.6-2014-09-30'),
- (10030,'3.5.8');
+ (10030,'3.5.8'),
+ (10051,'');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `#__schemas` ENABLE KEYS */;
 
@@ -7776,8 +8023,6 @@ CREATE TABLE  `#__session` (
 
 /*!40000 ALTER TABLE `#__session` DISABLE KEYS */;
 LOCK TABLES `#__session` WRITE;
-INSERT INTO `#__session` VALUES  ('aba4739df6af8070d3aa00c4b3bd2a46',0,1,'1408191548','__default|a:7:{s:15:\"session.counter\";i:2;s:19:\"session.timer.start\";i:1407619259;s:18:\"session.timer.last\";i:1407619259;s:17:\"session.timer.now\";i:1408191542;s:22:\"session.client.browser\";s:81:\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:31.0) Gecko/20100101 Firefox/31.0\";s:8:\"registry\";O:24:\"Joomla\\Registry\\Registry\":1:{s:7:\"\\0\\0\\0data\";O:8:\"stdClass\":0:{}}s:4:\"user\";O:5:\"JUser\":25:{s:9:\"\\0\\0\\0isRoot\";N;s:2:\"id\";i:0;s:4:\"name\";N;s:8:\"username\";N;s:5:\"email\";N;s:8:\"password\";N;s:14:\"password_clear\";s:0:\"\";s:5:\"block\";N;s:9:\"sendEmail\";i:0;s:12:\"registerDate\";N;s:13:\"lastvisitDate\";N;s:10:\"activation\";N;s:6:\"params\";N;s:6:\"groups\";a:1:{i:0;s:1:\"1\";}s:5:\"guest\";i:1;s:13:\"lastResetTime\";N;s:10:\"resetCount\";N;s:12:\"requireReset\";N;s:10:\"\\0\\0\\0_params\";O:24:\"Joomla\\Registry\\Registry\":1:{s:7:\"\\0\\0\\0data\";O:8:\"stdClass\":0:{}}s:14:\"\\0\\0\\0_authGroups\";N;s:14:\"\\0\\0\\0_authLevels\";a:2:{i:0;i:1;i:1;i:1;}s:15:\"\\0\\0\\0_authActions\";N;s:12:\"\\0\\0\\0_errorMsg\";N;s:10:\"\\0\\0\\0_errors\";a:0:{}s:3:\"aid\";i:0;}}',0,''),
- ('ce2dcda12197de4eb435517d3572fea6',1,0,'1408191649','__default|a:8:{s:15:\"session.counter\";i:17;s:19:\"session.timer.start\";i:1407618268;s:18:\"session.timer.last\";i:1408191599;s:17:\"session.timer.now\";i:1408191647;s:22:\"session.client.browser\";s:81:\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:31.0) Gecko/20100101 Firefox/31.0\";s:8:\"registry\";O:24:\"Joomla\\Registry\\Registry\":1:{s:7:\"\\0\\0\\0data\";O:8:\"stdClass\":3:{s:11:\"application\";O:8:\"stdClass\":1:{s:4:\"lang\";s:0:\"\";}s:13:\"com_installer\";O:8:\"stdClass\":2:{s:7:\"message\";s:0:\"\";s:17:\"extension_message\";s:0:\"\";}s:16:\"com_joomlaupdate\";O:8:\"stdClass\":3:{s:4:\"file\";N;s:8:\"password\";s:32:\"NyksZkFqL4jGYfzMWcJo52M1ugIiNsN5\";s:8:\"filesize\";i:1521458;}}}s:4:\"user\";O:5:\"JUser\":27:{s:9:\"\\0\\0\\0isRoot\";b:1;s:2:\"id\";s:3:\"576\";s:4:\"name\";s:10:\"Super User\";s:8:\"username\";s:5:\"admin\";s:5:\"email\";s:21:\"joomlagovbr@gmail.com\";s:8:\"password\";s:60:\"$2y$10$jN9cqIctGw2b.88ugASMcOpLAb2vZLzKXrwqqyo8H0KcPFiH7mNdS\";s:14:\"password_clear\";s:0:\"\";s:5:\"block\";s:1:\"0\";s:9:\"sendEmail\";s:1:\"1\";s:12:\"registerDate\";s:19:\"2013-10-14 14:26:05\";s:13:\"lastvisitDate\";s:19:\"2014-07-05 18:46:28\";s:10:\"activation\";s:1:\"0\";s:6:\"params\";s:95:\"{\"admin_style\":\"\",\"admin_language\":\"\",\"language\":\"\",\"editor\":\"jce\",\"helpsite\":\"\",\"timezone\":\"\"}\";s:6:\"groups\";a:1:{i:8;s:1:\"8\";}s:5:\"guest\";i:0;s:13:\"lastResetTime\";s:19:\"0000-00-00 00:00:00\";s:10:\"resetCount\";s:1:\"0\";s:12:\"requireReset\";s:1:\"0\";s:10:\"\\0\\0\\0_params\";O:24:\"Joomla\\Registry\\Registry\":1:{s:7:\"\\0\\0\\0data\";O:8:\"stdClass\":6:{s:11:\"admin_style\";s:0:\"\";s:14:\"admin_language\";s:0:\"\";s:8:\"language\";s:0:\"\";s:6:\"editor\";s:3:\"jce\";s:8:\"helpsite\";s:0:\"\";s:8:\"timezone\";s:0:\"\";}}s:14:\"\\0\\0\\0_authGroups\";a:2:{i:0;i:1;i:1;i:8;}s:14:\"\\0\\0\\0_authLevels\";a:4:{i:0;i:1;i:1;i:1;i:2;i:2;i:3;i:3;}s:15:\"\\0\\0\\0_authActions\";N;s:12:\"\\0\\0\\0_errorMsg\";N;s:10:\"\\0\\0\\0_errors\";a:0:{}s:3:\"aid\";i:0;s:6:\"otpKey\";s:0:\"\";s:4:\"otep\";s:0:\"\";}s:13:\"session.token\";s:32:\"cc0ad1eb675b6d428f018488ff5b3504\";}',576,'admin');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `#__session` ENABLE KEYS */;
 
@@ -7834,7 +8079,7 @@ CREATE TABLE  `#__tags` (
 
 /*!40000 ALTER TABLE `#__tags` DISABLE KEYS */;
 LOCK TABLES `#__tags` WRITE;
-INSERT INTO `#__tags` VALUES  (1,0,0,1,0,'','ROOT',0x726F6F74,'','',1,0,'0000-00-00 00:00:00',1,'{}','','','',0,'2011-01-01 00:00:01','',0,'0000-00-00 00:00:00','','',0,'*',1,'0000-00-00 00:00:00','0000-00-00 00:00:00');
+INSERT INTO `#__tags` VALUES  (1,0,0,1,0,'','ROOT',0x726F6F74,'','',1,0,'0000-00-00 00:00:00',1,'{}','','','',576,'2011-01-01 00:00:01','',0,'0000-00-00 00:00:00','','',0,'*',1,'0000-00-00 00:00:00','0000-00-00 00:00:00');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `#__tags` ENABLE KEYS */;
 
@@ -8012,14 +8257,14 @@ CREATE TABLE  `#__update_sites` (
 
 /*!40000 ALTER TABLE `#__update_sites` DISABLE KEYS */;
 LOCK TABLES `#__update_sites` WRITE;
-INSERT INTO `#__update_sites` VALUES  (1,'Joomla Core','collection','http://update.joomla.org/core/sts/list_sts.xml',1,1412303237,''),
- (2,'Joomla Extension Directory','collection','http://update.joomla.org/jed/list.xml',1,1412303237,''),
- (3,'Accredited Joomla! Translations','collection','http://update.joomla.org/language/translationlist_3.xml',1,0,''),
- (5,'Blackdale','extension','http://updates.blackdale.com/update/modblank250/modblank250.xml',1,0,''),
- (6,'K2 Updates','extension','http://getk2.org/update.xml',1,1412303235,''),
- (7,'AllVideos','extension','http://www.joomlaworks.net/updates/jw_allvideos.xml',1,1412303235,''),
- (8,'Joomla! Update Component Update Site','extension','http://update.joomla.org/core/extensions/com_joomlaupdate.xml',1,1412303235,''),
- (9,'','collection','http://update.joomla.org/core/list.xml',1,1412303235,'');
+INSERT INTO `#__update_sites` VALUES  (1,'Joomla Core','collection','http://update.joomla.org/core/sts/list_sts.xml',1,1414543038,''),
+ (2,'Joomla Extension Directory','collection','http://update.joomla.org/jed/list.xml',1,1414543038,''),
+ (3,'Accredited Joomla! Translations','collection','http://update.joomla.org/language/translationlist_3.xml',1,1414543036,''),
+ (5,'Blackdale','extension','http://updates.blackdale.com/update/modblank250/modblank250.xml',1,1414543036,''),
+ (6,'K2 Updates','extension','http://getk2.org/update.xml',1,1414543036,''),
+ (7,'AllVideos','extension','http://www.joomlaworks.net/updates/jw_allvideos.xml',1,1414543036,''),
+ (8,'Joomla! Update Component Update Site','extension','http://update.joomla.org/core/extensions/com_joomlaupdate.xml',1,1414543036,''),
+ (9,'','collection','http://update.joomla.org/core/list.xml',1,1414543036,'');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `#__update_sites` ENABLE KEYS */;
 
@@ -8075,7 +8320,7 @@ CREATE TABLE  `#__updates` (
   `infourl` text NOT NULL,
   `extra_query` varchar(1000) DEFAULT '',
   PRIMARY KEY (`update_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8 COMMENT='Available Updates';
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8 COMMENT='Available Updates';
 
 --
 -- Dumping data for table `#__updates`
@@ -8085,64 +8330,61 @@ CREATE TABLE  `#__updates` (
 LOCK TABLES `#__updates` WRITE;
 INSERT INTO `#__updates` VALUES  (1,3,0,'Malay','','pkg_ms-MY','package','',0,'3.3.1.1','','http://update.joomla.org/language/details3/ms-MY_details.xml','',''),
  (2,3,0,'Romanian','','pkg_ro-RO','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/ro-RO_details.xml','',''),
- (3,3,0,'Flemish','','pkg_nl-BE','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/nl-BE_details.xml','',''),
- (4,3,0,'Chinese Traditional','','pkg_zh-TW','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/zh-TW_details.xml','',''),
- (5,3,0,'French','','pkg_fr-FR','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/fr-FR_details.xml','',''),
+ (3,3,0,'Flemish','','pkg_nl-BE','package','',0,'3.3.6.1','','http://update.joomla.org/language/details3/nl-BE_details.xml','',''),
+ (4,3,0,'Chinese Traditional','','pkg_zh-TW','package','',0,'3.3.6.1','','http://update.joomla.org/language/details3/zh-TW_details.xml','',''),
+ (5,3,0,'French','','pkg_fr-FR','package','',0,'3.3.6.2','','http://update.joomla.org/language/details3/fr-FR_details.xml','',''),
  (6,3,0,'Galician','','pkg_gl-ES','package','',0,'3.3.1.2','','http://update.joomla.org/language/details3/gl-ES_details.xml','',''),
- (7,3,0,'German','','pkg_de-DE','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/de-DE_details.xml','',''),
+ (7,3,0,'German','','pkg_de-DE','package','',0,'3.3.6.1','','http://update.joomla.org/language/details3/de-DE_details.xml','',''),
  (8,3,0,'Greek','','pkg_el-GR','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/el-GR_details.xml','',''),
- (9,3,0,'Japanese','','pkg_ja-JP','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/ja-JP_details.xml','',''),
+ (9,3,0,'Japanese','','pkg_ja-JP','package','',0,'3.3.6.1','','http://update.joomla.org/language/details3/ja-JP_details.xml','',''),
  (10,3,0,'Hebrew','','pkg_he-IL','package','',0,'3.1.1.1','','http://update.joomla.org/language/details3/he-IL_details.xml','',''),
  (11,3,0,'EnglishAU','','pkg_en-AU','package','',0,'3.3.1.1','','http://update.joomla.org/language/details3/en-AU_details.xml','',''),
  (12,3,0,'EnglishUS','','pkg_en-US','package','',0,'3.3.1.1','','http://update.joomla.org/language/details3/en-US_details.xml','',''),
  (13,3,0,'Hungarian','','pkg_hu-HU','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/hu-HU_details.xml','',''),
- (14,3,0,'Afrikaans','','pkg_af-ZA','package','',0,'3.2.0.1','','http://update.joomla.org/language/details3/af-ZA_details.xml','',''),
- (15,3,0,'Arabic Unitag','','pkg_ar-AA','package','',0,'3.3.2.1','','http://update.joomla.org/language/details3/ar-AA_details.xml','',''),
+ (14,3,0,'Afrikaans','','pkg_af-ZA','package','',0,'3.2.0.2','','http://update.joomla.org/language/details3/af-ZA_details.xml','',''),
+ (15,3,0,'Arabic Unitag','','pkg_ar-AA','package','',0,'3.3.6.1','','http://update.joomla.org/language/details3/ar-AA_details.xml','',''),
  (16,3,0,'Belarusian','','pkg_be-BY','package','',0,'3.2.1.1','','http://update.joomla.org/language/details3/be-BY_details.xml','',''),
  (17,3,0,'Bulgarian','','pkg_bg-BG','package','',0,'3.3.0.1','','http://update.joomla.org/language/details3/bg-BG_details.xml','',''),
- (18,3,0,'Catalan','','pkg_ca-ES','package','',0,'3.3.2.1','','http://update.joomla.org/language/details3/ca-ES_details.xml','',''),
+ (18,3,0,'Catalan','','pkg_ca-ES','package','',0,'3.3.6.1','','http://update.joomla.org/language/details3/ca-ES_details.xml','',''),
  (19,3,0,'Chinese Simplified','','pkg_zh-CN','package','',0,'3.3.1.1','','http://update.joomla.org/language/details3/zh-CN_details.xml','',''),
- (20,3,0,'Croatian','','pkg_hr-HR','package','',0,'3.1.5.1','','http://update.joomla.org/language/details3/hr-HR_details.xml','',''),
- (21,3,0,'Czech','','pkg_cs-CZ','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/cs-CZ_details.xml','',''),
- (22,3,0,'Danish','','pkg_da-DK','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/da-DK_details.xml','',''),
- (23,3,0,'Dutch','','pkg_nl-NL','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/nl-NL_details.xml','',''),
- (24,3,0,'Estonian','','pkg_et-EE','package','',0,'3.3.1.2','','http://update.joomla.org/language/details3/et-EE_details.xml','',''),
- (25,3,0,'Italian','','pkg_it-IT','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/it-IT_details.xml','',''),
+ (20,3,0,'Croatian','','pkg_hr-HR','package','',0,'3.3.6.1','','http://update.joomla.org/language/details3/hr-HR_details.xml','',''),
+ (21,3,0,'Czech','','pkg_cs-CZ','package','',0,'3.3.6.2','','http://update.joomla.org/language/details3/cs-CZ_details.xml','',''),
+ (22,3,0,'Danish','','pkg_da-DK','package','',0,'3.3.5.1','','http://update.joomla.org/language/details3/da-DK_details.xml','',''),
+ (23,3,0,'Dutch','','pkg_nl-NL','package','',0,'3.3.6.1','','http://update.joomla.org/language/details3/nl-NL_details.xml','',''),
+ (24,3,0,'Estonian','','pkg_et-EE','package','',0,'3.3.4.1','','http://update.joomla.org/language/details3/et-EE_details.xml','',''),
+ (25,3,0,'Italian','','pkg_it-IT','package','',0,'3.3.6.1','','http://update.joomla.org/language/details3/it-IT_details.xml','',''),
  (26,3,0,'Korean','','pkg_ko-KR','package','',0,'3.2.3.1','','http://update.joomla.org/language/details3/ko-KR_details.xml','',''),
- (27,3,0,'Latvian','','pkg_lv-LV','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/lv-LV_details.xml','',''),
- (28,3,0,'Macedonian','','pkg_mk-MK','package','',0,'3.3.2.1','','http://update.joomla.org/language/details3/mk-MK_details.xml','',''),
+ (27,3,0,'Latvian','','pkg_lv-LV','package','',0,'3.3.6.1','','http://update.joomla.org/language/details3/lv-LV_details.xml','',''),
+ (28,3,0,'Macedonian','','pkg_mk-MK','package','',0,'3.3.6.1','','http://update.joomla.org/language/details3/mk-MK_details.xml','',''),
  (29,3,0,'Norwegian Bokmal','','pkg_nb-NO','package','',0,'3.2.2.1','','http://update.joomla.org/language/details3/nb-NO_details.xml','',''),
- (30,3,0,'Persian','','pkg_fa-IR','package','',0,'3.3.1.1','','http://update.joomla.org/language/details3/fa-IR_details.xml','',''),
- (31,3,0,'Polish','','pkg_pl-PL','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/pl-PL_details.xml','',''),
+ (30,3,0,'Persian','','pkg_fa-IR','package','',0,'3.3.6.1','','http://update.joomla.org/language/details3/fa-IR_details.xml','',''),
+ (31,3,0,'Polish','','pkg_pl-PL','package','',0,'3.3.4.1','','http://update.joomla.org/language/details3/pl-PL_details.xml','',''),
  (32,3,0,'Portuguese','','pkg_pt-PT','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/pt-PT_details.xml','',''),
  (33,3,0,'Russian','','pkg_ru-RU','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/ru-RU_details.xml','',''),
- (34,3,0,'Slovak','','pkg_sk-SK','package','',0,'3.3.1.1','','http://update.joomla.org/language/details3/sk-SK_details.xml','',''),
+ (34,3,0,'Slovak','','pkg_sk-SK','package','',0,'3.3.6.1','','http://update.joomla.org/language/details3/sk-SK_details.xml','',''),
  (35,3,0,'Swedish','','pkg_sv-SE','package','',0,'3.3.3.3','','http://update.joomla.org/language/details3/sv-SE_details.xml','',''),
- (36,3,0,'Syriac','','pkg_sy-IQ','package','',0,'3.3.2.1','','http://update.joomla.org/language/details3/sy-IQ_details.xml','',''),
- (37,3,0,'Tamil','','pkg_ta-IN','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/ta-IN_details.xml','',''),
- (38,3,0,'Thai','','pkg_th-TH','package','',0,'3.3.2.1','','http://update.joomla.org/language/details3/th-TH_details.xml','',''),
- (39,3,0,'Turkish','','pkg_tr-TR','package','',0,'3.3.2.1','','http://update.joomla.org/language/details3/tr-TR_details.xml','',''),
+ (36,3,0,'Syriac','','pkg_sy-IQ','package','',0,'3.3.4.1','','http://update.joomla.org/language/details3/sy-IQ_details.xml','',''),
+ (37,3,0,'Tamil','','pkg_ta-IN','package','',0,'3.3.6.1','','http://update.joomla.org/language/details3/ta-IN_details.xml','',''),
+ (38,3,0,'Thai','','pkg_th-TH','package','',0,'3.3.6.1','','http://update.joomla.org/language/details3/th-TH_details.xml','',''),
+ (39,3,0,'Turkish','','pkg_tr-TR','package','',0,'3.3.5.1','','http://update.joomla.org/language/details3/tr-TR_details.xml','',''),
  (40,3,0,'Ukrainian','','pkg_uk-UA','package','',0,'3.3.3.15','','http://update.joomla.org/language/details3/uk-UA_details.xml','',''),
  (41,3,0,'Uyghur','','pkg_ug-CN','package','',0,'3.3.0.1','','http://update.joomla.org/language/details3/ug-CN_details.xml','',''),
  (42,3,0,'Albanian','','pkg_sq-AL','package','',0,'3.1.1.1','','http://update.joomla.org/language/details3/sq-AL_details.xml','',''),
- (43,3,0,'Serbian Latin','','pkg_sr-YU','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/sr-YU_details.xml','',''),
- (44,3,0,'Spanish','','pkg_es-ES','package','',0,'3.3.1.3','','http://update.joomla.org/language/details3/es-ES_details.xml','',''),
+ (43,3,0,'Serbian Latin','','pkg_sr-YU','package','',0,'3.3.4.1','','http://update.joomla.org/language/details3/sr-YU_details.xml','',''),
+ (44,3,0,'Spanish','','pkg_es-ES','package','',0,'3.3.4.1','','http://update.joomla.org/language/details3/es-ES_details.xml','',''),
  (45,3,0,'Bosnian','','pkg_bs-BA','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/bs-BA_details.xml','',''),
- (46,3,0,'Serbian Cyrillic','','pkg_sr-RS','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/sr-RS_details.xml','',''),
+ (46,3,0,'Serbian Cyrillic','','pkg_sr-RS','package','',0,'3.3.6.1','','http://update.joomla.org/language/details3/sr-RS_details.xml','',''),
  (47,3,0,'Vietnamese','','pkg_vi-VN','package','',0,'3.2.1.1','','http://update.joomla.org/language/details3/vi-VN_details.xml','',''),
  (48,3,0,'Bahasa Indonesia','','pkg_id-ID','package','',0,'3.3.0.2','','http://update.joomla.org/language/details3/id-ID_details.xml','',''),
- (49,3,0,'Finnish','','pkg_fi-FI','package','',0,'3.3.2.1','','http://update.joomla.org/language/details3/fi-FI_details.xml','',''),
- (50,3,0,'Swahili','','pkg_sw-KE','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/sw-KE_details.xml','',''),
+ (49,3,0,'Finnish','','pkg_fi-FI','package','',0,'3.3.4.1','','http://update.joomla.org/language/details3/fi-FI_details.xml','',''),
+ (50,3,0,'Swahili','','pkg_sw-KE','package','',0,'3.3.6.1','','http://update.joomla.org/language/details3/sw-KE_details.xml','',''),
  (51,3,0,'Montenegrin','','pkg_srp-ME','package','',0,'3.3.1.1','','http://update.joomla.org/language/details3/srp-ME_details.xml','',''),
- (52,3,0,'EnglishCA','','pkg_en-CA','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/en-CA_details.xml','',''),
- (53,3,0,'FrenchCA','','pkg_fr-CA','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/fr-CA_details.xml','',''),
- (54,3,0,'FrenchCA','','pkg_fr-CA','package','',0,'3.3.3.1','','http://update.joomla.org/language/details3/fr-CA_details.xml','',''),
- (55,3,0,'Welsh','','pkg_cy-GB','package','',0,'3.3.0.1','','http://update.joomla.org/language/details3/cy-GB_details.xml','',''),
- (56,3,0,'Welsh','','pkg_cy-GB','package','',0,'3.3.0.1','','http://update.joomla.org/language/details3/cy-GB_details.xml','',''),
- (57,3,0,'Sinhala','','pkg_si-LK','package','',0,'3.3.1.1','','http://update.joomla.org/language/details3/si-LK_details.xml','',''),
- (58,3,0,'Sinhala','','pkg_si-LK','package','',0,'3.3.1.1','','http://update.joomla.org/language/details3/si-LK_details.xml','',''),
- (59,6,10035,'K2','K2, the powerful content extension for Joomla! (by JoomlaWorks)','com_k2','component','',1,'2.6.8','','http://getk2.org/update.xml','',''),
- (60,7,10050,'AllVideos','The ultimate media player for Joomla!','jw_allvideos','plugin','content',0,'4.6.1','','http://www.joomlaworks.net/updates/jw_allvideos.xml','http://www.joomlaworks.net/forum/extension-updates/15010-june-4th,-2014-allvideos-v4-6-1','');
+ (52,3,0,'EnglishCA','','pkg_en-CA','package','',0,'3.3.6.1','','http://update.joomla.org/language/details3/en-CA_details.xml','',''),
+ (53,3,0,'FrenchCA','','pkg_fr-CA','package','',0,'3.3.6.1','','http://update.joomla.org/language/details3/fr-CA_details.xml','',''),
+ (54,3,0,'Welsh','','pkg_cy-GB','package','',0,'3.3.0.1','','http://update.joomla.org/language/details3/cy-GB_details.xml','',''),
+ (55,3,0,'Sinhala','','pkg_si-LK','package','',0,'3.3.1.1','','http://update.joomla.org/language/details3/si-LK_details.xml','',''),
+ (56,6,10035,'K2','K2, the powerful content extension for Joomla! (by JoomlaWorks)','com_k2','component','',1,'2.6.8','','http://getk2.org/update.xml','',''),
+ (57,7,10050,'AllVideos','The ultimate media player for Joomla!','jw_allvideos','plugin','content',0,'4.6.1','','http://www.joomlaworks.net/updates/jw_allvideos.xml','http://www.joomlaworks.net/forum/extension-updates/15010-june-4th,-2014-allvideos-v4-6-1','');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `#__updates` ENABLE KEYS */;
 
@@ -8253,7 +8495,8 @@ CREATE TABLE  `#__user_usergroup_map` (
 
 /*!40000 ALTER TABLE `#__user_usergroup_map` DISABLE KEYS */;
 LOCK TABLES `#__user_usergroup_map` WRITE;
-INSERT INTO `#__user_usergroup_map` VALUES  (576,8);
+INSERT INTO `#__user_usergroup_map` VALUES  (576,8),
+ (577,13);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `#__user_usergroup_map` ENABLE KEYS */;
 
@@ -8274,7 +8517,7 @@ CREATE TABLE  `#__usergroups` (
   KEY `idx_usergroup_title_lookup` (`title`),
   KEY `idx_usergroup_adjacency_lookup` (`parent_id`),
   KEY `idx_usergroup_nested_set_lookup` (`lft`,`rgt`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `#__usergroups`
@@ -8282,18 +8525,15 @@ CREATE TABLE  `#__usergroups` (
 
 /*!40000 ALTER TABLE `#__usergroups` DISABLE KEYS */;
 LOCK TABLES `#__usergroups` WRITE;
-INSERT INTO `#__usergroups` VALUES  (1,0,1,24,'Public'),
- (2,1,6,21,'Registered'),
- (3,2,7,20,'Author'),
- (4,3,16,19,'Editor'),
- (5,4,17,18,'Publisher'),
+INSERT INTO `#__usergroups` VALUES  (1,0,1,18,'Public'),
+ (2,1,6,15,'Registered'),
+ (3,2,7,14,'Author'),
+ (4,3,10,13,'Editor'),
+ (5,4,11,12,'Publisher'),
  (6,1,2,5,'Manager'),
  (7,6,3,4,'Administrator'),
- (8,1,22,23,'Super Users'),
- (9,3,8,15,'Agenda de dirigentes'),
- (10,9,9,10,'Assistente'),
- (11,9,11,12,'Autoridade Nível 2'),
- (12,9,13,14,'Autoridade Nível 3');
+ (8,1,16,17,'Super Users'),
+ (13,3,8,9,'Agenda de Autoridades - Perfil Exemplo');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `#__usergroups` ENABLE KEYS */;
 
@@ -8325,16 +8565,17 @@ CREATE TABLE  `#__users` (
   KEY `idx_block` (`block`),
   KEY `username` (`username`),
   KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=577 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=578 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `#__users`
 --
 
 /*!40000 ALTER TABLE `#__users` DISABLE KEYS */;
-######LOCK TABLES `#__users` WRITE;
-INSERT INTO `#__users` VALUES  (576,'Super User Default (apague ou troque os dados - está desabilitado)','admin_default','joomlagovbr@gmail.com','$2y$10$jN9cqIctGw2b.88ugASMcOpLAb2vZLzKXrwqqyo8H0KcPFiH7mNdS',1,1,'2013-10-14 14:26:05','2014-08-09 21:04:39','0','{\"admin_style\":\"\",\"admin_language\":\"\",\"language\":\"\",\"editor\":\"jce\",\"helpsite\":\"\",\"timezone\":\"\"}','0000-00-00 00:00:00',0,'','',0);
-######UNLOCK TABLES;
+LOCK TABLES `#__users` WRITE;
+INSERT INTO `#__users` VALUES  (576,'Super User Default (apague ou troque os dados - está desabilitado)','admin_default','joomlagovbr@gmail.com','$2y$10$jN9cqIctGw2b.88ugASMcOpLAb2vZLzKXrwqqyo8H0KcPFiH7mNdS',1,1,'2013-10-14 14:26:05','2014-08-09 21:04:39','0','{\"admin_style\":\"\",\"admin_language\":\"\",\"language\":\"\",\"editor\":\"jce\",\"helpsite\":\"\",\"timezone\":\"\"}','0000-00-00 00:00:00',0,'','',0),
+ (577,'Usuário de exemplo','agendadirigentes','agendadirigentes123@agendadirigentes123.gov.br','$2y$10$dM2awqlqHySLzVxsXjOPHOYLzS.s3zdRpJB5gV1QZY2YCMjgAaDsu',1,0,'2014-10-28 22:21:04','2014-10-29 00:36:54','','{\"admin_style\":\"\",\"admin_language\":\"\",\"language\":\"\",\"editor\":\"\",\"helpsite\":\"\",\"timezone\":\"\"}','0000-00-00 00:00:00',0,'','',0);
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `#__users` ENABLE KEYS */;
 
 
@@ -8360,7 +8601,7 @@ CREATE TABLE  `#__viewlevels` (
 LOCK TABLES `#__viewlevels` WRITE;
 INSERT INTO `#__viewlevels` VALUES  (1,'Public',0,'[1]'),
  (2,'Registered',1,'[6,2,8]'),
- (3,'Special',2,'[6,3,9,8]');
+ (3,'Special',2,'[6,3,13,8]');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `#__viewlevels` ENABLE KEYS */;
 

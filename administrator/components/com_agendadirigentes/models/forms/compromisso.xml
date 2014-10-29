@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addrulepath="/administrator/components/com_agendadirigentes/models/rules">
+        <fieldset name="details" addfieldpath="/administrator/components/com_agendadirigentes/models/fields">
+                <field
+                        name="id"
+                        type="hidden"
+                        filter="integer"
+                />
+                <field
+                        name="title"
+                        type="textarea"
+                        label="COM_AGENDADIRIGENTES_COMPROMISSOS_TITLE_LABEL"
+                        description="COM_AGENDADIRIGENTES_COMPROMISSOS_TITLE_DESC"
+                        cols="40"
+                        rows="5"
+                        class="span12 validate-compromisso-title"
+                        default=""
+                        required="true"
+                        filter="string"
+                />
+                <field
+                        name="owner"
+                        type="dirigentestags"
+                        label="COM_AGENDADIRIGENTES_DIRIGENTES_OWNER_LABEL"
+                        description="COM_AGENDADIRIGENTES_DIRIGENTES_OWNER_DESC"                                                
+                        class="span12"
+                        multiple="false"
+                        required="true"
+                        onchange="disableField('dirigentes');"
+                        mode="nested"
+                />                
+                <field
+                        name="dirigentes"
+                        type="dirigentestags"
+                        label="COM_AGENDADIRIGENTES_DIRIGENTES_PARTICIPANTES_LABEL"
+                        description="COM_AGENDADIRIGENTES_DIRIGENTES_PARTICIPANTES_DESC"                                             
+                        class="span12"
+                        multiple="true"
+                        add_participantes_externos="true"
+                        mode="nested"
+                />
+                <field name="state" type="list"
+                        label="JSTATUS" description="COM_AGENDADIRIGENTES_FIELD_STATE_DESC"
+                        class="chzn-color-state"
+                        size="1" default="0">
+                        <option value="1">JPUBLISHED</option>
+                        <option value="0">JUNPUBLISHED</option>
+                        <option value="2">JARCHIVED</option>
+                        <option value="-2">JTRASHED</option>
+                </field>
+                <field
+                        name="published_once"
+                        type="hidden"
+                        default="0"
+                        validate="boolean"
+                        filter="integer"
+                />
+                <field
+                        name="featured"
+                        type="radio"
+                        label="COM_AGENDADIRIGENTES_COMPROMISSOS_FEATURED_LABEL"
+                        description="COM_AGENDADIRIGENTES_COMPROMISSOS_FEATURED_DESC"
+                        default="0"
+                        validate="boolean"
+                        filter="integer"
+                        >
+                        <option value="0">JNO</option>
+                        <option value="1">JYES</option>
+                </field>
+                <field
+                        name="data_inicial"
+                        type="calendar"
+                        format="%d/%m/%Y"
+                        label="COM_AGENDADIRIGENTES_COMPROMISSOS_DATA_INICIAL_LABEL"
+                        description="COM_AGENDADIRIGENTES_COMPROMISSOS_DATA_INICIAL_DESC"
+                        default=""
+                        required="true"
+                        onchange="copiarValorParaDataFinal( this );"
+                        class="inputbox validate-compromisso-data_inicial"
+                        validate="databrasil"
+                        filter="string"
+                />
+                <field
+                        name="data_final"
+                        type="calendar"
+                        format="%d/%m/%Y"
+                        label="COM_AGENDADIRIGENTES_COMPROMISSOS_DATA_FINAL_LABEL"
+                        description="COM_AGENDADIRIGENTES_COMPROMISSOS_DATA_FINAL_DESC"
+                        default=""
+                        required="true"
+                        class="inputbox validate-compromisso-data_final"
+                        validate="databrasil"
+                        filter="string"
+                />
+                <field
+                        name="dia_todo"
+                        type="radio"
+                        label="COM_AGENDADIRIGENTES_COMPROMISSOS_DIA_TODO_LABEL"
+                        description="COM_AGENDADIRIGENTES_COMPROMISSOS_DIA_TODO_DESC"
+                        default="0"
+                        validate="boolean"
+                        filter="integer"
+                        >
+                        <option value="0">JNO</option>
+                        <option value="1">JYES</option>
+                </field>
+                <field
+                        name="horario_inicio"
+                        type="text"
+                        size="5"
+                        maxlength="5"
+                        label="COM_AGENDADIRIGENTES_COMPROMISSOS_HORARIO_INICIO_LABEL"
+                        description="COM_AGENDADIRIGENTES_COMPROMISSOS_HORARIO_INICIO_DESC"
+                        default=""
+                        validate="hora"
+                        filter="string"
+                />
+                <field
+                        name="horario_fim"
+                        type="text"
+                        size="5"
+                        maxlength="5"
+                        label="COM_AGENDADIRIGENTES_COMPROMISSOS_HORARIO_FIM_LABEL"
+                        description="COM_AGENDADIRIGENTES_COMPROMISSOS_HORARIO_FIM_DESC"
+                        default=""
+                        validate="hora"
+                        filter="string"
+                />
+                <field
+                        name="local"
+                        type="textarea"
+                        label="COM_AGENDADIRIGENTES_COMPROMISSOS_LOCAL_LABEL"
+                        description="COM_AGENDADIRIGENTES_COMPROMISSOS_LOCAL_DESC"
+                        default=""
+                        filter="string"
+                />
+                <field
+                        name="description"
+                        type="editor"
+                        label="COM_AGENDADIRIGENTES_COMPROMISSOS_DESCRIPTION_LABEL"
+                        description="COM_AGENDADIRIGENTES_COMPROMISSOS_DESCRIPTION_DESC"
+                        default=""
+                        readonly="true"
+                        filter="raw"
+                />
+                <field
+                        name="participantes_externos"
+                        type="hidden"
+                        filter="string"
+                />
+                <field
+                        name="created"
+                        type="text"
+                        label="COM_AGENDADIRIGENTES_COMPROMISSOS_CREATED_LABEL"
+                        description="COM_AGENDADIRIGENTES_COMPROMISSOS_CREATED_DESC"
+                        default=""
+                        readonly="true"
+                        filter="string"
+                />
+                <field
+                        name="created_by"
+                        type="text"
+                        label="COM_AGENDADIRIGENTES_COMPROMISSOS_CREATED_BY_LABEL"
+                        description="COM_AGENDADIRIGENTES_COMPROMISSOS_CREATED_BY_DESC"
+                        default=""
+                        readonly="true"
+                        filter="integer"
+                />
+                <field
+                        name="modified"
+                        type="text"
+                        label="COM_AGENDADIRIGENTES_COMPROMISSOS_MODIFIED_LABEL"
+                        description="COM_AGENDADIRIGENTES_COMPROMISSOS_MODIFIED_DESC"
+                        default=""
+                        readonly="true"
+                        filter="string"
+                />
+                <field
+                        name="modified_by"
+                        type="text"
+                        label="COM_AGENDADIRIGENTES_COMPROMISSOS_MODIFIED_BY_LABEL"
+                        description="COM_AGENDADIRIGENTES_COMPROMISSOS_MODIFIED_BY_DESC"
+                        default=""
+                        readonly="true"
+                        filter="integer"
+                />
+                <field
+                        name="language"
+                        type="language"
+                        client="site"
+                        label="COM_AGENDADIRIGENTES_COMPROMISSOS_LANGUAGE_LABEL"
+                        description="COM_AGENDADIRIGENTES_COMPROMISSOS_LANGUAGE_DESC"
+                        default="pt-BR"
+                        filter="string"
+                />
+                <field
+                        name="version"
+                        type="text"
+                        label="COM_AGENDADIRIGENTES_COMPROMISSOS_VERSION_LABEL"
+                        description="COM_AGENDADIRIGENTES_COMPROMISSOS_VERSION_DESC"
+                        default="0"
+                        readonly="true"
+                        filter="integer"
+                />
+        </fieldset>
+        <fields name="params">
+                <fieldset
+                        name="display"
+                        label="JGLOBAL_FIELDSET_DISPLAY_OPTIONS"
+                        >
+                        <field
+                                name="exibir_horario_inicio"
+                                type="list"
+                                label="COM_AGENDADIRIGENTES_COMPROMISSOS_EXIBIR_HORARIO_INICIO_LABEL"
+                                description="COM_AGENDADIRIGENTES_COMPROMISSOS_EXIBIR_HORARIO_INICIO_DESC"
+                                default=""
+                                >
+                                <option value="">JGLOBAL_USE_GLOBAL</option>
+                                <option value="0">JHIDE</option>
+                                <option value="1">JSHOW</option>
+                        </field>
+                        <field
+                                name="exibir_horario_fim"
+                                type="list"
+                                label="COM_AGENDADIRIGENTES_COMPROMISSOS_EXIBIR_HORARIO_FIM_LABEL"
+                                description="COM_AGENDADIRIGENTES_COMPROMISSOS_EXIBIR_HORARIO_FIM_DESC"
+                                default=""
+                                >
+                                <option value="">JGLOBAL_USE_GLOBAL</option>
+                                <option value="0">JHIDE</option>
+                                <option value="1">JSHOW</option>
+                        </field>
+                        <field
+                                name="exibir_local"
+                                type="list"
+                                label="COM_AGENDADIRIGENTES_COMPROMISSO_PARAM_EXIBIR_LOCAL_LABEL"
+                                description="COM_AGENDADIRIGENTES_COMPROMISSO_PARAM_EXIBIR_LOCAL_DESC"
+                                default=""
+                                >
+                                <option value="">JGLOBAL_USE_GLOBAL</option>
+                                <option value="0">JHIDE</option>
+                                <option value="1">JSHOW</option>
+                        </field>
+                        <field
+                                name="exibir_pauta"
+                                type="list"
+                                label="COM_AGENDADIRIGENTES_COMPROMISSO_PARAM_EXIBIR_PAUTA_LABEL"
+                                description="COM_AGENDADIRIGENTES_COMPROMISSO_PARAM_EXIBIR_PAUTA_DESC"
+                                default=""
+                                >
+                                <option value="">JGLOBAL_USE_GLOBAL</option>
+                                <option value="0">JHIDE</option>
+                                <option value="1">JSHOW</option>
+                        </field>
+                        <field
+                                name="exibir_participantes_locais"
+                                type="list"
+                                label="COM_AGENDADIRIGENTES_COMPROMISSO_PARAM_EXIBIR_PARTICIPANTES_LOCAIS_LABEL"
+                                description="COM_AGENDADIRIGENTES_COMPROMISSO_PARAM_EXIBIR_PARTICIPANTES_LOCAIS_DESC"
+                                default=""
+                                >
+                                <option value="">JGLOBAL_USE_GLOBAL</option>
+                                <option value="0">JHIDE</option>
+                                <option value="1">JSHOW</option>
+                        </field>
+                        <field
+                                name="exibir_participantes_externos"
+                                type="list"
+                                label="COM_AGENDADIRIGENTES_COMPROMISSO_PARAM_EXIBIR_PARTICIPANTES_EXTERNOS_LABEL"
+                                description="COM_AGENDADIRIGENTES_COMPROMISSO_PARAM_EXIBIR_PARTICIPANTES_EXTERNOS_DESC"
+                                default=""
+                                >
+                                <option value="">JGLOBAL_USE_GLOBAL</option>
+                                <option value="0">JHIDE</option>
+                                <option value="1">JSHOW</option>
+                        </field>
+                </fieldset>
+        </fields>
+</form>

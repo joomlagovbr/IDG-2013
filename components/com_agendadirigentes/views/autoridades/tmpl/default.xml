@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_AGENDADIRIGENTES_AUTORIDADES_VIEW_DEFAULT_TITLE">
+		<message>
+			<![CDATA[COM_AGENDADIRIGENTES_AUTORIDADES_VIEW_DEFAULT_DESC]]>
+		</message>
+	</layout>
+	<fields name="request">
+		<fieldset name="request" addfieldpath="/administrator/components/com_agendadirigentes/models/fields">
+            <field
+            name="introtext"
+            type="editor"
+            label="COM_AGENDADIRIGENTES_AUTORIDADES_VIEW_INTROTEXT_LABEL"
+            description="COM_AGENDADIRIGENTES_AUTORIDADES_VIEW_INTROTEXT_DESC"
+			default=""
+			filter="raw"
+			/>
+			<field
+				name="dia"
+				type="calendar"
+				label="COM_AGENDADIRIGENTES_AUTORIDADES_VIEW_DEFAULT_DATE_LABEL"
+				description="COM_AGENDADIRIGENTES_AUTORIDADES_VIEW_DEFAULT_DATE_DESC"
+				default=""
+			/>
+		</fieldset>
+	</fields>
+</metadata>

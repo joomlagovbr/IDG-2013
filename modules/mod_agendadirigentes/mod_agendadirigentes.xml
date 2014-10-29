@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension
+	type="module"
+	version="1.0"
+	client="site"
+	method="upgrade">
+	<name>Módulo de Exibição de agendas de autoridades</name>
+	<author>Comunidade Joomla Calango e Grupo de Trabalho de Ministérios</author>
+	<creationDate>Setembro 2014</creationDate>
+	<copyright>Copyright (C) 2014 Comunidade Joomla Calango</copyright>
+	<license>GNU General Public License version 2</license>
+	<authorEmail>rafaelberlanda@gmail.com</authorEmail>
+	<authorUrl>https://github.com/joomlagovbr</authorUrl>
+	<version>1.0</version>
+	<description>Módulo que exibe agenda de autoridades</description>
+	<files>
+		<filename module="mod_agendadirigentes">mod_agendadirigentes.php</filename>
+		<folder>tmpl</folder>
+		<filename>helper.php</filename>
+		<filename>index.html</filename>
+		<filename>mod_agendadirigentes.xml</filename>
+	</files>
+	<languages>
+		<language tag="en-GB">en-GB.mod_agendadirigentes.ini</language>
+		<language tag="pt-BR">pt-BR.mod_agendadirigentes.ini</language>
+	</languages>
+	<media destination="mod_agendadirigentes" folder="media">
+		<filename>index.html</filename>
+		<folder>css</folder>
+	</media>
+	<config>
+		<fields name="params">
+			<fieldset name="basic" addfieldpath="/administrator/components/com_agendadirigentes/models/fields">	
+                <field
+	                name="autoridade"
+	                type="dirigentestags"
+	                label="Autoridade"
+	                description="Escolha a autoridade a ser exibida." 
+	                multiple="false"                        
+	                emptyfirst="true"                        
+	                mode="nested"
+	                default=""
+	                show_category="0"
+                />
+				<field name="modo_agenda" type="list" default="dia_atual" label="Modo de agenda" description="Modo da agenda">
+					<option value="dia_atual">Dia atual</option>		
+					<option value="dia_util">Dia útil</option>		
+					<option value="dia_prox_compromisso">Dia do compromisso mais próximo</option>		
+		  		</field>
+		  		<field name="link_todas_as_agendas" type="list" default="1" label="Exibir link para agendas no final" description="Exibir link para agendas no final">
+					<option value="1">Sim</option>		
+					<option value="2">Não</option>		
+		  		</field>
+				<field
+					name="itemid"
+					type="menuitem"
+					label="Itemid"
+					description="Itemid da página"
+					>
+					<option value="">JDEFAULT</option>
+		  		</field>
+				<field name="featured_compromissos" type="list" default="" label="Mostrar compromissos:" description="">
+					<option value="">Todos</option>		
+					<option value="1">Em destaque</option>		
+					<option value="0">Sem destaque</option>		
+		  		</field>
+				<field
+					name="limit_compromissos"
+					type="text"
+					label="Limite de compromissos"
+					description="Limite de compromissos para o dia em questão. Informe -1 para todos os compromissos."
+					default="-1" />
+				<field
+					name="limit_title_compromissos"
+					type="text"
+					label="Limite de caracteres de compromissos"
+					description="Deixe em branco ou zero para sem limite. Busca considerar espaços, para não cortar palavras."
+					default="" />
+				<field
+					name="delimiter_title_compromissos"
+					type="text"
+					label="Delimitador da quantidade de caracteres"
+					description="Caracteres delimitadores do texto, quando este é limitado"
+					default=" [...]" />
+				<field name="order_compromissos" type="list" default="ASC" label="Ordem dos compromissos" description="Ordem de exibição dos compromissos">
+					<option value="ASC">ASC</option>		
+					<option value="DESC">DESC</option>		
+					<option value="NEXT_ASC">NEXT ASC</option>		
+					<option value="NEXT_DESC">NEXT DESC</option>		
+		  		</field>
+			</fieldset>
+			<fieldset
+				name="advanced">
+				<field
+					name="altura_lista"
+					type="text"
+					label="Altura da lista"
+					description="Limita a altura da lista de itens por meio de css overflow. Exemplo: 50px"
+					default="" />
+
+				<field
+					name="moduleclass_sfx"
+					type="textarea" rows="3"
+					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
+					description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
+
+				<field
+					name="cache"
+					type="list"
+					default="1"
+					label="COM_MODULES_FIELD_CACHING_LABEL"
+					description="COM_MODULES_FIELD_CACHING_DESC">
+					<option
+						value="1">JGLOBAL_USE_GLOBAL</option>
+					<option
+						value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+				</field>
+
+				<field
+					name="cache_time"
+					type="text"
+					default="900"
+					label="COM_MODULES_FIELD_CACHE_TIME_LABEL"
+					description="COM_MODULES_FIELD_CACHE_TIME_DESC" />
+			</fieldset>
+		</fields>
+	</config>
+</extension>

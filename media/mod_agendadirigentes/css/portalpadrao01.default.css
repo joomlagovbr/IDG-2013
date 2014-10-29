@@ -1,0 +1,12 @@
+/* Complementacao ao estilo de modulo do portal padrao */
+/* depende das classes module-box-01 e module, em relacao ao css padrao */
+
+.compromissos-container p.period { border-bottom:1px solid #CFCDCD; padding:9px; margin:0; text-align: center; font-weight: bold; font-size: 1em !important }
+.compromissos-container .compromisso-horario-inicio .icon-fixed-width { color:#1b9501; }
+.compromissos-container .compromissos-lista { margin:0 !important; padding:0 !important; display: block; } /*overflow: auto; height:100px;*/
+.compromissos-container .compromissos-lista li { display:block; border-left:none !important; padding:12px !important;  color:#355075 }
+.compromissos-container .compromissos-lista a { font-weight: bold; color:#355075 }
+.compromissos-container .compromissos-lista a:hover { color:#000 }
+
+.module-box-01 .compromissos-container .compromissos-lista li { line-height: 1em !important }
+.module-box-01 .compromissos-container .compromissos-lista li.sem-compromissos-oficiais { text-align: center }
