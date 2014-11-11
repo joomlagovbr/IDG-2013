@@ -8,7 +8,8 @@
  */
 
 defined('_JEXEC') or die;
-echo '<'.$tag1.' '.$class.'>'."\n";
+if($tag1 != 'none')
+	echo '<'.$tag1.' '.$class.'>'."\n";
 ?>
 	<?php //titulo do modulo ?>
 	<?php if ($module->showtitle): ?> 
@@ -39,7 +40,8 @@ echo '<'.$tag1.' '.$class.'>'."\n";
 			$mod->title = (@$mod_params->alternative_title!='')? $mod_params->alternative_title : $mod->title;
 			$class = 'class="'.trim($class).'"';
 			
-			echo '<'.$tag2.' '.$class.'>'."\n";
+			if($tag2 != 'none')
+				echo '<'.$tag2.' '.$class.'>'."\n";
 			?>
 			<?php //titulo do modulo 2 ?>
 			<?php if ($mod->showtitle && $counter <= $numero_colunas): ?>
@@ -76,7 +78,8 @@ echo '<'.$tag1.' '.$class.'>'."\n";
 			<?php endif; ?>
 
 			<?php
-			echo '</'.$tag2.'>'."\n";
+			if($tag2 != 'none')
+				echo '</'.$tag2.'>'."\n";
 			$counter++;	
 		endforeach;
 	?>
@@ -94,5 +97,6 @@ echo '<'.$tag1.' '.$class.'>'."\n";
     </div>  
 	<?php endif; ?>
 <?php
-echo '</'.$tag1.'>'."\n";
+if($tag1 != 'none')
+	echo '</'.$tag1.'>'."\n";
 ?>

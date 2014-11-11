@@ -23,6 +23,8 @@
 				description="COM_AGENDADIRIGENTES_AUTORIDADES_VIEW_DEFAULT_DATE_DESC"
 				default=""
 				format="%Y-%m-%d"
+				maxlength="10"
+				size="10"
 				filter="user_utc"
 			/>
 		</fieldset>
