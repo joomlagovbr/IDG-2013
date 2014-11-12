@@ -1,0 +1,15 @@
+.banner-carousel .faixa { background: transparent url(../img/shadow-50.png) 0 0; height:20px; width:746px; position:relative; top: -20px; -webkit-border-radius:0 0 5px 5px; -moz-border-radius: 0 0 5px 5px; -ms-border-radius: 0 0 5px 5px; -o-border-radius: 0 0 5px 5px; border-radius: 0 0 5px 5px }
+.banner-carousel .banneritem img { -webkit-border-radius: 5px; -moz-border-radius: 5px; -ms-border-radius: 5px; -o-border-radius: 5px; border-radius: 5px }
+.banner-carousel .carousel-indicators-custom { position: absolute; top:0; right:4px; display: block; background: #136328; -webkit-border-radius:0 0 5px 0; -moz-border-radius: 0 0 5px 0; -ms-border-radius: 0 0 5px 0; -o-border-radius: 0 0 5px 0; border-radius: 0 0 5px 0 }
+.banner-carousel .carousel-indicators-custom li { display:block; float:left; width:20px; height:20px; position: relative; margin:0 !important; }
+.banner-carousel .carousel-indicators-custom li a { display:block; width:20px; height:20px; overflow: hidden; text-indent:-9999px; background: #136328 url(../img/bullets-branco-verde.gif) 0 0 no-repeat }
+.banner-carousel .carousel-indicators-custom li.active a,
+.banner-carousel .carousel-indicators-custom li a:hover { background:#FFB400 url(../img/bullets-branco-verde.gif) -21px 0 }
+.banner-carousel .carousel-indicators-custom li.last,
+.carousel-indicators-custom li.last a { -webkit-border-radius:0 0 5px 0; -moz-border-radius: 0 0 5px 0; -ms-border-radius: 0 0 5px 0; -o-border-radius: 0 0 5px 0; border-radius: 0 0 5px 0 }
+.banner-carousel .item { -webkit-transition-property: opacity; -moz-transition-property: opacity; -o-transition-property: opacity; transition-property: opacity }
+.banner-carousel .fading .carousel-inner > .item { display: block; position: absolute; left: 0 !important; opacity: 0; -moz-transition: .6s ease-in-out opacity; -webkit-transition: .6s ease-in-out opacity; -o-transition: .6s ease-in-out opacity; transition: .6s ease-in-out opacity }
+.banner-carousel .fading .carousel-inner > .active,
+.banner-carousel .fading .carousel-inner > .next.left { opacity: 1 }
+.banner-carousel .fading .carousel-inner > .next,
+.banner-carousel .fading .carousel-inner > .active.left { opacity: 0 }
