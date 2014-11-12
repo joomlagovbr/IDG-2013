@@ -15,7 +15,10 @@ main div.container {
         span.title { position: relative; top:12px }
         a.img-rounded { .rounded-corners(8px) !important; display:block; overflow:hidden; margin-bottom:10px; }
         //.span4 .img-rounded { .rounded-corners(8px) !important; display:block; width:230px; height:136px; overflow:hidden; margin-bottom:10px; }
-        .outstanding-footer { border-top:2px solid @cor-module-title-padrao; background:@cor-module-title-bkg-padrao; height:22px; margin:26px 0 0 0; padding:10px; clear:both; }
+        .outstanding-footer {
+            border-top:2px solid @cor-module-title-padrao; background:@cor-module-title-bkg-padrao; height:22px; margin:26px 0 0 0; padding:10px; clear:both;
+            .text { max-width: 80%; text-align: right }
+        }
         a.outstanding-link { font-size:0.7em; color:@cor-module-outstanding-link-padrao; text-transform:uppercase; line-height:1em; float:right; margin-right:7px;
             .text { display:block; padding:5px; float:left; }
             .icon-box {  display:block; float:right; width:12px; height:16px; padding:0px 4px 4px 6px; .rounded-corners(2px); .linear-gradient( @cor-module-title-padrao, lighten(@cor-module-title-padrao, 10%), darken(@cor-module-title-padrao, 10%) ); text-align:center;      }
@@ -161,6 +164,9 @@ main div.container {
         }
         
      }
+     .module-box-01-white { 
+        background: #FFF !important
+    }
      //fix module-box-01 internas
      #content.internas .module-box-01 {
         .header { 

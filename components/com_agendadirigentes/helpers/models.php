@@ -34,7 +34,7 @@ class AgendadirigentesModels
             if ( !empty($input_var) )
             {
                 if (preg_match($rule->getRegex(), $input_var))
-                    $params->set( $var, $input->get( $var));
+                    $params->set( $var, $input_var);
             }
             elseif(!empty($params_var) && !preg_match($rule->getRegex(), $params_var))
             {

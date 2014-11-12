@@ -5,6 +5,7 @@ CREATE TABLE `#__agendadirigentes_agendaalterada` (
   `data` date NOT NULL,
   `qtd_alteracoes` int(4) NOT NULL DEFAULT '0',
   `data_alteracao` DATETIME NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_dirigente`,`data`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
