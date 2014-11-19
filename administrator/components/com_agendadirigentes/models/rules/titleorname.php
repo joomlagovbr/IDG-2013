@@ -17,5 +17,5 @@ class JFormRuleTitleOrName extends JFormRule
          * @var         string
          * @since       2.5
          */
-        protected $regex = '^[^0-9]+$';
+        protected $regex = '^[^0-9\s\t\r\n]+';
 }

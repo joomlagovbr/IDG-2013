@@ -22,6 +22,18 @@
 				description="COM_AGENDADIRIGENTES_AUTORIDADES_VIEW_DEFAULT_DATE_DESC"
 				default=""
 			/>
+            <field name="limit" type="list"
+                    label="COM_AGENDADIRIGENTES_AUTORIDADES_VIEW_DEFAULT_LIMIT_LABEL" description="COM_AGENDADIRIGENTES_AUTORIDADES_VIEW_DEFAULT_LIMIT_DESC"
+                    class="chzn-color-state"
+                    size="1" default="0">
+                    <option value="0">COM_AGENDADIRIGENTES_AUTORIDADES_VIEW_DEFAULT_LIMIT_OPT_ALL</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+            </field>
 		</fieldset>
 	</fields>
 </metadata>
