@@ -27,7 +27,7 @@ $document->addStylesheet( JURI::root().'media/mod_agendadirigentes/css/portalpad
 				<i class="icon-fixed-width icon-time"><span class="hide"><?php echo JText::_('MOD_AGENDADIRIGENTES_FROM'); ?></span></i><span class="timestamp"><?php echo $item->horario_inicio ?></span>
 			</div>
 			<?php endif ?>
-			<a class="compromisso-link" href="<?php echo JURI::root() ?>index.php?option=com_agendadirigentes&view=autoridade&id=<?php echo $params->get('autoridade', 0); ?>&Itemid=<?php echo $params->get('itemid') ?>&dia=<?php echo $params->get('dia'); ?>">
+			<a class="compromisso-link" href="<?php echo JRoute::_("index.php?option=com_agendadirigentes&view=autoridade&id=".$params->get('autoridade', 0)."&Itemid=".$params->get('itemid')."&dia=".$params->get('dia') ); ?>">
 				<?php echo $item->title ?>
 			</a>
 		</li>
@@ -47,5 +47,5 @@ $document->addStylesheet( JURI::root().'media/mod_agendadirigentes/css/portalpad
 
 </div>
 <div class="footer">
-<a class="link" href="<?php echo JURI::root() ?>index.php?option=com_agendadirigentes&view=autoridades&Itemid=<?php echo $params->get('itemid') ?>"><?php echo JText::_('MOD_AGENDADIRIGENTES_LINK_VIEW_ALL'); ?></a>
+<a class="link" href="<?php echo JRoute::_( "index.php?option=com_agendadirigentes&view=autoridades&Itemid=".$params->get('itemid') ); ?>"><?php echo JText::_('MOD_AGENDADIRIGENTES_LINK_VIEW_ALL'); ?></a>
 </div>

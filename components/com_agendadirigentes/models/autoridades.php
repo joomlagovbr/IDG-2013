@@ -30,7 +30,6 @@ class AgendaDirigentesModelAutoridades extends JModelList
             $params = $app->getParams();
             $params->set('introtext', $app->input->get('introtext', '', 'HTML'));
 
-
             $this->setState('params', $params);
             parent::populateState();
     }
