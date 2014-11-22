@@ -44,7 +44,8 @@ if(!empty($alternative_title))
 if(!empty($position))
 {
 	$modules = JModuleHelper::getModules( $position );
-	if ($auto_divisor) {
+	if ($auto_divisor && count($modules) > 0)
+	{
 		$divisor = intval($grid_positions / count($modules));	
 		if($divisor >= ($grid_positions/$numero_colunas))
 			$moduleclass_sfx_level2 = trim($moduleclass_sfx_level2.' span'.$divisor);
