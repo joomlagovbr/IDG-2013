@@ -1,4 +1,4 @@
-Portal padrão em CMS Joomla 3.2.4
+Portal padrão em CMS Joomla 3.2.7
 ================
 
 Sobre este branch específico
