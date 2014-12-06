@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="3.2" method="upgrade">
+        <name>COM_AGENDADIRIGENTES</name>
+        <creationDate>Agosto 2014</creationDate>
+        <author>JUG Joomla Calango</author>
+        <authorEmail>rafaelberlanda@gmail.com</authorEmail>
+        <authorUrl>http://portalpadrao.joomlacalango.org</authorUrl>
+        <copyright>Copyright (c) 2013 - 2014 JUG Joomla Calango. Todos os direitos reservados.</copyright>
+        <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+        <version>1.0.0</version>
+        <description>COM_AGENDADIRIGENTES_DESCRIPTION</description> 
+        <install> <!-- Runs on install -->
+                <sql>
+                        <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+                </sql>
+        </install>
+        <uninstall> <!-- Runs on uninstall -->
+                <sql>
+                        <file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+                </sql>
+        </uninstall>
+        <!-- Runs on install/uninstall/update; New in 2.5 -->
+        <scriptfile>script.php</scriptfile>
+        <update>
+                <schemas>
+                        <schemapath type="mysql">sql/updates/mysql/</schemapath>
+                </schemas>
+        </update> 
+        <files folder="site">
+                <filename>agendadirigentes.php</filename>
+                <filename>controller.php</filename>
+                <filename>index.html</filename>
+                <folder>helpers</folder>
+                <folder>models</folder>
+                <folder>views</folder>
+        </files>
+        <languages folder="site/language">
+                <language tag="en-GB">en-GB.com_agendadirigentes.ini</language>
+                <language tag="pt-BR">pt-BR.com_agendadirigentes.ini</language>
+        </languages>
+        <media destination="com_agendadirigentes" folder="media">
+                <filename>index.html</filename>
+                <folder>css</folder>
+                <folder>fullcalendar</folder>
+                <folder>images</folder>
+                <folder>js</folder>
+        </media>
+        <administration>
+                <languages folder="admin/language">
+                        <language tag="en-GB">en-GB.com_agendadirigentes.ini</language>
+                        <language tag="en-GB">en-GB.com_agendadirigentes.sys.ini</language>
+                        <language tag="pt-BR">pt-BR.com_agendadirigentes.ini</language>
+                        <language tag="pt-BR">pt-BR.com_agendadirigentes.sys.ini</language>
+                </languages>
+                <!-- Administration Menu Section -->
+                <menu img="../media/com_agendadirigentes/images/icon-calendar.png">COM_AGENDADIRIGENTES_MENU</menu>
+                <submenu>
+                        <menu view="compromissos" link="option=com_agendadirigentes&amp;view=compromissos">COM_AGENDADIRIGENTES_MENU_COMPROMISSOS</menu>
+                        <menu view="dirigentes" link="option=com_agendadirigentes&amp;view=dirigentes">COM_AGENDADIRIGENTES_MENU_DIRIGENTES</menu>
+                        <menu view="categorias" link="option=com_categories&amp;extension=com_agendadirigentes">COM_AGENDADIRIGENTES_MENU_CATEGORIAS</menu>
+                        <menu view="cargos" link="option=com_agendadirigentes&amp;view=cargos">COM_AGENDADIRIGENTES_MENU_CARGOS</menu>
+                </submenu>
+                <files folder="admin">
+                        <filename>access.xml</filename>
+                        <filename>agendadirigentes.php</filename>
+                        <filename>config.xml</filename>
+                        <filename>controller.php</filename>
+                        <filename>index.html</filename>
+                        <filename>script.php</filename>
+                        <folder>assets</folder>
+                        <folder>controllers</folder>
+                        <folder>helpers</folder>
+                        <folder>models</folder>
+                        <folder>sql</folder>
+                        <folder>tables</folder>
+                        <folder>views</folder>
+                </files>
+        </administration> 
+        <!-- UPDATESERVER DEFINITION -->
+        <!-- <updateservers<name />
+                <server type="extension" priority="1" name="AgendaDirigentes Update Site">http://yourdomain.com/update/helloworld-update.xml</server>
+        </updateservers> -->
+</extension>

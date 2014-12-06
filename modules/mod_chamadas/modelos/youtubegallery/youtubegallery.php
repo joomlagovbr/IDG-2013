@@ -5,8 +5,6 @@ class ModeloYoutubegallery
 {
 	public function getListaModelo($params) 
 	{
-		// var_dump($params);
-		// die();
 		//Permissão de acesso
 		$user	= JFactory::getUser();
 		$groups	= implode(',', $user->getAuthorisedViewLevels());

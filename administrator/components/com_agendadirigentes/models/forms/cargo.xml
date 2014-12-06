@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addrulepath="/administrator/components/com_agendadirigentes/models/rules">
+        <fieldset name="details" addfieldpath="/administrator/components/com_agendadirigentes/models/fields">
+                <field
+                        name="id"
+                        type="hidden"
+                        filter="integer"
+                />
+                <field
+                        name="name"
+                        type="text"
+                        label="COM_AGENDADIRIGENTES_CARGOS_NAME_LABEL"
+                        description="COM_AGENDADIRIGENTES_CARGOS_NAME_DESC"
+                        size="40"
+                        maxlength="255"
+                        class="inputbox validate-cargo-name"
+                        default=""
+                        required="true"
+                        validate="titleorname"
+                        filter="string"
+                />
+                <field
+                        name="name_f"
+                        type="text"
+                        label="COM_AGENDADIRIGENTES_CARGOS_F_NAME_LABEL"
+                        description="COM_AGENDADIRIGENTES_CARGOS_F_NAME_DESC"
+                        size="40"
+                        maxlength="255"
+                        class="inputbox validate-cargo-name"
+                        default=""
+                        validate="titleorname"
+                        filter="string"
+                />
+                <field
+                        name="catid"
+                        type="categoriasrestritas"
+                        extension="com_agendadirigentes"
+                        label="COM_AGENDADIRIGENTES_CARGOS_CATID_LABEL"
+                        description="COM_AGENDADIRIGENTES_CARGOS_CATID_DESC"
+                        class="inputbox validate-cargo-catid"
+                        default=""
+                        required="true"
+                        validate="catid"
+                        filter="integer"
+                        restrictType="cargos"
+                >
+                        <option value="0">COM_AGENDADIRIGENTES_LIST_SELECT</option>
+                </field>
+                <field
+                        name="published"
+                        type="list"
+                        label="JPUBLISHED"
+                        description="COM_AGENDADIRIGENTES_CARGOS_PUBLISHED_DESC"
+                        size="1" 
+                        default="0"
+                        validate="boolean"
+                        filter="integer">
+                        <option value="1">JPUBLISHED</option>
+                        <option value="0">JUNPUBLISHED</option>
+                </field>
+                <field name="ordering"
+                        type="cargoordering"
+                        label="JFIELD_ORDERING_LABEL"
+                        description="JFIELD_ORDERING_DESC"
+                        filter="string"
+                        default="0"
+                />
+                <field
+                        name="featured"
+                        type="radio"
+                        label="COM_AGENDADIRIGENTES_CARGOS_FEATURED_LABEL"
+                        description="COM_AGENDADIRIGENTES_CARGOS_FEATURED_DESC"
+                        default="0"
+                        validate="boolean"
+                        filter="integer"
+                        >
+                        <option value="0">JNO</option>
+                        <option value="1">JYES</option>
+                </field>
+                <field
+                        name="permitir_sobreposicao"
+                        type="radio"
+                        label="COM_AGENDADIRIGENTES_CARGOS_ALLOW_TO_BE_OVERRIDDEN_LABEL"
+                        description="COM_AGENDADIRIGENTES_CARGOS_ALLOW_TO_BE_OVERRIDDEN_DESC"
+                        default="1"
+                        validate="boolean"
+                        filter="integer"
+                        >
+                        <option value="0">JNO</option>
+                        <option value="1">JYES</option>
+                </field>
+                <field
+                        name="realizar_sobreposicao"
+                        type="radio"
+                        label="COM_AGENDADIRIGENTES_CARGOS_ALLOW_TO_OVERRIDE_LABEL"
+                        description="COM_AGENDADIRIGENTES_CARGOS_ALLOW_TO_OVERRIDE_DESC"
+                        default="0"                        
+                        filter="string"
+                        >
+                        <option value="0">JNO</option>
+                        <option value="1">COM_AGENDADIRIGENTES_CARGOS_ALLOW_TO_OVERRIDE_CATEGORY</option>
+                        <option value="*">COM_AGENDADIRIGENTES_CARGOS_ALLOW_TO_OVERRIDE_ALL</option>
+                </field>
+        </fieldset>
+</form>

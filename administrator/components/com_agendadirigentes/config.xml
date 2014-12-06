@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+        <fieldset
+                name="general"
+                label="COM_AGENDADIRIGENTES_CONFIG_GENERAL_SETTINGS_LABEL"
+        >
+                <field
+                        name="fonte_nome_orgao"
+                        type="list"
+                        label="COM_AGENDADIRIGENTES_CONFIG_SOURCE_ORG_NAME_LABEL"
+                        description="COM_AGENDADIRIGENTES_CONFIG_SOURCE_ORG_NAME_DESC"
+                        default="custom"
+                        >                                
+                        <option value="custom">COM_AGENDADIRIGENTES_CONFIG_SOURCE_ORG_NAME_CUSTOM</option>
+                        <option value="site_name">COM_AGENDADIRIGENTES_CONFIG_SOURCE_ORG_NAME_SITE_NAME</option>
+                        <option value="tmpl_padraogoverno01">COM_AGENDADIRIGENTES_CONFIG_SOURCE_ORG_NAME_SITE_TMPL_PG01</option>
+                </field>
+                <field
+                        name="custom_nome_orgao"
+                        type="text"
+                        label="COM_AGENDADIRIGENTES_CONFIG_DESC_ORGAO_LABEL"
+                        description="COM_AGENDADIRIGENTES_CONFIG_DESC_ORGAO_DESC"
+                        default="Órgão do Poder Executivo Federal"
+                />
+                <field
+                        name="link_reportar_erro"
+                        type="textarea"
+                        cols="40"
+                        rows="4"
+                        label="COM_AGENDADIRIGENTES_CONFIG_LINK_REPORTE_ERRO_LABEL"
+                        description="COM_AGENDADIRIGENTES_CONFIG_LINK_REPORTE_ERRO_DESC"
+                        default=""
+                />
+                <field
+                        name="busca_itemid"
+                        type="menuitem"
+                        label="COM_AGENDADIRIGENTES_CONFIG_BUSCA_ITEMID_LABEL"
+                        description="COM_AGENDADIRIGENTES_CONFIG_BUSCA_ITEMID_DESC"
+                        >
+                        <option value="">JGLOBAL_SELECT_AN_OPTION</option>
+                </field>
+                <field
+                        name="permissionsType"
+                        type="list"
+                        label="COM_AGENDADIRIGENTES_CONFIG_PERMISSION_TYPE_LABEL"
+                        description="COM_AGENDADIRIGENTES_CONFIG_PERMISSION_TYPE_DESC"
+                        default="implicit"
+                >                                
+                        <option value="implicit">COM_AGENDADIRIGENTES_CONFIG_PERMISSION_TYPE_IMPLICIT</option>
+                        <option value="explicit">COM_AGENDADIRIGENTES_CONFIG_PERMISSION_TYPE_EXPLICIT</option>
+                </field>
+                <field
+                        name="editOwnState"
+                        type="list"
+                        label="COM_AGENDADIRIGENTES_CONFIG_EDITOWNSTATE_LABEL"
+                        description="COM_AGENDADIRIGENTES_CONFIG_EDITOWNSTATE_DESC"
+                        default="0"
+                >                                
+                        <option value="0">JNO</option>
+                        <option value="1">JYES</option>
+                </field>
+                <field
+                        name="allowFeature"
+                        type="list"
+                        label="COM_AGENDADIRIGENTES_CONFIG_ALLOWFEATURE_LABEL"
+                        description="COM_AGENDADIRIGENTES_CONFIG_ALLOWFEATURE_DESC"
+                        default="state"
+                >                                
+                        <option value="state">COM_AGENDADIRIGENTES_CONFIG_ALLOWFEATURE_ONCHANGESTATE</option>
+                        <option value="edit">COM_AGENDADIRIGENTES_CONFIG_ALLOWFEATURE_ONEDIT</option>
+                        <option value="superuser">COM_AGENDADIRIGENTES_CONFIG_ALLOWFEATURE_ONLYSUPER</option>
+                </field>
+                <field
+                        name="restricted_list_compromissos"
+                        type="list"
+                        label="COM_AGENDADIRIGENTES_CONFIG_RESTICTEDLIST_COMPROMISSOS_LABEL"
+                        description="COM_AGENDADIRIGENTES_CONFIG_RESTICTEDLIST_COMPROMISSOS_DESC"
+                        default="0"
+                >
+                        <option value="0">JNO</option>
+                        <option value="1">JYES</option>
+                </field>
+                <field
+                        name="restricted_list_cargos"
+                        type="list"
+                        label="COM_AGENDADIRIGENTES_CONFIG_RESTICTEDLIST_CARGOS_LABEL"
+                        description="COM_AGENDADIRIGENTES_CONFIG_RESTICTEDLIST_CARGOS_DESC"
+                        default="0"
+                >
+                        <option value="0">JNO</option>
+                        <option value="1">JYES</option>
+                </field>
+                <field
+                        name="restricted_list_dirigentes"
+                        type="list"
+                        label="COM_AGENDADIRIGENTES_CONFIG_RESTICTEDLIST_DIRIGENTES_LABEL"
+                        description="COM_AGENDADIRIGENTES_CONFIG_RESTICTEDLIST_DIRIGENTES_DESC"
+                        default="0"
+                >
+                        <option value="0">JNO</option>
+                        <option value="1">JYES</option>
+                </field>
+                <field
+                        name="permitir_participantes_locais"
+                        type="list"
+                        label="COM_AGENDADIRIGENTES_CONFIG_ALLOW_OVERRIDE_LABEL"
+                        description="COM_AGENDADIRIGENTES_CONFIG_ALLOW_OVERRIDE_DESC"
+                        default="1"
+                        >
+                        <option value="0">JNO</option>
+                        <option value="1">JYES</option>
+                </field>
+                <field
+                        name="permitir_participantes_externos"
+                        type="list"
+                        label="COM_AGENDADIRIGENTES_CONFIG_ALLOW_EXTERNAL_LABEL"
+                        description="COM_AGENDADIRIGENTES_CONFIG_ALLOW_EXTERNAL_DESC"
+                        default="1"
+                        >
+                        <option value="0">JNO</option>
+                        <option value="1">JYES</option>
+                </field>
+        </fieldset>
+        <fieldset
+                name="compromissos"
+                label="COM_AGENDADIRIGENTES_CONFIG_COMPROMISSOS_SETTINGS_LABEL"
+        >
+                <field
+                        name="exibir_horario_inicio"
+                        type="list"
+                        label="COM_AGENDADIRIGENTES_COMPROMISSOS_EXIBIR_HORARIO_INICIO_LABEL"
+                        description="COM_AGENDADIRIGENTES_COMPROMISSOS_EXIBIR_HORARIO_INICIO_DESC"
+                        default="1"
+                        >
+                        <option value="0">JHIDE</option>
+                        <option value="1">JSHOW</option>
+                </field>
+                <field
+                        name="exibir_horario_fim"
+                        type="list"
+                        label="COM_AGENDADIRIGENTES_COMPROMISSOS_EXIBIR_HORARIO_FIM_LABEL"
+                        description="COM_AGENDADIRIGENTES_COMPROMISSOS_EXIBIR_HORARIO_FIM_DESC"
+                        default="1"
+                        >
+                        <option value="0">JHIDE</option>
+                        <option value="1">JSHOW</option>
+                </field>
+                <field
+                        name="exibir_local"
+                        type="list"
+                        label="COM_AGENDADIRIGENTES_COMPROMISSO_PARAM_EXIBIR_LOCAL_LABEL"
+                        description="COM_AGENDADIRIGENTES_COMPROMISSO_PARAM_EXIBIR_LOCAL_DESC"
+                        default="1"
+                >                                
+                        <option value="0">JHIDE</option>
+                        <option value="1">JSHOW</option>
+                </field>
+                <field
+                        name="exibir_pauta"
+                        type="list"
+                        label="COM_AGENDADIRIGENTES_COMPROMISSO_PARAM_EXIBIR_PAUTA_LABEL"
+                        description="COM_AGENDADIRIGENTES_COMPROMISSO_PARAM_EXIBIR_PAUTA_DESC"
+                        default="1"
+                >                                
+                        <option value="0">JHIDE</option>
+                        <option value="1">JSHOW</option>
+                </field>
+                <field
+                        name="exibir_participantes_locais"
+                        type="list"
+                        label="COM_AGENDADIRIGENTES_COMPROMISSO_PARAM_EXIBIR_PARTICIPANTES_LOCAIS_LABEL"
+                        description="COM_AGENDADIRIGENTES_COMPROMISSO_PARAM_EXIBIR_PARTICIPANTES_LOCAIS_DESC"
+                        default="1"
+                        >
+                        <option value="0">JHIDE</option>
+                        <option value="1">JSHOW</option>
+                </field>
+                <field
+                        name="exibir_participantes_externos"
+                        type="list"
+                        label="COM_AGENDADIRIGENTES_COMPROMISSO_PARAM_EXIBIR_PARTICIPANTES_EXTERNOS_LABEL"
+                        description="COM_AGENDADIRIGENTES_COMPROMISSO_PARAM_EXIBIR_PARTICIPANTES_EXTERNOS_DESC"
+                        default="1"
+                        >
+                        <option value="0">JHIDE</option>
+                        <option value="1">JSHOW</option>
+                </field>  
+                <field
+                        name="permitir_sobreposicao"
+                        type="list"
+                        label="COM_AGENDADIRIGENTES_COMPROMISSO_PARAM_PERMITIR_SOBREPOSICAO_LABEL"
+                        description="COM_AGENDADIRIGENTES_COMPROMISSO_PARAM_PERMITIR_SOBREPOSICAO_DESC"
+                        default="1"
+                        >
+                        <option value="0">JNO</option>
+                        <option value="1">JYES</option>
+                </field>
+                <field
+                        name="permitir_vcard"
+                        type="list"
+                        label="COM_AGENDADIRIGENTES_CONFIG_ALLOW_VCARD_LABEL"
+                        description="COM_AGENDADIRIGENTES_CONFIG_ALLOW_VCARD_DESC"
+                        default="1"
+                >                                
+                        <option value="0">JNO</option>
+                        <option value="1">JYES</option>
+                </field>
+        </fieldset>
+        <fieldset
+                name="cmp_sidebar"
+                label="COM_AGENDADIRIGENTES_CONFIG_SIDEBAR_OPTIONS_LABEL"
+                description="COM_AGENDADIRIGENTES_CONFIG_SIDEBAR_OPTIONS_DESC"
+        >
+                <field
+                        name="allow_search_field"
+                        type="list"
+                        label="COM_AGENDADIRIGENTES_CONFIG_ALLOW_SEARCHFIELD_LABEL"
+                        description="COM_AGENDADIRIGENTES_CONFIG_ALLOW_SEARCHFIELD_DESC"
+                        default="0"
+                >                                
+                        <option value="0">JNO</option>
+                        <option value="1">JYES</option>
+                </field>
+                <field
+                        name="sidebar_custom_position"
+                        type="text"
+                        label="COM_AGENDADIRIGENTES_CONFIG_CUSTOM_POS_LABEL"
+                        description="COM_AGENDADIRIGENTES_CONFIG_CUSTOM_POS_DESC"
+                        default="com_agendadirigentes-sidebar"
+                />
+        </fieldset>
+        <fieldset
+                name="sharing"
+                label="COM_AGENDADIRIGENTES_CONFIG_SHARING_OPTIONS_LABEL"
+                description="COM_AGENDADIRIGENTES_CONFIG_SHARING_OPTIONS_DESC"
+        >
+                <field
+                        name="sharing_type"
+                        type="list"
+                        label="COM_AGENDADIRIGENTES_CONFIG_SHARING_TYPE_LABEL"
+                        description="COM_AGENDADIRIGENTES_CONFIG_SHARING_TYPE_DESC"
+                        default="module"
+                >                                
+                        <option value="none">COM_AGENDADIRIGENTES_CONFIG_SHARING_OPT_NONE</option>
+                        <option value="html">COM_AGENDADIRIGENTES_CONFIG_SHARING_OPT_HTML</option>
+                        <option value="module">COM_AGENDADIRIGENTES_CONFIG_SHARING_OPT_MODULE</option>
+                </field>
+                <field
+                        name="sharing_code"
+                        type="textarea"
+                        cols="40"
+                        rows="6"
+                        label="COM_AGENDADIRIGENTES_CONFIG_SHARING_CODE_LABEL"
+                        description="COM_AGENDADIRIGENTES_CONFIG_SHARING_CODE_DESC"
+                        default=""
+                        filter="raw"
+                />  
+                <field
+                        name="sharing_mod_position"
+                        type="text"
+                        label="COM_AGENDADIRIGENTES_CONFIG_SHARING_MODPOS_LABEL"
+                        description="COM_AGENDADIRIGENTES_CONFIG_SHARING_MODPOS_DESC"
+                        default="com_agendadirigentes-aut-btns-social"
+                />
+        </fieldset>
+        <fieldset
+                name="permissions"
+                label="JCONFIG_PERMISSIONS_LABEL"
+                description="JCONFIG_PERMISSIONS_DESC"
+        >
+                <field
+                        name="rules"
+                        type="rules"
+                        label="JCONFIG_PERMISSIONS_LABEL"
+                        class="inputbox"
+                        validate="rules"
+                        filter="rules"
+                        component="com_agendadirigentes"
+                        section="component"
+                />
+        </fieldset>
+</config>

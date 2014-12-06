@@ -29,43 +29,33 @@
 	</files>
 
 	<positions>
-		<position>debug</position>
-		<position>position-0</position>
-		<position>position-1</position>
-		<position>position-2</position>
-		<position>position-3</position>
-		<position>position-4</position>
-		<position>position-5</position>
-		<position>position-6</position>
-		<position>position-7</position>
-		<position>position-8</position>
-		<position>position-9</position>
-		<position>position-10</position>
-		<position>position-11</position>
-		<position>position-12</position>
-		<position>position-13</position>
-		<position>position-14</position>
 		<position>barra-do-governo</position>
-		<position>topo-main</position>
+		<position>debug</position>
+		<position>header-meio-direita</position>
+		<position>header-topo-direita</position>
+		<position>internas-direita</position>
+		<position>internas-rodape</position>
+		<position>internas-topo</position>
+		<position>menu-principal</position>
 		<position>menu-sobre</position>
+		<position>menus-rodape</position>
+		<position>pagina-inicial</position>
+		<position>pagina-interna-capa</position>
+		<position>topo-main</position>
 	</positions>
 
 	<config>
 		<fields name="params">
 			<fieldset name="advanced">
-
 				<field name="cor" type="list" default="verde"
 					label="Padrão de cores"
 					description="Padrão de cores utilizado."
 					filter="word"
 				>
-
 					<option value="amarelo">amarelo</option>
 					<option value="azul">azul</option>
 					<option value="branco">branco</option>
 					<option value="verde">verde</option>
-
-
 				</field>
 				<field name="font_style_url" type="text" default="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600,800,700"
 					label="URL de estilo de fonte"
@@ -108,7 +98,7 @@
 					<option value="1">SIM</option>
 					<option value="0">NÃO</option>
 				</field>
-				<field name="rodape_logo_brasil" type="list" default="1"
+				<field name="rodape_logo_brasil" type="list" default="0"
 					label="Exibir logo BRASIL"
 					description="Logo no rodapé do Governo Federal"
 					filter="integer"

@@ -130,6 +130,10 @@ class ModeloArticle_k2
 					$query->where('cont.catid = '.$cat);				
 				}
 			}
+
+// var_dump($params->get('buscar_cat_tag'));
+// var_dump($params->get('tags'));
+// 			die();
 			
 			
 			//Verifica se irá filtrar por tag
