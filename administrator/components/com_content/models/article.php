@@ -90,6 +90,9 @@ class ContentModelArticle extends JModelAdmin
 			// Reset the ID because we are making a copy
 			$this->table->id = 0;
 
+			// Reset hits because we are making a copy
+			$this->table->hits = 0;
+
 			// New category ID
 			$this->table->catid = $categoryId;
 
@@ -371,7 +374,7 @@ class ContentModelArticle extends JModelAdmin
 		$assoc = JLanguageAssociations::isEnabled();
 
 		// Check if article is associated
-		if ($id && $app->isSite() && $assoc)
+		if ($this->getState('article.id') && $app->isSite() && $assoc)
 		{
 			$associations = JLanguageAssociations::getAssociations('com_content', '#__content', 'com_content.item', $id);
 
@@ -662,10 +665,6 @@ class ContentModelArticle extends JModelAdmin
 		if ($assoc)
 		{
 			$languages = JLanguageHelper::getLanguages('lang_code');
-
-			// force to array (perhaps move to $this->loadFormData())
-			$data = (array) $data;
-
 			$addform = new SimpleXMLElement('<form />');
 			$fields = $addform->addChild('fields');
 			$fields->addAttribute('name', 'associations');
@@ -675,7 +674,7 @@ class ContentModelArticle extends JModelAdmin
 			$add = false;
 			foreach ($languages as $tag => $language)
 			{
-				if (empty($data['language']) || $tag != $data['language'])
+				if (empty($data->language) || $tag != $data->language)
 				{
 					$add = true;
 					$field = $fieldset->addChild('field');

@@ -225,6 +225,12 @@ class JApplicationCms extends JApplicationWeb
 	 */
 	public function enqueueMessage($msg, $type = 'message')
 	{
+		// Don't add empty messages.
+		if (!strlen($msg))
+		{
+			return;
+		}
+
 		// For empty queue, if messages exists in the session, enqueue them first.
 		$this->getMessageQueue();
 
@@ -916,7 +922,7 @@ class JApplicationCms extends JApplicationWeb
 				}
 				else
 				{
-					$type = null;
+					$type = 'message';
 				}
 
 				// Enqueue the message

@@ -58,6 +58,14 @@ jQuery(function () {
 		}
 	});
 	//fim botao de acao de voltar para o topo
+
+	//menus fechados
+	jQuery('#navigation-section nav.closed ul').hide();
+	jQuery('#navigation-section nav h2').click(function(){		
+		jQuery(this).next().slideToggle();
+		jQuery(this).parent().toggleClass('closed');
+	});	
+	//fim menus fechados
 });
 jQuery(window).resize(function(){
 	resize();

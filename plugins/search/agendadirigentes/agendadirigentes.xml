@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.1" type="plugin" group="search">
+	<name>plg_search_agendadirigentes</name>
+	<author>Joomla Calango</author>
+	<creationDate>Setembro 2014</creationDate>
+	<copyright>Copyright (c) 2013 - 2014 JUG Joomla Calango. Todos os direitos reservados.</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<authorEmail>rafaelberlanda@gmail.com</authorEmail>
+    <authorUrl>http://portalpadrao.joomlacalango.org</authorUrl>
+	<version>0.1.0</version>
+	<description>PLG_SEARCH_AGENDADIRIGENTES_XML_DESCRIPTION</description>
+	<files>
+		<filename plugin="agendadirigentes">agendadirigentes.php</filename>
+		<filename>index.html</filename>
+	</files>
+	<languages>
+		<language tag="en-GB">en-GB.plg_search_agendadirigentes.ini</language>
+		<language tag="pt-BR">pt-BR.plg_search_agendadirigentes.ini</language>
+	</languages>
+	<config>
+		<fields name="params">
+
+			<fieldset name="basic">
+				<field name="search_limit" type="text"
+					default="50"
+					description="JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC"
+					label="JFIELD_PLG_SEARCH_SEARCHLIMIT_LABEL"
+					size="5"
+				/>	
+				<field name="default_itemid" type="text"
+					default="0"
+					description="Default Itemid"
+					label="Default Itemid"
+					size="5"
+				/>	
+			</fieldset>
+		</fields>
+	</config>
+</extension>
