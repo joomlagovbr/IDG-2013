@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
 require_once __DIR__.'/../_helper.php';
 TmplK2Helper::removeCss(array('com_k2/css/k2.css'));
-TmplK2Helper::removeJs(array('com_k2/js/k2.js', 'js/mootools-core-uncompressed.js', 'js/core-uncompressed.js'));
+TmplK2Helper::removeJs(array('js/mootools-core.js', 'js/core.js', 'js/mootools-core-uncompressed.js', 'js/core-uncompressed.js', 'js/mootools-more.js', 'js/modal.js', 'SqueezeBox.initialize({});'));
 ?>
 <!-- Start K2 Item Layout -->
 <span id="startOfPageId<?php echo JRequest::getInt('id'); ?>"></span>
