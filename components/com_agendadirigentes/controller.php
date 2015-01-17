@@ -27,7 +27,7 @@ class AgendaDirigentesController extends JControllerLegacy
 		$this->input->set('view', $vName);
 
 		//evita cache nativo de view enquanto existe conflito entre parametros de data de agenda de autoridade e o cache nativo de views (Global Config > Cache)
-		if($view=='autoridade')
+		if($vName=='autoridade')
 			$cachable = false;
 
 		parent::display($cachable, $urlparams);
