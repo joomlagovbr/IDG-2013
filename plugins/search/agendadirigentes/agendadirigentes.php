@@ -19,7 +19,7 @@ class PlgSearchAgendadirigentes extends JPlugin
 	public function onContentSearchAreas()
 	{
 		static $areas = array(
-			'agendadirigentes' => PLG_SEARCH_AGENDADIRIGENTES_NAME
+			'agendadirigentes' => 'PLG_SEARCH_AGENDADIRIGENTES_NAME'
 		);
 
 		return $areas;
