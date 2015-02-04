@@ -110,7 +110,6 @@ function resize() {
 				{
 					jQuery(this).find('i').addClass('icon-chevron-down');
 					jQuery(this).find('i').removeClass('icon-chevron-up');
-					return true;
 				}
 			});	
 		}
