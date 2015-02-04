@@ -102,16 +102,15 @@ function resize() {
 			jQuery('#navigation h2').css('cursor', 'pointer');
 			jQuery('#navigation h2').click(function(){
 				if( !jQuery(this).next().is(':visible') )
-				{
-					jQuery(this).next().slideDown();
+				{					
 					jQuery(this).find('i').removeClass('icon-chevron-down');
 					jQuery(this).find('i').addClass('icon-chevron-up');
 				}
 				else
 				{
-					jQuery(this).next().slideUp();
 					jQuery(this).find('i').addClass('icon-chevron-down');
 					jQuery(this).find('i').removeClass('icon-chevron-up');
+					return true;
 				}
 			});	
 		}
