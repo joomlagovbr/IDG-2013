@@ -43,14 +43,16 @@ if(!empty($alternative_title))
 
 if(!empty($position))
 {
-	$modules = JModuleHelper::getModules( $position );
-	if ($auto_divisor && count($modules) > 0)
+	if($params->get('layout', 'default')=='_:default')
 	{
-		$divisor = intval($grid_positions / count($modules));	
-		if($divisor >= ($grid_positions/$numero_colunas))
-			$moduleclass_sfx_level2 = trim($moduleclass_sfx_level2.' span'.$divisor);
-		else
-			$moduleclass_sfx_level2 = trim($moduleclass_sfx_level2.' row');		
+		$modules = JModuleHelper::getModules( $position );
+		if ($auto_divisor) {
+			$divisor = intval($grid_positions / count($modules));	
+			if($divisor >= ($grid_positions/$numero_colunas))
+				$moduleclass_sfx_level2 = trim($moduleclass_sfx_level2.' span'.$divisor);
+			else
+				$moduleclass_sfx_level2 = trim($moduleclass_sfx_level2.' row');		
+		}	
 	}
 	require JModuleHelper::getLayoutPath('mod_container', $params->get('layout', 'default') );
 }
