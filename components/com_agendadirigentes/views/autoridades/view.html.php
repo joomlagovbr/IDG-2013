@@ -58,6 +58,13 @@ class AgendaDirigentesViewAutoridades extends JViewLegacy
 
             $this->introtext = $this->params->get('introtext', '');
             $this->document = JFactory::getDocument();
+
+
+            //correcao de valor de variavel de classe de pagina, nao informada
+            if( !isset($this->pageclass_sfx) )
+            {
+                $this->pageclass_sfx = '';
+            }
         }
 }
 

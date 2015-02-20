@@ -192,6 +192,12 @@ class AgendaDirigentesViewAutoridade extends JViewLegacy
                 }
             }
 
+            //correcao de valor de variavel de classe de pagina, nao informada
+            if( !isset($this->pageclass_sfx) )
+            {
+                $this->pageclass_sfx = '';
+            }
+
         }
 
         public function mergeParams($app_params, $item_params)

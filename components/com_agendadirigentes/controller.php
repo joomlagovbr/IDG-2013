@@ -30,7 +30,7 @@ class AgendaDirigentesController extends JControllerLegacy
 		if($vName=='autoridade')
 			$cachable = false;
 
-		@parent::display($cachable, $urlparams);
+		parent::display($cachable, $urlparams);
 
 		return $this;
 	}
