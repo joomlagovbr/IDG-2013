@@ -21,7 +21,12 @@ JHTML::script( JURI::root() . 'templates/padraogoverno01/html/mod_banners/js/ban
 			<?php $imageurl = $item->params->get('imageurl');?>
 			<?php $width = $item->params->get('width');?>
 			<?php $height = $item->params->get('height');?>
-			<?php $description = $item->description;?>
+			<?php
+				if(isset($item->description))
+					$description = $item->description;
+				else
+					$description = '';
+			?>
 			<?php if (BannerHelper::isImage($imageurl)) :?>
 				<?php // Image based banner ?>
 				<?php $alt = $item->params->get('alt');?>

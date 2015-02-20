@@ -19,7 +19,7 @@ if($this->templatevar != 'system'):
 	$this->document->addScript( JURI::root().'media/com_agendadirigentes/js/frontend.js' );
 	$script = "<script type=\"text/javascript\">\n"
 				."jQuery(document).ready(function() {\n"
-					."setCalendar('#autoridade-calendario', '".$this->params->get("dia")."', '".JURI::root()."index.php?option=com_agendadirigentes&view=autoridade&dia={DATA}&id=".$this->autoridade->id."&Itemid=".$this->Itemid."');\n"
+					."setCalendar('#autoridade-calendario', '".$this->params->get("dia")."', '".JRoute::_( "index.php?option=com_agendadirigentes&view=autoridade&dia={DATA}&id=".$this->autoridade->id."&Itemid=".$this->Itemid )."');\n"
 				."});\n"
 			  ."</script>\n";
 	$this->document->addCustomTag($script);
@@ -59,7 +59,7 @@ endif;
 				<?php else: ?>
 				<?php echo sprintf(
 							JText::_('COM_AGENDADIRIGENTES_TMPL_AUTORIDADE_AGENDA_CARGO_F')
-							, $this->autoridade->car_name );
+							, $this->autoridade->car_name_f );
 				 ?>
 				<?php endif ?>
 				<br>

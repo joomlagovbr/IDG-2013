@@ -36,10 +36,9 @@ class AgendaDirigentesViewAutoridade extends JViewLegacy
             
             if(@$this->autoridade->state < 1 || empty($this->autoridade))
             {
-                    JLog::add( JText::_('COM_AGENDADIRIGENTES_VIEW_AUTORIDADE_NOTFOUND'), JLog::WARNING, 'jerror');
-                    return false;                        
+                JLog::add( JText::_('COM_AGENDADIRIGENTES_VIEW_AUTORIDADE_NOTFOUND'), JLog::WARNING, 'jerror');
+                return false;                        
             }
-
 
             // Check for errors.
             if (count($errors = $this->get('Errors'))) 
@@ -66,13 +65,16 @@ class AgendaDirigentesViewAutoridade extends JViewLegacy
             $this->Itemid = $app->input->getInt('Itemid', 0);
             
             //page_heading
-            @$params_page_title = $this->params->get('page_title', '');
-            @$activeMenu_title = $activeMenu->title;
+            $params_page_title = $this->params->get('page_title', '');
+            $activeMenu_title = (isset($activeMenu->title))? $activeMenu->title : '';
+            $site_title = $app->getCfg('sitename', '');
 
-            if( empty($params_page_title) || $params_page_title==$activeMenu_title )
+            if( empty($params_page_title) || $params_page_title==$site_title || $params_page_title==$activeMenu_title )
             {
-                    if(@isset($this->autoridade->car_name)===false || @isset($this->autoridade->dir_name)===false)
-                            $this->page_heading = JText::_('COM_AGENDADIRIGENTES_VIEW_AUTORIDADE_PAGE_HEADING');
+                    if( !isset($this->autoridade->car_name) || !isset($this->autoridade->dir_name) )
+                    {
+                        $this->page_heading = JText::_('COM_AGENDADIRIGENTES_VIEW_AUTORIDADE_PAGE_HEADING');
+                    }
                     else
                     {
                         if($this->autoridade->sexo == 'M')
@@ -88,7 +90,7 @@ class AgendaDirigentesViewAutoridade extends JViewLegacy
                         {
                             $this->page_heading = sprintf(
                                                         JText::_('COM_AGENDADIRIGENTES_VIEW_AUTORIDADE_PAGE_HEADING_PART2_F')
-                                                        , $this->autoridade->car_name
+                                                        , $this->autoridade->car_name_f
                                                         , $this->autoridade->dir_name
                                                     );
                         }                            
