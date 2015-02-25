@@ -10,7 +10,7 @@ defined('_JEXEC') or die;
 $this->document->addStylesheet( JURI::root().'media/com_agendadirigentes/css/frontend.css' );
 
 ?>
-<div class="item-page<?php //echo $this->pageclass_sfx?>">
+<div class="item-page">
 	<h1 class="documentFirstHeading">
 		<?php echo $this->escape($this->page_heading); ?>
 	</h1>

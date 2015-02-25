@@ -59,7 +59,7 @@ endif;
 				<?php else: ?>
 				<?php echo sprintf(
 							JText::_('COM_AGENDADIRIGENTES_TMPL_AUTORIDADE_AGENDA_CARGO_F')
-							, $this->autoridade->car_name );
+							, $this->autoridade->car_name_f );
 				 ?>
 				<?php endif ?>
 				<br>

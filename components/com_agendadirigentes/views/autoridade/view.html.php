@@ -36,8 +36,8 @@ class AgendaDirigentesViewAutoridade extends JViewLegacy
             
             if(@$this->autoridade->state < 1 || empty($this->autoridade))
             {
-                    JLog::add( JText::_('COM_AGENDADIRIGENTES_VIEW_AUTORIDADE_NOTFOUND'), JLog::WARNING, 'jerror');
-                    return false;                        
+                JLog::add( JText::_('COM_AGENDADIRIGENTES_VIEW_AUTORIDADE_NOTFOUND'), JLog::WARNING, 'jerror');
+                return false;                        
             }
 
 
