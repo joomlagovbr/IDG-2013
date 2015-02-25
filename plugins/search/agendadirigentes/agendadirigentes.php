@@ -124,9 +124,9 @@ class PlgSearchAgendadirigentes extends JPlugin
 		{
 			foreach ($rows as $key => $row)
 			{
-				$rows[$key]->href = JURI::root() . 'index.php?option=com_agendadirigentes&view=autoridade&dia='
+				$rows[$key]->href = JRoute::_( 'index.php?option=com_agendadirigentes&view=autoridade&dia='
 										.$rows[$key]->data_inicial.'&id='.$rows[$key]->autoridade_id
-										.(($Itemid)? '&Itemid='.$Itemid : '');
+										.(($Itemid)? '&Itemid='.$Itemid : '') );
 				$rows[$key]->browsernav = 2;				
 			}
 		}

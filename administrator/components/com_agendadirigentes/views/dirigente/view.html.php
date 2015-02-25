@@ -28,7 +28,7 @@ class AgendaDirigentesViewDirigente extends JViewLegacy
           $this->form = $this->get('Form');
           $this->item = $this->get('Item');
           
-          if(is_null($this->item) || $this->item == 0)
+          if( empty($this->item) )
           {
             $this->item = new StdClass();
             $this->item->id = 0;
