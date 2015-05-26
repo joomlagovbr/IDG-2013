@@ -39,7 +39,10 @@ require_once(JPATH_SITE.DS.'components'.DS.'com_youtubegallery'.DS.'includes'.DS
 				<input name="vimeo_api_client_secret" style="width:400px;" value="<?php echo YouTubeGalleryMisc::getSettingValue('vimeo_api_client_secret'); ?>" />
 				</p>
 				
-				
+				<p>
+				Youtube Public API:<br/>
+				<input name="youtube_public_api" style="width:400px;" value="<?php echo YouTubeGalleryMisc::getSettingValue('youtube_public_api'); ?>" />
+				</p>
 				
 				
                 <input type="hidden" name="task" value="" />

@@ -201,7 +201,6 @@ class YouTubeGalleryMisc
 					
 				foreach($newlist as $theLinkItem)
 				{
-					
 					$item=$this->GrabVideoData($theLinkItem,$video_source);
 
 					if($item['videoid']!='')
@@ -246,7 +245,7 @@ class YouTubeGalleryMisc
 					}	
 						
 				}
-			
+				
 				$item=array(
 				'videosource'=>$vsn,
 				'videoid'=>$playlistid,
@@ -396,7 +395,6 @@ class YouTubeGalleryMisc
 			else
 				$theLink=$listitem;
 					
-				
 			if($vsn=='youtube' and !(strpos($theLink, '/embed/')===false))
 			{
 				//Convert Embed links to Address bar version
@@ -519,7 +517,6 @@ class YouTubeGalleryMisc
 								$theme_row_thumbnailstyle=$this->theme_row->thumbnailstyle;
 							else
 								$theme_row_thumbnailstyle='';
-							
 							
 							$videoitem=VideoSource_Youtube::getVideoData(
 												$videoid,
@@ -1538,8 +1535,10 @@ class YouTubeGalleryMisc
 
 		return $htmlcode;
 	}
-	
-	
+
+	//mudanca projeto portal padrao
+
+	//fim mudanca
 	
 	public static function ApplyPlayerParameters(&$settings,$youtubeparams)
 	{

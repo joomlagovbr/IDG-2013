@@ -44,13 +44,40 @@ class VideoSource_YoutubeUserUploads
 		
 		$userid=VideoSource_YoutubeUserUploads::extractYouTubeUserID($youtubeURL);
 		
-		if($userid=='')
+		//alteracoes projeto portal padrao
+		require_once JPATH_ADMINISTRATOR . '/components/com_youtubegallery/Google/_videos.php';
+		$videos = new YoutubeVideos();
+		$channelID = $videos->getChannelId($userid);
+		@$channelID = $channelID[0];
+		$video_raw = $videos->getVideosFromChannel( $channelID, 30, 'date' );
+
+// echo "<pre>";
+// var_dump($video_raw);
+// echo "</pre>";
+// die();
+
+		if($userid=='' || empty($channelID))
 			return $videolist; //user id not found
 		
+		for ($i=0,$limit=count($video_raw); $i < $limit; $i++)
+		{ 
+			$videolist[] = 'https://www.youtube.com/watch?v='.$video_raw[$i]['id']['videoId'];
+		}
+		
+		return $videolist;
+
+		/*
 		$url = 'http://gdata.youtube.com/feeds/api/users/'.$userid.'/uploads?v=2'.($spq!='' ? '&'.$spq : '' ) ; //&max-results=10
 
 		$xml=false;
 		$htmlcode=YouTubeGalleryMisc::getURLData($url);
+		// echo '<pre>';
+		// echo htmlentities($htmlcode);
+		// // var_dump($htmlcode);
+		// var_dump($userid);
+		// var_dump($youtubeURL);
+		// var_dump($optionalparameters_arr);
+		// die();
 
 		if(strpos($htmlcode,'<?xml version')===false)
 		{
@@ -81,9 +108,10 @@ class VideoSource_YoutubeUserUploads
 			}
 			
 		}
-		
+	var_dump($videolist);
+	die();	
 		return $videolist;
-		
+		*/
 	}
 	
 	public static function getUserInfo($youtubeURL,&$item)

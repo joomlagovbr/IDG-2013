@@ -120,8 +120,56 @@ class VideoSource_YouTube
 	{
 		if(phpversion()<5)
 			return "Update to PHP 5+";
-				
-		try{
+		
+		//
+		require_once JPATH_ADMINISTRATOR . '/components/com_youtubegallery/Google/_videos.php';
+		$youtubeVideos = new YoutubeVideos();
+		// var_dump($videoid);
+		$video_info = $youtubeVideos->getVideoInfo( $videoid );
+		// echo "<pre>";
+		// var_dump($video_info['items']);
+
+		if (isset($video_info['items']))
+		{
+			$video_info = $video_info['items'][0];
+		}
+
+		$blankArray['videoid']= $videoid;
+		$blankArray['title']= $video_info['snippet']['title'];
+		$blankArray['description']= $video_info['snippet']['description'];
+
+		if (isset($video_info['snippet']['publishedAt']))
+		{
+			$ts = strtotime($video_info['snippet']['publishedAt']);
+    		$blankArray['publisheddate']= date("Y-m-d H:i:s", $ts);
+		}
+
+		if (isset($video_info['contentDetails']['duration']))
+		{
+			$date = new DateTime('1970-01-01');
+			$date->add(new DateInterval( $video_info['contentDetails']['duration'] ));
+			$seconds = $date->format('s');
+			$minutes = $date->format('i');
+			$hours = $date->format('H');
+			$seconds = ($hours * 60 * 60) + ($minutes * 60) + $seconds;
+			$blankArray['duration'] = $seconds;
+		}
+
+		if (count($video_info['snippet']['thumbnails']) > 0)
+		{
+			$blankArray['imageurl'] = array();
+			foreach ($video_info['snippet']['thumbnails'] as $k => $v)
+			{
+				$blankArray['imageurl'][] = $v;
+			}
+			$blankArray['imageurl'] = implode(', ', $blankArray['imageurl']);
+		}
+
+
+		// die();
+		//
+
+		/*try{
 			
 
 
@@ -219,7 +267,7 @@ class VideoSource_YouTube
 		{
 			return 'Cannot get youtube video data.';
 		}
-		
+		*/
 		//print_r($blankArray);
 		//die;
 	
