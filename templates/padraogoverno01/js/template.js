@@ -73,10 +73,7 @@ jQuery(function () {
 	URL = URL.replace('https://', '');
 	URL = URL.substring(URL.indexOf('/'));
 	jQuery('#navigation-section > nav.closed > ul a').each(function(i){
-		if(i > 2)
-			return;
 		link = jQuery(this).attr('href');
-		// link = link.substring(link.indexOf('/', link.indexOf('//')));
 		if(URL == link)
 			jQuery(this).parents('nav.closed > ul').slideToggle();
 	});
