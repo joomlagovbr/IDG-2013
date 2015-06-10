@@ -130,8 +130,8 @@ class ModeloYoutubegallery
 				$lista[$i]->images->float_intro = '';
 				$lista[$i]->images->image_intro_alt = $lista[$i]->link;
 				$lista[$i]->images->image_intro_caption = $lista[$i]->title;
-				$lista[$i]->images->image_mq = $images[1];
-				$lista[$i]->images->image_hq = $images[2];
+				@$lista[$i]->images->image_mq = $images[1];
+				@$lista[$i]->images->image_hq = $images[2];
 			}
 
 			if( $params->get('image_item'.($i+1), '') != '') {

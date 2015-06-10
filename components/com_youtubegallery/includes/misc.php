@@ -203,7 +203,7 @@ class YouTubeGalleryMisc
 				{
 					$item=$this->GrabVideoData($theLinkItem,$video_source);
 
-					if($item['videoid']!='')
+					if( !empty($item['videoid']) )
 					{
 						//echo 'd:videoid='.$item['videoid'].'<br/>';
 						
@@ -245,7 +245,7 @@ class YouTubeGalleryMisc
 					}	
 						
 				}
-				
+
 				$item=array(
 				'videosource'=>$vsn,
 				'videoid'=>$playlistid,

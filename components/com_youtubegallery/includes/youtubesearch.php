@@ -47,54 +47,19 @@ class VideoSource_YoutubeSearch
 		$videolist=array();
 		
 		$keywords=VideoSource_YoutubeSearch::extractYouTubeSearchKeywords($youtubeURL);
-		//echo '$keywords='.$keywords.'<br/>';
-		//die;
-		
-		if($keywords=='')
-			return $videolist; //WRONG LINK id not found
-		
-		$url = 'https://gdata.youtube.com/feeds/api/videos?q='.urlencode($keywords).'&v=2&'.$spq;
-		
-		
-		$xml=false;
-		$htmlcode=YouTubeGalleryMisc::getURLData($url);
+		// echo '$keywords='.$keywords.'<br/>';
+		// die;
 
-		//print_r($htmlcode);
-		//die;
-
-		if(strpos($htmlcode,'<?xml version')===false)
+		require_once JPATH_ADMINISTRATOR . '/components/com_youtubegallery/Google/_videos.php';
+		$videos = new YoutubeVideos();
+		$videos_raw = $videos->getVideosFromSearch( $keywords );
+		$videolist = array();
+		for ($i=0, $limit=count($videos_raw); $i < $limit; $i++)
 		{
-			if(strpos($htmlcode,'Invalid id')===false)
-				return 'Cannot load data, Invalid id';
-
-			return 'Cannot load data, no connection';
+			$url = 'https://www.youtube.com/watch?v=' . $videos_raw[$i]->id->videoId;
+			$videolist[] = $url;
 		}
-		
-		$xml = simplexml_load_string($htmlcode);
-		
-		//print_r($xml);
-		//die;
-		
-		if($xml){
-			foreach ($xml->entry as $entry)
-			{
 
-				$media = $entry->children('http://search.yahoo.com/mrss/');
-				$link = $media->group->player->attributes();
-				if(isset($link))
-				{
-					if(isset($link['url']))
-					{
-						$videolist[] = $link['url'];
-					}
-				}//if(isset($link)
-			}//foreach ($xml->entry as $entry)
-		}//if($xml){
-		
-		
-		//print_r($videolist);
-		//die;
-		
 		return $videolist;
 		
 	}

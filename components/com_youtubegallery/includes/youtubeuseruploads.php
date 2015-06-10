@@ -51,11 +51,6 @@ class VideoSource_YoutubeUserUploads
 		@$channelID = $channelID[0];
 		$video_raw = $videos->getVideosFromChannel( $channelID, 30, 'date' );
 
-// echo "<pre>";
-// var_dump($video_raw);
-// echo "</pre>";
-// die();
-
 		if($userid=='' || empty($channelID))
 			return $videolist; //user id not found
 		
@@ -66,52 +61,6 @@ class VideoSource_YoutubeUserUploads
 		
 		return $videolist;
 
-		/*
-		$url = 'http://gdata.youtube.com/feeds/api/users/'.$userid.'/uploads?v=2'.($spq!='' ? '&'.$spq : '' ) ; //&max-results=10
-
-		$xml=false;
-		$htmlcode=YouTubeGalleryMisc::getURLData($url);
-		// echo '<pre>';
-		// echo htmlentities($htmlcode);
-		// // var_dump($htmlcode);
-		// var_dump($userid);
-		// var_dump($youtubeURL);
-		// var_dump($optionalparameters_arr);
-		// die();
-
-		if(strpos($htmlcode,'<?xml version')===false)
-		{
-			if(strpos($htmlcode,'Invalid id')===false)
-				return 'Cannot load data, Invalid id';
-
-			return 'Cannot load data, no connection';
-		}
-	
-		$xml = simplexml_load_string($htmlcode);
-		
-		if($xml)
-		{
-			foreach ($xml->entry as $entry)
-			{
-				
-				$attr=$entry->link[0]->attributes();
-
-				if(isset($entry->link[0]) && $attr['rel'] == 'alternate')
-				{
-					$videolist[] = $attr['href'];
-                    
-				} else {
-					$attr=$entry->link[1]->attributes();
-					$videolist[] = $attr['href'];
-                    		}
-
-			}
-			
-		}
-	var_dump($videolist);
-	die();	
-		return $videolist;
-		*/
 	}
 	
 	public static function getUserInfo($youtubeURL,&$item)

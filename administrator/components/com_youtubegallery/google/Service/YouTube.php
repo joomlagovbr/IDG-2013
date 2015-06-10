@@ -1156,6 +1156,10 @@ class Google_Service_YouTube extends Google_Service
                   'location' => 'query',
                   'type' => 'string',
                 ),
+                'playlistId' => array(
+                  'location' => 'body',
+                  'type' => 'string',
+                ),
               ),
             ),'update' => array(
               'path' => 'playlists',
