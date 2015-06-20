@@ -2,7 +2,7 @@
 /**
  * @package    Joomla.Installation
  *
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -19,7 +19,7 @@ JHtml::_('bootstrap.framework');
 JHtml::_('formbehavior.chosen', 'select');
 JHtml::_('behavior.framework', true);
 JHtml::_('behavior.keepalive');
-JHtml::_('behavior.formvalidation');
+JHtml::_('behavior.formvalidator');
 JHtml::_('script', 'installation/template/js/installation.js');
 
 // Load the JavaScript translated messages
@@ -42,52 +42,23 @@ JText::script('INSTL_FTP_SETTINGS_CORRECT');
 
 			});
 		</script>
-		<!-- portalpadrao: adicao de css do template padrao -->
-		<link rel="stylesheet" href="<?php echo JURI::root(); ?>templates/padraogoverno01/css/template-verde.css" type='text/css'/>
-    	<link rel="stylesheet" href="<?php echo JURI::root(); ?>templates/padraogoverno01/css/fontes.css" type='text/css'/>
-		<!-- portalpadrao: fim adicao de css do template padrao -->
-		<!-- portalpadrao: adicao barra do governo no head (vide topo e final do documento) -->
-		<style>
-		#barra-brasil li {line-height: inherit} /*ajuste para nao haver conflito com css do bootstrap*/
-		</style>
-		<!-- portalpadrao: fim adicao barra do governo no head (vide topo e final do documento) -->
 	</head>
 	<body>
-		<!-- portalpadrao: adicao barra do governo no topo (vide final do documento) -->
-		<div id="barra-brasil" style="background:#7F7F7F; height: 20px; padding:0 0 0 10px;display:block;"> 
-			<ul id="menu-barra-temp" style="list-style:none;">
-				<li style="display:inline; float:left;padding-right:10px; margin-right:10px; border-right:1px solid #EDEDED"><a href="http://brasil.gov.br" style="font-family:sans,sans-serif; text-decoration:none; color:white;">Portal do Governo Brasileiro</a></li> 
-				<li><a style="font-family:sans,sans-serif; text-decoration:none; color:white;" href="http://epwg.governoeletronico.gov.br/barra/atualize.html">Atualize sua Barra de Governo</a></li>
-			</ul>
-		</div>
-		<!-- portalpadrao: fim adicao barra do governo no topo (vide final do documento) -->
-		<!-- portalpadrao: adicao de cabecalho especifico -->
-		<header>
-            <div class="container">
-                <div class="row-fluid">
-                    <div class="span12 small" id="logo" align="center">
-                        <a title="Nome principal" href="http://github.com/joomlagovbr" target="_blank">
-                            <h1 class="portal-title corto">Portal Institucional Padr&atilde;o do Governo Federal</h1>
-                            <span class="portal-description">instalador para o CMS Joomla!</span>
-                        </a>
-                    </div>
-                    <!-- fim .span8 -->
-
-                </div>
-                <!-- fim .row-fluid -->
-            </div>
-            <!-- fim div.container -->
-        </header>
-		<!-- portalpadrao: fim adicao de cabecalho especifico -->
 		<!-- Header -->
 		<div class="header">
-			<!-- portalpadrao: trecho do instalador original comentado -->
-			<!-- <img src="<?php echo $this->baseurl ?>/template/images/joomla.png" alt="Joomla" />
-			<hr /> -->
-			<!-- portalpadrao: fim trecho do instalador original comentado -->
+			<img src="<?php echo $this->baseurl ?>/template/images/joomla.png" alt="Joomla" />
+			<hr />
 			<h5>
 				<?php
-				$joomla = '<a href="http://www.joomla.org" target="_blank">Joomla!</a><sup>&#174;</sup>';
+				// Fix wrong display of Joomla!® in RTL language
+				if (JFactory::getLanguage()->isRTL())
+				{
+					$joomla = '<a href="http://www.joomla.org" target="_blank">Joomla!</a><sup>&#174;&#x200E;</sup>';
+				}
+				else
+				{
+					$joomla = '<a href="http://www.joomla.org" target="_blank">Joomla!</a><sup>&#174;</sup>';
+				}
 				$license = '<a href="http://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank">' . JText::_('INSTL_GNU_GPL_LICENSE') . '</a>';
 				echo JText::sprintf('JGLOBAL_ISFREESOFTWARE', $joomla, $license);
 				?>
@@ -158,8 +129,5 @@ JText::script('INSTL_FTP_SETTINGS_CORRECT');
 			}
 			initElements();
 		</script>
-		<!-- portalpadrao: adicao barra do governo no final do documento -->
-		<script src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script><noscript>Barra do governo federal depende de javascript habilitado.</noscript>
-		<!-- portalpadrao: fim adicao barra do governo no final do documento -->
 	</body>
 </html>

@@ -3,7 +3,7 @@
  * @package     Joomla.Libraries
  * @subpackage  UCM
  *
- * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -46,9 +46,7 @@ defined('JPATH_PLATFORM') or die;
  * @property-read  string  $core_xreference
  * @property-read  string  $core_typeid
  *
- * @package     Joomla.Libraries
- * @subpackage  UCM
- * @since       3.1
+ * @since  3.1
  */
 class JUcmType implements JUcm
 {
@@ -200,6 +198,7 @@ class JUcmType implements JUcm
 		$query->select('ct.type_id');
 		$query->from($this->db->quoteName('#__content_types', 'ct'));
 		$query->where($this->db->quoteName('ct.type_alias') . ' = ' . $this->db->q($alias));
+
 		$this->db->setQuery($query);
 
 		$id = $this->db->loadResult();
