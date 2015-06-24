@@ -90,6 +90,9 @@
 					<option value="small">small - diminuir fonte</option>
 					<option value="big">big - aumentar fonte</option>
 				</field>
+				<field name="emblema" type="media" default=""
+					label="Emblema"
+					description="Para o caso de instituições militares, informe o caminho do emblema, a partir do diretório /images. Há exemplos de emblemas no endereço /images/exemplo_emblemas . Tamanho máximo preferencial: 112px de largura por 80px de altura" />
 				<field name="rodape_acesso_informacao" type="list" default="1"
 					label="Exibir logo acesso à informação"
 					description="Logo no rodapé do acesso à informação"
