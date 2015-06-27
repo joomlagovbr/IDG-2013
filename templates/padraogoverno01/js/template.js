@@ -107,6 +107,15 @@ function init() {
 
 	//paginas internas:
 	delaySocialItems();
+
+	//remocao de conflito com tooltips de mootools
+	// jQuery('.hasTooltip').tooltip('disable');
+	// jQuery('[rel=tooltip]').tooltip('disable');
+	jQuery('.hasTooltip').mouseout(function(){
+		// jQuery(this).tooltip('disable');
+		jQuery(this).show();
+	});
+
 }
 
 function resize() {
