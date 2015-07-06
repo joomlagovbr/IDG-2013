@@ -14,8 +14,6 @@ defined('_JEXEC') or die;
 $span_unit = 12 / count($items->name);
 for ($i=0, $limit = count($items->name); $i < $limit; $i++):
 	$class = 'module span' . $span_unit;
-	if($i==0)
-		$span .= ' no-margin';
 ?>
 	<div class="<?php echo $class ?>">
 		<div class="video">

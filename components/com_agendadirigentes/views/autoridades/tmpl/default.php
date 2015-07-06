@@ -14,11 +14,6 @@ $this->document->addStylesheet( JURI::root().'media/com_agendadirigentes/css/fro
 	<h1 class="documentFirstHeading">
 		<?php echo $this->escape($this->page_heading); ?>
 	</h1>
-	<?php if (!empty($this->introtext)): ?>
-		<div class="description">
-			<?php echo $this->introtext; ?>
-		</div>
-	<?php endif; ?>
 	<?php if(@empty($this->items) || @count($this->items)==0): ?>
 		<p>N&atilde;o foram encontradas autoridades cadastradas.</p>
 	<?php endif; ?>
