@@ -50,7 +50,7 @@ if(!empty($position))
 			$count_modules = count($modules);
 			if($count_modules == 0)
 				$count_modules = 1;
-			$divisor = intval($grid_positions / count($modules));
+			$divisor = intval($grid_positions / $count_modules);
 			if($divisor >= ($grid_positions/$numero_colunas))
 				$moduleclass_sfx_level2 = trim($moduleclass_sfx_level2.' span'.$divisor);
 			else
