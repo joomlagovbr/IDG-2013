@@ -122,7 +122,7 @@ class VideoSource_YouTube
 			return "Update to PHP 5+";
 		
 		//
-		require_once JPATH_ADMINISTRATOR . '/components/com_youtubegallery/Google/_videos.php';
+		require_once JPATH_ADMINISTRATOR . '/components/com_youtubegallery/google/_videos.php';
 		$youtubeVideos = new YoutubeVideos();
 		// var_dump($videoid);
 		$video_info = $youtubeVideos->getVideoInfo( $videoid );

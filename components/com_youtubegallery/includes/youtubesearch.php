@@ -50,7 +50,7 @@ class VideoSource_YoutubeSearch
 		// echo '$keywords='.$keywords.'<br/>';
 		// die;
 
-		require_once JPATH_ADMINISTRATOR . '/components/com_youtubegallery/Google/_videos.php';
+		require_once JPATH_ADMINISTRATOR . '/components/com_youtubegallery/google/_videos.php';
 		$videos = new YoutubeVideos();
 		$videos_raw = $videos->getVideosFromSearch( $keywords );
 		$videolist = array();

@@ -45,7 +45,7 @@ class VideoSource_YoutubeUserUploads
 		$userid=VideoSource_YoutubeUserUploads::extractYouTubeUserID($youtubeURL);
 		
 		//alteracoes projeto portal padrao
-		require_once JPATH_ADMINISTRATOR . '/components/com_youtubegallery/Google/_videos.php';
+		require_once JPATH_ADMINISTRATOR . '/components/com_youtubegallery/google/_videos.php';
 		$videos = new YoutubeVideos();
 		$channelID = $videos->getChannelId($userid);
 		@$channelID = $channelID[0];
