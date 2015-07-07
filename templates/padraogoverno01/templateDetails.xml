@@ -12,14 +12,21 @@
 	<description>Mais informacoes na URL do github.</description>
 
 	<files>
+		<folder>bootstrap</folder>
 		<folder>css</folder>
+		<folder>font-awesome</folder>
+		<folder>fonts</folder>
 		<folder>html</folder>
 		<folder>images</folder>
-		<folder>javascript</folder>
+		<folder>img</folder>
 		<folder>fonts</folder>
+		<folder>jplayer</folder>
 		<folder>language</folder>
+		<folder>js</folder>
+		<folder>less</folder>
 		<filename>index.html</filename>
 		<filename>index.php</filename>
+		<filename>helper.php</filename>
 		<filename>templateDetails.xml</filename>
 		<filename>template_preview.png</filename>
 		<filename>template_thumbnail.png</filename>
