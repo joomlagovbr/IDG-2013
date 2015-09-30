@@ -4,7 +4,7 @@ function completarValores( obj, fillValues )
 
 	medias = new Array();
 
-	if(value=='' && obj.parent().parent().find('*[name="jform[params][name]"]').val() != ''  && obj.parent().parent().find('*[name="jform[params][description]"]').val() != '')
+	if(value=='' && obj.parent().parent().find('*[name^="name-"]').val() != ''  && obj.parent().parent().find('*[name^="description-"]').val() != '')
 	{
 		if(window.confirm('Apagar dados?'))
 		{
@@ -46,9 +46,9 @@ function completarValores( obj, fillValues )
 
 			title = data.items[0].snippet.title;
 			description = data.items[0].snippet.description;
-	    	obj.parent().parent().find('*[name="jform[params][original]"]').val(description);
-    		obj.parent().parent().find('*[name="jform[params][name]"]').val(title);
-    		obj.parent().parent().find('*[name="jform[params][description]"]').val(description);
+	    	obj.parent().parent().find('*[name^="original-"]').val(description);
+    		obj.parent().parent().find('*[name^="name-"]').val(title);
+    		obj.parent().parent().find('*[name^="description-"]').val(description);
 
 
     		if(obj.parent().find('iframe').size()==0)
@@ -65,7 +65,7 @@ function completarValores( obj, fillValues )
 	    		html += '<label><input type="radio" name="'+elementName+'" onClick="limitarDescricao(this, \'caracteres\')" />';
 	    		html += '&nbsp; Limitar a <input type="text" class="textLimit" value="'+qtdCaracteres+'" style="width:30px !important"> caracteres.</label>';
 	    		html += '<label><input type="radio" name="'+elementName+'" onClick="limitarDescricao(this, \'original\')" />&nbsp; Original.</label>';
-	    		obj.parent().parent().find('*[name="jform[params][name]"]').parent().append(html);
+	    		obj.parent().parent().find('*[name^="name-"]').parent().append(html);
     		}    		
 		});	
 	};
@@ -81,36 +81,36 @@ function completarValores( obj, fillValues )
 
 function limitarDescricao( elm, criterio )
 {
-	desc = jQuery(elm).parent().parent().parent().find('*[name="jform[params][original]"]').val();
+	desc = jQuery(elm).parent().parent().parent().find('*[name^="original-"]').val();
 
 	if(criterio=='ponto')
 	{
 		desc = desc.substr(0, desc.indexOf('.')+1);
-		jQuery(elm).parent().parent().parent().find('*[name="jform[params][description]"]').val(desc);
+		jQuery(elm).parent().parent().parent().find('*[name^="description-"]').val(desc);
 	}
 	else if(criterio=='caracteres')
 	{
 		qtd = Number( jQuery(elm).parent().find('input[type="text"]').val() );
 		desc = desc.substr(0, qtd+1);
-		jQuery(elm).parent().parent().parent().find('*[name="jform[params][description]"]').val(desc);
+		jQuery(elm).parent().parent().parent().find('*[name^="description-"]').val(desc);
 	}
 	else if(criterio=='original')
 	{
-		desc = jQuery(elm).parent().parent().parent().find('*[name="jform[params][original]"]').val();
-		jQuery(elm).parent().parent().parent().find('*[name="jform[params][description]"]').val( desc );
+		desc = jQuery(elm).parent().parent().parent().find('*[name^="original-"]').val();
+		jQuery(elm).parent().parent().parent().find('*[name^="description-"]').val( desc );
 	}
 	return;
 }
 
 function apagarExibicaoEdados( elm )
 {
-	elm.parent().parent().find('*[name="jform[params][url]"]').next().next().remove();
-	elm.parent().parent().find('*[name="jform[params][url]"]').next().remove();
-	elm.parent().parent().find('*[name="jform[params][name]"]').val('');
-	elm.parent().parent().find('*[name="jform[params][description]"]').val('');
-	elm.parent().parent().find('*[name="jform[params][original]"]').val('');
-	elm.parent().parent().find('*[name="jform[params][name]"]').next().next().next().next().remove();
-	elm.parent().parent().find('*[name="jform[params][name]"]').next().next().next().remove();
-	elm.parent().parent().find('*[name="jform[params][name]"]').next().next().remove();
-	elm.parent().parent().find('*[name="jform[params][name]"]').next().remove();
+	elm.parent().parent().find('*[name^="url-"]').next().next().remove();
+	elm.parent().parent().find('*[name^="url-"]').next().remove();
+	elm.parent().parent().find('*[name^="name-"]').val('');
+	elm.parent().parent().find('*[name^="description-"]').val('');
+	elm.parent().parent().find('*[name^="original-"]').val('');
+	elm.parent().parent().find('*[name^="name-"]').next().next().next().next().remove();
+	elm.parent().parent().find('*[name^="name-"]').next().next().next().remove();
+	elm.parent().parent().find('*[name^="name-"]').next().next().remove();
+	elm.parent().parent().find('*[name^="name-"]').next().remove();
 }

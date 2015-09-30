@@ -12,4 +12,8 @@ jQuery(function () {
 			jQuery('.banner-carousel').carousel('cycle');
 		}, 1);		
 	});	
+	jQuery(window).load(function(){
+		pos = jQuery('.banner-carousel .banneritem img').eq(0).height() - jQuery('.banner-carousel .banneritem .faixa').eq(0).height();
+		jQuery('.banner-carousel .carousel-indicators').css('top', pos + 'px');
+	});
 });
