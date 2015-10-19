@@ -19,7 +19,7 @@ TmplAllvideosHelper::addJs(JURI::root().'templates/padraogoverno01/jplayer/js/jq
 $extension = substr($output->source, strrpos($output->source, '.')+1);
 $namefile = substr($output->source, strrpos($output->source, '/')+1);
 $output->newsource = JURI::root().$output->folder.'/'.$namefile;
-?>as fdasdf asdf asdf asf
+?>
  <!-- inicio jplayer -->
   <div class="jp-audio">    
     <div id="jplayer_<?php echo $output->playerID; ?>" class="jp-jplayer"></div>

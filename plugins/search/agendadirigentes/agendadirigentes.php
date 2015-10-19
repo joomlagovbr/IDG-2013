@@ -19,7 +19,7 @@ class PlgSearchAgendadirigentes extends JPlugin
 	public function onContentSearchAreas()
 	{
 		static $areas = array(
-			'agendadirigentes' => PLG_SEARCH_AGENDADIRIGENTES_NAME
+			'agendadirigentes' => 'PLG_SEARCH_AGENDADIRIGENTES_NAME'
 		);
 
 		return $areas;
@@ -124,9 +124,9 @@ class PlgSearchAgendadirigentes extends JPlugin
 		{
 			foreach ($rows as $key => $row)
 			{
-				$rows[$key]->href = JURI::root() . 'index.php?option=com_agendadirigentes&view=autoridade&dia='
+				$rows[$key]->href = JRoute::_( 'index.php?option=com_agendadirigentes&view=autoridade&dia='
 										.$rows[$key]->data_inicial.'&id='.$rows[$key]->autoridade_id
-										.(($Itemid)? '&Itemid='.$Itemid : '');
+										.(($Itemid)? '&Itemid='.$Itemid : '') );
 				$rows[$key]->browsernav = 2;				
 			}
 		}
