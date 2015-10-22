@@ -1,4 +1,5 @@
-Portal padrão em CMS Joomla 3.3.x
+Portal padrão em CMS Joomla 3.x
+Atenção! Após baixar o pacote, atualize a instalação imediatamente para Joomla 3.4.5
 ================
 
 Sobre esta versão
