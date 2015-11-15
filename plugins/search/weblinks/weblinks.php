@@ -3,7 +3,7 @@
  * @package     Joomla.Plugin
  * @subpackage  Search.weblinks
  *
- * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -14,9 +14,7 @@ require_once JPATH_SITE . '/components/com_weblinks/helpers/route.php';
 /**
  * Weblinks search plugin.
  *
- * @package     Joomla.Plugin
- * @subpackage  Search.weblinks
- * @since       1.6
+ * @since  1.6
  */
 class PlgSearchWeblinks extends JPlugin
 {
@@ -62,9 +60,7 @@ class PlgSearchWeblinks extends JPlugin
 	public function onContentSearch($text, $phrase = '', $ordering = '', $areas = null)
 	{
 		$db = JFactory::getDbo();
-		$app = JFactory::getApplication();
-		$user = JFactory::getUser();
-		$groups = implode(',', $user->getAuthorisedViewLevels());
+		$groups = implode(',', JFactory::getUser()->getAuthorisedViewLevels());
 
 		$searchText = $text;
 
@@ -187,7 +183,7 @@ class PlgSearchWeblinks extends JPlugin
 		->order($order);
 
 		// Filter by language.
-		if ($app->isSite() && JLanguageMultilang::isEnabled())
+		if (JFactory::getApplication()->isSite() && JLanguageMultilang::isEnabled())
 		{
 			$tag = JFactory::getLanguage()->getTag();
 			$query->where('a.language in (' . $db->quote($tag) . ',' . $db->quote('*') . ')')

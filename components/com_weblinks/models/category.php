@@ -3,18 +3,18 @@
  * @package     Joomla.Site
  * @subpackage  com_weblinks
  *
- * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('_JEXEC') or die;
 
+use Joomla\Registry\Registry;
+
 /**
  * Weblinks Component Weblink Model
  *
- * @package     Joomla.Site
- * @subpackage  com_weblinks
- * @since       1.5
+ * @since  1.5
  */
 class WeblinksModelCategory extends JModelList
 {
@@ -37,7 +37,8 @@ class WeblinksModelCategory extends JModelList
 	 * Constructor.
 	 *
 	 * @param   array  An optional associative array of configuration settings.
-	 * @see     JController
+	 *
+	 * @see     JControllerLegacy
 	 * @since   1.6
 	 */
 	public function __construct($config = array())
@@ -58,16 +59,14 @@ class WeblinksModelCategory extends JModelList
 	/**
 	 * The category that applies.
 	 *
-	 * @access    protected
-	 * @var        object
+	 * @var  object
 	 */
 	protected $_category = null;
 
 	/**
 	 * The list of other weblink categories.
 	 *
-	 * @access    protected
-	 * @var        array
+	 * @var  array
 	 */
 	protected $_categories = null;
 
@@ -86,10 +85,11 @@ class WeblinksModelCategory extends JModelList
 		{
 			if (!isset($this->_params))
 			{
-				$params = new JRegistry;
+				$params = new Registry;
 				$params->loadString($item->params);
 				$item->params = $params;
 			}
+
 			// Get the tags
 			$item->tags = new JHelperTags;
 			$item->tags->getItemTags('com_weblinks.weblink', $item->id);
@@ -99,15 +99,15 @@ class WeblinksModelCategory extends JModelList
 	}
 
 	/**
-	 * Method to build an SQL query to load the list data.
+	 * Method to get a JDatabaseQuery object for retrieving the data set from a database.
 	 *
-	 * @return  string    An SQL query
+	 * @return  JDatabaseQuery   A JDatabaseQuery object to retrieve the data set.
+	 *
 	 * @since   1.6
 	 */
 	protected function getListQuery()
 	{
-		$user = JFactory::getUser();
-		$groups = implode(',', $user->getAuthorisedViewLevels());
+		$groups = implode(',', JFactory::getUser()->getAuthorisedViewLevels());
 
 		// Create a new query object.
 		$db = $this->getDbo();
@@ -125,8 +125,9 @@ class WeblinksModelCategory extends JModelList
 				->join('LEFT', '#__categories AS c ON c.id = a.catid')
 				->where('c.access IN (' . $groups . ')');
 
-			//Filter by published category
+			// Filter by published category
 			$cpublished = $this->getState('filter.c.published');
+
 			if (is_numeric($cpublished))
 			{
 				$query->where('c.published = ' . (int) $cpublished);
@@ -136,24 +137,24 @@ class WeblinksModelCategory extends JModelList
 		// Join over the users for the author and modified_by names.
 		$query->select("CASE WHEN a.created_by_alias > ' ' THEN a.created_by_alias ELSE ua.name END AS author")
 			->select("ua.email AS author_email")
-
 			->join('LEFT', '#__users AS ua ON ua.id = a.created_by')
 			->join('LEFT', '#__users AS uam ON uam.id = a.modified_by');
 
 		// Filter by state
 
 		$state = $this->getState('filter.state');
+
 		if (is_numeric($state))
 		{
 			$query->where('a.state = ' . (int) $state);
 		}
+
 		// do not show trashed links on the front-end
 		$query->where('a.state != -2');
 
 		// Filter by start and end dates.
 		$nullDate = $db->quote($db->getNullDate());
-		$date = JFactory::getDate();
-		$nowDate = $db->quote($date->toSql());
+		$nowDate  = $db->quote(JFactory::getDate()->toSql());
 
 		if ($this->getState('filter.publish_date'))
 		{
@@ -169,6 +170,7 @@ class WeblinksModelCategory extends JModelList
 
 		// Filter by search in title
 		$search = $this->getState('list.filter');
+
 		if (!empty($search))
 		{
 			$search = $db->quote('%' . $db->escape($search, true) . '%');
@@ -176,7 +178,12 @@ class WeblinksModelCategory extends JModelList
 		}
 
 		// Add the list ordering clause.
-		$query->order($db->escape($this->getState('list.ordering', 'a.ordering')) . ' ' . $db->escape($this->getState('list.direction', 'ASC')));
+		$query->order(
+			$db->escape(
+				$this->getState('list.ordering', 'a.ordering')) . ' ' . $db->escape($this->getState('list.direction', 'ASC')
+			)
+		);
+
 		return $query;
 	}
 
@@ -203,23 +210,28 @@ class WeblinksModelCategory extends JModelList
 		$this->setState('list.filter', $app->input->getString('filter-search'));
 
 		$orderCol = $app->input->get('filter_order', 'ordering');
+
 		if (!in_array($orderCol, $this->filter_fields))
 		{
 			$orderCol = 'ordering';
 		}
+
 		$this->setState('list.ordering', $orderCol);
 
 		$listOrder = $app->input->get('filter_order_Dir', 'ASC');
+
 		if (!in_array(strtoupper($listOrder), array('ASC', 'DESC', '')))
 		{
 			$listOrder = 'ASC';
 		}
+
 		$this->setState('list.direction', $listOrder);
 
 		$id = $app->input->get('id', 0, 'int');
 		$this->setState('category.id', $id);
 
 		$user = JFactory::getUser();
+
 		if ((!$user->authorise('core.edit.state', 'com_weblinks')) && (!$user->authorise('core.edit', 'com_weblinks')))
 		{
 			// limit to published for people who can't edit or edit.state.
@@ -238,9 +250,8 @@ class WeblinksModelCategory extends JModelList
 	/**
 	 * Method to get category data for the current category
 	 *
-	 * @param   integer  An optional ID
-	 *
 	 * @return  object
+	 *
 	 * @since   1.5
 	 */
 	public function getCategory()
@@ -250,7 +261,7 @@ class WeblinksModelCategory extends JModelList
 			$app = JFactory::getApplication();
 			$menu = $app->getMenu();
 			$active = $menu->getActive();
-			$params = new JRegistry;
+			$params = new Registry;
 
 			if ($active)
 			{
@@ -258,17 +269,22 @@ class WeblinksModelCategory extends JModelList
 			}
 
 			$options = array();
-			$options['countItems'] = $params->get('show_cat_num_links_cat', 1) || $params->get('show_empty_categories', 0);
+			$options['countItems'] = $params->get('show_cat_num_links_cat', 1)
+				|| $params->get('show_empty_categories', 0);
+
 			$categories = JCategories::getInstance('Weblinks', $options);
 			$this->_item = $categories->get($this->getState('category.id', 'root'));
+
 			if (is_object($this->_item))
 			{
 				$this->_children = $this->_item->getChildren();
 				$this->_parent = false;
+
 				if ($this->_item->getParent())
 				{
 					$this->_parent = $this->_item->getParent();
 				}
+
 				$this->_rightsibling = $this->_item->getSibling();
 				$this->_leftsibling = $this->_item->getSibling(false);
 			}
@@ -341,20 +357,19 @@ class WeblinksModelCategory extends JModelList
 	/**
 	 * Increment the hit counter for the category.
 	 *
-	 * @param   int  $pk  Optional primary key of the category to increment.
+	 * @param   integer  $pk  Optional primary key of the category to increment.
 	 *
-	 * @return  boolean True if successful; false otherwise and internal error set.
+	 * @return  boolean  True if successful; false otherwise and internal error set.
 	 *
 	 * @since   3.2
 	 */
 	public function hit($pk = 0)
 	{
-		$input    = JFactory::getApplication()->input;
-		$hitcount = $input->getInt('hitcount', 1);
+		$hitcount = JFactory::getApplication()->input->getInt('hitcount', 1);
 
 		if ($hitcount)
 		{
-			$pk    = (!empty($pk)) ? $pk : (int) $this->getState('category.id');
+			$pk = (!empty($pk)) ? $pk : (int) $this->getState('category.id');
 			$table = JTable::getInstance('Category', 'JTable');
 			$table->load($pk);
 			$table->hit($pk);

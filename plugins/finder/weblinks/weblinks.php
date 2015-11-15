@@ -3,11 +3,13 @@
  * @package     Joomla.Plugin
  * @subpackage  Finder.Weblinks
  *
- * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
 defined('JPATH_BASE') or die;
+
+use Joomla\Registry\Registry;
 
 // Load the base adapter.
 require_once JPATH_ADMINISTRATOR . '/components/com_finder/helpers/indexer/adapter.php';
@@ -15,9 +17,7 @@ require_once JPATH_ADMINISTRATOR . '/components/com_finder/helpers/indexer/adapt
 /**
  * Smart Search adapter for Joomla Web Links.
  *
- * @package     Joomla.Plugin
- * @subpackage  Finder.Weblinks
- * @since       2.5
+ * @since  2.5
  */
 class PlgFinderWeblinks extends FinderIndexerAdapter
 {
@@ -253,11 +253,11 @@ class PlgFinderWeblinks extends FinderIndexerAdapter
 		$item->setLanguage();
 
 		// Initialise the item parameters.
-		$registry = new JRegistry;
+		$registry = new Registry;
 		$registry->loadString($item->params);
 		$item->params = $registry;
 
-		$registry = new JRegistry;
+		$registry = new Registry;
 		$registry->loadString($item->metadata);
 		$item->metadata = $registry;
 

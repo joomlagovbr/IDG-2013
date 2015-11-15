@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
 	<fieldset>
-		<!-- portalpadrao: modificacao para deixar somente um idioma -->
-		<!-- <field name="language" type="language" id="language"
+		<field name="language" type="installation.language" id="language"
 			class="chzn-select-deselect"
 			label="INSTL_LANGUAGE_LABEL"
 			size="20"
 			default="en-GB"
-			onchange="Install.setlanguage();" /> -->
-		<field name="language" type="list" default="pt-BR" label="Idioma padrão" class="chzn-select-deselect" onchange="Install.setlanguage();">
-			<option value="pt-BR">Português (do Brasil)</option>	
-			<option value="en-GB">English (United States)</option>	
-  		</field>
-		<!-- portalpadrao: fim modificacao para deixar somente um idioma -->
+			onchange="Install.setlanguage();" />
 
 		<field name="site_name" type="text" id="site_name" class="inputbox"
 			label="INSTL_SITE_NAME_LABEL"
@@ -46,7 +40,7 @@
 			autocomplete="off"
 		/>
 
-		<field name="site_metadesc" type="textarea" id="site_metadesc" class="text_area"
+		<field name="site_metadesc" type="textarea" id="site_metadesc" class="text_area noResize"
 			label="INSTL_SITE_METADESC_LABEL"
 			rows="3"
 		/>

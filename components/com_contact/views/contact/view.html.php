@@ -3,7 +3,7 @@
  * @package     Joomla.Site
  * @subpackage  com_contact
  *
- * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -14,18 +14,41 @@ require_once JPATH_COMPONENT . '/models/category.php';
 /**
  * HTML Contact View class for the Contact component
  *
- * @package     Joomla.Site
- * @subpackage  com_contact
- * @since       1.5
+ * @since  1.5
  */
 class ContactViewContact extends JViewLegacy
 {
+	/**
+	 * The item model state
+	 *
+	 * @var    \Joomla\Registry\Registry
+	 * @since  1.6
+	 */
 	protected $state;
 
+	/**
+	 * The form object for the contact item
+	 *
+	 * @var    JForm
+	 * @since  1.6
+	 */
 	protected $form;
 
+	/**
+	 * The item object details
+	 *
+	 * @var    JObject
+	 * @since  1.6
+	 */
 	protected $item;
 
+	/**
+	 * The page to return to on sumission
+	 *
+	 * @var         string
+	 * @since       1.6
+	 * @deprecated  4.0  Variable not used
+	 */
 	protected $return_page;
 
 	/**
@@ -70,7 +93,7 @@ class ContactViewContact extends JViewLegacy
 		}
 
 		// Check if access is not public
-		$groups	= $user->getAuthorisedViewLevels();
+		$groups = $user->getAuthorisedViewLevels();
 
 		$return = '';
 
@@ -80,22 +103,22 @@ class ContactViewContact extends JViewLegacy
 			return;
 		}
 
-		$options['category_id']	= $item->catid;
-		$options['order by']	= 'a.default_con DESC, a.ordering ASC';
+		$options['category_id'] = $item->catid;
+		$options['order by']    = 'a.default_con DESC, a.ordering ASC';
 
 		// Handle email cloaking
 		if ($item->email_to && $params->get('show_email'))
 		{
 			$item->email_to = JHtml::_('email.cloak', $item->email_to);
 		}
-			if ($params->get('show_street_address') || $params->get('show_suburb') || $params->get('show_state')
-				|| $params->get('show_postcode') || $params->get('show_country'))
+		if ($params->get('show_street_address') || $params->get('show_suburb') || $params->get('show_state')
+			|| $params->get('show_postcode') || $params->get('show_country'))
+		{
+			if (!empty ($item->address) || !empty ($item->suburb) || !empty ($item->state) || !empty ($item->country) || !empty ($item->postcode))
 			{
-				if (!empty ($item->address) || !empty ($item->suburb) || !empty ($item->state) || !empty ($item->country) || !empty ($item->postcode))
-				{
-					$params->set('address_check', 1);
-				}
+				$params->set('address_check', 1);
 			}
+		}
 		else
 		{
 			$params->set('address_check', 0);
@@ -133,7 +156,7 @@ class ContactViewContact extends JViewLegacy
 				}
 				else
 				{
-					$image1 = JHtml::_('image', 'contacts/'.$params->get('icon_address', 'con_address.png'), JText::_('COM_CONTACT_ADDRESS').": ", null, true);
+					$image1 = JHtml::_('image', 'contacts/' . $params->get('icon_address', 'con_address.png'), JText::_('COM_CONTACT_ADDRESS') . ": ", null, true);
 				}
 
 				if ($params->get('icon_email'))
@@ -169,7 +192,11 @@ class ContactViewContact extends JViewLegacy
 				}
 				else
 				{
-					$image5 = JHtml::_('image', 'contacts/' . $params->get('icon_misc', 'con_info.png'), JText::_('COM_CONTACT_OTHER_INFORMATION') . ": ", null, true);
+					$image5 = JHtml::_(
+						'image',
+						'contacts/' . $params->get('icon_misc', 'con_info.png'),
+						JText::_('COM_CONTACT_OTHER_INFORMATION') . ": ", null, true
+					);
 				}
 
 				if ($params->get('icon_mobile'))
@@ -198,6 +225,7 @@ class ContactViewContact extends JViewLegacy
 			{
 				$contact->link = JRoute::_(ContactHelperRoute::getContactRoute($contact->slug, $contact->catid));
 			}
+
 			$item->link = JRoute::_(ContactHelperRoute::getContactRoute($item->slug, $item->catid));
 		}
 
@@ -217,7 +245,8 @@ class ContactViewContact extends JViewLegacy
 
 		// Override the layout only if this is not the active menu item
 		// If it is the active menu item, then the view and item id will match
-		$active	= $app->getMenu()->getActive();
+		$active = $app->getMenu()->getActive();
+
 		if ((!$active) || ((strpos($active->link, 'view=contact') === false) || (strpos($active->link, '&id=' . (string) $this->item->id) === false)))
 		{
 			if ($layout = $params->get('contact_layout'))
@@ -240,15 +269,15 @@ class ContactViewContact extends JViewLegacy
 
 	/**
 	 * Prepares the document
-	 * 
+	 *
 	 * @return  void
 	 */
 	protected function _prepareDocument()
 	{
-		$app		= JFactory::getApplication();
-		$menus		= $app->getMenu();
-		$pathway	= $app->getPathway();
-		$title 		= null;
+		$app     = JFactory::getApplication();
+		$menus   = $app->getMenu();
+		$pathway = $app->getPathway();
+		$title   = null;
 
 		// Because the application sets a default page title,
 		// we need to get it from the menu item itself
@@ -316,7 +345,7 @@ class ContactViewContact extends JViewLegacy
 		{
 			$this->document->setDescription($this->item->metadesc);
 		}
-		elseif (!$this->item->metadesc && $this->params->get('menu-meta_description'))
+		elseif ($this->params->get('menu-meta_description'))
 		{
 			$this->document->setDescription($this->params->get('menu-meta_description'));
 		}
@@ -325,7 +354,7 @@ class ContactViewContact extends JViewLegacy
 		{
 			$this->document->setMetadata('keywords', $this->item->metakey);
 		}
-		elseif (!$this->item->metakey && $this->params->get('menu-meta_keywords'))
+		elseif ($this->params->get('menu-meta_keywords'))
 		{
 			$this->document->setMetadata('keywords', $this->params->get('menu-meta_keywords'));
 		}

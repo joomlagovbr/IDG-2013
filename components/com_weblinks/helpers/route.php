@@ -3,19 +3,16 @@
  * @package     Joomla.Site
  * @subpackage  com_weblinks
  *
- * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('_JEXEC') or die;
 
 /**
- * Weblinks Component Route Helper
+ * Weblinks Component Route Helper.
  *
- * @static
- * @package     Joomla.Site
- * @subpackage  com_weblinks
- * @since       1.5
+ * @since  1.5
  */
 abstract class WeblinksHelperRoute
 {
@@ -25,6 +22,8 @@ abstract class WeblinksHelperRoute
 
 	/**
 	 * @param   integer  The route of the weblink
+	 *
+	 * @return  string
 	 */
 	public static function getWeblinkRoute($id, $catid, $language = 0)
 	{
@@ -32,7 +31,7 @@ abstract class WeblinksHelperRoute
 			'weblink'  => array((int) $id)
 		);
 
-		//Create the link
+		// Create the link
 		$link = 'index.php?option=com_weblinks&view=weblink&id='. $id;
 
 		if ($catid > 1)
@@ -68,8 +67,10 @@ abstract class WeblinksHelperRoute
 	}
 
 	/**
-	 * @param   integer  $id		The id of the weblink.
-	 * @param   string	$return	The return page variable.
+	 * @param   integer  $id      The id of the weblink.
+	 * @param   string   $return  The return page variable.
+	 *
+	 * @return  string
 	 */
 	public static function getFormRoute($id, $return = null)
 	{
@@ -91,6 +92,12 @@ abstract class WeblinksHelperRoute
 		return $link;
 	}
 
+	/**
+	 * @param   JCategoryNode|string|integer  $catid     JCategoryNode object or category ID
+	 * @param   integer                       $language  Language code
+	 *
+	 * @return  string
+	 */
 	public static function getCategoryRoute($catid, $language = 0)
 	{
 		if ($catid instanceof JCategoryNode)
@@ -139,6 +146,9 @@ abstract class WeblinksHelperRoute
 		return $link;
 	}
 
+	/**
+	 * @return void
+	 */
 	protected static function buildLanguageLookup()
 	{
 		if (count(self::$lang_lookup) == 0)
@@ -161,9 +171,9 @@ abstract class WeblinksHelperRoute
 
 	protected static function _findItem($needles = null)
 	{
-		$app		= JFactory::getApplication();
-		$menus		= $app->getMenu('site');
-		$language	= isset($needles['language']) ? $needles['language'] : '*';
+		$app      = JFactory::getApplication();
+		$menus    = $app->getMenu('site');
+		$language = isset($needles['language']) ? $needles['language'] : '*';
 
 		// Prepare the reverse lookup array.
 		if (!isset(self::$lookup[$language]))
@@ -190,13 +200,14 @@ abstract class WeblinksHelperRoute
 					if (isset($item->query) && isset($item->query['view']))
 					{
 						$view = $item->query['view'];
+
 						if (!isset(self::$lookup[$language][$view]))
 						{
 							self::$lookup[$language][$view] = array();
 						}
+
 						if (isset($item->query['id']))
 						{
-
 							// here it will become a bit tricky
 							// language != * can override existing entries
 							// language == * cannot override existing entries
@@ -229,6 +240,7 @@ abstract class WeblinksHelperRoute
 
 		// Check if the active menuitem matches the requested language
 		$active = $menus->getActive();
+
 		if ($active && ($language == '*' || in_array($active->language, array('*', $language)) || !JLanguageMultilang::isEnabled()))
 		{
 			return $active->id;
@@ -236,6 +248,7 @@ abstract class WeblinksHelperRoute
 
 		// If not found, return language specific home link
 		$default = $menus->getDefault($language);
+
 		return !empty($default->id) ? $default->id : null;
 	}
 }

@@ -3,7 +3,7 @@
  * @package     Joomla.Site
  * @subpackage  com_weblinks
  *
- * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -12,19 +12,19 @@ defined('_JEXEC') or die;
 /**
  * Weblinks Component Controller
  *
- * @package     Joomla.Site
- * @subpackage  com_weblinks
- * @since       1.5
+ * @since  1.5
  */
 class WeblinksController extends JControllerLegacy
 {
 	/**
 	 * Method to display a view.
 	 *
-	 * @param   boolean			If true, the view output will be cached
-	 * @param   array  An array of safe url parameters and their variable types, for valid values see {@link JFilterInput::clean()}.
+	 * @param   boolean  $cachable   If true, the view output will be cached
+	 * @param   array    $urlparams  An array of safe url parameters and their variable types,
+	 *                               for valid values see {@link JFilterInput::clean()}.
 	 *
-	 * @return  JController		This object to support chaining.
+	 * @return  WeblinksController  This object to support chaining.
+	 *
 	 * @since   1.5
 	 */
 	public function display($cachable = false, $urlparams = false)
@@ -39,7 +39,7 @@ class WeblinksController extends JControllerLegacy
 		$vName = $this->input->get('view', 'categories');
 		$this->input->set('view', $vName);
 
-		if ($user->get('id') ||($this->input->getMethod() == 'POST' && $vName = 'categories'))
+		if (JFactory::getUser()->id ||($this->input->getMethod() == 'POST' && $vName = 'categories'))
 		{
 			$cachable = false;
 		}
