@@ -87,8 +87,8 @@ JText::script('INSTL_FTP_SETTINGS_CORRECT');
 			<!-- portalpadrao: fim trecho do instalador original comentado -->
 			<h5>
 				<?php
-				// Fix wrong display of Joomla!Â® in RTL language
-				if (JFactory::getLanguage()->isRTL())
+				// Fix wrong display of Joomla!® in RTL language
+				if (JFactory::getLanguage()->isRtl())
 				{
 					$joomla = '<a href="http://www.joomla.org" target="_blank">Joomla!</a><sup>&#174;&#x200E;</sup>';
 				}
