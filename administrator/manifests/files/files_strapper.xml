@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="file" version="2.5" method="upgrade">
+    <!-- Generic Metadata -->
+    <name>AkeebaStrapper</name>
+    <author>Nicholas K. Dionysopoulos</author>
+    <authorEmail>nicholas@dionysopoulos.me</authorEmail>
+    <authorUrl>https://www.akeebabackup.com</authorUrl>
+    <copyright>(C) 2012-2013 Akeeba Ltd.</copyright>
+    <license>GNU GPL v2 or later</license>
+    <version>2.3.0</version>
+    <creationDate>2014-05-02 19:14:41</creationDate>
+    <description>Namespaced jQuery, jQuery UI and Bootstrap for Akeeba products.</description>
+
+    <!-- Fileset definition -->
+    <fileset>
+        <files folder="akeeba_strapper" target="media/akeeba_strapper">
+            <folder>css</folder>
+            <folder>img</folder>
+            <folder>js</folder>
+            <folder>less</folder>
+            <filename>index.html</filename>
+            <filename>strapper.ini</filename>
+            <filename>strapper.php</filename>
+						<filename>version.php</filename>
+        </files>
+		<files target="media/akeeba_strapper">
+			<filename>version.txt</filename>
+		</files>
+    </fileset>
+</extension>

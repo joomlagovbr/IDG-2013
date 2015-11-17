@@ -863,14 +863,13 @@ class YoutubeGalleryLayoutRenderer
 	
 		$tr=0;
 		$count=0;
-		
 	
         foreach($gallery_list as $listitem)	
         {
 				$bgcolor=$theme_row->bgcolor;
 				
 				$aLinkURL='';
-				
+
 				if($theme_row->openinnewwindow==4)
 				{
 					//$title=str_replace('"','*q*',$listitem['title']);
@@ -884,8 +883,6 @@ class YoutubeGalleryLayoutRenderer
 				}
 				else
 					$aLink=YoutubeGalleryLayoutRenderer::makeLink($listitem, $theme_row->rel, $aLinkURL, $videolist_row->id, $theme_row->id,$custom_itemid);
-				
-
 
 				$isForShadowBox=false;
 				
@@ -1155,7 +1152,7 @@ class YoutubeGalleryLayoutRenderer
 			if($theme_row->showtitle)
 			{
 				if($thumbtitle!='') //alteracao projeto portal padrao
-					$thumbnail_layout.= '<h3>[title]</h3>';
+					$thumbnail_layout.= '<h3><a href="javascript:YoutubeGalleryHotVideoSwitch1(\'gPm0IMTI2ms\',\'youtube\','.$listitem['id'].')">[title]</a></h3>';
 				//fim alteracao projeto portal padrao
 			}
 			$result=YoutubeGalleryLayoutRenderer::renderThumbnailLayout($thumbnail_layout,		$listitem,$aHrefLink,$aLink, $videoid,$theme_row);

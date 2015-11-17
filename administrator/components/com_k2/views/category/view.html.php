@@ -1,9 +1,9 @@
 <?php
 /**
- * @version		$Id: view.html.php 1962 2013-04-29 12:29:34Z lefteris.kavadas $
+ * @version		2.6.x
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
+ * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
  * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -107,7 +107,8 @@ class K2ViewCategory extends K2View
         (JRequest::getInt('cid')) ? $title = JText::_('K2_EDIT_CATEGORY') : $title = JText::_('K2_ADD_CATEGORY');
         JToolBarHelper::title($title, 'k2.png');
         JToolBarHelper::save();
-        JToolBarHelper::custom('saveAndNew', 'save.png', 'save_f2.png', 'K2_SAVE_AND_NEW', false);
+        $saveNewIcon = version_compare(JVERSION, '2.5.0', 'ge') ? 'save-new.png' : 'save.png';
+        JToolBarHelper::custom('saveAndNew', $saveNewIcon, 'save_f2.png', 'K2_SAVE_AND_NEW', false);
         JToolBarHelper::apply();
         JToolBarHelper::cancel();
 

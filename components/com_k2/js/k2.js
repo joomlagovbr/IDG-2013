@@ -1,8 +1,8 @@
 /**
- * @version		$Id: k2.js 1987 2013-06-27 11:51:59Z lefteris.kavadas $
+ * @version		2.6.x
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
+ * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
  * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -143,6 +143,9 @@ $K2(document).ready(function(){
 	$K2('.itemRatingForm a').click(function(event){
 		event.preventDefault();
 		var itemID = $K2(this).attr('rel');
+		if(!itemID) {
+			itemID = $K2(this).data('id');
+		}
 		var log = $K2('#itemRatingLog' + itemID).empty().addClass('formLogLoading');
 		var rating = $K2(this).html();
 		$K2.ajax({

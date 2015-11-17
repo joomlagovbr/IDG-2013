@@ -1,9 +1,9 @@
 <?php
 /**
- * @version		$Id: script.k2.php 1967 2013-04-29 17:00:30Z lefteris.kavadas $
+ * @version		2.6.x
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
+ * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
  * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -41,9 +41,12 @@ class Com_K2InstallerScript
                 }
                 JFile::move(JPATH_SITE.'/plugins/'.$group.'/'.$name.'/'.$name.'.j25.xml', JPATH_SITE.'/plugins/'.$group.'/'.$name.'/'.$name.'.xml');
             }
-            $query = "UPDATE #__extensions SET enabled=1 WHERE type='plugin' AND element=".$db->Quote($name)." AND folder=".$db->Quote($group);
-            $db->setQuery($query);
-            $db->query();
+			if($group != 'finder')
+			{
+		    	$query = "UPDATE #__extensions SET enabled=1 WHERE type='plugin' AND element=".$db->Quote($name)." AND folder=".$db->Quote($group);
+            	$db->setQuery($query);
+            	$db->query();
+			}
             $status->plugins[] = array('name' => $name, 'group' => $group, 'result' => $result);
         }		
         $modules = $manifest->xpath('modules/module');
@@ -111,6 +114,27 @@ class Com_K2InstallerScript
 		$query = "DELETE FROM #__k2_users WHERE userID = 0";
 		$db->setQuery($query);
 		$db->query();
+		
+		// Fix media manager folder permissions
+		set_time_limit(0);
+		jimport('joomla.filesystem.folder');
+		jimport('joomla.filesystem.path');
+		$params = JComponentHelper::getParams('com_media');
+        $root = $params->get('file_path', 'media');
+		$mediaPath = JPATH_SITE.'/'.JPath::clean($root);
+		$folders = JFolder::folders($mediaPath, '.', true, true, array());
+		foreach($folders as $folder)
+		{
+			@chmod($folder, 0755);
+		}
+		if(JFolder::exists($mediaPath.'/'.'.tmb'))
+		{
+			@chmod($mediaPath.'/'.'.tmb', 0755);
+		}
+		if(JFolder::exists($mediaPath.'/'.'.quarantine'))
+		{
+			@chmod($mediaPath.'/'.'.quarantine', 0755);
+		}
 		
         $this->installationResults($status);
        
@@ -219,7 +243,7 @@ class Com_K2InstallerScript
             $db->query();
         }
 
-        $query = "SHOW INDEX FROM #__k2_items";
+        /*$query = "SHOW INDEX FROM #__k2_items";
         $db->setQuery($query);
         $indexes = $db->loadObjectList();
         $indexExists = false;
@@ -255,7 +279,7 @@ class Com_K2InstallerScript
             $query = "ALTER TABLE #__k2_tags ADD FULLTEXT (`name`)";
             $db->setQuery($query);
             $db->query();
-        }
+        }*/
 
         $query = "SELECT COUNT(*) FROM #__k2_user_groups";
         $db->setQuery($query);

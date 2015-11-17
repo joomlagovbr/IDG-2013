@@ -1,9 +1,9 @@
 <?php
 /**
- * @version		$Id: view.raw.php 1812 2013-01-14 18:45:06Z lefteris.kavadas $
+ * @version		2.6.x
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
+ * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
  * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -78,7 +78,8 @@ class K2ViewItem extends K2View
                 {
                     $uri = JFactory::getURI();
                     $url = 'index.php?option=com_users&view=login&return='.base64_encode($uri->toString());
-                    $mainframe->redirect(JRoute::_($url, false), JText::_('K2_YOU_NEED_TO_LOGIN_FIRST'));
+					$mainframe->enqueueMessage(JText::_('K2_YOU_NEED_TO_LOGIN_FIRST'), 'notice');
+                    $mainframe->redirect(JRoute::_($url, false));
                 }
                 else
                 {
@@ -95,7 +96,8 @@ class K2ViewItem extends K2View
                 {
                     $uri = JFactory::getURI();
                     $url = 'index.php?option=com_user&view=login&return='.base64_encode($uri->toString());
-                    $mainframe->redirect(JRoute::_($url, false), JText::_('K2_YOU_NEED_TO_LOGIN_FIRST'));
+					$mainframe->enqueueMessage(JText::_('K2_YOU_NEED_TO_LOGIN_FIRST'), 'notice');
+                    $mainframe->redirect(JRoute::_($url, false));
                 }
                 else
                 {

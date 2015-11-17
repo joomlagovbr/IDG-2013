@@ -76,7 +76,7 @@ class YoutubeGalleryViewLinksList extends JViewLegacy
                 JToolBarHelper::custom( 'linkslist.copyItem', 'copy.png', 'copy_f2.png', 'Copy', true);
 				JToolBarHelper::custom( 'linkslist.refreshItem', 'purge.png', 'purge_f2.png', 'Refresh', true);
                 JToolBarHelper::deleteList('', 'linkslist.delete');
-                
+                // JToolBarHelper::preferences('com_youtubegallery');
         }
         
         

@@ -1,9 +1,9 @@
 <?php
 /**
- * @version		$Id: item.php 1994 2013-07-04 17:25:25Z lefteris.kavadas $
+ * @version		2.6.x
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
+ * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
  * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -203,16 +203,24 @@ class K2ModelItem extends K2Model
 		{
 			$filterTags = preg_split('#[,\s]+#', trim($params->get('introTextCleanupExcludeTags')));
 			$filterAttrs = preg_split('#[,\s]+#', trim($params->get('introTextCleanupTagAttr')));
+			$filterAttrs = array_filter($filterAttrs);
 			$item->introtext = K2HelperUtilities::cleanTags($item->introtext, $filterTags);
-			$item->introtext = K2HelperUtilities::cleanAttributes($item->introtext, $filterTags, $filterAttrs);
+			if (count($filterAttrs))
+			{
+				$item->introtext = K2HelperUtilities::cleanAttributes($item->introtext, $filterTags, $filterAttrs);
+			}
 		}
 
 		if ($params->get('fullTextCleanup'))
 		{
 			$filterTags = preg_split('#[,\s]+#', trim($params->get('fullTextCleanupExcludeTags')));
 			$filterAttrs = preg_split('#[,\s]+#', trim($params->get('fullTextCleanupTagAttr')));
+			$filterAttrs = array_filter($filterAttrs);
 			$item->fulltext = K2HelperUtilities::cleanTags($item->fulltext, $filterTags);
-			$item->fulltext = K2HelperUtilities::cleanAttributes($item->fulltext, $filterTags, $filterAttrs);
+			if (count($filterAttrs))
+			{
+				$item->fulltext = K2HelperUtilities::cleanAttributes($item->fulltext, $filterTags, $filterAttrs);
+			}
 		}
 
 		if ($item->params->get('catItemIntroTextWordLimit') && $task == 'category')
@@ -254,16 +262,21 @@ class K2ModelItem extends K2Model
 		}
 
 		//Num of comments
-		$user = JFactory::getUser();
-		if (!$user->guest && $user->id == $item->created_by && $params->get('inlineCommentsModeration'))
+		if ($params->get('comments', 0) > 0)
 		{
-			$item->numOfComments = $this->countItemComments($item->id, false);
+			$user = JFactory::getUser();
+			if (!$user->guest && $user->id == $item->created_by && $params->get('inlineCommentsModeration'))
+			{
+				$item->numOfComments = $this->countItemComments($item->id, false);
+			}
+			else
+			{
+				$item->numOfComments = $this->countItemComments($item->id);
+			}
 		}
-		else
-		{
-			$item->numOfComments = $this->countItemComments($item->id);
-		}
+		
 		return $item;
+		
 	}
 
 	function prepareFeedItem(&$item)
@@ -522,6 +535,21 @@ class K2ModelItem extends K2Model
 		$dispatcher = JDispatcher::getInstance();
 		JPluginHelper::importPlugin('content');
 
+		if (!isset($this->isSigInstalled))
+		{
+			$this->isSigInstalled = (
+			JFile::exists(JPATH_SITE.'/plugins/content/jw_sigpro/jw_sigpro.php') || 
+			JFile::exists(JPATH_SITE.'/plugins/content/jw_sigpro/jw_sigpro/jw_sigpro.php') || 
+			JFile::exists(JPATH_SITE.'/plugins/content/jw_sig/jw_sig.php') || 
+			JFile::exists(JPATH_SITE.'/plugins/content/jw_sig/jw_sig/jw_sig.php')
+			);
+		}
+
+		if (!$this->isSigInstalled)
+		{
+			$item->gallery = null;
+		}
+
 		//Gallery
 		if (($view == 'item' && $item->params->get('itemImageGallery')) || ($view == 'itemlist' && ($task == '' || $task == 'category') && $item->params->get('catItemImageGallery')) || ($view == 'relatedByTag'))
 		{
@@ -638,6 +666,10 @@ class K2ModelItem extends K2Model
 				$item->text .= $item->introtext;
 			if ($item->params->get('itemFullText'))
 				$item->text .= '{K2Splitter}'.$item->fulltext;
+		}
+		else if($view == 'latest') {
+			if ($item->params->get('latestItemIntroText'))
+				$item->text .= $item->introtext;
 		}
 		else
 		{
@@ -1077,12 +1109,26 @@ class K2ModelItem extends K2Model
 		//Check permissions
 		if ((($params->get('comments') == '2') && ($user->id > 0) && K2HelperPermissions::canAddComment($item->catid)) || ($params->get('comments') == '1'))
 		{
+			
+			// If new antispam settings are not saved, show a message to the comments form and stop the comment submission
+			$antispamProtection = $params->get('antispam', null);
+			if(
+			$antispamProtection === null
+			|| (($antispamProtection == 'recaptcha' || $antispamProtection == 'both') && !$params->get('recaptcha_private_key'))
+			|| (($antispamProtection == 'akismet' || $antispamProtection == 'both') && !$params->get('akismetApiKey'))
+			)
+			{
+				$response->message = JText::_('K2_ANTISPAM_SETTINGS_ERROR');
+				echo $json->encode($response);
+				$mainframe->close();
+			}
+			
 
 			$row = JTable::getInstance('K2Comment', 'Table');
 
 			if (!$row->bind(JRequest::get('post')))
 			{
-				$response->message($row->getError());
+				$response->message = $row->getError();
 				echo $json->encode($response);
 				$mainframe->close();
 			}
@@ -1493,6 +1539,9 @@ class K2ModelItem extends K2Model
 							{
 								$object->value[0] = $object->value[1];
 							}
+							$rows[$i]->url = $object->value[1];
+							$rows[$i]->text = $object->value[0];
+							$rows[$i]->attributes = $attributes;
 							$value = '<a href="'.$object->value[1].'" '.$attributes.'>'.$object->value[0].'</a>';
 						}
 						else
@@ -1673,8 +1722,7 @@ class K2ModelItem extends K2Model
 		}
 		else
 		{
-			$accessCondition = ' AND access <= '.$user->aid;
-			;
+			$accessCondition = ' AND access <= '.$user->aid; ;
 		}
 
 		$languageCondition = '';
@@ -1720,8 +1768,7 @@ class K2ModelItem extends K2Model
 		}
 		else
 		{
-			$accessCondition = ' AND access <= '.$user->aid;
-			;
+			$accessCondition = ' AND access <= '.$user->aid; ;
 		}
 
 		$languageCondition = '';

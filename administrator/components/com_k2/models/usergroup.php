@@ -1,9 +1,9 @@
 <?php
 /**
- * @version		$Id: usergroup.php 1812 2013-01-14 18:45:06Z lefteris.kavadas $
+ * @version		2.6.x
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
+ * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
  * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -32,17 +32,20 @@ class K2ModelUserGroup extends K2Model
 
         if (!$row->bind(JRequest::get('post')))
         {
-            $mainframe->redirect('index.php?option=com_k2&view=usergroups', $row->getError(), 'error');
+        	$mainframe->enqueueMessage($row->getError(), 'error');
+            $mainframe->redirect('index.php?option=com_k2&view=usergroups');
         }
 
         if (!$row->check())
         {
-            $mainframe->redirect('index.php?option=com_k2&view=usergroup&cid='.$row->id, $row->getError(), 'error');
+        	$mainframe->enqueueMessage($row->getError(), 'error');
+            $mainframe->redirect('index.php?option=com_k2&view=usergroup&cid='.$row->id);
         }
 
         if (!$row->store())
         {
-            $mainframe->redirect('index.php?option=com_k2&view=usergroups', $row->getError(), 'error');
+        	$mainframe->enqueueMessage($row->getError(), 'error');
+            $mainframe->redirect('index.php?option=com_k2&view=usergroups');
         }
 
         $cache = JFactory::getCache('com_k2');
@@ -60,7 +63,8 @@ class K2ModelUserGroup extends K2Model
                 $link = 'index.php?option=com_k2&view=usergroups';
                 break;
         }
-        $mainframe->redirect($link, $msg);
+		$mainframe->enqueueMessage($msg);
+        $mainframe->redirect($link);
     }
 
 }

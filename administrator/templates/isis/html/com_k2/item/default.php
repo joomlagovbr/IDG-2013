@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: default.php 1944 2013-03-08 19:14:17Z joomlaworks $
+ * @version		2.6.x
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
  * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
@@ -979,7 +979,7 @@ $document->addScriptDeclaration("
 				{
 					jQuery('#'+items[i]).hide();
 				}
-				jQuery(this).text('');
+				//jQuery(this).text('');
 				if(!init)
 					clearInterval(document.hideFields);
 			}

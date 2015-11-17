@@ -1,9 +1,9 @@
 <?php
 /**
- * @version		$Id: permissions.php 1962 2013-04-29 12:29:34Z lefteris.kavadas $
+ * @version		2.6.x
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
+ * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
  * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -147,13 +147,14 @@ class K2HelperPermissions
             $mainframe = JFactory::getApplication();
             $uri = JURI::getInstance();
             $return = base64_encode($uri->toString());
+			$mainframe->enqueueMessage(JText::_('K2_YOU_NEED_TO_LOGIN_FIRST'), 'notice');
             if (K2_JVERSION == '15')
             {
-                $mainframe->redirect('index.php?option=com_user&view=login&return='.$return.'&tmpl=component', JText::_('K2_YOU_NEED_TO_LOGIN_FIRST'), 'notice');
+                $mainframe->redirect('index.php?option=com_user&view=login&return='.$return.'&tmpl=component');
             }
             else
             {
-                $mainframe->redirect('index.php?option=com_users&view=login&return='.$return.'&tmpl=component', JText::_('K2_YOU_NEED_TO_LOGIN_FIRST'), 'notice');
+                $mainframe->redirect('index.php?option=com_users&view=login&return='.$return.'&tmpl=component');
             }
         }
 

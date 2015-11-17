@@ -1,9 +1,9 @@
 <?php
 /**
- * @version		$Id: items.php 1976 2013-05-15 10:22:34Z lefteris.kavadas $
+ * @version		2.6.x
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
+ * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
  * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -52,24 +52,17 @@ class K2ModelItems extends K2Model
 
 		if ($search)
 		{
-
-			$search = JString::str_ireplace('*', '', $search);
-			$words = explode(' ', $search);
-			for ($i = 0; $i < count($words); $i++)
-			{
-				$words[$i] = '+'.$words[$i];
-				$words[$i] .= '*';
-			}
-			$search = implode(' ', $words);
 			$escaped = K2_JVERSION == '15' ? $db->getEscaped($search, true) : $db->escape($search, true);
-			$search = $db->Quote($escaped, false);
+			$quoted = $db->Quote('%'.$escaped.'%', false);
 
 			if ($params->get('adminSearch') == 'full')
-				$query .= " AND MATCH(i.title, i.introtext, i.`fulltext`, i.extra_fields_search, i.image_caption,i.image_credits,i.video_caption,i.video_credits,i.metadesc,i.metakey)";
+			{
+				$query .= " AND ( LOWER(i.title) LIKE ".$quoted." OR LOWER(i.introtext) LIKE ".$quoted." OR LOWER(i.`fulltext`) LIKE ".$quoted." OR LOWER(i.extra_fields_search) LIKE ".$quoted." OR LOWER(i.image_caption) LIKE ".$quoted." OR LOWER(i.image_credits) LIKE ".$quoted." OR LOWER(i.video_caption) LIKE ".$quoted." OR LOWER(i.video_credits) LIKE ".$quoted." OR LOWER(i.metadesc) LIKE ".$quoted." OR LOWER(i.metakey) LIKE ".$quoted.") ";
+			}
 			else
-				$query .= " AND MATCH( i.title )";
-
-			$query .= " AGAINST ({$search} IN BOOLEAN MODE)";
+			{
+				$query .= " AND LOWER(i.title) LIKE ".$quoted;
+			}
 		}
 
 		if ($filter_state > -1)
@@ -166,24 +159,17 @@ class K2ModelItems extends K2Model
 
 		if ($search)
 		{
-
-			$search = JString::str_ireplace('*', '', $search);
-			$words = explode(' ', $search);
-			for ($i = 0; $i < count($words); $i++)
-			{
-				$words[$i] = '+'.$words[$i];
-				$words[$i] .= '*';
-			}
-			$search = implode(' ', $words);
 			$escaped = K2_JVERSION == '15' ? $db->getEscaped($search, true) : $db->escape($search, true);
-			$search = $db->Quote($escaped, false);
+			$quoted = $db->Quote('%'.$escaped.'%', false);
 
 			if ($params->get('adminSearch') == 'full')
-				$query .= " AND MATCH(title, introtext, `fulltext`, extra_fields_search, image_caption, image_credits, video_caption, video_credits, metadesc, metakey)";
+			{
+				$query .= " AND ( LOWER(i.title) LIKE ".$quoted." OR LOWER(i.introtext) LIKE ".$quoted." OR LOWER(i.`fulltext`) LIKE ".$quoted." OR LOWER(i.extra_fields_search) LIKE ".$quoted." OR LOWER(i.image_caption) LIKE ".$quoted." OR LOWER(i.image_credits) LIKE ".$quoted." OR LOWER(i.video_caption) LIKE ".$quoted." OR LOWER(i.video_credits) LIKE ".$quoted." OR LOWER(i.metadesc) LIKE ".$quoted." OR LOWER(i.metakey) LIKE ".$quoted.") ";
+			}
 			else
-				$query .= " AND MATCH( title )";
-
-			$query .= " AGAINST ({$search} IN BOOLEAN MODE)";
+			{
+				$query .= " AND LOWER(i.title) LIKE ".$quoted;
+			}
 		}
 
 		if ($filter_state > -1)
@@ -245,11 +231,16 @@ class K2ModelItems extends K2Model
 		{
 			$row = JTable::getInstance('K2Item', 'Table');
 			$row->load($id);
-			$row->publish($id, 1);
+			$row->published = 1;
+			$row->store();
 		}
 		JPluginHelper::importPlugin('finder');
 		$dispatcher = JDispatcher::getInstance();
-		$dispatcher->trigger('onFinderChangeState', array('com_k2.item', $cid, 1));
+		$dispatcher->trigger('onFinderChangeState', array(
+			'com_k2.item',
+			$cid,
+			1
+		));
 		$cache = JFactory::getCache('com_k2');
 		$cache->clean();
 		$mainframe->redirect('index.php?option=com_k2&view=items');
@@ -264,11 +255,16 @@ class K2ModelItems extends K2Model
 		{
 			$row = JTable::getInstance('K2Item', 'Table');
 			$row->load($id);
-			$row->publish($id, 0);
+			$row->published = 0;
+			$row->store();
 		}
 		JPluginHelper::importPlugin('finder');
 		$dispatcher = JDispatcher::getInstance();
-		$dispatcher->trigger('onFinderChangeState', array('com_k2.item', $cid, 0));
+		$dispatcher->trigger('onFinderChangeState', array(
+			'com_k2.item',
+			$cid,
+			0
+		));
 		$cache = JFactory::getCache('com_k2');
 		$cache->clean();
 		$mainframe->redirect('index.php?option=com_k2&view=items');
@@ -327,7 +323,8 @@ class K2ModelItems extends K2Model
 		$cache = JFactory::getCache('com_k2');
 		$cache->clean();
 		$msg = JText::_('K2_NEW_ORDERING_SAVED');
-		$mainframe->redirect('index.php?option=com_k2&view=items', $msg);
+		$mainframe->enqueueMessage($msg);
+		$mainframe->redirect('index.php?option=com_k2&view=items');
 	}
 
 	function orderdown()
@@ -344,7 +341,8 @@ class K2ModelItems extends K2Model
 		$cache = JFactory::getCache('com_k2');
 		$cache->clean();
 		$msg = JText::_('K2_NEW_ORDERING_SAVED');
-		$mainframe->redirect('index.php?option=com_k2&view=items', $msg);
+		$mainframe->enqueueMessage($msg);
+		$mainframe->redirect('index.php?option=com_k2&view=items');
 	}
 
 	function savefeaturedorder()
@@ -400,7 +398,8 @@ class K2ModelItems extends K2Model
 		$cache = JFactory::getCache('com_k2');
 		$cache->clean();
 		$msg = JText::_('K2_NEW_ORDERING_SAVED');
-		$mainframe->redirect('index.php?option=com_k2&view=items', $msg);
+		$mainframe->enqueueMessage($msg);
+		$mainframe->redirect('index.php?option=com_k2&view=items');
 	}
 
 	function featuredorderdown()
@@ -417,7 +416,8 @@ class K2ModelItems extends K2Model
 		$cache = JFactory::getCache('com_k2');
 		$cache->clean();
 		$msg = JText::_('K2_NEW_ORDERING_SAVED');
-		$mainframe->redirect('index.php?option=com_k2&view=items', $msg);
+		$mainframe->enqueueMessage($msg);
+		$mainframe->redirect('index.php?option=com_k2&view=items');
 	}
 
 	function accessregistered()
@@ -440,7 +440,8 @@ class K2ModelItems extends K2Model
 		$cache = JFactory::getCache('com_k2');
 		$cache->clean();
 		$msg = JText::_('K2_NEW_ACCESS_SETTING_SAVED');
-		$mainframe->redirect('index.php?option=com_k2&view=items', $msg);
+		$mainframe->enqueueMessage($msg);
+		$mainframe->redirect('index.php?option=com_k2&view=items');
 	}
 
 	function accessspecial()
@@ -463,7 +464,8 @@ class K2ModelItems extends K2Model
 		$cache = JFactory::getCache('com_k2');
 		$cache->clean();
 		$msg = JText::_('K2_NEW_ACCESS_SETTING_SAVED');
-		$mainframe->redirect('index.php?option=com_k2&view=items', $msg);
+		$mainframe->enqueueMessage($msg);
+		$mainframe->redirect('index.php?option=com_k2&view=items');
 	}
 
 	function accesspublic()
@@ -486,7 +488,8 @@ class K2ModelItems extends K2Model
 		$cache = JFactory::getCache('com_k2');
 		$cache->clean();
 		$msg = JText::_('K2_NEW_ACCESS_SETTING_SAVED');
-		$mainframe->redirect('index.php?option=com_k2&view=items', $msg);
+		$mainframe->enqueueMessage($msg);
+		$mainframe->redirect('index.php?option=com_k2&view=items');
 	}
 
 	function copy()
@@ -631,8 +634,8 @@ class K2ModelItems extends K2Model
 
 			$row->store();
 		}
-
-		$mainframe->redirect('index.php?option=com_k2&view=items', JText::_('K2_COPY_COMPLETED'));
+		$mainframe->enqueueMessage(JText::_('K2_COPY_COMPLETED'));
+		$mainframe->redirect('index.php?option=com_k2&view=items');
 	}
 
 	function featured()
@@ -656,7 +659,8 @@ class K2ModelItems extends K2Model
 		}
 		$cache = JFactory::getCache('com_k2');
 		$cache->clean();
-		$mainframe->redirect('index.php?option=com_k2&view=items', JText::_('K2_ITEMS_CHANGED'));
+		$mainframe->enqueueMessage(JText::_('K2_ITEMS_CHANGED'));
+		$mainframe->redirect('index.php?option=com_k2&view=items');
 	}
 
 	function trash()
@@ -675,7 +679,8 @@ class K2ModelItems extends K2Model
 		}
 		$cache = JFactory::getCache('com_k2');
 		$cache->clean();
-		$mainframe->redirect('index.php?option=com_k2&view=items', JText::_('K2_ITEMS_MOVED_TO_TRASH'));
+		$mainframe->enqueueMessage(JText::_('K2_ITEMS_MOVED_TO_TRASH'));
+		$mainframe->redirect('index.php?option=com_k2&view=items');
 
 	}
 
@@ -708,7 +713,8 @@ class K2ModelItems extends K2Model
 		$cache->clean();
 		if ($warning)
 			$mainframe->enqueueMessage(JText::_('K2_SOME_OF_THE_ITEMS_HAVE_NOT_BEEN_RESTORED_BECAUSE_THEY_BELONG_TO_A_CATEGORY_WHICH_IS_IN_TRASH'), 'notice');
-		$mainframe->redirect('index.php?option=com_k2&view=items', JText::_('K2_ITEMS_RESTORED'));
+		$mainframe->enqueueMessage(JText::_('K2_ITEMS_RESTORED'));
+		$mainframe->redirect('index.php?option=com_k2&view=items');
 
 	}
 
@@ -767,8 +773,30 @@ class K2ModelItems extends K2Model
 			$videotype = $matches[1][0];
 			$videofile = $matches[2][0];
 
-			$videoExtensions = array('flv', 'mp4', 'ogv', 'webm', 'f4v', 'm4v', '3gp', '3g2', 'mov', 'mpeg', 'mpg', 'avi', 'wmv', 'divx', 'swf');
-			$audioExtensions = array('mp3', 'aac', 'mp4', 'ogg', 'wma');
+			$videoExtensions = array(
+				'flv',
+				'mp4',
+				'ogv',
+				'webm',
+				'f4v',
+				'm4v',
+				'3gp',
+				'3g2',
+				'mov',
+				'mpeg',
+				'mpg',
+				'avi',
+				'wmv',
+				'divx',
+				'swf'
+			);
+			$audioExtensions = array(
+				'mp3',
+				'aac',
+				'mp4',
+				'ogg',
+				'wma'
+			);
 
 			if (in_array($videotype, $videoExtensions) || in_array($videotype, $audioExtensions))
 			{
@@ -811,11 +839,15 @@ class K2ModelItems extends K2Model
 
 			$row->delete($id);
 
-			$dispatcher->trigger('onFinderAfterDelete', array('com_k2.item', $row));
+			$dispatcher->trigger('onFinderAfterDelete', array(
+				'com_k2.item',
+				$row
+			));
 		}
 		$cache = JFactory::getCache('com_k2');
 		$cache->clean();
-		$mainframe->redirect('index.php?option=com_k2&view=items', JText::_('K2_DELETE_COMPLETED'));
+		$mainframe->enqueueMessage(JText::_('K2_DELETE_COMPLETED'));
+		$mainframe->redirect('index.php?option=com_k2&view=items');
 	}
 
 	function import()
@@ -1097,7 +1129,8 @@ class K2ModelItems extends K2Model
 				}
 			}
 		}
-		$mainframe->redirect('index.php?option=com_k2&view=items', JText::_('K2_IMPORT_COMPLETED'));
+		$mainframe->enqueueMessage(JText::_('K2_IMPORT_COMPLETED'));
+		$mainframe->redirect('index.php?option=com_k2&view=items');
 	}
 
 	function importJ16()
@@ -1108,7 +1141,7 @@ class K2ModelItems extends K2Model
 		jimport('joomla.utilities.xmlelement');
 		$mainframe = JFactory::getApplication();
 		$db = JFactory::getDBO();
-		
+
 		$query = "SELECT COUNT(*) FROM #__k2_categories";
 		$db->setQuery($query);
 		$result = $db->loadResult();
@@ -1303,8 +1336,8 @@ class K2ModelItems extends K2Model
 			$db->setQuery($query);
 			$db->query();
 		}
-
-		$mainframe->redirect('index.php?option=com_k2&view=items', JText::_('K2_IMPORT_COMPLETED'));
+		$mainframe->enqueueMessage(JText::_('K2_IMPORT_COMPLETED'));
+		$mainframe->redirect('index.php?option=com_k2&view=items');
 	}
 
 	function move()
@@ -1323,7 +1356,8 @@ class K2ModelItems extends K2Model
 		}
 		$cache = JFactory::getCache('com_k2');
 		$cache->clean();
-		$mainframe->redirect('index.php?option=com_k2&view=items', JText::_('K2_MOVE_COMPLETED'));
+		$mainframe->enqueueMessage(JText::_('K2_MOVE_COMPLETED'));
+		$mainframe->redirect('index.php?option=com_k2&view=items');
 
 	}
 
