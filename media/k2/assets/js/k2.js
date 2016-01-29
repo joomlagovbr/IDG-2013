@@ -1,8 +1,8 @@
 /**
- * @version 	$Id: k2.js 1965 2013-04-29 16:01:44Z lefteris.kavadas $
+ * @version 	2.6.x
  * @package 	K2
  * @author 		JoomlaWorks http://www.joomlaworks.net
- * @copyright 	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
+ * @copyright 	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
  * @license 	GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -363,9 +363,9 @@ $K2(document).ready(function() {
                         success : function(response) {
                             $K2('#extraFieldsContainer').html(response);
                             initExtraFieldsEditor();
-                            $K2('img.calendar').each(function() {
-                                inputFieldID = $K2(this).prev().attr('id');
-                                imgFieldID = $K2(this).attr('id');
+                            $K2('.k2Calendar').each(function() {
+                                inputFieldID = $K2(this).attr('id');
+                                imgFieldID = $K2(this).next().attr('id');
                                 Calendar.setup({
                                     inputField : inputFieldID,
                                     ifFormat : "%Y-%m-%d",
@@ -545,7 +545,7 @@ function validateExtraFields() {
 
 // Extra Fields image field
 function extraFieldsImage() {
-	$K2('#extraFieldsContainer').on('click', '.k2ExtraFieldImageButton', function(event) {
+	$K2('body').on('click', '.k2ExtraFieldImageButton', function(event) {
     	event.preventDefault();
     	var href = $K2(this).attr('href');
     	SqueezeBox.initialize();
@@ -871,7 +871,13 @@ function initExtraFieldsEditor() {
             if (tinyMCE.get(id)) {
                 tinymce.EditorManager.remove(tinyMCE.get(id));
             }
-            tinyMCE.execCommand('mceAddControl', false, id);
+            if(tinymce.majorVersion == 4) {
+            	tinymce.init({selector: '#'+id});
+            	tinymce.editors[id].show();
+            } else {
+            	tinyMCE.execCommand('mceAddControl', false, id);
+            }
+
         } else {
             new nicEditor({
                 fullPanel : true,

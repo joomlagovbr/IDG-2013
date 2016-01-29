@@ -1,9 +1,9 @@
 <?php
 /**
- * @version		$Id: comments.php 1992 2013-07-04 16:36:38Z lefteris.kavadas $
+ * @version		2.6.x
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
+ * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
  * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -119,7 +119,8 @@ class K2ModelComments extends K2Model {
 					$mainframe->close();
 				}
 			}
-			$row->publish($id, 1);
+			$row->published = 1;
+			$row->store();
 		}
 		$cache = JFactory::getCache('com_k2');
 		$cache->clean();
@@ -146,7 +147,8 @@ class K2ModelComments extends K2Model {
 					$mainframe->close();
 				}
 			}
-			$row->publish($id, 0);
+			$row->published = 0;
+			$row->store();
 		}
 		$cache = JFactory::getCache('com_k2');
 		$cache->clean();
@@ -181,7 +183,8 @@ class K2ModelComments extends K2Model {
 			echo 'true';
 			$mainframe->close();
 		}
-		$mainframe->redirect('index.php?option=com_k2&view=comments', JText::_('K2_DELETE_COMPLETED'));
+		$mainframe->enqueueMessage(JText::_('K2_DELETE_COMPLETED'));
+		$mainframe->redirect('index.php?option=com_k2&view=comments');
 	}
 
 	function deleteUnpublished() {
@@ -210,7 +213,8 @@ class K2ModelComments extends K2Model {
 
 		$cache = JFactory::getCache('com_k2');
 		$cache->clean();
-		$mainframe->redirect('index.php?option=com_k2&view=comments', JText::_('K2_DELETE_COMPLETED'));
+		$mainframe->enqueueMessage(JText::_('K2_DELETE_COMPLETED'));
+		$mainframe->redirect('index.php?option=com_k2&view=comments');
 	}
 
 	function save() {

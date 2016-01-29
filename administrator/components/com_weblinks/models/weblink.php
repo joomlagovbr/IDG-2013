@@ -3,27 +3,27 @@
  * @package     Joomla.Administrator
  * @subpackage  com_weblinks
  *
- * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('_JEXEC') or die;
 
+use Joomla\Registry\Registry;
+use Joomla\String\String;
+
 /**
  * Weblinks model.
  *
- * @package     Joomla.Administrator
- * @subpackage  com_weblinks
- * @since       1.5
+ * @since  1.5
  */
 class WeblinksModelWeblink extends JModelAdmin
 {
-
 	/**
 	 * The type alias for this content type.
 	 *
-	 * @var      string
-	 * @since    3.2
+	 * @var    string
+	 * @since  3.2
 	 */
 	public $typeAlias = 'com_weblinks.weblink';
 
@@ -52,16 +52,13 @@ class WeblinksModelWeblink extends JModelAdmin
 			{
 				return;
 			}
-			$user = JFactory::getUser();
 
 			if ($record->catid)
 			{
-				return $user->authorise('core.delete', 'com_weblinks.category.'.(int) $record->catid);
+				return JFactory::getUser()->authorise('core.delete', 'com_weblinks.category.' . (int) $record->catid);
 			}
-			else
-			{
-				return parent::canDelete($record);
-			}
+
+			return parent::canDelete($record);
 		}
 	}
 
@@ -76,16 +73,12 @@ class WeblinksModelWeblink extends JModelAdmin
 	 */
 	protected function canEditState($record)
 	{
-		$user = JFactory::getUser();
-
 		if (!empty($record->catid))
 		{
-			return $user->authorise('core.edit.state', 'com_weblinks.category.'.(int) $record->catid);
+			return JFactory::getUser()->authorise('core.edit.state', 'com_weblinks.category.' . (int) $record->catid);
 		}
-		else
-		{
-			return parent::canEditState($record);
-		}
+
+		return parent::canEditState($record);
 	}
 
 	/**
@@ -199,12 +192,12 @@ class WeblinksModelWeblink extends JModelAdmin
 		if ($item = parent::getItem($pk))
 		{
 			// Convert the metadata field to an array.
-			$registry = new JRegistry;
+			$registry = new Registry;
 			$registry->loadString($item->metadata);
 			$item->metadata = $registry->toArray();
 
 			// Convert the images field to an array.
-			$registry = new JRegistry;
+			$registry = new Registry;
 			$registry->loadString($item->images);
 			$item->images = $registry->toArray();
 
@@ -234,11 +227,11 @@ class WeblinksModelWeblink extends JModelAdmin
 		$user = JFactory::getUser();
 
 		$table->title = htmlspecialchars_decode($table->title, ENT_QUOTES);
-		$table->alias = JApplication::stringURLSafe($table->alias);
+		$table->alias = JApplicationHelper::stringURLSafe($table->alias);
 
 		if (empty($table->alias))
 		{
-			$table->alias = JApplication::stringURLSafe($table->title);
+			$table->alias = JApplicationHelper::stringURLSafe($table->title);
 		}
 
 		if (empty($table->id))
@@ -248,7 +241,7 @@ class WeblinksModelWeblink extends JModelAdmin
 			// Set ordering to the last item if not set
 			if (empty($table->ordering))
 			{
-				$db = JFactory::getDbo();
+				$db = $this->getDbo();
 				$query = $db->getQuery(true)
 					->select('MAX(ordering)')
 					->from($db->quoteName('#__weblinks'));
@@ -262,7 +255,7 @@ class WeblinksModelWeblink extends JModelAdmin
 			{
 				// Set the values
 				$table->modified    = $date->toSql();
-				$table->modified_by = $user->get('id');
+				$table->modified_by = $user->id;
 			}
 		}
 
@@ -332,10 +325,10 @@ class WeblinksModelWeblink extends JModelAdmin
 		{
 			if ($name == $table->title)
 			{
-				$name = JString::increment($name);
+				$name = String::increment($name);
 			}
 
-			$alias = JString::increment($alias, 'dash');
+			$alias = String::increment($alias, 'dash');
 		}
 
 		return array($name, $alias);

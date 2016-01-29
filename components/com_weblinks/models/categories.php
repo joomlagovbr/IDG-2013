@@ -3,7 +3,7 @@
  * @package     Joomla.Site
  * @subpackage  com_weblinks
  *
- * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -12,23 +12,22 @@ defined('_JEXEC') or die;
 /**
  * This models supports retrieving lists of article categories.
  *
- * @package     Joomla.Site
- * @subpackage  com_weblinks
- * @since       1.6
+ * @since  1.6
  */
 class WeblinksModelCategories extends JModelList
 {
 	/**
-	 * Model context string.
+	 * Context string for the model type.  This is used to handle uniqueness
+	 * when dealing with the getStoreId() method and caching data structures.
 	 *
-	 * @var		string
+	 * @var  string
 	 */
-	public $_context = 'com_weblinks.categories';
+	protected $context = 'com_weblinks.categories';
 
 	/**
 	 * The category context (allows other extensions to derived from this model).
 	 *
-	 * @var		string
+	 * @var  string
 	 */
 	protected $_extension = 'com_weblinks';
 
@@ -94,18 +93,23 @@ class WeblinksModelCategories extends JModelList
 			$menu = $app->getMenu();
 			$active = $menu->getActive();
 			$params = new JRegistry;
+
 			if ($active)
 			{
 				$params->loadString($active->params);
 			}
+
 			$options = array();
 			$options['countItems'] = $params->get('show_cat_num_links', 1) || !$params->get('show_empty_categories_cat', 0);
 			$categories = JCategories::getInstance('Weblinks', $options);
 			$this->_parent = $categories->get($this->getState('filter.parentId', 'root'));
+
 			if (is_object($this->_parent))
 			{
 				$this->_items = $this->_parent->getChildren();
-			} else {
+			}
+			else
+			{
 				$this->_items = false;
 			}
 		}

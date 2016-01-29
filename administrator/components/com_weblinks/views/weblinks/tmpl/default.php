@@ -3,7 +3,7 @@
  * @package     Joomla.Administrator
  * @subpackage  com_weblinks
  *
- * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -27,24 +27,25 @@ if ($saveOrder)
 	JHtml::_('sortablelist.sortable', 'weblinkList', 'adminForm', strtolower($listDirn), $saveOrderingUrl);
 }
 $sortFields = $this->getSortFields();
-?>
-<script type="text/javascript">
+
+JFactory::getDocument()->addScriptDeclaration('
 	Joomla.orderTable = function()
 	{
 		table = document.getElementById("sortTable");
 		direction = document.getElementById("directionTable");
 		order = table.options[table.selectedIndex].value;
-		if (order != '<?php echo $listOrder; ?>')
+		if (order != "' . $listOrder . '")
 		{
-			dirn = 'asc';
+			dirn = "asc";
 		}
 		else
 		{
 			dirn = direction.options[direction.selectedIndex].value;
 		}
-		Joomla.tableOrdering(order, dirn, '');
-	}
-</script>
+		Joomla.tableOrdering(order, dirn, "");
+	};
+');
+?>
 <form action="<?php echo JRoute::_('index.php?option=com_weblinks&view=weblinks'); ?>" method="post" name="adminForm" id="adminForm">
 <?php if (!empty( $this->sidebar)) : ?>
 	<div id="j-sidebar-container" class="span2">
@@ -95,7 +96,7 @@ $sortFields = $this->getSortFields();
 						<th width="1%" class="nowrap center hidden-phone">
 							<?php echo JHtml::_('grid.sort', '<i class="icon-menu-2"></i>', 'a.ordering', $listDirn, $listOrder, null, 'asc', 'JGRID_HEADING_ORDERING'); ?>
 						</th>
-						<th width="1%" class="hidden-phone">
+						<th width="1%" class="hidden-phone center">
 							<?php echo JHtml::_('grid.checkall'); ?>
 						</th>
 						<th width="1%" style="min-width:55px" class="nowrap center">

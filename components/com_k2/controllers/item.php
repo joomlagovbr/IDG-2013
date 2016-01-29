@@ -1,9 +1,9 @@
 <?php
 /**
- * @version		$Id: item.php 1985 2013-06-25 16:58:55Z lefteris.kavadas $
+ * @version		2.6.x
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
+ * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
  * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -100,14 +100,14 @@ class K2ControllerItem extends K2Controller
 		}
 
 		// CSS
-		$document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.css?v=2.6.7');
-		$document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.frontend.css?v=2.6.7');
+		$document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.css?v=2.6.8');
+		$document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.frontend.css?v=2.6.8');
 		$document->addStyleSheet(JURI::root(true).'/templates/system/css/general.css');
 		$document->addStyleSheet(JURI::root(true).'/templates/system/css/system.css');
 
 		// JS
 		K2HelperHTML::loadjQuery(true);
-		$document->addScript(JURI::root(true).'/media/k2/assets/js/k2.js?v=2.6.7&amp;sitepath='.JURI::root(true).'/');
+		$document->addScript(JURI::root(true).'/media/k2/assets/js/k2.js?v=2.6.8&amp;sitepath='.JURI::root(true).'/');
 
 		$this->addViewPath(JPATH_COMPONENT_ADMINISTRATOR.DS.'views');
 		$this->addModelPath(JPATH_COMPONENT_ADMINISTRATOR.DS.'models');
@@ -320,15 +320,16 @@ class K2ControllerItem extends K2Controller
 				$url = 'index.php?option=com_user&view=login&return='.base64_encode($uri->toString());
 			}
 			$mainframe = JFactory::getApplication();
-			$mainframe->redirect(JRoute::_($url, false), JText::_('K2_YOU_NEED_TO_LOGIN_FIRST'));
+			$mainframe->enqueueMessage(JText::_('K2_YOU_NEED_TO_LOGIN_FIRST'), 'notice');
+			$mainframe->redirect(JRoute::_($url, false));
 		}
 
 		// CSS
-		$document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.css?v=2.6.7');
+		$document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.css?v=2.6.8');
 
 		// JS
 		K2HelperHTML::loadjQuery(true);
-		$document->addScript(JURI::root(true).'/media/k2/assets/js/k2.js?v=2.6.7&amp;sitepath='.JURI::root(true).'/');
+		$document->addScript(JURI::root(true).'/media/k2/assets/js/k2.js?v=2.6.8&amp;sitepath='.JURI::root(true).'/');
 		$this->addViewPath(JPATH_COMPONENT_ADMINISTRATOR.DS.'views');
 		$view = $this->getView('media', 'html');
 		$view->addTemplatePath(JPATH_COMPONENT_ADMINISTRATOR.DS.'views'.DS.'media'.DS.'tmpl');
@@ -386,11 +387,11 @@ class K2ControllerItem extends K2Controller
 		}
 
 		// CSS
-		$document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.css?v=2.6.7');
+		$document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.css?v=2.6.8');
 
 		// JS
 		K2HelperHTML::loadjQuery(true);
-		$document->addScript(JURI::root(true).'/media/k2/assets/js/k2.js?v=2.6.7&amp;sitepath='.JURI::root(true).'/');
+		$document->addScript(JURI::root(true).'/media/k2/assets/js/k2.js?v=2.6.8&amp;sitepath='.JURI::root(true).'/');
 
 		$this->addViewPath(JPATH_COMPONENT_ADMINISTRATOR.DS.'views');
 		$this->addModelPath(JPATH_COMPONENT_ADMINISTRATOR.DS.'models');

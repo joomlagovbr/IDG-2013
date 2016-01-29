@@ -1,9 +1,9 @@
 <?php
 /**
- * @version		$Id: itemform.php 1982 2013-05-30 12:55:18Z lefteris.kavadas $
+ * @version		2.6.x
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
+ * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
  * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -57,11 +57,9 @@ $document->addScriptDeclaration("
 			</div>
 			<div class="clr"></div>
 			<hr class="sep" />
-			<?php if(!$this->permissions->get('publish')): ?>
 			<div id="k2FrontendPermissionsNotice">
-				<p><?php echo JText::_('K2_FRONTEND_PERMISSIONS_NOTICE'); ?></p>
+				<p><?php echo $this->permissionsMessage; ?></p>
 			</div>
-			<?php endif; ?>
 			<?php endif; ?>
 			<div id="k2ToggleSidebarContainer"> <a href="#" id="k2ToggleSidebar"><?php echo JText::_('K2_TOGGLE_SIDEBAR'); ?></a> </div>
 			<table cellspacing="0" cellpadding="0" border="0" class="adminFormK2Container table">
@@ -146,7 +144,8 @@ $document->addScriptDeclaration("
 										<?php endif; ?>
 									</td>
 								</tr>
-								<?php if($this->mainframe->isAdmin() || ($this->mainframe->isSite() && $this->permissions->get('publish'))): ?>
+								<?php if($this->mainframe->isAdmin() || ($this->mainframe->isSite() && $this->permissions->get('publish')  || ($this->permissions->get('editPublished') && $this->row->id && $this->row->published)  )): ?>
+								<?php if($this->permissions->get('publish')): ?>
 								<tr>
 									<td class="adminK2LeftCol">
 										<label for="featured"><?php echo JText::_('K2_IS_IT_FEATURED'); ?></label>
@@ -155,6 +154,7 @@ $document->addScriptDeclaration("
 										<?php echo $this->lists['featured']; ?>
 									</td>
 								</tr>
+								<?php endif; ?>
 								<tr>
 									<td class="adminK2LeftCol">
 										<label><?php echo JText::_('K2_PUBLISHED'); ?></label>
@@ -165,7 +165,15 @@ $document->addScriptDeclaration("
 								</tr>
 								<?php endif; ?>
 							</table>
-							<ul id="k2ExtraFieldsValidationResults"></ul>
+							
+							<!-- Required extra field warning -->
+							<div id="k2ExtraFieldsValidationResults">
+								<h3><?php echo JText::_('K2_THE_FOLLOWING_FIELDS_ARE_REQUIRED'); ?></h3>
+								<ul id="k2ExtraFieldsMissing">
+									<li><?php echo JText::_('K2_LOADING'); ?></li>
+								</ul>
+							</div>
+							
 							<!-- Tabs start here -->
 							<div class="simpleTabs" id="k2Tabs">
 								<ul class="simpleTabsNavigation">

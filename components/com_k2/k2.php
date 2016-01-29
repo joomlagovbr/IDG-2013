@@ -1,9 +1,9 @@
 <?php
 /**
- * @version		$Id: k2.php 1978 2013-05-15 19:34:16Z joomlaworks $
+ * @version		2.6.x
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
+ * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
  * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -56,8 +56,9 @@ jimport('joomla.html.parameter');
 
 if (JFile::exists(JPATH_COMPONENT.DS.'controllers'.DS.$controller.'.php'))
 {
-    require_once (JPATH_COMPONENT.DS.'controllers'.DS.$controller.'.php');
     $classname = 'K2Controller'.$controller;
+    if(!class_exists($classname))
+        require_once (JPATH_COMPONENT.DS.'controllers'.DS.$controller.'.php');
     $controller = new $classname();
     $controller->execute($task);
     $controller->redirect();
@@ -69,5 +70,5 @@ else
 
 if (JRequest::getCmd('format') != 'json')
 {
-    echo "\n<!-- JoomlaWorks \"K2\" (v2.6.7) | Learn more about K2 at http://getk2.org -->\n\n";
+    echo "\n<!-- JoomlaWorks \"K2\" (v2.6.8) | Learn more about K2 at http://getk2.org -->\n\n";
 }

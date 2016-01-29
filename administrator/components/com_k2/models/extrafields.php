@@ -1,9 +1,9 @@
 <?php
 /**
- * @version		$Id: extrafields.php 1937 2013-03-07 15:19:16Z lefteris.kavadas $
+ * @version		2.6.x
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
+ * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
  * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -128,7 +128,8 @@ class K2ModelExtraFields extends K2Model
         {
         	$row = JTable::getInstance('K2ExtraField', 'Table');
             $row->load($id);
-            $row->publish($id, 1);
+            $row->published = 1;
+			$row->store();
         }
         $cache = JFactory::getCache('com_k2');
         $cache->clean();
@@ -144,7 +145,8 @@ class K2ModelExtraFields extends K2Model
         {
         	$row = JTable::getInstance('K2ExtraField', 'Table');
             $row->load($id);
-            $row->publish($id, 0);
+            $row->published = 0;
+			$row->store();
         }
         $cache = JFactory::getCache('com_k2');
         $cache->clean();
@@ -204,7 +206,8 @@ class K2ModelExtraFields extends K2Model
         $cache = JFactory::getCache('com_k2');
         $cache->clean();
         $msg = JText::_('K2_NEW_ORDERING_SAVED');
-        $mainframe->redirect('index.php?option=com_k2&view=extrafields', $msg);
+		$mainframe->enqueueMessage($msg);
+        $mainframe->redirect('index.php?option=com_k2&view=extrafields');
     }
 
     function orderdown()
@@ -221,7 +224,8 @@ class K2ModelExtraFields extends K2Model
         $cache = JFactory::getCache('com_k2');
         $cache->clean();
         $msg = JText::_('K2_NEW_ORDERING_SAVED');
-        $mainframe->redirect('index.php?option=com_k2&view=extrafields', $msg);
+		$mainframe->enqueueMessage($msg);
+        $mainframe->redirect('index.php?option=com_k2&view=extrafields');
     }
 
     function remove()
@@ -238,7 +242,8 @@ class K2ModelExtraFields extends K2Model
         }
         $cache = JFactory::getCache('com_k2');
         $cache->clean();
-        $mainframe->redirect('index.php?option=com_k2&view=extrafields', JText::_('K2_DELETE_COMPLETED'));
+		$mainframe->enqueueMessage(JText::_('K2_DELETE_COMPLETED'));
+        $mainframe->redirect('index.php?option=com_k2&view=extrafields');
     }
 
     function getExtraFieldsGroup()
@@ -306,17 +311,20 @@ class K2ModelExtraFields extends K2Model
         $row = JTable::getInstance('K2ExtraFieldsGroup', 'Table');
         if (!$row->bind(JRequest::get('post')))
         {
-            $mainframe->redirect('index.php?option=com_k2&view=extrafieldsgroups', $row->getError(), 'error');
+        	$mainframe->enqueueMessage($row->getError(), 'error');
+            $mainframe->redirect('index.php?option=com_k2&view=extrafieldsgroups');
         }
 
         if (!$row->check())
         {
-            $mainframe->redirect('index.php?option=com_k2&view=extrafieldsgroup&cid='.$row->id, $row->getError(), 'error');
+        	$mainframe->enqueueMessage($row->getError(), 'error');
+            $mainframe->redirect('index.php?option=com_k2&view=extrafieldsgroup&cid='.$row->id);
         }
 
         if (!$row->store())
         {
-            $mainframe->redirect('index.php?option=com_k2&view=extrafieldsgroup', $row->getError(), 'error');
+        	$mainframe->enqueueMessage($row->getError(), 'error');
+            $mainframe->redirect('index.php?option=com_k2&view=extrafieldsgroup');
         }
 
         switch(JRequest::getCmd('task'))
@@ -334,7 +342,8 @@ class K2ModelExtraFields extends K2Model
 
         $cache = JFactory::getCache('com_k2');
         $cache->clean();
-        $mainframe->redirect($link, $msg);
+		$mainframe->enqueueMessage($msg);
+        $mainframe->redirect($link);
     }
 
     function removeGroups()
@@ -355,7 +364,8 @@ class K2ModelExtraFields extends K2Model
         }
         $cache = &JFactory::getCache('com_k2');
         $cache->clean();
-        $mainframe->redirect('index.php?option=com_k2&view=extrafieldsgroups', JText::_('K2_DELETE_COMPLETED'));
+		$mainframe->enqueueMessage(JText::_('K2_DELETE_COMPLETED'));
+        $mainframe->redirect('index.php?option=com_k2&view=extrafieldsgroups');
     }
 
 }

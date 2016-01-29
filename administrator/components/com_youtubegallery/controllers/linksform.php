@@ -22,7 +22,7 @@ class YoutubeGalleryControllerLinksForm extends JControllerForm
          * Proxy for getModel.
        */
        
-       	function display()
+       	function display($cachable = false, $urlparams = Array())
 	{
 		$task=$_POST['task'];
 		
@@ -78,7 +78,7 @@ class YoutubeGalleryControllerLinksForm extends JControllerForm
 	}
 
        
-	function save()
+	function save($key = NULL, $urlVar = NULL)
 	{
 		$task = JRequest::getVar( 'task');
 		
@@ -136,7 +136,7 @@ class YoutubeGalleryControllerLinksForm extends JControllerForm
 	/**
 	* Cancels an edit operation
 	*/
-	function cancel()
+	function cancel($key = NULL)
 	{
 		$this->setRedirect( 'index.php?option=com_youtubegallery&view=linkslist');
 	}

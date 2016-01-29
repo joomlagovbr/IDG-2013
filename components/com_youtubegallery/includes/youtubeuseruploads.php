@@ -44,46 +44,23 @@ class VideoSource_YoutubeUserUploads
 		
 		$userid=VideoSource_YoutubeUserUploads::extractYouTubeUserID($youtubeURL);
 		
-		if($userid=='')
+		//alteracoes projeto portal padrao
+		require_once JPATH_ADMINISTRATOR . '/components/com_youtubegallery/google/_videos.php';
+		$videos = new YoutubeVideos();
+		$channelID = $videos->getChannelId($userid);
+		@$channelID = $channelID[0];
+		$video_raw = $videos->getVideosFromChannel( $channelID, 30, 'date' );
+
+		if($userid=='' || empty($channelID))
 			return $videolist; //user id not found
 		
-		$url = 'http://gdata.youtube.com/feeds/api/users/'.$userid.'/uploads?v=2'.($spq!='' ? '&'.$spq : '' ) ; //&max-results=10
-
-		$xml=false;
-		$htmlcode=YouTubeGalleryMisc::getURLData($url);
-
-		if(strpos($htmlcode,'<?xml version')===false)
-		{
-			if(strpos($htmlcode,'Invalid id')===false)
-				return 'Cannot load data, Invalid id';
-
-			return 'Cannot load data, no connection';
-		}
-	
-		$xml = simplexml_load_string($htmlcode);
-		
-		if($xml)
-		{
-			foreach ($xml->entry as $entry)
-			{
-				
-				$attr=$entry->link[0]->attributes();
-
-				if(isset($entry->link[0]) && $attr['rel'] == 'alternate')
-				{
-					$videolist[] = $attr['href'];
-                    
-				} else {
-					$attr=$entry->link[1]->attributes();
-					$videolist[] = $attr['href'];
-                    		}
-
-			}
-			
+		for ($i=0,$limit=count($video_raw); $i < $limit; $i++)
+		{ 
+			$videolist[] = 'https://www.youtube.com/watch?v='.$video_raw[$i]['id']['videoId'];
 		}
 		
 		return $videolist;
-		
+
 	}
 	
 	public static function getUserInfo($youtubeURL,&$item)

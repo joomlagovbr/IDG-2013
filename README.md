@@ -1,9 +1,9 @@
-Portal padrão em CMS Joomla 3.3.x
+Portal padrão em CMS Joomla 3.4.x
 ================
 
 Sobre esta versão
 ---------------------
-O Joomla 3.3 é recomendado para versões do PHP 5.3.10+. Caso a versão do PHP seja inferior, utilize o pacote para [Joomla 3.2.7](https://github.com/joomlagovbr/joomla-3.x/tree/3.2.x). Obtenha maiores informações no [comunicado de lançamento da versão 3.3](http://www.joomla.org/announcements/release-news/5546-joomla-3-3-0-released.html).
+O Joomla 3.4.x é recomendado para versões do PHP 5.3.10+. 
 
 Acompanhe as atualizações do projeto
 ---------------------

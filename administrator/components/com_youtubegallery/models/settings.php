@@ -100,7 +100,8 @@ class YoutubeGalleryModelSettings extends JModelAdmin
         {
 		
 		$vimeo_api_client_id=trim(preg_replace("/[^a-zA-Z0-9_]/", "", JRequest::getVar('vimeo_api_client_id')));
-		$vimeo_api_client_secret=trim(preg_replace("/[^a-zA-Z0-9_]/", "", JRequest::getVar('vimeo_api_client_secret')));
+        $vimeo_api_client_secret=trim(preg_replace("/[^a-zA-Z0-9_]/", "", JRequest::getVar('vimeo_api_client_secret')));
+		$youtube_public_api=trim(str_ireplace(array('select','=','update','insert'), '', JRequest::getVar('youtube_public_api')));
 	    
 	    
 		$db = JFactory::getDBO();
@@ -116,7 +117,9 @@ class YoutubeGalleryModelSettings extends JModelAdmin
 		VALUES ("vimeo_api_client_secret", "'.$vimeo_api_client_secret.'")
 		ON DUPLICATE KEY UPDATE `option`="vimeo_api_client_secret", `value`="'.$vimeo_api_client_secret.'"';
 
-		
+        $query[] = 'INSERT INTO `#__youtubegallery_settings` (`option`, `value`)
+        VALUES ("youtube_public_api", "'.$youtube_public_api.'")
+        ON DUPLICATE KEY UPDATE `option`="youtube_public_api", `value`="'.$youtube_public_api.'"';		
 
 		foreach($query as $q)
 		{

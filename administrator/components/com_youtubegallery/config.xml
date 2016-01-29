@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+        <fieldset
+                name="general"
+                label="Configurações básicas"
+        >
+                <field
+                        name="chave_api_youtube"
+                        type="text"
+                        label="Chave de API"
+                        description="Chave de acesso público à API, do tipo 'chave para aplicativos do servidor'"
+                        default=""
+                />
+        </fieldset>
+</config>

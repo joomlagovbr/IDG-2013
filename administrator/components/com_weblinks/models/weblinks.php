@@ -3,7 +3,7 @@
  * @package     Joomla.Administrator
  * @subpackage  com_weblinks
  *
- * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -12,9 +12,7 @@ defined('_JEXEC') or die;
 /**
  * Methods supporting a list of weblink records.
  *
- * @package     Joomla.Administrator
- * @subpackage  com_weblinks
- * @since       1.6
+ * @since  1.6
  */
 class WeblinksModelWeblinks extends JModelList
 {
@@ -22,7 +20,8 @@ class WeblinksModelWeblinks extends JModelList
 	 * Constructor.
 	 *
 	 * @param   array  An optional associative array of configuration settings.
-	 * @see     JController
+	 *
+	 * @see     JControllerLegacy
 	 * @since   1.6
 	 */
 	public function __construct($config = array())
@@ -56,8 +55,9 @@ class WeblinksModelWeblinks extends JModelList
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * Note. Calling getState in this method will result in recursion.
+	 * @return  void
 	 *
+	 * @note    Calling getState in this method will result in recursion.
 	 * @since   1.6
 	 */
 	protected function populateState($ordering = null, $direction = null)
@@ -96,8 +96,10 @@ class WeblinksModelWeblinks extends JModelList
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param   string  $id    A prefix for the store id.
+	 * @param   string  $id  A prefix for the store id.
+	 *
 	 * @return  string  A store id.
+	 *
 	 * @since   1.6
 	 */
 	protected function getStoreId($id = '')
@@ -116,6 +118,7 @@ class WeblinksModelWeblinks extends JModelList
 	 * Build an SQL query to load the list data.
 	 *
 	 * @return  JDatabaseQuery
+	 *
 	 * @since   1.6
 	 */
 	protected function getListQuery()
@@ -130,9 +133,7 @@ class WeblinksModelWeblinks extends JModelList
 			$this->getState(
 				'list.select',
 				'a.id, a.title, a.alias, a.checked_out, a.checked_out_time, a.catid,' .
-					'a.hits,' .
-					'a.state, a.access, a.ordering,' .
-					'a.language, a.publish_up, a.publish_down'
+				'a.hits, a.state, a.access, a.ordering, a.language, a.publish_up, a.publish_down'
 			)
 		);
 		$query->from($db->quoteName('#__weblinks') . ' AS a');
@@ -168,6 +169,7 @@ class WeblinksModelWeblinks extends JModelList
 
 		// Filter by published state
 		$published = $this->getState('filter.state');
+
 		if (is_numeric($published))
 		{
 			$query->where('a.state = ' . (int) $published);
@@ -179,6 +181,7 @@ class WeblinksModelWeblinks extends JModelList
 
 		// Filter by category.
 		$categoryId = $this->getState('filter.category_id');
+
 		if (is_numeric($categoryId))
 		{
 			$query->where('a.catid = ' . (int) $categoryId);
@@ -186,6 +189,7 @@ class WeblinksModelWeblinks extends JModelList
 
 		// Filter by search in title
 		$search = $this->getState('filter.search');
+
 		if (!empty($search))
 		{
 			if (stripos($search, 'id:') === 0)
@@ -206,6 +210,7 @@ class WeblinksModelWeblinks extends JModelList
 		}
 
 		$tagId = $this->getState('filter.tag');
+
 		// Filter by a single tag.
 		if (is_numeric($tagId))
 		{
@@ -220,13 +225,14 @@ class WeblinksModelWeblinks extends JModelList
 		// Add the list ordering clause.
 		$orderCol = $this->state->get('list.ordering');
 		$orderDirn = $this->state->get('list.direction');
+
 		if ($orderCol == 'a.ordering' || $orderCol == 'category_title')
 		{
 			$orderCol = 'c.title ' . $orderDirn . ', a.ordering';
 		}
+
 		$query->order($db->escape($orderCol . ' ' . $orderDirn));
 
-		//echo nl2br(str_replace('#__','jos_',$query));
 		return $query;
 	}
 }

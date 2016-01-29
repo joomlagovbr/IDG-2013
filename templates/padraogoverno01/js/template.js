@@ -60,14 +60,23 @@ jQuery(function () {
 	//fim botao de acao de voltar para o topo
 
 	//menus fechados e interacoes de menu principal
-	jQuery('#navigation-section nav.closed ul').hide();	
-	jQuery('#navigation-section nav h2').click(function(){		
+	jQuery('#navigation-section > nav.closed > ul').hide();	
+	jQuery('#navigation-section > nav > h2').click(function(){		
 		jQuery(this).next().slideToggle();
 		jQuery(this).find('i').toggleClass('icon-chevron-down');
 		jQuery(this).find('i').toggleClass('icon-chevron-up');
 		jQuery(this).parent().toggleClass('closed');
 	});	
-	jQuery('#navigation-section nav h2 i:not(.visible-tablet)').parent().css('cursor','pointer');
+	jQuery('#navigation-section > nav > h2 > i:not(.visible-tablet)').parent().css('cursor','pointer');
+	URL = document.URL;
+	URL = URL.replace('http://', '');
+	URL = URL.replace('https://', '');
+	URL = URL.substring(URL.indexOf('/'));
+	jQuery('#navigation-section > nav.closed > ul a').each(function(i){
+		link = jQuery(this).attr('href');
+		if(URL == link)
+			jQuery(this).parents('nav.closed > ul').slideToggle();
+	});
 	//fim menus fechados e interacoes de menu principal
 });
 jQuery(window).resize(function(){
@@ -98,6 +107,15 @@ function init() {
 
 	//paginas internas:
 	delaySocialItems();
+
+	//remocao de conflito com tooltips de mootools
+	// jQuery('.hasTooltip').tooltip('disable');
+	// jQuery('[rel=tooltip]').tooltip('disable');
+	jQuery('.hasTooltip').mouseout(function(){
+		// jQuery(this).tooltip('disable');
+		jQuery(this).show();
+	});
+
 }
 
 function resize() {

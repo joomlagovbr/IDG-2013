@@ -3,7 +3,7 @@
  * @package     Joomla.Site
  * @subpackage  com_weblinks
  *
- * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -12,9 +12,7 @@ defined('_JEXEC') or die;
 /**
  * HTML Article View class for the Weblinks component
  *
- * @package     Joomla.Site
- * @subpackage  com_weblinks
- * @since       1.5
+ * @since  1.5
  */
 class WeblinksViewForm extends JViewLegacy
 {
@@ -48,6 +46,7 @@ class WeblinksViewForm extends JViewLegacy
 		if ($authorised !== true)
 		{
 			JError::raiseError(403, JText::_('JERROR_ALERTNOAUTHOR'));
+
 			return false;
 		}
 
@@ -131,7 +130,7 @@ class WeblinksViewForm extends JViewLegacy
 			$this->document->setMetadata('keywords', $this->params->get('menu-meta_keywords'));
 		}
 
-			if ($this->params->get('robots'))
+		if ($this->params->get('robots'))
 		{
 			$this->document->setMetadata('robots', $this->params->get('robots'));
 		}

@@ -1,9 +1,9 @@
 <?php
 /**
- * @version		$Id: comments.php 1978 2013-05-15 19:34:16Z joomlaworks $
+ * @version		2.6.x
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
+ * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
  * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 // no direct access
@@ -29,7 +29,8 @@ class K2ControllerComments extends K2Controller
                 $url = 'index.php?option=com_user&view=login&return='.base64_encode($uri->toString());
             }
             $application = JFactory::getApplication();
-            $application->redirect(JRoute::_($url, false), JText::_('K2_YOU_NEED_TO_LOGIN_FIRST'));
+			$application->enqueueMessage(JText::_('K2_YOU_NEED_TO_LOGIN_FIRST'), 'notice');
+            $application->redirect(JRoute::_($url, false));
         }
         JRequest::setVar('tmpl', 'component');
 
@@ -51,11 +52,11 @@ class K2ControllerComments extends K2Controller
         $language->load('com_k2', JPATH_ADMINISTRATOR);
 
         // CSS
-        $document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.css?v=2.6.7');
+        $document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.css?v=2.6.8');
 
         // JS
         K2HelperHTML::loadjQuery(true);
-        $document->addScript(JURI::root(true).'/media/k2/assets/js/k2.js?v=2.6.7&amp;sitepath='.JURI::root(true).'/');
+        $document->addScript(JURI::root(true).'/media/k2/assets/js/k2.js?v=2.6.8&amp;sitepath='.JURI::root(true).'/');
 
         $this->addViewPath(JPATH_COMPONENT_ADMINISTRATOR.DS.'views');
         $this->addModelPath(JPATH_COMPONENT_ADMINISTRATOR.DS.'models');

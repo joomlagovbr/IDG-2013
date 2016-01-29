@@ -1,9 +1,9 @@
 <?php
 /**
- * @version		$Id: tags.php 1947 2013-03-11 11:46:13Z lefteris.kavadas $
+ * @version		2.6.x
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
+ * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
  * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -103,7 +103,8 @@ class K2ModelTags extends K2Model
 		{
 			$row = JTable::getInstance('K2Tag', 'Table');
 			$row->load($id);
-			$row->publish($id, 1);
+			$row->published = 1;
+			$row->store();
 		}
 		$cache = JFactory::getCache('com_k2');
 		$cache->clean();
@@ -119,7 +120,8 @@ class K2ModelTags extends K2Model
 		{
 			$row = JTable::getInstance('K2Tag', 'Table');
 			$row->load($id);
-			$row->publish($id, 0);
+			$row->published = 0;
+			$row->store();
 		}
 		$cache = JFactory::getCache('com_k2');
 		$cache->clean();
@@ -140,7 +142,8 @@ class K2ModelTags extends K2Model
 		}
 		$cache = JFactory::getCache('com_k2');
 		$cache->clean();
-		$mainframe->redirect('index.php?option=com_k2&view=tags', JText::_('K2_DELETE_COMPLETED'));
+		$mainframe->enqueueMessage(JText::_('K2_DELETE_COMPLETED'));
+		$mainframe->redirect('index.php?option=com_k2&view=tags');
 	}
 
 	function getFilter()
@@ -169,7 +172,8 @@ class K2ModelTags extends K2Model
 		$db->setQuery("DELETE FROM #__k2_tags WHERE id NOT IN (SELECT DISTINCT tagID FROM #__k2_tags_xref)");
 		$db->query();
 		$mainframe = JFactory::getApplication();
-		$mainframe->redirect('index.php?option=com_k2&view=tags', JText::_('K2_DELETE_COMPLETED'));
+		$mainframe->enqueueMessage(JText::_('K2_DELETE_COMPLETED'));
+		$mainframe->redirect('index.php?option=com_k2&view=tags');
 	}
 
 }

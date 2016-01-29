@@ -1,9 +1,9 @@
 <?php
 /**
- * @version		$Id: k2.php 1995 2013-07-04 17:27:53Z lefteris.kavadas $
+ * @version		2.6.x
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
+ * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
  * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -72,7 +72,7 @@ if(version_compare(JVERSION,'1.6.0','ge')) {
 }
 
 // CSS
-$document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.css?v=2.6.7');
+$document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.css?v=2.6.8');
 
 K2HelperHTML::loadjQuery(true, JRequest::getCmd('view') == 'media');
 
@@ -82,7 +82,7 @@ if(K2_JVERSION == '30')
     JHtml::_('formbehavior.chosen', 'select');
 }
 $document->addScriptDeclaration('K2JVersion = "'.K2_JVERSION.'";');
-$document->addScript(JURI::root(true).'/media/k2/assets/js/k2.js?v=2.6.7&amp;sitepath='.JURI::root(true).'/');
+$document->addScript(JURI::root(true).'/media/k2/assets/js/k2.js?v=2.6.8&amp;sitepath='.JURI::root(true).'/');
 
 // Container CSS class definition
 if(K2_JVERSION == '15'){
@@ -138,6 +138,6 @@ $controller->redirect();
 if( $document->getType() != 'raw' &&  JRequest::getWord('task')!='deleteAttachment' && JRequest::getWord('task')!='connector' && JRequest::getWord('task')!='tag' && JRequest::getWord('task')!='extrafields' && JRequest::getWord('task')!='download' && JRequest::getWord('task')!='saveComment'): ?>
 </div>
 <div id="k2AdminFooter">
-	<a target="_blank" href="http://getk2.org/">K2 v2.6.7</a> | Copyright &copy; 2006-<?php echo date('Y'); ?> <a target="_blank" href="http://www.joomlaworks.net/">JoomlaWorks Ltd.</a>
+	<a target="_blank" href="http://getk2.org/">K2 v2.6.8</a> | Copyright &copy; 2006-<?php echo date('Y'); ?> <a target="_blank" href="http://www.joomlaworks.net/">JoomlaWorks Ltd.</a>
 </div>
 <?php endif;
