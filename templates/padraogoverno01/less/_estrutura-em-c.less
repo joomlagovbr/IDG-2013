@@ -4,23 +4,29 @@ header {
      @line-height:5px;
     padding: 14px 0 0 0;
     .accessibility-language-actions-container { height:25px; overflow: hidden }
-    #accessibility{       
+    #accessibility{
         font-family: @basic-font-family !important; margin:0; line-height:@line-height; padding-top: 2px;
         li { line-height:@line-height; margin:0 10px 0 0 }
-        a { 
+        a {
             color:@cor-links-header-topo; font-size: 0.7em;
             span { background-color: @cor-links-header-bkgspan; color:@cor-links-header-acessibilidadespan; padding:0 2px 0px 3px }
             &:hover { background:@cor-links-header-bkghover }
         }
     }
-    #portal-siteactions, #language { 
+    #portal-siteactions, #language, .mod-languages {
         border-bottom: 1px dotted @cor-bordas-header; text-transform:uppercase; margin:-6px 0 0 0;
-        li { 
+        li {
             margin:0 16px 0 0;
             &:last-child { margin-right:0 !important }
         }
         a { color:@cor-links-header-topo; font-size:0.73em;
-              &:hover { text-decoration:underline }
+            &:hover { text-decoration:underline }
+        }
+    }
+    .mod-languages{
+        margin-left:20px;
+        li { margin-left:6px; display:block; float:left;
+            &:first-child { margin-left:0 }
         }
     }
     #language {
@@ -43,12 +49,12 @@ header {
         .portal-description { font-size:1.1em; text-transform:uppercase; position:relative; top:4px }
     }
     #logo.small {
-        margin:13px 0 10px 0; 
+        margin:13px 0 10px 0;
         h1 { font-size:2.4em; font-family: @font-family-bold; }
     }
     #logo.big {
-        margin:10px 0 13px 0; 
-        h1 { font-size:3.6em; font-family: @font-family-bold; }        
+        margin:10px 0 13px 0;
+        h1 { font-size:3.6em; font-family: @font-family-bold; }
     }
     #portal-searchbox {
         form { margin:22px 0 0 0 }
@@ -62,7 +68,7 @@ header {
     #social-icons { margin:2px 0 2px 0; .opacity(@opacity-header-icons);
         li { margin: 0 0 0 6px }
         a { color:@cor-links-header;
-            i { font-size:1.70em; margin-top:5px; .chrome_antialising (@cor-links-header; .4px ) } 
+            i { font-size:1.70em; margin-top:5px; .chrome_antialising (@cor-links-header; .4px ) }
             i.icon-youtube {  .chrome_antialising (@cor-links-header-hover; 0 ) !important }
             &:hover { color:@cor-links-header-hover; .chrome_antialising (@cor-links-header-hover; .4px ) }
         }
@@ -90,10 +96,10 @@ main {
         h2, ul, li, a { padding:0; text-align:center; text-transform:uppercase }
         h2 { background:@cor-cinza-escuro url('../img/em-destaque.png') no-repeat right center; color:@cor-branco; padding:@altura-padding 0 @altura-padding 0; .rounded-corners(5px 0 0 5px); margin-right:0; font-size:0.7em; font-weight:normal;line-height:1em;  }
         ul { margin:0; padding:0 5px; background:@cor-cinza-medio; .rounded-corners(0 5px 5px 0) }
-        li {  
+        li {
             display:block; float:left; background:transparent url('../img/linha-cinza.gif') repeat-y right 0;
             &:last-child { background:none }
-            a { font-size:0.7em; color:@cor-preto; display:block; padding:@altura-padding 5px; line-height:1em; 
+            a { font-size:0.7em; color:@cor-preto; display:block; padding:@altura-padding 5px; line-height:1em;
                 &:hover { text-decoration:underline }
             }
         }
@@ -126,7 +132,7 @@ main {
                     }
                     li a, li.current li a { cursor:pointer;
                         &:hover { text-decoration:underline; }
-                    }                     
+                    }
                 }
                 //terceiro nivel de menu
                 /*nav li.active,*/ li.deeper { background:transparent url(@nav-active-marker) no-repeat 15px 14px; border-top:1px solid darken(@cor-nav-active-base-border, 20%); border-bottom:none;
@@ -157,9 +163,9 @@ main {
                 }
             }
         }
-        .menu-de-apoio {   
+        .menu-de-apoio {
             li { padding-left:0; padding-right:0; }
-            a { color:@cor-menudeapoio-links; font-size:1.05em } 
+            a { color:@cor-menudeapoio-links; font-size:1.05em }
         }
         .central-conteudos {
             li { padding:14px 10px 14px 0;
@@ -188,11 +194,11 @@ main {
         }
     }
 }
-footer {    
-    background:@cor-footer; 
+footer {
+    background:@cor-footer;
     .footer-atalhos { background:@cor-background; border-bottom:2px solid @cor-bordaprincipal-footer;
         .container { padding:10px 0 25px 0 }
-        .voltar-ao-topo { 
+        .voltar-ao-topo {
             a { color:@cor-cinza-escuro;
                 &:hover { text-decoration:underline }
             }
@@ -207,7 +213,7 @@ footer {
         li { display:block; padding-bottom:3px }
         a { font-size:0.9em; color:@cor-links-footer; line-height:0.9em;
             &:hover { color:@cor-links-footer; text-decoration:underline }
-        }        
+        }
     }
     .footer-menus { padding-bottom:10px }
     .footer-logos { padding:25px 0; background:@cor-barralogos-footer; }
