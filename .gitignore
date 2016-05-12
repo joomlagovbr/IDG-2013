@@ -4,3 +4,6 @@
 /.buildpath
 /configuration.php
 /.git
+
+# Dependency directories
+node_modules
