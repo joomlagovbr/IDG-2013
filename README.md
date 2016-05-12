@@ -41,14 +41,14 @@ Confira a documentação disponível até o momento no repositório provisório 
 
 Configuração para desenvolvimento
 ---------------------
-O fonte do projeto usa [LESS](http://lesscss.org/), que precisa ser compilado para CSS. Esse processo foi altomatizado independente de ambiente de desenvolvimento, usando a ferramenta [Gulp](http://gulpjs.com/). Para usa-la, você precisa:
-   - Instalar o [Node.js](https://nodejs.org);
-   - Em um terminal, dentro da pasta raiz do projeto execute os comandos:
+O fonte do projeto usa [LESS](http://lesscss.org/), que precisa ser compilado para CSS. Esse processo foi automatizado independente de ambiente de desenvolvimento e IDE, usando a ferramenta [Gulp](http://gulpjs.com/), para o usar você precisa:
+   - Instalar o [Nodejs](https://nodejs.org);
+   - Após a instalação, um terminal, dentro da pasta raiz do projeto execute os comandos:
         - `` npm install `` para instalar as dependências (somente uma vez);
         - `` npm install -g gulp `` para instalar o gulp (somente uma vez);
-        - `` gulp less `` para compilar e "comprimir" os aquivos LESS;
-        - `` gulp watch `` para monitorar alterações nos aquivos LESS e então compila-los sem compressão (desenvolvimento e teste);
-   - Mais informações sobre node e gulp [Workflow Front End](https://www.gitbook.com/book/tapmorales/workflow-front-end/details) e [Gulp: O novo automatizador](http://tableless.com.br/gulp-o-novo-automatizador/)
+        - `` gulp watch `` para monitorar alterações nos aquivos LESS e compilar para CSS sem compressão (durante o desenvolvimento);
+        - `` gulp less `` para compilar e "comprimir" os aquivos LESS para CSS (para gerar uma versão final);
+   - Mais informações sobre Nodejs e Gulp: [Workflow Front End](https://www.gitbook.com/book/tapmorales/workflow-front-end/details) e [Gulp: O novo automatizador](http://tableless.com.br/gulp-o-novo-automatizador/)
 
 Desenvolvimento
 ---------------------
