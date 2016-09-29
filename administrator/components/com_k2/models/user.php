@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
@@ -178,9 +178,10 @@ class K2ModelUser extends K2Model
         $spammer = JFactory::getUser($id);
         $db->setQuery("SELECT ip FROM #__k2_users WHERE userID=".$id, 0, 1);
         $ip = $db->loadResult();
-        if ($ip && function_exists('fsockopen') && $params->get('stopForumSpamApiKey'))
+        $stopForumSpamApiKey = trim($params->get('stopForumSpamApiKey'));
+        if ($ip && function_exists('fsockopen') && $stopForumSpamApiKey)
         {
-            $data = "username=".$spammer->username."&ip_addr=".$ip."&email=".$spammer->email."&api_key=".$params->get('stopForumSpamApiKey');
+            $data = "username=".$spammer->username."&ip_addr=".$ip."&email=".$spammer->email."&api_key=".$stopForumSpamApiKey;
             $fp = fsockopen("www.stopforumspam.com", 80);
             fputs($fp, "POST /add.php HTTP/1.1\n");
             fputs($fp, "Host: www.stopforumspam.com\n");

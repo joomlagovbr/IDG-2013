@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
@@ -29,6 +29,7 @@ class K2ViewExtraFields extends K2View
         $filter_state = $mainframe->getUserStateFromRequest($option.$view.'filter_state', 'filter_state', -1, 'int');
         $search = $mainframe->getUserStateFromRequest($option.$view.'search', 'search', '', 'string');
         $search = JString::strtolower($search);
+        $search = trim(preg_replace('/[^a-zA-Z0-9\s\-_]/', '', $search));
         $filter_type = $mainframe->getUserStateFromRequest($option.$view.'filter_type', 'filter_type', '', 'string');
         $filter_group = $mainframe->getUserStateFromRequest($option.$view.'filter_group', 'filter_group', '', 'string');
 
@@ -40,12 +41,10 @@ class K2ViewExtraFields extends K2View
             JRequest::setVar('limitstart', $limitstart);
         }
         $extraFields = $model->getData();
-		require_once (JPATH_COMPONENT.DS.'lib'.DS.'JSON.php');
-		$json = new Services_JSON;
         foreach ($extraFields as $key => $extraField)
         {
             $extraField->status = K2_JVERSION == '15' ? JHTML::_('grid.published', $extraField, $key) : JHtml::_('jgrid.published', $extraField->published, $key);
-			$values = $json->decode($extraField->value);
+			$values = json_decode($extraField->value);
 			if (isset($values[0]->alias) && !empty($values[0]->alias))
 			{
 				$extraField->alias = $values[0]->alias;

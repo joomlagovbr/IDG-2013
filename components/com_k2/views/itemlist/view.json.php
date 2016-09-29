@@ -1,9 +1,9 @@
 <?php
 /**
- * @version     2.6.x
+ * @version     2.7.x
  * @package     K2
  * @author      JoomlaWorks http://www.joomlaworks.net
- * @copyright   Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
+ * @copyright   Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
  * @license     GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -146,6 +146,7 @@ class K2ViewItemlist extends K2View
                     $category->description = $category->text;
 
                     //Category K2 plugins
+                    $category->event = new stdClass;
                     $category->event->K2CategoryDisplay = '';
                     JPluginHelper::importPlugin('k2');
                     $results = $dispatcher->trigger('onK2CategoryDisplay', array(&$category, &$params, $limitstart));

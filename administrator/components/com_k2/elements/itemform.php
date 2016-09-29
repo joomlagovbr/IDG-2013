@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
@@ -16,6 +16,9 @@ class K2ElementItemForm extends K2Element
 {
     function fetchElement($name, $value, &$node, $control_name)
     {
+      if(version_compare(JVERSION, '3.5', 'ge')) {
+        JHtml::_('behavior.framework');
+      }
         $document = JFactory::getDocument();
         $document->addScriptDeclaration("
 			window.addEvent('domready', function() {
@@ -32,7 +35,7 @@ class K2ElementItemForm extends K2Element
 					if(options.length == 3) {
 						options[0].remove();
 					}
-				}				
+				}
 			});
 		");
         return '';

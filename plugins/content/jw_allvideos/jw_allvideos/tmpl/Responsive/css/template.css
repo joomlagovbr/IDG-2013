@@ -1,8 +1,8 @@
 /**
- * @version		4.5.0
+ * @version		4.7.0
  * @package		AllVideos (plugin)
- * @author    JoomlaWorks - http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
+ * @author		JoomlaWorks - http://www.joomlaworks.net
+ * @copyright	Copyright (c) 2006 - 2015 JoomlaWorks Ltd. All rights reserved.
  * @license		GNU/GPL license:http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -21,7 +21,8 @@
 	.avVideo .avPlayerContainer .avPlayerBlock iframe,
 	.avVideo .avPlayerContainer .avPlayerBlock object,
 	.avVideo .avPlayerContainer .avPlayerBlock embed,
-	.avVideo .avPlayerContainer .avPlayerBlock div {position:absolute!important;top:0;left:0;min-width:320px!important;width:100%!important;height:100%!important;}
+	.avVideo .avPlayerContainer .avPlayerBlock video,
+	.avVideo .avPlayerContainer .avPlayerBlock > div {position:absolute!important;top:0;left:0;min-width:320px!important;width:100%!important;height:100%!important;}
 	/* SoundCloud container styling only */
 	.avSoundCloudSet .avPlayerContainer .avPlayerBlock {width:100%!important;position:relative!important;padding:0 0 56% 0!important;}
 	.avSoundCloudSet .avPlayerContainer .avPlayerBlock iframe,
@@ -34,9 +35,9 @@
 	.avSoundCloudSong .avPlayerContainer .avPlayerBlock embed {min-width:320px!important;width:100%!important;height:168px!important;}
 	/* Audio container styling only */
 	.avAudio .avPlayerContainer .avPlayerBlock {width:100%!important;padding:0!important;}
-	.avAudio .avPlayerContainer .avPlayerBlock div {min-width:320px!important;width:100%!important;height:24px!important;}
+	.avAudio .avPlayerContainer .avPlayerBlock > div {min-width:320px!important;width:100%!important;height:24px!important;}
 
-	.avPlayerWrapper .avPlayerContainer .avPlayerBlock div {text-align:center!important;}
+	.avPlayerWrapper .avPlayerContainer .avPlayerBlock > div {text-align:center!important;}
 	.avPlayerWrapper .avPlayerContainer .avPlayerBlock .avDownloadLink {text-align:center;padding:4px;font-size:11px;}
 		.avPlayerWrapper .avPlayerContainer .avPlayerBlock .avDownloadLink a {}
 		.avPlayerWrapper .avPlayerContainer .avPlayerBlock .avDownloadLink a:hover {}

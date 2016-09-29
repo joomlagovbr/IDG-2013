@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
@@ -30,16 +30,7 @@ $button_text = $params->get('button_text', JText::_('K2_SEARCH'));
 $width = intval($params->get('width', 20));
 $maxlength = $width > 20 ? $width : 20;
 $text = $params->get('text', JText::_('K2_SEARCH'));
-
-if (K2_JVERSION == '15')
-{
-    JHTML::_('behavior.mootools');
-}
-else
-{
-    JHTML::_('behavior.framework');
-
-}
+$searchItemId = $params->get('searchItemId', '');
 
 // API
 $document = JFactory::getDocument();

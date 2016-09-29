@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
@@ -81,7 +81,7 @@ class K2ElementUsersLatest extends K2Element
 		";
 
         $document->addScriptDeclaration($js);
-        $document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.modules.css?v=2.6.8');
+        $document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.modules.css?v=2.7.1');
 
         $current = array();
         if (is_string($value) && !empty($value))
@@ -110,7 +110,7 @@ class K2ElementUsersLatest extends K2Element
 			<li>
 				<img class="remove" src="'.$image.'" alt="'.JText::_('K2_REMOVE_ENTRY_FROM_LIST').'" />
 				<span class="handle">'.$row->name.'</span>
-				<input type="hidden" value="'.$row->id.'" name="'.$fieldName.'"/>
+				<input type="hidden" value="'.$row->id.'" name="'.$fieldName.'" />
 				<span style="clear:both;"></span>
 			</li>
 			';

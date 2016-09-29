@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
@@ -27,19 +27,19 @@ class K2ViewItem extends K2View
 		JHTML::_('behavior.modal');
 		JRequest::setVar('hidemainmenu', 1);
 		$document = JFactory::getDocument();
-		$document->addScript(JURI::root(true).'/media/k2/assets/js/nicEdit.js?v=2.6.8');
+		$document->addScript(JURI::root(true).'/media/k2/assets/js/nicEdit.js?v=2.7.1');
 		//var K2SitePath = '".JURI::root(true)."/';
 		$js = "
-					var K2BasePath = '".JURI::base(true)."/';
-					var K2Language = [
-						'".JText::_('K2_REMOVE', true)."',
-						'".JText::_('K2_LINK_TITLE_OPTIONAL', true)."',
-						'".JText::_('K2_LINK_TITLE_ATTRIBUTE_OPTIONAL', true)."',
-						'".JText::_('K2_ARE_YOU_SURE', true)."',
-						'".JText::_('K2_YOU_ARE_NOT_ALLOWED_TO_POST_TO_THIS_CATEGORY', true)."',
-						'".JText::_('K2_OR_SELECT_A_FILE_ON_THE_SERVER', true)."'
-					]
-				";
+			var K2BasePath = '".JURI::base(true)."/';
+			var K2Language = [
+				'".JText::_('K2_REMOVE', true)."',
+				'".JText::_('K2_LINK_TITLE_OPTIONAL', true)."',
+				'".JText::_('K2_LINK_TITLE_ATTRIBUTE_OPTIONAL', true)."',
+				'".JText::_('K2_ARE_YOU_SURE', true)."',
+				'".JText::_('K2_YOU_ARE_NOT_ALLOWED_TO_POST_TO_THIS_CATEGORY', true)."',
+				'".JText::_('K2_OR_SELECT_A_FILE_ON_THE_SERVER', true)."'
+			]
+		";
 		$document->addScriptDeclaration($js);
 		K2Model::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.DS.'models');
 		$model = K2Model::getInstance('Item', 'K2Model', array('table_path' => JPATH_COMPONENT_ADMINISTRATOR.DS.'tables'));
@@ -146,9 +146,9 @@ class K2ViewItem extends K2View
 		}
 
 		// Set up calendars
-		$lists['createdCalendar'] = JHTML::_('calendar', $created, 'created', 'created');
-		$lists['publish_up'] = JHTML::_('calendar', $publishUp, 'publish_up', 'publish_up');
-		$lists['publish_down'] = JHTML::_('calendar', $publishDown, 'publish_down', 'publish_down');
+		$lists['createdCalendar'] = JHTML::_('calendar', $created, 'created', 'created', '%Y-%m-%d %H:%M:%S');
+		$lists['publish_up'] = JHTML::_('calendar', $publishUp, 'publish_up', 'publish_up', '%Y-%m-%d %H:%M:%S');
+		$lists['publish_down'] = JHTML::_('calendar', $publishDown, 'publish_down', 'publish_down', '%Y-%m-%d %H:%M:%S');
 
 		if ($item->id)
 		{
@@ -206,7 +206,7 @@ class K2ViewItem extends K2View
 
 		$lists['published'] = JHTML::_('select.booleanlist', 'published', 'class="inputbox"', $item->published);
 		$lists['featured'] = JHTML::_('select.booleanlist', 'featured', 'class="inputbox"', $item->featured);
-		$lists['access'] = version_compare(JVERSION, '3.0', 'ge') ? JHTML::_('access.level', 'access', $item->access) : JHTML::_('list.accesslevel', $item);
+		$lists['access'] = version_compare(JVERSION, '2.5', 'ge') ? JHTML::_('access.level', 'access', $item->access, '', false) : str_replace('size="3"', "", JHTML::_('list.accesslevel', $item));
 
 		$query = "SELECT ordering AS value, title AS text FROM #__k2_items WHERE catid={$item->catid}";
 		$lists['ordering'] = version_compare(JVERSION, '3.0', 'ge') ? NUll : JHTML::_('list.specificordering', $item, $item->id, $query);
@@ -268,7 +268,7 @@ class K2ViewItem extends K2View
 			$options['startOffset'] = 0;
 		}
 
-		$document->addScriptDeclaration("var K2ActiveVideoTab = ".$options['startOffset']);
+		$document->addScriptDeclaration("var K2ActiveMediaTab = ".$options['startOffset']);
 
 		$lists['remoteVideo'] = ($remoteVideo) ? preg_replace('%\{[a-z0-9-_]*\}(.*)\{/[a-z0-9-_]*\}%i', '\1', $item->video) : '';
 		$lists['remoteVideoType'] = ($remoteVideo) ? preg_replace('%\{([a-z0-9-_]*)\}.*\{/[a-z0-9-_]*\}%i', '\1', $item->video) : '';
@@ -287,7 +287,7 @@ class K2ViewItem extends K2View
 		$dispatcher = JDispatcher::getInstance();
 
 		// Detect gallery type
-		if (JString::strpos($item->gallery, 'http://'))
+		if (JString::strpos($item->gallery, 'http://') || JString::strpos($item->gallery, 'https://'))
 		{
 			$item->galleryType = 'flickr';
 			$item->galleryValue = JString::substr($item->gallery, 9);
@@ -380,7 +380,6 @@ class K2ViewItem extends K2View
 		{
 			$active = $user->id;
 		}
-		$lists['authors'] = JHTML::_('list.users', 'created_by', $active, false);
 
 		$categories_option[] = JHTML::_('select.option', 0, JText::_('K2_SELECT_CATEGORY'));
 		$categories = $categoriesModel->categoriesTree(NUll, true, false);
@@ -572,16 +571,8 @@ class K2ViewItem extends K2View
 			JToolBarHelper::apply();
 			JToolBarHelper::cancel();
 		}
-		// ACE ACL integration
-		$definedConstants = get_defined_constants();
-		if (!empty($definedConstants['ACEACL']) && AceaclApi::authorize('permissions', 'com_aceacl'))
-		{
-			$aceAclFlag = true;
-		}
-		else
-		{
-			$aceAclFlag = false;
-		}
+		// ACE ACL integration has been removed. We keep this flag to avoid php notices for users who have overrides 
+		$aceAclFlag = false;
 		$this->assignRef('aceAclFlag', $aceAclFlag);
 
 		// SIG PRO v3 integration

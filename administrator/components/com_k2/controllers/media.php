@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
@@ -89,27 +89,26 @@ class K2ControllerMedia extends K2Controller
 
 		if ($mainframe->isAdmin())
 		{
-			$permissions = array(
-				'read' => true,
-				'write' => true
-			);
+			$permissions = array('read' => true, 'write' => true);
 		}
 		else
 		{
-			$permissions = array(
-				'read' => true,
-				'write' => false
-			);
+			$permissions = array('read' => true, 'write' => false);
 		}
 		$options = array(
 			'debug' => false,
-			'roots' => array( array(
+			'roots' => array(
+				array(
 					'driver' => 'LocalFileSystem',
 					'path' => $path,
 					'URL' => $url,
 					'accessControl' => 'access',
-					'defaults' => $permissions
-				))
+					'defaults' => $permissions,
+					'uploadDeny' => array('all'),
+					'uploadAllow' => array('image', 'video', 'audio', 'text/plain', 'text/html', 'application/json', 'application/pdf', 'application/zip', 'application/x-7z-compressed', 'application/x-bzip', 'application/x-bzip2', 'text/css', 'application/msword', 'application/vnd.ms-excel', 'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.openxmlformats-officedocument.presentationml.presentation'),
+					'uploadOrder' => array('deny', 'allow')
+				)
+			)
 		);
 		$connector = new elFinderConnector(new elFinder($options));
 		$connector->run();

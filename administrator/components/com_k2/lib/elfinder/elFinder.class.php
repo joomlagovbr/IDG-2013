@@ -1,9 +1,9 @@
 <?php
 /**
- * @version     2.6.x
+ * @version     2.7.x
  * @package     K2
  * @author      JoomlaWorks http://www.joomlaworks.net
- * @copyright   Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
+ * @copyright   Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
  * @license     GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -682,7 +682,7 @@ class elFinder {
         }
 
         return ($dir = $volume->mkdir($target, $name)) == false
-            ? array('error' => $this->error(self::ERROR_MKDIR, $name, $volume->error()))
+            ? array('error' => $this->error(self::ERROR_MKDIR, htmlspecialchars($name, ENT_QUOTES, 'UTF-8'), $volume->error()))
             : array('added' => array($dir));
     }
     
@@ -702,7 +702,7 @@ class elFinder {
         }
 
         return ($file = $volume->mkfile($target, $args['name'])) == false
-            ? array('error' => $this->error(self::ERROR_MKFILE, $name, $volume->error()))
+            ? array('error' => $this->error(self::ERROR_MKFILE, htmlspecialchars($name, ENT_QUOTES, 'UTF-8'), $volume->error()))
             : array('added' => array($file));
     }
     

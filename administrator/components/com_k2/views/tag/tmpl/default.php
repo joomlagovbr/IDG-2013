@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
@@ -22,22 +22,40 @@ $document->addScriptDeclaration("
 		} else {
 			submitform( pressbutton );
 		}
-	}
+	};
 ");
 
 ?>
 
 <form action="index.php" enctype="multipart/form-data" method="post" name="adminForm" id="adminForm">
-	<table class="admintable table">
-		<tr>
-			<td class="key"><?php echo JText::_('K2_NAME'); ?></td>
-			<td><input class="text_area k2TitleBox" type="text" name="name" id="name" value="<?php echo $this->row->name; ?>" size="50" maxlength="250" /></td>
-		</tr>
-		<tr>
-			<td class="key"><?php	echo JText::_('K2_PUBLISHED');	?></td>
-			<td><?php echo $this->lists['published']; ?></td>
-		</tr>
-	</table>
+	<div class="xmlParamsFields k2GenericForm">
+        <h3>
+          <?php if($this->row->id): ?>
+              <?php echo JText::_('K2_EDIT_TAG'); ?>
+          <?php else: ?>
+              <?php echo JText::_('K2_ADD_NEW_TAG'); ?>
+          <?php endif; ?>
+        </h3>
+
+        <ul class="adminformlist">
+            <li>
+            	<div class="paramLabel">
+					<label><?php echo JText::_('K2_NAME'); ?></label>
+				</div>
+				<div class="paramValue">
+					<input class="text_area k2TitleBox" type="text" name="name" id="name" value="<?php echo $this->row->name; ?>" size="50" maxlength="250" />
+				</div>
+			</li>
+			<li>
+				<div class="paramLabel">
+					<label><?php echo JText::_('K2_PUBLISHED'); ?></label>
+				</div>
+				<div class="paramValue">
+					<?php echo $this->lists['published']; ?>
+				</div>
+			</li>
+		</ul>
+	</div>
 
 	<input type="hidden" name="id" value="<?php echo $this->row->id; ?>" />
 	<input type="hidden" name="option" value="com_k2" />

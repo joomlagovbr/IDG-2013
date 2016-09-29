@@ -1,9 +1,9 @@
 <?php
 /**
- * @version     2.6.x
+ * @version     2.7.x
  * @package     K2
  * @author      JoomlaWorks http://www.joomlaworks.net
- * @copyright   Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
+ * @copyright   Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
  * @license     GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -63,8 +63,17 @@ class K2Plugin extends JPlugin
 			$fields = '';
 			foreach ($form->getFieldset() as $field)
 			{
-				$search = 'name="'.$field->name.'"';
-				$replace = 'name="plugins['.$this->pluginName.$field->name.']"';
+
+				if (strpos($field->name, '[]') !== false)
+				{
+					$search = 'name="'.$field->name.'"';
+					$replace = 'name="plugins['.$this->pluginName.str_replace('[]', '', $field->name).'][]"';
+				}
+				else
+				{
+					$search = 'name="'.$field->name.'"';
+					$replace = 'name="plugins['.$this->pluginName.$field->name.']"';
+				}
 				$input = JString::str_ireplace($search, $replace, $field->__get('input'));
 				$fields .= $field->__get('label').' '.$input;
 			}

@@ -3,7 +3,7 @@
  * @package     Joomla.Legacy
  * @subpackage  Model
  *
- * @copyright   Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -321,11 +321,14 @@ class JModelList extends JModelLegacy
 
 		$start = $this->getState('list.start');
 		$limit = $this->getState('list.limit');
-		$total = $this->getTotal();
 
-		if ($start > $total - $limit)
+		if ($start > 0)
 		{
-			$start = max(0, (int) (ceil($total / $limit) - 1) * $limit);
+			$total = $this->getTotal();
+			if ($start > $total - $limit)
+			{
+				$start = max(0, (int) (ceil($total / $limit) - 1) * $limit);
+			}
 		}
 
 		// Add the total to the internal cache.
@@ -450,10 +453,10 @@ class JModelList extends JModelLegacy
 		if (!property_exists($data, 'list'))
 		{
 			$data->list = array(
-				'direction' => $this->state->{'list.direction'},
-				'limit'     => $this->state->{'list.limit'},
-				'ordering'  => $this->state->{'list.ordering'},
-				'start'     => $this->state->{'list.start'}
+				'direction' => $this->getState('list.direction'),
+				'limit'     => $this->getState('list.limit'),
+				'ordering'  => $this->getState('list.ordering'),
+				'start'     => $this->getState('list.start'),
 			);
 		}
 
@@ -555,8 +558,8 @@ class JModelList extends JModelLegacy
 								break;
 
 							case 'limit':
-							case 'start':
-								$limit = $inputFilter->clean($value, 'int');
+								$value = $inputFilter->clean($value, 'int');
+								$limit = $value;
 								break;
 
 							case 'select':
@@ -621,7 +624,7 @@ class JModelList extends JModelLegacy
 				$this->setState('list.direction', $oldDirection);
 			}
 
-			$value = $app->getUserStateFromRequest($this->context . '.limitstart', 'limitstart', 0);
+			$value = $app->getUserStateFromRequest($this->context . '.limitstart', 'limitstart', 0, 'int');
 			$limitstart = ($limit != 0 ? (floor($value / $limit) * $limit) : 0);
 			$this->setState('list.start', $limitstart);
 		}
@@ -698,13 +701,13 @@ class JModelList extends JModelLegacy
 			$name    = substr($request, 7);
 			$filters = $app->input->get('filter', array(), 'array');
 
-			if (!empty($filters[$name]))
+			if (isset($filters[$name]))
 			{
 				$new_state = $filters[$name];
 			}
 		}
 
-		if (($cur_state != $new_state) && ($resetPage))
+		if (($cur_state != $new_state) && $new_state !== null && ($resetPage))
 		{
 			$input->set('limitstart', 0);
 		}

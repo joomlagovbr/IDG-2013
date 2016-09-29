@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
@@ -31,6 +31,7 @@ class K2ModelTags extends K2Model
 		$filter_state = $mainframe->getUserStateFromRequest($option.$view.'filter_state', 'filter_state', -1, 'int');
 		$search = $mainframe->getUserStateFromRequest($option.$view.'search', 'search', '', 'string');
 		$search = JString::strtolower($search);
+		$search = trim(preg_replace('/[^a-zA-Z0-9\s\-_]/', '', $search));
 
 		$query = "SELECT #__k2_tags.*, (SELECT COUNT(*) FROM #__k2_tags_xref WHERE #__k2_tags_xref.tagID = #__k2_tags.id) AS numOfItems FROM #__k2_tags";
 
@@ -75,6 +76,7 @@ class K2ModelTags extends K2Model
 		$filter_state = $mainframe->getUserStateFromRequest($option.$view.'filter_state', 'filter_state', 1, 'int');
 		$search = $mainframe->getUserStateFromRequest($option.$view.'search', 'search', '', 'string');
 		$search = JString::strtolower($search);
+		$search = trim(preg_replace('/[^a-zA-Z0-9\s\-_]/', '', $search));
 
 		$query = "SELECT COUNT(*) FROM #__k2_tags WHERE id>0";
 
@@ -151,7 +153,7 @@ class K2ModelTags extends K2Model
 
 		$db = JFactory::getDBO();
 		$query = "SELECT name, id FROM #__k2_tags ORDER BY name";
-		$db->setQuery($query, 0, 1000);
+		$db->setQuery($query);
 		$rows = $db->loadObjectList();
 		return $rows;
 

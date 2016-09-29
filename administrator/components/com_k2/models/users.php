@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
@@ -33,10 +33,11 @@ class K2ModelUsers extends K2Model
         $filter_group_k2 = $mainframe->getUserStateFromRequest($option.$view.'filter_group_k2', 'filter_group_k2', '', 'string');
         $search = $mainframe->getUserStateFromRequest($option.$view.'search', 'search', '', 'string');
         $search = JString::strtolower($search);
+        $search = trim(preg_replace('/[^a-zA-Z0-9\s\-_]/', '', $search));
 
         $query = "SELECT juser.*, k2user.group, k2group.name as groupname FROM #__users as juser "."LEFT JOIN #__k2_users as k2user ON juser.id=k2user.userID "."LEFT JOIN #__k2_user_groups as k2group ON k2user.group=k2group.id ";
 
-        if (K2_JVERSION != '15')
+        if (K2_JVERSION != '15' && $filter_group)
         {
             $query .= " LEFT JOIN #__user_usergroup_map as `map` ON juser.id=map.user_id ";
         }
@@ -90,11 +91,6 @@ class K2ModelUsers extends K2Model
             $filter_order = "juser.name";
         }
 
-        if (K2_JVERSION != '15')
-        {
-            $query .= "  GROUP BY juser.id  ";
-        }
-
         $query .= " ORDER BY {$filter_order} {$filter_order_Dir}";
 
         $db->setQuery($query, $limitstart, $limit);
@@ -143,10 +139,11 @@ class K2ModelUsers extends K2Model
         $filter_group_k2 = $mainframe->getUserStateFromRequest($option.$view.'filter_group_k2', 'filter_group_k2', '', 'string');
         $search = $mainframe->getUserStateFromRequest($option.$view.'search', 'search', '', 'string');
         $search = JString::strtolower($search);
+        $search = trim(preg_replace('/[^a-zA-Z0-9\s\-_]/', '', $search));
 
         $query = "SELECT COUNT(DISTINCT juser.id) FROM #__users as juser "."LEFT JOIN #__k2_users as k2user ON juser.id=k2user.userID "."LEFT JOIN #__k2_user_groups as k2group ON k2user.group=k2group.id ";
 
-        if (K2_JVERSION != '15')
+        if (K2_JVERSION != '15' && $filter_group)
         {
             $query .= " LEFT JOIN #__user_usergroup_map as `map` ON juser.id=map.user_id ";
         }
@@ -454,7 +451,7 @@ class K2ModelUsers extends K2Model
                 else
                 {
                     $user = JFactory::getUser($id);
-                    $query = "INSERT INTO #__k2_users VALUES ('', {$id}, {$db->Quote($user->username)}, '', '', '', '', {$k2group}, '')";
+                    $query = "INSERT INTO #__k2_users VALUES ('', {$id}, {$db->Quote($user->username)}, '', '', '', '', {$k2group}, '', '', '', '')";
                 }
                 $db->setQuery($query);
                 $db->query();

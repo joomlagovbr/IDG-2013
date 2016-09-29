@@ -1,13 +1,14 @@
 /**
- * @version 	2.6.x
+ * @version 	2.7.x
  * @package 	K2
  * @author 		JoomlaWorks http://www.joomlaworks.net
- * @copyright 	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
+ * @copyright 	Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
  * @license 	GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 var K2JVersion;
 var selectsInstance;
+var K2SitePath
 $K2(document).ready(function() {
 
     // Set the selects instance to allow inheritance of jQuery chosen bindings
@@ -18,26 +19,78 @@ $K2(document).ready(function() {
     }
 
     // Generic function to get URL params passed in .js script include
-		function getUrlParams(targetScript, varName) {
-			var scripts = document.getElementsByTagName('script');
-			var scriptCount = scripts.length;
-			for (var a = 0; a < scriptCount; a++) {
-				var scriptSrc = scripts[a].src;
-				if (scriptSrc.indexOf(targetScript) >= 0) {
-					varName = varName.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
-					var re = new RegExp("[\\?&]" + varName + "=([^&#]*)");
-					var parsedVariables = re.exec(scriptSrc);
-					if (parsedVariables !== null) {
-						return parsedVariables[1];
-					}
+	function getUrlParams(targetScript, varName) {
+		var scripts = document.getElementsByTagName('script');
+		var scriptCount = scripts.length;
+		for (var a = 0; a < scriptCount; a++) {
+			var scriptSrc = scripts[a].src;
+			if (scriptSrc.indexOf(targetScript) >= 0) {
+				varName = varName.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+				var re = new RegExp("[\\?&]" + varName + "=([^&#]*)");
+				var parsedVariables = re.exec(scriptSrc);
+				if (parsedVariables !== null) {
+					return parsedVariables[1];
 				}
 			}
 		}
+	}
 
-		// Set the site root path
-		var K2SitePath = getUrlParams('k2.js', 'sitepath');
+	// Set the site root path
+	K2SitePath = getUrlParams('k2.js', 'sitepath');
 
-    // Common functions
+    // --- Common functions ---
+
+    // Minimal Scrollspy
+	$K2(".k2ScrollSpyMenu").each(function( index ) {
+
+		// Cache selectors
+		var lastId,
+		    topMenu = $K2(this),
+		    topMenuHeight = topMenu.outerHeight()+15,
+		    // All list items
+		    menuItems = topMenu.find("a"),
+		    // Anchors corresponding to menu items
+		    scrollItems = menuItems.map(function(){
+		      var item = $K2($K2(this).attr("href"));
+		      if (item.length) { return item; }
+		    });
+
+		// Bind click handler to menu items so we can get a fancy scroll animation
+		menuItems.click(function(e){
+		  var href = $K2(this).attr("href"),
+		      offsetTop = (href === "#") ? 0 : $K2(href).offset().top-60;
+		  $K2('html, body').stop().animate({
+		      scrollTop: offsetTop
+		  }, 300);
+		  e.preventDefault();
+		});
+
+		// Bind to scroll
+		$K2(window).scroll(function(){
+		   // Get container scroll position
+		   var fromTop = $K2(this).scrollTop() + 100;
+
+		   // Get id of current scroll item
+		   var cur = scrollItems.map(function(){
+		     if ($K2(this).offset().top < fromTop)
+		       return this;
+		   });
+		   // Get the id of the current element
+		   cur = cur[cur.length-1];
+		   var id = cur && cur.length ? cur[0].id : "";
+
+		   if (lastId !== id) {
+		       lastId = id;
+		       // Set/remove active class
+		       menuItems
+		         .parent().removeClass("active")
+		         .end().filter("[href=#"+id+"]").parent().addClass("active");
+		   }
+		});
+
+	});
+
+	// Toggler
     $K2('#jToggler').click(function() {
         if ($K2(this).attr('checked')) {
             $K2('input[id^=cb]').attr('checked', true);
@@ -47,9 +100,13 @@ $K2(document).ready(function() {
             $K2('input[name=boxchecked]').val('0');
         }
     });
+
+    // Submit form
     $K2('#k2SubmitButton').click(function() {
         this.form.submit();
     });
+
+    // Form filters reset
     $K2('#k2ResetButton').click(function(event) {
         event.preventDefault();
         $K2('.k2AdminTableFilters input').val('');
@@ -62,11 +119,14 @@ $K2(document).ready(function() {
 
     // View specific functions
     if ($K2('#k2AdminContainer').length > 0) {
+    	var K2IsAdmin = true;
         var view = $K2('#k2AdminContainer input[name=view]').val();
     } else {
+    	var K2IsAdmin = false;
         var view = $K2('#k2FrontendContainer input[name=view]').val();
     }
 
+	// Report user
     $K2('.k2ReportUserButton').click(function(event) {
         event.preventDefault();
         if (view == 'comments') {
@@ -249,12 +309,45 @@ $K2(document).ready(function() {
             });
             break;
 
+        case 'categories':
+            $K2('#K2BatchButton').click(function(event) {
+                event.preventDefault();
+                var checked = $K2('input[name="cid[]"]:checked').length;
+                $K2('#k2BatchOperationsCounter').text(checked);
+                if(checked > 0) {
+                    $K2('#k2BatchOperations').addClass('jw-modal-open');
+                    $K2('#batchCategory option').removeAttr('disabled');
+                    $K2('input[name="cid[]"]:checked').each(function () {
+                        $K2('#batchCategory option[value="' + $K2(this).val() + '"]').attr('disabled', 'disabled');
+                        $K2('#batchCategory').trigger('liszt:updated');
+                    });
+                } else {
+                    alert(K2SelectItemsError);
+                }
+            });
+            $K2('#K2MoveButton').click(function(event) {
+                event.preventDefault();
+                var checked = $K2('input[name="cid[]"]:checked').length;
+                $K2('#k2MoveOperationsCounter').text(checked);
+                if(checked > 0) {
+                    $K2('#k2MoveOperations').addClass('jw-modal-open');
+                    $K2('#moveCategories option').removeAttr('disabled');
+                    $K2('input[name="cid[]"]:checked').each(function () {
+                        $K2('#moveCategories option[value="' + $K2(this).val() + '"]').attr('disabled', 'disabled');
+                        $K2('#moveCategories').trigger('liszt:updated');
+                    });
+                } else {
+                    alert(K2SelectItemsError);
+                }
+            });
+            break;
+
         case 'category':
             $K2('#k2Accordion').accordion({
                 collapsible : true,
                 autoHeight : false
             });
-            $K2('#k2Tabs').tabs();
+            $K2('.k2Tabs').tabs();
             $K2('#k2ImageBrowseServer').click(function(event) {
                 event.preventDefault();
                 SqueezeBox.initialize();
@@ -269,17 +362,40 @@ $K2(document).ready(function() {
             });
             break;
 
+        case 'items':
+            $K2('#K2BatchButton').click(function(event) {
+                event.preventDefault();
+                var checked = $K2('input[name="cid[]"]:checked').length;
+                $K2('#k2BatchOperationsCounter').text(checked);
+                if(checked > 0) {
+                  $K2('#k2BatchOperations').addClass('jw-modal-open');
+                } else {
+                  alert(K2SelectItemsError);
+                }
+            });
+            $K2('#K2MoveButton').click(function(event) {
+                event.preventDefault();
+                var checked = $K2('input[name="cid[]"]:checked').length;
+                $K2('#k2MoveOperationsCounter').text(checked);
+                if(checked > 0) {
+                  $K2('#k2MoveOperations').addClass('jw-modal-open');
+                } else {
+                  alert(K2SelectItemsError);
+                }
+            });
+            break;
+
         case 'item':
             $K2('#k2Accordion').accordion({
                 collapsible : true,
                 autoHeight : false
             });
-            $K2('#k2Tabs').tabs();
-            if ( typeof (K2ActiveVideoTab) === 'undefined') {
-                $K2('#k2VideoTabs').tabs();
+            $K2('.k2Tabs').tabs();
+            if ( typeof (K2ActiveMediaTab) === 'undefined') {
+                $K2('#k2MediaTabs').tabs();
             } else {
-                $K2('#k2VideoTabs').tabs({
-                    selected : K2ActiveVideoTab
+                $K2('#k2MediaTabs').tabs({
+                    selected : K2ActiveMediaTab
                 });
             }
             $K2('#k2ToggleSidebar').click(function(event) {
@@ -405,7 +521,7 @@ $K2(document).ready(function() {
             });
             $K2('#itemAttachments').on('click', '.k2AttachmentBrowseServer', function(event) {
                 event.preventDefault();
-                var k2ActiveAttachmentField = $K2(this).next();
+                var k2ActiveAttachmentField = $K2(this).next().next();
                 k2ActiveAttachmentField.attr('id', 'k2ActiveAttachment');
                 SqueezeBox.initialize();
                 SqueezeBox.fromElement(this, {
@@ -430,16 +546,21 @@ $K2(document).ready(function() {
             $K2('#search-field').keypress(function(event) {
                 if (event.which == '13') {
                     if ($K2(this).val() != '') {
-                        $K2('<li class="addedTag">' + $K2(this).val() + '<span class="tagRemove" onclick="$K2(this).parent().remove();">x</span><input type="hidden" value="' + $K2(this).val() + '" name="tags[]"></li>').insertBefore('.tags .tagAdd');
+                        $K2('<li class="addedTag">' + $K2(this).val() + '<span class="tagRemove" onclick="$K2(this).parent().remove();">&times;</span><input type="hidden" value="' + $K2(this).val() + '" name="tags[]"></li>').insertBefore('.tags .tagAdd');
                         $K2(this).val('');
                     }
                 }
             });
+            var tagsUrl = K2SitePath;
+            if(K2IsAdmin) {
+            	tagsUrl += 'administrator/';
+            }
+            tagsUrl += 'index.php?option=com_k2&view=item&task=tags';
             $K2('#search-field').autocomplete({
                 source : function(request, response) {
                     $K2.ajax({
                         type : 'post',
-                        url : K2SitePath + 'index.php?option=com_k2&view=item&task=tags',
+                        url : tagsUrl,
                         data : 'q=' + request.term,
                         dataType : 'json',
                         success : function(data) {
@@ -452,7 +573,7 @@ $K2(document).ready(function() {
                 },
                 minLength : 3,
                 select : function(event, ui) {
-                    $K2('<li class="addedTag">' + ui.item.label + '<span class="tagRemove" onclick="$K2(this).parent().remove();">x</span><input type="hidden" value="' + ui.item.value + '" name="tags[]"></li>').insertBefore('.tags .tagAdd');
+                    $K2('<li class="addedTag">' + ui.item.label + '<span class="tagRemove" onclick="$K2(this).parent().remove();">&times;</span><input type="hidden" value="' + ui.item.value + '" name="tags[]"></li>').insertBefore('.tags .tagAdd');
                     this.value = '';
                     return false;
                 },
@@ -461,50 +582,68 @@ $K2(document).ready(function() {
                 }
             });
             if ($K2('input[name=isSite]').val() == 1) {
-                parent.$('sbox-overlay').removeEvents('click');
-                parent.$('sbox-btn-close').removeEvents('click');
+              if(typeof(parent.$) !== 'undefined') {
+                if(parent.$('sbox-overlay') != undefined) {
+                   parent.$('sbox-overlay').removeEvents('click');
+                }
+                if(parent.$('sbox-btn-close') != undefined) {
+                   parent.$('sbox-btn-close').removeEvents('click');
+                }
+              }
                 var elements = [parent.$K2('#sbox-btn-close'), $K2('#toolbar-cancel a')];
                 $K2.each(elements, function(index, element) {
                     element.unbind();
                     element.click(function(event) {
                         event.preventDefault();
-                        if ($K2('input[name=id]').val()) {
-                            $K2.ajax({
-                                type : 'get',
-                                cache : false,
-                                url : K2SitePath + 'index.php?option=com_k2&view=item&task=checkin&cid=' + $K2('input[name=id]').val() + '&lang=' + $K2('input[name=lang]').val(),
-                                success : function() {
-                                    if (window.opener) {
-                                        window.opener.location.reload();
-                                    } else {
-                                        parent.window.location.reload();
-                                    }
-                                    if ( typeof (window.parent.SqueezeBox.close == 'function')) {
-                                        window.parent.SqueezeBox.close();
-                                    } else {
-                                        parent.$K2('#sbox-window').close();
-                                    }
-                                    if (window.opener) {
-                                        window.close();
-                                    }
+                        var k2ItemId = $K2('input[name=id]').val();
+                        var sigProFolder = $K2('input[name=sigProFolder]').val();
+                        $K2.ajax({
+                            type : 'get',
+                            cache : false,
+                            url : K2SitePath + 'index.php?option=com_k2&view=item&task=checkin&cid=' + k2ItemId + '&lang=' + $K2('input[name=lang]').val() + '&sigProFolder=' + sigProFolder,
+                            success : function() {
+                                // Refresh parent
+                                if (window.opener) {
+                                    window.opener.location.reload();
+                                } else {
+                                    parent.window.location.reload();
                                 }
-                            });
-                        } else {
-                            if ( typeof (window.parent.SqueezeBox.close == 'function')) {
-                                window.parent.SqueezeBox.close();
-                            } else {
-                                parent.$K2('#sbox-window').close();
+
+                                // Close modal
+                                if (typeof(parent.$K2.magnificPopup) !== 'undefined') {
+                                  parent.$K2.magnificPopup.close();
+                                }
+                                if ( typeof (window.parent.SqueezeBox !== 'undefined')) {
+                                    window.parent.SqueezeBox.close();
+                                } else {
+                                    parent.$K2('#sbox-window').close();
+                                }
+
+                                if (window.opener) {
+                                    window.close();
+                                }
                             }
-                            if (window.opener) {
-                                window.close();
-                            }
-                        }
+                        });
+
                     });
                 });
             }
             extraFieldsImage();
             break;
     }
+
+    // Add the correct CSS classes for the checked labels
+    $K2('label.radio').has('input:checked').addClass('isChecked');
+
+    // Toggle clickable Labels
+    $K2('label.radio').has('input').click(function(e){
+
+        $K2(this).parent().children().removeClass('isChecked');
+
+        if( !$K2(this).hasClass('isChecked') ) {
+            $K2(this).addClass('isChecked');
+        }
+    });
 });
 
 // Extra fields validation
@@ -520,7 +659,7 @@ function validateExtraFields() {
 		var value;
 		if ($K2(this).hasClass('k2ExtraFieldEditor')) {
 			if ( typeof tinymce != 'undefined') {
-				var value = tinyMCE.get(id).getContent()
+				var value = tinyMCE.get(id).getContent();
 			}
 		} else {
 			var value = $K2(this).val();
@@ -599,7 +738,7 @@ function addOption() {
     }).appendTo(div);
     input.click(function() {
         $K2(this).parent().remove();
-    })
+    });
 }
 
 function renderExtraFields(fieldType, fieldValues, isNewField) {
@@ -636,40 +775,40 @@ function renderExtraFields(fieldType, fieldValues, isNewField) {
                 cols : '40',
                 rows : '10'
             }).appendTo(target);
-			
+
             var br = $K2('<br/>').appendTo(target);
-            var label = $K2('<label/>').html(K2Language[17]).appendTo(target);
+            var label = $K2('<span class="label"/>').html(K2Language[17]).appendTo(target);
 			var input = $K2('<input/>', {
                 name : 'option_rows[]',
                 type : 'text'
             }).appendTo(target);
-            
+
             if (!isNewField && currentType == fieldType) {
                 input.val(fieldValues[0].rows);
             }
-            
+
             var br = $K2('<br/>').appendTo(target);
-            var label = $K2('<label/>').html(K2Language[16]).appendTo(target);
+            var label = $K2('<span class="label"/>').html(K2Language[16]).appendTo(target);
 			var input = $K2('<input/>', {
                 name : 'option_cols[]',
                 type : 'text'
             }).appendTo(target);
-            
+
             if (!isNewField && currentType == fieldType) {
                 input.val(fieldValues[0].cols);
             }
-            
+
             var br = $K2('<br/>').appendTo(target);
-            var label = $K2('<label/>').html(K2Language[3]).appendTo(target);
+            var label = $K2('<span class="label"/>').html(K2Language[3]).appendTo(target);
             var input = $K2('<input/>', {
                 name : 'option_editor[]',
                 type : 'checkbox',
                 value : '1'
             }).appendTo(target);
-            
+
             var br = $K2('<br/>').appendTo(target);
             var br = $K2('<br/>').appendTo(target);
-            var notice = $K2('<span/>').html('(' + K2Language[4] + ')').appendTo(target);
+            var notice = $K2('<span class="label"/>').html('(' + K2Language[4] + ')').appendTo(target);
             if (!isNewField && currentType == fieldType) {
                 textarea.val(fieldValues[0].value);
                 if (fieldValues[0].editor) {
@@ -715,7 +854,7 @@ function renderExtraFields(fieldType, fieldValues, isNewField) {
                     }).appendTo(div);
                     input.click(function() {
                         $K2(this).parent().remove();
-                    })
+                    });
                 });
             }
             break;
@@ -787,7 +926,7 @@ function renderExtraFields(fieldType, fieldValues, isNewField) {
                         } else {
                             var th = $K2('<th/>').html(cell).appendTo(tr);
                         }
-                    })
+                    });
                 });
                 var label = $K2('<label/>').html(K2Language[13]).appendTo(target);
                 var input = $K2('<input/>', {
@@ -882,6 +1021,7 @@ function initExtraFieldsEditor() {
             new nicEditor({
                 fullPanel : true,
                 maxHeight : 180,
+                width : '100%',
                 iconsPath : K2SitePath + 'media/k2/assets/images/system/nicEditorIcons.gif'
             }).panelInstance($K2(this).attr('id'));
         }
@@ -905,8 +1045,8 @@ function syncExtraFieldsEditor() {
 }
 
 function addAttachment() {
-    var div = $K2('<div/>', {
-        style : 'border-top: 1px dotted #ccc; margin: 4px; padding: 10px;'
+    var div = $K2('<div class="itemNewAttachment"/>', {
+        style : ''
     }).appendTo($K2('#itemAttachments'));
     var input = $K2('<input/>', {
         name : 'attachment_file[]',
@@ -914,27 +1054,29 @@ function addAttachment() {
     }).appendTo(div);
     var label = $K2('<a/>', {
         href : 'index.php?option=com_k2&view=media&type=attachment&tmpl=component&fieldID=k2ActiveAttachment',
-        'class' : 'k2AttachmentBrowseServer'
+        'class' : 'k2AttachmentBrowseServer k2Button'
     }).html(K2Language[5]).appendTo(div);
-    var input = $K2('<input/>', {
-        name : 'attachment_existing_file[]',
-        type : 'text'
-    }).appendTo(div);
-    var input = $K2('<input/>', {
-        value : K2Language[0],
-        type : 'button'
+    var input = $K2('<button><i class="fa fa-ban"></i></button>', {
+        value : '',
+        type : 'button',
+        class: 'removeAttachment k2FRight',
+        title : K2Language[0]
     }).appendTo(div);
     input.click(function() {
         $K2(this).parent().remove();
     });
-    var br = $K2('<br/>').appendTo(div);
+    var input = $K2('<input/>', {
+        name : 'attachment_existing_file[]',
+        type : 'text'
+    }).appendTo(div);
+    var br = $K2('<div class="attachmentGap"/>').appendTo(div);
     var label = $K2('<label/>').html(K2Language[1]).appendTo(div);
     var input = $K2('<input/>', {
         name : 'attachment_title[]',
         type : 'text',
         'class' : 'linkTitle'
     }).appendTo(div);
-    var br = $K2('<br/>').appendTo(div);
+    var br = $K2('<div class="attachmentGap"/>').appendTo(div);
     var label = $K2('<label/>').html(K2Language[2]).appendTo(div);
     var textarea = $K2('<textarea/>', {
         name : 'attachment_title_attribute[]',

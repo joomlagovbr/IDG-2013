@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
@@ -104,7 +104,7 @@ defined('_JEXEC') or die;
 					<label id="imagemsg" for="image"><?php echo JText::_( 'K2_USER_IMAGE_AVATAR' ); ?></label>
 				</td>
 				<td>
-					<input type="file" id="image" name="image"/>
+					<input type="file" id="image" name="image" />
 					<?php if ($this->K2User->image): ?>
 					<img class="k2AccountPageImage" src="<?php echo JURI::root(true).'/media/k2/users/'.$this->K2User->image; ?>" alt="<?php echo $this->user->name; ?>" />
 					<input type="checkbox" name="del_image" id="del_image" />
@@ -117,7 +117,7 @@ defined('_JEXEC') or die;
 					<label id="urlmsg" for="url"><?php echo JText::_('K2_URL'); ?></label>
 				</td>
 				<td>
-					<input type="text" size="50" value="<?php echo $this->K2User->url; ?>" name="url" id="url"/>
+					<input type="text" size="50" value="<?php echo $this->K2User->url; ?>" name="url" id="url" />
 				</td>
 			</tr>
 			<?php if(count(array_filter($this->K2Plugins))): ?>

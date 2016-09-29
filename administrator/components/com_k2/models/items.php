@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
@@ -36,6 +36,7 @@ class K2ModelItems extends K2Model
 		$filter_state = $mainframe->getUserStateFromRequest($option.$view.'filter_state', 'filter_state', -1, 'int');
 		$search = $mainframe->getUserStateFromRequest($option.$view.'search', 'search', '', 'string');
 		$search = JString::strtolower($search);
+		$search = trim(preg_replace('/[^a-zA-Z0-9\s\-_]/', '', $search));
 		$tag = $mainframe->getUserStateFromRequest($option.$view.'tag', 'tag', 0, 'int');
 		$language = $mainframe->getUserStateFromRequest($option.$view.'language', 'language', '', 'string');
 
@@ -104,7 +105,7 @@ class K2ModelItems extends K2Model
 
 		if ($language)
 		{
-			$query .= " AND (i.language = ".$db->Quote($language)." OR i.language = '*')";
+			$query .= " AND i.language = ".$db->Quote($language);
 		}
 
 		if ($filter_order == 'i.ordering')
@@ -145,6 +146,7 @@ class K2ModelItems extends K2Model
 		$filter_state = $mainframe->getUserStateFromRequest($option.$view.'filter_state', 'filter_state', -1, 'int');
 		$search = $mainframe->getUserStateFromRequest($option.$view.'search', 'search', '', 'string');
 		$search = JString::strtolower($search);
+		$search = trim(preg_replace('/[^a-zA-Z0-9\s\-_]/', '', $search));
 		$tag = $mainframe->getUserStateFromRequest($option.$view.'tag', 'tag', 0, 'int');
 		$language = $mainframe->getUserStateFromRequest($option.$view.'language', 'language', '', 'string');
 
@@ -211,7 +213,7 @@ class K2ModelItems extends K2Model
 
 		if ($language)
 		{
-			$query .= " AND (language = ".$db->Quote($language)." OR language = '*')";
+			$query .= " AND language = ".$db->Quote($language);
 		}
 		$dispatcher = JDispatcher::getInstance();
 		JPluginHelper::importPlugin('k2');
@@ -492,7 +494,7 @@ class K2ModelItems extends K2Model
 		$mainframe->redirect('index.php?option=com_k2&view=items');
 	}
 
-	function copy()
+	function copy($batch = false)
 	{
 
 		$mainframe = JFactory::getApplication();
@@ -504,7 +506,7 @@ class K2ModelItems extends K2Model
 		$cid = JRequest::getVar('cid');
 		JArrayHelper::toInteger($cid);
 		$row = JTable::getInstance('K2Item', 'Table');
-
+		$copies = array();
 		$nullDate = $db->getNullDate();
 
 		foreach ($cid as $id)
@@ -561,6 +563,7 @@ class K2ModelItems extends K2Model
 			$row->created = K2_JVERSION == '15' ? $datenow->toMySQL() : $datenow->toSql();
 			$row->modified = $nullDate;
 			$row->store();
+			$copies[] = $row->id;
 
 			//Target images
 			if (JFile::exists($sourceImage))
@@ -634,8 +637,13 @@ class K2ModelItems extends K2Model
 
 			$row->store();
 		}
-		$mainframe->enqueueMessage(JText::_('K2_COPY_COMPLETED'));
-		$mainframe->redirect('index.php?option=com_k2&view=items');
+		if($batch) {
+			return $copies;
+		} else {
+			$mainframe->enqueueMessage(JText::_('K2_COPY_COMPLETED'));
+			$mainframe->redirect('index.php?option=com_k2&view=items');
+		}
+
 	}
 
 	function featured()
@@ -677,6 +685,13 @@ class K2ModelItems extends K2Model
 			$row->trash = 1;
 			$row->store();
 		}
+		JPluginHelper::importPlugin('finder');
+		$dispatcher = JDispatcher::getInstance();
+		$dispatcher->trigger('onFinderChangeState', array(
+			'com_k2.item',
+			$cid,
+			0
+		));
 		$cache = JFactory::getCache('com_k2');
 		$cache->clean();
 		$mainframe->enqueueMessage(JText::_('K2_ITEMS_MOVED_TO_TRASH'));
@@ -709,6 +724,13 @@ class K2ModelItems extends K2Model
 			}
 
 		}
+		JPluginHelper::importPlugin('finder');
+		$dispatcher = JDispatcher::getInstance();
+		$dispatcher->trigger('onFinderChangeState', array(
+			'com_k2.item',
+			$cid,
+			1
+		));
 		$cache = JFactory::getCache('com_k2');
 		$cache->clean();
 		if ($warning)
@@ -951,8 +973,8 @@ class K2ModelItems extends K2Model
 				}
 
 				$query = "SELECT article.*, xref.content_id
-				FROM #__content AS article 
-				LEFT JOIN #__content_frontpage AS xref ON article.id = xref.content_id 
+				FROM #__content AS article
+				LEFT JOIN #__content_frontpage AS xref ON article.id = xref.content_id
 				WHERE catid = ".(int)$category->id;
 				$db->setQuery($query);
 				$items = $db->loadObjectList();
@@ -1242,15 +1264,14 @@ class K2ModelItems extends K2Model
 				JFile::copy(realpath(JPATH_SITE.DS.$category->image), JPATH_SITE.DS.'media'.DS.'k2'.DS.'categories'.DS.$K2Category->image);
 			}
 			$query = "SELECT article.*, xref.content_id
-				FROM #__content AS article 
-				LEFT JOIN #__content_frontpage AS xref ON article.id = xref.content_id 
+				FROM #__content AS article
+				LEFT JOIN #__content_frontpage AS xref ON article.id = xref.content_id
 				WHERE catid = ".(int)$category->id;
 			$db->setQuery($query);
 			$items = $db->loadObjectList();
 
 			foreach ($items as $item)
 			{
-
 				$K2Item = JTable::getInstance('K2Item', 'Table');
 				$K2Item->title = $item->title;
 				$K2Item->alias = $item->title;
@@ -1287,6 +1308,7 @@ class K2ModelItems extends K2Model
 				$K2Item->params = $itemParams;
 				$K2Item->language = $item->language;
 				$K2Item->check();
+
 				if ($preserveItemIDs)
 				{
 					$K2Item->id = $item->id;
@@ -1297,33 +1319,52 @@ class K2ModelItems extends K2Model
 					$K2Item->store();
 				}
 
-				if (!empty($item->metakey))
+				$item->tags = array();
+				if(class_exists('JHelperTags')) {
+					$tagsHelper = new JHelperTags;
+					$tagsHelper->getItemTags('com_content.article', $item->id);
+					$tags = $tagsHelper->itemTags;
+					foreach($tags as $tag) {
+						$item->tags[] = $tag->title;
+					}
+				}
+
+				if (!empty($item->metakey) || count($item->tags))
 				{
-					$itemTags = explode(',', $item->metakey);
+					$itemTags = array_merge(explode(',', $item->metakey), $item->tags);
+					$itemTags = array_filter($itemTags);
+					$itemTags = array_unique($itemTags);
 					foreach ($itemTags as $itemTag)
 					{
 						$itemTag = JString::trim($itemTag);
-						if (in_array($itemTag, JArrayHelper::getColumn($tags, 'name')))
+						if($itemTag)
 						{
+							if (in_array($itemTag, JArrayHelper::getColumn($tags, 'name')))
+							{
 
-							$query = "SELECT id FROM #__k2_tags WHERE name=".$db->Quote($itemTag);
-							$db->setQuery($query);
-							$id = $db->loadResult();
-							$query = "INSERT INTO #__k2_tags_xref (`id`, `tagID`, `itemID`) VALUES (NULL, {$id}, {$K2Item->id})";
-							$db->setQuery($query);
-							$db->query();
+								$query = "SELECT id FROM #__k2_tags WHERE name=".$db->Quote($itemTag);
+								$db->setQuery($query);
+								$id = $db->loadResult();
+								if($id)
+								{
+									$query = "INSERT INTO #__k2_tags_xref (`id`, `tagID`, `itemID`) VALUES (NULL, {$id}, {$K2Item->id})";
+									$db->setQuery($query);
+									$db->query();
+								}
+							}
+							else
+							{
+								$K2Tag = JTable::getInstance('K2Tag', 'Table');
+								$K2Tag->name = $itemTag;
+								$K2Tag->published = 1;
+								$K2Tag->store();
+								$tags[] = $K2Tag;
+								$query = "INSERT INTO #__k2_tags_xref (`id`, `tagID`, `itemID`) VALUES (NULL, {$K2Tag->id}, {$K2Item->id})";
+								$db->setQuery($query);
+								$db->query();
+							}
 						}
-						else
-						{
-							$K2Tag = JTable::getInstance('K2Tag', 'Table');
-							$K2Tag->name = $itemTag;
-							$K2Tag->published = 1;
-							$K2Tag->store();
-							$tags[] = $K2Tag;
-							$query = "INSERT INTO #__k2_tags_xref (`id`, `tagID`, `itemID`) VALUES (NULL, {$K2Tag->id}, {$K2Item->id})";
-							$db->setQuery($query);
-							$db->query();
-						}
+
 					}
 				}
 			}
@@ -1345,13 +1386,13 @@ class K2ModelItems extends K2Model
 
 		$mainframe = JFactory::getApplication();
 		$cid = JRequest::getVar('cid');
-		$catid = JRequest::getInt('category');
+		$catid = JRequest::getInt('moveCategories');
 		foreach ($cid as $id)
 		{
 			$row = JTable::getInstance('K2Item', 'Table');
 			$row->load($id);
 			$row->catid = $catid;
-			$row->ordering = $row->getNextOrder('catid = '.$row->catid.' AND published = 1');
+			$row->ordering = $row->getNextOrder('catid = '.(int)$row->catid.' AND published = 1');
 			$row->store();
 		}
 		$cache = JFactory::getCache('com_k2');
@@ -1368,6 +1409,49 @@ class K2ModelItems extends K2Model
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
 		return $rows;
+	}
+
+	function saveBatch()
+	{
+		$application = JFactory::getApplication();
+		$cid = JRequest::getVar('cid');
+		$batchMode = JRequest::getCmd('batchMode');
+		$catid = JRequest::getInt('batchCategory');
+		$access = JRequest::getCmd('batchAccess');
+		$author = JRequest::getInt('batchAuthor');
+		$language = JRequest::getVar('batchLanguage');
+		if($batchMode == 'clone'){
+			$cid = $this->copy(true);
+		}
+		foreach ($cid as $id)
+		{
+			$row = JTable::getInstance('K2Item', 'Table');
+			$row->load($id);
+			if($catid)
+			{
+				$row->catid = $catid;
+				$row->ordering = $row->getNextOrder('catid = '.(int)$row->catid.' AND published = 1');
+			}
+			if($access)
+			{
+				$row->access = $access;
+			}
+			if($author)
+			{
+				$row->created_by = $author;
+				$row->created_by_alias = '';
+			}
+			if($language)
+			{
+				$row->language = $language;
+			}
+			$row->store();
+		}
+		$cache = JFactory::getCache('com_k2');
+		$cache->clean();
+		$application->enqueueMessage(JText::_('K2_BATCH_COMPLETED'));
+		$application->redirect('index.php?option=com_k2&view=items');
+
 	}
 
 }

@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 // no direct access
 defined('_JEXEC') or die ;
@@ -52,11 +52,11 @@ class K2ControllerComments extends K2Controller
         $language->load('com_k2', JPATH_ADMINISTRATOR);
 
         // CSS
-        $document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.css?v=2.6.8');
+        $document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.css?v=2.7.1');
 
         // JS
         K2HelperHTML::loadjQuery(true);
-        $document->addScript(JURI::root(true).'/media/k2/assets/js/k2.js?v=2.6.8&amp;sitepath='.JURI::root(true).'/');
+        $document->addScript(JURI::root(true).'/media/k2/assets/js/k2.js?v=2.7.1&amp;sitepath='.JURI::root(true).'/');
 
         $this->addViewPath(JPATH_COMPONENT_ADMINISTRATOR.DS.'views');
         $this->addModelPath(JPATH_COMPONENT_ADMINISTRATOR.DS.'models');

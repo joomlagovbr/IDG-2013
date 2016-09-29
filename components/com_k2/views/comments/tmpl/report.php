@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
@@ -29,13 +29,16 @@ defined('_JEXEC') or die;
 		<textarea name="reportReason" id="reportReason" cols="60" rows="10"></textarea>
 
 		<?php if($this->params->get('recaptcha') && $this->user->guest): ?>
+		<?php if(!$this->params->get('recaptchaV2')): ?>
 		<label class="formRecaptcha"><?php echo JText::_('K2_ENTER_THE_TWO_WORDS_YOU_SEE_BELOW'); ?></label>
-		<div id="recaptcha"></div>
-
 		<?php endif; ?>
+		<div id="recaptcha" class="<?php echo $this->recaptchaClass; ?>"></div>
+		<?php endif; ?>
+
 		<button class="button"><?php echo JText::_('K2_SEND_REPORT'); ?></button>
+
 		<span id="formLog"></span>
-		
+
 		<input type="hidden" name="option" value="com_k2" />
 		<input type="hidden" name="view" value="comments" />
 		<input type="hidden" name="task" value="sendReport" />

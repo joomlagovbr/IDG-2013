@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
@@ -46,7 +46,7 @@ defined('_JEXEC') or die;
 					<?php echo JHTML::_('date', $item->created , JText::_('K2_DATE_FORMAT_LC2')); ?>
 				</span>
 				<?php endif; ?>
-			
+
 			  <?php if($item->params->get('tagItemTitle',1)): ?>
 			  <!-- Item title -->
 			  <h2 class="tagItemTitle">
@@ -73,7 +73,7 @@ defined('_JEXEC') or die;
 				  <div class="clr"></div>
 			  </div>
 			  <?php endif; ?>
-			  
+
 			  <?php if($item->params->get('tagItemIntroText',1)): ?>
 			  <!-- Item introtext -->
 			  <div class="tagItemIntroText">
@@ -83,11 +83,11 @@ defined('_JEXEC') or die;
 
 			  <div class="clr"></div>
 		  </div>
-		  
+
 		  <div class="clr"></div>
-		  
+
 		  <?php if($item->params->get('tagItemExtraFields',0) && count($item->extra_fields)): ?>
-		  <!-- Item extra fields -->  
+		  <!-- Item extra fields -->
 		  <div class="tagItemExtraFields">
 		  	<h4><?php echo JText::_('K2_ADDITIONAL_INFO'); ?></h4>
 		  	<ul>
@@ -99,7 +99,7 @@ defined('_JEXEC') or die;
 					<?php else: ?>
 					<span class="tagItemExtraFieldsLabel"><?php echo $extraField->name; ?></span>
 					<span class="tagItemExtraFieldsValue"><?php echo $extraField->value; ?></span>
-					<?php endif; ?>		
+					<?php endif; ?>
 				</li>
 				<?php endif; ?>
 				<?php endforeach; ?>
@@ -107,7 +107,7 @@ defined('_JEXEC') or die;
 		    <div class="clr"></div>
 		  </div>
 		  <?php endif; ?>
-		  
+
 			<?php if($item->params->get('tagItemCategory')): ?>
 			<!-- Item category name -->
 			<div class="tagItemCategory">
@@ -115,7 +115,7 @@ defined('_JEXEC') or die;
 				<a href="<?php echo $item->category->link; ?>"><?php echo $item->category->name; ?></a>
 			</div>
 			<?php endif; ?>
-			
+
 			<?php if ($item->params->get('tagItemReadMore')): ?>
 			<!-- Item "read more..." link -->
 			<div class="tagItemReadMore">
@@ -128,7 +128,7 @@ defined('_JEXEC') or die;
 			<div class="clr"></div>
 		</div>
 		<!-- End K2 Item Layout -->
-		
+
 		<?php endforeach; ?>
 	</div>
 
@@ -142,6 +142,6 @@ defined('_JEXEC') or die;
 	<?php endif; ?>
 
 	<?php endif; ?>
-	
+
 </div>
 <!-- End K2 Tag Layout -->

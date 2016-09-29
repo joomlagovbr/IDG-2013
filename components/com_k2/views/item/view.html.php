@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
@@ -110,6 +110,7 @@ class K2ViewItem extends K2View
 				}
 			}
 		}
+
 		// Published check
 		if (!$item->published || $item->trash)
 		{
@@ -177,21 +178,31 @@ class K2ViewItem extends K2View
 				// Load reCAPTCHA script
 				if (!JRequest::getInt('print') && ($item->params->get('comments') == '1' || ($item->params->get('comments') == '2' && K2HelperPermissions::canAddComment($item->catid))))
 				{
-
 					if ($params->get('recaptcha') && ($user->guest || $params->get('recaptchaForRegistered', 1)))
 					{
-						$document->addScript('https://www.google.com/recaptcha/api/js/recaptcha_ajax.js');
-						$js = '
-						function showRecaptcha(){
-							Recaptcha.create("'.$item->params->get('recaptcha_public_key').'", "recaptcha", {
-								theme: "'.$item->params->get('recaptcha_theme', 'clean').'"
-							});
+						if($params->get('recaptchaV2')) {
+							$document->addScript('https://www.google.com/recaptcha/api.js?onload=onK2RecaptchaLoaded&render=explicit');
+							$js = 'function onK2RecaptchaLoaded(){grecaptcha.render("recaptcha", {"sitekey" : "'.$item->params->get('recaptcha_public_key').'"});}';
+							$document->addScriptDeclaration($js);
+							$this->recaptchaClass = 'k2-recaptcha-v2';
 						}
-						$K2(window).load(function() {
-							showRecaptcha();
-						});
-						';
-						$document->addScriptDeclaration($js);
+						else
+						{
+							$document->addScript('https://www.google.com/recaptcha/api/js/recaptcha_ajax.js');
+							$js = '
+							function showRecaptcha(){
+								Recaptcha.create("'.$item->params->get('recaptcha_public_key').'", "recaptcha", {
+									theme: "'.$item->params->get('recaptcha_theme', 'clean').'"
+								});
+							}
+							$K2(window).load(function() {
+								showRecaptcha();
+							});
+							';
+							$document->addScriptDeclaration($js);
+							$this->recaptchaClass = 'k2-recaptcha-v1';
+						}
+
 					}
 				}
 
@@ -259,6 +270,11 @@ class K2ViewItem extends K2View
 				}
 
 				$item->comments = $comments;
+
+				if(!isset($item->numOfComments))
+				{
+					$item->numOfComments = 0;
+				}
 
 				jimport('joomla.html.pagination');
 				$total = $item->numOfComments;
@@ -546,23 +562,42 @@ class K2ViewItem extends K2View
 		}
 
 		// Set Facebook meta data
-		$document = JFactory::getDocument();
-		$uri = JURI::getInstance();
-		$document->setMetaData('og:url', $uri->toString());
-		$document->setMetaData('og:title', (K2_JVERSION == '15') ? htmlspecialchars($document->getTitle(), ENT_QUOTES, 'UTF-8') : $document->getTitle());
-		$document->setMetaData('og:type', 'article');
-		$facebookImage = 'image'.$params->get('facebookImage', 'Small');
-		if ($item->$facebookImage)
+		if($params->get('facebookMetatags', '1'))
 		{
-			$parts = parse_url($item->$facebookImage);
-			if (JFile::exists(JPATH_SITE.$parts['path']))
+			$document = JFactory::getDocument();
+			$uri = JURI::getInstance();
+			$document->setMetaData('og:url', $uri->toString());
+			$document->setMetaData('og:title', (K2_JVERSION == '15') ? htmlspecialchars($document->getTitle(), ENT_QUOTES, 'UTF-8') : $document->getTitle());
+			$document->setMetaData('og:type', 'article');
+			$facebookImage = 'image'.$params->get('facebookImage', 'Small');
+			if ($item->$facebookImage)
 			{
-				$image = substr(JURI::root(), 0, -1).str_replace(JURI::root(true), '', $item->$facebookImage);
-				$document->setMetaData('og:image', $image);
-				$document->setMetaData('image', $image);
+				$basename = basename($item->$facebookImage);
+				if(strpos($basename, '?t=')!==false)
+				{
+					$tmpBasename = explode('?t=', $basename);
+					$basenameWithNoTimestamp = $tmpBasename[0];
+				}
+				else
+				{
+					$basenameWithNoTimestamp = $basename;
+				}
+				if (JFile::exists(JPATH_SITE.'/media/k2/items/cache/'.$basenameWithNoTimestamp))
+				{
+					$image = JURI::root().'media/k2/items/cache/'.$basename;
+					$document->setMetaData('og:image', $image);
+					$document->setMetaData('image', $image);
+				}
 			}
+			$document->setMetaData('og:description', strip_tags($document->getDescription()));
 		}
-		$document->setMetaData('og:description', strip_tags($document->getDescription()));
+
+		// Get the frontend's language for use in social media buttons - use explicit variable references for future update flexibility
+		$getSiteLanguage = JFactory::getLanguage();
+		$languageTag = $getSiteLanguage->getTag();
+		$item->langTagForFB = str_replace('-', '_', $languageTag);
+		$item->langTagForTW = strtolower($languageTag);
+		$item->langTagForGP = $languageTag;
 
 		// Look for template files in component folders
 		$this->_addPath('template', JPATH_COMPONENT.DS.'templates');

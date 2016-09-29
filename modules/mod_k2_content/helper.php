@@ -1,14 +1,14 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
-defined('_JEXEC') or die;
+defined('_JEXEC') or die ;
 
 require_once (JPATH_SITE.DS.'components'.DS.'com_k2'.DS.'helpers'.DS.'route.php');
 require_once (JPATH_SITE.DS.'components'.DS.'com_k2'.DS.'helpers'.DS.'utilities.php');
@@ -32,7 +32,7 @@ class modK2ContentHelper
 		$db = JFactory::getDBO();
 
 		$jnow = JFactory::getDate();
-		$now =  K2_JVERSION == '15'?$jnow->toMySQL():$jnow->toSql();
+		$now = K2_JVERSION == '15' ? $jnow->toMySQL() : $jnow->toSql();
 		$nullDate = $db->getNullDate();
 
 		if ($params->get('source') == 'specific')
@@ -93,15 +93,15 @@ class modK2ContentHelper
 
 		else
 		{
-			$query = "SELECT i.*,";
+			$query = "SELECT DISTINCT i.*,";
 
 			if ($ordering == 'modified')
 			{
 				$query .= " CASE WHEN i.modified = 0 THEN i.created ELSE i.modified END as lastChanged,";
 			}
-			
+
 			$query .= "c.name AS categoryname,c.id AS categoryid, c.alias AS categoryalias, c.params AS categoryparams";
-			
+
 			if ($ordering == 'best')
 				$query .= ", (r.rating_sum/r.rating_count) AS rating";
 
@@ -115,6 +115,12 @@ class modK2ContentHelper
 
 			if ($ordering == 'comments')
 				$query .= " LEFT JOIN #__k2_comments comments ON comments.itemID = i.id";
+			
+			$tagsFilter = $params->get('tags');
+			if($tagsFilter && is_array($tagsFilter) && count($tagsFilter))
+			{
+				$query .= " INNER JOIN #__k2_tags_xref tags_xref ON tags_xref.itemID = i.id";
+			}
 
 			if (K2_JVERSION != '15')
 			{
@@ -165,6 +171,18 @@ class modK2ContentHelper
 
 					}
 				}
+			}
+			
+			$tagsFilter = $params->get('tags');
+			if($tagsFilter && is_array($tagsFilter) && count($tagsFilter))
+			{
+				$query .= " AND tags_xref.tagID IN(".implode(',', $tagsFilter).")";
+			}
+			
+			$usersFilter = $params->get('users');
+			if($usersFilter && is_array($usersFilter) && count($usersFilter))
+			{
+				$query .= " AND i.created_by IN(".implode(',', $usersFilter).") AND i.created_by_alias = ''";
 			}
 
 			if ($params->get('FeaturedItems') == '0')
@@ -225,7 +243,7 @@ class modK2ContentHelper
 					if ($params->get('popularityRange'))
 					{
 						$datenow = JFactory::getDate();
-						$date =  K2_JVERSION == '15'?$datenow->toMySQL():$datenow->toSql();
+						$date = K2_JVERSION == '15' ? $datenow->toMySQL() : $datenow->toSql();
 						$query .= " AND i.created > DATE_SUB('{$date}',INTERVAL ".$params->get('popularityRange')." DAY) ";
 					}
 					$orderby = 'i.hits DESC';
@@ -243,7 +261,7 @@ class modK2ContentHelper
 					if ($params->get('popularityRange'))
 					{
 						$datenow = JFactory::getDate();
-						$date =  K2_JVERSION == '15'?$datenow->toMySQL():$datenow->toSql();
+						$date = K2_JVERSION == '15' ? $datenow->toMySQL() : $datenow->toSql();
 						$query .= " AND i.created > DATE_SUB('{$date}',INTERVAL ".$params->get('popularityRange')." DAY) ";
 					}
 					$query .= " GROUP BY i.id ";
@@ -275,7 +293,7 @@ class modK2ContentHelper
 
 			foreach ($items as $item)
 			{
-			    $item->event = new stdClass;
+				$item->event = new stdClass;
 
 				//Clean title
 				$item->title = JFilterOutput::ampReplace($item->title);
@@ -392,14 +410,14 @@ class modK2ContentHelper
 					$params->set('vfolder', 'media/k2/videos');
 					$params->set('afolder', 'media/k2/audio');
 					$item->text = $item->video;
-					            if (K2_JVERSION == '15')
-            {
-                $dispatcher->trigger('onPrepareContent', array(&$item, &$params, $limitstart));
-            }
-            else
-            {
-                $dispatcher->trigger('onContentPrepare', array('mod_k2_content.', &$item, &$params, $limitstart));
-            }
+					if (K2_JVERSION == '15')
+					{
+						$dispatcher->trigger('onPrepareContent', array(&$item, &$params, $limitstart));
+					}
+					else
+					{
+						$dispatcher->trigger('onContentPrepare', array('mod_k2_content.', &$item, &$params, $limitstart));
+					}
 					$item->video = $item->text;
 				}
 
@@ -423,7 +441,7 @@ class modK2ContentHelper
 
 					$params->set('parsedInModule', 1);
 					// for plugins to know when they are parsed inside this module
-					
+
 					$item->event = new stdClass;
 					$item->event->BeforeDisplay = '';
 					$item->event->AfterDisplay = '';
@@ -470,7 +488,7 @@ class modK2ContentHelper
 
 							$dispatcher->trigger('onPrepareContent', array(&$item, &$params, $limitstart));
 						}
-						
+
 					}
 					//Init K2 plugin events
 					$item->event->K2BeforeDisplay = '';
@@ -511,8 +529,8 @@ class modK2ContentHelper
 
 				}
 
-                // Restore the intotext variable after plugins execution
-                $item->introtext = $item->text;
+				// Restore the intotext variable after plugins execution
+				$item->introtext = $item->text;
 
 				//Clean the plugin tags
 				$item->introtext = preg_replace("#{(.*?)}(.*?){/(.*?)}#s", '', $item->introtext);
@@ -553,6 +571,22 @@ class modK2ContentHelper
 							$item->authorAvatar = K2HelperUtilities::getAvatar($author->id, $author->email, $componentParams->get('userImageWidth'));
 						}
 						//Author Link
+						$item->authorLink = JRoute::_(K2HelperRoute::getUserRoute($item->created_by));
+					}
+				}
+
+				// Author avatar
+				if ($params->get('itemAuthorAvatar') && !isset($item->authorAvatar))
+				{
+					if (!empty($item->created_by_alias))
+					{
+						$item->authorAvatar = K2HelperUtilities::getAvatar('alias');
+						$item->authorLink = Juri::root(true);
+					}
+					else
+					{
+						$jAuthor = JFactory::getUser($item->created_by);
+						$item->authorAvatar = K2HelperUtilities::getAvatar($jAuthor->id, $jAuthor->email, $componentParams->get('userImageWidth'));
 						$item->authorLink = JRoute::_(K2HelperRoute::getUserRoute($item->created_by));
 					}
 				}

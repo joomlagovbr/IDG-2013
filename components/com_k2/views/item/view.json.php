@@ -1,9 +1,9 @@
 <?php
 /**
- * @version     2.6.x
+ * @version     2.7.x
  * @package     K2
  * @author      JoomlaWorks http://www.joomlaworks.net
- * @copyright   Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
+ * @copyright   Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
  * @license     GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -100,6 +100,9 @@ class K2ViewItem extends K2View
         {
             JError::raiseError(404, JText::_('K2_ITEM_NOT_FOUND'));
         }
+        
+        // Increase hits counter
+        $model->hit($item->id);
 
         // Set default image
         K2HelperUtilities::setDefaultImage($item, $view);

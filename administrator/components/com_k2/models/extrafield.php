@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
@@ -50,7 +50,7 @@ class K2ModelExtraField extends K2Model
 
 		if (!$row->id)
 		{
-			$row->ordering = $row->getNextOrder("`group` = {$row->group}");
+			$row->ordering = $row->getNextOrder("`group` = ".(int)$row->group);
 		}
 
 		$objects = array();
@@ -69,7 +69,7 @@ class K2ModelExtraField extends K2Model
 		{
 			$alias = '';
 		}
-
+		$lastOptionId = 1;
 		for ($i = 0; $i < sizeof($values); $i++)
 		{
 			$object = new JObject;
@@ -77,13 +77,22 @@ class K2ModelExtraField extends K2Model
 
 			if ($row->type == 'select' || $row->type == 'multipleSelect' || $row->type == 'radio')
 			{
-				$object->set('value', $i + 1);
+				if(!empty($values[$i]))
+				{
+					$object->set('value', $values[$i]);
+					$lastOptionId = intval($values[$i]);
+				}
+				else
+				{
+					$lastOptionId ++;
+					$object->set('value', $lastOptionId);
+				}
 			}
 			elseif ($row->type == 'link')
 			{
 				if (trim($values[$i]) != '')
 				{
-					if (substr($values[$i], 0, 7) == 'http://' || substr($values[$i], 0, 8) == 'https://' || substr($values[$i], 0, 2) == '//' || substr($values[$i], 0, 1) == '/')
+					if (substr($values[$i], 0, 7) == 'http://' || substr($values[$i], 0, 8) == 'https://' || substr($values[$i], 0, 2) == '//' || substr($values[$i], 0, 1) == '/' || substr($values[$i], 0, 7) == 'mailto:' || substr($values[$i], 0, 4) == 'tel:' )
 					{
 						$values[$i] = $values[$i];
 					}
@@ -111,9 +120,7 @@ class K2ModelExtraField extends K2Model
 				}
 				else
 				{
-					require_once (JPATH_COMPONENT.DS.'lib'.DS.'JSON.php');
-					$json = new Services_JSON;
-					$object->set('value', $json->decode($values[$i]));
+					$object->set('value', json_decode($values[$i]));
 					if (JRequest::getBool('K2ResetCSV'))
 						$object->set('value', null);
 				}
@@ -148,9 +155,7 @@ class K2ModelExtraField extends K2Model
 			$objects[] = $object;
 		}
 
-		require_once (JPATH_COMPONENT.DS.'lib'.DS.'JSON.php');
-		$json = new Services_JSON;
-		$row->value = $json->encode($objects);
+		$row->value = json_encode($objects);
 
 		if (!$row->check())
 		{
@@ -166,7 +171,7 @@ class K2ModelExtraField extends K2Model
 
 		$params = JComponentHelper::getParams('com_k2');
 		if (!$params->get('disableCompactOrdering'))
-			$row->reorder("`group` = {$row->group}");
+			$row->reorder("`group` = ".(int)$row->group);
 
 		$cache = JFactory::getCache('com_k2');
 		$cache->clean();
@@ -202,8 +207,6 @@ class K2ModelExtraField extends K2Model
 	{
 
 		$mainframe = JFactory::getApplication();
-		require_once (JPATH_COMPONENT_ADMINISTRATOR.DS.'lib'.DS.'JSON.php');
-		$json = new Services_JSON;
 
 		if (!is_null($itemID))
 		{
@@ -211,7 +214,7 @@ class K2ModelExtraField extends K2Model
 			$item->load($itemID);
 		}
 
-		$defaultValues = $json->decode($extraField->value);
+		$defaultValues = json_decode($extraField->value);
 
 		foreach ($defaultValues as $value)
 		{
@@ -219,7 +222,7 @@ class K2ModelExtraField extends K2Model
 			$required = isset($value->required) ? $value->required : 0;
 			$showNull = isset($value->showNull) ? $value->showNull : 0;
 
-			if ($extraField->type == 'textfield' || $extraField->type == 'csv' || $extraField->type == 'labels' || $extraField->type == 'date')
+			if ($extraField->type == 'textfield' || $extraField->type == 'csv' || $extraField->type == 'labels' || $extraField->type == 'date' || $extraField->type == 'image')
 			{
 				$active = $value->value;
 			}
@@ -250,7 +253,7 @@ class K2ModelExtraField extends K2Model
 
 		if (isset($item))
 		{
-			$currentValues = $json->decode($item->extra_fields);
+			$currentValues = json_decode($item->extra_fields);
 			if (count($currentValues))
 			{
 				foreach ($currentValues as $value)
@@ -279,21 +282,13 @@ class K2ModelExtraField extends K2Model
 
 		}
 		$attributes = '';
-		if (version_compare(JVERSION, '3.2', 'ge'))
+		$arrayAttributes = array();
+		if ($required)
 		{
-			$arrayAttributes = array();
-			if ($required)
-			{
-				$arrayAttributes['class'] = "k2Required";
-			}
+			$arrayAttributes['class'] = "k2Required";
+			$attributes .= 'class="k2Required"';
 		}
-		else
-		{
-			if ($required)
-			{
-				$attributes .= 'class="k2Required"';
-			}
-		}
+		
 
 		if ($showNull && in_array($extraField->type, array(
 			'select',
@@ -389,7 +384,7 @@ class K2ModelExtraField extends K2Model
 
 				if (is_array($active) && count($active))
 				{
-					$output .= '<input type="hidden" name="K2CSV_'.$extraField->id.'" value="'.htmlspecialchars($json->encode($active)).'"/>';
+					$output .= '<input type="hidden" name="K2CSV_'.$extraField->id.'" value="'.htmlspecialchars(json_encode($active)).'" />';
 					$output .= '<table class="csvTable">';
 					foreach ($active as $key => $row)
 					{
@@ -402,7 +397,7 @@ class K2ModelExtraField extends K2Model
 					}
 					$output .= '</table>';
 					$output .= '<label>'.JText::_('K2_DELETE_CSV_DATA').'</label>';
-					$output .= '<input type="checkbox" name="K2ResetCSV_'.$extraField->id.'"/>';
+					$output .= '<input type="checkbox" name="K2ResetCSV_'.$extraField->id.'" />';
 				}
 				break;
 
@@ -422,7 +417,7 @@ class K2ModelExtraField extends K2Model
 				break;
 			case 'image' :
 				$output = '<input type="text" name="K2ExtraField_'.$extraField->id.'" id="K2ExtraField_'.$extraField->id.'" value="'.$active.'" '.$attributes.' />
-				<a class="k2ExtraFieldImageButton" href="'.JRoute::_('index.php?option=com_k2&view=media&type=image&tmpl=component&fieldID=K2ExtraField_'.$extraField->id).'">'.JText::_('K2_SELECT').'</a>';
+				<a class="k2ExtraFieldImageButton" href="'.JURI::base(true).'/index.php?option=com_k2&view=media&type=image&tmpl=component&fieldID=K2ExtraField_'.$extraField->id.'">'.JText::_('K2_SELECT').'</a>';
 				break;
 			case 'header' :
 				$output = '';
@@ -450,9 +445,7 @@ class K2ModelExtraField extends K2Model
 		$row = JTable::getInstance('K2ExtraField', 'Table');
 		$row->load($id);
 
-		require_once (JPATH_COMPONENT_ADMINISTRATOR.DS.'lib'.DS.'JSON.php');
-		$json = new Services_JSON;
-		$jsonObject = $json->decode($row->value);
+		$jsonObject = json_decode($row->value);
 
 		$value = '';
 		if ($row->type == 'textfield' || $row->type == 'textarea')

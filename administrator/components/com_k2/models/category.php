@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
@@ -55,7 +55,7 @@ class K2ModelCategory extends K2Model
 
         if (!$row->id)
         {
-            $row->ordering = $row->getNextOrder('parent = '.$row->parent.' AND trash=0');
+            $row->ordering = $row->getNextOrder('parent = '.(int)$row->parent.' AND trash=0');
         }
 
         if (!$row->check())
@@ -71,7 +71,7 @@ class K2ModelCategory extends K2Model
         }
 
         if (!$params->get('disableCompactOrdering'))
-            $row->reorder('parent = '.$row->parent.' AND trash=0');
+            $row->reorder('parent = '.(int)$row->parent.' AND trash=0');
 
         if ((int)$params->get('imageMemoryLimit'))
         {
@@ -83,9 +83,9 @@ class K2ModelCategory extends K2Model
         $savepath = JPATH_ROOT.DS.'media'.DS.'k2'.DS.'categories'.DS;
 
         $existingImage = JRequest::getVar('existingImage');
-        if (($files['image']['error'] === 0 || $existingImage) && !JRequest::getBool('del_image'))
+        if (($files['image']['error'] == 0 || $existingImage) && !JRequest::getBool('del_image'))
         {
-            if ($files['image']['error'] === 0)
+            if ($files['image']['error'] == 0)
             {
                 $image = $files['image'];
             }
@@ -105,7 +105,7 @@ class K2ModelCategory extends K2Model
                 $handle->image_ratio_y = true;
                 $handle->image_x = $params->get('catImageWidth', '100');
                 $handle->Process($savepath);
-                if ($files['image']['error'] === 0)
+                if ($files['image']['error'] == 0)
                     $handle->Clean();
             }
             else

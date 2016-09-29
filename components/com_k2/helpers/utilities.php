@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
@@ -21,16 +21,6 @@ class K2HelperUtilities
 		jimport('joomla.application.component.model');
 		$mainframe = JFactory::getApplication();
 		$params = K2HelperUtilities::getParams('com_k2');
-
-		if (K2_CB && $userID != 'alias')
-		{
-			$cbUser = CBuser::getInstance((int)$userID);
-			if (is_object($cbUser))
-			{
-				$avatar = $cbUser->getField('avatar', null, 'csv', 'none', 'profile');
-				return $avatar;
-			}
-		}
 
 		// Check for placeholder overrides
 		if (JFile::exists(JPATH_SITE.DS.'templates'.DS.$mainframe->getTemplate().DS.'images'.DS.'placeholder'.DS.'user.png'))
@@ -51,7 +41,7 @@ class K2HelperUtilities
 		{
 			if ($params->get('gravatar') && !is_null($email))
 			{
-				$avatar = '//www.gravatar.com/avatar/'.md5($email).'?s='.$width.'&amp;default='.urlencode(JURI::root().$avatarPath);
+				$avatar = 'https://secure.gravatar.com/avatar/'.md5($email).'?s='.$width.'&amp;default='.urlencode(JURI::root().$avatarPath);
 			}
 			else
 			{
@@ -68,7 +58,7 @@ class K2HelperUtilities
 			{
 				if ($params->get('gravatar') && !is_null($email))
 				{
-					$avatar = '//www.gravatar.com/avatar/'.md5($email).'?s='.$width.'&amp;default='.urlencode(JURI::root().$avatarPath);
+					$avatar = 'https://secure.gravatar.com/avatar/'.md5($email).'?s='.$width.'&amp;default='.urlencode(JURI::root().$avatarPath);
 				}
 				else
 				{
@@ -359,6 +349,33 @@ class K2HelperUtilities
 			}
 		}
 		return $string;
+	}
+
+	public static function verifyRecaptcha() {
+
+		$params = JComponentHelper::getParams('com_k2');
+		$vars = array();
+		$vars['secret'] = $params->get('recaptcha_private_key');
+		$vars['response'] = $_POST['g-recaptcha-response'];
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, 'https://www.google.com/recaptcha/api/siteverify');
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+		curl_setopt($ch, CURLOPT_POST, true);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($vars, '', '&'));
+		$result = curl_exec($ch);
+		$info = curl_getinfo($ch);
+		curl_close($ch);
+		$response = json_decode($result);
+		if($result && $info['http_code'] == 200 && is_object($response) && isset($response->success) && $response->success == true)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+
 	}
 
 } // End Class

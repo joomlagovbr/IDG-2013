@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
@@ -19,6 +19,7 @@ class K2ViewCategory extends K2View
     {
 
         JRequest::setVar('hidemainmenu', 1);
+        JHTML::_('behavior.modal');
         $model = $this->getModel();
         $category = $model->getData();
         if (K2_JVERSION == '15')
@@ -53,7 +54,7 @@ class K2ViewCategory extends K2View
 
         $lists = array();
         $lists['published'] = JHTML::_('select.booleanlist', 'published', 'class="inputbox"', $category->published);
-        $lists['access'] = version_compare(JVERSION, '3.0', 'ge') ? JHTML::_('access.level', 'access', $category->access) : JHTML::_('list.accesslevel', $category);
+        $lists['access'] = version_compare(JVERSION, '2.5', 'ge') ? JHTML::_('access.level', 'access', $category->access, '', false) : str_replace('size="3"', "", JHTML::_('list.accesslevel', $category));
         $query = 'SELECT ordering AS value, name AS text FROM #__k2_categories ORDER BY ordering';
         $lists['ordering'] = version_compare(JVERSION, '3.0', 'ge') ? NUll : JHTML::_('list.specificordering', $category, $category->id, $query);
         $categories[] = JHTML::_('select.option', '0', JText::_('K2_NONE_ONSELECTLISTS'));
@@ -112,16 +113,8 @@ class K2ViewCategory extends K2View
         JToolBarHelper::apply();
         JToolBarHelper::cancel();
 
-        // ACE ACL integration
-        $definedConstants = get_defined_constants();
-        if (!empty($definedConstants['ACEACL']) && AceaclApi::authorize('permissions', 'com_aceacl'))
-        {
-            $aceAclFlag = true;
-        }
-        else
-        {
-            $aceAclFlag = false;
-        }
+        // ACE ACL integration has been removed. We keep this flag to avoid php notices for users who have overrides 
+        $aceAclFlag = false;
         $this->assignRef('aceAclFlag', $aceAclFlag);
 
         parent::display($tpl);

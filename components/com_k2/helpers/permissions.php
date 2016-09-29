@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
@@ -142,9 +142,9 @@ class K2HelperPermissions
         }
         $task = JRequest::getCmd('task');
         $user = JFactory::getUser();
+        $mainframe = JFactory::getApplication();
         if ($user->guest && ($task == 'add' || $task == 'edit'))
         {
-            $mainframe = JFactory::getApplication();
             $uri = JURI::getInstance();
             $return = base64_encode($uri->toString());
 			$mainframe->enqueueMessage(JText::_('K2_YOU_NEED_TO_LOGIN_FIRST'), 'notice');
@@ -170,15 +170,28 @@ class K2HelperPermissions
             case 'deleteAttachment' :
             case 'checkin' :
                 $cid = JRequest::getInt('cid');
-                if (!$cid)
-                    JError::raiseError(403, JText::_('K2_ALERTNOTAUTH'));
+                if($cid)
+                {
+                  JTable::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.DS.'tables');
+                  $item = JTable::getInstance('K2Item', 'Table');
+                  $item->load($cid);
 
-                JTable::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.DS.'tables');
-                $item = JTable::getInstance('K2Item', 'Table');
-                $item->load($cid);
+                  if (!K2HelperPermissions::canEditItem($item->created_by, $item->catid))
+                  {
+                    // Handle in a different way the case when user can add an item but not edit it.
+                    if($task == 'edit' && !$user->guest && $item->created_by == $user->id && (int)$item->modified == 0 && K2HelperPermissions::canAddItem())
+                    {
+                      echo '<script>parent.location.href = "'.JUri::root().'";</script>';
+                      exit;
+                    }
+                    else
+                    {
+                      JError::raiseError(403, JText::_('K2_ALERTNOTAUTH'));
+                    }
 
-                if (!K2HelperPermissions::canEditItem($item->created_by, $item->catid))
-                    JError::raiseError(403, JText::_('K2_ALERTNOTAUTH'));
+                  }
+
+                }
                 break;
 
             case 'save' :
@@ -319,7 +332,7 @@ class K2HelperPermissions
         $K2Permissions = K2Permissions::getInstance();
         return in_array('comment.category.all', $K2Permissions->actions) || in_array('comment.category.'.$itemCategory, $K2Permissions->actions);
     }
-	
+
     public static function canEditPublished($itemCategory)
     {
         $K2Permissions = K2Permissions::getInstance();

@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
@@ -133,6 +133,13 @@ class K2ControllerCategories extends K2Controller
         $view = $this->getView('categories', 'html');
         $view->setLayout('move');
         $view->move();
+    }
+
+    function saveBatch()
+    {
+        JRequest::checkToken() or jexit('Invalid Token');
+        $model = $this->getModel('categories');
+        $model->saveBatch();
     }
 
     function saveMove()

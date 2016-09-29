@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
@@ -32,6 +32,7 @@ class K2ViewCategories extends K2View
 		$language = $mainframe->getUserStateFromRequest($option.$view.'language', 'language', '', 'string');
 		$search = $mainframe->getUserStateFromRequest($option.$view.'search', 'search', '', 'string');
 		$search = JString::strtolower($search);
+		$search = trim(preg_replace('/[^a-zA-Z0-9\s\-_]/', '', $search));
 		$model = $this->getModel();
 		$total = $model->getTotal();
 		$task = JRequest::getCmd('task');
@@ -46,7 +47,7 @@ class K2ViewCategories extends K2View
 
 		$params = JComponentHelper::getParams('com_k2');
 		$this->assignRef('params', $params);
-		
+
 		if (K2_JVERSION != '15')
 		{
 			$langs = JLanguageHelper::getLanguages();
@@ -57,8 +58,8 @@ class K2ViewCategories extends K2View
 				$langsMapping[$lang->lang_code] = $lang->title;
 			}
 		}
-		
-		
+
+
 		for ($i = 0; $i < sizeof($categories); $i++)
 		{
 			$categories[$i]->status = K2_JVERSION == '15' ? JHTML::_('grid.published', $categories[$i], $i) : JHtml::_('jgrid.published', $categories[$i]->published, $i, '', $filter_trash == 0 && $task != 'element');
@@ -103,6 +104,10 @@ class K2ViewCategories extends K2View
 
 		$this->assignRef('rows', $categories);
 
+		if(count($categories) && $filter_trash) {
+			$mainframe->enqueueMessage(JText::_('K2_ALL_TRASHED_ITEMS_IN_A_CATEGORY_MUST_BE_DELETED_FIRST'));
+		}
+
 		jimport('joomla.html.pagination');
 		$pageNav = new JPagination($total, $limitstart, $limit);
 		$this->assignRef('page', $pageNav);
@@ -125,8 +130,36 @@ class K2ViewCategories extends K2View
 		$categoriesModel = K2Model::getInstance('Categories', 'K2Model');
 		$categories_option[] = JHTML::_('select.option', 0, JText::_('K2_SELECT_CATEGORY'));
 		$categoriesFilter = $categoriesModel->categoriesTree(NULL, true, false);
+		$categoriesTree = $categoriesFilter;
 		$categories_options = @array_merge($categories_option, $categoriesFilter);
 		$lists['categories'] = JHTML::_('select.genericlist', $categories_options, 'filter_category', '', 'value', 'text', $filter_category);
+		
+		//Batch fields
+		$extraFieldsModel = K2Model::getInstance('ExtraFields', 'K2Model');
+		$extraFieldsGroups = $extraFieldsModel->getGroups();
+		$options = array();
+		$options[] = JHTML::_('select.option', '', JText::_('K2_LEAVE_UNCHANGED'));
+		$options[] = JHTML::_('select.option', '0', JText::_('K2_NONE_ONSELECTLISTS'));
+		foreach ($extraFieldsGroups as $extraFieldsGroup)
+		{
+			$name = $extraFieldsGroup->name;
+			$options[] = JHTML::_('select.option', $extraFieldsGroup->id, $name);
+		}
+		$lists['batchExtraFieldsGroups'] = JHTML::_('select.genericlist', $options, 'batchExtraFieldsGroups', '', 'value', 'text', null);
+
+		array_unshift($categoriesTree, JHtml::_('select.option', '0', JText::_('K2_NONE_ONSELECTLISTS')));
+		array_unshift($categoriesTree, JHtml::_('select.option', '', JText::_('K2_LEAVE_UNCHANGED')));
+
+		$lists['batchCategories'] = JHTML::_('select.genericlist', $categoriesTree, 'batchCategory', 'class="inputbox" size="8"', 'value', 'text', null);
+
+		$lists['batchAccess'] = version_compare(JVERSION, '2.5', 'ge') ? JHTML::_('access.level', 'batchAccess', null, '', array(JHtml::_('select.option', '', JText::_('K2_LEAVE_UNCHANGED')))) : str_replace('size="3"', "", JHTML::_('list.accesslevel', ''));
+
+		if (version_compare(JVERSION, '2.5.0', 'ge'))
+		{
+			$languages = JHTML::_('contentlanguage.existing', true, true);
+			array_unshift($languages, JHtml::_('select.option', '', JText::_('K2_LEAVE_UNCHANGED')));
+			$lists['batchLanguage'] = JHTML::_('select.genericlist', $languages, 'batchLanguage', '', 'value', 'text', null);
+		}
 
 		if (version_compare(JVERSION, '1.6.0', 'ge'))
 		{
@@ -137,6 +170,7 @@ class K2ViewCategories extends K2View
 		$this->assignRef('lists', $lists);
 
 		JToolBarHelper::title(JText::_('K2_CATEGORIES'), 'k2.png');
+		$toolbar = JToolBar::getInstance('toolbar');
 
 		if ($filter_trash == 1)
 		{
@@ -147,7 +181,21 @@ class K2ViewCategories extends K2View
 		{
 			JToolBarHelper::publishList();
 			JToolBarHelper::unpublishList();
-			JToolBarHelper::custom('move', 'move.png', 'move_f2.png', 'K2_MOVE', true);
+
+			// Batch button in modal
+			if (K2_JVERSION == '30')
+			{
+				$batchButton = '<a id="K2BatchButton" class="btn btn-small" href="#"><i class="icon-edit "></i>'.JText::_('K2_BATCH').'</a>';
+			}
+			else
+			{
+				$batchButton = '<a id="K2BatchButton" href="#"><span class="icon-32-edit" title="'.JText::_('K2_BATCH').'"></span>'.JText::_('K2_BATCH').'</a>';
+			}
+
+			$toolbar->appendButton('Custom', $batchButton);
+			$document = JFactory::getDocument();
+			$document->addScriptDeclaration('var K2SelectItemsError = "'.JText::_('K2_SELECT_SOME_ITEMS_FIRST').'";');
+
 			JToolBarHelper::custom('copy', 'copy.png', 'copy_f2.png', 'K2_COPY', true);
 			JToolBarHelper::editList();
 			JToolBarHelper::addNew();
@@ -160,7 +208,6 @@ class K2ViewCategories extends K2View
 		}
 		else
 		{
-			$toolbar = JToolBar::getInstance('toolbar');
 			$toolbar->appendButton('Popup', 'config', 'Parameters', 'index.php?option=com_k2&view=settings');
 		}
 
@@ -208,7 +255,7 @@ class K2ViewCategories extends K2View
 
 		foreach ($cid as $id)
 		{
-			$row = &JTable::getInstance('K2Category', 'Table');
+			$row = JTable::getInstance('K2Category', 'Table');
 			$row->load($id);
 			$rows[] = $row;
 		}

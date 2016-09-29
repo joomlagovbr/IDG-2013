@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
@@ -20,9 +20,9 @@ class K2ViewMedia extends K2View
         $mainframe = JFactory::getApplication();
         $user = JFactory::getUser();
         $document = JFactory::getDocument();
-        $document->addStyleSheet('//ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/smoothness/jquery-ui.css');
-        $document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/theme.css?v=2.6.8');
-        $document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/elfinder.min.css?v=2.6.8');
+        $document->addStyleSheet('//ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/smoothness/jquery-ui.css?v=2.7.1');
+        $document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/theme.css?v=2.7.1');
+        $document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/elfinder.min.css?v=2.7.1');
         $type = JRequest::getCmd('type');
         $fieldID = JRequest::getCmd('fieldID');
         if ($type == 'video')

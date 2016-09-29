@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
@@ -38,7 +38,7 @@ K2HelperUtilities::setDefaultImage($this->item, 'itemlist', $this->params);
 			<?php if(isset($this->item->editLink)): ?>
 			<!-- Item edit link -->
 			<span class="catItemEditLink">
-				<a class="modal" rel="{handler:'iframe',size:{x:990,y:550}}" href="<?php echo $this->item->editLink; ?>">
+				<a data-k2-modal="edit" href="<?php echo $this->item->editLink; ?>">
 					<?php echo JText::_('K2_EDIT_ITEM'); ?>
 				</a>
 			</span>
@@ -66,7 +66,7 @@ K2HelperUtilities::setDefaultImage($this->item, 'itemlist', $this->params);
 		<?php if($this->item->params->get('catItemAuthor')): ?>
 		<!-- Item Author -->
 		<span class="catItemAuthor">
-			<?php echo K2HelperUtilities::writtenBy($this->item->author->profile->gender); ?> 
+			<?php echo K2HelperUtilities::writtenBy($this->item->author->profile->gender); ?>
 			<?php if(isset($this->item->author->link) && $this->item->author->link): ?>
 			<a rel="author" href="<?php echo $this->item->author->link; ?>"><?php echo $this->item->author->name; ?></a>
 			<?php else: ?>

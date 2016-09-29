@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
@@ -31,6 +31,7 @@ class K2ModelExtraFields extends K2Model
         $filter_state = $mainframe->getUserStateFromRequest($option.$view.'filter_state', 'filter_state', -1, 'int');
         $search = $mainframe->getUserStateFromRequest($option.$view.'search', 'search', '', 'string');
         $search = JString::strtolower($search);
+        $search = trim(preg_replace('/[^a-zA-Z0-9\s\-_]/', '', $search));
         $filter_type = $mainframe->getUserStateFromRequest($option.$view.'filter_type', 'filter_type', '', 'string');
         $filter_group = $mainframe->getUserStateFromRequest($option.$view.'filter_group', 'filter_group', 0, 'int');
 
@@ -88,6 +89,7 @@ class K2ModelExtraFields extends K2Model
         $filter_state = $mainframe->getUserStateFromRequest($option.$view.'filter_state', 'filter_state', 1, 'int');
         $search = $mainframe->getUserStateFromRequest($option.$view.'search', 'search', '', 'string');
         $search = JString::strtolower($search);
+        $search = trim(preg_replace('/[^a-zA-Z0-9\s\-_]/', '', $search));
         $filter_type = $mainframe->getUserStateFromRequest($option.$view.'filter_type', 'filter_type', '', 'string');
         $filter_group = $mainframe->getUserStateFromRequest($option.$view.'filter_group', 'filter_group', '', 'string');
 
@@ -184,7 +186,7 @@ class K2ModelExtraFields extends K2Model
             foreach ($groupings as $group)
             {
             	$row = JTable::getInstance('K2ExtraField', 'Table');
-                $row->reorder("`group` = {$group}");
+                $row->reorder("`group` = ".(int)$group);
             }
         }
         $cache = JFactory::getCache('com_k2');
@@ -202,7 +204,7 @@ class K2ModelExtraFields extends K2Model
         $row->move(-1, "`group` = '{$row->group}'");
         $params = JComponentHelper::getParams('com_k2');
         if (!$params->get('disableCompactOrdering'))
-            $row->reorder("`group` = '{$row->group}'");
+            $row->reorder("`group` = ".(int)$row->group);
         $cache = JFactory::getCache('com_k2');
         $cache->clean();
         $msg = JText::_('K2_NEW_ORDERING_SAVED');
@@ -220,7 +222,7 @@ class K2ModelExtraFields extends K2Model
         $row->move(1, "`group` = '{$row->group}'");
         $params = JComponentHelper::getParams('com_k2');
         if (!$params->get('disableCompactOrdering'))
-            $row->reorder("`group` = '{$row->group}'");
+            $row->reorder("`group` = ".(int)$row->group);
         $cache = JFactory::getCache('com_k2');
         $cache->clean();
         $msg = JText::_('K2_NEW_ORDERING_SAVED');

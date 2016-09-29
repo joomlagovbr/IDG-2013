@@ -25,8 +25,10 @@
 			<option value="1.9.1remote">K2_COM_LOAD_V1_9_X_LATEST_REMOTE_COPY</option>
 			<option value="1.10.2">K2_COM_LOAD_V1_10_LOCAL_COPY</option>
 			<option value="1.10.2remote">K2_COM_LOAD_V1_10_X_LATEST_REMOTE_COPY</option>
-			<option value="1.11.0">K2_COM_LOAD_V1_11_LOCAL_COPY</option>
-			<option value="1.11.0remote">K2_COM_LOAD_V1_11_X_LATEST_REMOTE_COPY</option>
+			<option value="1.11.3">K2_COM_LOAD_V1_11_LOCAL_COPY</option>
+			<option value="1.11.3remote">K2_COM_LOAD_V1_11_X_LATEST_REMOTE_COPY</option>
+			<option value="1.12.1">K2_COM_LOAD_V1_12_LOCAL_COPY</option>
+			<option value="1.12.1remote">K2_COM_LOAD_V1_12_X_LATEST_REMOTE_COPY</option>
 		</param>
 		<param menu="hide" name="backendJQueryHandling" type="list" default="remote" label="K2_COM_BACKEND_JQUERY_HANDLING" description="K2_COM_BACKEND_JQUERY_HANDLING_DESC">
 			<option value="local">K2_COM_LOAD_A_LOCAL_COPY</option>
@@ -289,8 +291,7 @@
 		</param>
 		<param menu="hide" name="commenterImgWidth" type="text" default="48" size="4" label="K2_COMMENTER_IMAGE_AVATAR_WIDTH_IN_PX" description="" />
 		<param menu="hide" name="" type="header" default="K2_ONLINE_IMAGE_EDITOR" label="" description="" />
-		<param menu="hide" name="onlineImageEditor" type="list" default="splashup" label="K2_SELECT_ONLINE_IMAGE_EDITOR" description="">
-			<option value="splashup">K2_IMG_EDITOR_SPLASHUP</option>
+		<param menu="hide" name="onlineImageEditor" type="list" default="sumopaint" label="K2_SELECT_ONLINE_IMAGE_EDITOR" description="">
 			<option value="sumopaint">K2_IMG_EDITOR_SUMOPAINT</option>
 			<option value="pixlr">K2_IMG_EDITOR_PIXLR</option>
 		</param>
@@ -305,6 +306,10 @@
 		<!-- ######################### Social Settings ######################### -->
 		<param menu="hide" name="socialButtonCode" type="textarea" default="" label="K2_SOCIAL_BUTTON_CODE" description="K2_PASTE_HTML_CODE_HERE_TO_INTEGRATE_SERVICES_LIKE_ADD_THIS_OR_SHARE_THIS_IN_THE_ITEM_PAGE" rows="8" cols="40" />
 		<param menu="hide" name="twitterUsername" type="text" default="" label="K2_YOUR_TWITTER_USERNAME" description="K2_ENTER_YOUR_TWITTER_USERNAME_ACCOUNT_TO_ENABLE_TWITTER_BUTTON_PERSONALIZATION" />
+		<param menu="hide" name="facebookMetatags" type="radio" default="1" label="K2_ENABLE_FACEBOOK_META_TAGS">
+			<option value="0">K2_NO</option>
+			<option value="1">K2_YES</option>
+		</param>
 		<param menu="hide" name="facebookImage" type="list" default="Medium" label="K2_FACEBOOK_IMAGE_SIZE" description="K2_FACEBOOK_IMAGE_SIZE_DESC">
 			<option value="XSmall">K2_XSMALL</option>
 			<option value="Small">K2_SMALL</option>
@@ -329,7 +334,7 @@
 			<option value="above">K2_ABOVE_COMMENTS</option>
 			<option value="below">K2_BELOW_COMMENTS</option>
 		</param>
-		<param menu="hide" name="commentsPublishing" type="radio" default="1" label="K2_ENABLE_COMMENT_AUTOPUBLISHING" description="">
+		<param menu="hide" name="commentsPublishing" type="radio" default="0" label="K2_ENABLE_COMMENT_AUTOPUBLISHING" description="">
 			<option value="0">K2_NO</option>
 			<option value="1">K2_YES</option>
 		</param>
@@ -433,6 +438,10 @@
 			<option value="full">K2_FULL_EVERYTHING</option>
 		</param>
 		<param menu="hide" name="cookieDomain" type="text" default="" label="K2_COOKIE_DOMAIN" description="K2_SET_THE_DOMAIN_OF_YOUR_SITE_HERE_AND_K2_WILL_CREATE_A_COOKIE_CONTAINING_THE_USER_ID_FOR_LOGGED_IN_USERS" />
+		<param menu="hide" name="gatherStatistics" type="radio" default="1" label="K2_ENABLE_ANONYMOUS_SYSTEM_STATISTICS_GATHERING" description="K2_ENABLE_ANONYMOUS_SYSTEM_STATISTICS_GATHERING_DESC">
+			<option value="0">K2_NO</option>
+			<option value="1">K2_YES</option>
+		</param>
 		<!-- ######################### Tag System Settings ######################### -->
 		<param menu="hide" name="" type="header" default="K2_TAG_SYSTEM_SETTINGS" label="" description="" />
 		<param menu="hide" name="taggingSystem" type="radio" default="1" label="K2_TAGGING_SYSTEM" description="">
@@ -467,6 +476,10 @@
 			<option value="clean">K2_CLEAN</option>
 			<option value="custom">K2_CUSTOM</option>
 		</param>
+		<param menu="hide" name="recaptchaV2" type="radio" default="1" label="K2_RECAPTCHA_VERSION_2">
+			<option value="0">K2_NO</option>
+			<option value="1">K2_YES</option>
+		</param>
 		<param menu="hide" name="recaptchaOnRegistration" type="radio" default="0" label="K2_ENABLE_RECAPTCHA_ON_REGISTRATION_FORM" description="K2_ENABLE_RECAPTCHA_ON_REGISTRATION_FORM_DESC">
 			<option value="0">K2_NO</option>
 			<option value="1">K2_YES</option>
@@ -477,6 +490,11 @@
 			<option value="1">K2_YES</option>
 		</param>
 		<param menu="hide" name="stopForumSpamApiKey" type="text" default="" label="K2_STOP_FORUM_SPAM_API_KEY" description="K2_STOP_FORUM_SPAM_API_KEY_DESCRIPTION" />
+		<param menu="hide" name="profilePageDisplay" type="radio" default="0" label="K2_USER_PROFILES_FOR_USERS_WITH_NO_ITEMS" description="K2_USER_PROFILES_FOR_USERS_WITH_NO_ITEMS_DESCRIPTION">
+			<option value="0">K2_DISABLED</option>
+			<option value="1">K2_ENABLED</option>
+			<option value="2">K2_ENABLED_FOR_REGISTERED_USERS_ONLY</option>
+		</param>
 		<!-- ######################### Performance Settings ######################### -->
 		<param menu="hide" name="" type="header" default="K2_PERFORMANCE" label="" description="" />
 		<param menu="hide" name="showItemsCounterAdmin" type="radio" default="1" label="K2_ITEM_COUNTER_NEXT_TO_THE_CATEGORY_TITLE_IN_THE_CATEGORY_MANAGER" description="K2_DISABLING_THIS_WILL_REDUCE_THE_NUMBER_OF_QUERIES_IN_THE_BACKEND_AND_OVERALL_IMPROVE_PERFORMANCE_FOR_SITES_WITH_THOUSANDS_OF_ITEMS">
@@ -536,33 +554,6 @@
 			<option value="0">K2_NO</option>
 			<option value="1">K2_YES</option>
 		</param>
-		<!-- ######################### sh404SEF Settings ######################### -->
-		<param menu="hide" name="" type="header" default="K2_SH404SEF" label="" description="" />
-		<param menu="hide" name="sh404SefLabelCat" type="text" default="" label="K2_SH404SEF_URL_PREFIX_FOR_CATEGORIES" description="" />
-		<param menu="hide" name="sh404SefLabelUser" type="text" default="blog" label="K2_SH404SEF_URL_PREFIX_FOR_USERSAUTHORS" description="" />
-		<param menu="hide" name="sh404SefLabelItem" type="list" default="2" label="K2_SH404SEF_URL_CATEGORY_PREFIX_FOR_ITEMS" description="">
-			<option value="0">K2_NO_CATEGORIES</option>
-			<option value="1">K2_ONLY_THE_LAST_CATEGORY</option>
-			<option value="2">K2_ALL_CATEGORIES</option>
-		</param>
-		<param menu="hide" name="sh404SefTitleAlias" type="list" default="alias" label="K2_USE_TITLE_ALIAS_FOR_SH404SEF_URLS" description="">
-			<option value="alias">K2_YES</option>
-			<option value="title">K2_NO_USE_THE_ITEMS_TITLE</option>
-		</param>
-		<param menu="hide" name="sh404SefModK2ContentFeedAlias" type="text" default="feed" label="K2_SH404SEF_URL_PREFIX_FOR_K2_CONTENT_MODULE_FEED" description="" />
-		<param menu="hide" name="sh404SefInsertItemId" type="radio" default="0" label="K2_INSERT_ITEM_ID_IN_URL" description="">
-			<option value="0">K2_NO</option>
-			<option value="1">K2_YES</option>
-		</param>
-		<param menu="hide" name="sh404SefInsertUniqueItemId" type="radio" default="0" label="K2_INSERT_UNIQUE_ITEM_ID_IN_URL" description="">
-			<option value="0">K2_NO</option>
-			<option value="1">K2_YES</option>
-		</param>
-		<param menu="hide" name="" type="header" default="K2_COMMUNITY_BUILDER" label="" description="" />
-		<param menu="hide" name="cbIntegration" type="radio" default="0" label="K2_CB_INTEGRATION" description="K2_CB_INTEGRATION_DESC">
-			<option value="0">K2_DISABLED</option>
-			<option value="1">K2_ENABLED</option>
-		</param>
 	</params>
 	<fieldset name="COM_K2_LAYOUT_OPTIONS" label="K2_LAYOUT_VIEWS" addfieldpath="/administrator/components/com_k2/elements">
 		<!-- ######################### CSS Settings ######################### -->
@@ -589,8 +580,10 @@
 			<option value="1.9.1remote">K2_COM_LOAD_V1_9_X_LATEST_REMOTE_COPY</option>
 			<option value="1.10.2">K2_COM_LOAD_V1_10_LOCAL_COPY</option>
 			<option value="1.10.2remote">K2_COM_LOAD_V1_10_X_LATEST_REMOTE_COPY</option>
-			<option value="1.11.0">K2_COM_LOAD_V1_11_LOCAL_COPY</option>
-			<option value="1.11.0remote">K2_COM_LOAD_V1_11_X_LATEST_REMOTE_COPY</option>
+			<option value="1.11.3">K2_COM_LOAD_V1_11_LOCAL_COPY</option>
+			<option value="1.11.3remote">K2_COM_LOAD_V1_11_X_LATEST_REMOTE_COPY</option>
+			<option value="1.12.1">K2_COM_LOAD_V1_12_LOCAL_COPY</option>
+			<option value="1.12.1remote">K2_COM_LOAD_V1_12_X_LATEST_REMOTE_COPY</option>
 		</field>
 		<field menu="hide" name="backendJQueryHandling" type="list" default="remote" label="K2_COM_BACKEND_JQUERY_HANDLING" description="K2_COM_BACKEND_JQUERY_HANDLING_DESC">
 			<option value="local">K2_COM_LOAD_A_LOCAL_COPY</option>
@@ -853,8 +846,7 @@
 		</field>
 		<field menu="hide" name="commenterImgWidth" type="text" default="48" size="4" label="K2_COMMENTER_IMAGE_AVATAR_WIDTH_IN_PX" description="" />
 		<field menu="hide" name="" type="header" default="K2_ONLINE_IMAGE_EDITOR" label="" description="" />
-		<field menu="hide" name="onlineImageEditor" type="list" default="splashup" label="K2_SELECT_ONLINE_IMAGE_EDITOR" description="">
-			<option value="splashup">K2_IMG_EDITOR_SPLASHUP</option>
+		<field menu="hide" name="onlineImageEditor" type="list" default="sumopaint" label="K2_SELECT_ONLINE_IMAGE_EDITOR" description="">
 			<option value="sumopaint">K2_IMG_EDITOR_SUMOPAINT</option>
 			<option value="pixlr">K2_IMG_EDITOR_PIXLR</option>
 		</field>
@@ -869,6 +861,10 @@
 		<!-- ######################### Social Settings ######################### -->
 		<field menu="hide" name="socialButtonCode" type="textarea" default="" filter="raw" label="K2_SOCIAL_BUTTON_CODE" description="K2_PASTE_HTML_CODE_HERE_TO_INTEGRATE_SERVICES_LIKE_ADD_THIS_OR_SHARE_THIS_IN_THE_ITEM_PAGE" rows="8" cols="40" />
 		<field menu="hide" name="twitterUsername" type="text" default="" label="K2_YOUR_TWITTER_USERNAME" description="K2_ENTER_YOUR_TWITTER_USERNAME_ACCOUNT_TO_ENABLE_TWITTER_BUTTON_PERSONALIZATION" />
+		<field menu="hide" name="facebookMetatags" type="radio" default="1" label="K2_ENABLE_FACEBOOK_META_TAGS">
+			<option value="0">K2_NO</option>
+			<option value="1">K2_YES</option>
+		</field>
 		<field menu="hide" name="facebookImage" type="list" default="Medium" label="K2_FACEBOOK_IMAGE_SIZE" description="K2_FACEBOOK_IMAGE_SIZE_DESC">
 			<option value="XSmall">K2_XSMALL</option>
 			<option value="Small">K2_SMALL</option>
@@ -893,7 +889,7 @@
 			<option value="above">K2_ABOVE_COMMENTS</option>
 			<option value="below">K2_BELOW_COMMENTS</option>
 		</field>
-		<field menu="hide" name="commentsPublishing" type="radio" default="1" label="K2_ENABLE_COMMENT_AUTOPUBLISHING" description="">
+		<field menu="hide" name="commentsPublishing" type="radio" default="0" label="K2_ENABLE_COMMENT_AUTOPUBLISHING" description="">
 			<option value="0">K2_NO</option>
 			<option value="1">K2_YES</option>
 		</field>
@@ -997,6 +993,10 @@
 			<option value="full">K2_FULL_EVERYTHING</option>
 		</field>
 		<field menu="hide" name="cookieDomain" type="text" default="" label="K2_COOKIE_DOMAIN" description="K2_SET_THE_DOMAIN_OF_YOUR_SITE_HERE_AND_K2_WILL_CREATE_A_COOKIE_CONTAINING_THE_USER_ID_FOR_LOGGED_IN_USERS" />
+		<field menu="hide" name="gatherStatistics" type="radio" default="1" label="K2_ENABLE_ANONYMOUS_SYSTEM_STATISTICS_GATHERING" description="K2_ENABLE_ANONYMOUS_SYSTEM_STATISTICS_GATHERING_DESC">
+			<option value="0">K2_NO</option>
+			<option value="1">K2_YES</option>
+		</field>
 		<!-- ######################### Tag System Settings ######################### -->
 		<field menu="hide" name="" type="header" default="K2_TAG_SYSTEM_SETTINGS" label="" description="" />
 		<field menu="hide" name="taggingSystem" type="radio" default="1" label="K2_TAGGING_SYSTEM" description="">
@@ -1031,6 +1031,10 @@
 			<option value="clean">K2_CLEAN</option>
 			<option value="custom">K2_CUSTOM</option>
 		</field>
+		<field menu="hide" name="recaptchaV2" type="radio" default="1" label="K2_RECAPTCHA_VERSION_2">
+			<option value="0">K2_NO</option>
+			<option value="1">K2_YES</option>
+		</field>
 		<field menu="hide" name="recaptchaOnRegistration" type="radio" default="0" label="K2_ENABLE_RECAPTCHA_ON_REGISTRATION_FORM" description="K2_ENABLE_RECAPTCHA_ON_REGISTRATION_FORM_DESC">
 			<option value="0">K2_NO</option>
 			<option value="1">K2_YES</option>
@@ -1041,6 +1045,11 @@
 			<option value="1">K2_YES</option>
 		</field>
 		<field menu="hide" name="stopForumSpamApiKey" type="text" default="" label="K2_STOP_FORUM_SPAM_API_KEY" description="K2_STOP_FORUM_SPAM_API_KEY_DESCRIPTION" />
+		<field menu="hide" name="profilePageDisplay" type="radio" default="0" label="K2_USER_PROFILES_FOR_USERS_WITH_NO_ITEMS" description="K2_USER_PROFILES_FOR_USERS_WITH_NO_ITEMS_DESCRIPTION">
+			<option value="0">K2_DISABLED</option>
+			<option value="1">K2_ENABLED</option>
+			<option value="2">K2_ENABLED_FOR_REGISTERED_USERS_ONLY</option>
+		</field>
 		<!-- ######################### Performance Settings ######################### -->
 		<field menu="hide" name="" type="header" default="K2_PERFORMANCE" label="" description="" />
 		<field menu="hide" name="showItemsCounterAdmin" type="radio" default="1" label="K2_ITEM_COUNTER_NEXT_TO_THE_CATEGORY_TITLE_IN_THE_CATEGORY_MANAGER" description="K2_DISABLING_THIS_WILL_REDUCE_THE_NUMBER_OF_QUERIES_IN_THE_BACKEND_AND_OVERALL_IMPROVE_PERFORMANCE_FOR_SITES_WITH_THOUSANDS_OF_ITEMS">
@@ -1103,33 +1112,6 @@
 		<field menu="hide" name="k2SefUseCatTitleAlias" type="radio" default="1" label="K2_SEF_USE_CAT_TITLE_ALIAS" description="K2_SEF_USE_CAT_TITLE_ALIAS_DESC">
 			<option value="0">K2_NO</option>
 			<option value="1">K2_YES</option>
-		</field>
-		<!-- ######################### sh404SEF Settings ######################### -->
-		<field menu="hide" name="" type="header" default="K2_SH404SEF" label="" description="" />
-		<field menu="hide" name="sh404SefLabelCat" type="text" default="" label="K2_SH404SEF_URL_PREFIX_FOR_CATEGORIES" description="" />
-		<field menu="hide" name="sh404SefLabelUser" type="text" default="blog" label="K2_SH404SEF_URL_PREFIX_FOR_USERSAUTHORS" description="" />
-		<field menu="hide" name="sh404SefLabelItem" type="list" default="2" label="K2_SH404SEF_URL_CATEGORY_PREFIX_FOR_ITEMS" description="">
-			<option value="0">K2_NO_CATEGORIES</option>
-			<option value="1">K2_ONLY_THE_LAST_CATEGORY</option>
-			<option value="2">K2_ALL_CATEGORIES</option>
-		</field>
-		<field menu="hide" name="sh404SefTitleAlias" type="list" default="alias" label="K2_USE_TITLE_ALIAS_FOR_SH404SEF_URLS" description="">
-			<option value="alias">K2_YES</option>
-			<option value="title">K2_NO_USE_THE_ITEMS_TITLE</option>
-		</field>
-		<field menu="hide" name="sh404SefModK2ContentFeedAlias" type="text" default="feed" label="K2_SH404SEF_URL_PREFIX_FOR_K2_CONTENT_MODULE_FEED" description="" />
-		<field menu="hide" name="sh404SefInsertItemId" type="radio" default="0" label="K2_INSERT_ITEM_ID_IN_URL" description="">
-			<option value="0">K2_NO</option>
-			<option value="1">K2_YES</option>
-		</field>
-		<field menu="hide" name="sh404SefInsertUniqueItemId" type="radio" default="0" label="K2_INSERT_UNIQUE_ITEM_ID_IN_URL" description="">
-			<option value="0">K2_NO</option>
-			<option value="1">K2_YES</option>
-		</field>
-		<field menu="hide" name="" type="header" default="K2_COMMUNITY_BUILDER" label="" description="" />
-		<field menu="hide" name="cbIntegration" type="radio" default="0" label="K2_CB_INTEGRATION" description="K2_CB_INTEGRATION_DESC">
-			<option value="0">K2_DISABLED</option>
-			<option value="1">K2_ENABLED</option>
 		</field>
 	</fieldset>
 	<fieldset name="permissions" label="JCONFIG_PERMISSIONS_LABEL" description="JCONFIG_PERMISSIONS_DESC">

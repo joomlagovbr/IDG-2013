@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
@@ -59,11 +59,11 @@ class K2HelperHTML
 		{
 			if (K2_JVERSION == '15')
 			{
-				JHtml::_('behavior.mootools');
+				//JHtml::_('behavior.mootools');
 			}
 			else if (K2_JVERSION == '25')
 			{
-				JHtml::_('behavior.framework');
+				//JHtml::_('behavior.framework');
 			}
 			else
 			{
@@ -73,7 +73,7 @@ class K2HelperHTML
 				}
 				else
 				{
-					JHtml::_('behavior.framework');
+					//JHtml::_('behavior.framework');
 					if ($application->isAdmin() || ($application->isSite() && $params->get('jQueryHandling')))
 					{
 						JHtml::_('jquery.framework');
@@ -97,12 +97,6 @@ class K2HelperHTML
 				{
 					if ($handling && JString::strpos($handling, 'remote') !== false)
 					{
-						// Remove this if statement in 2.7.0
-						if ($handling == '1.9remote')
-						{
-							$handling = '1remote';
-						}
-						
 						$document->addScript('//ajax.googleapis.com/ajax/libs/jquery/'.str_replace('remote', '', $handling).'/jquery.min.js');
 					}
 					else if ($handling && JString::strpos($handling, 'remote') === false)
@@ -118,7 +112,7 @@ class K2HelperHTML
 
 				// No conflict loaded when $ui requested or in the backend.
 				// No need to reload for $mediaManager as the latter is always called with $ui
-				$document->addScript(JURI::root(true).'/media/k2/assets/js/k2.noconflict.js');
+				$document->addScript(JURI::root(true).'/media/k2/assets/js/k2.noconflict.js?v=2.7.1');
 
 				if ($handling == 'local')
 				{
@@ -126,13 +120,13 @@ class K2HelperHTML
 				}
 				else
 				{
-					$document->addScript('//ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js');
+					$document->addScript('//ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js');
 				}
 			}
 
 			if ($mediaManager)
 			{
-				$document->addScript(JURI::root(true).'/media/k2/assets/js/elfinder.min.js?v=2.6.8');
+				$document->addScript(JURI::root(true).'/media/k2/assets/js/elfinder.min.js?v=2.7.1');
 			}
 		}
 	}

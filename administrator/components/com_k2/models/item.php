@@ -1,9 +1,9 @@
 <?php
 /**
- * @version     2.6.x
+ * @version     2.7.x
  * @package     K2
  * @author      JoomlaWorks http://www.joomlaworks.net
- * @copyright   Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
+ * @copyright   Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
  * @license     GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -106,7 +106,7 @@ class K2ModelItem extends K2Model
 		}
 		else
 		{
-			$row->ordering = $row->getNextOrder("catid = {$row->catid} AND trash = 0");
+			$row->ordering = $row->getNextOrder("catid = ".(int)$row->catid." AND trash = 0");
 			if ($row->featured)
 				$row->featured_ordering = $row->getNextOrder("featured = 1 AND trash = 0", 'featured_ordering');
 		}
@@ -259,7 +259,7 @@ class K2ModelItem extends K2Model
 
 		if (!$params->get('disableCompactOrdering'))
 		{
-			$row->reorder("catid = {$row->catid} AND trash = 0");
+			$row->reorder("catid = ".(int)$row->catid." AND trash = 0");
 		}
 		if ($row->featured && !$params->get('disableCompactOrdering'))
 		{
@@ -273,10 +273,10 @@ class K2ModelItem extends K2Model
 			ini_set('memory_limit', (int)$params->get('imageMemoryLimit').'M');
 		}
 		$existingImage = JRequest::getVar('existingImage');
-		if (($files['image']['error'] === 0 || $existingImage) && !JRequest::getBool('del_image'))
+		if (($files['image']['error'] == 0 || $existingImage) && !JRequest::getBool('del_image'))
 		{
 
-			if ($files['image']['error'] === 0)
+			if ($files['image']['error'] == 0)
 			{
 				$image = $files['image'];
 			}
@@ -287,10 +287,10 @@ class K2ModelItem extends K2Model
 
 			$handle = new Upload($image);
 			$handle->allowed = array('image/*');
+			$handle->forbidden = array('image/tiff');
 
-			if ($handle->uploaded)
+			if ($handle->file_is_image && $handle->uploaded)
 			{
-
 				//Image params
 				$category = JTable::getInstance('K2Category', 'Table');
 				$category->load($row->catid);
@@ -426,14 +426,13 @@ class K2ModelItem extends K2Model
 				$handle->image_x = $imageWidth;
 				$handle->Process($savepath);
 
-				if ($files['image']['error'] === 0)
+				if ($files['image']['error'] == 0)
 					$handle->Clean();
 
 			}
 			else
 			{
-				$mainframe->enqueueMessage($handle->error, 'error');
-				$mainframe->redirect('index.php?option=com_k2&view=items');
+				$mainframe->enqueueMessage(JText::_('K2_IMAGE_WAS_NOT_UPLOADED'), 'notice');
 			}
 
 		}
@@ -628,6 +627,18 @@ class K2ModelItem extends K2Model
 				}
 				else
 				{
+					$imageDir = $savepath.DS.$row->id;
+					$galleryDir = opendir($imageDir);
+					while ($filename = readdir($galleryDir))
+					{
+						if ($filename != "." && $filename != "..")
+						{
+							$file = str_replace(" ", "_", $filename);
+							$safefilename = JFile::makeSafe($file);
+							rename($imageDir.DS.$filename, $imageDir.DS.$safefilename);
+						}
+					}
+					closedir($galleryDir);
 					$row->gallery = '{gallery}'.$row->id.'{/gallery}';
 				}
 				JFile::delete($savepath.DS.$handle->file_dst_name);
@@ -777,9 +788,7 @@ class K2ModelItem extends K2Model
 				}
 				else
 				{
-					require_once (JPATH_COMPONENT_ADMINISTRATOR.DS.'lib'.DS.'JSON.php');
-					$json = new Services_JSON;
-					$object->set('value', $json->decode(JRequest::getVar('K2CSV_'.$object->id)));
+					$object->set('value', json_decode(JRequest::getVar('K2CSV_'.$object->id)));
 					if (JRequest::getBool('K2ResetCSV_'.$object->id))
 						$object->set('value', null);
 				}
@@ -788,9 +797,7 @@ class K2ModelItem extends K2Model
 			}
 		}
 
-		require_once (JPATH_COMPONENT_ADMINISTRATOR.DS.'lib'.DS.'JSON.php');
-		$json = new Services_JSON;
-		$row->extra_fields = $json->encode($objects);
+		$row->extra_fields = json_encode($objects);
 
 		require_once (JPATH_COMPONENT_ADMINISTRATOR.DS.'models'.DS.'extrafield.php');
 		$extraFieldModel = K2Model::getInstance('ExtraField', 'K2Model');
@@ -907,9 +914,7 @@ class K2ModelItem extends K2Model
 
 		}
 
-		$query = "UPDATE #__k2_items SET 
-        video_caption = ".$db->Quote($row->video_caption).", 
-        video_credits = ".$db->Quote($row->video_credits).", ";
+		$query = "UPDATE #__k2_items SET video_caption = ".$db->Quote($row->video_caption).", video_credits = ".$db->Quote($row->video_credits).", ";
 
 		if (!is_null($row->video))
 		{
@@ -919,10 +924,7 @@ class K2ModelItem extends K2Model
 		{
 			$query .= " gallery = ".$db->Quote($row->gallery).", ";
 		}
-		$query .= " extra_fields = ".$db->Quote($row->extra_fields).", 
-        extra_fields_search = ".$db->Quote($row->extra_fields_search)." ,
-        published = ".$db->Quote($row->published)." 
-        WHERE id = ".$row->id;
+		$query .= " extra_fields = ".$db->Quote($row->extra_fields).", extra_fields_search = ".$db->Quote($row->extra_fields_search)." , published = ".$db->Quote($row->published)." WHERE id = ".$row->id;
 		$db->setQuery($query);
 
 		if (!$db->query())
@@ -1001,6 +1003,15 @@ class K2ModelItem extends K2Model
 			$row->load($cid);
 			$row->checkin();
 		}
+    else
+    {
+      // Clean up SigPro
+      $sigProFolder = JRequest::getCmd('sigProFolder');
+      if($sigProFolder && !is_numeric($sigProFolder) && JFolder::exists(JPATH_SITE.'/media/k2/galleries/'.$sigProFolder))
+      {
+        JFolder::delete(JPATH_SITE.'/media/k2/galleries/'.$sigProFolder);
+      }
+    }
 
 		$mainframe->redirect('index.php?option=com_k2&view=items');
 	}
@@ -1139,7 +1150,7 @@ class K2ModelItem extends K2Model
 			JResponse::setHeader('Content-Transfer-Encoding', 'binary', true);
 			JResponse::setHeader('Content-Length', $len, true);
 			JResponse::sendHeaders();
-			echo JFile::read($file);
+			readfile($file);
 
 		}
 		else
@@ -1223,10 +1234,7 @@ class K2ModelItem extends K2Model
 
 		$db = JFactory::getDBO();
 		$itemID = (int)$itemID;
-		$query = "SELECT tags.*
-        FROM #__k2_tags AS tags 
-        JOIN #__k2_tags_xref AS xref ON tags.id = xref.tagID 
-        WHERE xref.itemID = ".(int)$itemID." ORDER BY xref.id ASC";
+		$query = "SELECT tags.* FROM #__k2_tags AS tags JOIN #__k2_tags_xref AS xref ON tags.id = xref.tagID WHERE xref.itemID = ".(int)$itemID." ORDER BY xref.id ASC";
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
 		return $rows;

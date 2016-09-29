@@ -1,16 +1,16 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
 defined('_JEXEC') or die;
 
-$document = & JFactory::getDocument();
+$document = JFactory::getDocument();
 $document->addScriptDeclaration("
 	Joomla.submitbutton = function(pressbutton) {
 		if (pressbutton == 'cancel') {
@@ -22,7 +22,7 @@ $document->addScriptDeclaration("
 		} else {
 			submitform( pressbutton );
 		}
-	}
+	};
 ");
 
 ?>
