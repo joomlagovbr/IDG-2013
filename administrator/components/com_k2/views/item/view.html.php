@@ -8,7 +8,7 @@
  */
 
 // no direct access
-defined('_JEXEC') or die ;
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
@@ -27,8 +27,7 @@ class K2ViewItem extends K2View
 		JHTML::_('behavior.modal');
 		JRequest::setVar('hidemainmenu', 1);
 		$document = JFactory::getDocument();
-		$document->addScript(JURI::root(true).'/media/k2/assets/js/nicEdit.js?v=2.7.1');
-		//var K2SitePath = '".JURI::root(true)."/';
+
 		$js = "
 			var K2BasePath = '".JURI::base(true)."/';
 			var K2Language = [
@@ -468,9 +467,9 @@ class K2ViewItem extends K2View
 		$date = JFactory::getDate($item->modified);
 		$timestamp = '?t='.$date->toUnix();
 
-		if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$item->id).'_L.jpg'))
+		if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$item->id).'_XL.jpg'))
 		{
-			$item->image = JURI::root().'media/k2/items/cache/'.md5("Image".$item->id).'_L.jpg'.$timestamp;
+			$item->image = JURI::root().'media/k2/items/cache/'.md5("Image".$item->id).'_XL.jpg'.$timestamp;
 		}
 
 		if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$item->id).'_S.jpg'))
@@ -571,7 +570,7 @@ class K2ViewItem extends K2View
 			JToolBarHelper::apply();
 			JToolBarHelper::cancel();
 		}
-		// ACE ACL integration has been removed. We keep this flag to avoid php notices for users who have overrides 
+		// ACE ACL integration has been removed. We keep this flag to avoid php notices for users who have overrides
 		$aceAclFlag = false;
 		$this->assignRef('aceAclFlag', $aceAclFlag);
 

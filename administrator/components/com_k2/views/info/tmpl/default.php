@@ -54,32 +54,32 @@ defined('_JEXEC') or die;
 					      </tfoot>
 							  <tbody>
 							    <tr>
-							      <td><a target="_blank" href="http://www.verot.net/php_class_upload.htm">class.upload.php</a></td>
-							      <td>0.33dev</td>
+							      <td><a target="_blank" href="https://github.com/verot/class.upload.php">class.upload.php</a></td>
+							      <td>0.33</td>
 							      <td><?php echo JText::_('K2_PHP_CLASS'); ?></td>
 							      <td><?php echo JText::_('K2_GNUGPL'); ?></td>
 							    </tr>
 							    <tr>
 							      <td><a target="_blank" href="http://jquery.com">jQuery</a></td>
-							      <td>1.3.x - 1.12.x</td>
+							      <td>1.7.x - 1.12.x</td>
 							      <td><?php echo JText::_('K2_JS_LIB'); ?></td>
 							      <td><?php echo JText::_('K2_MIT'); ?></td>
 							    </tr>
 							    <tr>
 							      <td><a target="_blank" href="http://jqueryui.com/">jQuery UI</a></td>
-							      <td>1.8.24</td>
+							      <td>1.8.24 & 1.11.4</td>
 							      <td><?php echo JText::_('K2_JS_LIB'); ?></td>
 							      <td><?php echo JText::_('K2_MIT'); ?></td>
 							    </tr>
 							    <tr>
-							      <td><a target="_blank" href="http://elfinder.org/">elFinder</a></td>
-							      <td>2.0 (rc1) [patched by JoomlaWorks]</td>
+							      <td><a target="_blank" href="http://studio-42.github.io/elFinder/">elFinder</a></td>
+							      <td>2.1.14</td>
 							      <td><?php echo JText::_('K2_INFO_FILE_MANAGER'); ?></td>
 							      <td><?php echo JText::_('K2_BSD'); ?></td>
 							    </tr>
 							    <tr>
 							      <td><a target="_blank" href="https://select2.github.io/">Select2</a></td>
-							      <td></td>
+							      <td>4.0.3</td>
 							      <td><?php echo JText::_('K2_INFO_REPLACEMENT_FOR_SELECT_BOXES'); ?></td>
 							      <td><?php echo JText::_('K2_MIT'); ?></td>
 							    </tr>
@@ -90,8 +90,8 @@ defined('_JEXEC') or die;
 							      <td><?php echo JText::_('K2_MIT'); ?></td>
 							    </tr>
 							    <tr>
-							      <td><a target="_blank" href="http://nicedit.com/">NicEdit</a></td>
-							      <td></td>
+							      <td><a target="_blank" href="http://www.nicedit.com/">NicEdit</a></td>
+							      <td>0.9 r25</td>
 							      <td><?php echo JText::_('K2_INFO_WYSIWYG_EDITOR'); ?></td>
 							      <td><?php echo JText::_('K2_MIT'); ?></td>
 							    </tr>

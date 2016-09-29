@@ -8,24 +8,32 @@
  */
 
 // no direct access
-defined('_JEXEC') or die; ?>
+defined('_JEXEC') or die;
+
+?>
 <script type="text/javascript">
 	$K2(document).ready(function() {
-		var basePath = '<?php echo JURI::root(true); ?>';
-		var elf = $K2('#elfinder').elfinder({
-			url : '<?php echo JURI::base(true); ?>/index.php?option=com_k2&view=media&task=connector',
+		$K2('#elfinder').elfinder({
+			url: '<?php echo JURI::base(true); ?>/index.php?option=com_k2&view=media&task=connector',
+			customData: {
+				'<?php echo $this->token; ?>': 1
+			},
 			<?php if($this->mimes): ?>
 			onlyMimes: [<?php echo $this->mimes; ?>],
 			<?php endif; ?>
 			<?php if($this->fieldID): ?>
-			getFileCallback : function(path) {
-				value = path.replace(basePath, '');
-				parent.elFinderUpdate('<?php echo $this->fieldID; ?>', value);
+			getFileCallback: function(image) {
+				var basePath = '<?php echo JURI::root(true); ?>';
+				var imgPath = image.path;
+				var newImgPath = imgPath.replace(basePath, '');
+				parent.elFinderUpdate('<?php echo $this->fieldID; ?>', newImgPath);
 			}
 			<?php else: ?>
 			height: 600
 			<?php endif; ?>
-		}).elfinder('instance');
+		});
 	});
 </script>
-<div id="elfinder"></div>
+<div id="elfinderContainer">
+	<div id="elfinder"></div>
+</div>

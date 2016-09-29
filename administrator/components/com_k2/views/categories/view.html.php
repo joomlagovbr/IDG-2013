@@ -8,7 +8,7 @@
  */
 
 // no direct access
-defined('_JEXEC') or die ;
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
@@ -19,6 +19,7 @@ class K2ViewCategories extends K2View
 	{
 
 		$mainframe = JFactory::getApplication();
+		$params = JComponentHelper::getParams('com_k2');
 		$user = JFactory::getUser();
 		$option = JRequest::getCmd('option');
 		$view = JRequest::getCmd('view');
@@ -32,7 +33,7 @@ class K2ViewCategories extends K2View
 		$language = $mainframe->getUserStateFromRequest($option.$view.'language', 'language', '', 'string');
 		$search = $mainframe->getUserStateFromRequest($option.$view.'search', 'search', '', 'string');
 		$search = JString::strtolower($search);
-		$search = trim(preg_replace('/[^a-zA-Z0-9\s\-_]/', '', $search));
+		$search = trim(preg_replace('/[^\p{L}\p{N}\s\"\-_]/u', '', $search));
 		$model = $this->getModel();
 		$total = $model->getTotal();
 		$task = JRequest::getCmd('task');
@@ -45,7 +46,6 @@ class K2ViewCategories extends K2View
 		$categories = $model->getData();
 		$categoryModel = K2Model::getInstance('Category', 'K2Model');
 
-		$params = JComponentHelper::getParams('com_k2');
 		$this->assignRef('params', $params);
 
 		if (K2_JVERSION != '15')
@@ -58,7 +58,6 @@ class K2ViewCategories extends K2View
 				$langsMapping[$lang->lang_code] = $lang->title;
 			}
 		}
-
 
 		for ($i = 0; $i < sizeof($categories); $i++)
 		{
@@ -113,7 +112,17 @@ class K2ViewCategories extends K2View
 		$this->assignRef('page', $pageNav);
 
 		$lists = array();
-		$lists['search'] = $search;
+
+		// Detect exact search phrase using double quotes in search string
+		if(substr($search, 0, 1)=='"' && substr($search, -1)=='"')
+		{
+			$lists['search'] = "\"".trim(str_replace('"', '', $search))."\"";
+		}
+		else
+		{
+			$lists['search'] = trim(str_replace('"', '', $search));
+		}
+
 		$lists['order_Dir'] = $filter_order_Dir;
 		$lists['order'] = $filter_order;
 
@@ -133,7 +142,7 @@ class K2ViewCategories extends K2View
 		$categoriesTree = $categoriesFilter;
 		$categories_options = @array_merge($categories_option, $categoriesFilter);
 		$lists['categories'] = JHTML::_('select.genericlist', $categories_options, 'filter_category', '', 'value', 'text', $filter_category);
-		
+
 		//Batch fields
 		$extraFieldsModel = K2Model::getInstance('ExtraFields', 'K2Model');
 		$extraFieldsGroups = $extraFieldsModel->getGroups();
@@ -204,11 +213,11 @@ class K2ViewCategories extends K2View
 
 		if (K2_JVERSION != '15')
 		{
-			JToolBarHelper::preferences('com_k2', 550, 875, 'K2_PARAMETERS');
+			JToolBarHelper::preferences('com_k2', 580, 800, 'K2_PARAMETERS');
 		}
 		else
 		{
-			$toolbar->appendButton('Popup', 'config', 'Parameters', 'index.php?option=com_k2&view=settings');
+			$toolbar->appendButton('Popup', 'config', 'K2_PARAMETERS', 'index.php?option=com_k2&view=settings', 800, 580);
 		}
 
 		$this->loadHelper('html');
@@ -220,7 +229,7 @@ class K2ViewCategories extends K2View
 		$ordering = (($this->lists['order'] == 'c.ordering' || $this->lists['order'] == 'c.parent, c.ordering') && (!$this->filter_trash));
 		$this->assignRef('ordering', $ordering);
 
-		// Joomla! 3.0 drag-n-drop sorting variables
+		// Joomla 3.0 drag-n-drop sorting variables
 		if (K2_JVERSION == '30')
 		{
 			if ($ordering)

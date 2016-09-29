@@ -8,7 +8,7 @@
  */
 
 // no direct access
-defined('_JEXEC') or die ;
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
@@ -19,6 +19,7 @@ class K2ViewComments extends K2View
 	{
 
 		$mainframe = JFactory::getApplication();
+		$params = JComponentHelper::getParams('com_k2');
 		$user = JFactory::getUser();
 		$option = JRequest::getCmd('option');
 		$view = JRequest::getCmd('view');
@@ -31,7 +32,7 @@ class K2ViewComments extends K2View
 		$filter_author = $mainframe->getUserStateFromRequest($option.$view.'filter_author', 'filter_author', 0, 'int');
 		$search = $mainframe->getUserStateFromRequest($option.$view.'search', 'search', '', 'string');
 		$search = JString::strtolower($search);
-		$search = trim(preg_replace('/[^a-zA-Z0-9\s\-_]/', '', $search));
+		$search = trim(preg_replace('/[^\p{L}\p{N}\s\"\.\@\-_]/u', '', $search));
 		if ($mainframe->isSite())
 		{
 			$filter_author = $user->id;
@@ -40,7 +41,6 @@ class K2ViewComments extends K2View
 		$this->loadHelper('html');
 		K2Model::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.DS.'models');
 		$model = K2Model::getInstance('Comments', 'K2Model');
-		$params = JComponentHelper::getParams('com_k2');
 		$total = $model->getTotal();
 		if ($limitstart > $total - $limit)
 		{
@@ -107,7 +107,17 @@ class K2ViewComments extends K2View
 		$this->assignRef('page', $pageNav);
 
 		$lists = array();
-		$lists['search'] = $search;
+
+		// Detect exact search phrase using double quotes in search string
+		if(substr($search, 0, 1)=='"' && substr($search, -1)=='"')
+		{
+			$lists['search'] = "\"".trim(str_replace('"', '', $search))."\"";
+		}
+		else
+		{
+			$lists['search'] = trim(str_replace('"', '', $search));
+		}
+
 		$lists['order_Dir'] = $filter_order_Dir;
 		$lists['order'] = $filter_order;
 
@@ -162,22 +172,16 @@ class K2ViewComments extends K2View
 
 			if (K2_JVERSION != '15')
 			{
-				JToolBarHelper::preferences('com_k2', 550, 875, 'K2_PARAMETERS');
+				JToolBarHelper::preferences('com_k2', 580, 800, 'K2_PARAMETERS');
 			}
 			else
 			{
-				$toolbar->appendButton('Popup', 'config', 'Parameters', 'index.php?option=com_k2&view=settings');
+				$toolbar->appendButton('Popup', 'config', 'K2_PARAMETERS', 'index.php?option=com_k2&view=settings', 800, 580);
 			}
 			K2HelperHTML::subMenu();
 
-			if (K2_JVERSION != '15')
-			{
-				$userEditLink = JURI::base().'index.php?option=com_k2&view=user&cid=';
-			}
-			else
-			{
-				$userEditLink = JURI::base().'index.php?option=com_k2&view=user&cid=';
-			}
+			$userEditLink = JURI::base().'index.php?option=com_k2&view=user&cid=';
+
 			$this->assignRef('userEditLink', $userEditLink);
 
 		}
@@ -188,17 +192,23 @@ class K2ViewComments extends K2View
 		if ($mainframe->isSite())
 		{
 			// CSS
-			$document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.frontend.css?v=2.7.1');
+			$document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.frontend.css?v='.K2_CURRENT_VERSION);
 			$document->addStyleSheet(JURI::root(true).'/templates/system/css/general.css');
 			$document->addStyleSheet(JURI::root(true).'/templates/system/css/system.css');
-			if (K2_JVERSION != '15')
+			if (K2_JVERSION == '15')
+			{
+				$document->addStyleSheet(JURI::root(true).'/administrator/templates/khepri/css/general.css');
+
+			}
+			else if (K2_JVERSION == '25')
 			{
 				$document->addStyleSheet(JURI::root(true).'/administrator/templates/bluestork/css/template.css');
 				$document->addStyleSheet(JURI::root(true).'/media/system/css/system.css');
 			}
 			else
 			{
-				$document->addStyleSheet(JURI::root(true).'/administrator/templates/khepri/css/general.css');
+				$document->addStyleSheet(JURI::root(true).'/administrator/templates/isis/css/template.css');
+				$document->addStyleSheet(JURI::root(true).'/media/system/css/system.css');
 			}
 		}
 

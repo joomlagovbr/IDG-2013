@@ -76,7 +76,9 @@ span.k2GalleryNotice ,
 #k2ExtraFieldsValidationResults:before {background:url('../images/system/sprite-backend.png') no-repeat;overflow:hidden;text-align:left;}
 span.k2GalleryNotice {background-position:-79px -118px;width:16px;height:16px;}
 #k2ExtraFieldsValidationResults:before {content: '';float:left;margin-right:10px;background-position:-10px -92px;width:59px;height:54px;}
-.icon-48-k2{background-position:-10px -0px;width:95px;height:36px;}
+.icon-48-k2 {background-position:-10px -0px;height:36px;}
+.isJ15 .icon-48-k2,
+.isJ25 .icon-48-k2 {height:48px;}
 body.com_k2 .page-title {background-position:-10px -46px;width:85px;height:36px;}
 .k2Inactive {background-position:-79px -92px;width:16px;height:16px;}
 .k2Active {background-position:-79px -144px;width:16px;height:16px;}
@@ -84,7 +86,7 @@ body.com_k2 .page-title {background-position:-10px -46px;width:85px;height:36px;
 
 .k2Toggler {display:block;width:16px;height:16px;margin:0 auto;padding:0;background-repeat:no-repeat;background-position:0 0;text-indent:-500px;overflow:hidden;}
 .k2Active {background-image:url(../images/system/tick.png);}
-.k2Inactive{background-image:url(../images/system/cross.png);}
+.k2Inactive {background-image:url(../images/system/cross.png);}
 
 .k2clr {clear:both;height:0;line-height:0;border:none;float:none;background:none;padding:0;margin:0;}
 
@@ -146,7 +148,7 @@ div.controls label.radio {display:inline-block;}
 div.k2Table {margin:0 0 20px 0;}
 div.k2Table .k2TableLabel > label {font-weight:normal;color:#777;}
 div.k2Table .k2TableValue {}
-div.k2Table .k2TableValue input[type="text"]{min-height:40px;line-height:40px;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
+div.k2Table .k2TableValue input[type="text"] {min-height:40px;line-height:40px;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
 div.k2Table .k2TableValue:after {content:" ";display:block;margin-bottom:8px;}
 div.k2SubTable {margin-bottom:15px;}
 div.k2SubTable .k2SubTableLabel {display:inline-block;text-align:right;vertical-align:top;}
@@ -302,7 +304,8 @@ box-shadow:0 1px 1px rgba(65,64,66,.14),inset 0 1px 0 #fff;}
 .xmlParamsFields .paramValue input[type="radio"] {opacity:0;position:absolute;clip:rect(0,0,0,0);}
 .xmlParamsFields .paramValue input[type="text"],
 .xmlParamsFields .paramValue textarea,
-.xmlParamsFields .paramValue select {margin-left:20px;}
+.xmlParamsFields .paramValue select,
+.xmlParamsFields .paramValue div.chzn-container {margin-left:20px;}
 
 /* Check boxes - generic */
 .xmlParamsFields .paramValue input:checked + label {background:#63696f;color:#fff;box-shadow:0 1px 1px rgba(65,64,66,.14);}
@@ -319,18 +322,18 @@ box-shadow:0 1px 1px rgba(65,64,66,.14),inset 0 1px 0 #fff;}
 .xmlParamsFields .paramLabel label {font-size:13px;font-weight:700;color:#777778;padding:10px 10px 10px 20px;line-height:1;margin:0;display:inline-block;vertical-align:middle;}
 .xmlParamsFields .paramValue,
 .xmlParamsFields .paramLabel {display:inline-block;vertical-align:middle;}
+.xmlParamsFields .paramLabel {width:30%;}
 .xmlParamsFields .paramLabel input[type="checkbox"] {margin-left:20px;display:inline-block;vertical-align:middle;position:relative;top:-2px;}
 .xmlParamsFields .paramLabel input[type="checkbox"] + label {padding-left:5px;}
-.xmlParamsFields .paramValue {width:100%;}
 
 .k2ScrollingContent > h3,
 .k2NavTabContent h3 {font-size:16px;font-weight:300;padding-bottom:16px;margin-top:25px;margin-bottom:15px;border-bottom:2px solid #dddedf;color:#00afec;}
 @media screen and (min-width:767px) {
-	.xmlParamsFields .paramValue {float:right;width:auto;}
+	.xmlParamsFields .paramValue {width:auto;}
 	.k2ScrollingContent > h3,
 	.k2NavTabContent h3 {font-size:24px;}
 	.xmlParamsFields .paramValue input[type="text"],
-	.xmlParamsFields .paramValue textarea {float:right;}
+	.xmlParamsFields .paramValue textarea {/*float:right;*/}
 }
 
 div#k2AdminContainer.isJ25 form#adminForm div.xmlParamsFields fieldset input {float:none!important;}
@@ -602,11 +605,12 @@ span.k2GalleryNotice {cursor:pointer;text-indent:-99px;width:16px;height:16px;li
 .itemPluginsContent {padding:0 20px;}
 
 /* Admin - Media Manager */
-.isJ30 #elfinder input {width:auto;}/* Fix for Joomla 3.2 CSS... */
 .K2AdminViewMedia {border-left:1px solid #d3d3d3;border-bottom:1px solid #d3d3d3;}
+	#elfinderContainer {width:auto;padding:4px;margin:0;}
+		.isJ30.k2IsBackend #elfinder input {width:95%;} /* Fix for Joomla 3.2+ */
 
 /* Lists - Generic styling */
-#k2AdminContainer {position:relative;width:100%;clear:both;margin-bottom:10px;}
+#k2AdminContainer {position:relative;width:auto;clear:both;margin-bottom:10px;}
 
 .com_k2.view-items,
 .com_k2.view-categories,
@@ -626,7 +630,7 @@ span.k2GalleryNotice {cursor:pointer;text-indent:-99px;width:16px;height:16px;li
 #k2AdminContainer .k2AdminTableFilters tr td {background:#fff; padding-top:15px;}
 
 /* Filters on smaller viewports */
-#k2AdminContainer .k2AdminTableFiltersSelects, 
+#k2AdminContainer .k2AdminTableFiltersSelects,
 #k2AdminContainer .k2AdminTableFiltersSearch { display: block; width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
 #k2AdminContainer .k2AdminTableFiltersSelects select { max-width: 48%; }
 
@@ -660,7 +664,7 @@ table.adminFormK2 {width:100%;margin-bottom:16px;}
 .isJ25 #k2AdminContainer .adminlist tr td {background:#f0f2f2;border-bottom:1px solid #dbdcdc;}
 
 .table-responsive-wrap {position:relative;}
-.table-responsive {width:100%;margin-bottom:15px;overflow-x:scroll;overflow-y:hidden;-webkit-overflow-scrolling:touch;-ms-overflow-style:-ms-autohiding-scrollbar;}
+.table-responsive {width:100%;margin-bottom:15px;overflow-y:hidden;-webkit-overflow-scrolling:touch;-ms-overflow-style:-ms-autohiding-scrollbar;}
 
 /* minimal modal */
 .jw-modal {display:none;position:fixed;z-index:9999;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.3);}
@@ -780,7 +784,7 @@ html.isJ15 #submenu li a {display:block;color:#777;font-size:14px;text-decoratio
 html.isJ25 #submenu li a.active,
 html.isJ15 #submenu li a.active {color:#0091ff;background:#f0f2f2;}
 html.isJ25 #submenu li a.active:before,
-html.isJ15 #submenu li a.active:before	{text-align:center;content:"\f0d8";font-family:"FontAwesome";color:#fff;position:absolute;font-size:32px;bottom:-2px;left:50%;margin-left:-16px;width:32px;text-shadow:0px -1px 1px #ccc;}
+html.isJ15 #submenu li a.active:before	 {text-align:center;content:"\f0d8";font-family:"FontAwesome";color:#fff;position:absolute;font-size:32px;bottom:-2px;left:50%;margin-left:-16px;width:32px;text-shadow:0px -1px 1px #ccc;}
 
 /* The list */
 .oldJ table.adminlist {border-spacing:0;}

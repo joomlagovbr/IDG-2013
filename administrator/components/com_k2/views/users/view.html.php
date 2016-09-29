@@ -8,7 +8,7 @@
  */
 
 // no direct access
-defined('_JEXEC') or die ;
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
@@ -33,7 +33,7 @@ class K2ViewUsers extends K2View
         $filter_group_k2 = $mainframe->getUserStateFromRequest($option.$view.'filter_group_k2', 'filter_group_k2', '', 'string');
         $search = $mainframe->getUserStateFromRequest($option.$view.'search', 'search', '', 'string');
         $search = JString::strtolower($search);
-        $search = trim(preg_replace('/[^a-zA-Z0-9\s\-_]/', '', $search));
+        $search = trim(preg_replace('/[^\p{L}\p{N}\s\-_]/u', '', $search));
         K2Model::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.DS.'models');
         $model = K2Model::getInstance('Users', 'K2Model');
         $total = $model->getTotal();
@@ -164,11 +164,11 @@ class K2ViewUsers extends K2View
 
             if (K2_JVERSION != '15')
             {
-                JToolBarHelper::preferences('com_k2', 550, 875, 'K2_PARAMETERS');
+                JToolBarHelper::preferences('com_k2', 580, 800, 'K2_PARAMETERS');
             }
             else
             {
-                $toolbar->appendButton('Popup', 'config', 'K2_PARAMETERS', 'index.php?option=com_k2&view=settings');
+                $toolbar->appendButton('Popup', 'config', 'K2_PARAMETERS', 'index.php?option=com_k2&view=settings', 800, 580);
             }
 
             $this->loadHelper('html');
@@ -212,19 +212,25 @@ class K2ViewUsers extends K2View
 
         if ($mainframe->isSite())
         {
-            // CSS
-            $document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.frontend.css?v=2.7.1');
-            $document->addStyleSheet(JURI::root(true).'/templates/system/css/general.css');
-            $document->addStyleSheet(JURI::root(true).'/templates/system/css/system.css');
-            if (K2_JVERSION != '15')
-            {
-                $document->addStyleSheet(JURI::root(true).'/administrator/templates/bluestork/css/template.css');
-                $document->addStyleSheet(JURI::root(true).'/media/system/css/system.css');
-            }
-            else
-            {
-                $document->addStyleSheet(JURI::root(true).'/administrator/templates/khepri/css/general.css');
-            }
+			// CSS
+			$document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.frontend.css?v='.K2_CURRENT_VERSION);
+			$document->addStyleSheet(JURI::root(true).'/templates/system/css/general.css');
+			$document->addStyleSheet(JURI::root(true).'/templates/system/css/system.css');
+			if (K2_JVERSION == '15')
+			{
+				$document->addStyleSheet(JURI::root(true).'/administrator/templates/khepri/css/general.css');
+
+			}
+			else if (K2_JVERSION == '25')
+			{
+				$document->addStyleSheet(JURI::root(true).'/administrator/templates/bluestork/css/template.css');
+				$document->addStyleSheet(JURI::root(true).'/media/system/css/system.css');
+			}
+			else
+			{
+				$document->addStyleSheet(JURI::root(true).'/administrator/templates/isis/css/template.css');
+				$document->addStyleSheet(JURI::root(true).'/media/system/css/system.css');
+			}
         }
 
         parent::display($tpl);

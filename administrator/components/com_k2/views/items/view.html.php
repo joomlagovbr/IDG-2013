@@ -8,7 +8,7 @@
  */
 
 // no direct access
-defined('_JEXEC') or die ;
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
@@ -19,6 +19,7 @@ class K2ViewItems extends K2View
 		JHTML::_('behavior.modal');
 		jimport('joomla.filesystem.file');
 		$mainframe = JFactory::getApplication();
+		$params = JComponentHelper::getParams('com_k2');
 		$user = JFactory::getUser();
 		$option = JRequest::getCmd('option');
 		$view = JRequest::getCmd('view');
@@ -33,15 +34,14 @@ class K2ViewItems extends K2View
 		$filter_state = $mainframe->getUserStateFromRequest($option.$view.'filter_state', 'filter_state', -1, 'int');
 		$search = $mainframe->getUserStateFromRequest($option.$view.'search', 'search', '', 'string');
 		$search = JString::strtolower($search);
-		$search = trim(preg_replace('/[^a-zA-Z0-9\s\-_]/', '', $search));
+		$search = trim(preg_replace('/[^\p{L}\p{N}\s\"\-_]/u', '', $search));
 		$tag = $mainframe->getUserStateFromRequest($option.$view.'tag', 'tag', 0, 'int');
 		$language = $mainframe->getUserStateFromRequest($option.$view.'language', 'language', '', 'string');
-		$params = JComponentHelper::getParams('com_k2');
 
 		$db = JFactory::getDBO();
 		$nullDate = $db->getNullDate();
-		$this->assignRef('nullDate', $nullDate);
 
+		$this->assignRef('nullDate', $nullDate);
 
 		if(K2_JVERSION == '30' && $filter_featured == 1 && $filter_order == 'i.ordering')
 		{
@@ -156,7 +156,16 @@ class K2ViewItems extends K2View
 		$this->assignRef('rows', $items);
 
 		$lists = array();
-		$lists['search'] = $search;
+
+		// Detect exact search phrase using double quotes in search string
+		if(substr($search, 0, 1)=='"' && substr($search, -1)=='"')
+		{
+			$lists['search'] = "\"".trim(str_replace('"', '', $search))."\"";
+		}
+		else
+		{
+			$lists['search'] = trim(str_replace('"', '', $search));
+		}
 
 		if (!$filter_order)
 		{
@@ -274,8 +283,6 @@ class K2ViewItems extends K2View
 		}
 		else
 		{
-
-			$params = JComponentHelper::getParams('com_k2');
 			$toolbar = JToolBar::getInstance('toolbar');
 
 			K2_JVERSION == '30' ? JToolBarHelper::custom('featured', 'featured.png', 'featured_f2.png', 'K2_TOGGLE_FEATURED_STATE', true) : JToolBarHelper::custom('featured', 'default.png', 'default_f2.png', 'K2_TOGGLE_FEATURED_STATE', true);
@@ -307,14 +314,14 @@ class K2ViewItems extends K2View
 		$toolbar = JToolBar::getInstance('toolbar');
 		if (K2_JVERSION != '15')
 		{
-			JToolBarHelper::preferences('com_k2', 550, 875, 'K2_PARAMETERS');
+			JToolBarHelper::preferences('com_k2', 580, 800, 'K2_PARAMETERS');
 		}
 		else
 		{
-			$toolbar->appendButton('Popup', 'config', 'K2_PARAMETERS', 'index.php?option=com_k2&view=settings');
+			$toolbar->appendButton('Popup', 'config', 'K2_PARAMETERS', 'index.php?option=com_k2&view=settings', 800, 580);
 		}
 
-		// Import Joomla! content button
+		// Display import button for Joomla content
 		if ($user->gid > 23 && !$params->get('hideImportButton'))
 		{
 			$buttonUrl = JURI::base().'index.php?option=com_k2&amp;view=items&amp;task=import';
@@ -355,7 +362,7 @@ class K2ViewItems extends K2View
 		$table = JTable::getInstance('K2Item', 'Table');
 		$this->assignRef('table', $table);
 
-		// Joomla! 3.0 drag-n-drop sorting variables
+		// Joomla 3.0 drag-n-drop sorting variables
 		if (K2_JVERSION == '30')
 		{
 			if ($ordering)

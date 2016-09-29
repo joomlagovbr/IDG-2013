@@ -4,10 +4,10 @@
 	<author>JoomlaWorks</author>
 	<authorEmail>please-use-the-contact-form@joomlaworks.net</authorEmail>
 	<authorUrl>www.joomlaworks.net</authorUrl>
-	<copyright>Copyright (c) 2006 - 2015 JoomlaWorks Ltd. All rights reserved.</copyright>
-	<creationDate>April 20th, 2015</creationDate>
+	<copyright>Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.</copyright>
+	<creationDate>March 29th, 2016</creationDate>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-	<version>4.7.0</version>
+	<version>4.8.0</version>
 	<description>JW_PLG_AV_XML_DESC</description>
 	<!-- Parameters -->
 	<config>
@@ -65,8 +65,10 @@
 					<option value="0">JW_PLG_AV_NO</option>
 					<option value="1">JW_PLG_AV_YES</option>
 				</field>
-			</fieldset>
-			<fieldset addfieldpath="/plugins/content/jw_allvideos/jw_allvideos/includes/elements" name="advanced">
+				<field name="ytnocookie" type="radio" class="btn-group btn-group-yesno" default="0" label="JW_PLG_AV_YT_NOCOOKIE" description="JW_PLG_AV_YT_NOCOOKIE_DESC">
+					<option value="0">JW_PLG_AV_NO</option>
+					<option value="1">JW_PLG_AV_YES</option>
+				</field>
 				<field name="" type="header" default="JW_PLG_AV_JWPLAYER_PARAMETERS" label="" description="" />
 				<field name="jwPlayerLoading" type="radio" class="btn-group btn-group-yesno" default="local" label="JW_PLG_AV_JWPLAYER_LOADING" description="JW_PLG_AV_JWPLAYER_LOADING_DESC">
 					<option value="local">JW_PLG_AV_LOCAL</option>

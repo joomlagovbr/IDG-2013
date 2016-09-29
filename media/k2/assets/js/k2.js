@@ -84,7 +84,7 @@ $K2(document).ready(function() {
 		       // Set/remove active class
 		       menuItems
 		         .parent().removeClass("active")
-		         .end().filter("[href=#"+id+"]").parent().addClass("active");
+		         .end().filter('a[href="#'+id+'"]').parent().addClass("active");
 		   }
 		});
 
@@ -699,7 +699,7 @@ function extraFieldsImage() {
     });
 }
 
-// If we are in Joomla! 1.5 define the functions for validation
+// If we are in Joomla 1.5 define the functions for validation
 if ( typeof (Joomla) === 'undefined') {
     var Joomla = {};
     Joomla.submitbutton = function(pressbutton) {
@@ -1016,13 +1016,12 @@ function initExtraFieldsEditor() {
             } else {
             	tinyMCE.execCommand('mceAddControl', false, id);
             }
-
         } else {
             new nicEditor({
                 fullPanel : true,
                 maxHeight : 180,
                 width : '100%',
-                iconsPath : K2SitePath + 'media/k2/assets/images/system/nicEditorIcons.gif'
+                iconsPath : K2SitePath + 'media/k2/assets/images/nicedit/nicEditorIcons.gif'
             }).panelInstance($K2(this).attr('id'));
         }
     });

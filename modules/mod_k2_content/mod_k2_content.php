@@ -8,7 +8,7 @@
  */
 
 // no direct access
-defined('_JEXEC') or die ;
+defined('_JEXEC') or die;
 
 if (K2_JVERSION != '15')
 {
@@ -24,16 +24,35 @@ $getTemplate = $params->get('getTemplate', 'Default');
 $itemAuthorAvatarWidthSelect = $params->get('itemAuthorAvatarWidthSelect', 'custom');
 $itemAuthorAvatarWidth = $params->get('itemAuthorAvatarWidth', 50);
 $itemCustomLinkTitle = $params->get('itemCustomLinkTitle', '');
-if ($params->get('itemCustomLinkMenuItem'))
+$itemCustomLinkURL = trim($params->get('itemCustomLinkURL'));
+$itemCustomLinkMenuItem = $params->get('itemCustomLinkMenuItem');
+
+if ($itemCustomLinkURL && $itemCustomLinkURL!='http://')
+{
+	if ($itemCustomLinkTitle=='')
+	{
+		if (strpos($itemCustomLinkURL, '://')!==false)
+		{
+			$linkParts = explode('://', $itemCustomLinkURL);
+			$itemCustomLinkURL = $linkParts[1];
+		}
+		$itemCustomLinkTitle = $itemCustomLinkURL;
+	}
+}
+else if ($itemCustomLinkMenuItem)
 {
     $menu = JMenu::getInstance('site');
-    $menuLink = $menu->getItem($params->get('itemCustomLinkMenuItem'));
+    $menuLink = $menu->getItem($itemCustomLinkMenuItem);
     if (!$itemCustomLinkTitle)
     {
         $itemCustomLinkTitle = (K2_JVERSION != '15') ? $menuLink->title : $menuLink->name;
     }
-    $params->set('itemCustomLinkURL', JRoute::_('index.php?&Itemid='.$menuLink->id));
+    $itemCustomLinkURL = JRoute::_('index.php?&Itemid='.$menuLink->id);
 }
+
+// Make params backwards compatible
+$params->set('itemCustomLinkTitle', $itemCustomLinkTitle);
+$params->set('itemCustomLinkURL', $itemCustomLinkURL);
 
 // Get component params
 $componentParams = JComponentHelper::getParams('com_k2');

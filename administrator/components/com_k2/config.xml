@@ -7,16 +7,8 @@
 			<option value="0">K2_DISABLE</option>
 			<option value="1">K2_ENABLE</option>
 		</param>
-		<param menu="hide" name="jQueryHandling" type="list" default="1.8remote" label="K2_COM_JQUERY_HANDLING" description="">
+		<param menu="hide" name="jQueryHandling" type="list" default="1.8remote" label="K2_COM_JQUERY_HANDLING" description="K2_COM_JQUERY_HANDLING_DESC">
 			<option value="0">K2_COM_DO_NOT_LOAD_THE_JQUERY_LIBRARY</option>
-			<option value="1.3.2">K2_COM_LOAD_V1_3_2_LOCAL_COPY</option>
-			<option value="1.3remote">K2_COM_LOAD_V1_3_2_REMOTE_COPY</option>
-			<option value="1.4.4">K2_COM_LOAD_V1_4_4_LOCAL_COPY</option>
-			<option value="1.4remote">K2_COM_LOAD_V1_4_4_REMOTE_COPY</option>
-			<option value="1.5.2">K2_COM_LOAD_V1_5_2_LOCAL_COPY</option>
-			<option value="1.5remote">K2_COM_LOAD_V1_5_2_REMOTE_COPY</option>
-			<option value="1.6.4">K2_COM_LOAD_V1_6_LOCAL_COPY</option>
-			<option value="1.6remote">K2_COM_LOAD_V1_6_X_LATEST_REMOTE_COPY</option>
 			<option value="1.7.2">K2_COM_LOAD_V1_7_LOCAL_COPY</option>
 			<option value="1.7remote">K2_COM_LOAD_V1_7_X_LATEST_REMOTE_COPY</option>
 			<option value="1.8.3">K2_COM_LOAD_V1_8_LOCAL_COPY</option>
@@ -27,8 +19,8 @@
 			<option value="1.10.2remote">K2_COM_LOAD_V1_10_X_LATEST_REMOTE_COPY</option>
 			<option value="1.11.3">K2_COM_LOAD_V1_11_LOCAL_COPY</option>
 			<option value="1.11.3remote">K2_COM_LOAD_V1_11_X_LATEST_REMOTE_COPY</option>
-			<option value="1.12.1">K2_COM_LOAD_V1_12_LOCAL_COPY</option>
-			<option value="1.12.1remote">K2_COM_LOAD_V1_12_X_LATEST_REMOTE_COPY</option>
+			<option value="1.12.4">K2_COM_LOAD_V1_12_LOCAL_COPY</option>
+			<option value="1.12.4remote">K2_COM_LOAD_V1_12_X_LATEST_REMOTE_COPY</option>
 		</param>
 		<param menu="hide" name="backendJQueryHandling" type="list" default="remote" label="K2_COM_BACKEND_JQUERY_HANDLING" description="K2_COM_BACKEND_JQUERY_HANDLING_DESC">
 			<option value="local">K2_COM_LOAD_A_LOCAL_COPY</option>
@@ -413,10 +405,6 @@
 			<option value="0">K2_NO</option>
 			<option value="1">K2_YES</option>
 		</param>
-		<param menu="hide" name="sideBarDisplay" type="radio" default="1" label="K2_DEFAULT_STATE_FOR_THE_ITEM_FORM_SIDEBAR" description="">
-			<option value="0">K2_HIDDEN</option>
-			<option value="1">K2_SHOWN</option>
-		</param>
 		<param menu="hide" name="attachmentsFolder" type="text" default="" size="40" label="K2_CHANGE_ROOT_ATTACHMENTS_FOLDER" description="K2_ENTER_THE_RELATIVE_PATH_TO_THE_FOLDER_FOR_STORING_ATTACHMENTS_LEAVE_THIS_BLANK_TO_USE_THE_DEFAULT_K2_ATTACHMENTS_FOLDER_MEDIAK2ATTACHMENTS_IF_YOU_CHANGE_THIS_SETTING_AT_ANY_POINT_REMEMBER_TO_MOVE_YOUR_FILES_FROM_THE_OLD_FOLDER_TO_THE_NEWLY_CREATED_ONE" />
 		<param menu="hide" name="hideImportButton" type="radio" default="0" label="K2_HIDE_IMPORT_BUTTONS" description="K2_HIDE_IMPORT_JOOMLA_CONTENT_AND_IMPORT_JOOMLA_USERS_BUTTONS">
 			<option value="0">K2_NO</option>
@@ -433,7 +421,7 @@
 		</param>
 		<param menu="hide" name="K2UserGroup" type="sql" default="" description="K2_SELECT_THE_DEFAULT_K2_USER_GROUP_FOR_NEW_REGISTRATIONS" label="K2_SELECT_DEFAULT_K2_USER_GROUP" query="SELECT id AS value, name AS K2UserGroup FROM #__k2_user_groups" />
 		<param menu="hide" name="redirect" type="menuitem" default="" label="K2_PROFILE_EDIT_REDIRECT" description="K2_SELECT_A_MENU_ITEM_TO_REDIRECT_AFTER_USER_PROFILE_EDIT_PLEASE_NOTE_THAT_THE_PLUGIN_MUST_BE_THE_LAST_ONE_IN_USER_GROUP_OR_IT_WILL_BREAK_THE_EXECUTION_OF_OTHER_USER_PLUGINS" />
-		<param menu="hide" name="adminSearch" type="list" default="simple" label="K2_ADMINISTRATION_ITEM_SEARCH" description="">
+		<param menu="hide" name="adminSearch" type="list" default="simple" label="K2_ADMINISTRATION_SEARCH_CONTEXT" description="">
 			<option value="simple">K2_SIMPLE_TITLE_ONLY</option>
 			<option value="full">K2_FULL_EVERYTHING</option>
 		</param>
@@ -524,7 +512,7 @@
 		<param menu="hide" name="k2SefLabelUser" type="text" default="author" label="K2_SEF_URL_PREFIX_FOR_USERSAUTHORS" description="K2_SEF_URL_PREFIX_FOR_USERSAUTHORS_DESC" />
 		<param menu="hide" name="k2SefLabelSearch" type="text" default="search" label="K2_SEF_URL_PREFIX_FOR_SEARCH_RESULTS" description="K2_SEF_URL_PREFIX_FOR_SEARCH_RESULTS_DESC" />
 		<param menu="hide" name="k2SefLabelDate" type="text" default="date" label="K2_SEF_URL_PREFIX_FOR_DATE_LISTINGS" description="K2_SEF_URL_PREFIX_FOR_DATE_LISTINGS_DESC" />
-		<param menu="hide" name="k2SefLabelItem" type="radio" default="0" label="K2_SEF_URL_CATEGORY_PREFIX_FOR_ITEMS" description="K2_SEF_URL_CATEGORY_PREFIX_FOR_ITEMS_DESC">
+		<param menu="hide" name="k2SefLabelItem" type="list" default="0" label="K2_SEF_URL_CATEGORY_PREFIX_FOR_ITEMS" description="K2_SEF_URL_CATEGORY_PREFIX_FOR_ITEMS_DESC">
 			<option value="0">K2_NONE</option>
 			<option value="1">K2_SEF_USE_CATEGORY_NAME_WITH_ID</option>
 			<option value="2">K2_SEF_USE_CUSTOM_PREFIX</option>
@@ -534,7 +522,7 @@
 			<option value="0">K2_NO</option>
 			<option value="1">K2_YES</option>
 		</param>
-		<param menu="hide" name="k2SefItemIdTitleAliasSep" type="radio" default="dash" label="K2_SEF_ITEM_ID_TITLE_ALIAS_SEPARATOR" description="K2_SEF_ITEM_ID_TITLE_ALIAS_SEPARATOR_DESC">
+		<param menu="hide" name="k2SefItemIdTitleAliasSep" type="list" default="dash" label="K2_SEF_ITEM_ID_TITLE_ALIAS_SEPARATOR" description="K2_SEF_ITEM_ID_TITLE_ALIAS_SEPARATOR_DESC">
 			<option value="dash">K2_USE_A_DASH</option>
 			<option value="slash">K2_USE_A_FORWARD_SLASH</option>
 		</param>
@@ -546,7 +534,7 @@
 			<option value="0">K2_NO</option>
 			<option value="1">K2_YES</option>
 		</param>
-		<param menu="hide" name="k2SefCatIdTitleAliasSep" type="radio" default="dash" label="K2_SEF_CAT_ID_TITLE_ALIAS_SEPARATOR" description="K2_SEF_CAT_ID_TITLE_ALIAS_SEPARATOR_DESC">
+		<param menu="hide" name="k2SefCatIdTitleAliasSep" type="list" default="dash" label="K2_SEF_CAT_ID_TITLE_ALIAS_SEPARATOR" description="K2_SEF_CAT_ID_TITLE_ALIAS_SEPARATOR_DESC">
 			<option value="dash">K2_USE_A_DASH</option>
 			<option value="slash">K2_USE_A_FORWARD_SLASH</option>
 		</param>
@@ -562,16 +550,8 @@
 			<option value="0">K2_DISABLE</option>
 			<option value="1">K2_ENABLE</option>
 		</field>
-		<field menu="hide" name="jQueryHandling" type="list" default="1.8remote" label="K2_COM_JQUERY_HANDLING" description="">
+		<field menu="hide" name="jQueryHandling" type="list" default="1.8remote" label="K2_COM_JQUERY_HANDLING" description="K2_COM_JQUERY_HANDLING_DESC">
 			<option value="0">K2_COM_DO_NOT_LOAD_THE_JQUERY_LIBRARY</option>
-			<option value="1.3.2">K2_COM_LOAD_V1_3_2_LOCAL_COPY</option>
-			<option value="1.3remote">K2_COM_LOAD_V1_3_2_REMOTE_COPY</option>
-			<option value="1.4.4">K2_COM_LOAD_V1_4_4_LOCAL_COPY</option>
-			<option value="1.4remote">K2_COM_LOAD_V1_4_4_REMOTE_COPY</option>
-			<option value="1.5.2">K2_COM_LOAD_V1_5_2_LOCAL_COPY</option>
-			<option value="1.5remote">K2_COM_LOAD_V1_5_2_REMOTE_COPY</option>
-			<option value="1.6.4">K2_COM_LOAD_V1_6_LOCAL_COPY</option>
-			<option value="1.6remote">K2_COM_LOAD_V1_6_X_LATEST_REMOTE_COPY</option>
 			<option value="1.7.2">K2_COM_LOAD_V1_7_LOCAL_COPY</option>
 			<option value="1.7remote">K2_COM_LOAD_V1_7_X_LATEST_REMOTE_COPY</option>
 			<option value="1.8.3">K2_COM_LOAD_V1_8_LOCAL_COPY</option>
@@ -582,8 +562,8 @@
 			<option value="1.10.2remote">K2_COM_LOAD_V1_10_X_LATEST_REMOTE_COPY</option>
 			<option value="1.11.3">K2_COM_LOAD_V1_11_LOCAL_COPY</option>
 			<option value="1.11.3remote">K2_COM_LOAD_V1_11_X_LATEST_REMOTE_COPY</option>
-			<option value="1.12.1">K2_COM_LOAD_V1_12_LOCAL_COPY</option>
-			<option value="1.12.1remote">K2_COM_LOAD_V1_12_X_LATEST_REMOTE_COPY</option>
+			<option value="1.12.4">K2_COM_LOAD_V1_12_LOCAL_COPY</option>
+			<option value="1.12.4remote">K2_COM_LOAD_V1_12_X_LATEST_REMOTE_COPY</option>
 		</field>
 		<field menu="hide" name="backendJQueryHandling" type="list" default="remote" label="K2_COM_BACKEND_JQUERY_HANDLING" description="K2_COM_BACKEND_JQUERY_HANDLING_DESC">
 			<option value="local">K2_COM_LOAD_A_LOCAL_COPY</option>
@@ -968,10 +948,6 @@
 			<option value="0">K2_NO</option>
 			<option value="1">K2_YES</option>
 		</field>
-		<field menu="hide" name="sideBarDisplay" type="radio" default="1" label="K2_DEFAULT_STATE_FOR_THE_ITEM_FORM_SIDEBAR" description="">
-			<option value="0">K2_HIDDEN</option>
-			<option value="1">K2_SHOWN</option>
-		</field>
 		<field menu="hide" name="attachmentsFolder" type="text" default="" size="40" label="K2_CHANGE_ROOT_ATTACHMENTS_FOLDER" description="K2_ENTER_THE_RELATIVE_PATH_TO_THE_FOLDER_FOR_STORING_ATTACHMENTS_LEAVE_THIS_BLANK_TO_USE_THE_DEFAULT_K2_ATTACHMENTS_FOLDER_MEDIAK2ATTACHMENTS_IF_YOU_CHANGE_THIS_SETTING_AT_ANY_POINT_REMEMBER_TO_MOVE_YOUR_FILES_FROM_THE_OLD_FOLDER_TO_THE_NEWLY_CREATED_ONE" />
 		<field menu="hide" name="hideImportButton" type="radio" default="0" label="K2_HIDE_IMPORT_BUTTONS" description="K2_HIDE_IMPORT_JOOMLA_CONTENT_AND_IMPORT_JOOMLA_USERS_BUTTONS">
 			<option value="0">K2_NO</option>
@@ -988,7 +964,7 @@
 		</field>
 		<field menu="hide" name="K2UserGroup" type="sql" default="" description="K2_SELECT_THE_DEFAULT_K2_USER_GROUP_FOR_NEW_REGISTRATIONS" label="K2_SELECT_DEFAULT_K2_USER_GROUP" query="SELECT id AS value, name AS K2UserGroup FROM #__k2_user_groups" />
 		<field menu="hide" name="redirect" type="menuitem" disable="separator" default="" label="K2_PROFILE_EDIT_REDIRECT" description="K2_SELECT_A_MENU_ITEM_TO_REDIRECT_AFTER_USER_PROFILE_EDIT_PLEASE_NOTE_THAT_THE_PLUGIN_MUST_BE_THE_LAST_ONE_IN_USER_GROUP_OR_IT_WILL_BREAK_THE_EXECUTION_OF_OTHER_USER_PLUGINS" />
-		<field menu="hide" name="adminSearch" type="list" default="simple" label="K2_ADMINISTRATION_ITEM_SEARCH" description="">
+		<field menu="hide" name="adminSearch" type="list" default="simple" label="K2_ADMINISTRATION_SEARCH_CONTEXT" description="">
 			<option value="simple">K2_SIMPLE_TITLE_ONLY</option>
 			<option value="full">K2_FULL_EVERYTHING</option>
 		</field>
@@ -1045,7 +1021,7 @@
 			<option value="1">K2_YES</option>
 		</field>
 		<field menu="hide" name="stopForumSpamApiKey" type="text" default="" label="K2_STOP_FORUM_SPAM_API_KEY" description="K2_STOP_FORUM_SPAM_API_KEY_DESCRIPTION" />
-		<field menu="hide" name="profilePageDisplay" type="radio" default="0" label="K2_USER_PROFILES_FOR_USERS_WITH_NO_ITEMS" description="K2_USER_PROFILES_FOR_USERS_WITH_NO_ITEMS_DESCRIPTION">
+		<field menu="hide" name="profilePageDisplay" type="list" default="0" label="K2_USER_PROFILES_FOR_USERS_WITH_NO_ITEMS" description="K2_USER_PROFILES_FOR_USERS_WITH_NO_ITEMS_DESCRIPTION">
 			<option value="0">K2_DISABLED</option>
 			<option value="1">K2_ENABLED</option>
 			<option value="2">K2_ENABLED_FOR_REGISTERED_USERS_ONLY</option>
@@ -1083,7 +1059,7 @@
 		<field menu="hide" name="k2SefLabelUser" type="text" default="author" label="K2_SEF_URL_PREFIX_FOR_USERSAUTHORS" description="K2_SEF_URL_PREFIX_FOR_USERSAUTHORS_DESC" />
 		<field menu="hide" name="k2SefLabelSearch" type="text" default="search" label="K2_SEF_URL_PREFIX_FOR_SEARCH_RESULTS" description="K2_SEF_URL_PREFIX_FOR_SEARCH_RESULTS_DESC" />
 		<field menu="hide" name="k2SefLabelDate" type="text" default="date" label="K2_SEF_URL_PREFIX_FOR_DATE_LISTINGS" description="K2_SEF_URL_PREFIX_FOR_DATE_LISTINGS_DESC" />
-		<field menu="hide" name="k2SefLabelItem" type="radio" default="0" label="K2_SEF_URL_CATEGORY_PREFIX_FOR_ITEMS" description="K2_SEF_URL_CATEGORY_PREFIX_FOR_ITEMS_DESC">
+		<field menu="hide" name="k2SefLabelItem" type="list" default="0" label="K2_SEF_URL_CATEGORY_PREFIX_FOR_ITEMS" description="K2_SEF_URL_CATEGORY_PREFIX_FOR_ITEMS_DESC">
 			<option value="0">K2_NONE</option>
 			<option value="1">K2_SEF_USE_CATEGORY_NAME_WITH_ID</option>
 			<option value="2">K2_SEF_USE_CUSTOM_PREFIX</option>
@@ -1093,7 +1069,7 @@
 			<option value="0">K2_NO</option>
 			<option value="1">K2_YES</option>
 		</field>
-		<field menu="hide" name="k2SefItemIdTitleAliasSep" type="radio" default="dash" label="K2_SEF_ITEM_ID_TITLE_ALIAS_SEPARATOR" description="K2_SEF_ITEM_ID_TITLE_ALIAS_SEPARATOR_DESC">
+		<field menu="hide" name="k2SefItemIdTitleAliasSep" type="list" default="dash" label="K2_SEF_ITEM_ID_TITLE_ALIAS_SEPARATOR" description="K2_SEF_ITEM_ID_TITLE_ALIAS_SEPARATOR_DESC">
 			<option value="dash">K2_USE_A_DASH</option>
 			<option value="slash">K2_USE_A_FORWARD_SLASH</option>
 		</field>
@@ -1105,7 +1081,7 @@
 			<option value="0">K2_NO</option>
 			<option value="1">K2_YES</option>
 		</field>
-		<field menu="hide" name="k2SefCatIdTitleAliasSep" type="radio" default="dash" label="K2_SEF_CAT_ID_TITLE_ALIAS_SEPARATOR" description="K2_SEF_CAT_ID_TITLE_ALIAS_SEPARATOR_DESC">
+		<field menu="hide" name="k2SefCatIdTitleAliasSep" type="list" default="dash" label="K2_SEF_CAT_ID_TITLE_ALIAS_SEPARATOR" description="K2_SEF_CAT_ID_TITLE_ALIAS_SEPARATOR_DESC">
 			<option value="dash">K2_USE_A_DASH</option>
 			<option value="slash">K2_USE_A_FORWARD_SLASH</option>
 		</field>

@@ -20,9 +20,6 @@ class K2ViewMedia extends K2View
         $mainframe = JFactory::getApplication();
         $user = JFactory::getUser();
         $document = JFactory::getDocument();
-        $document->addStyleSheet('//ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/smoothness/jquery-ui.css?v=2.7.1');
-        $document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/theme.css?v=2.7.1');
-        $document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/elfinder.min.css?v=2.7.1');
         $type = JRequest::getCmd('type');
         $fieldID = JRequest::getCmd('fieldID');
         if ($type == 'video')
@@ -37,19 +34,23 @@ class K2ViewMedia extends K2View
         {
             $mimes = '';
         }
+        $token = version_compare(JVERSION, '2.5', 'ge') ? JSession::getFormToken() : JUtility::getToken();
+
         $this->assignRef('mimes', $mimes);
         $this->assignRef('type', $type);
         $this->assignRef('fieldID', $fieldID);
+        $this->assignRef('token', $token);
+
         if ($mainframe->isAdmin())
         {
             $toolbar = JToolBar::getInstance('toolbar');
             if (K2_JVERSION != '15')
             {
-                JToolBarHelper::preferences('com_k2', 550, 875, 'K2_PARAMETERS');
+                JToolBarHelper::preferences('com_k2', 580, 800, 'K2_PARAMETERS');
             }
             else
             {
-                $toolbar->appendButton('Popup', 'config', 'K2_PARAMETERS', 'index.php?option=com_k2&view=settings');
+                $toolbar->appendButton('Popup', 'config', 'K2_PARAMETERS', 'index.php?option=com_k2&view=settings', 800, 580);
             }
             JToolBarHelper::title(JText::_('K2_MEDIA_MANAGER'), 'k2.png');
             $this->loadHelper('html');
