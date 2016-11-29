@@ -1,6 +1,12 @@
 Portal padrão em CMS Joomla 3.4.x
 ================
 
+ATENÇÃO
+---------------------
+Assim que o pacote for baixado, faça a atualização de versão do CMS Joomla para a versão 3.6.2.
+A atualização nativa é plenamente compatível com esta versão da IDG para Joomla.
+
+
 Sobre esta versão
 ---------------------
 O Joomla 3.4.x é recomendado para versões do PHP 5.3.10+. 
