@@ -1,14 +1,14 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
-defined('_JEXEC') or die ;
+defined('_JEXEC') or die;
 
 $user = JFactory::getUser();
 
@@ -50,13 +50,11 @@ $modLogo = (int)$params->get('modLogo', 1);
 // Component parameters
 $componentParams = JComponentHelper::getParams('com_k2');
 
-$onlineImageEditor = $componentParams->get('onlineImageEditor', 'splashup');
+$onlineImageEditor = $componentParams->get('onlineImageEditor', 'sumopaint');
 
 switch($onlineImageEditor)
 {
-	case 'splashup' :
-		$onlineImageEditorLink = 'http://splashup.com/splashup/';
-		break;
+	default:
 	case 'sumopaint' :
 		$onlineImageEditorLink = 'http://www.sumopaint.com/app/';
 		break;
@@ -70,7 +68,9 @@ JHTML::_('behavior.modal');
 
 // Append CSS to the document's head
 if ($modCSSStyling)
-	$document->addStyleSheet(JURI::base(true).'/modules/'.$mod_name.'/tmpl/css/style.css?v=2.6.8');
+{
+	$document->addStyleSheet(JURI::base(true).'/modules/'.$mod_name.'/tmpl/css/style.css?v='.K2_CURRENT_VERSION);
+}
 
 // Output content with template
 echo $mod_copyrights_start;

@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
@@ -31,41 +31,51 @@ $document->addScriptDeclaration("
 				submitform( pressbutton );
 			}
 		}
-	}
+	};
 ");
 
 ?>
 
 <form action="<?php echo JURI::root(true); ?>/index.php" enctype="multipart/form-data" method="post" name="adminForm" id="adminForm">
 	<?php if($this->mainframe->isSite()): ?>
-	<div id="k2FrontendContainer">
+	<div id="k2FrontendContainer" class="isJ<?php echo K2_JVERSION; ?>">
 		<div id="k2Frontend">
 			<table class="k2FrontendToolbar" cellpadding="2" cellspacing="4">
 				<tr>
 					<td id="toolbar-save" class="button">
-						<a class="toolbar" href="#" onclick="Joomla.submitbutton('save'); return false;"> <span title="<?php echo JText::_('K2_SAVE'); ?>" class="icon-32-save icon-save"></span> <?php echo JText::_('K2_SAVE'); ?> </a>
+						<a class="toolbar" href="#" onclick="Joomla.submitbutton('save'); return false;">
+							<span title="<?php echo JText::_('K2_SAVE'); ?>" class="icon-32-save icon-save"></span> <?php echo JText::_('K2_SAVE'); ?>
+						</a>
 					</td>
 					<td id="toolbar-cancel" class="button">
-						<a class="toolbar" href="#"> <span title="<?php echo JText::_('K2_CANCEL'); ?>" class="icon-32-cancel icon-cancel"></span> <?php echo JText::_('K2_CLOSE'); ?> </a>
+						<a class="toolbar" href="#">
+							<span title="<?php echo JText::_('K2_CANCEL'); ?>" class="icon-32-cancel icon-cancel"></span> <?php echo JText::_('K2_CLOSE'); ?>
+						</a>
 					</td>
 				</tr>
 			</table>
+
 			<div id="k2FrontendEditToolbar">
 				<h2 class="header icon-48-k2">
 					<?php echo (JRequest::getInt('cid')) ? JText::_('K2_EDIT_ITEM') : JText::_('K2_ADD_ITEM'); ?>
 				</h2>
 			</div>
+
 			<div class="clr"></div>
-			<hr class="sep" />
+
 			<div id="k2FrontendPermissionsNotice">
-				<p><?php echo $this->permissionsMessage; ?></p>
+				<p><i class="icon-info"></i> <?php echo $this->permissionsMessage; ?></p>
 			</div>
 			<?php endif; ?>
-			<div id="k2ToggleSidebarContainer"> <a href="#" id="k2ToggleSidebar"><?php echo JText::_('K2_TOGGLE_SIDEBAR'); ?></a> </div>
+
+			<div id="k2ToggleSidebarContainer">
+				<a href="#" id="k2ToggleSidebar"><?php echo JText::_('K2_TOGGLE_SIDEBAR'); ?></a>
+			</div>
+
 			<table cellspacing="0" cellpadding="0" border="0" class="adminFormK2Container table">
 				<tbody>
 					<tr>
-						<td>
+						<td id="adminFormK2tabs">
 							<table class="adminFormK2">
 								<tr>
 									<td class="adminK2LeftCol">
@@ -165,7 +175,7 @@ $document->addScriptDeclaration("
 								</tr>
 								<?php endif; ?>
 							</table>
-							
+
 							<!-- Required extra field warning -->
 							<div id="k2ExtraFieldsValidationResults">
 								<h3><?php echo JText::_('K2_THE_FOLLOWING_FIELDS_ARE_REQUIRED'); ?></h3>
@@ -173,10 +183,10 @@ $document->addScriptDeclaration("
 									<li><?php echo JText::_('K2_LOADING'); ?></li>
 								</ul>
 							</div>
-							
+
 							<!-- Tabs start here -->
-							<div class="simpleTabs" id="k2Tabs">
-								<ul class="simpleTabsNavigation">
+							<div class="k2Tabs" id="k2Tabs">
+								<ul class="k2TabsNavigation">
 									<li id="tabContent"><a href="#k2Tab1"><?php echo JText::_('K2_CONTENT'); ?></a></li>
 									<?php if ($this->params->get('showImageTab')): ?>
 									<li id="tabImage"><a href="#k2Tab2"><?php echo JText::_('K2_IMAGE'); ?></a></li>
@@ -199,7 +209,7 @@ $document->addScriptDeclaration("
 								</ul>
 
 								<!-- Tab content -->
-								<div class="simpleTabsContent" id="k2Tab1">
+								<div class="k2TabsContent" id="k2Tab1">
 									<?php if($this->params->get('mergeEditors')): ?>
 									<div class="k2ItemFormEditor"> <?php echo $this->text; ?>
 										<div class="dummyHeight"></div>
@@ -231,7 +241,7 @@ $document->addScriptDeclaration("
 								</div>
 								<?php if ($this->params->get('showImageTab')): ?>
 								<!-- Tab image -->
-								<div class="simpleTabsContent" id="k2Tab2">
+								<div class="k2TabsContent" id="k2Tab2">
 									<table class="admintable">
 										<tr>
 											<td align="right" class="key">
@@ -295,7 +305,7 @@ $document->addScriptDeclaration("
 								<?php endif; ?>
 								<?php if ($this->params->get('showImageGalleryTab')): ?>
 								<!-- Tab image gallery -->
-								<div class="simpleTabsContent" id="k2Tab3">
+								<div class="k2TabsContent" id="k2Tab3">
 									<?php if ($this->lists['checkSIG']): ?>
 									<table class="admintable table" id="item_gallery_content">
 										<tr>
@@ -372,7 +382,7 @@ $document->addScriptDeclaration("
 								<?php endif; ?>
 								<?php if ($this->params->get('showVideoTab')): ?>
 								<!-- Tab video -->
-								<div class="simpleTabsContent" id="k2Tab4">
+								<div class="k2TabsContent" id="k2Tab4">
 									<?php if ($this->lists['checkAllVideos']): ?>
 									<table class="admintable" id="item_video_content">
 										<tr>
@@ -380,33 +390,33 @@ $document->addScriptDeclaration("
 												<?php echo JText::_('K2_MEDIA_SOURCE'); ?>
 											</td>
 											<td>
-												<div id="k2VideoTabs" class="simpleTabs">
-													<ul class="simpleTabsNavigation">
+												<div id="k2VideoTabs" class="k2Tabs">
+													<ul class="k2TabsNavigation">
 														<li><a href="#k2VideoTab1"><?php echo JText::_('K2_UPLOAD'); ?></a></li>
 														<li><a href="#k2VideoTab2"><?php echo JText::_('K2_BROWSE_SERVERUSE_REMOTE_MEDIA'); ?></a></li>
 														<li><a href="#k2VideoTab3"><?php echo JText::_('K2_MEDIA_USE_ONLINE_VIDEO_SERVICE'); ?></a></li>
 														<li><a href="#k2VideoTab4"><?php echo JText::_('K2_EMBED'); ?></a></li>
 													</ul>
-													<div id="k2VideoTab1" class="simpleTabsContent">
+													<div id="k2VideoTab1" class="k2TabsContent">
 														<div class="panel" id="Upload_video">
 															<input type="file" name="video" class="fileUpload" />
 															<i>(<?php echo JText::_('K2_MAX_UPLOAD_SIZE'); ?>: <?php echo ini_get('upload_max_filesize'); ?>)</i> </div>
 													</div>
-													<div id="k2VideoTab2" class="simpleTabsContent">
+													<div id="k2VideoTab2" class="k2TabsContent">
 														<div class="panel" id="Remote_video"> <a id="k2MediaBrowseServer" href="index.php?option=com_k2&view=media&type=video&tmpl=component&fieldID=remoteVideo"><?php echo JText::_('K2_BROWSE_VIDEOS_ON_SERVER')?></a> <?php echo JText::_('K2_OR'); ?> <?php echo JText::_('K2_PASTE_REMOTE_VIDEO_URL'); ?>
 															<br />
 															<br />
 															<input type="text" size="50" name="remoteVideo" id="remoteVideo" value="<?php echo $this->lists['remoteVideo'] ?>" />
 														</div>
 													</div>
-													<div id="k2VideoTab3" class="simpleTabsContent">
+													<div id="k2VideoTab3" class="k2TabsContent">
 														<div class="panel" id="Video_from_provider"> <?php echo JText::_('K2_SELECT_VIDEO_PROVIDER'); ?> <?php echo $this->lists['providers']; ?> <br/><br/> <?php echo JText::_('K2_AND_ENTER_VIDEO_ID'); ?>
 															<input type="text" size="50" name="videoID" value="<?php echo $this->lists['providerVideo'] ?>" />
 															<br />
 															<br />
 															<a class="modal" rel="{handler: 'iframe', size: {x: 990, y: 600}}" href="http://www.joomlaworks.net/allvideos-documentation"><?php echo JText::_('K2_READ_THE_ALLVIDEOS_DOCUMENTATION_FOR_MORE'); ?></a> </div>
 													</div>
-													<div id="k2VideoTab4" class="simpleTabsContent">
+													<div id="k2VideoTab4" class="k2TabsContent">
 														<div class="panel" id="embedVideo">
 															<?php echo JText::_('K2_PASTE_HTML_EMBED_CODE_BELOW'); ?>
 															<br />
@@ -479,11 +489,11 @@ $document->addScriptDeclaration("
 												<?php echo JText::_('K2_MEDIA_SOURCE'); ?>
 											</td>
 											<td>
-												<div id="k2VideoTabs" class="simpleTabs">
-													<ul class="simpleTabsNavigation">
+												<div id="k2VideoTabs" class="k2Tabs">
+													<ul class="k2TabsNavigation">
 														<li><a href="#k2VideoTab4"><?php echo JText::_('K2_EMBED'); ?></a></li>
 													</ul>
-													<div class="simpleTabsContent" id="k2VideoTab4">
+													<div class="k2TabsContent" id="k2VideoTab4">
 														<div class="panel" id="embedVideo">
 															<?php echo JText::_('K2_PASTE_HTML_EMBED_CODE_BELOW'); ?>
 															<br />
@@ -540,7 +550,7 @@ $document->addScriptDeclaration("
 								<?php endif; ?>
 								<?php if ($this->params->get('showExtraFieldsTab')): ?>
 								<!-- Tab extra fields -->
-								<div class="simpleTabsContent" id="k2Tab5">
+								<div class="k2TabsContent" id="k2Tab5">
 									<div id="extraFieldsContainer">
 										<?php if (count($this->extraFields)): ?>
 										<table class="admintable" id="extraFields">
@@ -608,7 +618,7 @@ $document->addScriptDeclaration("
 								<?php endif; ?>
 								<?php if ($this->params->get('showAttachmentsTab')): ?>
 								<!-- Tab attachements -->
-								<div class="simpleTabsContent" id="k2Tab6">
+								<div class="k2TabsContent" id="k2Tab6">
 									<div class="itemAttachments">
 										<?php if (count($this->row->attachments)): ?>
 										<table class="adminlist">
@@ -652,7 +662,7 @@ $document->addScriptDeclaration("
 										<?php endif; ?>
 									</div>
 									<div id="addAttachment">
-										<input type="button" id="addAttachmentButton" value="<?php echo JText::_('K2_ADD_ATTACHMENT_FIELD'); ?>" />
+										<input type="button" id="addAttachmentButton" class="k2Selector k2Button" value="<?php echo JText::_('K2_ADD_ATTACHMENT_FIELD'); ?>" />
 										<i>(<?php echo JText::_('K2_MAX_UPLOAD_SIZE'); ?>: <?php echo ini_get('upload_max_filesize'); ?>)</i> </div>
 									<div id="itemAttachments"></div>
 									<?php if (count($this->K2PluginsItemAttachments)): ?>
@@ -671,7 +681,7 @@ $document->addScriptDeclaration("
 								<?php endif; ?>
 								<?php if(count(array_filter($this->K2PluginsItemOther)) && $this->params->get('showK2Plugins')): ?>
 								<!-- Tab other plugins -->
-								<div class="simpleTabsContent" id="k2Tab7">
+								<div class="k2TabsContent" id="k2Tab7">
 									<div class="itemPlugins">
 										<?php foreach($this->K2PluginsItemOther as $K2Plugin): ?>
 										<?php if(!is_null($K2Plugin)): ?>
@@ -698,6 +708,8 @@ $document->addScriptDeclaration("
 							<input type="hidden" name="Itemid" value="<?php echo JRequest::getInt('Itemid'); ?>" />
 							<?php echo JHTML::_('form.token'); ?>
 						</td>
+
+						<!-- Sidebar -->
 						<td id="adminFormK2Sidebar"<?php if($this->mainframe->isSite() && !$this->params->get('sideBarDisplayFrontend')): ?> style="display:none;"<?php endif; ?> class="xmlParamsFields">
 							<?php if($this->row->id): ?>
 							<table class="sidebarDetails">
@@ -785,168 +797,167 @@ $document->addScriptDeclaration("
 								</tr>
 							</table>
 							<?php endif; ?>
-							<div id="k2Accordion">
-								<h3><a href="#"><?php echo JText::_('K2_AUTHOR_PUBLISHING_STATUS'); ?></a></h3>
-								<div>
-									<table class="admintable">
-										<?php if(isset($this->lists['language'])): ?>
-										<tr>
-											<td align="right" class="key">
-												<?php echo JText::_('K2_LANGUAGE'); ?>
-											</td>
-											<td>
-												<?php echo $this->lists['language']; ?>
-											</td>
-										</tr>
-										<?php endif; ?>
-										<tr>
-											<td align="right" class="key">
-												<?php echo JText::_('K2_AUTHOR'); ?>
-											</td>
-											<td id="k2AuthorOptions">
-												<span id="k2Author"><?php echo $this->row->author; ?></span>
-												<?php if($this->mainframe->isAdmin() || ($this->mainframe->isSite() && $this->permissions->get('editAll'))): ?>
-												<a class="modal" rel="{handler:'iframe', size: {x: 800, y: 460}}" href="index.php?option=com_k2&amp;view=users&amp;task=element&amp;tmpl=component"><?php echo JText::_('K2_CHANGE'); ?></a>
-												<input type="hidden" name="created_by" value="<?php echo $this->row->created_by; ?>" />
-												<?php endif; ?>
-											</td>
-										</tr>
-										<tr>
-											<td align="right" class="key">
-												<?php echo JText::_('K2_AUTHOR_ALIAS'); ?>
-											</td>
-											<td>
-												<input class="text_area" type="text" name="created_by_alias" maxlength="250" value="<?php echo $this->row->created_by_alias; ?>" />
-											</td>
-										</tr>
-										<tr>
-											<td align="right" class="key">
-												<?php echo JText::_('K2_ACCESS_LEVEL'); ?>
-											</td>
-											<td>
-												<?php echo $this->lists['access']; ?>
-											</td>
-										</tr>
-										<tr>
-											<td align="right" class="key">
-												<?php echo JText::_('K2_CREATION_DATE'); ?>
-											</td>
-											<td class="k2ItemFormDateField">
-												<?php echo $this->lists['createdCalendar']; ?>
-											</td>
-										</tr>
-										<tr>
-											<td align="right" class="key">
-												<?php echo JText::_('K2_START_PUBLISHING'); ?>
-											</td>
-											<td class="k2ItemFormDateField">
-												<?php echo $this->lists['publish_up']; ?>
-											</td>
-										</tr>
-										<tr>
-											<td align="right" class="key">
-												<?php echo JText::_('K2_FINISH_PUBLISHING'); ?>
-											</td>
-											<td class="k2ItemFormDateField">
-												<?php echo $this->lists['publish_down']; ?>
-											</td>
-										</tr>
-									</table>
-								</div>
-								<h3><a href="#"><?php echo JText::_('K2_METADATA_INFORMATION'); ?></a></h3>
-								<div>
-									<table class="admintable">
-										<tr>
-											<td align="right" class="key">
-												<?php echo JText::_('K2_DESCRIPTION'); ?>
-											</td>
-											<td>
-												<textarea name="metadesc" rows="5" cols="20"><?php echo $this->row->metadesc; ?></textarea>
-											</td>
-										</tr>
-										<tr>
-											<td align="right" class="key">
-												<?php echo JText::_('K2_KEYWORDS'); ?>
-											</td>
-											<td>
-												<textarea name="metakey" rows="5" cols="20"><?php echo $this->row->metakey; ?></textarea>
-											</td>
-										</tr>
-										<tr>
-											<td align="right" class="key">
-												<?php echo JText::_('K2_ROBOTS'); ?>
-											</td>
-											<td>
-												<input type="text" name="meta[robots]" value="<?php echo $this->lists['metadata']->get('robots'); ?>" />
-											</td>
-										</tr>
-										<tr>
-											<td align="right" class="key">
-												<?php echo JText::_('K2_AUTHOR'); ?>
-											</td>
-											<td>
-												<input type="text" name="meta[author]" value="<?php echo $this->lists['metadata']->get('author'); ?>" />
-											</td>
-										</tr>
-									</table>
-								</div>
-								<?php if($this->mainframe->isAdmin()): ?>
-								<h3><a href="#"><?php echo JText::_('K2_ITEM_VIEW_OPTIONS_IN_CATEGORY_LISTINGS'); ?></a></h3>
-								<div>
-									<?php if(version_compare( JVERSION, '1.6.0', 'ge' )): ?>
-									<fieldset class="panelform">
-										<ul class="adminformlist">
-											<?php foreach($this->form->getFieldset('item-view-options-listings') as $field): ?>
-											<li>
-												<?php if($field->type=='header'): ?>
-												<div class="paramValueHeader"><?php echo $field->input; ?></div>
-												<?php elseif($field->type=='Spacer'): ?>
-												<div class="paramValueSpacer">&nbsp;</div>
-												<div class="clr"></div>
-												<?php else: ?>
-												<div class="paramLabel"><?php echo $field->label; ?></div>
-												<div class="paramValue"><?php echo $field->input; ?></div>
-												<div class="clr"></div>
-												<?php endif; ?>
-											</li>
-											<?php endforeach; ?>
-										</ul>
-									</fieldset>
-									<?php else: ?>
-									<?php echo $this->form->render('params', 'item-view-options-listings'); ?>
+							<!-- Author Publishing Status -->
+							<h3><a href="#"><?php echo JText::_('K2_AUTHOR_PUBLISHING_STATUS'); ?></a></h3>
+							<div>
+								<table class="admintable">
+									<?php if(isset($this->lists['language'])): ?>
+									<tr>
+										<td align="right" class="key">
+											<?php echo JText::_('K2_LANGUAGE'); ?>
+										</td>
+										<td>
+											<?php echo $this->lists['language']; ?>
+										</td>
+									</tr>
 									<?php endif; ?>
-								</div>
-								<h3><a href="#"><?php echo JText::_('K2_ITEM_VIEW_OPTIONS'); ?></a></h3>
-								<div>
-									<?php if(version_compare( JVERSION, '1.6.0', 'ge' )): ?>
-									<fieldset class="panelform">
-										<ul class="adminformlist">
-											<?php foreach($this->form->getFieldset('item-view-options') as $field): ?>
-											<li>
-												<?php if($field->type=='header'): ?>
-												<div class="paramValueHeader"><?php echo $field->input; ?></div>
-												<?php elseif($field->type=='Spacer'): ?>
-												<div class="paramValueSpacer">&nbsp;</div>
-												<div class="clr"></div>
-												<?php else: ?>
-												<div class="paramLabel"><?php echo $field->label; ?></div>
-												<div class="paramValue"><?php echo $field->input; ?></div>
-												<div class="clr"></div>
-												<?php endif; ?>
-											</li>
-											<?php endforeach; ?>
-										</ul>
-									</fieldset>
-									<?php else: ?>
-									<?php echo $this->form->render('params', 'item-view-options'); ?>
-									<?php endif; ?>
-								</div>
-								<?php endif; ?>
-								<?php if($this->aceAclFlag): ?>
-								<h3><a href="#"><?php echo JText::_('AceACL') . ' ' . JText::_('COM_ACEACL_COMMON_PERMISSIONS'); ?></a></h3>
-								<div><?php AceaclApi::getWidget('com_k2.item.'.$this->row->id, true); ?></div>
+									<tr>
+										<td align="right" class="key">
+											<?php echo JText::_('K2_AUTHOR'); ?>
+										</td>
+										<td id="k2AuthorOptions">
+											<span id="k2Author"><?php echo $this->row->author; ?></span>
+											<?php if($this->mainframe->isAdmin() || ($this->mainframe->isSite() && $this->permissions->get('editAll'))): ?>
+											<a class="modal" rel="{handler:'iframe', size: {x: 800, y: 460}}" href="index.php?option=com_k2&amp;view=users&amp;task=element&amp;tmpl=component"><?php echo JText::_('K2_CHANGE'); ?></a>
+											<input type="hidden" name="created_by" value="<?php echo $this->row->created_by; ?>" />
+											<?php endif; ?>
+										</td>
+									</tr>
+									<tr>
+										<td align="right" class="key">
+											<?php echo JText::_('K2_AUTHOR_ALIAS'); ?>
+										</td>
+										<td>
+											<input class="text_area" type="text" name="created_by_alias" maxlength="250" value="<?php echo $this->row->created_by_alias; ?>" />
+										</td>
+									</tr>
+									<tr>
+										<td align="right" class="key">
+											<?php echo JText::_('K2_ACCESS_LEVEL'); ?>
+										</td>
+										<td>
+											<?php echo $this->lists['access']; ?>
+										</td>
+									</tr>
+									<tr>
+										<td align="right" class="key">
+											<?php echo JText::_('K2_CREATION_DATE'); ?>
+										</td>
+										<td class="k2ItemFormDateField">
+											<?php echo $this->lists['createdCalendar']; ?>
+										</td>
+									</tr>
+									<tr>
+										<td align="right" class="key">
+											<?php echo JText::_('K2_START_PUBLISHING'); ?>
+										</td>
+										<td class="k2ItemFormDateField">
+											<?php echo $this->lists['publish_up']; ?>
+										</td>
+									</tr>
+									<tr>
+										<td align="right" class="key">
+											<?php echo JText::_('K2_FINISH_PUBLISHING'); ?>
+										</td>
+										<td class="k2ItemFormDateField">
+											<?php echo $this->lists['publish_down']; ?>
+										</td>
+									</tr>
+								</table>
+							</div>
+
+							<!-- Metadata Info -->
+							<h3><a href="#"><?php echo JText::_('K2_METADATA_INFORMATION'); ?></a></h3>
+							<div>
+								<table class="admintable">
+									<tr>
+										<td align="right" class="key">
+											<?php echo JText::_('K2_DESCRIPTION'); ?>
+										</td>
+										<td>
+											<textarea name="metadesc" rows="5" cols="20"><?php echo $this->row->metadesc; ?></textarea>
+										</td>
+									</tr>
+									<tr>
+										<td align="right" class="key">
+											<?php echo JText::_('K2_KEYWORDS'); ?>
+										</td>
+										<td>
+											<textarea name="metakey" rows="5" cols="20"><?php echo $this->row->metakey; ?></textarea>
+										</td>
+									</tr>
+									<tr>
+										<td align="right" class="key">
+											<?php echo JText::_('K2_ROBOTS'); ?>
+										</td>
+										<td>
+											<input type="text" name="meta[robots]" value="<?php echo $this->lists['metadata']->get('robots'); ?>" />
+										</td>
+									</tr>
+									<tr>
+										<td align="right" class="key">
+											<?php echo JText::_('K2_AUTHOR'); ?>
+										</td>
+										<td>
+											<input type="text" name="meta[author]" value="<?php echo $this->lists['metadata']->get('author'); ?>" />
+										</td>
+									</tr>
+								</table>
+							</div>
+
+							<?php if($this->mainframe->isAdmin()): ?>
+							<h3><a href="#"><?php echo JText::_('K2_ITEM_VIEW_OPTIONS_IN_CATEGORY_LISTINGS'); ?></a></h3>
+							<div>
+								<?php if(version_compare( JVERSION, '1.6.0', 'ge' )): ?>
+								<fieldset class="panelform">
+									<ul class="adminformlist">
+										<?php foreach($this->form->getFieldset('item-view-options-listings') as $field): ?>
+										<li>
+											<?php if($field->type=='header'): ?>
+											<div class="paramValueHeader"><?php echo $field->input; ?></div>
+											<?php elseif($field->type=='Spacer'): ?>
+											<div class="paramValueSpacer">&nbsp;</div>
+											<div class="clr"></div>
+											<?php else: ?>
+											<div class="paramLabel"><?php echo $field->label; ?></div>
+											<div class="paramValue"><?php echo $field->input; ?></div>
+											<div class="clr"></div>
+											<?php endif; ?>
+										</li>
+										<?php endforeach; ?>
+									</ul>
+								</fieldset>
+								<?php else: ?>
+								<?php echo $this->form->render('params', 'item-view-options-listings'); ?>
 								<?php endif; ?>
 							</div>
+
+							<h3><a href="#"><?php echo JText::_('K2_ITEM_VIEW_OPTIONS'); ?></a></h3>
+							<div>
+								<?php if(version_compare( JVERSION, '1.6.0', 'ge' )): ?>
+								<fieldset class="panelform">
+									<ul class="adminformlist">
+										<?php foreach($this->form->getFieldset('item-view-options') as $field): ?>
+										<li>
+											<?php if($field->type=='header'): ?>
+											<div class="paramValueHeader"><?php echo $field->input; ?></div>
+											<?php elseif($field->type=='Spacer'): ?>
+											<div class="paramValueSpacer">&nbsp;</div>
+											<div class="clr"></div>
+											<?php else: ?>
+											<div class="paramLabel"><?php echo $field->label; ?></div>
+											<div class="paramValue"><?php echo $field->input; ?></div>
+											<div class="clr"></div>
+											<?php endif; ?>
+										</li>
+										<?php endforeach; ?>
+									</ul>
+								</fieldset>
+								<?php else: ?>
+								<?php echo $this->form->render('params', 'item-view-options'); ?>
+								<?php endif; ?>
+							</div>
+							<?php endif; ?>
 						</td>
 					</tr>
 				</tbody>

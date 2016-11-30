@@ -1,16 +1,16 @@
 <?php
 /**
- * @version		4.5.0
- * @package		AllVideos (plugin)
- * @author    JoomlaWorks - http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    4.8.0
+ * @package    AllVideos (plugin)
+ * @author     JoomlaWorks - http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 
-if (version_compare(JVERSION, '1.6.0', 'ge'))
+if (version_compare(JVERSION, '2.5.0', 'ge'))
 {
 	jimport('joomla.form.formfield');
 	class JWElement extends JFormField

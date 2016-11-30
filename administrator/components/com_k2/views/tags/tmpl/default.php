@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
@@ -20,7 +20,7 @@ $document->addScriptDeclaration("
 		} else {
 			submitform( pressbutton );
 		}
-	}
+	};
 ");
 
 ?>
@@ -31,7 +31,7 @@ $document->addScriptDeclaration("
       <td class="k2AdminTableFiltersSearch">
 				<!--<label><?php echo JText::_('K2_FILTER'); ?></label>-->
 				<div class="btn-wrapper input-append">
-					<input type="text" name="search" value="<?php echo $this->lists['search'] ?>" class="text_area"	title="<?php echo JText::_('K2_FILTER_BY_TITLE'); ?>" placeholder="<?php echo JText::_('K2_FILTER'); ?>" />
+					<input type="text" name="search" value="<?php echo htmlspecialchars($this->lists['search'], ENT_QUOTES, 'UTF-8'); ?>" class="text_area"	title="<?php echo JText::_('K2_FILTER_BY_TITLE'); ?>" placeholder="<?php echo JText::_('K2_FILTER'); ?>" />
 					<button id="k2SubmitButton" class="btn"><?php echo JText::_('K2_GO'); ?></button>
 					<button id="k2ResetButton" class="btn"><?php echo JText::_('K2_RESET'); ?></button>
 				</div>

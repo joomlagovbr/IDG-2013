@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		4.5.0
- * @package		AllVideos (plugin)
- * @author    JoomlaWorks - http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    4.8.0
+ * @package    AllVideos (plugin)
+ * @author     JoomlaWorks - http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
@@ -18,10 +18,10 @@ class JWElementTemplate extends JWElement
 	public function fetchElement($name, $value, &$node, $control_name)
 	{
 		jimport('joomla.filesystem.folder');
-		$plgTemplatesPath = version_compare(JVERSION, '1.6', 'ge') ? JPATH_SITE.'/plugins/content/jw_allvideos/jw_allvideos/tmpl' : JPATH_SITE.'/plugins/content/jw_allvideos/tmpl';
+		$plgTemplatesPath = version_compare(JVERSION, '2.5.0', 'ge') ? JPATH_SITE.'/plugins/content/jw_allvideos/jw_allvideos/tmpl' : JPATH_SITE.'/plugins/content/jw_allvideos/tmpl';
 		$plgTemplatesFolders = JFolder::folders($plgTemplatesPath);
 		$db = JFactory::getDBO();
-		if (version_compare(JVERSION, '1.6', 'ge'))
+		if (version_compare(JVERSION, '2.5.0', 'ge'))
 		{
 			$query = "SELECT template FROM #__template_styles WHERE client_id = 0 AND home = 1";
 		}
@@ -48,7 +48,7 @@ class JWElementTemplate extends JWElement
 		{
 			$options[] = JHTML::_('select.option', $folder, $folder);
 		}
-		$fieldName = version_compare(JVERSION, '1.6', 'ge') ? $name : $control_name.'['.$name.']';
+		$fieldName = version_compare(JVERSION, '2.5.0', 'ge') ? $name : $control_name.'['.$name.']';
 		return JHTML::_('select.genericlist', $options, $fieldName, '', 'value', 'text', $value);
 	}
 

@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
@@ -29,8 +29,9 @@ If you wish to use the live search option, it's important that you maintain the 
 		<input type="submit" value="<?php echo $button_text; ?>" class="button" onclick="this.form.searchword.focus();" />
 		<?php endif; ?>
 		<?php endif; ?>
-
+		<?php if($categoryFilter): ?>
 		<input type="hidden" name="categories" value="<?php echo $categoryFilter; ?>" />
+		<?php endif; ?>
 		<?php if(!$app->getCfg('sef')): ?>
 		<input type="hidden" name="option" value="com_k2" />
 		<input type="hidden" name="view" value="itemlist" />
@@ -40,6 +41,9 @@ If you wish to use the live search option, it's important that you maintain the 
 		<input type="hidden" name="format" value="html" />
 		<input type="hidden" name="t" value="" />
 		<input type="hidden" name="tpl" value="search" />
+		<?php endif; ?>
+		<?php if($searchItemId): ?>
+		<input type="hidden" name="Itemid" value="<?php echo $searchItemId;?>" />
 		<?php endif; ?>
 	</form>
 

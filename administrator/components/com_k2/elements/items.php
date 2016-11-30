@@ -1,14 +1,14 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
-defined('_JEXEC') or die ;
+defined('_JEXEC') or die;
 
 require_once (JPATH_ADMINISTRATOR.'/components/com_k2/elements/base.php');
 
@@ -18,15 +18,9 @@ class K2ElementItems extends K2Element
     {
         $params = JComponentHelper::getParams('com_k2');
         $document = JFactory::getDocument();
-        if (version_compare(JVERSION, '1.6.0', 'ge'))
-        {
-            JHtml::_('behavior.framework');
-        }
-        else
-        {
-            JHTML::_('behavior.mootools');
-        }
-        K2HelperHTML::loadjQuery();
+
+        K2HelperHTML::loadHeadIncludes(true, true, false, true);
+
         $mainframe = JFactory::getApplication();
         if (K2_JVERSION != '15')
         {
@@ -64,7 +58,7 @@ class K2ElementItems extends K2Element
 				alert('".JText::_('K2_ITEM_ADDED_IN_THE_LIST', true)."');
 			}
 		}
-		
+
 		\$K2(document).ready(function(){
 			\$K2('#itemsList').sortable({
 				containment: '#itemsList',
@@ -78,7 +72,6 @@ class K2ElementItems extends K2Element
 		";
 
         $document->addScriptDeclaration($js);
-        $document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.modules.css?v=2.6.8');
 
         $current = array();
         if (is_string($value) && !empty($value))
@@ -100,7 +93,7 @@ class K2ElementItems extends K2Element
 			<li>
 				<img class="remove" src="'.$image.'" alt="'.JText::_('K2_REMOVE_ENTRY_FROM_LIST').'" />
 				<span class="handle">'.$row->title.'</span>
-				<input type="hidden" value="'.$row->id.'" name="'.$fieldName.'"/>
+				<input type="hidden" value="'.$row->id.'" name="'.$fieldName.'" />
 				<span style="clear:both;"></span>
 			</li>
 			';

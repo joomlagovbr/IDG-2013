@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
@@ -84,5 +84,26 @@ class K2ControllerUsers extends K2Controller
         $model = $this->getModel('users');
         $model->import();
     }
+	
+	function search()
+	{
+		$mainframe = JFactory::getApplication();
+        $db = JFactory::getDBO();
+        $word = JRequest::getString('q', null);
+        if (K2_JVERSION == '15')
+        {
+            $word = $db->Quote($db->getEscaped($word, true).'%', false);
+        }
+        else
+        {
+            $word = $db->Quote($db->escape($word, true).'%', false);
+        }
+		
+		$query = "SELECT id,name FROM #__users WHERE name LIKE ".$word." OR username LIKE ".$word." OR email LIKE ".$word;
+        $db->setQuery($query);
+        $result = $db->loadObjectList();
+        echo json_encode($result);
+        $mainframe->close();
+	}
 
 }

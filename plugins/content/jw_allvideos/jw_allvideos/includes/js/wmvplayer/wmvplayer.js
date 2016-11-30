@@ -13,15 +13,6 @@ if(typeof jeroenwijering == "undefined") {
 	jeroenwijering.utils = new Object();
 }
 
-
-
-
-
-
-
-
-
-
 /****************************************************************************
 * The player wrapper; loads config variables and starts MVC cycle.
 ****************************************************************************/
@@ -60,7 +51,7 @@ jeroenwijering.Player = function(cnt,src,cfg) {
 	};
 	for(itm in this.configuration) {
 		if(cfg[itm] != undefined) {
-			if (itm.indexOf('color') > 0) { 
+			if (itm.indexOf('color') > 0) {
 				this.configuration[itm] = cfg[itm].substr(cfg[itm].length-6);
 			} else {
 				this.configuration[itm] = cfg[itm];
@@ -91,7 +82,7 @@ jeroenwijering.Player.prototype = {
 		this.view.listeners.push({type:typ,func:fcn});
 	},
 
-	getConfig: function() { 
+	getConfig: function() {
 		return this.configuration;
 	},
 
@@ -130,15 +121,6 @@ jeroenwijering.Player.prototype = {
 	}
 }
 
-
-
-
-
-
-
-
-
-
 /****************************************************************************
 * The controller of the player MVC triad, which processes all user input.
 ****************************************************************************/
@@ -160,7 +142,7 @@ jeroenwijering.Controller.prototype = {
 		}
 		if(this.configuration['autostart'] == 'true') {
 			this.model.goStart();
-		} else { 
+		} else {
 			this.model.goPause();
 		}
 	},
@@ -170,7 +152,7 @@ jeroenwijering.Controller.prototype = {
 		var pos = this.configuration['start'];
 		if(old == 'Closed' && pos > 0) {
 			setTimeout(jeroenwijering.utils.delegate(this,this.setScrub),200,pos);
-		} 
+		}
 	},
 
 	setLink: function() {
@@ -185,7 +167,7 @@ jeroenwijering.Controller.prototype = {
 
 	setLoad: function(fil) {
 		if(this.model.state != "Closed") {
-			this.model.goStop(); 
+			this.model.goStop();
 		}
 		this.configuration['file'] = fil;
 		if(this.configuration['autostart'] == 'true') {
@@ -207,9 +189,9 @@ jeroenwijering.Controller.prototype = {
 
 	setPlay: function() {
 		if(this.state == 'Buffering' || this.state == 'Playing') {
-			if(this.configuration['duration'] == 0) { 
+			if(this.configuration['duration'] == 0) {
 				this.model.goStop();
-			} else { 
+			} else {
 				this.model.goPause();
 			}
 		} else {
@@ -242,7 +224,7 @@ jeroenwijering.Controller.prototype = {
 		if(this.configuration['usemute'] == 'true') {
 			this.configuration['usemute'] = 'false';
 			this.view.onMute(false);
-		} 
+		}
 	},
 
 	setFullscreen: function() {
@@ -251,15 +233,6 @@ jeroenwijering.Controller.prototype = {
 		jeroenwijering.utils.delegate(this.view,this.view.onFullscreen);
 	}
 }
-
-
-
-
-
-
-
-
-
 
 /****************************************************************************
 * The view of the player MVC triad, which manages the graphics.
@@ -272,9 +245,9 @@ jeroenwijering.View = function(cfg,ctr) {
 	this.fslistener;
 	this.display = this.configuration['sender'].findName("PlayerDisplay");
 	this.controlbar = this.configuration['sender'].findName("PlayerControls");
-	this.configuration['sender'].getHost().content.onResize = 
+	this.configuration['sender'].getHost().content.onResize =
 		jeroenwijering.utils.delegate(this,this.resizePlayer);
-	this.configuration['sender'].getHost().content.onFullScreenChange = 
+	this.configuration['sender'].getHost().content.onFullScreenChange =
 		jeroenwijering.utils.delegate(this,this.onFullscreen);
 	this.assignColorsClicks();
 	this.resizePlayer();
@@ -283,9 +256,9 @@ jeroenwijering.View = function(cfg,ctr) {
 jeroenwijering.View.prototype = {
 	onBuffer: function(pct) {
 		var snd = this.configuration['sender'];
-		if(pct == 0) { 
+		if(pct == 0) {
 			snd.findName("BufferText").Text = null;
-		} else { 
+		} else {
 			pct < 10 ? pct = "0"+pct: pct = ""+pct;
 			snd.findName("BufferText").Text = pct;
 		}
@@ -295,7 +268,7 @@ jeroenwijering.View.prototype = {
 	onFullscreen: function(fss) {
 		var snd = this.configuration['sender'];
 		var fst = snd.getHost().content.FullScreen;
-		if(fst) { 
+		if(fst) {
 			this.fstimeout = setTimeout(jeroenwijering.utils.delegate(this,
 				this.hideFSControls),2000);
 			this.fslistener = this.display.addEventListener('MouseMove',
@@ -320,7 +293,7 @@ jeroenwijering.View.prototype = {
 		clearTimeout(this.fstimeout);
 		this.controlbar.Visibility = "Visible";
 		this.display.Cursor = "Hand";
-		if(yps < 0) { 
+		if(yps < 0) {
 			this.fstimeout = setTimeout(jeroenwijering.utils.delegate(this,
 				this.hideFSControls),2000);
 		}
@@ -374,7 +347,7 @@ jeroenwijering.View.prototype = {
 				snd.findName("BufferIcon").Visibility = "Visible";
 				snd.findName("BufferText").Visibility = "Visible";
 			}
-		} else { 
+		} else {
 			snd.findName("MuteIcon").Visibility = "Collapsed";
 			snd.findName("BufferIcon").Visibility = "Collapsed";
 			snd.findName("BufferText").Visibility = "Collapsed";
@@ -382,7 +355,7 @@ jeroenwijering.View.prototype = {
 			snd.findName("PlaySymbol").Visibility = "Visible";
 			if(this.configuration['linkfromdisplay'] == 'true') {
 				snd.findName("PlayIcon").Visibility = "Collapsed";
-			} else { 
+			} else {
 				snd.findName("PlayIcon").Visibility = "Visible";
 			}
 		}
@@ -407,7 +380,7 @@ jeroenwijering.View.prototype = {
 			snd.findName("TimeSymbol").Visibility = "Visible";
 			snd.findName("TimeSymbol")['Canvas.Left'] = pos+4;
 			snd.findName("TimeHighlight").Width = pos-2;
-		} else  { 
+		} else  {
 			snd.findName("TimeSymbol").Visibility = "Collapsed";
 		}
 		this.delegate('TIME',[elp,dur]);
@@ -422,11 +395,11 @@ jeroenwijering.View.prototype = {
 	assignColorsClicks: function() {
 		this.display.Cursor = "Hand";
 		this.display.Background = "#FF"+this.configuration['screencolor'];
-		if(this.configuration['linkfromdisplay'] == 'false') { 
+		if(this.configuration['linkfromdisplay'] == 'false') {
 			this.display.addEventListener('MouseLeftButtonUp',
 				jeroenwijering.utils.delegate(this.controller,
 				this.controller.setPlay));
-		} else { 
+		} else {
 			this.display.addEventListener('MouseLeftButtonUp',
 				jeroenwijering.utils.delegate(this.controller,
 				this.controller.setLink));
@@ -434,19 +407,19 @@ jeroenwijering.View.prototype = {
 		}
 		if(this.configuration['logo'] != '') {
 			this.display.findName('OverlayCanvas').Visibility = "Visible";
-			this.display.findName('OverlayLogo').ImageSource = 
+			this.display.findName('OverlayLogo').ImageSource =
 				this.configuration['logo'];
 		}
-		this.controlbar.findName("ControlbarBack").Fill = 
+		this.controlbar.findName("ControlbarBack").Fill =
 			"#FF"+this.configuration['backcolor'];
 		this.assignButton('Play',this.controller.setPlay);
 		this.assignButton('Stop',this.controller.setStop);
-		this.configuration['sender'].findName('ElapsedText').Foreground = 
+		this.configuration['sender'].findName('ElapsedText').Foreground =
 			"#FF"+this.configuration['frontcolor'];
 		this.assignSlider('Time',this.changeTime);
-		this.configuration['sender'].findName('DownloadProgress').Fill = 
+		this.configuration['sender'].findName('DownloadProgress').Fill =
 			"#FF"+this.configuration['frontcolor'];
-		this.configuration['sender'].findName('RemainingText').Foreground = 
+		this.configuration['sender'].findName('RemainingText').Foreground =
 			"#FF"+this.configuration['frontcolor'];
 		this.assignButton('Link',this.controller.setLink);
 		this.assignButton('Fullscreen',this.controller.setFullscreen);
@@ -463,10 +436,10 @@ jeroenwijering.View.prototype = {
 			jeroenwijering.utils.delegate(this,this.rollOver));
 		el1.addEventListener('MouseLeave',
 			jeroenwijering.utils.delegate(this,this.rollOut));
-		this.configuration['sender'].findName(btn+'Symbol').Fill = 
+		this.configuration['sender'].findName(btn+'Symbol').Fill =
 			"#FF"+this.configuration['frontcolor'];
 		try {
-			this.configuration['sender'].findName(btn+'OffSymbol').Fill = 
+			this.configuration['sender'].findName(btn+'OffSymbol').Fill =
 				"#FF"+this.configuration['frontcolor'];
 		} catch(e) {}
 	},
@@ -480,11 +453,11 @@ jeroenwijering.View.prototype = {
 			jeroenwijering.utils.delegate(this,this.rollOver));
 		el1.addEventListener('MouseLeave',
 			jeroenwijering.utils.delegate(this,this.rollOut));
-		this.configuration['sender'].findName(sld+'Slider').Fill = 
+		this.configuration['sender'].findName(sld+'Slider').Fill =
 			"#FF"+this.configuration['frontcolor'];
-		this.configuration['sender'].findName(sld+'Highlight').Fill = 
+		this.configuration['sender'].findName(sld+'Highlight').Fill =
 			"#FF"+this.configuration['frontcolor'];
-		this.configuration['sender'].findName(sld+'Symbol').Fill = 
+		this.configuration['sender'].findName(sld+'Symbol').Fill =
 			"#FF"+this.configuration['frontcolor'];
 	},
 
@@ -498,20 +471,20 @@ jeroenwijering.View.prototype = {
 
 	rollOver: function(sdr) {
 		var str = sdr.Name.substr(0,sdr.Name.length-6);
-		this.configuration['sender'].findName(str+'Symbol').Fill = 
+		this.configuration['sender'].findName(str+'Symbol').Fill =
 			"#FF"+this.configuration['lightcolor'];
 		try {
-			this.configuration['sender'].findName(str+'OffSymbol').Fill = 
+			this.configuration['sender'].findName(str+'OffSymbol').Fill =
 				"#FF"+this.configuration['lightcolor'];
 		} catch(e) {}
 	},
 
 	rollOut: function(sdr) {
 		var str = sdr.Name.substr(0,sdr.Name.length-6);
-		this.configuration['sender'].findName(str+'Symbol').Fill = 
+		this.configuration['sender'].findName(str+'Symbol').Fill =
 			"#FF"+this.configuration['frontcolor'];
 		try {
-			this.configuration['sender'].findName(str+'OffSymbol').Fill = 
+			this.configuration['sender'].findName(str+'OffSymbol').Fill =
 				"#FF"+this.configuration['frontcolor'];
 		} catch(e) {}
 	},
@@ -539,7 +512,7 @@ jeroenwijering.View.prototype = {
 				this.controlbar['Canvas.Left'] = Math.round(wid/2-250);
 				this.resizeControlbar(500,hei-this.controlbar.Height-16);
 				this.controlbar.findName('ControlbarBack')['Opacity'] = 0.5;
-			} else { 
+			} else {
 				this.resizeDisplay(wid,hei-20);
 				this.controlbar['Canvas.Left'] = 0;
 				this.resizeControlbar(wid,hei-this.controlbar.Height);
@@ -582,7 +555,7 @@ jeroenwijering.View.prototype = {
 			rgt += 18;
 			this.placeElement('FullscreenButton',wid-rgt);
 		} else {
-			this.controlbar.findName('FullscreenButton').Visibility = 
+			this.controlbar.findName('FullscreenButton').Visibility =
 				"Collapsed";
 		}
 		if(this.configuration['link'] != '') {
@@ -599,7 +572,7 @@ jeroenwijering.View.prototype = {
 			this.placeElement('ElapsedButton',lft);
 			lft +=35;
 		} else {
-			this.controlbar.findName('RemainingButton').Visibility = 
+			this.controlbar.findName('RemainingButton').Visibility =
 				"Collapsed";
 			this.controlbar.findName('ElapsedButton').Visibility="Collapsed";
 		}
@@ -634,15 +607,6 @@ jeroenwijering.View.prototype = {
 	}
 }
 
-
-
-
-
-
-
-
-
-
 /****************************************************************************
 * The model of the player MVC triad, which stores all playback logic.
 ****************************************************************************/
@@ -662,7 +626,7 @@ jeroenwijering.Model = function(cfg,ctr,vie) {
 	this.timeint;
 	this.video.Stretch = str[this.configuration['overstretch']];
 	this.preview.Stretch = str[this.configuration['overstretch']];
-	this.video.BufferingTime = 
+	this.video.BufferingTime =
 		jeroenwijering.utils.spanstring(this.configuration['bufferlength']);
 	this.video.AutoPlay = true;
 	this.video.AddEventListener("CurrentStateChanged",
@@ -719,7 +683,7 @@ jeroenwijering.Model.prototype = {
 			this.controller.setState(this.state,stt);
 			this.view.onState(this.state,stt);
 			this.state = stt;
-			this.configuration['duration'] = 
+			this.configuration['duration'] =
 				Math.round(this.video.NaturalDuration.Seconds*10)/10;
 			if(stt != "Playing" && stt != "Buffering" && stt != "Opening") {
 				clearInterval(this.timeint);
@@ -757,15 +721,6 @@ jeroenwijering.Model.prototype = {
 		this.view.onTime(pos,this.configuration['duration']);
 	}
 }
-
-
-
-
-
-
-
-
-
 
 /****************************************************************************
 * Some utility functions.

@@ -1,14 +1,14 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
-defined('_JEXEC') or die ;
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
@@ -28,6 +28,7 @@ class K2ViewTags extends K2View
 		$filter_state = $mainframe->getUserStateFromRequest($option.$view.'filter_state', 'filter_state', -1, 'int');
 		$search = $mainframe->getUserStateFromRequest($option.$view.'search', 'search', '', 'string');
 		$search = JString::strtolower($search);
+		$search = trim(preg_replace('/[^\p{L}\p{N}\s\-_]/u', '', $search));
 		$model = $this->getModel();
 		$total = $model->getTotal();
 		$task = JRequest::getCmd('task');
@@ -71,12 +72,12 @@ class K2ViewTags extends K2View
 
 		if (K2_JVERSION != '15')
 		{
-			JToolBarHelper::preferences('com_k2', 550, 875, 'K2_PARAMETERS');
+			JToolBarHelper::preferences('com_k2', 580, 800, 'K2_PARAMETERS');
 		}
 		else
 		{
 			$toolbar = JToolBar::getInstance('toolbar');
-			$toolbar->appendButton('Popup', 'config', 'Parameters', 'index.php?option=com_k2&view=settings');
+			$toolbar->appendButton('Popup', 'config', 'K2_PARAMETERS', 'index.php?option=com_k2&view=settings', 800, 580);
 		}
 
 		$this->loadHelper('html');

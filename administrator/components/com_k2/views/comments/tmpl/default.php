@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
@@ -19,11 +19,11 @@ defined('_JEXEC') or die;
 			}
 			if (confirm('<?php echo JText::_('K2_ARE_YOU_SURE_YOU_WANT_TO_DELETE_SELECTED_COMMENTS', true); ?>')){
 				submitform( pressbutton );
-			} 
+			}
 		} else if (pressbutton == 'deleteUnpublished') {
 			if (confirm('<?php echo JText::_('K2_THIS_WILL_PERMANENTLY_DELETE_ALL_UNPUBLISHED_COMMENTS_ARE_YOU_SURE', true); ?>')){
 				submitform( pressbutton );
-			} 
+			}
 		} else if (pressbutton == 'publish') {
 			if (document.adminForm.boxchecked.value==0){
 				alert('<?php echo JText::_('K2_PLEASE_MAKE_A_SELECTION_FROM_THE_LIST_TO_PUBLISH', true); ?>');
@@ -36,10 +36,10 @@ defined('_JEXEC') or die;
 				return false;
 			}
 			submitform( pressbutton );
-		}  else { 
+		}  else {
 			submitform( pressbutton );
 		}
-	}
+	};
 </script>
 <form action="<?php echo JRoute::_('index.php'); ?>" method="post" name="adminForm" id="adminForm">
 	<?php if($this->mainframe->isSite()): ?>
@@ -72,7 +72,7 @@ defined('_JEXEC') or die;
 					<td class="k2AdminTableFiltersSearch">
 						<!--<label><?php echo JText::_('K2_FILTER'); ?></label>-->
 						<div class="btn-wrapper input-append">
-							<input type="text" name="search" value="<?php echo $this->lists['search'] ?>" class="text_area"	title="<?php echo JText::_('K2_FILTER_BY_TITLE'); ?>" placeholder="<?php echo JText::_('K2_FILTER'); ?>" />
+							<input type="text" name="search" value="<?php echo htmlspecialchars($this->lists['search'], ENT_QUOTES, 'UTF-8'); ?>" class="text_area"	title="<?php echo JText::_('K2_FILTER_BY_TITLE'); ?>" placeholder="<?php echo JText::_('K2_FILTER'); ?>" />
 							<button id="k2SubmitButton" class="btn"><?php echo JText::_('K2_GO'); ?></button>
 							<button id="k2ResetButton" class="btn"><?php echo JText::_('K2_RESET'); ?></button>
 						</div>
@@ -181,7 +181,7 @@ defined('_JEXEC') or die;
 						</td>
 						<td class="k2Center center hidden-phone">
 							<?php if($row->commenterLastVisitIP): ?>
-							<a target="_blank" href="http://www.ipchecking.com/?ip=<?php echo $row->commenterLastVisitIP; ?>&check=Lookup">
+							<a target="_blank" href="https://ipalyzer.com/<?php echo $row->commenterLastVisitIP; ?>">
 								<?php echo $row->commenterLastVisitIP; ?>
 							</a>
 							<?php endif; ?>
@@ -198,7 +198,7 @@ defined('_JEXEC') or die;
 							<?php echo $row->catName; ?>
 						</td>
 						<td class="hidden-phone">
-							<?php $user = JFactory::getUser($row->created_by); echo $user->name; ?> 
+							<?php $user = JFactory::getUser($row->created_by); echo $user->name; ?>
 						</td>
 						<td class="k2Date hidden-phone">
 							<?php echo JHTML::_('date', $row->commentDate , $this->dateFormat); ?>

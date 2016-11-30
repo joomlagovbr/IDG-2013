@@ -1,14 +1,14 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
-defined('_JEXEC') or die ;
+defined('_JEXEC') or die;
 
 if (K2_JVERSION != '15')
 {
@@ -66,7 +66,7 @@ if ($user->guest)
     // Get user stuff (do not edit)
     $usersConfig = JComponentHelper::getParams('com_users');
 
-    // Define some variables depending on Joomla! version
+    // Define some variables depending on Joomla version
     $passwordFieldName = K2_JVERSION != '15' ? 'password' : 'passwd';
     $resetLink = JRoute::_((K2_JVERSION != '15') ? 'index.php?option=com_users&view=reset&Itemid='.UsersHelperRoute::getResetRoute() : 'index.php?option=com_user&view=reset');
     $remindLink = JRoute::_((K2_JVERSION != '15') ? 'index.php?option=com_users&view=remind&Itemid='.UsersHelperRoute::getRemindRoute() : 'index.php?option=com_user&view=remind');
@@ -77,7 +77,6 @@ if ($user->guest)
 }
 else
 {
-		JHTML::_('behavior.modal');
 
     $user->profile = modK2UserHelper::getProfile($params);
     $user->numOfComments = modK2UserHelper::countUserComments($user->id);

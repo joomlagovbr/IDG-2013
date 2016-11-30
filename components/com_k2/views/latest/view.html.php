@@ -1,14 +1,14 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
-defined('_JEXEC') or die ;
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
@@ -242,7 +242,7 @@ class K2ViewLatest extends K2View
 		$document->setTitle($browserTitle);
 
 
-        // Set menu metadata for Joomla! 2.5+
+        // Set menu metadata for Joomla 2.5+
         if (K2_JVERSION != '15')
         {
             if ($params->get('menu-meta_description'))
@@ -269,12 +269,15 @@ class K2ViewLatest extends K2View
         }
 
         // Set Facebook meta data
-        $document = JFactory::getDocument();
-        $uri = JURI::getInstance();
-        $document->setMetaData('og:url', $uri->toString());
-        $document->setMetaData('og:title', (K2_JVERSION == '15') ? htmlspecialchars($document->getTitle(), ENT_QUOTES, 'UTF-8') : $document->getTitle());
-        $document->setMetaData('og:type', 'website');
-        $document->setMetaData('og:description', strip_tags($document->getDescription()));
+        if($params->get('facebookMetatags', '1'))
+        {
+          $document = JFactory::getDocument();
+          $uri = JURI::getInstance();
+          $document->setMetaData('og:url', $uri->toString());
+          $document->setMetaData('og:title', (K2_JVERSION == '15') ? htmlspecialchars($document->getTitle(), ENT_QUOTES, 'UTF-8') : $document->getTitle());
+          $document->setMetaData('og:type', 'website');
+          $document->setMetaData('og:description', strip_tags($document->getDescription()));
+        }
 
         //Look for template files in component folders
         $this->_addPath('template', JPATH_COMPONENT.DS.'templates');
@@ -284,7 +287,7 @@ class K2ViewLatest extends K2View
         $this->_addPath('template', JPATH_SITE.DS.'templates'.DS.$mainframe->getTemplate().DS.'html'.DS.'com_k2'.DS.'templates');
         $this->_addPath('template', JPATH_SITE.DS.'templates'.DS.$mainframe->getTemplate().DS.'html'.DS.'com_k2'.DS.'templates'.DS.'default');
 
-        //Look for overrides in template folder (Joomla! template structure)
+        //Look for overrides in template folder (Joomla template structure)
         $this->_addPath('template', JPATH_SITE.DS.'templates'.DS.$mainframe->getTemplate().DS.'html'.DS.'com_k2'.DS.'default');
         $this->_addPath('template', JPATH_SITE.DS.'templates'.DS.$mainframe->getTemplate().DS.'html'.DS.'com_k2');
 

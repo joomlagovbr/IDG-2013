@@ -49,11 +49,11 @@
 			<option value="none">K2_NO_IMAGE</option>
 		</param>
 		<param name="" type="header" default="K2_OTHER_LAYOUT_OPTIONS" label="" description=""/>
-		<param name="catCatalogMode" type="list" default="0" label="K2_CATALOG_MODE" description="K2_IF_YOU_SELECT_YES_THEN_ONLY_THE_ITEMS_DIRECTLY_BELONGING_TO_THIS_CATEGORY_WILL_BE_RETRIEVED_IF_YOU_SELECT_NO_THEN_ITEMS_FROM_ALL_SUBCATEGORIES_WILL_BE_RETRIEVED_SETTING_THIS_OPTION_TO_NO_IS_IDEAL_FOR_NEWSPORTALMAGAZINEBLOG_LAYOUTS">
+		<param name="catCatalogMode" type="radio" default="0" label="K2_CATALOG_MODE" description="K2_IF_YOU_SELECT_YES_THEN_ONLY_THE_ITEMS_DIRECTLY_BELONGING_TO_THIS_CATEGORY_WILL_BE_RETRIEVED_IF_YOU_SELECT_NO_THEN_ITEMS_FROM_ALL_SUBCATEGORIES_WILL_BE_RETRIEVED_SETTING_THIS_OPTION_TO_NO_IS_IDEAL_FOR_NEWSPORTALMAGAZINEBLOG_LAYOUTS">
 			<option value="0">K2_NO</option>
 			<option value="1">K2_YES</option>
 		</param>
-		<param name="catFeaturedItems" type="list" default="1" label="K2_FEATURED_ITEMS" description="">
+		<param name="catFeaturedItems" type="radio" default="1" label="K2_FEATURED_ITEMS" description="">
 			<option value="0">K2_HIDE</option>
 			<option value="1">K2_SHOW</option>
 			<option value="2">K2_SHOW_ONLY_FEATURED_ITEMS</option>
@@ -73,7 +73,7 @@
 			<option value="modified">K2_LATEST_MODIFIED</option>
 			<option value="rand">K2_RANDOM_ORDERING</option>
 		</param>
-		<param name="catPagination" type="list" default="2" label="K2_PAGINATION" description="">
+		<param name="catPagination" type="radio" default="2" label="K2_PAGINATION" description="">
 			<option value="0">K2_HIDE</option>
 			<option value="1">K2_SHOW</option>
 			<option value="2">K2_AUTO</option>
@@ -219,6 +219,8 @@
 			<option value="0">K2_HIDE</option>
 			<option value="1">K2_SHOW</option>
 		</param>
+		<param name="catItemImageGalleryWidth" type="text" default="" size="4" label="K2_IMAGE_GALLERY_THUMBNAIL_WIDTH" description=""/>
+		<param name="catItemImageGalleryHeight" type="text" default="" size="4" label="K2_IMAGE_GALLERY_THUMBNAIL_HEIGHT" description=""/>
 		<param name="catItemDateModified" type="radio" default="0" label="K2_ITEM_MODIFIED_DATE_AND_TIME" description="">
 			<option value="0">K2_HIDE</option>
 			<option value="1">K2_SHOW</option>
@@ -290,7 +292,7 @@
 			<option value="0">K2_HIDE</option>
 			<option value="1">K2_SHOW</option>
 		</param>
-		<param name="itemImgSize" type="list" default="Large" label="K2_IMAGE_SIZE" description="">
+		<param name="itemImgSize" type="radio" default="Large" label="K2_IMAGE_SIZE" description="">
 			<option value="XSmall">K2_XSMALL</option>
 			<option value="Small">K2_SMALL</option>
 			<option value="Medium">K2_MEDIUM</option>
@@ -365,6 +367,8 @@
 			<option value="0">K2_HIDE</option>
 			<option value="1">K2_SHOW</option>
 		</param>
+		<param name="itemImageGalleryWidth" type="text" default="" size="4" label="K2_IMAGE_GALLERY_THUMBNAIL_WIDTH" description=""/>
+		<param name="itemImageGalleryHeight" type="text" default="" size="4" label="K2_IMAGE_GALLERY_THUMBNAIL_HEIGHT" description=""/>
 		<param name="itemNavigation" type="radio" default="1" label="K2_ITEM_NAVIGATION" description="">
 			<option value="0">K2_HIDE</option>
 			<option value="1">K2_SHOW</option>
@@ -426,7 +430,7 @@
 			<option value="0">K2_HIDE</option>
 			<option value="1">K2_SHOW</option>
 		</param>
-		<param name="itemRelatedImageSize" type="list" default="0" label="K2_RELATED_ITEMS_IMAGE" description="">
+		<param name="itemRelatedImageSize" type="radio" default="0" label="K2_RELATED_ITEMS_IMAGE" description="">
 			<option value="0">K2_NONE_SELECTED</option>
 			<option value="XSmall">K2_XSMALL</option>
 			<option value="Small">K2_SMALL</option>
@@ -516,11 +520,11 @@
 				<option value="none">K2_NO_IMAGE</option>
 			</field>
 			<field name="" type="header" default="K2_OTHER_LAYOUT_OPTIONS" label="" description=""/>
-			<field name="catCatalogMode" type="list" default="0" label="K2_CATALOG_MODE" description="K2_IF_YOU_SELECT_YES_THEN_ONLY_THE_ITEMS_DIRECTLY_BELONGING_TO_THIS_CATEGORY_WILL_BE_RETRIEVED_IF_YOU_SELECT_NO_THEN_ITEMS_FROM_ALL_SUBCATEGORIES_WILL_BE_RETRIEVED_SETTING_THIS_OPTION_TO_NO_IS_IDEAL_FOR_NEWSPORTALMAGAZINEBLOG_LAYOUTS">
+			<field name="catCatalogMode" type="radio" default="0" label="K2_CATALOG_MODE" description="K2_IF_YOU_SELECT_YES_THEN_ONLY_THE_ITEMS_DIRECTLY_BELONGING_TO_THIS_CATEGORY_WILL_BE_RETRIEVED_IF_YOU_SELECT_NO_THEN_ITEMS_FROM_ALL_SUBCATEGORIES_WILL_BE_RETRIEVED_SETTING_THIS_OPTION_TO_NO_IS_IDEAL_FOR_NEWSPORTALMAGAZINEBLOG_LAYOUTS">
 				<option value="0">K2_NO</option>
 				<option value="1">K2_YES</option>
 			</field>
-			<field name="catFeaturedItems" type="list" default="1" label="K2_FEATURED_ITEMS" description="">
+			<field name="catFeaturedItems" type="radio" default="1" label="K2_FEATURED_ITEMS" description="">
 				<option value="0">K2_HIDE</option>
 				<option value="1">K2_SHOW</option>
 				<option value="2">K2_SHOW_ONLY_FEATURED_ITEMS</option>
@@ -540,7 +544,7 @@
 				<option value="modified">K2_LATEST_MODIFIED</option>
 				<option value="rand">K2_RANDOM_ORDERING</option>
 			</field>
-			<field name="catPagination" type="list" default="2" label="K2_PAGINATION" description="">
+			<field name="catPagination" type="radio" default="2" label="K2_PAGINATION" description="">
 				<option value="0">K2_HIDE</option>
 				<option value="1">K2_SHOW</option>
 				<option value="2">K2_AUTO</option>
@@ -581,7 +585,7 @@
 				<option value="1">K2_SHOW</option>
 			</field>
 			<field name="subCatColumns" type="text" default="2" size="4" label="K2_COLUMNS" description=""/>
-			<field name="subCatOrdering" type="list" default="" label="K2_SUBCATEGORY_ORDERING" description="">
+			<field name="subCatOrdering" type="radio" default="" label="K2_SUBCATEGORY_ORDERING" description="">
 				<option value="">K2_DEFAULT_BY_ID_ASCENDING</option>
 				<option value="reversedefault">K2_REVERSE_DEFAULT_BY_ID_DESCENDING</option>
 				<option value="alpha">K2_TITLE_ALPHABETICAL</option>
@@ -686,6 +690,8 @@
 				<option value="0">K2_HIDE</option>
 				<option value="1">K2_SHOW</option>
 			</field>
+			<field name="catItemImageGalleryWidth" type="text" default="" size="4" label="K2_IMAGE_GALLERY_THUMBNAIL_WIDTH" description=""/>
+			<field name="catItemImageGalleryHeight" type="text" default="" size="4" label="K2_IMAGE_GALLERY_THUMBNAIL_HEIGHT" description=""/>
 			<field name="catItemDateModified" type="radio" default="0" label="K2_ITEM_MODIFIED_DATE_AND_TIME" description="">
 				<option value="0">K2_HIDE</option>
 				<option value="1">K2_SHOW</option>
@@ -832,6 +838,8 @@
 				<option value="0">K2_HIDE</option>
 				<option value="1">K2_SHOW</option>
 			</field>
+			<field name="itemImageGalleryWidth" type="text" default="" size="4" label="K2_IMAGE_GALLERY_THUMBNAIL_WIDTH" description=""/>
+			<field name="itemImageGalleryHeight" type="text" default="" size="4" label="K2_IMAGE_GALLERY_THUMBNAIL_HEIGHT" description=""/>
 			<field name="itemNavigation" type="radio" default="1" label="K2_ITEM_NAVIGATION" description="">
 				<option value="0">K2_HIDE</option>
 				<option value="1">K2_SHOW</option>

@@ -1,14 +1,14 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
-defined('_JEXEC') or die ;
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.controller');
 jimport('joomla.filesystem.file');
@@ -24,11 +24,22 @@ class K2ControllerMedia extends K2Controller
 
 	function connector()
 	{
+
+		if ($_POST)
+		{
+			JSession::checkToken('post') or jexit(JText::_('JINVALID_TOKEN'));
+		}
+		else
+		{
+			JSession::checkToken('get') or jexit(JText::_('JINVALID_TOKEN'));
+		}
+
 		$mainframe = JFactory::getApplication();
 		$params = JComponentHelper::getParams('com_media');
 		$root = $params->get('file_path', 'media');
 		$folder = JRequest::getVar('folder', $root, 'default', 'path');
 		$type = JRequest::getCmd('type', 'video');
+
 		if (JString::trim($folder) == "")
 		{
 			$folder = $root;
@@ -49,15 +60,16 @@ class K2ControllerMedia extends K2Controller
 		$path = JPATH_SITE.DS.JPath::clean($folder);
 
 		JPath::check($path);
-		include_once JPATH_COMPONENT_ADMINISTRATOR.DS.'lib'.DS.'elfinder'.DS.'elFinderConnector.class.php';
-		include_once JPATH_COMPONENT_ADMINISTRATOR.DS.'lib'.DS.'elfinder'.DS.'elFinder.class.php';
-		include_once JPATH_COMPONENT_ADMINISTRATOR.DS.'lib'.DS.'elfinder'.DS.'elFinderVolumeDriver.class.php';
-		include_once JPATH_COMPONENT_ADMINISTRATOR.DS.'lib'.DS.'elfinder'.DS.'elFinderVolumeLocalFileSystem.class.php';
+
+		require_once JPATH_COMPONENT_ADMINISTRATOR.DS.'lib'.DS.'elfinder'.DS.'autoload.php';
+
 		function access($attr, $path, $data, $volume)
 		{
 			$mainframe = JFactory::getApplication();
-			// Hide PHP files.
+
+			// Hide PHP files
 			$ext = strtolower(JFile::getExt(basename($path)));
+
 			if ($ext == 'php')
 			{
 				return true;
@@ -68,6 +80,7 @@ class K2ControllerMedia extends K2Controller
 			{
 				return true;
 			}
+
 			// Read only access for front-end. Full access for administration section.
 			switch($attr)
 			{
@@ -89,27 +102,28 @@ class K2ControllerMedia extends K2Controller
 
 		if ($mainframe->isAdmin())
 		{
-			$permissions = array(
-				'read' => true,
-				'write' => true
-			);
+			$permissions = array('read' => true, 'write' => true);
 		}
 		else
 		{
-			$permissions = array(
-				'read' => true,
-				'write' => false
-			);
+			$permissions = array('read' => true, 'write' => false);
 		}
+
 		$options = array(
 			'debug' => false,
-			'roots' => array( array(
+			'roots' => array(
+				array(
 					'driver' => 'LocalFileSystem',
 					'path' => $path,
 					'URL' => $url,
 					'accessControl' => 'access',
-					'defaults' => $permissions
-				))
+					'defaults' => $permissions,
+					'mimeDetect' => 'internal',
+					'uploadDeny' => array('all'),
+					'uploadAllow' => array('image', 'video', 'audio', 'text/plain', 'text/html', 'application/json', 'application/pdf', 'application/zip', 'application/x-7z-compressed', 'application/x-bzip', 'application/x-bzip2', 'text/css', 'application/msword', 'application/vnd.ms-excel', 'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.openxmlformats-officedocument.presentationml.presentation'),
+					'uploadOrder' => array('deny', 'allow')
+				)
+			)
 		);
 		$connector = new elFinderConnector(new elFinder($options));
 		$connector->run();

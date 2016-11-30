@@ -1,14 +1,14 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
-defined('_JEXEC') or die ;
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.model');
 
@@ -21,6 +21,7 @@ class K2ModelCategories extends K2Model
     {
 
         $mainframe = JFactory::getApplication();
+        $params = JComponentHelper::getParams('com_k2');
         $option = JRequest::getCmd('option');
         $view = JRequest::getCmd('view');
         $db = JFactory::getDBO();
@@ -28,6 +29,7 @@ class K2ModelCategories extends K2Model
         $limitstart = $mainframe->getUserStateFromRequest($option.$view.'.limitstart', 'limitstart', 0, 'int');
         $search = $mainframe->getUserStateFromRequest($option.$view.'search', 'search', '', 'string');
         $search = JString::strtolower($search);
+        $search = trim(preg_replace('/[^\p{L}\p{N}\s\"\-_]/u', '', $search));
         $filter_order = $mainframe->getUserStateFromRequest($option.$view.'filter_order', 'filter_order', 'c.ordering', 'cmd');
         $filter_order_Dir = $mainframe->getUserStateFromRequest($option.$view.'filter_order_Dir', 'filter_order_Dir', '', 'word');
         $filter_trash = $mainframe->getUserStateFromRequest($option.$view.'filter_trash', 'filter_trash', 0, 'int');
@@ -42,11 +44,70 @@ class K2ModelCategories extends K2Model
             $query .= " AND c.trash=0";
         }
 
-        if ($search)
-        {
-            $escaped = K2_JVERSION == '15' ? $db->getEscaped($search, true) : $db->escape($search, true);
-            $query .= " AND LOWER( c.name ) LIKE ".$db->Quote('%'.$escaped.'%', false);
-        }
+		if ($search)
+		{
+
+			// Detect exact search phrase using double quotes in search string
+			if(substr($search, 0, 1)=='"' && substr($search, -1)=='"')
+			{
+				$exact = true;
+			}
+			else
+			{
+				$exact = false;
+			}
+
+			// Now completely strip double quotes
+			$search = trim(str_replace('"', '', $search));
+
+			// Escape remaining string
+			$escaped = K2_JVERSION == '15' ? $db->getEscaped($search, true) : $db->escape($search, true);
+
+			// Full phrase or set of words
+			if(strpos($escaped, ' ')!==false && !$exact)
+			{
+				$escaped=explode(' ', $escaped);
+				$quoted = array();
+				foreach($escaped as $key=>$escapedWord)
+				{
+					$quoted[] = $db->Quote('%'.$escapedWord.'%', false);
+				}
+				if ($params->get('adminSearch') == 'full')
+				{
+					foreach($quoted as $quotedWord)
+					{
+						$query .= " AND ( ".
+							"LOWER(c.name) LIKE ".$quotedWord." ".
+							"OR LOWER(c.description) LIKE ".$quotedWord." ".
+							" )";
+					}
+				}
+				else
+				{
+					foreach($quoted as $quotedWord)
+					{
+						$query .= " AND LOWER(c.name) LIKE ".$quotedWord;
+					}
+				}
+			}
+			// Single word or exact phrase to search for (wrapped in double quotes in the search block)
+			else
+			{
+				$quoted = $db->Quote('%'.$escaped.'%', false);
+
+				if ($params->get('adminSearch') == 'full')
+				{
+					$query .= " AND ( ".
+						"LOWER(c.name) LIKE ".$quoted." ".
+						"OR LOWER(c.description) LIKE ".$quoted." ".
+						" )";
+				}
+				else
+				{
+					$query .= " AND LOWER(c.name) LIKE ".$quoted;
+				}
+			}
+		}
 
         if ($filter_state > -1)
         {
@@ -54,7 +115,7 @@ class K2ModelCategories extends K2Model
         }
         if ($language)
         {
-            $query .= " AND (c.language = ".$db->Quote($language)." OR c.language = '*')";
+            $query .= " AND c.language = ".$db->Quote($language);
         }
 
         if ($filter_category)
@@ -101,6 +162,10 @@ class K2ModelCategories extends K2Model
                 $db->setQuery('SELECT parent FROM #__k2_categories WHERE id = '.$filter_category);
                 $root = $db->loadResult();
             }
+            else if($language && count($categories))
+            {
+            	$root = $categories[0]->parent;
+            }
             else
             {
                 $root = 0;
@@ -138,6 +203,7 @@ class K2ModelCategories extends K2Model
     {
 
         $mainframe = JFactory::getApplication();
+        $params = JComponentHelper::getParams('com_k2');
         $option = JRequest::getCmd('option');
         $view = JRequest::getCmd('view');
         $db = JFactory::getDBO();
@@ -145,6 +211,7 @@ class K2ModelCategories extends K2Model
         $limitstart = $mainframe->getUserStateFromRequest($option.'.limitstart', 'limitstart', 0, 'int');
         $search = $mainframe->getUserStateFromRequest($option.$view.'search', 'search', '', 'string');
         $search = JString::strtolower($search);
+        $search = trim(preg_replace('/[^\p{L}\p{N}\s\"\-_]/u', '', $search));
         $filter_trash = $mainframe->getUserStateFromRequest($option.$view.'filter_trash', 'filter_trash', 0, 'int');
         $filter_state = $mainframe->getUserStateFromRequest($option.$view.'filter_state', 'filter_state', 1, 'int');
         $language = $mainframe->getUserStateFromRequest($option.$view.'language', 'language', '', 'string');
@@ -157,11 +224,70 @@ class K2ModelCategories extends K2Model
             $query .= " AND trash=0";
         }
 
-        if ($search)
-        {
-            $escaped = K2_JVERSION == '15' ? $db->getEscaped($search, true) : $db->escape($search, true);
-            $query .= " AND LOWER( name ) LIKE ".$db->Quote('%'.$escaped.'%', false);
-        }
+		if ($search)
+		{
+
+			// Detect exact search phrase using double quotes in search string
+			if(substr($search, 0, 1)=='"' && substr($search, -1)=='"')
+			{
+				$exact = true;
+			}
+			else
+			{
+				$exact = false;
+			}
+
+			// Now completely strip double quotes
+			$search = trim(str_replace('"', '', $search));
+
+			// Escape remaining string
+			$escaped = K2_JVERSION == '15' ? $db->getEscaped($search, true) : $db->escape($search, true);
+
+			// Full phrase or set of words
+			if(strpos($escaped, ' ')!==false && !$exact)
+			{
+				$escaped=explode(' ', $escaped);
+				$quoted = array();
+				foreach($escaped as $key=>$escapedWord)
+				{
+					$quoted[] = $db->Quote('%'.$escapedWord.'%', false);
+				}
+				if ($params->get('adminSearch') == 'full')
+				{
+					foreach($quoted as $quotedWord)
+					{
+						$query .= " AND ( ".
+							"LOWER(name) LIKE ".$quotedWord." ".
+							"OR LOWER(description) LIKE ".$quotedWord." ".
+							" )";
+					}
+				}
+				else
+				{
+					foreach($quoted as $quotedWord)
+					{
+						$query .= " AND LOWER(name) LIKE ".$quotedWord;
+					}
+				}
+			}
+			// Single word or exact phrase to search for (wrapped in double quotes in the search block)
+			else
+			{
+				$quoted = $db->Quote('%'.$escaped.'%', false);
+
+				if ($params->get('adminSearch') == 'full')
+				{
+					$query .= " AND ( ".
+						"LOWER(name) LIKE ".$quoted." ".
+						"OR LOWER(description) LIKE ".$quoted." ".
+						" )";
+				}
+				else
+				{
+					$query .= " AND LOWER(name) LIKE ".$quoted;
+				}
+			}
+		}
 
         if ($filter_state > -1)
         {
@@ -170,7 +296,7 @@ class K2ModelCategories extends K2Model
 
         if ($language)
         {
-            $query .= " AND (language = ".$db->Quote($language)." OR language = '*')";
+            $query .= " AND language = ".$db->Quote($language);
         }
 
         if ($filter_category)
@@ -248,6 +374,7 @@ class K2ModelCategories extends K2Model
     {
 
         $mainframe = JFactory::getApplication();
+        $params = JComponentHelper::getParams('com_k2');
         $db = JFactory::getDBO();
         $cid = JRequest::getVar('cid', array(0), 'post', 'array');
         $total = count($cid);
@@ -268,7 +395,6 @@ class K2ModelCategories extends K2Model
                 }
             }
         }
-        $params = JComponentHelper::getParams('com_k2');
         if (!$params->get('disableCompactOrdering'))
         {
             $groupings = array_unique($groupings);
@@ -287,13 +413,13 @@ class K2ModelCategories extends K2Model
     {
 
         $mainframe = JFactory::getApplication();
+        $params = JComponentHelper::getParams('com_k2');
         $cid = JRequest::getVar('cid');
         $row = JTable::getInstance('K2Category', 'Table');
         $row->load($cid[0]);
         $row->move(-1, 'parent = '.$row->parent.' AND trash=0');
-        $params = JComponentHelper::getParams('com_k2');
         if (!$params->get('disableCompactOrdering'))
-            $row->reorder('parent = '.$row->parent.' AND trash=0');
+            $row->reorder('parent = '.(int)$row->parent.' AND trash=0');
         $cache = JFactory::getCache('com_k2');
         $cache->clean();
         $msg = JText::_('K2_NEW_ORDERING_SAVED');
@@ -305,13 +431,13 @@ class K2ModelCategories extends K2Model
     {
 
         $mainframe = JFactory::getApplication();
+        $params = JComponentHelper::getParams('com_k2');
         $cid = JRequest::getVar('cid');
         $row = JTable::getInstance('K2Category', 'Table');
         $row->load($cid[0]);
         $row->move(1, 'parent = '.$row->parent.' AND trash=0');
-        $params = JComponentHelper::getParams('com_k2');
         if (!$params->get('disableCompactOrdering'))
-            $row->reorder('parent = '.$row->parent.' AND trash=0');
+            $row->reorder('parent = '.(int)$row->parent.' AND trash=0');
         $cache = JFactory::getCache('com_k2');
         $cache->clean();
         $msg = JText::_('K2_NEW_ORDERING_SAVED');
@@ -411,6 +537,9 @@ class K2ModelCategories extends K2Model
         $db->setQuery($query);
         $db->query();
 
+        JPluginHelper::importPlugin('finder');
+        $dispatcher = JDispatcher::getInstance();
+        $dispatcher->trigger('onFinderChangeState', array('com_k2.category', $cid, 0));
         $cache = JFactory::getCache('com_k2');
         $cache->clean();
 		$mainframe->enqueueMessage(JText::_('K2_CATEGORIES_MOVED_TO_TRASH'));
@@ -462,6 +591,9 @@ class K2ModelCategories extends K2Model
             $db->setQuery('UPDATE #__k2_items SET trash = 0 WHERE catid IN ('.implode(',', $restored).') AND trash = 1');
             $db->query();
         }
+        JPluginHelper::importPlugin('finder');
+        $dispatcher = JDispatcher::getInstance();
+        $dispatcher->trigger('onFinderChangeState', array('com_k2.category', $cid, 1));
         $cache = JFactory::getCache('com_k2');
         $cache->clean();
         if ($warning)
@@ -530,7 +662,7 @@ class K2ModelCategories extends K2Model
         {
             $mainframe->enqueueMessage(JText::_('K2_SOME_OF_THE_CATEGORIES_HAVE_NOT_BEEN_DELETED_BECAUSE_THEY_HAVE_CHILD_CATEGORIES'), 'notice');
         }
-		
+
 		$mainframe->enqueueMessage(JText::_('K2_DELETE_COMPLETED'));
         $mainframe->redirect('index.php?option=com_k2&view=categories');
     }
@@ -602,12 +734,13 @@ class K2ModelCategories extends K2Model
         return $mitems;
     }
 
-    function copy()
+    function copy($batch = false)
     {
         jimport('joomla.filesystem.file');
         $mainframe = JFactory::getApplication();
         $cid = JRequest::getVar('cid');
         JArrayHelper::toInteger($cid);
+        $copies = array();
         foreach ($cid as $id)
         {
             //Load source category
@@ -621,6 +754,7 @@ class K2ModelCategories extends K2Model
             $row->name = JText::_('K2_COPY_OF').' '.$category->name;
             $row->published = 0;
             $row->store();
+            $copies[] = $row->id;
             //Target image
             if ($category->image && JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'categories'.DS.$category->image))
             {
@@ -629,8 +763,16 @@ class K2ModelCategories extends K2Model
                 $row->store();
             }
         }
-		$mainframe->enqueueMessage(JText::_('K2_COPY_COMPLETED'));
-        $mainframe->redirect('index.php?option=com_k2&view=categories');
+        if($batch)
+        {
+            return $copies;
+        }
+        else
+        {
+            $mainframe->enqueueMessage(JText::_('K2_COPY_COMPLETED'));
+            $mainframe->redirect('index.php?option=com_k2&view=categories');
+        }
+
     }
 
     function move()
@@ -638,20 +780,71 @@ class K2ModelCategories extends K2Model
 
         $mainframe = JFactory::getApplication();
         $cid = JRequest::getVar('cid');
-        $catid = JRequest::getInt('category');
-        
+        $catid = JRequest::getInt('moveCategories');
+        if(in_array($catid, $cid))
+        {
+            $mainframe->redirect('index.php?option=com_k2&view=categories');
+            return;
+        }
         foreach ($cid as $id)
         {
         	$row = JTable::getInstance('K2Category', 'Table');
             $row->load($id);
             $row->parent = $catid;
-            $row->ordering = $row->getNextOrder('parent = '.$row->parent.' AND published = 1');
+            $row->ordering = $row->getNextOrder('parent = '.(int)$row->parent.' AND published = 1');
             $row->store();
         }
         $cache = JFactory::getCache('com_k2');
         $cache->clean();
 		$mainframe->enqueueMessage(JText::_('K2_MOVE_COMPLETED'));
         $mainframe->redirect('index.php?option=com_k2&view=categories');
+
+    }
+
+    function saveBatch()
+    {
+        $application = JFactory::getApplication();
+        $cid = JRequest::getVar('cid');
+        $batchMode = JRequest::getCmd('batchMode');
+        $catid = JRequest::getCmd('batchCategory');
+        $access = JRequest::getCmd('batchAccess');
+        $extraFieldsGroups = JRequest::getCmd('batchExtraFieldsGroups');
+        $language = JRequest::getVar('batchLanguage');
+        if($batchMode == 'clone'){
+            $cid = $this->copy(true);
+        }
+        if(in_array($catid, $cid))
+        {
+            $application->redirect('index.php?option=com_k2&view=categories');
+            return;
+        }
+        foreach ($cid as $id)
+        {
+            $row = JTable::getInstance('K2Category', 'Table');
+            $row->load($id);
+            if(is_numeric($catid) && $catid != '')
+            {
+                $row->parent = $catid;
+                $row->ordering = $row->getNextOrder('parent = '.(int)$catid.' AND published = 1');
+            }
+            if($access)
+            {
+                $row->access = $access;
+            }
+            if(is_numeric($extraFieldsGroups) && $extraFieldsGroups != '')
+            {
+                $row->extraFieldsGroup = intval($extraFieldsGroups);
+            }
+            if($language)
+            {
+                $row->language = $language;
+            }
+            $row->store();
+        }
+        $cache = JFactory::getCache('com_k2');
+        $cache->clean();
+        $application->enqueueMessage(JText::_('K2_BATCH_COMPLETED'));
+        $application->redirect('index.php?option=com_k2&view=categories');
 
     }
 

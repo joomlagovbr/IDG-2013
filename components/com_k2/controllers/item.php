@@ -1,14 +1,14 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.7.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
-defined('_JEXEC') or die ;
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.controller');
 
@@ -58,14 +58,19 @@ class K2ControllerItem extends K2Controller
 				$itemListModel = K2Model::getInstance('Itemlist', 'K2Model');
 				$profile = $itemListModel->getUserProfile($user->id);
 				$script = "
-\$K2(document).ready(function() {
-\$K2('#userName').val('".$view->escape($user->name)."').attr('disabled', 'disabled');
-\$K2('#commentEmail').val('".$user->email."').attr('disabled', 'disabled');";
+					\$K2(document).ready(function() {
+						\$K2('#userName').val(".json_encode($user->name).").attr('disabled', 'disabled');
+						\$K2('#commentEmail').val('".$user->email."').attr('disabled', 'disabled');
+				";
 				if (is_object($profile) && $profile->url)
 				{
-					$script .= " \$K2('#commentURL').val('".htmlspecialchars($profile->url, ENT_QUOTES, 'UTF-8')."').attr('disabled', 'disabled');";
+					$script .= "
+						\$K2('#commentURL').val('".htmlspecialchars($profile->url, ENT_QUOTES, 'UTF-8')."').attr('disabled', 'disabled');
+					";
 				}
-				$script .= " });";
+				$script .= "
+					});
+				";
 				$document->addScriptDeclaration($script);
 			}
 		}
@@ -90,24 +95,12 @@ class K2ControllerItem extends K2Controller
 
 		$document = JFactory::getDocument();
 
-		if (version_compare(JVERSION, '1.6.0', 'ge'))
-		{
-			JHtml::_('behavior.framework');
-		}
-		else
-		{
-			JHTML::_('behavior.mootools');
-		}
+		K2HelperHTML::loadHeadIncludes(true, true, true);
 
 		// CSS
-		$document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.css?v=2.6.8');
-		$document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.frontend.css?v=2.6.8');
+		$document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.frontend.css?v='.K2_CURRENT_VERSION);
 		$document->addStyleSheet(JURI::root(true).'/templates/system/css/general.css');
 		$document->addStyleSheet(JURI::root(true).'/templates/system/css/system.css');
-
-		// JS
-		K2HelperHTML::loadjQuery(true);
-		$document->addScript(JURI::root(true).'/media/k2/assets/js/k2.js?v=2.6.8&amp;sitepath='.JURI::root(true).'/');
 
 		$this->addViewPath(JPATH_COMPONENT_ADMINISTRATOR.DS.'views');
 		$this->addModelPath(JPATH_COMPONENT_ADMINISTRATOR.DS.'models');
@@ -127,7 +120,7 @@ class K2ControllerItem extends K2Controller
 		$view->addTemplatePath(JPATH_SITE.DS.'templates'.DS.$mainframe->getTemplate().DS.'html'.DS.'com_k2'.DS.'templates');
 		$view->addTemplatePath(JPATH_SITE.DS.'templates'.DS.$mainframe->getTemplate().DS.'html'.DS.'com_k2'.DS.'templates'.DS.'default');
 
-		// Look for overrides in template folder (Joomla! template structure)
+		// Look for overrides in template folder (Joomla template structure)
 		$view->addTemplatePath(JPATH_SITE.DS.'templates'.DS.$mainframe->getTemplate().DS.'html'.DS.'com_k2'.DS.'default');
 		$view->addTemplatePath(JPATH_SITE.DS.'templates'.DS.$mainframe->getTemplate().DS.'html'.DS.'com_k2');
 
@@ -184,7 +177,11 @@ class K2ControllerItem extends K2Controller
 
 	function tags()
 	{
-
+		$user = JFactory::getUser();
+		if($user->guest)
+		{
+			JError::raiseError(403, JText::_('K2_ALERTNOTAUTH'));
+		}
 		require_once (JPATH_COMPONENT_ADMINISTRATOR.DS.'models'.DS.'tag.php');
 		$model = new K2ModelTag;
 		$model->tags();
@@ -301,7 +298,6 @@ class K2ControllerItem extends K2Controller
 
 	function media()
 	{
-		K2HelperHTML::loadjQuery(true, true);
 		JRequest::setVar('tmpl', 'component');
 		$params = K2HelperUtilities::getParams('com_k2');
 		$document = JFactory::getDocument();
@@ -324,12 +320,8 @@ class K2ControllerItem extends K2Controller
 			$mainframe->redirect(JRoute::_($url, false));
 		}
 
-		// CSS
-		$document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.css?v=2.6.8');
+		K2HelperHTML::loadHeadIncludes(false, true, true);
 
-		// JS
-		K2HelperHTML::loadjQuery(true);
-		$document->addScript(JURI::root(true).'/media/k2/assets/js/k2.js?v=2.6.8&amp;sitepath='.JURI::root(true).'/');
 		$this->addViewPath(JPATH_COMPONENT_ADMINISTRATOR.DS.'views');
 		$view = $this->getView('media', 'html');
 		$view->addTemplatePath(JPATH_COMPONENT_ADMINISTRATOR.DS.'views'.DS.'media'.DS.'tmpl');
@@ -377,21 +369,7 @@ class K2ControllerItem extends K2Controller
 
 		$document = JFactory::getDocument();
 
-		if (version_compare(JVERSION, '1.6.0', 'ge'))
-		{
-			JHtml::_('behavior.framework');
-		}
-		else
-		{
-			JHTML::_('behavior.mootools');
-		}
-
-		// CSS
-		$document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.css?v=2.6.8');
-
-		// JS
-		K2HelperHTML::loadjQuery(true);
-		$document->addScript(JURI::root(true).'/media/k2/assets/js/k2.js?v=2.6.8&amp;sitepath='.JURI::root(true).'/');
+		K2HelperHTML::loadHeadIncludes(true, true, true);
 
 		$this->addViewPath(JPATH_COMPONENT_ADMINISTRATOR.DS.'views');
 		$this->addModelPath(JPATH_COMPONENT_ADMINISTRATOR.DS.'models');

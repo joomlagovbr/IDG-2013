@@ -1,17 +1,17 @@
 <?php
 /**
-* @version		2.6.x
+* @version		2.7.x
 * @package		K2
 * @author		JoomlaWorks http://www.joomlaworks.net
-* @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
+* @copyright	Copyright (c) 2006 - 2016 JoomlaWorks Ltd. All rights reserved.
 * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
 */
 
 // no direct access
 defined('_JEXEC') or die;
 
-// Quick and dirty fix for Joomla! 3.0 missing CSS tabs when creating tabs using the API.
-// Should be removed when Joomla! fixes that...
+// Quick and dirty fix for Joomla 3.0 missing CSS tabs when creating tabs using the API.
+// Should be removed when Joomla fixes that...
 if (K2_JVERSION == '30')
 {
 	$document = JFactory::getDocument();
@@ -24,7 +24,7 @@ if (K2_JVERSION == '30')
 ');
 }
 
-// Import Joomla! tabs
+// Import Joomla tabs
 jimport('joomla.html.pane');
 
 ?>

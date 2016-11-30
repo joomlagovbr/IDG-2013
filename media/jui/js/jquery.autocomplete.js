@@ -1,5 +1,5 @@
 /**
-*  Ajax Autocomplete for jQuery, version 1.2.18
+*  Ajax Autocomplete for jQuery, version 1.2.25
 *  (c) 2015 Tomas Kirda
 *
 *  Ajax Autocomplete for jQuery is freely distributable under the terms of an MIT-style license.
@@ -127,9 +127,20 @@
     $.Autocomplete = Autocomplete;
 
     Autocomplete.formatResult = function (suggestion, currentValue) {
+        // Do not replace anything if there current value is empty
+        if (!currentValue) {
+            return suggestion.value;
+        }
+        
         var pattern = '(' + utils.escapeRegExChars(currentValue) + ')';
 
-        return suggestion.value.replace(new RegExp(pattern, 'gi'), '<strong>$1<\/strong>');
+        return suggestion.value
+            .replace(new RegExp(pattern, 'gi'), '<strong>$1<\/strong>')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/&lt;(\/?strong)&gt;/g, '<$1>');
     };
 
     Autocomplete.prototype = {
@@ -182,6 +193,7 @@
             // Listen for click event on suggestions list:
             container.on('click.autocomplete', suggestionSelector, function () {
                 that.select($(this).data('index'));
+                return false;
             });
 
             that.fixPositionCapture = function () {
@@ -202,14 +214,24 @@
 
         onFocus: function () {
             var that = this;
+
             that.fixPosition();
-            if (that.options.minChars <= that.el.val().length) {
+
+            if (that.el.val().length >= that.options.minChars) {
                 that.onValueChange();
             }
         },
 
         onBlur: function () {
             this.enableKillerFn();
+        },
+        
+        abortAjax: function () {
+            var that = this;
+            if (that.currentRequest) {
+                that.currentRequest.abort();
+                that.currentRequest = null;
+            }
         },
 
         setOptions: function (suppliedOptions) {
@@ -250,9 +272,7 @@
             var that = this;
             that.disabled = true;
             clearInterval(that.onChangeInterval);
-            if (that.currentRequest) {
-                that.currentRequest.abort();
-            }
+            that.abortAjax();
         },
 
         enable: function () {
@@ -334,7 +354,11 @@
             var that = this;
             that.stopKillSuggestions();
             that.intervalId = window.setInterval(function () {
-                that.hide();
+                if (that.visible) {
+                    that.el.val(that.currentValue);
+                    that.hide();
+                }
+                
                 that.stopKillSuggestions();
             }, 50);
         },
@@ -452,8 +476,7 @@
             var that = this,
                 options = that.options,
                 value = that.el.val(),
-                query = that.getQuery(value),
-                index;
+                query = that.getQuery(value);
 
             if (that.selection && that.currentValue !== query) {
                 that.selection = null;
@@ -465,12 +488,9 @@
             that.selectedIndex = -1;
 
             // Check existing suggestion for the match before proceeding:
-            if (options.triggerSelectOnValidInput) {
-                index = that.findSuggestionIndex(query);
-                if (index !== -1) {
-                    that.select(index);
-                    return;
-                }
+            if (options.triggerSelectOnValidInput && that.isExactMatch(query)) {
+                that.select(0);
+                return;
             }
 
             if (query.length < options.minChars) {
@@ -480,19 +500,10 @@
             }
         },
 
-        findSuggestionIndex: function (query) {
-            var that = this,
-                index = -1,
-                queryLowerCase = query.toLowerCase();
+        isExactMatch: function (query) {
+            var suggestions = this.suggestions;
 
-            $.each(that.suggestions, function (i, suggestion) {
-                if (suggestion.value.toLowerCase() === queryLowerCase) {
-                    index = i;
-                    return false;
-                }
-            });
-
-            return index;
+            return (suggestions.length === 1 && suggestions[0].value.toLowerCase() === query.toLowerCase());
         },
 
         getQuery: function (value) {
@@ -567,9 +578,7 @@
                 that.suggest();
                 options.onSearchComplete.call(that.element, q, response.suggestions);
             } else if (!that.isBadQuery(q)) {
-                if (that.currentRequest) {
-                    that.currentRequest.abort();
-                }
+                that.abortAjax();
 
                 ajaxSettings = {
                     url: serviceUrl,
@@ -583,7 +592,7 @@
                 that.currentRequest = $.ajax(ajaxSettings).done(function (data) {
                     var result;
                     that.currentRequest = null;
-                    result = options.transformResult(data);
+                    result = options.transformResult(data, q);
                     that.processResponse(result, q, cacheKey);
                     options.onSearchComplete.call(that.element, q, result.suggestions);
                 }).fail(function (jqXHR, textStatus, errorThrown) {
@@ -658,15 +667,11 @@
                         category = currentCategory;
 
                         return '<div class="autocomplete-group"><strong>' + category + '</strong></div>';
-                    },
-                index;
+                    };
 
-            if (options.triggerSelectOnValidInput) {
-                index = that.findSuggestionIndex(value);
-                if (index !== -1) {
-                    that.select(index);
-                    return;
-                }
+            if (options.triggerSelectOnValidInput && that.isExactMatch(value)) {
+                that.select(0);
+                return;
             }
 
             // Build suggestions inner HTML:
@@ -675,7 +680,7 @@
                     html += formatGroup(suggestion, value, i);
                 }
 
-                html += '<div class="' + className + '" data-index="' + i + '">' + formatResult(suggestion, value) + '</div>';
+                html += '<div class="' + className + '" data-index="' + i + '">' + formatResult(suggestion, value, i) + '</div>';
             });
 
             this.adjustContainerWidth();
@@ -684,7 +689,7 @@
             container.html(html);
 
             if ($.isFunction(beforeRender)) {
-                beforeRender.call(that.element, container);
+                beforeRender.call(that.element, container, that.suggestions);
             }
 
             that.fixPosition();
