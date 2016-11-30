@@ -9,7 +9,7 @@ A atualização nativa é plenamente compatível com esta versão da IDG para Jo
 
 Sobre esta versão
 ---------------------
-O Joomla 3.4.x é recomendado para versões do PHP 5.3.10+. 
+O Joomla 3.4.x é recomendado para versões do PHP 5.3.10+.
 
 Acompanhe as atualizações do projeto
 ---------------------
@@ -39,11 +39,22 @@ Documentação
 ---------------------
 Confira a documentação disponível até o momento no repositório provisório [https://github.com/joomlagovbr/documentacao](https://github.com/joomlagovbr/documentacao).
 
-###Links diretos:
+### Links diretos:
 -   [Manual Template Portal Padrão, vr. 0.1](https://github.com/joomlagovbr/documentacao/raw/master/pdf/1.%20Manual%20Portal%20Padrao.pdf) - (as imagens são baseadas na versão Joomla 2.5, mas os princípios de alteração são os mesmos para a versão 3.3)
 -   [Como criar uma manchete de página inicial ou editoria](https://github.com/joomlagovbr/documentacao/raw/master/pdf/2.%20Pagina%20Inicial%20-%20Criar%20manchete.pdf)
 -   [Posições de template do projeto Portal Padrão (importante)](https://github.com/joomlagovbr/documentacao/raw/master/pdf/3.%20Posicoes%20de%20template%20do%20projeto%20portal%20padrao.pdf) - (as posições são geradas dinamicamente, através de uma lógica própria)
 
+
+Configuração para desenvolvimento
+---------------------
+O fonte do projeto usa [LESS](http://lesscss.org/), que precisa ser compilado para CSS. Esse processo foi automatizado independente de ambiente de desenvolvimento e IDE, usando a ferramenta [Gulp](http://gulpjs.com/), para o usar você precisa:
+   - Instalar o [Nodejs](https://nodejs.org);
+   - Após a instalação, um terminal, dentro da pasta raiz do projeto execute os comandos:
+        - `` npm install `` para instalar as dependências (somente uma vez);
+        - `` npm install -g gulp `` para instalar o gulp (somente uma vez);
+        - `` gulp watch `` para monitorar alterações nos aquivos LESS e compilar para CSS sem compressão (durante o desenvolvimento);
+        - `` gulp less `` para compilar e "comprimir" os aquivos LESS para CSS (para gerar uma versão final);
+   - Mais informações sobre Nodejs e Gulp: [Workflow Front End](https://www.gitbook.com/book/tapmorales/workflow-front-end/details) e [Gulp: O novo automatizador](http://tableless.com.br/gulp-o-novo-automatizador/)
 
 Desenvolvimento
 ---------------------

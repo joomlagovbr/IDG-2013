@@ -39,7 +39,7 @@ $active_item = TmplPadraoGoverno01Helper::getActiveItemid();
     <!--[if lt IE 8]>
     <link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/css/ie7.css" />
     <link rel="stylesheet" href="font-awesome/css/font-awesome-ie7.min.css" />
-    <![endif]-->    
+    <![endif]-->
     <?php if(TmplPadraoGoverno01Helper::beforeHead('local_mainscript', $this)) TmplPadraoGoverno01Helper::getTemplateMainScripts( $this ); ?>
     <jdoc:include type="head" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -226,17 +226,9 @@ $active_item = TmplPadraoGoverno01Helper::getActiveItemid();
                 <!-- fim .row -->
             </div>
             <!-- fim .container -->
-            <div class="footer-logos">
-                <div class="container">
-                    <?php if( $this->params->get('rodape_acesso_informacao', 1) == 1 ): ?>
-                        <a href="http://www.acessoainformacao.gov.br/" class="logo-acesso pull-left"><img src="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/images/acesso-a-informacao.png" alt="Acesso a Informação"></a>
-                    <?php endif; ?>
-                    <?php if( $this->params->get('rodape_logo_brasil', 1) == 1 ): ?>
-                        <!-- separador para fins de acessibilidade --><span class="hide">&nbsp;</span><!-- fim separador para fins de acessibilidade -->
-                        <a href="http://www.brasil.gov.br/" class="brasil pull-right"><img src="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/images/brasil.png" alt="Brasil - Governo Federal"></a>
-                    <?php endif; ?>
-                </div>
-            </div>
+            <?php if( $this->params->get('rodape_acesso_informacao', 1) == 1 ): ?>
+            <div id="footer-brasil" class="footer-logos"></div>
+            <?php endif; ?>
             <div class="footer-ferramenta">
                 <div class="container">
                     <?php echo $this->params->get('mensagem_final_ferramenta', '<p>Desenvolvido com o CMS de c&oacute;digo aberto <a href="http://www.joomla.org">Joomla</a></p>'); ?>

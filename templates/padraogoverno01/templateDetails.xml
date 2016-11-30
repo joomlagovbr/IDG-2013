@@ -101,16 +101,8 @@
 					label="Emblema"
 					description="Para o caso de instituições militares, informe o caminho do emblema, a partir do diretório /images. Há exemplos de emblemas no endereço /images/exemplo_emblemas . Tamanho máximo preferencial: 112px de largura por 80px de altura" />
 				<field name="rodape_acesso_informacao" type="list" default="1"
-					label="Exibir logo acesso à informação"
-					description="Logo no rodapé do acesso à informação"
-					filter="integer"
-				>
-					<option value="1">SIM</option>
-					<option value="0">NÃO</option>
-				</field>
-				<field name="rodape_logo_brasil" type="list" default="0"
-					label="Exibir logo BRASIL"
-					description="Logo no rodapé do Governo Federal"
+					label="Exibir rodapé acesso à informação"
+					description="Rodapé no rodapé do acesso à informação"
 					filter="integer"
 				>
 					<option value="1">SIM</option>
@@ -162,9 +154,9 @@
 					<option value="1">Sim</option>
 				</field>
 				<field type="spacer" hr="true" />
-				<field name="allow_set_color" type="list" default="0" label="Permitir teste com outra cor de tema" description="Permite configurar a cor de uma página específica, com a cor de um tema diferente da cor do tema padrão. Ex.: index.php?cor=amarelo">					
+				<field name="allow_set_color" type="list" default="0" label="Permitir teste com outra cor de tema" description="Permite configurar a cor de uma página específica, com a cor de um tema diferente da cor do tema padrão. Ex.: index.php?cor=amarelo">
 					<option value="1">SIM</option>
-					<option value="0">NÃO</option>		
+					<option value="0">NÃO</option>
 		  		</field>
 		  		<field name="meta_generator" type="text" default=""
 					label="Tag Generator"
