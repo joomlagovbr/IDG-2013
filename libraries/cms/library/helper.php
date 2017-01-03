@@ -3,7 +3,7 @@
  * @package     Joomla.Legacy
  * @subpackage  Library
  *
- * @copyright   Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -32,7 +32,7 @@ class JLibraryHelper
 	 * @param   string   $element  Element of the library in the extensions table.
 	 * @param   boolean  $strict   If set and the library does not exist, the enabled attribute will be set to false.
 	 *
-	 * @return  object   An object with the library's information.
+	 * @return  stdClass   An object with the library's information.
 	 *
 	 * @since   3.2
 	 */
@@ -143,8 +143,8 @@ class JLibraryHelper
 	{
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true)
-			->select('extension_id AS id, element AS "option", params, enabled')
-			->from('#__extensions')
+			->select($db->quoteName(array('extension_id', 'element', 'params', 'enabled'), array('id', 'option', null, null)))
+			->from($db->quoteName('#__extensions'))
 			->where($db->quoteName('type') . ' = ' . $db->quote('library'))
 			->where($db->quoteName('element') . ' = ' . $db->quote($element));
 		$db->setQuery($query);

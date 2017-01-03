@@ -1,17 +1,17 @@
 /**
-*  Ajax Autocomplete for jQuery, version 1.2.18
+*  Ajax Autocomplete for jQuery, version 1.2.26
 *  (c) 2015 Tomas Kirda
 *
 *  Ajax Autocomplete for jQuery is freely distributable under the terms of an MIT-style license.
 *  For details, see the web site: https://github.com/devbridge/jQuery-Autocomplete
 */
 
-/*jslint  browser: true, white: true, plusplus: true, vars: true */
+/*jslint  browser: true, white: true, single: true, this: true, multivar: true */
 /*global define, window, document, jQuery, exports, require */
 
 // Expose plugin as an AMD module if AMD loader is present:
 (function (factory) {
-    'use strict';
+    "use strict";
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
         define(['jquery'], factory);
@@ -29,7 +29,7 @@
         utils = (function () {
             return {
                 escapeRegExChars: function (value) {
-                    return value.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+                    return value.replace(/[|\\{}()[\]^$+*?.]/g, "\\$&");
                 },
                 createNode: function (containerClass) {
                     var div = document.createElement('div');
@@ -52,7 +52,7 @@
         };
 
     function Autocomplete(el, options) {
-        var noop = function () { },
+        var noop = $.noop,
             that = this,
             defaults = {
                 ajaxSettings: {},
@@ -127,9 +127,20 @@
     $.Autocomplete = Autocomplete;
 
     Autocomplete.formatResult = function (suggestion, currentValue) {
+        // Do not replace anything if there current value is empty
+        if (!currentValue) {
+            return suggestion.value;
+        }
+        
         var pattern = '(' + utils.escapeRegExChars(currentValue) + ')';
 
-        return suggestion.value.replace(new RegExp(pattern, 'gi'), '<strong>$1<\/strong>');
+        return suggestion.value
+            .replace(new RegExp(pattern, 'gi'), '<strong>$1<\/strong>')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/&lt;(\/?strong)&gt;/g, '<$1>');
     };
 
     Autocomplete.prototype = {
@@ -147,7 +158,7 @@
             that.element.setAttribute('autocomplete', 'off');
 
             that.killerFn = function (e) {
-                if ($(e.target).closest('.' + that.options.containerClass).length === 0) {
+                if (!$(e.target).closest('.' + that.options.containerClass).length) {
                     that.killSuggestions();
                     that.disableKillerFn();
                 }
@@ -165,7 +176,7 @@
 
             // Only set width if it was provided:
             if (options.width !== 'auto') {
-                container.width(options.width);
+                container.css('width', options.width);
             }
 
             // Listen for mouse over event on suggestions list:
@@ -182,6 +193,7 @@
             // Listen for click event on suggestions list:
             container.on('click.autocomplete', suggestionSelector, function () {
                 that.select($(this).data('index'));
+                return false;
             });
 
             that.fixPositionCapture = function () {
@@ -202,14 +214,24 @@
 
         onFocus: function () {
             var that = this;
+
             that.fixPosition();
-            if (that.options.minChars <= that.el.val().length) {
+
+            if (that.el.val().length >= that.options.minChars) {
                 that.onValueChange();
             }
         },
 
         onBlur: function () {
             this.enableKillerFn();
+        },
+        
+        abortAjax: function () {
+            var that = this;
+            if (that.currentRequest) {
+                that.currentRequest.abort();
+                that.currentRequest = null;
+            }
         },
 
         setOptions: function (suppliedOptions) {
@@ -250,9 +272,7 @@
             var that = this;
             that.disabled = true;
             clearInterval(that.onChangeInterval);
-            if (that.currentRequest) {
-                that.currentRequest.abort();
-            }
+            that.abortAjax();
         },
 
         enable: function () {
@@ -312,9 +332,8 @@
                 }
             }
 
-            // -2px to account for suggestions border.
             if (that.options.width === 'auto') {
-                styles.width = (that.el.outerWidth() - 2) + 'px';
+                styles.width = that.el.outerWidth() + 'px';
             }
 
             $container.css(styles);
@@ -334,7 +353,17 @@
             var that = this;
             that.stopKillSuggestions();
             that.intervalId = window.setInterval(function () {
-                that.hide();
+                if (that.visible) {
+                    // No need to restore value when 
+                    // preserveInput === true, 
+                    // because we did not change it
+                    if (!that.options.preserveInput) {
+                        that.el.val(that.currentValue);
+                    }
+
+                    that.hide();
+                }
+                
                 that.stopKillSuggestions();
             }, 50);
         },
@@ -452,8 +481,7 @@
             var that = this,
                 options = that.options,
                 value = that.el.val(),
-                query = that.getQuery(value),
-                index;
+                query = that.getQuery(value);
 
             if (that.selection && that.currentValue !== query) {
                 that.selection = null;
@@ -465,12 +493,9 @@
             that.selectedIndex = -1;
 
             // Check existing suggestion for the match before proceeding:
-            if (options.triggerSelectOnValidInput) {
-                index = that.findSuggestionIndex(query);
-                if (index !== -1) {
-                    that.select(index);
-                    return;
-                }
+            if (options.triggerSelectOnValidInput && that.isExactMatch(query)) {
+                that.select(0);
+                return;
             }
 
             if (query.length < options.minChars) {
@@ -480,19 +505,10 @@
             }
         },
 
-        findSuggestionIndex: function (query) {
-            var that = this,
-                index = -1,
-                queryLowerCase = query.toLowerCase();
+        isExactMatch: function (query) {
+            var suggestions = this.suggestions;
 
-            $.each(that.suggestions, function (i, suggestion) {
-                if (suggestion.value.toLowerCase() === queryLowerCase) {
-                    index = i;
-                    return false;
-                }
-            });
-
-            return index;
+            return (suggestions.length === 1 && suggestions[0].value.toLowerCase() === query.toLowerCase());
         },
 
         getQuery: function (value) {
@@ -567,9 +583,7 @@
                 that.suggest();
                 options.onSearchComplete.call(that.element, q, response.suggestions);
             } else if (!that.isBadQuery(q)) {
-                if (that.currentRequest) {
-                    that.currentRequest.abort();
-                }
+                that.abortAjax();
 
                 ajaxSettings = {
                     url: serviceUrl,
@@ -583,7 +597,7 @@
                 that.currentRequest = $.ajax(ajaxSettings).done(function (data) {
                     var result;
                     that.currentRequest = null;
-                    result = options.transformResult(data);
+                    result = options.transformResult(data, q);
                     that.processResponse(result, q, cacheKey);
                     options.onSearchComplete.call(that.element, q, result.suggestions);
                 }).fail(function (jqXHR, textStatus, errorThrown) {
@@ -627,7 +641,7 @@
         },
 
         suggest: function () {
-            if (this.suggestions.length === 0) {
+            if (!this.suggestions.length) {
                 if (this.options.showNoSuggestionNotice) {
                     this.noSuggestions();
                 } else {
@@ -658,15 +672,11 @@
                         category = currentCategory;
 
                         return '<div class="autocomplete-group"><strong>' + category + '</strong></div>';
-                    },
-                index;
+                    };
 
-            if (options.triggerSelectOnValidInput) {
-                index = that.findSuggestionIndex(value);
-                if (index !== -1) {
-                    that.select(index);
-                    return;
-                }
+            if (options.triggerSelectOnValidInput && that.isExactMatch(value)) {
+                that.select(0);
+                return;
             }
 
             // Build suggestions inner HTML:
@@ -675,7 +685,7 @@
                     html += formatGroup(suggestion, value, i);
                 }
 
-                html += '<div class="' + className + '" data-index="' + i + '">' + formatResult(suggestion, value) + '</div>';
+                html += '<div class="' + className + '" data-index="' + i + '">' + formatResult(suggestion, value, i) + '</div>';
             });
 
             this.adjustContainerWidth();
@@ -684,7 +694,7 @@
             container.html(html);
 
             if ($.isFunction(beforeRender)) {
-                beforeRender.call(that.element, container);
+                beforeRender.call(that.element, container, that.suggestions);
             }
 
             that.fixPosition();
@@ -729,10 +739,9 @@
             // If width is auto, adjust width before displaying suggestions,
             // because if instance was created before input had width, it will be zero.
             // Also it adjusts if input width has changed.
-            // -2px to account for suggestions border.
             if (options.width === 'auto') {
-                width = that.el.outerWidth() - 2;
-                container.width(width > 0 ? width : 300);
+                width = that.el.outerWidth();
+                container.css('width', width > 0 ? width : 300);
             }
         },
 
@@ -799,7 +808,7 @@
             // Cache results if cache is not disabled:
             if (!options.noCache) {
                 that.cachedResponse[cacheKey] = result;
-                if (options.preventBadQueries && result.suggestions.length === 0) {
+                if (options.preventBadQueries && !result.suggestions.length) {
                     that.badQueries.push(originalQuery);
                 }
             }
@@ -957,7 +966,7 @@
         var dataKey = 'autocomplete';
         // If function invoked without argument return
         // instance of the first matched element:
-        if (arguments.length === 0) {
+        if (!arguments.length) {
             return this.first().data(dataKey);
         }
 

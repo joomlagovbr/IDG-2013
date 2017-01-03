@@ -3,13 +3,13 @@
  * @package     Joomla.Site
  * @subpackage  com_users
  *
- * @copyright   Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('_JEXEC') or die;
 
-require_once JPATH_COMPONENT . '/controller.php';
+JLoader::register('UsersController', JPATH_COMPONENT . '/controller.php');
 
 /**
  * Profile controller class for Users.
@@ -38,7 +38,8 @@ class UsersControllerProfile extends UsersController
 		// Check if the user is trying to edit another users profile.
 		if ($userId != $loginUserId)
 		{
-			JError::raiseError(403, JText::_('JERROR_ALERTNOAUTHOR'));
+			$app->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'error');
+			$app->setHeader('status', 403, true);
 
 			return false;
 		}
@@ -97,10 +98,10 @@ class UsersControllerProfile extends UsersController
 		$userId = (int) $user->get('id');
 
 		// Get the user data.
-		$data = $app->input->post->get('jform', array(), 'array');
+		$requestData = $app->input->post->get('jform', array(), 'array');
 
 		// Force the ID to this user.
-		$data['id'] = $userId;
+		$requestData['id'] = $userId;
 
 		// Validate the posted data.
 		$form = $model->getForm();
@@ -113,7 +114,7 @@ class UsersControllerProfile extends UsersController
 		}
 
 		// Validate the posted data.
-		$data = $model->validate($form, $data);
+		$data = $model->validate($form, $requestData);
 
 		// Check for errors.
 		if ($data === false)
@@ -134,8 +135,12 @@ class UsersControllerProfile extends UsersController
 				}
 			}
 
+			// Unset the passwords.
+			unset($requestData['password1']);
+			unset($requestData['password2']);
+
 			// Save the data in the session.
-			$app->setUserState('com_users.edit.profile.data', $data);
+			$app->setUserState('com_users.edit.profile.data', $requestData);
 
 			// Redirect back to the edit screen.
 			$userId = (int) $app->getUserState('com_users.edit.profile.id');

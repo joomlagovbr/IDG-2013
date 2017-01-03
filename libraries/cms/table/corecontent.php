@@ -3,13 +3,14 @@
  * @package     Joomla.Libraries
  * @subpackage  Table
  *
- * @copyright   Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
 defined('JPATH_PLATFORM') or die;
 
 use Joomla\Registry\Registry;
+use Joomla\Utilities\ArrayHelper;
 
 /**
  * Core content table
@@ -94,7 +95,7 @@ class JTableCorecontent extends JTable
 	{
 		if (trim($this->core_title) == '')
 		{
-			$this->setError(JText::_('LIB_CMS_WARNING_PROVIDE_VALID_NAME'));
+			$this->setError(JText::_('JLIB_CMS_WARNING_PROVIDE_VALID_NAME'));
 
 			return false;
 		}
@@ -104,7 +105,7 @@ class JTableCorecontent extends JTable
 			$this->core_alias = $this->core_title;
 		}
 
-		$this->core_alias = JApplication::stringURLSafe($this->core_alias);
+		$this->core_alias = JApplicationHelper::stringURLSafe($this->core_alias);
 
 		if (trim(str_replace('-', '', $this->core_alias)) == '')
 		{
@@ -334,7 +335,7 @@ class JTableCorecontent extends JTable
 		$k = $this->_tbl_key;
 
 		// Sanitize input.
-		JArrayHelper::toInteger($pks);
+		$pks = ArrayHelper::toInteger($pks);
 		$userId = (int) $userId;
 		$state = (int) $state;
 

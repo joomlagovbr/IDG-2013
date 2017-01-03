@@ -3,7 +3,7 @@
  * @package     Joomla.Administrator
  * @subpackage  com_templates
  *
- * @copyright   Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -144,8 +144,8 @@ if($this->type == 'font')
 					<form method="post" action="">
 						<input type="hidden" name="option" value="com_templates" />
 						<input type="hidden" name="task" value="template.delete" />
-						<input type="hidden" name="id" value="<? echo $input->getInt('id'); ?>" />
-						<input type="hidden" name="file" value="<? echo $this->file; ?>" />
+						<input type="hidden" name="id" value="<?php echo $input->getInt('id'); ?>" />
+						<input type="hidden" name="file" value="<?php echo $this->file; ?>" />
 						<?php echo JHtml::_('form.token'); ?>
 						<a href="#" class="btn" data-dismiss="modal"><?php echo JText::_('COM_TEMPLATES_TEMPLATE_CLOSE'); ?></a>
 						<button type="submit"><?php echo JText::_('COM_TEMPLATES_BUTTON_DELETE');?></button>
@@ -287,7 +287,7 @@ if($this->type == 'font')
 				<h1><p><?php echo JText::_('COM_TEMPLATES_HOME_HEADING'); ?></p></h1>
 				<p><?php echo JText::_('COM_TEMPLATES_HOME_TEXT'); ?></p>
 				<p>
-					<a href="https://docs.joomla.org/J3.2:How_to_use_the_Template_Manager" target="_blank">
+					<a href="https://docs.joomla.org/J3.x:How_to_use_the_Template_Manager" target="_blank">
 						<?php echo JText::_('COM_TEMPLATES_HOME_BUTTON'); ?>
 					</a>
 				</p>
