@@ -3,13 +3,13 @@
  * @package     Joomla.Administrator
  * @subpackage  com_content
  *
- * @copyright   Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('_JEXEC') or die;
 
-require_once __DIR__ . '/articles.php';
+JLoader::register('ContentModelArticles', __DIR__ . '/articles.php');
 
 /**
  * About Page Model
@@ -86,7 +86,7 @@ class ContentModelFeatured extends ContentModelArticles
 		$query->from('#__content AS a');
 
 		// Join over the language
-		$query->select('l.title AS language_title')
+		$query->select('l.title AS language_title, l.image AS language_image')
 			->join('LEFT', $db->quoteName('#__languages') . ' AS l ON l.lang_code = a.language');
 
 		// Join over the content table.
@@ -156,6 +156,7 @@ class ContentModelFeatured extends ContentModelArticles
 
 		// Filter by author
 		$authorId = $this->getState('filter.author_id');
+
 		if (is_numeric($authorId))
 		{
 			$type = $this->getState('filter.author_id.include', true) ? '= ' : '<>';
@@ -170,6 +171,11 @@ class ContentModelFeatured extends ContentModelArticles
 			if (stripos($search, 'id:') === 0)
 			{
 				$query->where('a.id = ' . (int) substr($search, 3));
+			}
+			elseif (stripos($search, 'author:') === 0)
+			{
+				$search = $db->quote('%' . $db->escape(substr($search, 7), true) . '%');
+				$query->where('(ua.name LIKE ' . $search . ' OR ua.username LIKE ' . $search . ')');
 			}
 			else
 			{
@@ -201,5 +207,22 @@ class ContentModelFeatured extends ContentModelArticles
 		$query->order($db->escape($this->getState('list.ordering', 'a.title')) . ' ' . $db->escape($this->getState('list.direction', 'ASC')));
 
 		return $query;
+	}
+
+	/**
+	 * Method to auto-populate the model state.
+	 *
+	 * Note. Calling getState in this method will result in recursion.
+	 *
+	 * @param   string  $ordering   An optional ordering field.
+	 * @param   string  $direction  An optional direction (asc|desc).
+	 *
+	 * @return  void
+	 *
+	 * @since   3.5
+	 */
+	protected function populateState($ordering = 'a.title', $direction = 'asc')
+	{
+		parent::populateState($ordering, $direction);
 	}
 }
