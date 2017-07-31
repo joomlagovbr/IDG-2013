@@ -3,7 +3,7 @@
  * @package     Joomla.Plugin
  * @subpackage  Authentication.joomla
  *
- * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2017 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -61,7 +61,7 @@ class PlgAuthenticationJoomla extends JPlugin
 				$response->email    = $user->email;
 				$response->fullname = $user->name;
 
-				if (JFactory::getApplication()->isAdmin())
+				if (JFactory::getApplication()->isClient('administrator'))
 				{
 					$response->language = $user->getParam('admin_language');
 				}
@@ -92,7 +92,7 @@ class PlgAuthenticationJoomla extends JPlugin
 		}
 
 		// Check the two factor authentication
-		if ($response->status == JAuthentication::STATUS_SUCCESS)
+		if ($response->status === JAuthentication::STATUS_SUCCESS)
 		{
 			$methods = JAuthenticationHelper::getTwoFactorMethods();
 
@@ -119,10 +119,10 @@ class PlgAuthenticationJoomla extends JPlugin
 			}
 
 			// Check if the user has enabled two factor authentication
-			if (empty($otpConfig->method) || ($otpConfig->method == 'none'))
+			if (empty($otpConfig->method) || ($otpConfig->method === 'none'))
 			{
 				// Warn the user if they are using a secret code but they have not
-				// enabed two factor auth in their account.
+				// enabled two factor auth in their account.
 				if (!empty($credentials['secretkey']))
 				{
 					try
@@ -170,7 +170,7 @@ class PlgAuthenticationJoomla extends JPlugin
 				// Did the user use an OTEP instead?
 				if (empty($otpConfig->otep))
 				{
-					if (empty($otpConfig->method) || ($otpConfig->method == 'none'))
+					if (empty($otpConfig->method) || ($otpConfig->method === 'none'))
 					{
 						// Two factor authentication is not enabled on this account.
 						// Any string is assumed to be a valid OTEP.

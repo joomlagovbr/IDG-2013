@@ -3,11 +3,13 @@
  * @package     Joomla.Libraries
  * @subpackage  Helper
  *
- * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2017 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('JPATH_PLATFORM') or die;
+
+use Joomla\Registry\Registry;
 
 /**
  * Helper for standard content style extensions.
@@ -93,28 +95,36 @@ class JHelperContent
 	public static function getActions($component = '', $section = '', $id = 0)
 	{
 		// Check for deprecated arguments order
-		if (is_int($component) || is_null($component))
+		if (is_int($component) || $component === null)
 		{
 			$result = self::_getActions($component, $section, $id);
 
 			return $result;
 		}
 
-		$user   = JFactory::getUser();
-		$result = new JObject;
-
-		$path = JPATH_ADMINISTRATOR . '/components/' . $component . '/access.xml';
+		$assetName = $component;
 
 		if ($section && $id)
 		{
-			$assetName = $component . '.' . $section . '.' . (int) $id;
-		}
-		else
-		{
-			$assetName = $component;
+			$assetName .=  '.' . $section . '.' . (int) $id;
 		}
 
-		$actions = JAccess::getActionsFromFile($path, "/access/section[@name='component']/");
+		$result = new JObject;
+
+		$user = JFactory::getUser();
+
+		$actions = JAccess::getActionsFromFile(
+			JPATH_ADMINISTRATOR . '/components/' . $component . '/access.xml', '/access/section[@name="component"]/'
+		);
+
+		if ($actions === false)
+		{
+			JLog::add(
+				JText::sprintf('JLIB_ERROR_COMPONENTS_ACL_CONFIGURATION_FILE_MISSING_OR_IMPROPERLY_STRUCTURED', $component), JLog::ERROR, 'jerror'
+			);
+
+			return $result;
+		}
 
 		foreach ($actions as $action)
 		{
@@ -137,7 +147,22 @@ class JHelperContent
 	public static function getCurrentLanguage($detectBrowser = true)
 	{
 		$app = JFactory::getApplication();
-		$langCode = $app->input->cookie->getString(JApplicationHelper::getHash('language'));
+
+		// Get the languagefilter parameters
+		if (JLanguageMultilang::isEnabled())
+		{
+			$plugin       = JPluginHelper::getPlugin('system', 'languagefilter');
+			$pluginParams = new Registry($plugin->params);
+
+			if ((int) $pluginParams->get('lang_cookie', 1) === 1)
+			{
+				$langCode = $app->input->cookie->getString(JApplicationHelper::getHash('language'));
+			}
+			else
+			{
+				$langCode = JFactory::getSession()->get('plg_system_languagefilter.language');
+			}
+		}
 
 		// No cookie - let's try to detect browser language or use site default
 		if (!$langCode)
@@ -174,9 +199,7 @@ class JHelperContent
 			->where($db->quoteName('lang_code') . ' = ' . $db->quote($langCode));
 		$db->setQuery($query);
 
-		$id = $db->loadResult();
-
-		return $id;
+		return $db->loadResult();
 	}
 
 	/**
