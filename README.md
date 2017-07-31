@@ -28,6 +28,9 @@ Não é mais necessário alterar o arquivo configuration.php manualmente.
 
 O instalador padrão do CMS Joomla! 3.x foi customizado para configurar uma instalação padrão do CMS Joomla! com componentes, módulos, template e conteúdo de exemplo do Portal Padrão.
 
+Após concluir instalação e entrar no administrativo, rodar reparos no banco de dados.
+Cole o link /administrator/index.php?option=com_installer&view=database, e execute o clicando no botão 'Corrigir'
+
 
 Documentação
 ---------------------
