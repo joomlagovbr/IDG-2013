@@ -25,19 +25,19 @@ $subheader = 'h'.(intval(substr($params->get('header_tag'), 1))+1);
 ?>
 	<?php if($i==0): ?>
 	<div class="row-fluid">
-		<?php if ($lista->image_url != ''): ?>	
+		<?php if ($lista->image_url != ''): ?>
 		<div class="span4 <?php if ( $lista->image_align != 'right'): ?>no-margin<?php else: ?>pull-right<?php endif; ?>">
 		<?php else: ?>
-		<div class="span12 no-margin">	
+		<div class="span12 no-margin">
 		<?php endif; ?>
-		
+
 		<?php if (@$lista->chapeu): ?>
 		<p class="subtitle">
 			<?php echo $lista->chapeu ?>
 		</p>
 		<?php endif; ?>
 
-		<?php if ($params->get('exibir_title') && !empty($lista->title)): ?>			
+		<?php if ($params->get('exibir_title') && !empty($lista->title)): ?>
 				<<?php echo $params->get('header_tag')?> <?php if ($params->get('header_class')): echo 'class="'.$params->get('header_class').'"'; endif; ?>>
 					<a href="<?php echo $lista->link ?>" <?php if ($params->get('header_class')): echo 'class="'.$params->get('header_class').'"'; endif; ?>>
 						<?php echo $lista->title ?>
@@ -50,16 +50,16 @@ $subheader = 'h'.(intval(substr($params->get('header_tag'), 1))+1);
 		<?php endif; ?>
 		</div>
 		<?php if ($lista->image_url != ''): ?>
-		<div class="span8<?php if ( $lista->image_align == 'right'): ?> no-margin<?php endif; ?> img-manchete-lateral">				
+		<div class="span8<?php if ( $lista->image_align == 'right'): ?> no-margin<?php endif; ?> img-manchete-lateral">
 			<?php if (!empty($lista->image_url)): ?>
 				<?php if(strpos($lista->image_url, 'www.youtube')!==false): ?>
 					<object width="490" height="368"><param value="<?php echo 'http://'.$lista->image_url; ?>" name="movie"><param value="true" name="allowFullScreen"><param value="always" name="allowscriptaccess"><embed width="490" height="368" allowfullscreen="true" allowscriptaccess="always" type="application/x-shockwave-flash" src="<?php echo 'http://'.$lista->image_url; ?>"></object>
-				<?php else: ?>				
+				<?php else: ?>
 					<a href="<?php echo $lista->link ?>">
 						<img src="<?php echo $lista->image_url ?>" class="img-rounded" width="490" height="auto" alt="<?php echo $lista->image_alt ?>" />
-					</a>				
+					</a>
 				<?php endif; ?>
-			<?php endif; ?>	
+			<?php endif; ?>
 		</div>
 		<?php endif; ?>
 	</div>
@@ -70,25 +70,25 @@ $subheader = 'h'.(intval(substr($params->get('header_tag'), 1))+1);
 		<?php else: ?>
 			<div class="<?php echo trim($class_container); ?>">
 		<?php endif; ?>
-		
+
 			<?php if($lista_chamadas_counter <= 4 || ($lista_chamadas_counter>4 && $i<3)): ?>
-				<?php if (!empty($lista->image_url)): ?>	
+				<?php if (!empty($lista->image_url)): ?>
 					<?php if(strpos($lista->image_url, 'www.youtube')!==false): ?>
 						<object width="230" height="176"><param value="<?php echo 'http://'.$lista->image_url; ?>" name="movie"><param value="true" name="allowFullScreen"><param value="always" name="allowscriptaccess"><embed width="230" height="176" allowfullscreen="true" allowscriptaccess="always" type="application/x-shockwave-flash" src="<?php echo 'http://'.$lista->image_url; ?>"></object>
-					<?php else: ?>				
+					<?php else: ?>
 						<a href="<?php echo $lista->link ?>" class="img-rounded">
 							<img src="<?php echo $lista->image_url ?>" width="230" height="136" alt="<?php echo $lista->image_alt ?>" />
 						</a>
-					<?php endif; ?>				
+					<?php endif; ?>
 				<?php endif; ?>
-				
+
 				<?php if (@$lista->chapeu): ?>
 				<p class="subtitle">
 					<?php echo $lista->chapeu ?>
 				</p>
 				<?php endif; ?>
 
-				<?php if ($params->get('exibir_title') && !empty($lista->title)): ?>			
+				<?php if ($params->get('exibir_title') && !empty($lista->title)): ?>
 						<<?php echo $subheader; ?> <?php if ($params->get('header_class')): echo 'class="'.$params->get('header_class').'"'; endif; ?>>
 							<a href="<?php echo $lista->link ?>" <?php if ($params->get('header_class')): echo 'class="'.$params->get('header_class').'"'; endif; ?>>
 								<?php echo $lista->title ?>
@@ -107,7 +107,7 @@ $subheader = 'h'.(intval(substr($params->get('header_tag'), 1))+1);
 					</p>
 					<?php endif; ?>
 
-					<?php if ($params->get('exibir_title') && !empty($lista->title)): ?>			
+					<?php if ($params->get('exibir_title') && !empty($lista->title)): ?>
 							<<?php echo $subheader; ?> <?php if ($params->get('header_class')): echo 'class="'.$params->get('header_class').'"'; endif; ?>>
 								<a href="<?php echo $lista->link ?>" <?php if ($params->get('header_class')): echo 'class="'.$params->get('header_class').'"'; endif; ?>>
 									<?php echo $lista->title ?>
@@ -120,7 +120,7 @@ $subheader = 'h'.(intval(substr($params->get('header_tag'), 1))+1);
 					<?php endif; ?>
 				</div>
 			<?php endif; ?>
-		
+
 			</div>
 		<?php if($i==($lista_chamadas_counter-1)): ?>
 			</div>
@@ -135,10 +135,10 @@ $subheader = 'h'.(intval(substr($params->get('header_tag'), 1))+1);
 			<?php else: ?>
 				<span class="text">saiba mais</span>
 			<?php endif;?>
-			<span class="icon-box">                                          
+			<span class="icon-box">
 		      <i class="icon-angle-right icon-light"><span class="hide">&nbsp;</span></i>
 		    </span>
-		</a>	
+		</a>
 	</div>
 <?php endif; ?>
 </div>

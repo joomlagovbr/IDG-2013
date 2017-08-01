@@ -20,7 +20,7 @@ if (empty($link_saiba_mais) && count($params->get('catid'))==1 && $params->get('
 		$header_tag2 = 'h'.(intval(str_replace('h', '', $params->get('header_tag')))+1);
 		foreach ($lista_chamadas as $lista): ?>
 		<li class="<?php echo $params->get('subitem_class', 'span4'); ?>">
-		<?php if ($params->get('exibir_title') && !empty($lista->title)): ?>			
+		<?php if ($params->get('exibir_title') && !empty($lista->title)): ?>
 			<<?php echo $header_tag2; ?>>
 				<a href="<?php echo $lista->link ?>">
 					<?php echo ModChamadasHelper::getIntroLimiteCaracteres($lista->title, $params); ?>
