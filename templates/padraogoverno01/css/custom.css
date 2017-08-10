@@ -1,0 +1,8 @@
+// Corrige a opacidade de todos os icones das redes sociais, na home, topo.
+#social-icons a:hover {
+	opacity: 1;
+}
+
+#social-icons a {
+	opacity: 0.5;
+}
