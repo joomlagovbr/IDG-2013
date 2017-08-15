@@ -1,0 +1,5 @@
+/**
+ * @package     ${NAMESPACE}
+ *
+ * @since version
+ */
