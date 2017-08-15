@@ -9,7 +9,7 @@
 // No direct access.
 defined('_JEXEC') or die;
 // Add JavaScript Frameworks
-JHtml::('bootstrap.framework');
+JHtml::_('bootstrap.framework');
 
 require JPATH_SITE .'/templates/'.$this->template.'/helper.php';
 TmplPadraoGoverno01Helper::init( $this ); //inicializacao de funcoes do template, como configuracao de cor, se alterada via get, limpeza do head padrao do joomla e outras providencias.
