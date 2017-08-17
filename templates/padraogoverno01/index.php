@@ -14,11 +14,7 @@ JHtml::_('bootstrap.framework');
 require JPATH_SITE .'/templates/'.$this->template.'/helper.php';
 TmplPadraoGoverno01Helper::init( $this ); //inicializacao de funcoes do template, como configuracao de cor, se alterada via get, limpeza do head padrao do joomla e outras providencias.
 $active_item = TmplPadraoGoverno01Helper::getActiveItemid();
-/*TESTE DE MENSAGENS*/
-// JFactory::getApplication()->enqueueMessage('Message');
-// JError::raiseNotice( 100, 'Notice' );
-// JError::raiseWarning( 100, 'Warning' );
-/*FIM TESTE DE MENSAGENS*/
+
 ?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="pt-br" dir="ltr"> <![endif]-->
@@ -59,7 +55,8 @@ $active_item = TmplPadraoGoverno01Helper::getActiveItemid();
       </div>
     </noscript>
     <!--[if lt IE 7]><center><strong>Atenção, a versão de seu navegador não é compatível com este sítio. Atualize seu navegador.</strong></center><![endif]-->
-    <jdoc:include type="modules" name="barra-do-governo" />
+     <?php $module_barra_do_governo = TmplPadraoGoverno01Helper::getModules('barra-do-governo') ?>
+    <?php TmplPadraoGoverno01Helper::loadModuleByPosition('barra-do-governo', NULL, $module_barra_do_governo); ?>
     <div class="layout">
         <header>
             <div class="container">
