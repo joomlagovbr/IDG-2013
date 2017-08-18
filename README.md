@@ -1,9 +1,9 @@
-Portal padrão em CMS Joomla 3.6.5
+Portal padrão em CMS Joomla 3.7.4
 ================
 
 Sobre esta versão
 ---------------------
-O Joomla 3.6.5 é recomendado para versões do PHP 5.3.10+. 
+O Joomla 3.7.4 é recomendado para versões do PHP 5.3.10+. Compátivel com PHP 7+ 
 
 Acompanhe as atualizações do projeto
 ---------------------
@@ -27,6 +27,9 @@ Configuração inicial
 Não é mais necessário alterar o arquivo configuration.php manualmente.
 
 O instalador padrão do CMS Joomla! 3.x foi customizado para configurar uma instalação padrão do CMS Joomla! com componentes, módulos, template e conteúdo de exemplo do Portal Padrão.
+
+Após concluir instalação e entrar no administrativo, rodar reparos no banco de dados.
+Cole o link /administrator/index.php?option=com_installer&view=database, e execute o clicando no botão 'Corrigir'
 
 
 Documentação

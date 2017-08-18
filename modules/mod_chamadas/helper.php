@@ -96,7 +96,7 @@ class ModChamadasHelper
 		}
 		elseif( $params->get($article, '' ) != ''  )
 		{
-			if(ModChamadasHelper::getjVersion() > 2)
+			if(ModChamadasHelper::getjVersion() < 2)
 			{
 				$link = JRoute::_(  'index.php?option=com_content&view=article&id='. $params->get($article, '') );
 			}
@@ -107,7 +107,7 @@ class ModChamadasHelper
 		}
 		elseif($content_item && $isJoomlaArticle )
 		{
-			if(ModChamadasHelper::getjVersion() > 2)
+			if(ModChamadasHelper::getjVersion() < 2)
 			{
 				$link = JRoute::_(  'index.php?option=com_content&view=article&id='.$content_item->id );
 			}

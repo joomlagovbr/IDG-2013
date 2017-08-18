@@ -54,7 +54,7 @@ class TmplPadraoGoverno01Helper
 		$new_script  = $script = $tmpl->_script;
 		$user = JFactory::getUser();
 
-		if ($clear_default_javascript == 1 && !$user->get('isRoot')) {
+		if ($clear_default_javascript == 1 && $user->guest == 1) {
 	 		unset($new_scripts[$tmpl->baseurl.'/media/system/js/mootools-core.js']);
 			unset($new_scripts[$tmpl->baseurl.'/media/system/js/core.js']);
 			unset($new_scripts[$tmpl->baseurl.'/media/system/js/caption.js']);        

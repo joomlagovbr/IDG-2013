@@ -3,11 +3,13 @@
  * @package     Joomla.Libraries
  * @subpackage  Helper
  *
- * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2017 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('JPATH_PLATFORM') or die;
+
+use Joomla\Registry\Registry;
 
 /**
  * Base Helper class.
@@ -28,7 +30,22 @@ class JHelper
 	public function getCurrentLanguage($detectBrowser = true)
 	{
 		$app = JFactory::getApplication();
-		$langCode = $app->input->cookie->getString(JApplicationHelper::getHash('language'));
+
+		// Get the languagefilter parameters
+		if (JLanguageMultilang::isEnabled())
+		{
+			$plugin       = JPluginHelper::getPlugin('system', 'languagefilter');
+			$pluginParams = new Registry($plugin->params);
+
+			if ((int) $pluginParams->get('lang_cookie', 1) === 1)
+			{
+				$langCode = $app->input->cookie->getString(JApplicationHelper::getHash('language'));
+			}
+			else
+			{
+				$langCode = JFactory::getSession()->get('plg_system_languagefilter.language');
+			}
+		}
 
 		// No cookie - let's try to detect browser language or use site default
 		if (!$langCode)
@@ -64,9 +81,7 @@ class JHelper
 			->where($db->quoteName('lang_code') . ' = ' . $db->quote($langCode));
 		$db->setQuery($query);
 
-		$id = $db->loadResult();
-
-		return $id;
+		return $db->loadResult();
 	}
 
 	/**
