@@ -43,7 +43,7 @@ class TemplateContentCategoriesHelper extends TemplateContentCategoryHelper {
 		return ''; 
 	}
 
-	static function getLastArticleModifiedDate( $view_object )
+	static function getLastArticleModifiedDate( $view_object, $children = false )
 	{
 		if(!is_object($view_object))
 			return '';
