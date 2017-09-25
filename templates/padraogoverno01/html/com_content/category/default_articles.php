@@ -73,7 +73,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 						</a>
 					</div>
 					<?php endif; ?>
-					
+
 					<span class="subtitle"><?php echo trim($article->xreference); ?></span>
 					<h2 class="tileHeadline">
 	              		<a href="<?php echo JRoute::_(ContentHelperRoute::getArticleRoute($article->slug, $article->catid)); ?>"><?php echo $article->title ?></a>
@@ -87,7 +87,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 							</li>
 						</ul>
 						<?php endif; ?>
-	          		</span> 
+	          		</span>
 	          		<?php if($article->metakey != ''): ?>
 	          		<span class="keywords">
 	                	Tags:
@@ -108,7 +108,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 						<li><i class="icon-fixed-width icon-time"></i> <?php echo JHtml::_('date', $article->publish_up, 'H\hi'); ?></li>
 						<!-- <li><i class="icon-fixed-width"></i> Artigo</li> -->
 					</ul>							            								
-				</div>									
+				</div>
 			</div>
 			<!-- div.tileItem -->
 		<?php endforeach; ?>

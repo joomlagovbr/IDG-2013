@@ -18,6 +18,7 @@ $urls    = json_decode($this->item->urls);
 $canEdit = $this->item->params->get('access-edit');
 $user    = JFactory::getUser();
 
+
 if($this->item->catid <= 2)
 	$params->set('show_category', 0);
 ?>
@@ -222,15 +223,15 @@ if (count($showBelowContent) > 0): ?>
 	<?php if (in_array('categories', $showBelowContent)): ?>
 	<div class="line">
 		registrado em:
-			<?php			
+			<?php
 			TemplateContentArticleHelper::displayCategoryLinks($categories, $this->item); ?>
 	</div>
 	<?php endif; ?>
-	
+
 	<?php if (in_array('metakeys', $showBelowContent)): ?>
 	<div class="line">
 		Assunto(s):
-		<?php TemplateContentArticleHelper::displayMetakeyLinks( $this->item->metakey ); ?>		
+		<?php TemplateContentArticleHelper::displayMetakeyLinks( $this->item->metakey ); ?>
 	</div>
 	<?php endif; ?>
 
