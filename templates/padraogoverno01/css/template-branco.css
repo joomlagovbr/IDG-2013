@@ -415,8 +415,8 @@ main div.rastro-navegacao a:hover{text-decoration:underline}
 #content.internas .description{display:block;font-size:1.1em;margin:0 0 35px 0;color:#666;line-height:1.3em;font-weight:bold;font-size:1.18em}
 #content.internas .description p{line-height:1.3em!important}
 #content.internas p{font-size:1.0em!important;line-height:1.75em}
-#content.internas ul li{display:list-item!important;list-style:square outside!important;line-height:1.5em!important;font-size:1em;margin-bottom:.25em}
-#content.internas ol li{display:list-item!important;list-style:decimal outside!important;line-height:1.5em!important;font-size:.9em;margin-bottom:.25em}
+#content.internas ul li{display:list-item;list-style:square outside!important;line-height:1.5em!important;font-size:1em;margin-bottom:.25em}
+#content.internas ol li{display:list-item;list-style:decimal outside!important;line-height:1.5em!important;font-size:.9em;margin-bottom:.25em}
 #content.internas table{border-top:1px solid #e8e7e7;border-left:1px solid #e8e7e7}
 #content.internas table td,#content.internas th{border-right:1px solid #e8e7e7;border-bottom:1px solid #e8e7e7;padding:5px 10px;vertical-align:top}
 #content.internas table th{font-weight:bold}
