@@ -38,10 +38,8 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 			</legend>
 
 			<div class="filter-search pull-left">
-              <label class="filter-search-lbl" for="filter-search"><?php /*echo JText::_('COM_CONTENT_'.$this->params->get('filter_field').'_FILTER_LABEL').'&#160;'; */ ?>
-				<input type="text" name="filter-search" id="filter-search" value="<?php echo $this->escape($this->state->get('list.filter')); ?>" class="inputbox" onchange="document.adminForm.submit();" title="<?php echo JText::_('COM_CONTENT_FILTER_SEARCH_DESC'); ?>" />
-              <input type="submit" value="Buscar" class="acao-busca">
-              </label>
+				<label class="filter-search-lbl" for="filter-search"><?php echo JText::_('COM_CONTENT_'.$this->params->get('filter_field').'_FILTER_LABEL').'&#160;'; ?>
+				<input type="text" name="filter-search" id="filter-search" value="<?php echo $this->escape($this->state->get('list.filter')); ?>" class="inputbox" onchange="document.adminForm.submit();" title="<?php echo JText::_('COM_CONTENT_FILTER_SEARCH_DESC'); ?>" /></label>
 			</div>
 			<?php endif; ?>
 
@@ -71,11 +69,11 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 							<?php if ($images->image_intro_caption):
 								echo ' title="' .htmlspecialchars($images->image_intro_caption) .'"';
 							endif; ?>
-							class="tileImage" src="<?php echo htmlspecialchars($images->image_intro); ?>" alt="<?php echo htmlspecialchars($images->image_intro_alt); ?>" height="86" width="128" />							
+							class="tileImage" src="<?php echo htmlspecialchars($images->image_intro); ?>" alt="<?php echo htmlspecialchars($images->image_intro_alt); ?>" height="86" width="128" />
 						</a>
 					</div>
 					<?php endif; ?>
-					
+
 					<span class="subtitle"><?php echo trim($article->xreference); ?></span>
 					<h2 class="tileHeadline">
 	              		<a href="<?php echo JRoute::_(ContentHelperRoute::getArticleRoute($article->slug, $article->catid)); ?>"><?php echo $article->title ?></a>
@@ -89,7 +87,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 							</li>
 						</ul>
 						<?php endif; ?>
-	          		</span> 
+	          		</span>
 	          		<?php if($article->metakey != ''): ?>
 	          		<span class="keywords">
 	                	Tags:
@@ -105,12 +103,12 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 						?>
 						<li class="hide"><?php echo JText::sprintf('COM_CONTENT_WRITTEN_BY', $author); ?></li>
 						<li class="hide"><?php echo (($article->state == 1)? 'publicado' : 'n&atilde;o publicado' ) ?></li>
-		
+
 						<li><i class="icon-fixed-width icon-calendar"></i> <?php echo JHtml::_('date', $article->publish_up, 'd/m/y'); ?></li>
 						<li><i class="icon-fixed-width icon-time"></i> <?php echo JHtml::_('date', $article->publish_up, 'H\hi'); ?></li>
 						<!-- <li><i class="icon-fixed-width"></i> Artigo</li> -->
-					</ul>							            								
-				</div>									
+					</ul>
+				</div>
 			</div>
 			<!-- div.tileItem -->
 		<?php endforeach; ?>
