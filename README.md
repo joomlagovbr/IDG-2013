@@ -45,3 +45,10 @@ Confira a documentação disponível até o momento no repositório provisório 
 Desenvolvimento
 ---------------------
 -   [Comunidade Joomla Calango](http://www.joomlacalango.org/)
+
+Ultimas mudanças
+--------------------
+-Correções no CSS referentes aos modulos, menus e banners
+-Correções de nas funcionalidades da busca padrao, somente no Override de template."original nao afetado"
+-Adição de novo Plugin de busca de busca por Menu(Descobrir item no gerenciador). Sera incorporado posteriormente.
+Opcional( se colocado  uma palavra chave no plugin e nos itens de menu, terão prioridade na busca.

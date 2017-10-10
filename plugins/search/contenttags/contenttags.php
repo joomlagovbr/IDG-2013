@@ -50,6 +50,7 @@ class plgSearchContenttags extends JPlugin
 		require_once JPATH_ADMINISTRATOR . '/components/com_search/helpers/search.php';
 
 		$searchText = $text;
+		$searchText = htmlspecialchars_decode($text);
 		if (is_array($areas)) {
 			if (!array_intersect($areas, array_keys($this->onContentSearchAreas()))) {
 				return array();
@@ -69,7 +70,7 @@ class plgSearchContenttags extends JPlugin
 			return array();
 		}
 
-		//não realiza pesquisa, se area de busca for voltada somente para itens de conteudo
+		//não realiza pesquisa, se area de busca ja estiver buscando conteudo 'content'
 		$input = JFactory::getApplication()->input;
 		$area_content = $input->get('areas', array(), 'array');
 		if(in_array('content', $area_content) || count($area_content)==0)
@@ -154,6 +155,9 @@ class plgSearchContenttags extends JPlugin
 
 			$query->from('#__content AS a');
 			$query->innerJoin('#__categories AS c ON c.id=a.catid');
+
+			$where = htmlspecialchars_decode($where);
+
 			$query->where('('. $where .')' . 'AND a.state=1 AND c.published = 1 AND a.access IN ('.$groups.') '
 						.'AND c.access IN ('.$groups.') '
 						.'AND (a.publish_up = '.$db->Quote($nullDate).' OR a.publish_up <= '.$db->Quote($now).') '
@@ -168,6 +172,8 @@ class plgSearchContenttags extends JPlugin
 			}
 
 			$db->setQuery($query, 0, $limit);
+			// echo $query->dump();
+			// die;
 			$list = $db->loadObjectList();
 			$limit -= count($list);
 
@@ -211,6 +217,7 @@ class plgSearchContenttags extends JPlugin
 			//.'CONCAT_WS("/", c.title) AS section, \'2\' AS browsernav' );
 			$query->from('#__content AS a');
 			$query->innerJoin('#__categories AS c ON c.id=a.catid AND c.access IN ('. $groups .')');
+			$where = htmlspecialchars_decode($where);
 			$query->where('('. $where .') AND a.state = 2 AND c.published = 1 AND a.access IN ('. $groups
 				.') AND c.access IN ('. $groups .') '
 				.'AND (a.publish_up = '.$db->Quote($nullDate).' OR a.publish_up <= '.$db->Quote($now).') '

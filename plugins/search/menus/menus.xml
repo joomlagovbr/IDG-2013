@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" version="3.7.4" group="search">
+
+	<name>Pesquisa - Menus</name>
+	<author>Tiago Garcia</author>
+	<creationDate>Setembro  2017</creationDate>
+	<copyright>Copyright (C) 2017 Grupo de Trabalho do Datasus</copyright>
+	<license>GNU General Public License version 2</license>
+	<authorEmail>tiagovtg@gmail.com</authorEmail>
+	<authorUrl></authorUrl>
+	<version>1.0</version>
+	<description>Plugin baseado no nativo, com a função de realizar buscas no Item de Menu por Titulo e nas palavras-chave de menu.</description>
+	<files>
+		<filename plugin="menus">menus.php</filename>
+		<filename>index.html</filename>
+	</files>
+	<config>
+		<fields name="params">
+
+			<fieldset name="basic">
+				<field name="search_limit" type="text"
+					default="50"
+					label="Limite de Busca"
+					description="Limite de Busca"
+					size="5"
+				/>
+
+				<field name="search_content" type="radio" class="btn-group btn-group-yesno"
+					default="0"
+					description="Menus"
+					label="Busca pelo nome dos menus"
+				>
+					<option value="0">JOFF</option>
+					<option value="1">JON</option>
+				</field>
+
+				<field
+					name="search_menu"
+					type="text"
+					default="Destaque"
+					label="Palavra Chave"
+					description="Palavra chave que sera buscada dentro do menu como item de relevancia."
+					size="40" />
+			</fieldset>
+
+		</fields>
+	</config>
+</extension>
