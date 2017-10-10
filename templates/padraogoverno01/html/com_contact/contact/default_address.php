@@ -100,7 +100,7 @@ defined('_JEXEC') or die;
 <?php endif; ?>
 <?php if ($this->contact->webpage && $this->params->get('show_webpage')) : ?>
 	<h3>
-		Site
+		<?php echo JText::_('JSITE'); ?>
 	</h3>
 	<p>
 		<span class="contact-webpage">

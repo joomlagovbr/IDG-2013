@@ -12,7 +12,7 @@ $cparams = JComponentHelper::getParams ('com_media');
 ?>
 <div class="contact<?php echo $this->pageclass_sfx?>">
 <?php if ($this->params->get('show_page_heading')) : ?>
-<h1 class="documentFirstHeading">
+<h1 class="documentFirstHeading borderHeading">
 	<?php echo $this->escape($this->params->get('page_heading')); ?>
 </h1>
 <?php endif; ?>
@@ -28,21 +28,26 @@ $cparams = JComponentHelper::getParams ('com_media');
 		<form action="#" method="get" id="selectForm" class="pull-left">
 			<label for="id" class="hide"><?php echo JText::_('COM_CONTACT_SELECT_CONTACT'); ?></label>
 			<?php echo JHtml::_('select.genericlist',  $this->contacts, 'id', 'class="inputbox" onchange="document.location.href = this.value"', 'link', 'name', $this->contact->link);?>
-			
 		</form>
 		<br>
 	</div>
 	<br>
 	<?php endif;  ?>
+	
+	<?php if ($this->contact->misc) : ?>
+		<p>
+			<?php echo $this->contact->misc; ?>
+		</p>
+	<?php endif;  ?>
 
 	<div class="row-fluid description">
 		<p>
 		<?php if ($this->params->get('show_contact_category') == 'show_no_link') : ?>
-			<span class="contact-category">Categoria: <?php echo $this->contact->category_title; ?>.</span>
+			<span class="contact-category"><?php echo JText::_('JCATEGORY'); ?>: <?php echo $this->contact->category_title; ?>.</span>
 		<?php endif; ?>
 		<?php if ($this->params->get('show_contact_category') == 'show_with_link') : ?>
 			<?php $contactLink = ContactHelperRoute::getCategoryRoute($this->contact->catid);?>
-			<span class="contact-category">Categoria: <a href="<?php echo $contactLink; ?>">
+			<span class="contact-category"><?php echo JText::_('JCATEGORY'); ?>: <a href="<?php echo $contactLink; ?>">
 				<?php echo $this->escape($this->contact->category_title); ?></a>.
 			</span>
 		<?php endif; ?>
@@ -85,7 +90,6 @@ $cparams = JComponentHelper::getParams ('com_media');
 				<?php echo $this->loadTemplate('address'); ?>
 				</div>
 			</div>
-
 
 			<?php if ($this->params->get('allow_vcard')) :	?>
 			<div class="vcard row-fluid">			
