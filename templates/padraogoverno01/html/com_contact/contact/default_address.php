@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
 	<div class="contact-address">
 	<?php if ($this->params->get('address_check') > 0) : ?>
 		<h3>
-			Endereço
+			<?php echo JText::_('COM_CONTACT_ADDRESS'); ?>
 		</h3>
 		<address>
 	<?php endif; ?>
@@ -57,7 +57,7 @@ defined('_JEXEC') or die;
 <?php endif; ?>
 <?php if ($this->contact->email_to && $this->params->get('show_email')) : ?>	
 		<h3>
-			E-mail
+			<?php echo JText::_('COM_CONTACT_EMAIL_LABEL'); ?>
 		</h3>
 	<p>
 		<span class="contact-emailto">
@@ -68,7 +68,7 @@ defined('_JEXEC') or die;
 
 <?php if ($this->contact->telephone && $this->params->get('show_telephone')) : ?>
 		<h3>
-			Telefone
+			<?php echo JText::_('COM_CONTACT_TELEPHONE'); ?>
 		</h3>
 	<p>
 	
@@ -80,7 +80,7 @@ defined('_JEXEC') or die;
 <?php if ($this->contact->fax && $this->params->get('show_fax')) : ?>
 	
 		<h3>
-			Fax
+			<?php echo JText::_('COM_CONTACT_FAX'); ?>
 		</h3>
 	<p>
 		<span class="contact-fax">
@@ -90,7 +90,7 @@ defined('_JEXEC') or die;
 <?php endif; ?>
 <?php if ($this->contact->mobile && $this->params->get('show_mobile')) :?>
 		<h3>
-			Celular
+			<?php echo JText::_('COM_CONTACT_MOBILE'); ?>
 		</h3>
 	<p>
 		<span class="contact-mobile">

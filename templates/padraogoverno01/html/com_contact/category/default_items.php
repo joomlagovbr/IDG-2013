@@ -41,42 +41,42 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 				<p class="description">
 					<?php if ($this->params->get('show_position_headings')) : ?>
 						<span class="item-position">
-							Cargo: <?php echo $item->con_position; ?> | 
+							<?php echo JText::_('COM_CONTACT_POSITION'); ?>: <?php echo $item->con_position; ?> | 
 						</span>
 					<?php endif; ?>
 					<?php if ($this->params->get('show_email_headings')) : ?>
 						<span class="item-email">
-							E-mail: <?php echo $item->email_to; ?> | 
+							<?php echo JText::_('COM_CONTACT_EMAIL_LABEL'); ?>: <?php echo $item->email_to; ?> | 
 						</span>
 					<?php endif; ?>					
 
 					<?php if ($this->params->get('show_telephone_headings')) : ?>
 						<span class="item-phone">
-							Telefone: <?php echo $item->telephone; ?> | 
+							<?php echo JText::_('COM_CONTACT_TELEPHONE'); ?>: <?php echo $item->telephone; ?> | 
 						</span>
 					<?php endif; ?>
 
 					<?php if ($this->params->get('show_mobile_headings')) : ?>
 						<span class="item-phone">
-							Celular: <?php echo $item->mobile; ?> | 
+							<?php echo JText::_('COM_CONTACT_MOBILE'); ?>: <?php echo $item->mobile; ?> | 
 						</span>
 					<?php endif; ?>
 
 					<?php if ($this->params->get('show_fax_headings')) : ?>
 					<span class="item-phone">
-						Fax: <?php echo $item->fax; ?> | 
+						<?php echo JText::_('COM_CONTACT_FAX'); ?>: <?php echo $item->fax; ?> | 
 					</span>
 					<?php endif; ?>
 
 					<?php if ($this->params->get('show_suburb_headings')) : ?>
 					<span class="item-suburb">
-						Cidade: <?php echo $item->suburb; ?> | 
+						<?php echo JText::_('COM_CONTACT_SUBURB'); ?>: <?php echo $item->suburb; ?> | 
 					</span>
 					<?php endif; ?>
 
 					<?php if ($this->params->get('show_state_headings')) : ?>
 					<span class="item-state">
-						Estado: <?php echo $item->state; ?> | 
+						<?php echo JText::_('COM_CONTACT_STATE'); ?>: <?php echo $item->state; ?> | 
 					</span>
 					<?php endif; ?>
 
