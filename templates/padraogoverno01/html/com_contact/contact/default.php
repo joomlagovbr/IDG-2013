@@ -47,7 +47,7 @@ $cparams = JComponentHelper::getParams ('com_media');
 			</span>
 		<?php endif; ?>
 		<?php if ($this->contact->con_position && $this->params->get('show_position')) : ?>
-			<span class="contact-position"> | Cargo: <?php echo $this->contact->con_position; ?></span>
+			<span class="contact-position"> | <?php echo JText::_('COM_CONTACT_POSITION'); ?>: <?php echo $this->contact->con_position; ?></span>
 		<?php endif; ?>
 		</p>			
 	</div>
@@ -57,7 +57,7 @@ $cparams = JComponentHelper::getParams ('com_media');
 			<?php if ($this->params->get('show_email_form') && ($this->contact->email_to || $this->contact->user_id)) : ?>
 			<div class="module">
 				<div class="outstanding-header">
-					<h2 class="outstanding-title"><span>Envie um e-mail</span></h2>
+					<h2 class="outstanding-title"><span><?php echo JText::_('COM_CONTACT_CONTACT_SEND'); ?></span></h2>
 			 	</div>
 			
 			
@@ -72,7 +72,7 @@ $cparams = JComponentHelper::getParams ('com_media');
 		<div class="span4">
 			<div class="module">
 				<div class="outstanding-header">
-					<h2 class="outstanding-title"><span>Contatos</span></h2>
+					<h2 class="outstanding-title"><span><?php echo JText::_('COM_CONTACT_DETAILS'); ?></span></h2>
 			 	</div>
 			
 				<?php if ($this->contact->image && $this->params->get('show_image')) : ?>
