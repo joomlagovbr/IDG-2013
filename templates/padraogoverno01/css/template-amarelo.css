@@ -344,6 +344,8 @@ main div.container .module-box-01 .gallery-pane .galeria-thumbs ul{margin:0}
 main div.container .module-box-01 .gallery-pane .galeria-thumbs .galeria-image{border:0;margin:0;line-height:auto;padding:0;background:#333;margin:0 4px 9px 0;display:block;float:left}
 main div.container .module-box-01 .gallery-pane .galeria-thumbs .galeria-image a img{width:54px;height:40px;border:1px solid #333;opacity:.6;-moz-opacity:.6;filter:alpha(opacity=100)}
 main div.container .module-box-01 .gallery-pane .galeria-thumbs .active a img{opacity:1;-moz-opacity:1;filter:alpha(opacity=100)}
+main div.container .module-box-01 ul li{display:block !important}
+main div.container .module-box-01 ol li{display:block !important}
 main div.container .module-box-01-white{background:#fff!important}
 main div.container #content.internas .module-box-01 .header h2,main div.container #content.internas .module-box-01 .header h3,main div.container #content.internas .module-box-01 .header h4,main div.container #content.internas .module-box-01 .header h4,main div.container #content.internas .module-box-01 .header h6{margin-bottom:3px;font-weight:400}
 main div.container #content.internas .module-box-01 .gallery-pane h3,main div.container #content.internas .module-box-01 .gallery-pane h4,main div.container #content.internas .module-box-01 .gallery-pane h5,main div.container #content.internas .module-box-01 .gallery-pane h6{font-size:1.2em!important;margin:0 0 3px 0}
