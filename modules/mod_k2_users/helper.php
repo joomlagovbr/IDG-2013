@@ -1,17 +1,17 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.8.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
-defined('_JEXEC') or die ;
+defined('_JEXEC') or die;
 
-require_once (JPATH_SITE.DS.'components'.DS.'com_k2'.DS.'helpers'.DS.'route.php');
-require_once (JPATH_SITE.DS.'components'.DS.'com_k2'.DS.'helpers'.DS.'utilities.php');
+require_once(JPATH_SITE.'/components/com_k2/helpers/route.php');
+require_once(JPATH_SITE.'/components/com_k2/helpers/utilities.php');
 
 class modK2UsersHelper
 {
@@ -19,10 +19,10 @@ class modK2UsersHelper
     public static function getUsers(&$params)
     {
 
-        $mainframe = JFactory::getApplication();
+        $application = JFactory::getApplication();
         $user = JFactory::getUser();
         $aid = (int)$user->get('aid');
-        $db = JFactory::getDBO();
+        $db = JFactory::getDbo();
 
         $jnow = JFactory::getDate();
         $now = K2_JVERSION == '15' ? $jnow->toMySQL() : $jnow->toSql();
@@ -35,7 +35,7 @@ class modK2UsersHelper
             $itemAccessCheck = " i.access IN(".implode(',', $user->getAuthorisedViewLevels()).") ";
             $categoryAccessCheck = " c.access IN(".implode(',', $user->getAuthorisedViewLevels()).") ";
             $languageCheck = '';
-            if ($mainframe->getLanguageFilter())
+            if ($application->getLanguageFilter())
             {
                 $languageTag = JFactory::getLanguage()->getTag();
                 $languageCheck = " AND c.language IN (".$db->Quote($languageTag).", ".$db->Quote('*').") AND i.language IN (".$db->Quote($languageTag).", ".$db->Quote('*').")";

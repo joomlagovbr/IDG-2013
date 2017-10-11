@@ -1,14 +1,14 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.8.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
-defined('_JEXEC') or die ;
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
@@ -18,7 +18,7 @@ class K2ViewItemlist extends K2View
     function display($tpl = null)
     {
 
-        $mainframe = JFactory::getApplication();
+        $application = JFactory::getApplication();
         $params = K2HelperUtilities::getParams('com_k2');
         $model = $this->getModel('itemlist');
         $limitstart = JRequest::getInt('limitstart');
@@ -37,7 +37,7 @@ class K2ViewItemlist extends K2View
             case 'category' :
                 //Get category
                 $id = JRequest::getInt('id');
-                JTable::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.DS.'tables');
+                JTable::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.'/tables');
                 $category = JTable::getInstance('K2Category', 'Table');
                 $category->load($id);
 
@@ -57,8 +57,8 @@ class K2ViewItemlist extends K2View
                         {
                             $uri = JFactory::getURI();
                             $url = 'index.php?option=com_user&view=login&return='.base64_encode($uri->toString());
-							$mainframe->enqueueMessage(JText::_('K2_YOU_NEED_TO_LOGIN_FIRST'), 'notice');
-                            $mainframe->redirect(JRoute::_($url, false));
+							$application->enqueueMessage(JText::_('K2_YOU_NEED_TO_LOGIN_FIRST'), 'notice');
+                            $application->redirect(JRoute::_($url, false));
                         }
                         else
                         {
@@ -66,7 +66,7 @@ class K2ViewItemlist extends K2View
                             return;
                         }
                     }
-                    $languageFilter = $mainframe->getLanguageFilter();
+                    $languageFilter = $application->getLanguageFilter();
                     $languageTag = JFactory::getLanguage()->getTag();
                     if ($languageFilter && $category->language != $languageTag && $category->language != '*')
                     {
@@ -81,8 +81,8 @@ class K2ViewItemlist extends K2View
                         {
                             $uri = JFactory::getURI();
                             $url = 'index.php?option=com_user&view=login&return='.base64_encode($uri->toString());
-							$mainframe->enqueueMessage(JText::_('K2_YOU_NEED_TO_LOGIN_FIRST'), 'notice');
-                            $mainframe->redirect(JRoute::_($url, false));
+							$application->enqueueMessage(JText::_('K2_YOU_NEED_TO_LOGIN_FIRST'), 'notice');
+                            $application->redirect(JRoute::_($url, false));
                         }
                         else
                         {
@@ -237,8 +237,19 @@ class K2ViewItemlist extends K2View
                 //Set limit
                 $limit = $params->get('tagItemCount');
 
+                // Prevent spammers from using the tag view
+                $tag = JRequest::getString('tag');
+                $db = JFactory::getDbo();
+                $db->setQuery('SELECT id, name FROM #__k2_tags WHERE name = '.$db->quote($tag));
+                $tag = $db->loadObject();
+                if (!$tag->id)
+                {
+                  JError::raiseError(404, JText::_('K2_NOT_FOUND'));
+                  return false;
+                }
+
                 //set title
-                $title = JText::_('K2_DISPLAYING_ITEMS_BY_TAG').' '.JRequest::getVar('tag');
+                $title = JText::_('K2_DISPLAYING_ITEMS_BY_TAG').' '.$tag->name;
 
                 // Set ordering
                 $ordering = $params->get('tagOrdering');
@@ -377,12 +388,12 @@ class K2ViewItemlist extends K2View
         }
 
         //Pathway
-        $pathway = $mainframe->getPathWay();
+        $pathway = $application->getPathWay();
         $pathway->addItem($title);
 
         //Feed link
         $config = JFactory::getConfig();
-        $menu = $mainframe->getMenu();
+        $menu = $application->getMenu();
         $default = $menu->getDefault();
         $active = $menu->getActive();
         if ($task == 'tag')
@@ -437,42 +448,28 @@ class K2ViewItemlist extends K2View
         $this->assignRef('pagination', $pagination);
 
         //Look for template files in component folders
-        $this->_addPath('template', JPATH_COMPONENT.DS.'templates');
-        $this->_addPath('template', JPATH_COMPONENT.DS.'templates'.DS.'default');
+        $this->_addPath('template', JPATH_COMPONENT.'/templates');
+        $this->_addPath('template', JPATH_COMPONENT.'/templates/default');
 
         //Look for overrides in template folder (K2 template structure)
-        $this->_addPath('template', JPATH_SITE.DS.'templates'.DS.$mainframe->getTemplate().DS.'html'.DS.'com_k2'.DS.'templates');
-        $this->_addPath('template', JPATH_SITE.DS.'templates'.DS.$mainframe->getTemplate().DS.'html'.DS.'com_k2'.DS.'templates'.DS.'default');
+        $this->_addPath('template', JPATH_SITE.'/templates/'.$application->getTemplate().'/html/com_k2/templates');
+        $this->_addPath('template', JPATH_SITE.'/templates/'.$application->getTemplate().'/html/com_k2/templates/default');
 
-        //Look for overrides in template folder (Joomla! template structure)
-        $this->_addPath('template', JPATH_SITE.DS.'templates'.DS.$mainframe->getTemplate().DS.'html'.DS.'com_k2'.DS.'default');
-        $this->_addPath('template', JPATH_SITE.DS.'templates'.DS.$mainframe->getTemplate().DS.'html'.DS.'com_k2');
+        //Look for overrides in template folder (Joomla template structure)
+        $this->_addPath('template', JPATH_SITE.'/templates/'.$application->getTemplate().'/html/com_k2/default');
+        $this->_addPath('template', JPATH_SITE.'/templates/'.$application->getTemplate().'/html/com_k2');
 
         //Look for specific K2 theme files
         if ($params->get('theme'))
         {
-            $this->_addPath('template', JPATH_COMPONENT.DS.'templates'.DS.$params->get('theme'));
-            $this->_addPath('template', JPATH_SITE.DS.'templates'.DS.$mainframe->getTemplate().DS.'html'.DS.'com_k2'.DS.'templates'.DS.$params->get('theme'));
-            $this->_addPath('template', JPATH_SITE.DS.'templates'.DS.$mainframe->getTemplate().DS.'html'.DS.'com_k2'.DS.$params->get('theme'));
+            $this->_addPath('template', JPATH_COMPONENT.'/templates/'.$params->get('theme'));
+            $this->_addPath('template', JPATH_SITE.'/templates/'.$application->getTemplate().'/html/com_k2/templates/'.$params->get('theme'));
+            $this->_addPath('template', JPATH_SITE.'/templates/'.$application->getTemplate().'/html/com_k2/'.$params->get('theme'));
         }
 
-        $db = JFactory::getDBO();
+        $db = JFactory::getDbo();
         $nullDate = $db->getNullDate();
         $this->assignRef('nullDate', $nullDate);
-        
-        // Prevent spammers from using the tag view
-        if ($task == 'tag' && !count($this->items))
-        {
-            $tag = JRequest::getString('tag');
-            $db = JFactory::getDBO();
-            $db->setQuery('SELECT id FROM #__k2_tags WHERE name = '.$db->quote($tag));
-            $tagID = $db->loadResult();
-            if (!$tagID)
-            {
-                JError::raiseError(404, JText::_('K2_NOT_FOUND'));
-                return false;
-            }
-        }
 
         parent::display($tpl);
     }
@@ -480,7 +477,7 @@ class K2ViewItemlist extends K2View
     function module()
     {
         jimport('joomla.application.module.helper');
-        $mainframe = JFactory::getApplication();
+        $application = JFactory::getApplication();
         $moduleID = JRequest::getInt('moduleID');
         $model = K2Model::getInstance('Itemlist', 'K2Model');
         if ($moduleID)
@@ -496,13 +493,13 @@ class K2ViewItemlist extends K2View
             {
                 $params = $result->params;
             }
-           
+
             if ($params->get('getTemplate'))
-                require (JModuleHelper::getLayoutPath('mod_k2_content', $params->get('getTemplate').DS.'default'));
+                require(JModuleHelper::getLayoutPath('mod_k2_content', $params->get('getTemplate').'/default'));
             else
-                require (JModuleHelper::getLayoutPath($result->module, 'default'));
+                require(JModuleHelper::getLayoutPath($result->module, 'default'));
         }
-        $mainframe->close();
+        $application->close();
     }
 
 }

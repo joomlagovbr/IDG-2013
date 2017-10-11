@@ -1,18 +1,18 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.8.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
-defined('_JEXEC') or die ;
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.model');
 
-JTable::addIncludePath(JPATH_COMPONENT.DS.'tables');
+JTable::addIncludePath(JPATH_COMPONENT.'/tables');
 
 class K2ModelTag extends K2Model
 {
@@ -29,25 +29,25 @@ class K2ModelTag extends K2Model
     function save()
     {
 
-        $mainframe = JFactory::getApplication();
+        $application = JFactory::getApplication();
         $row = JTable::getInstance('K2Tag', 'Table');
 
         if (!$row->bind(JRequest::get('post')))
         {
-        	$mainframe->enqueueMessage($row->getError(), 'error');
-            $mainframe->redirect('index.php?option=com_k2&view=tags');
+        	$application->enqueueMessage($row->getError(), 'error');
+            $application->redirect('index.php?option=com_k2&view=tags');
         }
 
         if (!$row->check())
         {
-        	$mainframe->enqueueMessage($row->getError(), 'error');
-            $mainframe->redirect('index.php?option=com_k2&view=tag&cid='.$row->id);
+        	$application->enqueueMessage($row->getError(), 'error');
+            $application->redirect('index.php?option=com_k2&view=tag&cid='.$row->id);
         }
 
         if (!$row->store())
         {
-        	$mainframe->enqueueMessage($row->getError(), 'error');
-            $mainframe->redirect('index.php?option=com_k2&view=tags');
+        	$application->enqueueMessage($row->getError(), 'error');
+            $application->redirect('index.php?option=com_k2&view=tags');
         }
 
         $cache = JFactory::getCache('com_k2');
@@ -65,14 +65,14 @@ class K2ModelTag extends K2Model
                 $link = 'index.php?option=com_k2&view=tags';
                 break;
         }
-		$mainframe->enqueueMessage($msg);
-        $mainframe->redirect($link);
+		$application->enqueueMessage($msg);
+        $application->redirect($link);
     }
 
     function addTag()
     {
 
-        $mainframe = JFactory::getApplication();
+        $application = JFactory::getApplication();
 
         $user = JFactory::getUser();
         $params = JComponentHelper::getParams('com_k2');
@@ -86,17 +86,14 @@ class K2ModelTag extends K2Model
         $response = new JObject;
         $response->set('name', $tag);
 
-        require_once (JPATH_COMPONENT_ADMINISTRATOR.DS.'lib'.DS.'JSON.php');
-        $json = new Services_JSON;
-
         if (empty($tag))
         {
             $response->set('msg', JText::_('K2_YOU_NEED_TO_ENTER_A_TAG', true));
-            echo $json->encode($response);
-            $mainframe->close();
+            echo json_encode($response);
+            $application->close();
         }
 
-        $db = JFactory::getDBO();
+        $db = JFactory::getDbo();
         $query = "SELECT COUNT(*) FROM #__k2_tags WHERE name=".$db->Quote($tag);
         $db->setQuery($query);
         $result = $db->loadResult();
@@ -104,8 +101,8 @@ class K2ModelTag extends K2Model
         if ($result > 0)
         {
             $response->set('msg', JText::_('K2_TAG_ALREADY_EXISTS', true));
-            echo $json->encode($response);
-            $mainframe->close();
+            echo json_encode($response);
+            $application->close();
         }
 
         $row = JTable::getInstance('K2Tag', 'Table');
@@ -119,17 +116,18 @@ class K2ModelTag extends K2Model
         $response->set('id', $row->id);
         $response->set('status', 'success');
         $response->set('msg', JText::_('K2_TAG_ADDED_TO_AVAILABLE_TAGS_LIST', true));
-        echo $json->encode($response);
+        echo json_encode($response);
 
-        $mainframe->close();
+        $application->close();
 
     }
 
     function tags()
     {
-        $mainframe = JFactory::getApplication();
-        $db = JFactory::getDBO();
+        $application = JFactory::getApplication();
+        $db = JFactory::getDbo();
         $word = JRequest::getString('q', null);
+		$id = JRequest::getInt('id');
         if (K2_JVERSION == '15')
         {
             $word = $db->Quote($db->getEscaped($word, true).'%', false);
@@ -138,13 +136,22 @@ class K2ModelTag extends K2Model
         {
             $word = $db->Quote($db->escape($word, true).'%', false);
         }
-        $query = "SELECT name FROM #__k2_tags WHERE name LIKE ".$word;
-        $db->setQuery($query);
-        $result = K2_JVERSION == '30' ? $db->loadColumn() : $db->loadResultArray();
-        require_once (JPATH_COMPONENT_ADMINISTRATOR.DS.'lib'.DS.'JSON.php');
-        $json = new Services_JSON;
-        echo $json->encode($result);
-        $mainframe->close();
+		
+		if($id)
+		{
+			$query = "SELECT id,name FROM #__k2_tags WHERE name LIKE ".$word;
+        	$db->setQuery($query);
+        	$result = $db->loadObjectList();
+		}
+		else
+		{
+			$query = "SELECT name FROM #__k2_tags WHERE name LIKE ".$word;
+        	$db->setQuery($query);
+        	$result = K2_JVERSION == '30' ? $db->loadColumn() : $db->loadResultArray();
+		}
+
+        echo json_encode($result);
+        $application->close();
     }
 
 }

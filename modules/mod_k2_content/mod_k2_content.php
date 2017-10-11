@@ -1,22 +1,22 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.8.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
-defined('_JEXEC') or die ;
+defined('_JEXEC') or die;
 
 if (K2_JVERSION != '15')
 {
     $language = JFactory::getLanguage();
-    $language->load('mod_k2.j16', JPATH_ADMINISTRATOR, null, true);
+    $language->load('com_k2.dates', JPATH_ADMINISTRATOR, null, true);
 }
 
-require_once (dirname(__FILE__).DS.'helper.php');
+require_once(dirname(__FILE__).'/helper.php');
 
 // Params
 $moduleclass_sfx = $params->get('moduleclass_sfx', '');
@@ -24,16 +24,35 @@ $getTemplate = $params->get('getTemplate', 'Default');
 $itemAuthorAvatarWidthSelect = $params->get('itemAuthorAvatarWidthSelect', 'custom');
 $itemAuthorAvatarWidth = $params->get('itemAuthorAvatarWidth', 50);
 $itemCustomLinkTitle = $params->get('itemCustomLinkTitle', '');
-if ($params->get('itemCustomLinkMenuItem'))
+$itemCustomLinkURL = trim($params->get('itemCustomLinkURL'));
+$itemCustomLinkMenuItem = $params->get('itemCustomLinkMenuItem');
+
+if ($itemCustomLinkURL && $itemCustomLinkURL!='http://')
+{
+	if ($itemCustomLinkTitle=='')
+	{
+		if (strpos($itemCustomLinkURL, '://')!==false)
+		{
+			$linkParts = explode('://', $itemCustomLinkURL);
+			$itemCustomLinkURL = $linkParts[1];
+		}
+		$itemCustomLinkTitle = $itemCustomLinkURL;
+	}
+}
+else if ($itemCustomLinkMenuItem)
 {
     $menu = JMenu::getInstance('site');
-    $menuLink = $menu->getItem($params->get('itemCustomLinkMenuItem'));
+    $menuLink = $menu->getItem($itemCustomLinkMenuItem);
     if (!$itemCustomLinkTitle)
     {
         $itemCustomLinkTitle = (K2_JVERSION != '15') ? $menuLink->title : $menuLink->name;
     }
-    $params->set('itemCustomLinkURL', JRoute::_('index.php?&Itemid='.$menuLink->id));
+    $itemCustomLinkURL = JRoute::_('index.php?&Itemid='.$menuLink->id);
 }
+
+// Make params backwards compatible
+$params->set('itemCustomLinkTitle', $itemCustomLinkTitle);
+$params->set('itemCustomLinkURL', $itemCustomLinkURL);
 
 // Get component params
 $componentParams = JComponentHelper::getParams('com_k2');
@@ -52,5 +71,5 @@ $items = modK2ContentHelper::getItems($params);
 
 if (count($items))
 {
-    require (JModuleHelper::getLayoutPath('mod_k2_content', $getTemplate.DS.'default'));
+    require(JModuleHelper::getLayoutPath('mod_k2_content', $getTemplate.'/default'));
 }

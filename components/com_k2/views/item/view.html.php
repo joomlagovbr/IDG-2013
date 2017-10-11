@@ -1,14 +1,14 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.8.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
-defined('_JEXEC') or die ;
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
@@ -17,7 +17,7 @@ class K2ViewItem extends K2View
 
 	function display($tpl = null)
 	{
-		$mainframe = JFactory::getApplication();
+		$application = JFactory::getApplication();
 		$user = JFactory::getUser();
 		$document = JFactory::getDocument();
 		$params = K2HelperUtilities::getParams('com_k2');
@@ -25,7 +25,7 @@ class K2ViewItem extends K2View
 		$view = JRequest::getWord('view');
 		$task = JRequest::getWord('task');
 
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 		$jnow = JFactory::getDate();
 		$now = K2_JVERSION == '15' ? $jnow->toMySQL() : $jnow->toSql();
 		$nullDate = $db->getNullDate();
@@ -81,8 +81,8 @@ class K2ViewItem extends K2View
 				{
 					$uri = JFactory::getURI();
 					$url = 'index.php?option=com_users&view=login&return='.base64_encode($uri->toString());
-					$mainframe->enqueueMessage(JText::_('K2_YOU_NEED_TO_LOGIN_FIRST'), 'notice');
-					$mainframe->redirect(JRoute::_($url, false));
+					$application->enqueueMessage(JText::_('K2_YOU_NEED_TO_LOGIN_FIRST'), 'notice');
+					$application->redirect(JRoute::_($url, false));
 				}
 				else
 				{
@@ -100,8 +100,8 @@ class K2ViewItem extends K2View
 				{
 					$uri = JFactory::getURI();
 					$url = 'index.php?option=com_user&view=login&return='.base64_encode($uri->toString());
-					$mainframe->enqueueMessage(JText::_('K2_YOU_NEED_TO_LOGIN_FIRST'), 'notice');
-					$mainframe->redirect(JRoute::_($url, false));
+					$application->enqueueMessage(JText::_('K2_YOU_NEED_TO_LOGIN_FIRST'), 'notice');
+					$application->redirect(JRoute::_($url, false));
 				}
 				else
 				{
@@ -110,6 +110,7 @@ class K2ViewItem extends K2View
 				}
 			}
 		}
+
 		// Published check
 		if (!$item->published || $item->trash)
 		{
@@ -177,21 +178,31 @@ class K2ViewItem extends K2View
 				// Load reCAPTCHA script
 				if (!JRequest::getInt('print') && ($item->params->get('comments') == '1' || ($item->params->get('comments') == '2' && K2HelperPermissions::canAddComment($item->catid))))
 				{
-
 					if ($params->get('recaptcha') && ($user->guest || $params->get('recaptchaForRegistered', 1)))
 					{
-						$document->addScript('https://www.google.com/recaptcha/api/js/recaptcha_ajax.js');
-						$js = '
-						function showRecaptcha(){
-							Recaptcha.create("'.$item->params->get('recaptcha_public_key').'", "recaptcha", {
-								theme: "'.$item->params->get('recaptcha_theme', 'clean').'"
-							});
+						if($params->get('recaptchaV2')) {
+							$document->addScript('https://www.google.com/recaptcha/api.js?onload=onK2RecaptchaLoaded&render=explicit');
+							$js = 'function onK2RecaptchaLoaded(){grecaptcha.render("recaptcha", {"sitekey" : "'.$item->params->get('recaptcha_public_key').'"});}';
+							$document->addScriptDeclaration($js);
+							$this->recaptchaClass = 'k2-recaptcha-v2';
 						}
-						$K2(window).load(function() {
-							showRecaptcha();
-						});
-						';
-						$document->addScriptDeclaration($js);
+						else
+						{
+							$document->addScript('https://www.google.com/recaptcha/api/js/recaptcha_ajax.js');
+							$js = '
+							function showRecaptcha(){
+								Recaptcha.create("'.$item->params->get('recaptcha_public_key').'", "recaptcha", {
+									theme: "'.$item->params->get('recaptcha_theme', 'clean').'"
+								});
+							}
+							$K2(window).load(function() {
+								showRecaptcha();
+							});
+							';
+							$document->addScriptDeclaration($js);
+							$this->recaptchaClass = 'k2-recaptcha-v1';
+						}
+
 					}
 				}
 
@@ -260,6 +271,11 @@ class K2ViewItem extends K2View
 
 				$item->comments = $comments;
 
+				if(!isset($item->numOfComments))
+				{
+					$item->numOfComments = 0;
+				}
+
 				jimport('joomla.html.pagination');
 				$total = $item->numOfComments;
 				$pagination = new JPagination($total, $limitstart, $limit);
@@ -313,32 +329,32 @@ class K2ViewItem extends K2View
 				$date = JFactory::getDate($item->modified);
 				$timestamp = '?t='.$date->toUnix();
 
-				if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$nextItem->id).'_XS.jpg'))
+				if (JFile::exists(JPATH_SITE.'/media/k2/items/cache/'.md5("Image".$nextItem->id).'_XS.jpg'))
 				{
 					$item->nextImageXSmall = JURI::base(true).'/media/k2/items/cache/'.md5("Image".$nextItem->id).'_XS.jpg'.$timestamp;
 
 				}
-				if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$nextItem->id).'_S.jpg'))
+				if (JFile::exists(JPATH_SITE.'/media/k2/items/cache/'.md5("Image".$nextItem->id).'_S.jpg'))
 				{
 					$item->nextImageSmall = JURI::base(true).'/media/k2/items/cache/'.md5("Image".$nextItem->id).'_S.jpg'.$timestamp;
 				}
 
-				if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$nextItem->id).'_M.jpg'))
+				if (JFile::exists(JPATH_SITE.'/media/k2/items/cache/'.md5("Image".$nextItem->id).'_M.jpg'))
 				{
 					$item->nextImageMedium = JURI::base(true).'/media/k2/items/cache/'.md5("Image".$nextItem->id).'_M.jpg'.$timestamp;
 				}
 
-				if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$nextItem->id).'_L.jpg'))
+				if (JFile::exists(JPATH_SITE.'/media/k2/items/cache/'.md5("Image".$nextItem->id).'_L.jpg'))
 				{
 					$item->nextImageLarge = JURI::base(true).'/media/k2/items/cache/'.md5("Image".$nextItem->id).'_L.jpg'.$timestamp;
 				}
 
-				if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$nextItem->id).'_XL.jpg'))
+				if (JFile::exists(JPATH_SITE.'/media/k2/items/cache/'.md5("Image".$nextItem->id).'_XL.jpg'))
 				{
 					$item->nextImageXLarge = JURI::base(true).'/media/k2/items/cache/'.md5("Image".$nextItem->id).'_XL.jpg'.$timestamp;
 				}
 
-				if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$nextItem->id).'_Generic.jpg'))
+				if (JFile::exists(JPATH_SITE.'/media/k2/items/cache/'.md5("Image".$nextItem->id).'_Generic.jpg'))
 				{
 					$item->nextImageGeneric = JURI::base(true).'/media/k2/items/cache/'.md5("Image".$nextItem->id).'_Generic.jpg'.$timestamp;
 				}
@@ -354,32 +370,32 @@ class K2ViewItem extends K2View
 				$date = JFactory::getDate($item->modified);
 				$timestamp = '?t='.$date->toUnix();
 
-				if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$previousItem->id).'_XS.jpg'))
+				if (JFile::exists(JPATH_SITE.'/media/k2/items/cache/'.md5("Image".$previousItem->id).'_XS.jpg'))
 				{
 					$item->previousImageXSmall = JURI::base(true).'/media/k2/items/cache/'.md5("Image".$previousItem->id).'_XS.jpg'.$timestamp;
 
 				}
-				if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$previousItem->id).'_S.jpg'))
+				if (JFile::exists(JPATH_SITE.'/media/k2/items/cache/'.md5("Image".$previousItem->id).'_S.jpg'))
 				{
 					$item->previousImageSmall = JURI::base(true).'/media/k2/items/cache/'.md5("Image".$previousItem->id).'_S.jpg'.$timestamp;
 				}
 
-				if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$previousItem->id).'_M.jpg'))
+				if (JFile::exists(JPATH_SITE.'/media/k2/items/cache/'.md5("Image".$previousItem->id).'_M.jpg'))
 				{
 					$item->previousImageMedium = JURI::base(true).'/media/k2/items/cache/'.md5("Image".$previousItem->id).'_M.jpg'.$timestamp;
 				}
 
-				if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$previousItem->id).'_L.jpg'))
+				if (JFile::exists(JPATH_SITE.'/media/k2/items/cache/'.md5("Image".$previousItem->id).'_L.jpg'))
 				{
 					$item->previousImageLarge = JURI::base(true).'/media/k2/items/cache/'.md5("Image".$previousItem->id).'_L.jpg'.$timestamp;
 				}
 
-				if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$previousItem->id).'_XL.jpg'))
+				if (JFile::exists(JPATH_SITE.'/media/k2/items/cache/'.md5("Image".$previousItem->id).'_XL.jpg'))
 				{
 					$item->previousImageXLarge = JURI::base(true).'/media/k2/items/cache/'.md5("Image".$previousItem->id).'_XL.jpg'.$timestamp;
 				}
 
-				if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$previousItem->id).'_Generic.jpg'))
+				if (JFile::exists(JPATH_SITE.'/media/k2/items/cache/'.md5("Image".$previousItem->id).'_Generic.jpg'))
 				{
 					$item->previousImageGeneric = JURI::base(true).'/media/k2/items/cache/'.md5("Image".$previousItem->id).'_Generic.jpg'.$timestamp;
 				}
@@ -394,13 +410,13 @@ class K2ViewItem extends K2View
 		// Email link
 		if (K2_JVERSION != '15')
 		{
-			require_once (JPATH_SITE.'/components/com_mailto/helpers/mailto.php');
-			$template = $mainframe->getTemplate();
+			require_once(JPATH_SITE.'/components/com_mailto/helpers/mailto.php');
+			$template = $application->getTemplate();
 			$item->emailLink = JRoute::_('index.php?option=com_mailto&tmpl=component&template='.$template.'&link='.MailToHelper::addLink($item->absoluteURL));
 		}
 		else
 		{
-			require_once (JPATH_SITE.DS.'components'.DS.'com_mailto'.DS.'helpers'.DS.'mailto.php');
+			require_once(JPATH_SITE.'/components/com_mailto/helpers/mailto.php');
 			$item->emailLink = JRoute::_('index.php?option=com_mailto&tmpl=component&link='.MailToHelper::addLink($item->absoluteURL));
 		}
 
@@ -418,7 +434,7 @@ class K2ViewItem extends K2View
 		$item->socialLink = urlencode($item->absoluteURL);
 
 		// Set page title
-		$menus = $mainframe->getMenu();
+		$menus = $application->getMenu();
 		$menu = $menus->getActive();
 		if (is_object($menu) && isset($menu->query['view']) && $menu->query['view'] == 'item' && isset($menu->query['id']) && $menu->query['id'] == $item->id)
 		{
@@ -442,23 +458,23 @@ class K2ViewItem extends K2View
 
 		if (K2_JVERSION != '15')
 		{
-			if ($mainframe->getCfg('sitename_pagetitles', 0) == 1)
+			if ($application->getCfg('sitename_pagetitles', 0) == 1)
 			{
-				$title = JText::sprintf('JPAGETITLE', $mainframe->getCfg('sitename'), $params->get('page_title'));
+				$title = JText::sprintf('JPAGETITLE', $application->getCfg('sitename'), $params->get('page_title'));
 				$params->set('page_title', $title);
 			}
-			elseif ($mainframe->getCfg('sitename_pagetitles', 0) == 2)
+			elseif ($application->getCfg('sitename_pagetitles', 0) == 2)
 			{
-				$title = JText::sprintf('JPAGETITLE', $params->get('page_title'), $mainframe->getCfg('sitename'));
+				$title = JText::sprintf('JPAGETITLE', $params->get('page_title'), $application->getCfg('sitename'));
 				$params->set('page_title', $title);
 			}
 		}
 		$document->setTitle($params->get('page_title'));
 
 		// Set pathway
-		$menus = $mainframe->getMenu();
+		$menus = $application->getMenu();
 		$menu = $menus->getActive();
-		$pathway = $mainframe->getPathWay();
+		$pathway = $application->getPathWay();
 		if ($menu)
 		{
 			if (isset($menu->query['view']) && ($menu->query['view'] != 'item' || $menu->query['id'] != $item->id))
@@ -477,6 +493,7 @@ class K2ViewItem extends K2View
 		else
 		{
 			$metaDescItem = preg_replace("#{(.*?)}(.*?){/(.*?)}#s", '', $item->introtext.' '.$item->fulltext);
+			$metaDescItem = preg_replace("/<script\b[^>]*>(.*?)<\/script>/is", '', $item->introtext.' '.$item->fulltext);
 			$metaDescItem = strip_tags($metaDescItem);
 			$metaDescItem = K2HelperUtilities::characterLimit($metaDescItem, $params->get('metaDescLimit', 150));
 			$document->setDescription(K2_JVERSION == '15' ? $metaDescItem : html_entity_decode($metaDescItem));
@@ -498,7 +515,7 @@ class K2ViewItem extends K2View
 			}
 		}
 
-		// Menu metadata for Joomla! 2.5+ (overrides the current metadata if set)
+		// Menu metadata for Joomla 2.5+ (overrides the current metadata if set)
 		if (K2_JVERSION != '15')
 		{
 
@@ -526,11 +543,11 @@ class K2ViewItem extends K2View
 
 		}
 
-		if ($mainframe->getCfg('MetaTitle') == '1')
+		if ($application->getCfg('MetaTitle') == '1')
 		{
 			$document->setMetadata('title', $item->cleanTitle);
 		}
-		if ($mainframe->getCfg('MetaAuthor') == '1' && isset($item->author->name))
+		if ($application->getCfg('MetaAuthor') == '1' && isset($item->author->name))
 		{
 			$document->setMetadata('author', $item->author->name);
 		}
@@ -546,42 +563,61 @@ class K2ViewItem extends K2View
 		}
 
 		// Set Facebook meta data
-		$document = JFactory::getDocument();
-		$uri = JURI::getInstance();
-		$document->setMetaData('og:url', $uri->toString());
-		$document->setMetaData('og:title', (K2_JVERSION == '15') ? htmlspecialchars($document->getTitle(), ENT_QUOTES, 'UTF-8') : $document->getTitle());
-		$document->setMetaData('og:type', 'article');
-		$facebookImage = 'image'.$params->get('facebookImage', 'Small');
-		if ($item->$facebookImage)
+		if($params->get('facebookMetatags', '1'))
 		{
-			$parts = parse_url($item->$facebookImage);
-			if (JFile::exists(JPATH_SITE.$parts['path']))
+			$document = JFactory::getDocument();
+			$uri = JURI::getInstance();
+			$document->setMetaData('og:url', $uri->toString());
+			$document->setMetaData('og:title', (K2_JVERSION == '15') ? htmlspecialchars($document->getTitle(), ENT_QUOTES, 'UTF-8') : $document->getTitle());
+			$document->setMetaData('og:type', 'article');
+			$facebookImage = 'image'.$params->get('facebookImage', 'Small');
+			if ($item->$facebookImage)
 			{
-				$image = substr(JURI::root(), 0, -1).str_replace(JURI::root(true), '', $item->$facebookImage);
-				$document->setMetaData('og:image', $image);
-				$document->setMetaData('image', $image);
+				$basename = basename($item->$facebookImage);
+				if(strpos($basename, '?t=')!==false)
+				{
+					$tmpBasename = explode('?t=', $basename);
+					$basenameWithNoTimestamp = $tmpBasename[0];
+				}
+				else
+				{
+					$basenameWithNoTimestamp = $basename;
+				}
+				if (JFile::exists(JPATH_SITE.'/media/k2/items/cache/'.$basenameWithNoTimestamp))
+				{
+					$image = JURI::root().'media/k2/items/cache/'.$basename;
+					$document->setMetaData('og:image', $image);
+					$document->setMetaData('image', $image);
+				}
 			}
+			$document->setMetaData('og:description', strip_tags($document->getDescription()));
 		}
-		$document->setMetaData('og:description', strip_tags($document->getDescription()));
+
+		// Get the frontend's language for use in social media buttons - use explicit variable references for future update flexibility
+		$getSiteLanguage = JFactory::getLanguage();
+		$languageTag = $getSiteLanguage->getTag();
+		$item->langTagForFB = str_replace('-', '_', $languageTag);
+		$item->langTagForTW = strtolower($languageTag);
+		$item->langTagForGP = $languageTag;
 
 		// Look for template files in component folders
-		$this->_addPath('template', JPATH_COMPONENT.DS.'templates');
-		$this->_addPath('template', JPATH_COMPONENT.DS.'templates'.DS.'default');
+		$this->_addPath('template', JPATH_COMPONENT.'/templates');
+		$this->_addPath('template', JPATH_COMPONENT.'/templates/default');
 
 		// Look for overrides in template folder (K2 template structure)
-		$this->_addPath('template', JPATH_SITE.DS.'templates'.DS.$mainframe->getTemplate().DS.'html'.DS.'com_k2'.DS.'templates');
-		$this->_addPath('template', JPATH_SITE.DS.'templates'.DS.$mainframe->getTemplate().DS.'html'.DS.'com_k2'.DS.'templates'.DS.'default');
+		$this->_addPath('template', JPATH_SITE.'/templates/'.$application->getTemplate().'/html/com_k2/templates');
+		$this->_addPath('template', JPATH_SITE.'/templates/'.$application->getTemplate().'/html/com_k2/templates/default');
 
-		// Look for overrides in template folder (Joomla! template structure)
-		$this->_addPath('template', JPATH_SITE.DS.'templates'.DS.$mainframe->getTemplate().DS.'html'.DS.'com_k2'.DS.'default');
-		$this->_addPath('template', JPATH_SITE.DS.'templates'.DS.$mainframe->getTemplate().DS.'html'.DS.'com_k2');
+		// Look for overrides in template folder (Joomla template structure)
+		$this->_addPath('template', JPATH_SITE.'/templates/'.$application->getTemplate().'/html/com_k2/default');
+		$this->_addPath('template', JPATH_SITE.'/templates/'.$application->getTemplate().'/html/com_k2');
 
 		// Look for specific K2 theme files
 		if ($item->params->get('theme'))
 		{
-			$this->_addPath('template', JPATH_COMPONENT.DS.'templates'.DS.$item->params->get('theme'));
-			$this->_addPath('template', JPATH_SITE.DS.'templates'.DS.$mainframe->getTemplate().DS.'html'.DS.'com_k2'.DS.'templates'.DS.$item->params->get('theme'));
-			$this->_addPath('template', JPATH_SITE.DS.'templates'.DS.$mainframe->getTemplate().DS.'html'.DS.'com_k2'.DS.$item->params->get('theme'));
+			$this->_addPath('template', JPATH_COMPONENT.'/templates/'.$item->params->get('theme'));
+			$this->_addPath('template', JPATH_SITE.'/templates/'.$application->getTemplate().'/html/com_k2/templates/'.$item->params->get('theme'));
+			$this->_addPath('template', JPATH_SITE.'/templates/'.$application->getTemplate().'/html/com_k2/'.$item->params->get('theme'));
 		}
 
 		// Assign data

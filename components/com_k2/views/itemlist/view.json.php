@@ -1,14 +1,14 @@
 <?php
 /**
- * @version     2.6.x
+ * @version     2.8.x
  * @package     K2
  * @author      JoomlaWorks http://www.joomlaworks.net
- * @copyright   Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
+ * @copyright   Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
  * @license     GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
-defined('_JEXEC') or die ;
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
@@ -18,7 +18,7 @@ class K2ViewItemlist extends K2View
     function display($tpl = null)
     {
 
-        $mainframe = JFactory::getApplication();
+        $application = JFactory::getApplication();
         $params = K2HelperUtilities::getParams('com_k2');
         $document = JFactory::getDocument();
         if (K2_JVERSION == '15')
@@ -80,7 +80,7 @@ class K2ViewItemlist extends K2View
                 case 'category' :
                     //Get category
                     $id = JRequest::getInt('id');
-                    JTable::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.DS.'tables');
+                    JTable::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.'/tables');
                     $category = JTable::getInstance('K2Category', 'Table');
                     $category->load($id);
 
@@ -98,7 +98,7 @@ class K2ViewItemlist extends K2View
                         {
                             JError::raiseError(403, JText::_('K2_ALERTNOTAUTH'));
                         }
-                        $languageFilter = $mainframe->getLanguageFilter();
+                        $languageFilter = $application->getLanguageFilter();
                         $languageTag = JFactory::getLanguage()->getTag();
                         if ($languageFilter && $category->language != $languageTag && $category->language != '*')
                         {
@@ -146,6 +146,7 @@ class K2ViewItemlist extends K2View
                     $category->description = $category->text;
 
                     //Category K2 plugins
+                    $category->event = new stdClass;
                     $category->event->K2CategoryDisplay = '';
                     JPluginHelper::importPlugin('k2');
                     $results = $dispatcher->trigger('onK2CategoryDisplay', array(&$category, &$params, $limitstart));
@@ -208,7 +209,7 @@ class K2ViewItemlist extends K2View
                     $row->ordering = $category->ordering;
                     //$row->plugins = $category->plugins;
                     $row->events = $category->event;
-                    $row->chidlren = $subCategories;
+                    $row->children = $subCategories;
                     $response->category = $row;
                     break;
 
@@ -440,12 +441,12 @@ class K2ViewItemlist extends K2View
         }
 
         $response->items = $rows;
-        
+
         // Prevent spammers from using the tag view
         if ($task == 'tag' && !count($response->items))
         {
             $tag = JRequest::getString('tag');
-            $db = JFactory::getDBO();
+            $db = JFactory::getDbo();
             $db->setQuery('SELECT id FROM #__k2_tags WHERE name = '.$db->quote($tag));
             $tagID = $db->loadResult();
             if (!$tagID)

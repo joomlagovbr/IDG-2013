@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.8.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
@@ -14,18 +14,16 @@ jimport('joomla.application.component.view');
 
 class K2ViewUserGroups extends K2View
 {
-
     function display($tpl = null)
     {
-
-        $mainframe = JFactory::getApplication();
+        $application = JFactory::getApplication();
         $user = JFactory::getUser();
         $option = JRequest::getCmd('option');
         $view = JRequest::getCmd('view');
-        $limit = $mainframe->getUserStateFromRequest('global.list.limit', 'limit', $mainframe->getCfg('list_limit'), 'int');
-        $limitstart = $mainframe->getUserStateFromRequest($option.$view.'.limitstart', 'limitstart', 0, 'int');
-        $filter_order = $mainframe->getUserStateFromRequest($option.$view.'filter_order', 'filter_order', '', 'cmd');
-        $filter_order_Dir = $mainframe->getUserStateFromRequest($option.$view.'filter_order_Dir', 'filter_order_Dir', '', 'word');
+        $limit = $application->getUserStateFromRequest('global.list.limit', 'limit', $application->getCfg('list_limit'), 'int');
+        $limitstart = $application->getUserStateFromRequest($option.$view.'.limitstart', 'limitstart', 0, 'int');
+        $filter_order = $application->getUserStateFromRequest($option.$view.'filter_order', 'filter_order', '', 'cmd');
+        $filter_order_Dir = $application->getUserStateFromRequest($option.$view.'filter_order_Dir', 'filter_order_Dir', '', 'word');
 
         $model = $this->getModel();
         $total = $model->getTotal();
@@ -49,20 +47,21 @@ class K2ViewUserGroups extends K2View
 
         $this->assignRef('lists', $lists);
 
+		// Toolbar
         JToolBarHelper::title(JText::_('K2_USER_GROUPS'), 'k2.png');
 
-        JToolBarHelper::deleteList('', 'remove', 'K2_DELETE');
-        JToolBarHelper::editList();
         JToolBarHelper::addNew();
+        JToolBarHelper::editList();
+        JToolBarHelper::deleteList('', 'remove', 'K2_DELETE');
 
         if (K2_JVERSION != '15')
         {
-            JToolBarHelper::preferences('com_k2', 550, 875, 'K2_PARAMETERS');
+            JToolBarHelper::preferences('com_k2', 580, 800, 'K2_PARAMETERS');
         }
         else
         {
             $toolbar = JToolBar::getInstance('toolbar');
-            $toolbar->appendButton('Popup', 'config', 'Parameters', 'index.php?option=com_k2&view=settings');
+            $toolbar->appendButton('Popup', 'config', 'K2_PARAMETERS', 'index.php?option=com_k2&view=settings', 800, 580);
         }
 
         $this->loadHelper('html');
@@ -70,5 +69,4 @@ class K2ViewUserGroups extends K2View
 
         parent::display($tpl);
     }
-
 }

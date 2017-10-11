@@ -1,21 +1,20 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.8.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
-defined('_JEXEC') or die ;
+defined('_JEXEC') or die;
 
 class Com_K2InstallerScript
 {
-
     public function postflight($type, $parent)
     {
-        $db = JFactory::getDBO();
+        $db = JFactory::getDbo();
         $status = new stdClass;
         $status->modules = array();
         $status->plugins = array();
@@ -33,7 +32,7 @@ class Com_K2InstallerScript
             }
             $installer = new JInstaller;
             $result = $installer->install($path);
-            if ($result && $group != 'finder' && $group != 'josetta_ext')
+            if ($result && $group != 'finder')
             {
                 if (JFile::exists(JPATH_SITE.'/plugins/'.$group.'/'.$name.'/'.$name.'.xml'))
                 {
@@ -41,14 +40,14 @@ class Com_K2InstallerScript
                 }
                 JFile::move(JPATH_SITE.'/plugins/'.$group.'/'.$name.'/'.$name.'.j25.xml', JPATH_SITE.'/plugins/'.$group.'/'.$name.'/'.$name.'.xml');
             }
-			if($group != 'finder')
-			{
-		    	$query = "UPDATE #__extensions SET enabled=1 WHERE type='plugin' AND element=".$db->Quote($name)." AND folder=".$db->Quote($group);
-            	$db->setQuery($query);
-            	$db->query();
-			}
+            if($group != 'finder')
+            {
+                $query = "UPDATE #__extensions SET enabled=1 WHERE type='plugin' AND element=".$db->Quote($name)." AND folder=".$db->Quote($group);
+                $db->setQuery($query);
+                $db->query();
+            }
             $status->plugins[] = array('name' => $name, 'group' => $group, 'result' => $result);
-        }		
+        }
         $modules = $manifest->xpath('modules/module');
         foreach ($modules as $module)
         {
@@ -59,13 +58,13 @@ class Com_K2InstallerScript
                 $client = 'site';
             }
             ($client == 'administrator') ? $path = $src.'/administrator/modules/'.$name : $path = $src.'/modules/'.$name;
-			
-			if($client == 'administrator')
-			{
-				$db->setQuery("SELECT id FROM #__modules WHERE `module` = ".$db->quote($name));
-				$isUpdate = (int)$db->loadResult();
-			}
-			
+
+            if($client == 'administrator')
+            {
+                $db->setQuery("SELECT id FROM #__modules WHERE `module` = ".$db->quote($name));
+                $isUpdate = (int)$db->loadResult();
+            }
+
             $installer = new JInstaller;
             $result = $installer->install($path);
             if ($result)
@@ -78,71 +77,74 @@ class Com_K2InstallerScript
                 JFile::move($root.'/modules/'.$name.'/'.$name.'.j25.xml', $root.'/modules/'.$name.'/'.$name.'.xml');
             }
             $status->modules[] = array('name' => $name, 'client' => $client, 'result' => $result);
-			if($client == 'administrator' && !$isUpdate)
-			{
-				$position = version_compare(JVERSION, '3.0', '<') && $name == 'mod_k2_quickicons'? 'icon' : 'cpanel';
-				$db->setQuery("UPDATE #__modules SET `position`=".$db->quote($position).",`published`='1' WHERE `module`=".$db->quote($name));
-				$db->query();
+            if($client == 'administrator' && !$isUpdate)
+            {
+                $position = version_compare(JVERSION, '3.0', '<') && $name == 'mod_k2_quickicons'? 'icon' : 'cpanel';
+                $db->setQuery("UPDATE #__modules SET `position`=".$db->quote($position).",`published`='1' WHERE `module`=".$db->quote($name));
+                $db->query();
 
-				$db->setQuery("SELECT id FROM #__modules WHERE `module` = ".$db->quote($name));
-				$id = (int)$db->loadResult();
+                $db->setQuery("SELECT id FROM #__modules WHERE `module` = ".$db->quote($name));
+                $id = (int)$db->loadResult();
 
-				$db->setQuery("INSERT IGNORE INTO #__modules_menu (`moduleid`,`menuid`) VALUES (".$id.", 0)");
-				$db->query();
-			}
+                $db->setQuery("INSERT IGNORE INTO #__modules_menu (`moduleid`,`menuid`) VALUES (".$id.", 0)");
+                $db->query();
+            }
         }
 
         if (JFile::exists(JPATH_ADMINISTRATOR.'/components/com_k2/admin.k2.php'))
         {
             JFile::delete(JPATH_ADMINISTRATOR.'/components/com_k2/admin.k2.php');
         }
-    
+
         if (JFile::exists(JPATH_ADMINISTRATOR.'/components/com_k2/models/cpanel.php'))
         {
             JFile::delete(JPATH_ADMINISTRATOR.'/components/com_k2/models/cpanel.php');
         }
-		if (version_compare(JVERSION, '3.0', 'lt') && JFolder::exists(JPATH_ADMINISTRATOR.'/components/com_joomfish/contentelements'))
-		{
-			$elements = $manifest->xpath('joomfish/file');
-			foreach ($elements as $element)
-			{
-				JFile::copy($src.'/administrator/components/com_joomfish/contentelements/'.$element->data(), JPATH_ADMINISTRATOR.'/components/com_joomfish/contentelements/'.$element->data());
-			}
-		}
-		
-	    // Clean up empty entries in #__k2_users table caused by an issue in the K2 user plugin. Fix details: http://code.google.com/p/getk2/source/detail?r=1966
-		$query = "DELETE FROM #__k2_users WHERE userID = 0";
-		$db->setQuery($query);
-		$db->query();
-		
-		// Fix media manager folder permissions
-		set_time_limit(0);
-		jimport('joomla.filesystem.folder');
-		jimport('joomla.filesystem.path');
-		$params = JComponentHelper::getParams('com_media');
+
+        if (version_compare(JVERSION, '3.0', 'lt') && JFolder::exists(JPATH_ADMINISTRATOR.'/components/com_joomfish/contentelements'))
+        {
+            $elements = $manifest->xpath('joomfish/file');
+            foreach ($elements as $element)
+            {
+                JFile::copy($src.'/administrator/components/com_joomfish/contentelements/'.$element->data(), JPATH_ADMINISTRATOR.'/components/com_joomfish/contentelements/'.$element->data());
+            }
+        }
+
+        // Clean up empty entries in #__k2_users table caused by an issue in the K2 user plugin. Fix details: http://code.google.com/p/getk2/source/detail?r=1966
+        $query = "DELETE FROM #__k2_users WHERE userID = 0";
+        $db->setQuery($query);
+        $db->query();
+
+        /*
+	    // TO DO: Check main folders for 0755 first and then apply this fix
+        // Fix media manager folder permissions
+        set_time_limit(0);
+        jimport('joomla.filesystem.folder');
+        jimport('joomla.filesystem.path');
+        $params = JComponentHelper::getParams('com_media');
         $root = $params->get('file_path', 'media');
-		$mediaPath = JPATH_SITE.'/'.JPath::clean($root);
-		$folders = JFolder::folders($mediaPath, '.', true, true, array());
-		foreach($folders as $folder)
-		{
-			@chmod($folder, 0755);
-		}
-		if(JFolder::exists($mediaPath.'/'.'.tmb'))
-		{
-			@chmod($mediaPath.'/'.'.tmb', 0755);
-		}
-		if(JFolder::exists($mediaPath.'/'.'.quarantine'))
-		{
-			@chmod($mediaPath.'/'.'.quarantine', 0755);
-		}
-		
+        $mediaPath = JPATH_SITE.'/'.JPath::clean($root);
+        $folders = JFolder::folders($mediaPath, '.', true, true, array());
+        foreach($folders as $folder)
+        {
+            @chmod($folder, 0755);
+        }
+        if(JFolder::exists($mediaPath.'/'.'.tmb'))
+        {
+            @chmod($mediaPath.'/'.'.tmb', 0755);
+        }
+        if(JFolder::exists($mediaPath.'/'.'.quarantine'))
+        {
+            @chmod($mediaPath.'/'.'.quarantine', 0755);
+        }
+        */
+
         $this->installationResults($status);
-       
     }
 
     public function uninstall($parent)
     {
-        $db = JFactory::getDBO();
+        $db = JFactory::getDbo();
         $status = new stdClass;
         $status->modules = array();
         $status->plugins = array();
@@ -164,14 +166,13 @@ class Com_K2InstallerScript
                 }
                 $status->plugins[] = array('name' => $name, 'group' => $group, 'result' => $result);
             }
-            
         }
         $modules = $manifest->xpath('modules/module');
         foreach ($modules as $module)
         {
             $name = (string)$module->attributes()->module;
             $client = (string)$module->attributes()->client;
-            $db = JFactory::getDBO();
+            $db = JFactory::getDbo();
             $query = "SELECT `extension_id` FROM `#__extensions` WHERE `type`='module' AND element = ".$db->Quote($name)."";
             $db->setQuery($query);
             $extensions = $db->loadColumn();
@@ -184,14 +185,14 @@ class Com_K2InstallerScript
                 }
                 $status->modules[] = array('name' => $name, 'client' => $client, 'result' => $result);
             }
-            
         }
         $this->uninstallationResults($status);
     }
 
     public function update($type)
     {
-        $db = JFactory::getDBO();
+        $db = JFactory::getDbo();
+
         $fields = $db->getTableColumns('#__k2_categories');
         if (!array_key_exists('language', $fields))
         {
@@ -221,21 +222,18 @@ class Com_K2InstallerScript
             $db->setQuery($query);
             $db->query();
         }
-
         if ($fields['video'] != 'text')
         {
             $query = "ALTER TABLE #__k2_items MODIFY `video` TEXT";
             $db->setQuery($query);
             $db->query();
         }
-
         if ($fields['introtext'] == 'text')
         {
             $query = "ALTER TABLE #__k2_items MODIFY `introtext` MEDIUMTEXT";
             $db->setQuery($query);
             $db->query();
         }
-
         if ($fields['fulltext'] == 'text')
         {
             $query = "ALTER TABLE #__k2_items MODIFY `fulltext` MEDIUMTEXT";
@@ -243,7 +241,9 @@ class Com_K2InstallerScript
             $db->query();
         }
 
-        /*$query = "SHOW INDEX FROM #__k2_items";
+        /*
+	    // TO DO: Use the following info to remove FULLTEXT attributes from the items & tags tables
+        $query = "SHOW INDEX FROM #__k2_items";
         $db->setQuery($query);
         $indexes = $db->loadObjectList();
         $indexExists = false;
@@ -279,7 +279,26 @@ class Com_K2InstallerScript
             $query = "ALTER TABLE #__k2_tags ADD FULLTEXT (`name`)";
             $db->setQuery($query);
             $db->query();
-        }*/
+        }
+        */
+
+        // Add index for comments count
+        $query = "SHOW INDEX FROM #__k2_comments";
+        $db->setQuery($query);
+        $indexes = $db->loadObjectList();
+        $indexExists = false;
+        foreach ($indexes as $index)
+        {
+            if ($index->Key_name == 'countComments')
+                $indexExists = true;
+        }
+
+        if (!$indexExists)
+        {
+            $query = "ALTER TABLE #__k2_comments ADD INDEX `countComments` (`itemID`, `published`)";
+            $db->setQuery($query);
+            $db->query();
+        }
 
         $query = "SELECT COUNT(*) FROM #__k2_user_groups";
         $db->setQuery($query);
@@ -289,31 +308,39 @@ class Com_K2InstallerScript
         {
             $query = "INSERT INTO #__k2_user_groups (`id`, `name`, `permissions`) VALUES('', 'Registered', '{\"comment\":\"1\",\"frontEdit\":\"0\",\"add\":\"0\",\"editOwn\":\"0\",\"editAll\":\"0\",\"publish\":\"0\",\"inheritance\":0,\"categories\":\"all\"}')";
             $db->setQuery($query);
-            $db->Query();
+            $db->query();
 
             $query = "INSERT INTO #__k2_user_groups (`id`, `name`, `permissions`) VALUES('', 'Site Owner', '{\"comment\":\"1\",\"frontEdit\":\"1\",\"add\":\"1\",\"editOwn\":\"1\",\"editAll\":\"1\",\"publish\":\"1\",\"inheritance\":1,\"categories\":\"all\"}')";
             $db->setQuery($query);
-            $db->Query();
-
+            $db->query();
         }
 
         $fields = $db->getTableColumns('#__k2_users');
         if (!array_key_exists('ip', $fields))
         {
-            $query = "ALTER TABLE `#__k2_users` 
-			ADD `ip` VARCHAR( 15 ) NOT NULL , 
-			ADD `hostname` VARCHAR( 255 ) NOT NULL , 
-			ADD `notes` TEXT NOT NULL";
+            $query = "ALTER TABLE `#__k2_users`
+            ADD `ip` VARCHAR( 15 ) NOT NULL ,
+            ADD `hostname` VARCHAR( 255 ) NOT NULL ,
+            ADD `notes` TEXT NOT NULL";
             $db->setQuery($query);
             $db->query();
         }
+
+        $query = "CREATE TABLE IF NOT EXISTS `#__k2_log` (
+        `status` int(11) NOT NULL,
+        `response` text NOT NULL,
+        `timestamp` datetime NOT NULL
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+        $db->setQuery($query);
+        $db->query();
     }
+
     private function installationResults($status)
     {
         $language = JFactory::getLanguage();
         $language->load('com_k2');
         $rows = 0; ?>
-        <img src="<?php echo JURI::root(true); ?>/media/k2/assets/images/system/K2_Logo_126x48_24.png" alt="K2" align="right" />
+        <img src="<?php echo JURI::root(true); ?>/media/k2/assets/images/backend/k2_logo_126x48.png" alt="K2" align="right" />
         <h2><?php echo JText::_('K2_INSTALLATION_STATUS'); ?></h2>
         <table class="adminlist table table-striped">
             <thead>
@@ -364,11 +391,12 @@ class Com_K2InstallerScript
         </table>
     <?php
     }
+
     private function uninstallationResults($status)
     {
-    $language = JFactory::getLanguage();
-    $language->load('com_k2');
-    $rows = 0;
+    	$language = JFactory::getLanguage();
+		$language->load('com_k2');
+		$rows = 0;
  ?>
         <h2><?php echo JText::_('K2_REMOVAL_STATUS'); ?></h2>
         <table class="adminlist table table-striped">
@@ -402,7 +430,7 @@ class Com_K2InstallerScript
                 </tr>
                 <?php endforeach; ?>
                 <?php endif; ?>
-        
+
                 <?php if (count($status->plugins)): ?>
                 <tr>
                     <th><?php echo JText::_('K2_PLUGIN'); ?></th>
@@ -421,5 +449,4 @@ class Com_K2InstallerScript
         </table>
     <?php
     }
-    }
-        
+}

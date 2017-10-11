@@ -1,20 +1,19 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.8.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
-defined('_JEXEC') or die ;
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.controller');
 
 class K2ControllerItem extends K2Controller
 {
-
 	public function display($cachable = false, $urlparams = array())
 	{
 		JRequest::setVar('view', 'item');
@@ -52,6 +51,17 @@ class K2ControllerItem extends K2Controller
 		$model->addTag();
 	}
 
+	function tags()
+	{
+		$user = JFactory::getUser();
+		if($user->guest)
+		{
+			JError::raiseError(403, JText::_('K2_ALERTNOTAUTH'));
+		}
+		$model = $this->getModel('tag');
+		$model->tags();
+	}
+
 	function download()
 	{
 		$model = $this->getModel('item');
@@ -60,15 +70,15 @@ class K2ControllerItem extends K2Controller
 
 	function extraFields()
 	{
-		$mainframe = JFactory::getApplication();
+		$application = JFactory::getApplication();
 		$itemID = JRequest::getInt('id', NULL);
 		$categoryModel = $this->getModel('category');
 		$category = $categoryModel->getData();
 		$extraFieldModel = $this->getModel('extraField');
 		$extraFields = $extraFieldModel->getExtraFieldsByGroup($category->extraFieldsGroup);
 
-		$output = '<table class="admintable" id="extraFields">';
 		$counter = 0;
+		$output = '';
 		if (count($extraFields))
 		{
 			foreach ($extraFields as $extraField)
@@ -76,24 +86,29 @@ class K2ControllerItem extends K2Controller
 
 				if ($extraField->type == 'header')
 				{
-					$output .= '<tr><td colspan="2" ><h4 class="k2ExtraFieldHeader">'.$extraField->name.'</h4></td></tr>';
+					$output .= '<div class="itemAdditionalField"><h4 class="k2ExtraFieldHeader">'.$extraField->name.'</h4></div>';
 				}
 				else
 				{
-					$output .= '<tr><td align="right" class="key"><label for="K2ExtraField_'.$extraField->id.'">'.$extraField->name.'</label></td>';
-					$output .= '<td>'.$extraFieldModel->renderExtraField($extraField, $itemID).'</td></tr>';
+					$output .= '
+					<div class="itemAdditionalField">
+						<div class="k2Right k2FLeft itemAdditionalValue">
+							<label for="K2ExtraField_'.$extraField->id.'">'.$extraField->name.'</label>
+						</div>
+						<div class="itemAdditionalData">'.$extraFieldModel->renderExtraField($extraField, $itemID).'</div>
+					</div>
+					';
 				}
 				$counter++;
 			}
 		}
-		$output .= '</table>';
 
 		if ($counter == 0)
 			$output = JText::_('K2_THIS_CATEGORY_DOESNT_HAVE_ASSIGNED_EXTRA_FIELDS');
 
 		echo $output;
 
-		$mainframe->close();
+		$application->close();
 	}
 
 	function resetHits()
@@ -101,7 +116,6 @@ class K2ControllerItem extends K2Controller
 		JRequest::checkToken() or jexit('Invalid Token');
 		$model = $this->getModel('item');
 		$model->resetHits();
-
 	}
 
 	function resetRating()
@@ -109,7 +123,5 @@ class K2ControllerItem extends K2Controller
 		JRequest::checkToken() or jexit('Invalid Token');
 		$model = $this->getModel('item');
 		$model->resetRating();
-
 	}
-
 }

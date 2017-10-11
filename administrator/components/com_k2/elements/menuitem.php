@@ -1,23 +1,22 @@
 <?php
 /**
- * @version		2.6.x
+ * @version		2.8.x
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
+ * @copyright	Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
  * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // Check to ensure this file is within the rest of the framework
 defined('JPATH_BASE') or die();
 
-require_once (JPATH_ADMINISTRATOR.'/components/com_k2/elements/base.php');
+require_once(JPATH_ADMINISTRATOR.'/components/com_k2/elements/base.php');
 
 class K2ElementMenuItem extends K2Element
 {
-
-    function fetchElement($name, $value, &$node, $control_name)
+    function fetchElementValue($name, $value, &$node, $control_name)
     {
-        $db = JFactory::getDBO();
+        $db = JFactory::getDbo();
 
         // load the list of menu types
         // TODO: move query to model
@@ -138,7 +137,6 @@ class K2ElementMenuItem extends K2Element
 
         return JHTML::_('select.genericlist', $options, $fieldName, 'class="inputbox"', 'value', 'text', $value, $control_name.$name);
     }
-
 }
 
 class JFormFieldMenuItem extends K2ElementMenuItem

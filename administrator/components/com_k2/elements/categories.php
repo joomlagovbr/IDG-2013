@@ -1,24 +1,23 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.8.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
 defined('_JEXEC') or die;
 
-require_once (JPATH_ADMINISTRATOR.'/components/com_k2/elements/base.php');
+require_once(JPATH_ADMINISTRATOR.'/components/com_k2/elements/base.php');
 
 class K2ElementCategories extends K2Element
 {
 
-    function fetchElement($name, $value, &$node, $control_name)
+    function fetchElementValue($name, $value, &$node, $control_name)
     {
-        $db = JFactory::getDBO();
-
+        $db = JFactory::getDbo();
         $query = 'SELECT m.* FROM #__k2_categories m WHERE trash = 0 ORDER BY parent, ordering';
         $db->setQuery($query);
         $mitems = $db->loadObjectList();
@@ -80,7 +79,6 @@ class K2ElementCategories extends K2Element
 
         return JHTML::_('select.genericlist', $mitems, $fieldName, $attributes, 'value', 'text', $value);
     }
-
 }
 
 class JFormFieldCategories extends K2ElementCategories

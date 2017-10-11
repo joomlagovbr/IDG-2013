@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.8.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
@@ -16,17 +16,22 @@ class K2ViewExtraFieldsGroup extends K2View
 {
     function display($tpl = null)
     {
-        JRequest::setVar('hidemainmenu', 1);
         $model = $this->getModel();
         $extraFieldsGroup = $model->getExtraFieldsGroup();
         JFilterOutput::objectHTMLSafe($extraFieldsGroup);
         $this->assignRef('row', $extraFieldsGroup);
-        (JRequest::getInt('cid')) ? $title = JText::_('K2_EDIT_EXTRA_FIELD_GROUP') : $title = JText::_('K2_ADD_EXTRA_FIELD_GROUP');
+
+		// Disable Joomla menu
+		JRequest::setVar('hidemainmenu', 1);
+
+        // Toolbar
+        $title = (JRequest::getInt('cid')) ? JText::_('K2_EDIT_EXTRA_FIELD_GROUP') : JText::_('K2_ADD_EXTRA_FIELD_GROUP');
         JToolBarHelper::title($title, 'k2.png');
-        JToolBarHelper::save();
+
         JToolBarHelper::apply();
+        JToolBarHelper::save();
         JToolBarHelper::cancel();
+
         parent::display($tpl);
     }
-
 }

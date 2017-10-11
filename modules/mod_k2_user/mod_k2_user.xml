@@ -2,17 +2,16 @@
 <extension type="module" client="site" version="2.5" method="upgrade">
     <name>K2 User</name>
     <author>JoomlaWorks</author>
-    <creationDate>February 28th, 2014</creationDate>
-    <copyright>Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.</copyright>
+    <creationDate>August 18th, 2017</creationDate>
+    <copyright>Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.</copyright>
     <authorEmail>please-use-the-contact-form@joomlaworks.net</authorEmail>
     <authorUrl>www.joomlaworks.net</authorUrl>
-    <version>2.6.8</version>
+    <version>2.8.0</version>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
     <description>K2_MOD_K2_USER_DESCRIPTION</description>
     <files>
         <filename module="mod_k2_user">mod_k2_user.php</filename>
         <filename>helper.php</filename>
-        <filename>index.html</filename>
         <folder>tmpl</folder>
     </files>
     <config>
@@ -27,7 +26,7 @@
                     <option value="0">K2_USERNAME</option>
                     <option value="1">K2_NAME</option>
                 </field>
-                <field name="userAvatar" type="radio" default="1" label="K2_USER_AVATAR" description="">
+                <field name="userAvatar" type="radio" default="1" label="K2_USER_AVATAR" description="" class="btn-group btn-group-yesno">
                     <option value="0">K2_HIDE</option>
                     <option value="1">K2_SHOW</option>
                 </field>
@@ -39,9 +38,13 @@
                 <field name="" type="header" default="K2_MENU_RENDER_OPTION" label="" description="" />
                 <field name="menu" type="menus" default="" label="K2_MENU_TO_RENDER" description="K2_MENU_TO_RENDER_DESC" />
                 <field name="" type="header" default="K2_LOGIN_LOGOUT_REDIRECTION" label="" description="" />
-                <field name="login" type="menuitem" default="" disable="separator" label="K2_LOGIN_REDIRECTION_URL" description="K2_LOGIN_REDIRECTION_URL_DESCRIPTION" />
-                <field name="logout" type="menuitem" default="" disable="separator" label="K2_LOGOUT_REDIRECTION_URL" description="K2_LOGOUT_REDIRECTION_URL_DESCRIPTION" />
-                <field name="usesecure" type="radio" default="0" label="K2_ENCRYPT_LOGIN_FORM" description="K2_SUBMIT_ENCRYPTED_LOGIN_DATA_REQUIRES_SSL">
+                <field name="login" type="menuitem" default="" disable="separator" label="K2_LOGIN_REDIRECTION_URL" description="K2_LOGIN_REDIRECTION_URL_DESCRIPTION">
+                	<option value="">K2_NONE_ONSELECTLISTS</option>
+                </field>
+                <field name="logout" type="menuitem" default="" disable="separator" label="K2_LOGOUT_REDIRECTION_URL" description="K2_LOGOUT_REDIRECTION_URL_DESCRIPTION">
+                	<option value="">K2_NONE_ONSELECTLISTS</option>
+                </field>
+                <field name="usesecure" type="radio" default="0" label="K2_ENCRYPT_LOGIN_FORM" description="K2_SUBMIT_ENCRYPTED_LOGIN_DATA_REQUIRES_SSL" class="btn-group btn-group-yesno">
                     <option value="0">K2_NO</option>
                     <option value="1">K2_YES</option>
                 </field>

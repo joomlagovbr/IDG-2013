@@ -1,18 +1,17 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.8.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
-defined('_JEXEC') or die ;
+defined('_JEXEC') or die;
 
 class K2HelperHTML
 {
-
 	public static function subMenu()
 	{
 		$user = JFactory::getUser();
@@ -47,94 +46,270 @@ class K2HelperHTML
 		return $href;
 	}
 
-	public static function loadjQuery($ui = false, $mediaManager = false)
+	public static function loadHeadIncludes($loadFramework = false, $jQueryUI = false, $adminHeadIncludes = false, $adminModuleIncludes = false)
 	{
-		JLoader::register('K2HelperUtilities', JPATH_SITE.DS.'components'.DS.'com_k2'.DS.'helpers'.DS.'utilities.php');
-
 		$application = JFactory::getApplication();
 		$document = JFactory::getDocument();
+		$user = JFactory::getUser();
+
 		$params = K2HelperUtilities::getParams('com_k2');
+
+		$option = JRequest::getCmd('option');
+		$view = strtolower(JRequest::getWord('view', 'items'));
+		$task = JRequest::getCmd('task');
+
+		$jQueryHandling = $params->get('jQueryHandling', '1.9.1');
 
 		if ($document->getType() == 'html')
 		{
-			if (K2_JVERSION == '15')
+
+			if ($loadFramework && $view != 'media')
 			{
-				JHtml::_('behavior.mootools');
-			}
-			else if (K2_JVERSION == '25')
-			{
-				JHtml::_('behavior.framework');
-			}
-			else
-			{
-				if($mediaManager)
-				{
-					$document->addScript('//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js');
-				}
-				else
+				if (version_compare(JVERSION, '1.6.0', 'ge'))
 				{
 					JHtml::_('behavior.framework');
-					if ($application->isAdmin() || ($application->isSite() && $params->get('jQueryHandling')))
-					{
-						JHtml::_('jquery.framework');
-					}
+				}
+				else
+				{
+					JHTML::_('behavior.mootools');
 				}
 			}
 
-			$handling = $application->isAdmin() ? $params->get('backendJQueryHandling', 'remote') : $params->get('jQueryHandling', '1.8remote');
+			if (version_compare(JVERSION, '3.0.0', 'ge'))
+			{
+				if ($application->isAdmin() || ($application->isSite() && $params->get('jQueryHandling')))
+				{
+					JHtml::_('jquery.framework');
+				}
+			}
+
 			// jQuery
-			if (K2_JVERSION != '30')
+			if (version_compare(JVERSION, '3.0.0', 'lt'))
 			{
-				if ($handling == 'remote')
+				// Frontend
+				if ($application->isSite())
 				{
-					$document->addScript('//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js');
+					// B/C for saved old options
+					if ($jQueryHandling == '1.7remote') $jQueryHandling = '1.7.2';
+					if ($jQueryHandling == '1.8remote') $jQueryHandling = '1.8.3';
+					if ($jQueryHandling == '1.9remote') $jQueryHandling = '1.9.1';
+					if ($jQueryHandling == '1.10remote') $jQueryHandling = '1.10.2';
+					if ($jQueryHandling == '1.11remote') $jQueryHandling = '1.11.3';
+					if ($jQueryHandling == '1.12remote') $jQueryHandling = '1.12.4';
+					$document->addScript('https://cdnjs.cloudflare.com/ajax/libs/jquery/'.$jQueryHandling.'/jquery.min.js');
 				}
-				else if ($handling == 'local')
+
+				// Backend
+				if ($application->isAdmin())
 				{
-					$document->addScript(JURI::root(true).'/media/k2/assets/js/jquery-1.8.3.min.js');
-				}
-				else
-				{
-					if ($handling && JString::strpos($handling, 'remote') !== false)
+					if (($option == 'com_k2' && ($view == 'item' || $view == 'category')) || $option == 'com_menus')
 					{
-						// Remove this if statement in 2.7.0
-						if ($handling == '1.9remote')
-						{
-							$handling = '1remote';
+						$document->addScript('https://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js');
+					}
+					else
+					{
+						$document->addScript('https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js');
+					}
+				}
+			}
+
+			// jQueryUI
+			if ($jQueryUI)
+			{
+				// Load version 1.8.24 for tabs & sortables (called the "old" way)...
+				if (($option == 'com_k2' && ($view == 'item' || $view == 'category')) || $option == 'com_menus')
+				{
+					$document->addScript('https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js');
+				}
+
+				// Load latest version for the "media" view & modules only
+				if (($option == 'com_k2' && $view == 'media') || $option == 'com_modules' || $option == 'com_advancedmodules')
+				{
+					$document->addStyleSheet('https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.min.css');
+					$document->addScript('https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js');
+				}
+			}
+
+			// Everything else...
+			if ($application->isAdmin() || $adminHeadIncludes)
+			{
+				// JS
+				$isBackend = ($application->isAdmin()) ? ' k2IsBackend' : '';
+				$isTask = ($task) ? ' k2TaskIs'.ucfirst($task) : '';
+				$cssClass = 'isJ'.K2_JVERSION.' k2ViewIs'.ucfirst($view).''.$isTask.''.$isBackend;
+				$document->addScriptDeclaration("
+
+					// Set K2 version as global JS variable
+					K2JVersion = '".K2_JVERSION."';
+
+					// Set Joomla version as class in the 'html' tag
+					(function(){
+						var addedClass = '".$cssClass."';
+						if (document.getElementsByTagName('html')[0].className !== '') {
+							document.getElementsByTagName('html')[0].className += ' '+addedClass;
+						} else {
+							document.getElementsByTagName('html')[0].className = addedClass;
 						}
-						
-						$document->addScript('//ajax.googleapis.com/ajax/libs/jquery/'.str_replace('remote', '', $handling).'/jquery.min.js');
-					}
-					else if ($handling && JString::strpos($handling, 'remote') === false)
-					{
-						$document->addScript(JURI::root(true).'/media/k2/assets/js/jquery-'.$handling.'.min.js');
-					}
-				}
-			}
+					})();
 
-			// jQuery UI
-			if ($application->isAdmin() || $ui)
-			{
+					// K2 Language Strings
+		        	var K2_THE_ENTRY_IS_ALREADY_IN_THE_LIST = '".JText::_('K2_THE_ENTRY_IS_ALREADY_IN_THE_LIST')."';
+		        	var K2_REMOVE_THIS_ENTRY = '".JText::_('K2_REMOVE_THIS_ENTRY')."';
+		        	var K2_THE_ENTRY_WAS_ADDED_IN_THE_LIST = '".JText::_('K2_THE_ENTRY_WAS_ADDED_IN_THE_LIST')."';
 
-				// No conflict loaded when $ui requested or in the backend.
-				// No need to reload for $mediaManager as the latter is always called with $ui
-				$document->addScript(JURI::root(true).'/media/k2/assets/js/k2.noconflict.js');
+				");
+				$document->addScript(JURI::root(true).'/media/k2/assets/js/k2.backend.js?v='.K2_CURRENT_VERSION.'&amp;sitepath='.JURI::root(true).'/');
 
-				if ($handling == 'local')
+				// NicEdit
+				if ($option == 'com_k2' && $view == 'item')
 				{
-					$document->addScript(JURI::root(true).'/media/k2/assets/js/jquery-ui-1.8.24.custom.min.js');
+					$document->addScript(JURI::root(true).'/media/k2/assets/vendors/bkirchoff/nicedit/nicEdit.js?v='.K2_CURRENT_VERSION);
+				}
+
+				// Media (elFinder)
+				if ($view == 'media')
+				{
+					$document->addStyleSheet(JURI::root(true).'/media/k2/assets/vendors/studio-42/elfinder/css/elfinder.min.css?v='.K2_CURRENT_VERSION);
+			        $document->addStyleSheet(JURI::root(true).'/media/k2/assets/vendors/studio-42/elfinder/css/theme.css?v='.K2_CURRENT_VERSION);
+					$document->addScript(JURI::root(true).'/media/k2/assets/vendors/studio-42/elfinder/js/elfinder.min.js?v='.K2_CURRENT_VERSION);
 				}
 				else
 				{
-					$document->addScript('//ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js');
+					JHTML::_('behavior.tooltip');
+					if (version_compare(JVERSION, '3.0.0', 'ge'))
+					{
+						if ($view == 'item' && !$params->get('taggingSystem'))
+						{
+							JHtml::_('formbehavior.chosen', 'select:not(#selectedTags, #tags)');
+						}
+						else
+						{
+							JHtml::_('formbehavior.chosen', 'select');
+						}
+					}
+				}
+
+				// Flatpickr
+				if ($view == 'item' || $view == 'extrafield')
+				{
+					$document->addStyleSheet('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/2.6.3/flatpickr.min.css');
+					$document->addScript('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/2.6.3/flatpickr.min.js');
+					$document->addCustomTag('<!--[if IE 9]><link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/2.6.3/ie.css" /><![endif]-->');
+				}
+
+				// Magnific Popup
+				$document->addStyleSheet('https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css');
+				$document->addStyleDeclaration('
+					/* K2 - Magnific Popup Overrides */
+					.mfp-iframe-holder {padding:10px;}
+					.mfp-iframe-holder .mfp-content {max-width:100%;width:100%;height:100%;}
+					.mfp-iframe-scaler iframe {background:#fff;padding:10px;box-sizing:border-box;box-shadow:none;}
+				');
+				$document->addScript('https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js');
+
+				// Fancybox
+				if ($view == 'item' || $view == 'items' || $view == 'categories')
+				{
+					$document->addStyleSheet('https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.20/jquery.fancybox.min.css');
+					$document->addScript('https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.20/jquery.fancybox.min.js');
+				}
+
+				// CSS
+				if ($option == 'com_k2' || $adminModuleIncludes)
+				{
+					$document->addStyleSheet('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
+				}
+				if ($option == 'com_k2')
+				{
+					$document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.backend.css?v='.K2_CURRENT_VERSION);
+				}
+				if($adminModuleIncludes)
+				{
+					$document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.global.css?v='.K2_CURRENT_VERSION);
 				}
 			}
 
-			if ($mediaManager)
+			// Frontend only
+			if($application->isSite())
 			{
-				$document->addScript(JURI::root(true).'/media/k2/assets/js/elfinder.min.js?v=2.6.8');
+				// Magnific Popup
+				if (!$user->guest || ($option == 'com_k2' && $view == 'item') || defined('K2_JOOMLA_MODAL_REQUIRED')){
+					$document->addStyleSheet('https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css');
+					$document->addStyleDeclaration('
+						/* K2 - Magnific Popup Overrides */
+						.mfp-iframe-holder {padding:10px;}
+						.mfp-iframe-holder .mfp-content {max-width:100%;width:100%;height:100%;}
+						.mfp-iframe-scaler iframe {background:#fff;padding:10px;box-sizing:border-box;box-shadow:none;}
+					');
+					$document->addScript('https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js');
+				}
+
+				// JS
+				$document->addScript(JURI::root(true).'/media/k2/assets/js/k2.frontend.js?v='.K2_CURRENT_VERSION.'&amp;sitepath='.JURI::root(true).'/');
+
+				// Google Search (deprecated - to remove)
+				if ($task == 'search' && $params->get('googleSearch'))
+				{
+					$language = JFactory::getLanguage();
+					$lang = $language->getTag();
+					// Fallback to the new container ID without breaking things
+					$googleSearchContainerID = trim($params->get('googleSearchContainer', 'k2GoogleSearchContainer'));
+					if($googleSearchContainerID == 'k2Container'){
+						$googleSearchContainerID = 'k2GoogleSearchContainer';
+					}
+					$document->addScript('https://www.google.com/jsapi');
+					$document->addScriptDeclaration('
+						google.load("search", "1", {"language" : "'.$lang.'"});
+						function OnLoad(){
+							var searchControl = new google.search.SearchControl();
+							var siteSearch = new google.search.WebSearch();
+							siteSearch.setUserDefinedLabel("'.$application->getCfg('sitename').'");
+							siteSearch.setUserDefinedClassSuffix("k2");
+							options = new google.search.SearcherOptions();
+							options.setExpandMode(google.search.SearchControl.EXPAND_MODE_OPEN);
+							siteSearch.setSiteRestriction("'.JURI::root().'");
+							searchControl.addSearcher(siteSearch, options);
+							searchControl.setResultSetSize(google.search.Search.LARGE_RESULTSET);
+							searchControl.setLinkTarget(google.search.Search.LINK_TARGET_SELF);
+							searchControl.draw(document.getElementById("'.$googleSearchContainerID.'"));
+							searchControl.execute("'.JRequest::getString('searchword').'");
+						}
+						google.setOnLoadCallback(OnLoad);
+					');
+				}
+
+				// Add related CSS to the <head>
+				if ($params->get('enable_css'))
+				{
+					jimport('joomla.filesystem.file');
+
+					// Simple Line Icons
+					$document->addStyleSheet('https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css');
+
+					// k2.css
+					if (JFile::exists(JPATH_SITE.'/templates/'.$application->getTemplate().'/css/k2.css'))
+					{
+						$document->addStyleSheet(JURI::root(true).'/templates/'.$application->getTemplate().'/css/k2.css?v='.K2_CURRENT_VERSION);
+					}
+					else
+					{
+						$document->addStyleSheet(JURI::root(true).'/components/com_k2/css/k2.css?v='.K2_CURRENT_VERSION);
+					}
+
+					// k2.print.css
+					if (JRequest::getInt('print') == 1)
+					{
+						if (JFile::exists(JPATH_SITE.'/templates/'.$application->getTemplate().'/css/k2.print.css'))
+						{
+							$document->addStyleSheet(JURI::root(true).'/templates/'.$application->getTemplate().'/css/k2.print.css?v='.K2_CURRENT_VERSION, 'text/css', 'print');
+						}
+						else
+						{
+							$document->addStyleSheet(JURI::root(true).'/components/com_k2/css/k2.print.css?v='.K2_CURRENT_VERSION, 'text/css', 'print');
+						}
+					}
+				}
 			}
 		}
 	}
-
 }

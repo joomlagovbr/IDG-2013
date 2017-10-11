@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.8.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
@@ -14,12 +14,10 @@ jimport('joomla.application.component.view');
 
 class K2ViewUserGroup extends K2View
 {
-
     function display($tpl = null)
     {
-
         JHTML::_('behavior.tooltip');
-        JRequest::setVar('hidemainmenu', 1);
+
         $model = $this->getModel();
         $userGroup = $model->getData();
         if (K2_JVERSION == '15')
@@ -34,7 +32,7 @@ class K2ViewUserGroup extends K2View
 
         if (K2_JVERSION == '15')
         {
-            $form = new JParameter('', JPATH_COMPONENT.DS.'models'.DS.'usergroup.xml');
+            $form = new JParameter('', JPATH_COMPONENT.'/models/usergroup.xml');
             $form->loadINI($userGroup->permissions);
             $appliedCategories = $form->get('categories');
             $inheritance = $form->get('inheritance');
@@ -42,7 +40,7 @@ class K2ViewUserGroup extends K2View
         else
         {
             jimport('joomla.form.form');
-            $form = JForm::getInstance('permissions', JPATH_COMPONENT_ADMINISTRATOR.DS.'models'.DS.'usergroup.xml');
+            $form = JForm::getInstance('permissions', JPATH_COMPONENT_ADMINISTRATOR.'/models/usergroup.xml');
             $values = array('params' => json_decode($userGroup->permissions));
             $form->bind($values);
             $inheritance = isset($values['params']->inheritance) ? $values['params']->inheritance : 0;
@@ -59,13 +57,17 @@ class K2ViewUserGroup extends K2View
         $lists['categories'] = JHTML::_('select.genericlist', $categories, 'params[categories][]', 'multiple="multiple" size="15"', 'value', 'text', $appliedCategories);
         $lists['inheritance'] = JHTML::_('select.booleanlist', 'params[inheritance]', NULL, $inheritance);
         $this->assignRef('lists', $lists);
-        (JRequest::getInt('cid')) ? $title = JText::_('K2_EDIT_USER_GROUP') : $title = JText::_('K2_ADD_USER_GROUP');
+
+        // Disable Joomla menu
+        JRequest::setVar('hidemainmenu', 1);
+
+        // Toolbar
+        $title = (JRequest::getInt('cid')) ? JText::_('K2_EDIT_USER_GROUP') : JText::_('K2_ADD_USER_GROUP');
         JToolBarHelper::title($title, 'k2.png');
-        JToolBarHelper::save();
         JToolBarHelper::apply();
+        JToolBarHelper::save();
         JToolBarHelper::cancel();
 
         parent::display($tpl);
     }
-
 }

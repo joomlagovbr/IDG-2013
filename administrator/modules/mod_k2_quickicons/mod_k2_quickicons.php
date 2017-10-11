@@ -1,27 +1,25 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.8.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
-defined('_JEXEC') or die ;
+defined('_JEXEC') or die;
 
 $user = JFactory::getUser();
 
 if (K2_JVERSION != '15')
 {
-
 	if (!$user->authorise('core.manage', 'com_k2'))
 	{
 		return;
 	}
-
 	$language = JFactory::getLanguage();
-	$language->load('mod_k2.j16', JPATH_ADMINISTRATOR);
+	$language->load('com_k2.dates', JPATH_ADMINISTRATOR);
 	if ($user->authorise('core.admin', 'com_k2'))
 	{
 		$user->gid = 1000;
@@ -38,7 +36,7 @@ $mod_copyrights_start = "\n\n<!-- JoomlaWorks \"K2 QuickIcons\" Module starts he
 $mod_copyrights_end = "\n<!-- JoomlaWorks \"K2 QuickIcons\" Module ends here -->\n\n";
 
 // API
-$mainframe = JFactory::getApplication();
+$application = JFactory::getApplication();
 $document = JFactory::getDocument();
 $user = JFactory::getUser();
 
@@ -50,29 +48,29 @@ $modLogo = (int)$params->get('modLogo', 1);
 // Component parameters
 $componentParams = JComponentHelper::getParams('com_k2');
 
-$onlineImageEditor = $componentParams->get('onlineImageEditor', 'splashup');
+$onlineImageEditor = $componentParams->get('onlineImageEditor', 'picozu');
 
 switch($onlineImageEditor)
 {
-	case 'splashup' :
-		$onlineImageEditorLink = 'http://splashup.com/splashup/';
+	default:
+	case 'picozu':
+		$onlineImageEditorName = JText::_('K2_IMG_EDITOR_PICOZU');
+		$onlineImageEditorLink = 'https://www.picozu.com/editor/';
 		break;
-	case 'sumopaint' :
-		$onlineImageEditorLink = 'http://www.sumopaint.com/app/';
-		break;
-	case 'pixlr' :
-		$onlineImageEditorLink = 'http://pixlr.com/editor/';
+	case 'gravit':
+		$onlineImageEditorName = JText::_('K2_IMG_EDITOR_GRAVIT');
+		$onlineImageEditorLink = 'https://app.designer.io/';
 		break;
 }
 
-// Call the modal and add some needed JS
-JHTML::_('behavior.modal');
-
-// Append CSS to the document's head
+// Load CSS & JS
+K2HelperHTML::loadHeadIncludes(true, false, true, false);
 if ($modCSSStyling)
-	$document->addStyleSheet(JURI::base(true).'/modules/'.$mod_name.'/tmpl/css/style.css?v=2.6.8');
+{
+	$document->addStyleSheet(JURI::base(true).'/modules/'.$mod_name.'/tmpl/css/style.css?v='.K2_CURRENT_VERSION);
+}
 
 // Output content with template
 echo $mod_copyrights_start;
-require (JModuleHelper::getLayoutPath($mod_name, 'default'));
+require(JModuleHelper::getLayoutPath($mod_name, 'default'));
 echo $mod_copyrights_end;

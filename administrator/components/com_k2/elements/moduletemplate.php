@@ -1,22 +1,21 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.8.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
-defined('_JEXEC') or die ;
+defined('_JEXEC') or die;
 
-require_once (JPATH_ADMINISTRATOR.'/components/com_k2/elements/base.php');
+require_once(JPATH_ADMINISTRATOR.'/components/com_k2/elements/base.php');
 
 class K2ElementModuleTemplate extends K2Element
 {
-    function fetchElement($name, $value, &$node, $control_name)
+    function fetchElementValue($name, $value, &$node, $control_name)
     {
-
         jimport('joomla.filesystem.folder');
         if (K2_JVERSION != '15')
         {
@@ -26,10 +25,10 @@ class K2ElementModuleTemplate extends K2Element
         {
             $moduleName = $node->_attributes['modulename'];
         }
-        $moduleTemplatesPath = JPATH_SITE.DS.'modules'.DS.$moduleName.DS.'tmpl';
+        $moduleTemplatesPath = JPATH_SITE.'/modules/'.$moduleName.'/tmpl';
         $moduleTemplatesFolders = JFolder::folders($moduleTemplatesPath);
-        
-        $db = JFactory::getDBO();
+
+        $db = JFactory::getDbo();
         if (K2_JVERSION != '15')
         {
             $query = "SELECT template FROM #__template_styles WHERE client_id = 0 AND home = 1";
@@ -40,7 +39,7 @@ class K2ElementModuleTemplate extends K2Element
         }
         $db->setQuery($query);
         $defaultemplate = $db->loadResult();
-        $templatePath = JPATH_SITE.DS.'templates'.DS.$defaultemplate.DS.'html'.DS.$moduleName;
+        $templatePath = JPATH_SITE.'/templates/'.$defaultemplate.'/html/'.$moduleName;
 
         if (JFolder::exists($templatePath))
         {
@@ -77,9 +76,7 @@ class K2ElementModuleTemplate extends K2Element
         }
 
         return JHTML::_('select.genericlist', $options, $fieldName, 'class="inputbox"', 'value', 'text', $value, $control_name.$name);
-
     }
-
 }
 
 class JFormFieldModuleTemplate extends K2ElementModuleTemplate

@@ -1,20 +1,19 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.8.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
-defined('_JEXEC') or die ;
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.controller');
 
 class K2ControllerItem extends K2Controller
 {
-
 	public function display($cachable = false, $urlparams = array())
 	{
 		$model = $this->getModel('itemlist');
@@ -31,7 +30,7 @@ class K2ControllerItem extends K2Controller
 		else
 		{
 			$cache = true;
-			JTable::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.DS.'tables');
+			JTable::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.'/tables');
 			$row = JTable::getInstance('K2Item', 'Table');
 			$row->load(JRequest::getInt('id'));
 			if (K2HelperPermissions::canEditItem($row->created_by, $row->catid))
@@ -58,14 +57,19 @@ class K2ControllerItem extends K2Controller
 				$itemListModel = K2Model::getInstance('Itemlist', 'K2Model');
 				$profile = $itemListModel->getUserProfile($user->id);
 				$script = "
-\$K2(document).ready(function() {
-\$K2('#userName').val('".$view->escape($user->name)."').attr('disabled', 'disabled');
-\$K2('#commentEmail').val('".$user->email."').attr('disabled', 'disabled');";
+					\$K2(document).ready(function() {
+						\$K2('#userName').val(".json_encode($user->name).").attr('disabled', 'disabled');
+						\$K2('#commentEmail').val('".$user->email."').attr('disabled', 'disabled');
+				";
 				if (is_object($profile) && $profile->url)
 				{
-					$script .= " \$K2('#commentURL').val('".htmlspecialchars($profile->url, ENT_QUOTES, 'UTF-8')."').attr('disabled', 'disabled');";
+					$script .= "
+						\$K2('#commentURL').val('".htmlspecialchars($profile->url, ENT_QUOTES, 'UTF-8')."').attr('disabled', 'disabled');
+					";
 				}
-				$script .= " });";
+				$script .= "
+					});
+				";
 				$document->addScriptDeclaration($script);
 			}
 		}
@@ -83,34 +87,21 @@ class K2ControllerItem extends K2Controller
 	function edit()
 	{
 		JRequest::setVar('tmpl', 'component');
-		$mainframe = JFactory::getApplication();
+		$application = JFactory::getApplication();
 		$params = K2HelperUtilities::getParams('com_k2');
 		$language = JFactory::getLanguage();
 		$language->load('com_k2', JPATH_ADMINISTRATOR);
 
 		$document = JFactory::getDocument();
 
-		if (version_compare(JVERSION, '1.6.0', 'ge'))
-		{
-			JHtml::_('behavior.framework');
-		}
-		else
-		{
-			JHTML::_('behavior.mootools');
-		}
+		K2HelperHTML::loadHeadIncludes(true, true, true);
 
 		// CSS
-		$document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.css?v=2.6.8');
-		$document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.frontend.css?v=2.6.8');
 		$document->addStyleSheet(JURI::root(true).'/templates/system/css/general.css');
 		$document->addStyleSheet(JURI::root(true).'/templates/system/css/system.css');
 
-		// JS
-		K2HelperHTML::loadjQuery(true);
-		$document->addScript(JURI::root(true).'/media/k2/assets/js/k2.js?v=2.6.8&amp;sitepath='.JURI::root(true).'/');
-
-		$this->addViewPath(JPATH_COMPONENT_ADMINISTRATOR.DS.'views');
-		$this->addModelPath(JPATH_COMPONENT_ADMINISTRATOR.DS.'models');
+		$this->addViewPath(JPATH_COMPONENT_ADMINISTRATOR.'/views');
+		$this->addModelPath(JPATH_COMPONENT_ADMINISTRATOR.'/models');
 		$view = $this->getView('item', 'html');
 		$view->setLayout('itemform');
 
@@ -120,23 +111,23 @@ class K2ControllerItem extends K2Controller
 		}
 
 		// Look for template files in component folders
-		$view->addTemplatePath(JPATH_COMPONENT.DS.'templates');
-		$view->addTemplatePath(JPATH_COMPONENT.DS.'templates'.DS.'default');
+		$view->addTemplatePath(JPATH_COMPONENT.'/templates');
+		$view->addTemplatePath(JPATH_COMPONENT.'/templates/default');
 
 		// Look for overrides in template folder (K2 template structure)
-		$view->addTemplatePath(JPATH_SITE.DS.'templates'.DS.$mainframe->getTemplate().DS.'html'.DS.'com_k2'.DS.'templates');
-		$view->addTemplatePath(JPATH_SITE.DS.'templates'.DS.$mainframe->getTemplate().DS.'html'.DS.'com_k2'.DS.'templates'.DS.'default');
+		$view->addTemplatePath(JPATH_SITE.'/templates/'.$application->getTemplate().'/html/com_k2/templates');
+		$view->addTemplatePath(JPATH_SITE.'/templates/'.$application->getTemplate().'/html/com_k2/templates/default');
 
-		// Look for overrides in template folder (Joomla! template structure)
-		$view->addTemplatePath(JPATH_SITE.DS.'templates'.DS.$mainframe->getTemplate().DS.'html'.DS.'com_k2'.DS.'default');
-		$view->addTemplatePath(JPATH_SITE.DS.'templates'.DS.$mainframe->getTemplate().DS.'html'.DS.'com_k2');
+		// Look for overrides in template folder (Joomla template structure)
+		$view->addTemplatePath(JPATH_SITE.'/templates/'.$application->getTemplate().'/html/com_k2/default');
+		$view->addTemplatePath(JPATH_SITE.'/templates/'.$application->getTemplate().'/html/com_k2');
 
 		// Look for specific K2 theme files
 		if ($params->get('theme'))
 		{
-			$view->addTemplatePath(JPATH_COMPONENT.DS.'templates'.DS.$params->get('theme'));
-			$view->addTemplatePath(JPATH_SITE.DS.'templates'.DS.$mainframe->getTemplate().DS.'html'.DS.'com_k2'.DS.'templates'.DS.$params->get('theme'));
-			$view->addTemplatePath(JPATH_SITE.DS.'templates'.DS.$mainframe->getTemplate().DS.'html'.DS.'com_k2'.DS.$params->get('theme'));
+			$view->addTemplatePath(JPATH_COMPONENT.'/templates/'.$params->get('theme'));
+			$view->addTemplatePath(JPATH_SITE.'/templates/'.$application->getTemplate().'/html/com_k2/templates/'.$params->get('theme'));
+			$view->addTemplatePath(JPATH_SITE.'/templates/'.$application->getTemplate().'/html/com_k2/'.$params->get('theme'));
 		}
 		$view->display();
 	}
@@ -154,63 +145,64 @@ class K2ControllerItem extends K2Controller
 
 	function save()
 	{
-		$mainframe = JFactory::getApplication();
+		$application = JFactory::getApplication();
 		JRequest::checkToken() or jexit('Invalid Token');
 		JRequest::setVar('tmpl', 'component');
 		$language = JFactory::getLanguage();
 		$language->load('com_k2', JPATH_ADMINISTRATOR);
-		require_once (JPATH_COMPONENT_ADMINISTRATOR.DS.'models'.DS.'item.php');
+		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/item.php');
 		$model = new K2ModelItem;
 		$model->save(true);
-		$mainframe->close();
+		$application->close();
 
 	}
 
 	function deleteAttachment()
 	{
-
-		require_once (JPATH_COMPONENT_ADMINISTRATOR.DS.'models'.DS.'item.php');
+		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/item.php');
 		$model = new K2ModelItem;
 		$model->deleteAttachment();
 	}
 
 	function tag()
 	{
-
-		require_once (JPATH_COMPONENT_ADMINISTRATOR.DS.'models'.DS.'tag.php');
+		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/tag.php');
 		$model = new K2ModelTag;
 		$model->addTag();
 	}
 
 	function tags()
 	{
-
-		require_once (JPATH_COMPONENT_ADMINISTRATOR.DS.'models'.DS.'tag.php');
+		$user = JFactory::getUser();
+		if($user->guest)
+		{
+			JError::raiseError(403, JText::_('K2_ALERTNOTAUTH'));
+		}
+		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/tag.php');
 		$model = new K2ModelTag;
 		$model->tags();
 	}
 
 	function download()
 	{
-
-		require_once (JPATH_COMPONENT_ADMINISTRATOR.DS.'models'.DS.'item.php');
+		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/item.php');
 		$model = new K2ModelItem;
 		$model->download();
 	}
 
 	function extraFields()
 	{
-		$mainframe = JFactory::getApplication();
+		$application = JFactory::getApplication();
 		$language = JFactory::getLanguage();
 		$language->load('com_k2', JPATH_ADMINISTRATOR);
 		$itemID = JRequest::getInt('id', NULL);
 
-		JTable::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.DS.'tables');
+		JTable::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.'/tables');
 		$catid = JRequest::getInt('cid');
 		$category = JTable::getInstance('K2Category', 'Table');
 		$category->load($catid);
 
-		require_once (JPATH_COMPONENT_ADMINISTRATOR.DS.'models'.DS.'extrafield.php');
+		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/extrafield.php');
 		$extraFieldModel = new K2ModelExtraField;
 
 		$extraFields = $extraFieldModel->getExtraFieldsByGroup($category->extraFieldsGroup);
@@ -241,40 +233,35 @@ class K2ControllerItem extends K2Controller
 			$output = JText::_('K2_THIS_CATEGORY_DOESNT_HAVE_ASSIGNED_EXTRA_FIELDS');
 
 		echo $output;
-		$mainframe->close();
+		$application->close();
 	}
 
 	function checkin()
 	{
-
 		$model = $this->getModel('item');
 		$model->checkin();
 	}
 
 	function vote()
 	{
-
 		$model = $this->getModel('item');
 		$model->vote();
 	}
 
 	function getVotesNum()
 	{
-
 		$model = $this->getModel('item');
 		$model->getVotesNum();
 	}
 
 	function getVotesPercentage()
 	{
-
 		$model = $this->getModel('item');
 		$model->getVotesPercentage();
 	}
 
 	function comment()
 	{
-
 		$model = $this->getModel('item');
 		$model->comment();
 	}
@@ -283,25 +270,26 @@ class K2ControllerItem extends K2Controller
 	{
 		JRequest::checkToken() or jexit('Invalid Token');
 		JRequest::setVar('tmpl', 'component');
-		require_once (JPATH_COMPONENT_ADMINISTRATOR.DS.'models'.DS.'item.php');
+		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/item.php');
+		$language = JFactory::getLanguage();
+		$language->load('com_k2', JPATH_ADMINISTRATOR);
 		$model = new K2ModelItem;
 		$model->resetHits();
-
 	}
 
 	function resetRating()
 	{
 		JRequest::checkToken() or jexit('Invalid Token');
 		JRequest::setVar('tmpl', 'component');
-		require_once (JPATH_COMPONENT_ADMINISTRATOR.DS.'models'.DS.'item.php');
+		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/item.php');
+		$language = JFactory::getLanguage();
+		$language->load('com_k2', JPATH_ADMINISTRATOR);
 		$model = new K2ModelItem;
 		$model->resetRating();
-
 	}
 
 	function media()
 	{
-		K2HelperHTML::loadjQuery(true, true);
 		JRequest::setVar('tmpl', 'component');
 		$params = K2HelperUtilities::getParams('com_k2');
 		$document = JFactory::getDocument();
@@ -319,23 +307,18 @@ class K2ControllerItem extends K2Controller
 			{
 				$url = 'index.php?option=com_user&view=login&return='.base64_encode($uri->toString());
 			}
-			$mainframe = JFactory::getApplication();
-			$mainframe->enqueueMessage(JText::_('K2_YOU_NEED_TO_LOGIN_FIRST'), 'notice');
-			$mainframe->redirect(JRoute::_($url, false));
+			$application = JFactory::getApplication();
+			$application->enqueueMessage(JText::_('K2_YOU_NEED_TO_LOGIN_FIRST'), 'notice');
+			$application->redirect(JRoute::_($url, false));
 		}
 
-		// CSS
-		$document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.css?v=2.6.8');
+		K2HelperHTML::loadHeadIncludes(false, true, true);
 
-		// JS
-		K2HelperHTML::loadjQuery(true);
-		$document->addScript(JURI::root(true).'/media/k2/assets/js/k2.js?v=2.6.8&amp;sitepath='.JURI::root(true).'/');
-		$this->addViewPath(JPATH_COMPONENT_ADMINISTRATOR.DS.'views');
+		$this->addViewPath(JPATH_COMPONENT_ADMINISTRATOR.'/views');
 		$view = $this->getView('media', 'html');
-		$view->addTemplatePath(JPATH_COMPONENT_ADMINISTRATOR.DS.'views'.DS.'media'.DS.'tmpl');
+		$view->addTemplatePath(JPATH_COMPONENT_ADMINISTRATOR.'/views/media/tmpl');
 		$view->setLayout('default');
 		$view->display();
-
 	}
 
 	function connector()
@@ -346,18 +329,15 @@ class K2ControllerItem extends K2Controller
 		{
 			JError::raiseError(403, JText::_('K2_ALERTNOTAUTH'));
 		}
-
-		require_once (JPATH_COMPONENT_ADMINISTRATOR.DS.'controllers'.DS.'media.php');
+		require_once(JPATH_COMPONENT_ADMINISTRATOR.'/controllers/media.php');
 		$controller = new K2ControllerMedia();
 		$controller->connector();
-
 	}
 
 	function users()
 	{
-
 		$itemID = JRequest::getInt('itemID');
-		JTable::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.DS.'tables');
+		JTable::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.'/tables');
 		$item = JTable::getInstance('K2Item', 'Table');
 		$item->load($itemID);
 		if (!K2HelperPermissions::canAddItem() && !K2HelperPermissions::canEditItem($item->created_by, $item->catid))
@@ -370,36 +350,19 @@ class K2ControllerItem extends K2Controller
 			JError::raiseError(403, JText::_('K2_ALERTNOTAUTH'));
 		}
 		JRequest::setVar('tmpl', 'component');
-		$mainframe = JFactory::getApplication();
+		$application = JFactory::getApplication();
 		$params = JComponentHelper::getParams('com_k2');
 		$language = JFactory::getLanguage();
 		$language->load('com_k2', JPATH_ADMINISTRATOR);
 
 		$document = JFactory::getDocument();
 
-		if (version_compare(JVERSION, '1.6.0', 'ge'))
-		{
-			JHtml::_('behavior.framework');
-		}
-		else
-		{
-			JHTML::_('behavior.mootools');
-		}
+		K2HelperHTML::loadHeadIncludes(true, true, true);
 
-		// CSS
-		$document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.css?v=2.6.8');
-
-		// JS
-		K2HelperHTML::loadjQuery(true);
-		$document->addScript(JURI::root(true).'/media/k2/assets/js/k2.js?v=2.6.8&amp;sitepath='.JURI::root(true).'/');
-
-		$this->addViewPath(JPATH_COMPONENT_ADMINISTRATOR.DS.'views');
-		$this->addModelPath(JPATH_COMPONENT_ADMINISTRATOR.DS.'models');
+		$this->addViewPath(JPATH_COMPONENT_ADMINISTRATOR.'/views');
+		$this->addModelPath(JPATH_COMPONENT_ADMINISTRATOR.'/models');
 		$view = $this->getView('users', 'html');
-		$view->addTemplatePath(JPATH_COMPONENT_ADMINISTRATOR.DS.'views'.DS.'users'.DS.'tmpl');
-		$view->setLayout('element');
+		$view->addTemplatePath(JPATH_COMPONENT_ADMINISTRATOR.'/views/users/tmpl');
 		$view->display();
-
 	}
-
 }

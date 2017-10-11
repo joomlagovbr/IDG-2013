@@ -1,39 +1,44 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.8.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
-defined('_JEXEC') or die ;
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
 class K2ViewUsers extends K2View
 {
-
     function display($tpl = null)
     {
-
-        $mainframe = JFactory::getApplication();
+        $application = JFactory::getApplication();
         $document = JFactory::getDocument();
-        $db = JFactory::getDBO();
+        $user = JFactory::getUser();
+        $db = JFactory::getDbo();
+
         $params = JComponentHelper::getParams('com_k2');
+
         $option = JRequest::getCmd('option');
         $view = JRequest::getCmd('view');
-        $limit = $mainframe->getUserStateFromRequest('global.list.limit', 'limit', $mainframe->getCfg('list_limit'), 'int');
-        $limitstart = $mainframe->getUserStateFromRequest($option.$view.'.limitstart', 'limitstart', 0, 'int');
-        $filter_order = $mainframe->getUserStateFromRequest($option.$view.'filter_order', 'filter_order', 'juser.name', 'cmd');
-        $filter_order_Dir = $mainframe->getUserStateFromRequest($option.$view.'filter_order_Dir', 'filter_order_Dir', '', 'word');
-        $filter_status = $mainframe->getUserStateFromRequest($option.$view.'filter_status', 'filter_status', -1, 'int');
-        $filter_group = $mainframe->getUserStateFromRequest($option.$view.'filter_group', 'filter_group', '', 'string');
-        $filter_group_k2 = $mainframe->getUserStateFromRequest($option.$view.'filter_group_k2', 'filter_group_k2', '', 'string');
-        $search = $mainframe->getUserStateFromRequest($option.$view.'search', 'search', '', 'string');
+        $task = JRequest::getCmd('task');
+
+        $limit = $application->getUserStateFromRequest('global.list.limit', 'limit', $application->getCfg('list_limit'), 'int');
+        $limitstart = $application->getUserStateFromRequest($option.$view.'.limitstart', 'limitstart', 0, 'int');
+        $filter_order = $application->getUserStateFromRequest($option.$view.'filter_order', 'filter_order', 'juser.name', 'cmd');
+        $filter_order_Dir = $application->getUserStateFromRequest($option.$view.'filter_order_Dir', 'filter_order_Dir', '', 'word');
+        $filter_status = $application->getUserStateFromRequest($option.$view.'filter_status', 'filter_status', -1, 'int');
+        $filter_group = $application->getUserStateFromRequest($option.$view.'filter_group', 'filter_group', '', 'string');
+        $filter_group_k2 = $application->getUserStateFromRequest($option.$view.'filter_group_k2', 'filter_group_k2', '', 'string');
+        $search = $application->getUserStateFromRequest($option.$view.'search', 'search', '', 'string');
         $search = JString::strtolower($search);
-        K2Model::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.DS.'models');
+        $search = trim(preg_replace('/[^\p{L}\p{N}\s\-_]/u', '', $search));
+
+        K2Model::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.'/models');
         $model = K2Model::getInstance('Users', 'K2Model');
         $total = $model->getTotal();
         if ($limitstart > $total - $limit)
@@ -42,10 +47,8 @@ class K2ViewUsers extends K2View
             JRequest::setVar('limitstart', $limitstart);
         }
         $users = $model->getData();
-        $task = JRequest::getCmd('task');
         for ($i = 0; $i < sizeof($users); $i++)
         {
-
             $users[$i]->loggedin = $model->checkLogin($users[$i]->id);
             $users[$i]->profileID = $model->hasProfile($users[$i]->id);
             if ($users[$i]->profileID)
@@ -93,9 +96,7 @@ class K2ViewUsers extends K2View
                 0 => array('disable', 'K2_ENABLED', 'K2_DISABLE', 'K2_ENABLED', false, 'publish', 'publish'),
                 1 => array('enable', 'K2_DISABLED', 'K2_ENABLE', 'K2_DISABLED', false, 'unpublish', 'unpublish'));
                 $users[$i]->blockStatus = JHtml::_('jgrid.state', $states, $users[$i]->block, $i, '', $task != 'element');
-
             }
-
         }
 
         $this->assignRef('rows', $users);
@@ -146,34 +147,36 @@ class K2ViewUsers extends K2View
         }
         $this->assignRef('dateFormat', $dateFormat);
 
-        $template = $mainframe->getTemplate();
+        $template = $application->getTemplate();
         $this->assignRef('template', $template);
 
-        if ($mainframe->isAdmin())
+        if ($application->isAdmin())
         {
+			// JS
+            $document->addScriptDeclaration("
+            	var K2Language = ['".JText::_('K2_REPORT_USER_WARNING', true)."'];
+
+				\$K2(document).ready(function(){
+					\$K2('#K2ImportUsersButton').click(function(event){
+						var answer = confirm('".JText::_('K2_WARNING_YOU_ARE_ABOUT_TO_IMPORT_JOOMLA_USERS_TO_K2_GENERATING_CORRESPONDING_K2_USER_GROUPS_IF_YOU_HAVE_EXECUTED_THIS_OPERATION_BEFORE_DUPLICATE_CONTENT_MAY_BE_PRODUCED', true)."');
+						if (!answer){
+							event.preventDefault();
+						}
+					});
+				});
+            ");
+
+            // Toolbar
+            $toolbar = JToolBar::getInstance('toolbar');
             JToolBarHelper::title(JText::_('K2_USERS'), 'k2.png');
-            JToolBarHelper::custom('move', 'move.png', 'move_f2.png', 'K2_MOVE', true);
-            JToolBarHelper::deleteList('K2_WARNING_YOU_ARE_ABOUT_TO_DELETE_THE_SELECTED_USERS_PERMANENTLY_FROM_THE_SYSTEM', 'delete', 'K2_DELETE');
+
+            JToolBarHelper::editList();
             JToolBarHelper::publishList('enable', 'K2_ENABLE');
             JToolBarHelper::unpublishList('disable', 'K2_DISABLE');
-            JToolBarHelper::editList();
+            JToolBarHelper::deleteList('K2_WARNING_YOU_ARE_ABOUT_TO_DELETE_THE_SELECTED_USERS_PERMANENTLY_FROM_THE_SYSTEM', 'delete', 'K2_DELETE');
             JToolBarHelper::deleteList('K2_ARE_YOU_SURE_YOU_WANT_TO_RESET_SELECTED_USERS', 'remove', 'K2_RESET_USER_DETAILS');
+            JToolBarHelper::custom('move', 'move.png', 'move_f2.png', 'K2_MOVE', true);
 
-            $toolbar = JToolBar::getInstance('toolbar');
-
-            if (K2_JVERSION != '15')
-            {
-                JToolBarHelper::preferences('com_k2', 550, 875, 'K2_PARAMETERS');
-            }
-            else
-            {
-                $toolbar->appendButton('Popup', 'config', 'K2_PARAMETERS', 'index.php?option=com_k2&view=settings');
-            }
-
-            $this->loadHelper('html');
-            K2HelperHTML::subMenu();
-
-            $user = JFactory::getUser();
             $canImport = false;
             if (K2_JVERSION == '15')
             {
@@ -202,28 +205,29 @@ class K2ViewUsers extends K2View
                 }
             }
 
-            $document = JFactory::getDocument();
-            $document->addScriptDeclaration('var K2Language = ["'.JText::_('K2_REPORT_USER_WARNING', true).'"];');
+            $this->loadHelper('html');
+            K2HelperHTML::subMenu();
 
-        }
-        $isAdmin = $mainframe->isAdmin();
-        $this->assignRef('isAdmin', $isAdmin);
-
-        if ($mainframe->isSite())
-        {
-            // CSS
-            $document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.frontend.css?v=2.6.8');
-            $document->addStyleSheet(JURI::root(true).'/templates/system/css/general.css');
-            $document->addStyleSheet(JURI::root(true).'/templates/system/css/system.css');
+			// Preferences (Parameters/Settings)
             if (K2_JVERSION != '15')
             {
-                $document->addStyleSheet(JURI::root(true).'/administrator/templates/bluestork/css/template.css');
-                $document->addStyleSheet(JURI::root(true).'/media/system/css/system.css');
+                JToolBarHelper::preferences('com_k2', 580, 800, 'K2_PARAMETERS');
             }
             else
             {
-                $document->addStyleSheet(JURI::root(true).'/administrator/templates/khepri/css/general.css');
+                $toolbar->appendButton('Popup', 'config', 'K2_PARAMETERS', 'index.php?option=com_k2&view=settings', 800, 580);
             }
+        }
+        $isAdmin = $application->isAdmin();
+        $this->assignRef('isAdmin', $isAdmin);
+
+        // Head includes
+		K2HelperHTML::loadHeadIncludes(true, false, true, true);
+        if ($application->isSite())
+        {
+			// CSS
+			$document->addStyleSheet(JURI::root(true).'/templates/system/css/general.css');
+			$document->addStyleSheet(JURI::root(true).'/templates/system/css/system.css');
         }
 
         parent::display($tpl);
@@ -231,11 +235,11 @@ class K2ViewUsers extends K2View
 
     function move()
     {
+        $application = JFactory::getApplication();
 
-        $mainframe = JFactory::getApplication();
-        JTable::addIncludePath(JPATH_COMPONENT.DS.'tables');
         $cid = JRequest::getVar('cid');
         JArrayHelper::toInteger($cid);
+        JTable::addIncludePath(JPATH_COMPONENT.'/tables');
 
         foreach ($cid as $id)
         {
@@ -272,11 +276,12 @@ class K2ViewUsers extends K2View
 
         $this->assignRef('lists', $lists);
 
+		// Toolbar
         JToolBarHelper::title(JText::_('K2_MOVE_USERS'), 'k2.png');
+
         JToolBarHelper::custom('saveMove', 'save.png', 'save_f2.png', 'K2_SAVE', false);
         JToolBarHelper::cancel();
 
         parent::display();
     }
-
 }

@@ -1,17 +1,17 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.8.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
-defined('_JEXEC') or die ;
+defined('_JEXEC') or die;
 
-require_once (JPATH_SITE.DS.'components'.DS.'com_k2'.DS.'helpers'.DS.'route.php');
-require_once (JPATH_SITE.DS.'components'.DS.'com_k2'.DS.'helpers'.DS.'utilities.php');
+require_once(JPATH_SITE.'/components/com_k2/helpers/route.php');
+require_once(JPATH_SITE.'/components/com_k2/helpers/utilities.php');
 
 class modK2CommentsHelper
 {
@@ -19,11 +19,11 @@ class modK2CommentsHelper
 	public static function getLatestComments(&$params)
 	{
 
-		$mainframe = JFactory::getApplication();
+		$application = JFactory::getApplication();
 		$limit = $params->get('comments_limit', '5');
 		$user = JFactory::getUser();
 		$aid = $user->get('aid');
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 		$cid = $params->get('category_id', NULL);
 
 		$jnow = JFactory::getDate();
@@ -79,7 +79,7 @@ class modK2CommentsHelper
 
 		if (K2_JVERSION != '15')
 		{
-			if ($mainframe->getLanguageFilter())
+			if ($application->getLanguageFilter())
 			{
 				$languageTag = JFactory::getLanguage()->getTag();
 				$query .= " AND category.language IN (".$db->Quote($languageTag).", ".$db->Quote('*').") AND i.language IN (".$db->Quote($languageTag).", ".$db->Quote('*').")";
@@ -184,11 +184,11 @@ class modK2CommentsHelper
 	public static function getTopCommenters(&$params)
 	{
 
-		JTable::addIncludePath(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_k2'.DS.'tables');
+		JTable::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_k2/tables');
 		$limit = $params->get('commenters_limit', '5');
 		$user = JFactory::getUser();
 		$aid = $user->get('aid');
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 		$query = "SELECT COUNT(id) as counter, userName, userID, commentEmail FROM #__k2_comments WHERE userID > 0 AND published = 1 GROUP BY userID ORDER BY counter DESC";
 		$db->setQuery($query, 0, $limit);
 		$rows = $db->loadObjectList();

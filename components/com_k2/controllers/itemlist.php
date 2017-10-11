@@ -1,14 +1,14 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.8.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
-defined('_JEXEC') or die ;
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.controller');
 
@@ -45,15 +45,16 @@ class K2ControllerItemlist extends K2Controller
 			$urlparams['print'] = 'INT';
 			$urlparams['lang'] = 'CMD';
 			$urlparams['Itemid'] = 'INT';
+			$urlparams['ordering'] = 'CMD';
 		}
 		parent::display($cache, $urlparams);
 	}
 
 	function calendar()
 	{
-		require_once (JPATH_SITE.DS.'modules'.DS.'mod_k2_tools'.DS.'includes'.DS.'calendarClass.php');
-		require_once (JPATH_SITE.DS.'modules'.DS.'mod_k2_tools'.DS.'helper.php');
-		$mainframe = JFactory::getApplication();
+		require_once(JPATH_SITE.'/media/k2/assets/vendors/cascade/calendar/calendar.php');
+		require_once(JPATH_SITE.'/modules/mod_k2_tools/helper.php');
+		$application = JFactory::getApplication();
 		$month = JRequest::getInt('month');
 		$year = JRequest::getInt('year');
 		$months = array(JText::_('K2_JANUARY'), JText::_('K2_FEBRUARY'), JText::_('K2_MARCH'), JText::_('K2_APRIL'), JText::_('K2_MAY'), JText::_('K2_JUNE'), JText::_('K2_JULY'), JText::_('K2_AUGUST'), JText::_('K2_SEPTEMBER'), JText::_('K2_OCTOBER'), JText::_('K2_NOVEMBER'), JText::_('K2_DECEMBER'), );
@@ -71,7 +72,7 @@ class K2ControllerItemlist extends K2Controller
 		{
 			echo $cal->getCurrentMonthView();
 		}
-		$mainframe->close();
+		$application->close();
 	}
 
 	function module()

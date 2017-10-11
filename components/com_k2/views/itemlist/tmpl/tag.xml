@@ -36,12 +36,12 @@
 			</param>
 		</params>
 		<url addpath="/administrator/components/com_k2/elements">
-			<param name="tag" type="k2tag" default="" label="K2_SELECT_TAG" description=""/>
+			<param name="tag" type="k2modalselector" scope="tag" default="" label="K2_SELECT_TAG_IN_MENUS" description=""/>
 			<param name="task" type="hidden" default="tag"/>
 		</url>
 		<fields name="request">
 			<fieldset name="request" addfieldpath="/administrator/components/com_k2/elements">
-				<field name="tag" type="k2tag" default="" label="K2_SELECT_TAG" description=""/>
+				<field name="tag" type="k2modalselector" scope="tag" default="" label="K2_SELECT_TAG_IN_MENUS" description=""/>
 				<field name="task" type="hidden" default="tag"/>
 			</fieldset>
 		</fields>
@@ -64,11 +64,11 @@
 					<option value="best">K2_HIGHEST_RATED</option>
 					<option value="rand">K2_RANDOM_ORDERING</option>
 				</field>
-				<field name="tagFeedLink" type="radio" default="1" label="K2_RSS_FEED_LINK" description="">
+				<field name="tagFeedLink" type="radio" default="1" label="K2_RSS_FEED_LINK" description="" class="btn-group btn-group-yesno">
 					<option value="0">K2_DISABLE</option>
 					<option value="1">K2_ENABLE</option>
 				</field>
-				<field name="tagFeedIcon" type="radio" default="1" label="K2_RSS_FEED_ICON" description="">
+				<field name="tagFeedIcon" type="radio" default="1" label="K2_RSS_FEED_ICON" description="" class="btn-group btn-group-yesno">
 					<option value="0">K2_DISABLE</option>
 					<option value="1">K2_ENABLE</option>
 				</field>

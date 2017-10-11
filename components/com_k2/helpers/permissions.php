@@ -1,14 +1,14 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.8.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
-defined('_JEXEC') or die ;
+defined('_JEXEC') or die;
 
 jimport('joomla.html.parameter');
 
@@ -142,19 +142,19 @@ class K2HelperPermissions
         }
         $task = JRequest::getCmd('task');
         $user = JFactory::getUser();
+        $application = JFactory::getApplication();
         if ($user->guest && ($task == 'add' || $task == 'edit'))
         {
-            $mainframe = JFactory::getApplication();
             $uri = JURI::getInstance();
             $return = base64_encode($uri->toString());
-			$mainframe->enqueueMessage(JText::_('K2_YOU_NEED_TO_LOGIN_FIRST'), 'notice');
+			$application->enqueueMessage(JText::_('K2_YOU_NEED_TO_LOGIN_FIRST'), 'notice');
             if (K2_JVERSION == '15')
             {
-                $mainframe->redirect('index.php?option=com_user&view=login&return='.$return.'&tmpl=component');
+                $application->redirect('index.php?option=com_user&view=login&return='.$return.'&tmpl=component');
             }
             else
             {
-                $mainframe->redirect('index.php?option=com_users&view=login&return='.$return.'&tmpl=component');
+                $application->redirect('index.php?option=com_users&view=login&return='.$return.'&tmpl=component');
             }
         }
 
@@ -170,15 +170,28 @@ class K2HelperPermissions
             case 'deleteAttachment' :
             case 'checkin' :
                 $cid = JRequest::getInt('cid');
-                if (!$cid)
-                    JError::raiseError(403, JText::_('K2_ALERTNOTAUTH'));
+                if($cid)
+                {
+                  JTable::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.'/tables');
+                  $item = JTable::getInstance('K2Item', 'Table');
+                  $item->load($cid);
 
-                JTable::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.DS.'tables');
-                $item = JTable::getInstance('K2Item', 'Table');
-                $item->load($cid);
+                  if (!K2HelperPermissions::canEditItem($item->created_by, $item->catid))
+                  {
+                    // Handle in a different way the case when user can add an item but not edit it.
+                    if($task == 'edit' && !$user->guest && $item->created_by == $user->id && (int)$item->modified == 0 && K2HelperPermissions::canAddItem())
+                    {
+                      echo '<script>parent.location.href = "'.JUri::root().'";</script>';
+                      exit;
+                    }
+                    else
+                    {
+                      JError::raiseError(403, JText::_('K2_ALERTNOTAUTH'));
+                    }
 
-                if (!K2HelperPermissions::canEditItem($item->created_by, $item->catid))
-                    JError::raiseError(403, JText::_('K2_ALERTNOTAUTH'));
+                  }
+
+                }
                 break;
 
             case 'save' :
@@ -186,7 +199,7 @@ class K2HelperPermissions
                 if ($cid)
                 {
 
-                    JTable::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.DS.'tables');
+                    JTable::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.'/tables');
                     $item = JTable::getInstance('K2Item', 'Table');
                     $item->load($cid);
 
@@ -216,7 +229,7 @@ class K2HelperPermissions
     public static function getK2User($userID)
     {
 
-        $db = JFactory::getDBO();
+        $db = JFactory::getDbo();
         $query = "SELECT * FROM #__k2_users WHERE userID = ".(int)$userID;
         $db->setQuery($query);
         $row = $db->loadObject();
@@ -226,7 +239,7 @@ class K2HelperPermissions
     public static function getK2UserGroup($id)
     {
 
-        $db = JFactory::getDBO();
+        $db = JFactory::getDbo();
         $query = "SELECT * FROM #__k2_user_groups WHERE id = ".(int)$id;
         $db->setQuery($query);
         $row = $db->loadObject();
@@ -246,7 +259,7 @@ class K2HelperPermissions
         {
             return in_array('add.category.'.$category, $K2Permissions->actions);
         }
-        $db = JFactory::getDBO();
+        $db = JFactory::getDbo();
         $query = "SELECT id FROM #__k2_categories WHERE published=1 AND trash=0";
         if (K2_JVERSION != '15')
         {
@@ -319,7 +332,7 @@ class K2HelperPermissions
         $K2Permissions = K2Permissions::getInstance();
         return in_array('comment.category.all', $K2Permissions->actions) || in_array('comment.category.'.$itemCategory, $K2Permissions->actions);
     }
-	
+
     public static function canEditPublished($itemCategory)
     {
         $K2Permissions = K2Permissions::getInstance();

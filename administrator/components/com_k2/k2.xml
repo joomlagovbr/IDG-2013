@@ -2,13 +2,13 @@
 <extension type="component" version="2.5" method="upgrade">
 	<name>COM_K2</name>
 	<author>JoomlaWorks</author>
-	<creationDate>February 28th, 2014</creationDate>
-	<copyright>Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.</copyright>
+	<creationDate>August 18th, 2017</creationDate>
+	<copyright>Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.</copyright>
 	<authorEmail>please-use-the-contact-form@joomlaworks.net</authorEmail>
 	<authorUrl>www.joomlaworks.net</authorUrl>
-	<version>2.6.8</version>
+	<version>2.8.0</version>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-	<description>Thank you for installing K2 by JoomlaWorks, the powerful content extension for Joomla!</description>
+	<description>Thank you for installing K2 by JoomlaWorks, the powerful content extension for Joomla</description>
 	<installfile>install.k2.php</installfile>
 	<uninstallfile>uninstall.k2.php</uninstallfile>
 	<scriptfile>script.k2.php</scriptfile>
@@ -25,16 +25,14 @@
 		</sql>
 	</uninstall>
 	<updateservers>
-		<server type="extension" priority="1" name="K2 Updates">http://getk2.org/update.xml</server>
+		<server type="extension" priority="1" name="K2 Updates">http://getk2.org/app/update.xml</server>
 	</updateservers>
 	<files folder="components/com_k2">
 		<folder>controllers</folder>
 		<folder>css</folder>
 		<folder>helpers</folder>
 		<folder>images</folder>
-		<folder>js</folder>
 		<folder>models</folder>
-		<folder>sef_ext</folder>
 		<folder>templates</folder>
 		<folder>views</folder>
 		<filename>k2.php</filename>
@@ -63,7 +61,7 @@
 		<language tag="en-GB">en-GB.mod_k2_user.sys.ini</language>
 	</languages>
 	<administration>
-		<menu img="../media/k2/assets/images/system/k2_16x16.png" view="items">COM_K2</menu>
+		<menu img="../media/k2/assets/images/backend/k2_logo_16x16.png" view="items">COM_K2</menu>
 		<submenu>
 			<menu view="items" link="option=com_k2&amp;view=items">K2_ITEMS</menu>
 			<menu view="categories" link="option=com_k2&amp;view=categories">K2_CATEGORIES</menu>
@@ -92,14 +90,13 @@
 			<filename>uninstall.mysql.sql</filename>
 		</files>
 		<languages folder="administrator/language/en-GB">
+			<language tag="en-GB">en-GB.com_k2.dates.ini</language>
 			<language tag="en-GB">en-GB.com_k2.ini</language>
 			<language tag="en-GB">en-GB.com_k2.menu.ini</language>
-			<language tag="en-GB">en-GB.com_k2.j16.ini</language>
 			<language tag="en-GB">en-GB.mod_k2_quickicons.ini</language>
 			<language tag="en-GB">en-GB.mod_k2_quickicons.sys.ini</language>
 			<language tag="en-GB">en-GB.mod_k2_stats.ini</language>
 			<language tag="en-GB">en-GB.mod_k2_stats.sys.ini</language>
-			<language tag="en-GB">en-GB.mod_k2.j16.ini</language>
 			<language tag="en-GB">en-GB.plg_finder_k2.ini</language>
 			<language tag="en-GB">en-GB.plg_finder_k2.sys.ini</language>
 			<language tag="en-GB">en-GB.plg_search_k2.ini</language>
@@ -115,8 +112,7 @@
 			<fieldset>
 				<!-- ######################### CSS Settings ######################### -->
 				<field name="enable_css" default="1" />
-				<field name="jQueryHandling" default="1.8remote" />
-				<field name="backendJQueryHandling" default="remote" />
+				<field name="jQueryHandling" default="1.9.1" />
 				<!-- ######################### Layout and view options for user (blog/profile) pages ######################### -->
 				<field name="userName" default="1" />
 				<field name="userImage" default="1" />
@@ -197,19 +193,20 @@
 				<field name="userImageWidth" default="100" />
 				<field name="userImageDefault" default="1" />
 				<field name="commenterImgWidth" default="48" />
-				<field name="onlineImageEditor" default="splashup" />
+				<field name="onlineImageEditor" default="picozu" />
 				<field name="imageTimestamp" default="0" />
 				<field name="imageMemoryLimit" default="" />
 				<!-- ######################### Social Settings ######################### -->
 				<field name="socialButtonCode" default="" />
 				<field name="twitterUsername" default="" />
+				<field name="facebookMetatags" default="1" />
 				<field name="facebookImage" default="Medium" />
 				<!-- ######################### Comments ######################### -->
 				<field name="comments" default="1" />
 				<field name="commentsOrdering" default="DESC" />
 				<field name="commentsLimit" default="10" />
 				<field name="commentsFormPosition" default="below" />
-				<field name="commentsPublishing" default="1" />
+				<field name="commentsPublishing" default="0" />
 				<field name="commentsReporting" default="2" />
 				<field name="commentsReportRecipient" default="" />
 				<field name="inlineCommentsModeration" default="0" />
@@ -239,6 +236,7 @@
 				<field name="redirect" default="" />
 				<field name="adminSearch" default="simple" />
 				<field name="cookieDomain" default="" />
+				<field name="gatherStatistics" default="1" />
 				<!-- ######################### Tag System Settings ######################### -->
 				<field name="taggingSystem" default="1" />
 				<field name="lockTags" default="0" />
@@ -253,6 +251,7 @@
 				<field name="recaptchaOnRegistration" default="0" />
 				<field name="stopForumSpam" default="0" />
 				<field name="stopForumSpamApiKey" default="" />
+				<field name="profilePageDisplay" default="" />
 				<!-- ######################### Performance Settings ######################### -->
 				<field name="showItemsCounterAdmin" default="1" />
 				<field name="showChildCatItems" default="1" />
@@ -276,15 +275,6 @@
 				<field name="k2SefInsertCatId" default="1" />
 				<field name="k2SefCatIdTitleAliasSep" default="dash" />
 				<field name="k2SefUseCatTitleAlias" default="1" />
-				<!-- ######################### sh404SEF Settings ######################### -->
-				<field name="sh404SefLabelCat" default="" />
-				<field name="sh404SefLabelUser" default="blog" />
-				<field name="sh404SefLabelItem" default="2" />
-				<field name="sh404SefTitleAlias" default="alias" />
-				<field name="sh404SefModK2ContentFeedAlias" default="feed" />
-				<field name="sh404SefInsertItemId" default="0" />
-				<field name="sh404SefInsertUniqueItemId" default="0" />
-				<field name="cbIntegration" default="0" />
 			</fieldset>
 		</fields>
 	</config>
@@ -302,8 +292,6 @@
 		<plugin plugin="k2" group="search" />
 		<plugin plugin="k2" group="system" />
 		<plugin plugin="k2" group="user" />
-		<plugin plugin="k2category" group="josetta_ext" />
-		<plugin plugin="k2item" group="josetta_ext" />
 	</plugins>
 	<joomfish>
 		<file>k2_attachments.xml</file>

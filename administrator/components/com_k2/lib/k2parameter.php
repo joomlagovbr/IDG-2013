@@ -1,14 +1,14 @@
 <?php
 /**
- * @version     2.6.x
+ * @version     2.8.x
  * @package     K2
  * @author      JoomlaWorks http://www.joomlaworks.net
- * @copyright   Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
+ * @copyright   Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
  * @license     GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
-defined('_JEXEC') or die ;
+defined('_JEXEC') or die;
 
 if (K2_JVERSION == '30')
 {
@@ -66,7 +66,7 @@ else
             parent::__construct('_default');
 
             // Set base path
-            $this->_elementPath[] = JPATH_COMPONENT_ADMINISTRATOR.DS.'elements';
+            $this->_elementPath[] = JPATH_COMPONENT_ADMINISTRATOR.'/elements';
 
             if (trim($data))
             {

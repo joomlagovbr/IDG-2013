@@ -1,14 +1,16 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.8.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
-defined('_JEXEC') or die ;
+defined('_JEXEC') or die;
+
+require_once JPATH_ADMINISTRATOR.'/components/com_k2/tables/table.php';
 
 class TableK2Item extends K2Table
 {
@@ -173,12 +175,12 @@ class TableK2Item extends K2Table
 		$params = JComponentHelper::getParams('com_k2');
 		if ($params->get('k2Sef') && !$params->get('k2SefInsertItemId'))
 		{
-			$db = JFactory::getDBO();
+			$db = JFactory::getDbo();
 			$db->setQuery("SELECT id FROM #__k2_items WHERE alias = ".$db->quote($this->alias)." AND id != ".(int)$this->id);
 			$result = count($db->loadObjectList());
-			if ($result > 1)
+			if ($result > 0)
 			{
-				$this->alias .= '-'.(int)$result + 1;
+				$this->alias .= '-'.((int)$result + 1);
 				$application = JFactory::getApplication();
 				$application->enqueueMessage(JText::_('K2_WARNING_DUPLICATE_TITLE_ALIAS_DETECTED'), 'notice');
 			}

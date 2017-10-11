@@ -1,16 +1,16 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.8.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 // no direct access
-defined('_JEXEC') or die ;
+defined('_JEXEC') or die;
 
-JLoader::register('K2HelperRoute', JPATH_SITE.DS.'components'.DS.'com_k2'.DS.'helpers'.DS.'route.php');
-JLoader::register('K2HelperUtilities', JPATH_SITE.DS.'components'.DS.'com_k2'.DS.'helpers'.DS.'utilities.php');
+JLoader::register('K2HelperRoute', JPATH_SITE.'/components/com_k2/helpers/route.php');
+JLoader::register('K2HelperUtilities', JPATH_SITE.'/components/com_k2/helpers/utilities.php');
 
 class modK2UserHelper
 {
@@ -23,7 +23,16 @@ class modK2UserHelper
             $application = JFactory::getApplication();
             $menu = $application->getMenu();
             $item = $menu->getItem($itemid);
-            $url = JRoute::_($item->link.'&Itemid='.$itemid, false);
+            if (K2_JVERSION != '15')
+            {
+                $url = 'index.php?Itemid=' . $item->id;
+
+            }
+            else
+            {
+                $url = JRoute::_($item->link.'&Itemid='.$itemid, false);
+            }
+
         }
         else
         {
@@ -46,7 +55,7 @@ class modK2UserHelper
     {
 
         $user = JFactory::getUser();
-        $db = JFactory::getDBO();
+        $db = JFactory::getDbo();
         $query = "SELECT * FROM #__k2_users  WHERE userID=".(int)$user->id;
         $db->setQuery($query, 0, 1);
         $profile = $db->loadObject();
@@ -55,17 +64,12 @@ class modK2UserHelper
         {
             if ($profile->image != '')
                 $profile->avatar = JURI::root().'media/k2/users/'.$profile->image;
-
-            require_once (JPATH_SITE.DS.'components'.DS.'com_k2'.DS.'helpers'.DS.'permissions'.'.php');
-
+            require_once(JPATH_SITE.'/components/com_k2/helpers/permissions'.'.php');
             if (JRequest::getCmd('option') != 'com_k2')
                 K2HelperPermissions::setPermissions();
-
             if (K2HelperPermissions::canAddItem())
-                $profile->addLink = JRoute::_('index.php?option=com_k2&view=item&task=add&tmpl=component');
-
+                $profile->addLink = JRoute::_('index.php?option=com_k2&view=item&task=add&tmpl=component&context=modalselector');
             return $profile;
-
         }
 
     }
@@ -73,7 +77,7 @@ class modK2UserHelper
     public static function countUserComments($userID)
     {
 
-        $db = JFactory::getDBO();
+        $db = JFactory::getDbo();
         $query = "SELECT COUNT(*) FROM #__k2_comments WHERE userID=".(int)$userID." AND published=1";
         $db->setQuery($query);
         $result = $db->loadResult();

@@ -1,26 +1,19 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.8.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
-defined('_JEXEC') or die ;
+defined('_JEXEC') or die;
 
 jimport('joomla.plugin.plugin');
 
 class plgUserK2 extends JPlugin
 {
-
-	function plgUserK2(&$subject, $config)
-	{
-
-		parent::__construct($subject, $config);
-	}
-
 	function onUserAfterSave($user, $isnew, $success, $msg)
 	{
 		return $this->onAfterStoreUser($user, $isnew, $success, $msg);
@@ -48,22 +41,20 @@ class plgUserK2 extends JPlugin
 
 	function onAfterStoreUser($user, $isnew, $success, $msg)
 	{
-
-		$mainframe = JFactory::getApplication();
-		$params = JComponentHelper::getParams('com_k2');
 		jimport('joomla.filesystem.file');
+		$application = JFactory::getApplication();
+		$params = JComponentHelper::getParams('com_k2');
 		$task = JRequest::getCmd('task');
 
-		if ($mainframe->isSite() && ($task == 'activate' || $isnew) && $params->get('stopForumSpam'))
+		if ($application->isSite() && ($task == 'activate' || $isnew) && $params->get('stopForumSpam'))
 		{
 			$this->checkSpammer($user);
-
 		}
 
-		if ($mainframe->isSite() && $task != 'activate' && JRequest::getInt('K2UserForm'))
+		if ($application->isSite() && $task != 'activate' && JRequest::getInt('K2UserForm'))
 		{
 			JPlugin::loadLanguage('com_k2');
-			JTable::addIncludePath(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_k2'.DS.'tables');
+			JTable::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_k2/tables');
 			$row = JTable::getInstance('K2User', 'Table');
 			$k2id = $this->getK2UserID($user['id']);
 			JRequest::setVar('id', $k2id, 'post');
@@ -101,11 +92,12 @@ class plgUserK2 extends JPlugin
 				$filter = new JFilterInput( array(), array(), 1, 1, 0);
 				$row->description = $filter->clean($row->description);
 			}
+			$row->store();
 
 			$file = JRequest::get('files');
 
-			require_once (JPATH_ADMINISTRATOR.DS.'components'.DS.'com_k2'.DS.'lib'.DS.'class.upload.php');
-			$savepath = JPATH_ROOT.DS.'media'.DS.'k2'.DS.'users'.DS;
+			require_once(JPATH_SITE.'/media/k2/assets/vendors/verot/class.upload.php/src/class.upload.php');
+			$savepath = JPATH_ROOT.'/media/k2/users/';
 
 			if (isset($file['image']) && $file['image']['error'] == 0 && !JRequest::getBool('del_image'))
 			{
@@ -124,47 +116,57 @@ class plgUserK2 extends JPlugin
 				}
 				else
 				{
-					$mainframe->enqueueMessage(JText::_('K2_COULD_NOT_UPLOAD_YOUR_IMAGE').$handle->error, 'notice');
+					$application->enqueueMessage(JText::_('K2_COULD_NOT_UPLOAD_YOUR_IMAGE').$handle->error, 'notice');
 				}
-				$row->image = $handle->file_dst_name;
+				$image = $handle->file_dst_name;
 			}
 
 			if (JRequest::getBool('del_image'))
 			{
 
-				if (JFile::exists(JPATH_ROOT.DS.'media'.DS.'k2'.DS.'users'.DS.$row->image))
+				if (JFile::exists(JPATH_ROOT.'/media/k2/users/'.$row->image))
 				{
-					JFile::delete(JPATH_ROOT.DS.'media'.DS.'k2'.DS.'users'.DS.$row->image);
+					JFile::delete(JPATH_ROOT.'/media/k2/users/'.$row->image);
 				}
-				$row->image = '';
+				$image = '';
+			}
+			if (isset($image))
+			{
+				$row->image = $image;
+				$row->store();
 			}
 
-			$row->store();
 			$itemid = $params->get('redirect');
-
 			if (!$isnew && $itemid)
 			{
 				$menu = JSite::getMenu();
 				$item = $menu->getItem($itemid);
 				$url = JRoute::_($item->link.'&Itemid='.$itemid, false);
-				if (JURI::isInternal($url))
+
+				if (K2_JVERSION == '15')
 				{
-					$mainframe->enqueueMessage(JText::_('K2_YOUR_SETTINGS_HAVE_BEEN_SAVED'));
-					$mainframe->redirect($url);
+					if (JURI::isInternal($url))
+					{
+						$application->enqueueMessage(JText::_('K2_YOUR_SETTINGS_HAVE_BEEN_SAVED'));
+						$application->redirect($url);
+					}
+				}
+				else
+				{
+					$application->setUserState('com_users.edit.profile.redirect', $url);
 				}
 			}
 		}
-
 	}
 
 	function onLoginUser($user, $options)
 	{
 		$params = JComponentHelper::getParams('com_k2');
-		$mainframe = JFactory::getApplication();
-		if ($mainframe->isSite())
+		$application = JFactory::getApplication();
+		if ($application->isSite())
 		{
 			// Get the user id
-			$db = JFactory::getDBO();
+			$db = JFactory::getDbo();
 			$db->setQuery("SELECT id FROM #__users WHERE username = ".$db->Quote($user['username']));
 			$id = $db->loadResult();
 
@@ -172,7 +174,7 @@ class plgUserK2 extends JPlugin
 			if ($params->get('K2UserProfile') && $id)
 			{
 				$k2id = $this->getK2UserID($id);
-				JTable::addIncludePath(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_k2'.DS.'tables');
+				JTable::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_k2/tables');
 				$row = JTable::getInstance('K2User', 'Table');
 				if ($k2id)
 				{
@@ -201,8 +203,8 @@ class plgUserK2 extends JPlugin
 	function onLogoutUser($user)
 	{
 		$params = JComponentHelper::getParams('com_k2');
-		$mainframe = JFactory::getApplication();
-		if ($mainframe->isSite() && $params->get('cookieDomain'))
+		$application = JFactory::getApplication();
+		if ($application->isSite() && $params->get('cookieDomain'))
 		{
 			setcookie("userID", "", time() - 3600, '/', $params->get('cookieDomain'), 0);
 		}
@@ -211,9 +213,8 @@ class plgUserK2 extends JPlugin
 
 	function onAfterDeleteUser($user, $succes, $msg)
 	{
-
-		$mainframe = JFactory::getApplication();
-		$db = JFactory::getDBO();
+		$application = JFactory::getApplication();
+		$db = JFactory::getDbo();
 		$query = "DELETE FROM #__k2_users WHERE userID={$user['id']}";
 		$db->setQuery($query);
 		$db->query();
@@ -221,39 +222,58 @@ class plgUserK2 extends JPlugin
 
 	function onBeforeStoreUser($user, $isNew)
 	{
-		$mainframe = JFactory::getApplication();
+		$application = JFactory::getApplication();
 		$params = JComponentHelper::getParams('com_k2');
 		$session = JFactory::getSession();
-		if ($params->get('K2UserProfile') && $isNew && $params->get('recaptchaOnRegistration') && $mainframe->isSite() && !$session->get('socialConnectData'))
+		if ($params->get('K2UserProfile') && $isNew && $params->get('recaptchaOnRegistration') && $application->isSite() && !$session->get('socialConnectData'))
 		{
-			if (!function_exists('_recaptcha_qsencode'))
+			if($params->get('recaptchaV2'))
 			{
-				require_once (JPATH_ADMINISTRATOR.DS.'components'.DS.'com_k2'.DS.'lib'.DS.'recaptchalib.php');
+				require_once JPATH_SITE.'/components/com_k2/helpers/utilities.php';
+				if (!K2HelperUtilities::verifyRecaptcha())
+				{
+					if (K2_JVERSION != '15')
+					{
+						$url = 'index.php?option=com_users&view=registration';
+					}
+					else
+					{
+						$url = 'index.php?option=com_user&view=register';
+					}
+					$application->enqueueMessage(JText::_('K2_COULD_NOT_VERIFY_THAT_YOU_ARE_NOT_A_ROBOT'), 'error');
+					$application->redirect($url);
+				}
 			}
-			$privatekey = $params->get('recaptcha_private_key');
-			$recaptcha_challenge_field = isset($_POST["recaptcha_challenge_field"]) ? $_POST["recaptcha_challenge_field"] : '';
-			$recaptcha_response_field = isset($_POST["recaptcha_response_field"]) ? $_POST["recaptcha_response_field"] : '';
-			$resp = recaptcha_check_answer($privatekey, $_SERVER["REMOTE_ADDR"], $recaptcha_challenge_field, $recaptcha_response_field);
-			if (!$resp->is_valid)
+			else
 			{
-				if (K2_JVERSION != '15')
+				if (!function_exists('_recaptcha_qsencode'))
 				{
-					$url = 'index.php?option=com_users&view=registration';
+					require_once(JPATH_SITE.'/media/k2/assets/vendors/google/recaptcha_legacy/recaptcha.php');
 				}
-				else
+				$privatekey = $params->get('recaptcha_private_key');
+				$recaptcha_challenge_field = isset($_POST["recaptcha_challenge_field"]) ? $_POST["recaptcha_challenge_field"] : '';
+				$recaptcha_response_field = isset($_POST["recaptcha_response_field"]) ? $_POST["recaptcha_response_field"] : '';
+				$resp = recaptcha_check_answer($privatekey, $_SERVER["REMOTE_ADDR"], $recaptcha_challenge_field, $recaptcha_response_field);
+				if (!$resp->is_valid)
 				{
-					$url = 'index.php?option=com_user&view=register';
+					if (K2_JVERSION != '15')
+					{
+						$url = 'index.php?option=com_users&view=registration';
+					}
+					else
+					{
+						$url = 'index.php?option=com_user&view=register';
+					}
+					$application->enqueueMessage(JText::_('K2_THE_WORDS_YOU_TYPED_DID_NOT_MATCH_THE_ONES_DISPLAYED_PLEASE_TRY_AGAIN'), 'error');
+					$application->redirect($url);
 				}
-				$mainframe->enqueueMessage(JText::_('K2_THE_WORDS_YOU_TYPED_DID_NOT_MATCH_THE_ONES_DISPLAYED_PLEASE_TRY_AGAIN'), 'error');
-				$mainframe->redirect($url);
 			}
 		}
 	}
 
 	function getK2UserID($id)
 	{
-
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 		$query = "SELECT id FROM #__k2_users WHERE userID={$id}";
 		$db->setQuery($query);
 		$result = $db->loadResult();
@@ -280,7 +300,7 @@ class plgUserK2 extends JPlugin
 				$response = json_decode($response);
 				if ($response->ip->appears || $response->email->appears || $response->username->appears)
 				{
-					$db = JFactory::getDBO();
+					$db = JFactory::getDbo();
 					$db->setQuery("UPDATE #__users SET block = 1 WHERE id = ".$user['id']);
 					$db->query();
 					$user['notes'] = JText::_('K2_POSSIBLE_SPAMMER_DETECTED_BY_STOPFORUMSPAM');
@@ -288,5 +308,4 @@ class plgUserK2 extends JPlugin
 			}
 		}
 	}
-
 }

@@ -1,18 +1,18 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.8.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
-defined('_JEXEC') or die ;
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.model');
 
-JTable::addIncludePath(JPATH_COMPONENT.DS.'tables');
+JTable::addIncludePath(JPATH_COMPONENT.'/tables');
 
 class K2ModelUsers extends K2Model
 {
@@ -20,23 +20,24 @@ class K2ModelUsers extends K2Model
     function getData()
     {
 
-        $mainframe = JFactory::getApplication();
+        $application = JFactory::getApplication();
         $option = JRequest::getCmd('option');
         $view = JRequest::getCmd('view');
-        $db = JFactory::getDBO();
-        $limit = $mainframe->getUserStateFromRequest('global.list.limit', 'limit', $mainframe->getCfg('list_limit'), 'int');
-        $limitstart = $mainframe->getUserStateFromRequest($option.$view.'.limitstart', 'limitstart', 0, 'int');
-        $filter_order = $mainframe->getUserStateFromRequest($option.$view.'filter_order', 'filter_order', 'juser.name', 'cmd');
-        $filter_order_Dir = $mainframe->getUserStateFromRequest($option.$view.'filter_order_Dir', 'filter_order_Dir', '', 'word');
-        $filter_status = $mainframe->getUserStateFromRequest($option.$view.'filter_status', 'filter_status', -1, 'int');
-        $filter_group = $mainframe->getUserStateFromRequest($option.$view.'filter_group', 'filter_group', '', 'string');
-        $filter_group_k2 = $mainframe->getUserStateFromRequest($option.$view.'filter_group_k2', 'filter_group_k2', '', 'string');
-        $search = $mainframe->getUserStateFromRequest($option.$view.'search', 'search', '', 'string');
+        $db = JFactory::getDbo();
+        $limit = $application->getUserStateFromRequest('global.list.limit', 'limit', $application->getCfg('list_limit'), 'int');
+        $limitstart = $application->getUserStateFromRequest($option.$view.'.limitstart', 'limitstart', 0, 'int');
+        $filter_order = $application->getUserStateFromRequest($option.$view.'filter_order', 'filter_order', 'juser.name', 'cmd');
+        $filter_order_Dir = $application->getUserStateFromRequest($option.$view.'filter_order_Dir', 'filter_order_Dir', '', 'word');
+        $filter_status = $application->getUserStateFromRequest($option.$view.'filter_status', 'filter_status', -1, 'int');
+        $filter_group = $application->getUserStateFromRequest($option.$view.'filter_group', 'filter_group', '', 'string');
+        $filter_group_k2 = $application->getUserStateFromRequest($option.$view.'filter_group_k2', 'filter_group_k2', '', 'string');
+        $search = $application->getUserStateFromRequest($option.$view.'search', 'search', '', 'string');
         $search = JString::strtolower($search);
+        $search = trim(preg_replace('/[^\p{L}\p{N}\s\-_]/u', '', $search));
 
         $query = "SELECT juser.*, k2user.group, k2group.name as groupname FROM #__users as juser "."LEFT JOIN #__k2_users as k2user ON juser.id=k2user.userID "."LEFT JOIN #__k2_user_groups as k2group ON k2user.group=k2group.id ";
 
-        if (K2_JVERSION != '15')
+        if (K2_JVERSION != '15' && $filter_group)
         {
             $query .= " LEFT JOIN #__user_usergroup_map as `map` ON juser.id=map.user_id ";
         }
@@ -90,11 +91,6 @@ class K2ModelUsers extends K2Model
             $filter_order = "juser.name";
         }
 
-        if (K2_JVERSION != '15')
-        {
-            $query .= "  GROUP BY juser.id  ";
-        }
-
         $query .= " ORDER BY {$filter_order} {$filter_order_Dir}";
 
         $db->setQuery($query, $limitstart, $limit);
@@ -106,11 +102,11 @@ class K2ModelUsers extends K2Model
             {
                 $IDs[] = $row->id;
             }
-            $query = "SELECT map.user_id, COUNT(map.group_id) AS group_count,GROUP_CONCAT(g2.title SEPARATOR '\n') AS group_names 
-		    FROM #__user_usergroup_map AS map 
-		    LEFT JOIN #__usergroups AS g2 
-		    ON g2.id = map.group_id 
-		    WHERE map.user_id IN (".implode(',', $IDs).") 
+            $query = "SELECT map.user_id, COUNT(map.group_id) AS group_count,GROUP_CONCAT(g2.title SEPARATOR '\n') AS group_names
+		    FROM #__user_usergroup_map AS map
+		    LEFT JOIN #__usergroups AS g2
+		    ON g2.id = map.group_id
+		    WHERE map.user_id IN (".implode(',', $IDs).")
 		    GROUP BY map.user_id";
             $db->setQuery($query);
             $groups = $db->loadObjectList();
@@ -132,21 +128,22 @@ class K2ModelUsers extends K2Model
     function getTotal()
     {
 
-        $mainframe = JFactory::getApplication();
+        $application = JFactory::getApplication();
         $option = JRequest::getCmd('option');
         $view = JRequest::getCmd('view');
-        $db = JFactory::getDBO();
-        $limit = $mainframe->getUserStateFromRequest('global.list.limit', 'limit', $mainframe->getCfg('list_limit'), 'int');
-        $limitstart = $mainframe->getUserStateFromRequest($option.'.limitstart', 'limitstart', 0, 'int');
-        $filter_status = $mainframe->getUserStateFromRequest($option.$view.'filter_status', 'filter_status', -1, 'int');
-        $filter_group = $mainframe->getUserStateFromRequest($option.$view.'filter_group', 'filter_group', '', 'string');
-        $filter_group_k2 = $mainframe->getUserStateFromRequest($option.$view.'filter_group_k2', 'filter_group_k2', '', 'string');
-        $search = $mainframe->getUserStateFromRequest($option.$view.'search', 'search', '', 'string');
+        $db = JFactory::getDbo();
+        $limit = $application->getUserStateFromRequest('global.list.limit', 'limit', $application->getCfg('list_limit'), 'int');
+        $limitstart = $application->getUserStateFromRequest($option.'.limitstart', 'limitstart', 0, 'int');
+        $filter_status = $application->getUserStateFromRequest($option.$view.'filter_status', 'filter_status', -1, 'int');
+        $filter_group = $application->getUserStateFromRequest($option.$view.'filter_group', 'filter_group', '', 'string');
+        $filter_group_k2 = $application->getUserStateFromRequest($option.$view.'filter_group_k2', 'filter_group_k2', '', 'string');
+        $search = $application->getUserStateFromRequest($option.$view.'search', 'search', '', 'string');
         $search = JString::strtolower($search);
+        $search = trim(preg_replace('/[^\p{L}\p{N}\s\-_]/u', '', $search));
 
         $query = "SELECT COUNT(DISTINCT juser.id) FROM #__users as juser "."LEFT JOIN #__k2_users as k2user ON juser.id=k2user.userID "."LEFT JOIN #__k2_user_groups as k2group ON k2user.group=k2group.id ";
 
-        if (K2_JVERSION != '15')
+        if (K2_JVERSION != '15' && $filter_group)
         {
             $query .= " LEFT JOIN #__user_usergroup_map as `map` ON juser.id=map.user_id ";
         }
@@ -203,23 +200,23 @@ class K2ModelUsers extends K2Model
     function remove()
     {
 
-        $mainframe = JFactory::getApplication();
+        $application = JFactory::getApplication();
         $cid = JRequest::getVar('cid');
         JArrayHelper::toInteger($cid);
-        $db = JFactory::getDBO();
+        $db = JFactory::getDbo();
         $query = "DELETE FROM #__k2_users WHERE userID IN(".implode(',', $cid).")";
         $db->setQuery($query);
         $db->query();
         $cache = JFactory::getCache('com_k2');
         $cache->clean();
-		$mainframe->enqueueMessage(JText::_('K2_USER_PROFILE_DELETED'));
-        $mainframe->redirect('index.php?option=com_k2&view=users');
+		$application->enqueueMessage(JText::_('K2_USER_PROFILE_DELETED'));
+        $application->redirect('index.php?option=com_k2&view=users');
     }
 
     function getUserGroups($type = 'joomla')
     {
 
-        $db = JFactory::getDBO();
+        $db = JFactory::getDbo();
 
         if ($type == 'joomla')
         {
@@ -228,12 +225,12 @@ class K2ModelUsers extends K2Model
 
             if (K2_JVERSION != '15')
             {
-                $query = "SELECT a.lft AS lft, a.id AS value, a.title AS text, COUNT(DISTINCT b.id) AS level 
-			    FROM #__usergroups AS a 
-			    LEFT JOIN #__usergroups AS b 
-			    ON a.lft > b.lft 
-			    AND a.rgt < b.rgt 
-			    GROUP BY a.id 
+                $query = "SELECT a.lft AS lft, a.id AS value, a.title AS text, COUNT(DISTINCT b.id) AS level
+			    FROM #__usergroups AS a
+			    LEFT JOIN #__usergroups AS b
+			    ON a.lft > b.lft
+			    AND a.rgt < b.rgt
+			    GROUP BY a.id
 			    ORDER BY a.lft ASC";
             }
 
@@ -281,7 +278,7 @@ class K2ModelUsers extends K2Model
     function checkLogin($id)
     {
 
-        $db = JFactory::getDBO();
+        $db = JFactory::getDbo();
         $query = "SELECT COUNT(s.userid) FROM #__session AS s WHERE s.userid = ".(int)$id;
         $db->setQuery($query);
         $result = $db->loadResult();
@@ -291,7 +288,7 @@ class K2ModelUsers extends K2Model
     function hasProfile($id)
     {
 
-        $db = JFactory::getDBO();
+        $db = JFactory::getDbo();
         $query = "SELECT id FROM #__k2_users WHERE userID = ".(int)$id;
         $db->setQuery($query);
         $result = $db->loadResult();
@@ -300,37 +297,45 @@ class K2ModelUsers extends K2Model
 
     function enable()
     {
-        $mainframe = JFactory::getApplication();
+        $application = JFactory::getApplication();
         $cid = JRequest::getVar('cid');
         JArrayHelper::toInteger($cid);
-        $db = JFactory::getDBO();
+        $db = JFactory::getDbo();
         $query = "UPDATE #__users SET block=0 WHERE id IN(".implode(',', $cid).")";
         $db->setQuery($query);
         $db->query();
-		$mainframe->enqueueMessage(JText::_('K2_USERS_ENABLED'));
-        $mainframe->redirect('index.php?option=com_k2&view=users');
+		$application->enqueueMessage(JText::_('K2_USERS_ENABLED'));
+		if(JRequest::getCmd('context') == "modalselector"){
+			$application->redirect('index.php?option=com_k2&view=users&tmpl=component&context=modalselector');
+		} else {
+			$application->redirect('index.php?option=com_k2&view=users');
+		}
     }
 
     function disable()
     {
-        $mainframe = JFactory::getApplication();
+        $application = JFactory::getApplication();
         $cid = JRequest::getVar('cid');
         JArrayHelper::toInteger($cid);
-        $db = JFactory::getDBO();
+        $db = JFactory::getDbo();
         $query = "UPDATE #__users SET block=1 WHERE id IN(".implode(',', $cid).")";
         $db->setQuery($query);
         $db->query();
-		$mainframe->enqueueMessage(JText::_('K2_USERS_DISABLED'));
-        $mainframe->redirect('index.php?option=com_k2&view=users');
+		$application->enqueueMessage(JText::_('K2_USERS_DISABLED'));
+		if(JRequest::getCmd('context') == "modalselector"){
+			$application->redirect('index.php?option=com_k2&view=users&tmpl=component&context=modalselector');
+		} else {
+			$application->redirect('index.php?option=com_k2&view=users');
+		}
     }
 
     function delete()
     {
-        $mainframe = JFactory::getApplication();
+        $application = JFactory::getApplication();
         $user = JFactory::getUser();
         $cid = JRequest::getVar('cid');
         JArrayHelper::toInteger($cid);
-        $db = JFactory::getDBO();
+        $db = JFactory::getDbo();
         if (in_array($user->id, $cid))
         {
             foreach ($cid as $key => $id)
@@ -340,12 +345,12 @@ class K2ModelUsers extends K2Model
                     unset($cid[$key]);
                 }
             }
-            $mainframe->enqueueMessage(JText::_('K2_YOU_CANNOT_DELETE_YOURSELF'), 'notice');
+            $application->enqueueMessage(JText::_('K2_YOU_CANNOT_DELETE_YOURSELF'), 'notice');
         }
         if (count($cid) < 1)
         {
-        	$mainframe->enqueueMessage(JText::_('K2_DELETE_COMPLETED'));
-            $mainframe->redirect('index.php?option=com_k2&view=users');
+        	$application->enqueueMessage(JText::_('K2_DELETE_COMPLETED'));
+            $application->redirect('index.php?option=com_k2&view=users');
         }
         if (K2_JVERSION != '15')
         {
@@ -398,14 +403,14 @@ class K2ModelUsers extends K2Model
         $query = "DELETE FROM #__k2_users WHERE userID IN(".implode(',', $IDsToDelete).") AND userID!={$user->id}";
         $db->setQuery($query);
         $db->query();
-		$mainframe->enqueueMessage(JText::_('K2_DELETE_COMPLETED'));
-        $mainframe->redirect('index.php?option=com_k2&view=users');
+		$application->enqueueMessage(JText::_('K2_DELETE_COMPLETED'));
+        $application->redirect('index.php?option=com_k2&view=users');
     }
 
     function saveMove()
     {
-        $mainframe = JFactory::getApplication();
-        $db = JFactory::getDBO();
+        $application = JFactory::getApplication();
+        $db = JFactory::getDbo();
         $cid = JRequest::getVar('cid');
         JArrayHelper::toInteger($cid);
         $group = JRequest::getVar('group');
@@ -454,27 +459,27 @@ class K2ModelUsers extends K2Model
                 else
                 {
                     $user = JFactory::getUser($id);
-                    $query = "INSERT INTO #__k2_users VALUES ('', {$id}, {$db->Quote($user->username)}, '', '', '', '', {$k2group}, '')";
+                    $query = "INSERT INTO #__k2_users VALUES ('', {$id}, {$db->Quote($user->username)}, '', '', '', '', {$k2group}, '', '', '', '')";
                 }
                 $db->setQuery($query);
                 $db->query();
             }
         }
-		$mainframe->enqueueMessage(JText::_('K2_MOVE_COMPLETED'));
-        $mainframe->redirect('index.php?option=com_k2&view=users');
+		$application->enqueueMessage(JText::_('K2_MOVE_COMPLETED'));
+        $application->redirect('index.php?option=com_k2&view=users');
 
     }
 
     function import()
     {
 
-        $mainframe = JFactory::getApplication();
-        $db = JFactory::getDBO();
+        $application = JFactory::getApplication();
+        $db = JFactory::getDbo();
         if (K2_JVERSION != '15')
         {
             $db->setQuery("SELECT id, title AS name FROM #__usergroups");
             $usergroups = $db->loadObjectList();
-            $xml = new JXMLElement(JFile::read(JPATH_COMPONENT.DS.'models'.DS.'usergroup.xml'));
+            $xml = new JXMLElement(JFile::read(JPATH_COMPONENT.'/models/usergroup.xml'));
             $permissions = class_exists('JParameter') ? new JParameter('') : new JRegistry('');
             foreach ($xml->params as $paramGroup)
             {
@@ -504,7 +509,7 @@ class K2ModelUsers extends K2Model
             $usergroups = array_merge($frontEndGroups, $backEndGroups);
 
             $xml = new JSimpleXML;
-            $xml->loadFile(JPATH_COMPONENT.DS.'models'.DS.'usergroup.xml');
+            $xml->loadFile(JPATH_COMPONENT.'/models/usergroup.xml');
             $permissions = class_exists('JParameter') ? new JParameter('') : new JRegistry('');
             foreach ($xml->document->params as $paramGroup)
             {
@@ -525,7 +530,7 @@ class K2ModelUsers extends K2Model
         foreach ($usergroups as $usergroup)
         {
             $K2UserGroup = JTable::getInstance('K2UserGroup', 'Table');
-            $K2UserGroup->name = JString::trim($usergroup->name)." (Imported from Joomla!)";
+            $K2UserGroup->name = JString::trim($usergroup->name)." (Imported from Joomla)";
             $K2UserGroup->permissions = $permissions;
             $K2UserGroup->store();
 
@@ -557,8 +562,8 @@ class K2ModelUsers extends K2Model
                 }
             }
         }
-		$mainframe->enqueueMessage(JText::_('K2_IMPORT_COMPLETED'));
-        $mainframe->redirect('index.php?option=com_k2&view=users');
+		$application->enqueueMessage(JText::_('K2_IMPORT_COMPLETED'));
+        $application->redirect('index.php?option=com_k2&view=users');
 
     }
 

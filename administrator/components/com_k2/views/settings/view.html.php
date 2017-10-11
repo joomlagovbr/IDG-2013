@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.8.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
@@ -12,18 +12,22 @@ defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
-class K2ViewSettings extends K2View {
-
-	function display($tpl = null) {
-
+class K2ViewSettings extends K2View
+{
+	function display($tpl = null)
+	{
 		JHTML::_('behavior.tooltip');
+
 		jimport('joomla.html.pane');
-		$model = &$this->getModel();
-		$params = &$model->getParams();
+
+		$model = $this->getModel();
+
+		$params = $model->getParams();
 		$this->assignRef('params', $params);
-		$pane = & JPane::getInstance('Tabs');
+
+		$pane = JPane::getInstance('Tabs');
 		$this->assignRef('pane', $pane);
+
 		parent::display($tpl);
 	}
-
 }

@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.8.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
@@ -12,27 +12,28 @@ defined('_JEXEC') or die;
 
 jimport('joomla.application.component.model');
 
-JTable::addIncludePath(JPATH_COMPONENT.DS.'tables');
+JTable::addIncludePath(JPATH_COMPONENT.'/tables');
 
 class K2ModelComments extends K2Model {
 
 	function getData() {
-
-		$mainframe = JFactory::getApplication();
+		$application = JFactory::getApplication();
+		$params = JComponentHelper::getParams('com_k2');
 		$option = JRequest::getCmd('option');
 		$view = JRequest::getCmd('view');
-		$db = JFactory::getDBO();
-		$limit = $mainframe->getUserStateFromRequest('global.list.limit', 'limit', $mainframe->getCfg('list_limit'), 'int');
-		$limitstart = $mainframe->getUserStateFromRequest($option.$view.'.limitstart', 'limitstart', 0, 'int');
-		$filter_order = $mainframe->getUserStateFromRequest($option.$view.'filter_order', 'filter_order', 'c.id', 'cmd');
-		$filter_order_Dir = $mainframe->getUserStateFromRequest($option.$view.'filter_order_Dir', 'filter_order_Dir', 'DESC', 'word');
-		$filter_state = $mainframe->getUserStateFromRequest($option.$view.'filter_state', 'filter_state', -1, 'int');
-		$filter_category = $mainframe->getUserStateFromRequest($option.$view.'filter_category', 'filter_category', 0, 'int');
-		$filter_author = $mainframe->getUserStateFromRequest($option.$view.'filter_author', 'filter_author', 0, 'int');
-		$search = $mainframe->getUserStateFromRequest($option.$view.'search', 'search', '', 'string');
+		$db = JFactory::getDbo();
+		$limit = $application->getUserStateFromRequest('global.list.limit', 'limit', $application->getCfg('list_limit'), 'int');
+		$limitstart = $application->getUserStateFromRequest($option.$view.'.limitstart', 'limitstart', 0, 'int');
+		$filter_order = $application->getUserStateFromRequest($option.$view.'filter_order', 'filter_order', 'c.id', 'cmd');
+		$filter_order_Dir = $application->getUserStateFromRequest($option.$view.'filter_order_Dir', 'filter_order_Dir', 'DESC', 'word');
+		$filter_state = $application->getUserStateFromRequest($option.$view.'filter_state', 'filter_state', -1, 'int');
+		$filter_category = $application->getUserStateFromRequest($option.$view.'filter_category', 'filter_category', 0, 'int');
+		$filter_author = $application->getUserStateFromRequest($option.$view.'filter_author', 'filter_author', 0, 'int');
+		$search = $application->getUserStateFromRequest($option.$view.'search', 'search', '', 'string');
 		$search = JString::strtolower($search);
+		$search = trim(preg_replace('/[^\p{L}\p{N}\s\"\.\@\-_]/u', '', $search));
 
-		$query = "SELECT c.*, i.title , i.catid,  i.alias AS itemAlias, i.created_by,  cat.alias AS catAlias, cat.name as catName FROM #__k2_comments AS c LEFT JOIN #__k2_items AS i ON c.itemID=i.id LEFT JOIN #__k2_categories AS cat ON cat.id=i.catid WHERE c.id>0";
+		$query = "SELECT c.*, i.title , i.catid,  i.alias AS itemAlias, i.created_by,  cat.alias AS catAlias, cat.name as catName FROM #__k2_comments AS c LEFT JOIN #__k2_items AS i ON c.itemID=i.id LEFT JOIN #__k2_categories AS cat ON cat.id=i.catid LEFT JOIN #__k2_users AS u ON c.userID=u.userID WHERE c.id>0";
 
 		if ($filter_state > - 1) {
 			$query .= " AND c.published={$filter_state}";
@@ -46,9 +47,79 @@ class K2ModelComments extends K2Model {
 			$query .= " AND i.created_by={$filter_author}";
 		}
 
-		if ($search) {
-		    $escaped = K2_JVERSION == '15' ? $db->getEscaped($search, true) : $db->escape($search, true);
-			$query .= " AND LOWER( c.commentText ) LIKE ".$db->Quote('%'.$escaped.'%', false);
+		if ($search)
+		{
+
+			// Detect exact search phrase using double quotes in search string
+			if(substr($search, 0, 1)=='"' && substr($search, -1)=='"')
+			{
+				$exact = true;
+			}
+			else
+			{
+				$exact = false;
+			}
+
+			// Now completely strip double quotes
+			$search = trim(str_replace('"', '', $search));
+
+			// Escape remaining string
+			$escaped = K2_JVERSION == '15' ? $db->getEscaped($search, true) : $db->escape($search, true);
+
+			// Full phrase or set of words
+			if(strpos($escaped, ' ')!==false && !$exact)
+			{
+				$escaped=explode(' ', $escaped);
+				$quoted = array();
+				foreach($escaped as $key=>$escapedWord)
+				{
+					$quoted[] = $db->Quote('%'.$escapedWord.'%', false);
+				}
+				if ($params->get('adminSearch') == 'full')
+				{
+					foreach($quoted as $quotedWord)
+					{
+						$query .= " AND ( ".
+							"LOWER(c.commentText) LIKE ".$quotedWord." ".
+							"OR LOWER(c.userName) LIKE ".$quotedWord." ".
+							"OR LOWER(c.commentEmail) LIKE ".$quotedWord." ".
+							"OR LOWER(c.commentURL) LIKE ".$quotedWord." ".
+							"OR LOWER(i.title) LIKE ".$quotedWord." ".
+							"OR LOWER(u.userName) LIKE ".$quotedWord." ".
+							"OR LOWER(u.ip) LIKE ".$quotedWord." ".
+							" )";
+					}
+				}
+				else
+				{
+					foreach($quoted as $quotedWord)
+					{
+						$query .= " AND LOWER(c.commentText) LIKE ".$quotedWord;
+					}
+				}
+			}
+			// Single word or exact phrase to search for (wrapped in double quotes in the search block)
+			else
+			{
+				$quoted = $db->Quote('%'.$escaped.'%', false);
+
+				if ($params->get('adminSearch') == 'full')
+				{
+					$query .= " AND ( ".
+						"LOWER(c.commentText) LIKE ".$quoted." ".
+						"OR LOWER(c.userName) LIKE ".$quoted." ".
+						"OR LOWER(c.commentEmail) LIKE ".$quoted." ".
+						"OR LOWER(c.commentURL) LIKE ".$quoted." ".
+						"OR LOWER(i.title) LIKE ".$quoted." ".
+						"OR LOWER(u.userName) LIKE ".$quoted." ".
+						"OR LOWER(u.ip) LIKE ".$quoted." ".
+						" )";
+				}
+				else
+				{
+					$query .= " AND LOWER(c.commentText) LIKE ".$quoted;
+				}
+			}
 		}
 
 		if (!$filter_order) {
@@ -62,20 +133,21 @@ class K2ModelComments extends K2Model {
 	}
 
 	function getTotal() {
-
-		$mainframe = JFactory::getApplication();
+		$application = JFactory::getApplication();
+		$params = JComponentHelper::getParams('com_k2');
 		$option = JRequest::getCmd('option');
 		$view = JRequest::getCmd('view');
-		$db = JFactory::getDBO();
-		$limit = $mainframe->getUserStateFromRequest('global.list.limit', 'limit', $mainframe->getCfg('list_limit'), 'int');
-		$limitstart = $mainframe->getUserStateFromRequest($option.'.limitstart', 'limitstart', 0, 'int');
-		$filter_state = $mainframe->getUserStateFromRequest($option.$view.'filter_state', 'filter_state', 1, 'int');
-		$filter_category = $mainframe->getUserStateFromRequest($option.$view.'filter_category', 'filter_category', 0, 'int');
-		$filter_author = $mainframe->getUserStateFromRequest($option.$view.'filter_author', 'filter_author', 0, 'int');
-		$search = $mainframe->getUserStateFromRequest($option.$view.'search', 'search', '', 'string');
+		$db = JFactory::getDbo();
+		$limit = $application->getUserStateFromRequest('global.list.limit', 'limit', $application->getCfg('list_limit'), 'int');
+		$limitstart = $application->getUserStateFromRequest($option.'.limitstart', 'limitstart', 0, 'int');
+		$filter_state = $application->getUserStateFromRequest($option.$view.'filter_state', 'filter_state', 1, 'int');
+		$filter_category = $application->getUserStateFromRequest($option.$view.'filter_category', 'filter_category', 0, 'int');
+		$filter_author = $application->getUserStateFromRequest($option.$view.'filter_author', 'filter_author', 0, 'int');
+		$search = $application->getUserStateFromRequest($option.$view.'search', 'search', '', 'string');
 		$search = JString::strtolower($search);
+		$search = trim(preg_replace('/[^\p{L}\p{N}\s\"\.\@\-_]/u', '', $search));
 
-		$query = "SELECT COUNT(*) FROM #__k2_comments AS c LEFT JOIN #__k2_items AS i ON c.itemID=i.id WHERE c.id>0";
+		$query = "SELECT COUNT(*) FROM #__k2_comments AS c LEFT JOIN #__k2_items AS i ON c.itemID=i.id LEFT JOIN #__k2_users AS u ON c.userID=u.userID WHERE c.id>0";
 
 		if ($filter_state > - 1) {
 			$query .= " AND c.published={$filter_state}";
@@ -89,34 +161,102 @@ class K2ModelComments extends K2Model {
 			$query .= " AND i.created_by={$filter_author}";
 		}
 
-		if ($search) {
-		    $escaped = K2_JVERSION == '15' ? $db->getEscaped($search, true) : $db->escape($search, true);
-			$query .= " AND LOWER( c.commentText ) LIKE ".$db->Quote('%'.$escaped.'%', false);
-		}
+		if ($search)
+		{
 
+			// Detect exact search phrase using double quotes in search string
+			if(substr($search, 0, 1)=='"' && substr($search, -1)=='"')
+			{
+				$exact = true;
+			}
+			else
+			{
+				$exact = false;
+			}
+
+			// Now completely strip double quotes
+			$search = trim(str_replace('"', '', $search));
+
+			// Escape remaining string
+			$escaped = K2_JVERSION == '15' ? $db->getEscaped($search, true) : $db->escape($search, true);
+
+			// Full phrase or set of words
+			if(strpos($escaped, ' ')!==false && !$exact)
+			{
+				$escaped=explode(' ', $escaped);
+				$quoted = array();
+				foreach($escaped as $key=>$escapedWord)
+				{
+					$quoted[] = $db->Quote('%'.$escapedWord.'%', false);
+				}
+				if ($params->get('adminSearch') == 'full')
+				{
+					foreach($quoted as $quotedWord)
+					{
+						$query .= " AND ( ".
+							"LOWER(c.commentText) LIKE ".$quotedWord." ".
+							"OR LOWER(c.userName) LIKE ".$quotedWord." ".
+							"OR LOWER(c.commentEmail) LIKE ".$quotedWord." ".
+							"OR LOWER(c.commentURL) LIKE ".$quotedWord." ".
+							"OR LOWER(i.title) LIKE ".$quotedWord." ".
+							"OR LOWER(u.userName) LIKE ".$quotedWord." ".
+							"OR LOWER(u.ip) LIKE ".$quotedWord." ".
+							" )";
+					}
+				}
+				else
+				{
+					foreach($quoted as $quotedWord)
+					{
+						$query .= " AND LOWER(c.commentText) LIKE ".$quotedWord;
+					}
+				}
+			}
+			// Single word or exact phrase to search for (wrapped in double quotes in the search block)
+			else
+			{
+				$quoted = $db->Quote('%'.$escaped.'%', false);
+
+				if ($params->get('adminSearch') == 'full')
+				{
+					$query .= " AND ( ".
+						"LOWER(c.commentText) LIKE ".$quoted." ".
+						"OR LOWER(c.userName) LIKE ".$quoted." ".
+						"OR LOWER(c.commentEmail) LIKE ".$quoted." ".
+						"OR LOWER(c.commentURL) LIKE ".$quoted." ".
+						"OR LOWER(i.title) LIKE ".$quoted." ".
+						"OR LOWER(u.userName) LIKE ".$quoted." ".
+						"OR LOWER(u.ip) LIKE ".$quoted." ".
+						" )";
+				}
+				else
+				{
+					$query .= " AND LOWER(c.commentText) LIKE ".$quoted;
+				}
+			}
+		}
 		$db->setQuery($query);
 		$total = $db->loadresult();
 		return $total;
 	}
 
 	function publish() {
-
-		$mainframe = JFactory::getApplication();
+		$application = JFactory::getApplication();
 		$user = JFactory::getUser();
 		$cid = JRequest::getVar('cid');
 	    if(!count($cid)){
             $cid[]=JRequest::getInt('commentID');
         }
-		
+
 		foreach ($cid as $id) {
 			$row = JTable::getInstance('K2Comment', 'Table');
 			$row->load($id);
-			if($mainframe->isSite()){
+			if($application->isSite()){
 				$item = JTable::getInstance('K2Item', 'Table');
 				$item->load($row->itemID);
 				if ($item->created_by != $user->id) {
 					JError::raiseError(403, JText::_('K2_ALERTNOTAUTH'));
-					$mainframe->close();
+					$application->close();
 				}
 			}
 			$row->published = 1;
@@ -126,25 +266,28 @@ class K2ModelComments extends K2Model {
 		$cache->clean();
 		if(JRequest::getCmd('format')=='raw'){
 			echo 'true';
-			$mainframe->close();
+			$application->close();
 		}
-		$mainframe->redirect('index.php?option=com_k2&view=comments');
+		if(JRequest::getCmd('context') == "modalselector"){
+			$application->redirect('index.php?option=com_k2&view=comments&tmpl=component&context=modalselector');
+		} else {
+			$application->redirect('index.php?option=com_k2&view=comments');
+		}
 	}
 
 	function unpublish() {
-
-		$mainframe = JFactory::getApplication();
+		$application = JFactory::getApplication();
 		$user = JFactory::getUser();
 		$cid = JRequest::getVar('cid');
 		foreach ($cid as $id) {
 			$row = JTable::getInstance('K2Comment', 'Table');
 			$row->load($id);
-			if($mainframe->isSite()){
+			if($application->isSite()){
 				$item = JTable::getInstance('K2Item', 'Table');
 				$item->load($row->itemID);
 				if ($item->created_by != $user->id) {
 					JError::raiseError(403, JText::_('K2_ALERTNOTAUTH'));
-					$mainframe->close();
+					$application->close();
 				}
 			}
 			$row->published = 0;
@@ -152,14 +295,17 @@ class K2ModelComments extends K2Model {
 		}
 		$cache = JFactory::getCache('com_k2');
 		$cache->clean();
-		$mainframe->redirect('index.php?option=com_k2&view=comments');
+		if(JRequest::getCmd('context') == "modalselector"){
+			$application->redirect('index.php?option=com_k2&view=comments&tmpl=component&context=modalselector');
+		} else {
+			$application->redirect('index.php?option=com_k2&view=comments');
+		}
 	}
 
 	function remove() {
-
-		$mainframe = JFactory::getApplication();
+		$application = JFactory::getApplication();
 		$user = JFactory::getUser();
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 		$cid = JRequest::getVar('cid');
 	  	if(!count($cid)){
             $cid[]=JRequest::getInt('commentID');
@@ -167,12 +313,12 @@ class K2ModelComments extends K2Model {
 		foreach ($cid as $id) {
 			$row = JTable::getInstance('K2Comment', 'Table');
 			$row->load($id);
-			if($mainframe->isSite()){
+			if($application->isSite()){
 				$item = JTable::getInstance('K2Item', 'Table');
 				$item->load($row->itemID);
 				if ($item->created_by != $user->id) {
 					JError::raiseError(403, JText::_('K2_ALERTNOTAUTH'));
-					$mainframe->close();
+					$application->close();
 				}
 			}
 			$row->delete($id);
@@ -181,21 +327,24 @@ class K2ModelComments extends K2Model {
 		$cache->clean();
 		if(JRequest::getCmd('format')=='raw'){
 			echo 'true';
-			$mainframe->close();
+			$application->close();
 		}
-		$mainframe->enqueueMessage(JText::_('K2_DELETE_COMPLETED'));
-		$mainframe->redirect('index.php?option=com_k2&view=comments');
+		$application->enqueueMessage(JText::_('K2_DELETE_COMPLETED'));
+		if(JRequest::getCmd('context') == "modalselector"){
+			$application->redirect('index.php?option=com_k2&view=comments&tmpl=component&context=modalselector');
+		} else {
+			$application->redirect('index.php?option=com_k2&view=comments');
+		}
 	}
 
 	function deleteUnpublished() {
-
-		$mainframe = JFactory::getApplication();
-		$db = JFactory::getDBO();
+		$application = JFactory::getApplication();
+		$db = JFactory::getDbo();
 		$user = JFactory::getUser();
 		$userID = $user->id;
-		if($mainframe->isSite()){
-			$query = "SELECT c.id FROM #__k2_comments AS c 
-			LEFT JOIN #__k2_items AS i ON c.itemID=i.id 
+		if($application->isSite()){
+			$query = "SELECT c.id FROM #__k2_comments AS c
+			LEFT JOIN #__k2_items AS i ON c.itemID=i.id
 			WHERE i.created_by = {$userID} AND c.published=0";
 			$db->setQuery($query);
 			$ids = K2_JVERSION == '30' ? $db->loadColumn() : $db->loadResultArray();
@@ -213,20 +362,23 @@ class K2ModelComments extends K2Model {
 
 		$cache = JFactory::getCache('com_k2');
 		$cache->clean();
-		$mainframe->enqueueMessage(JText::_('K2_DELETE_COMPLETED'));
-		$mainframe->redirect('index.php?option=com_k2&view=comments');
+		$application->enqueueMessage(JText::_('K2_DELETE_COMPLETED'));
+		if(JRequest::getCmd('context') == "modalselector"){
+			$application->redirect('index.php?option=com_k2&view=comments&tmpl=component&context=modalselector');
+		} else {
+			$application->redirect('index.php?option=com_k2&view=comments');
+		}
 	}
 
 	function save() {
-
-		$mainframe = JFactory::getApplication();
+		$application = JFactory::getApplication();
 		$user = JFactory::getUser();
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 		$id = JRequest::getInt('commentID');
 		$item = JTable::getInstance('K2Item', 'Table');
 		$row = JTable::getInstance('K2Comment', 'Table');
 		$row->load($id);
-		if($mainframe->isSite()){
+		if($application->isSite()){
 			$item->load($row->itemID);
 			if ($item->created_by != $user->id) {
 				JError::raiseError(403, JText::_('K2_ALERTNOTAUTH'));
@@ -240,17 +392,15 @@ class K2ModelComments extends K2Model {
 		$response->comment = $row->commentText;
 		$response->message = JText::_('K2_COMMENT_SAVED');
 		unset($response->_errors);
-		require_once (JPATH_COMPONENT_ADMINISTRATOR.DS.'lib'.DS.'JSON.php');
-		$json = new Services_JSON;
-		echo $json->encode($response);
-		$mainframe->close();
+		echo json_encode($response);
+		$application->close();
 	}
-	
+
     function report(){
         $id = $this->getState('id');
         $name = JString::trim($this->getState('name'));
         $reportReason = JString::trim($this->getState('reportReason'));
-        $params = &K2HelperUtilities::getParams('com_k2');
+        $params = K2HelperUtilities::getParams('com_k2');
         $user = JFactory::getUser();
         $row = JTable::getInstance('K2Comment', 'Table');
         $row->load($id);
@@ -261,33 +411,46 @@ class K2ModelComments extends K2Model {
         if(empty($name)){
             $this->setError(JText::_('K2_PLEASE_TYPE_YOUR_NAME'));
             return false;
-        }   
+        }
         if(empty($reportReason)){
             $this->setError(JText::_('K2_PLEASE_TYPE_THE_REPORT_REASON'));
             return false;
-        }               
+        }
     	if (($params->get('antispam') == 'recaptcha' || $params->get('antispam') == 'both') && $user->guest) {
-    	    if(!function_exists('_recaptcha_qsencode'))
-            {
-                require_once (JPATH_ADMINISTRATOR.DS.'components'.DS.'com_k2'.DS.'lib'.DS.'recaptchalib.php');
-            }
-			$privatekey = $params->get('recaptcha_private_key');
-			$resp = recaptcha_check_answer($privatekey, $_SERVER["REMOTE_ADDR"], $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]);
-			if (!$resp->is_valid) {
-				$this->setError(JText::_('K2_THE_WORDS_YOU_TYPED_DID_NOT_MATCH_THE_ONES_DISPLAYED_PLEASE_TRY_AGAIN'));
-				return false;
-			}
+
+				if($params->get('recaptchaV2'))
+				{
+					require_once JPATH_SITE.'/components/com_k2/helpers/utilities.php';
+					if (!K2HelperUtilities::verifyRecaptcha())
+					{
+						$this->setError(JText::_('K2_COULD_NOT_VERIFY_THAT_YOU_ARE_NOT_A_ROBOT'));
+						return false;
+					}
+				}
+				else
+				{
+					if(!function_exists('_recaptcha_qsencode'))
+					{
+						require_once(JPATH_SITE.'/media/k2/assets/vendors/google/recaptcha_legacy/recaptcha.php');
+					}
+					$privatekey = $params->get('recaptcha_private_key');
+					$resp = recaptcha_check_answer($privatekey, $_SERVER["REMOTE_ADDR"], $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]);
+					if (!$resp->is_valid) {
+						$this->setError(JText::_('K2_THE_WORDS_YOU_TYPED_DID_NOT_MATCH_THE_ONES_DISPLAYED_PLEASE_TRY_AGAIN'));
+						return false;
+					}
+				}
 		}
-		
-		$mainframe = JFactory::getApplication();
+
+		$application = JFactory::getApplication();
         $mail = JFactory::getMailer();
-        $senderEmail = $mainframe->getCfg('mailfrom');
-        $senderName = $mainframe->getCfg('fromname');
-        
+        $senderEmail = $application->getCfg('mailfrom');
+        $senderName = $application->getCfg('fromname');
+
         $mail->setSender(array($senderEmail, $senderName));
         $mail->setSubject(JText::_('K2_COMMENT_REPORT'));
         $mail->IsHTML(true);
-        
+
         switch(substr(strtoupper(PHP_OS), 0, 3)) {
             case 'WIN':
                 $mail->LE = "\r\n";
@@ -298,20 +461,19 @@ class K2ModelComments extends K2Model {
             default:
                 break;
         }
-        
+
+		// K2 embedded email template (to do: move to separate HTML template/override)
         $body = "
         <strong>".JText::_('K2_NAME')."</strong>: ".$name." <br/>
         <strong>".JText::_('K2_REPORT_REASON')."</strong>: ".$reportReason." <br/>
         <strong>".JText::_('K2_COMMENT')."</strong>: ".nl2br($row->commentText)." <br/>
         ";
-        
+
         $mail->setBody($body);
         $mail->ClearAddresses();
-        $mail->AddAddress($params->get('commentsReportRecipient', $mainframe->getCfg('mailfrom')));
+        $mail->AddAddress($params->get('commentsReportRecipient', $application->getCfg('mailfrom')));
         $mail->Send();
-        
-		return true;
-        
-    }
 
+		return true;
+    }
 }

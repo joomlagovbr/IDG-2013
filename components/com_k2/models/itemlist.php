@@ -1,18 +1,18 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.8.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
-defined('_JEXEC') or die ;
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.model');
 
-JTable::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.DS.'tables');
+JTable::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_k2/tables');
 
 class K2ModelItemlist extends K2Model
 {
@@ -22,7 +22,7 @@ class K2ModelItemlist extends K2Model
 
 		$user = JFactory::getUser();
 		$aid = $user->get('aid');
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 		$params = K2HelperUtilities::getParams('com_k2');
 		$limitstart = JRequest::getInt('limitstart');
 		$limit = JRequest::getInt('limit');
@@ -36,18 +36,18 @@ class K2ModelItemlist extends K2Model
 
 		if (JRequest::getWord('format') == 'feed')
 			$limit = $params->get('feedLimit');
-		
+
 		$query = "SELECT i.*,";
-		
+
 		if($ordering == 'modified')
 		{
 			$query .= " CASE WHEN i.modified = 0 THEN i.created ELSE i.modified END as lastChanged, ";
 		}
 
 		$query .= " c.name as categoryname,c.id as categoryid, c.alias as categoryalias, c.params as categoryparams";
-		
-		
-		
+
+
+
 		if ($ordering == 'best')
 			$query .= ", (r.rating_sum/r.rating_count) AS rating";
 
@@ -74,12 +74,12 @@ class K2ModelItemlist extends K2Model
 
 			$query .= "i.access IN(".implode(',', $user->getAuthorisedViewLevels()).")"." AND i.trash = 0"." AND c.published = 1"." AND c.access IN(".implode(',', $user->getAuthorisedViewLevels()).")"." AND c.trash = 0";
 
-			$mainframe = JFactory::getApplication();
-			$languageFilter = $mainframe->getLanguageFilter();
+			$application = JFactory::getApplication();
+			$languageFilter = $application->getLanguageFilter();
 			if ($languageFilter)
 			{
 				$languageTag = JFactory::getLanguage()->getTag();
-				$query .= " AND c.language IN (".$db->quote($languageTag).",".$db->quote('*').") 
+				$query .= " AND c.language IN (".$db->quote($languageTag).",".$db->quote('*').")
 						AND i.language IN (".$db->quote($languageTag).",".$db->quote('*').")";
 			}
 		}
@@ -134,7 +134,10 @@ class K2ModelItemlist extends K2Model
 				{
 					$categories = array_filter($categories);
 					JArrayHelper::toInteger($categories);
-					$query .= " AND c.id IN(".implode(',', $categories).")";
+					if(count($categories))
+					{
+						$query .= " AND c.id IN(".implode(',', $categories).")";
+					}
 				}
 				if (is_string($categories) && $categories > 0)
 				{
@@ -186,7 +189,7 @@ class K2ModelItemlist extends K2Model
 			case 'tag' :
 				$tag = JRequest::getString('tag');
 				jimport('joomla.filesystem.file');
-				if (JFile::exists(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_joomfish'.DS.'joomfish.php') && $task == 'tag')
+				if (JFile::exists(JPATH_ADMINISTRATOR.'/components/com_joomfish/joomfish.php') && $task == 'tag')
 				{
 
 					$registry = JFactory::getConfig();
@@ -202,7 +205,7 @@ class K2ModelItemlist extends K2Model
 
 				}
 
-				if (JFile::exists(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_falang'.DS.'falang.php') && $task == 'tag')
+				if (JFile::exists(JPATH_ADMINISTRATOR.'/components/com_falang/falang.php') && $task == 'tag')
 				{
 
 					$registry = JFactory::getConfig();
@@ -363,7 +366,7 @@ class K2ModelItemlist extends K2Model
 
 		$user = JFactory::getUser();
 		$aid = $user->get('aid');
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 		$params = K2HelperUtilities::getParams('com_k2');
 		$task = JRequest::getCmd('task');
 
@@ -392,12 +395,12 @@ class K2ModelItemlist extends K2Model
 		{
 			$query .= "i.access IN(".implode(',', $user->getAuthorisedViewLevels()).")"." AND i.trash = 0"." AND c.published = 1"." AND c.access IN(".implode(',', $user->getAuthorisedViewLevels()).")"." AND c.trash = 0";
 
-			$mainframe = JFactory::getApplication();
-			$languageFilter = $mainframe->getLanguageFilter();
+			$application = JFactory::getApplication();
+			$languageFilter = $application->getLanguageFilter();
 			if ($languageFilter)
 			{
 				$languageTag = JFactory::getLanguage()->getTag();
-				$query .= " AND c.language IN (".$db->quote($languageTag).",".$db->quote('*').") 
+				$query .= " AND c.language IN (".$db->quote($languageTag).",".$db->quote('*').")
 						AND i.language IN (".$db->quote($languageTag).",".$db->quote('*').")";
 			}
 		}
@@ -449,7 +452,10 @@ class K2ModelItemlist extends K2Model
 				{
 					$categories = array_filter($categories);
 					JArrayHelper::toInteger($categories);
-					$query .= " AND c.id IN(".implode(',', $categories).")";
+					if(count($categories))
+					{
+						$query .= " AND c.id IN(".implode(',', $categories).")";
+					}
 				}
 				if (is_string($categories) && $categories > 0)
 				{
@@ -501,7 +507,7 @@ class K2ModelItemlist extends K2Model
 			case 'tag' :
 				$tag = JRequest::getString('tag');
 				jimport('joomla.filesystem.file');
-				if (JFile::exists(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_joomfish'.DS.'joomfish.php') && $task == 'tag')
+				if (JFile::exists(JPATH_ADMINISTRATOR.'/components/com_joomfish/joomfish.php') && $task == 'tag')
 				{
 
 					$registry = JFactory::getConfig();
@@ -517,7 +523,7 @@ class K2ModelItemlist extends K2Model
 
 				}
 
-				if (JFile::exists(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_falang'.DS.'falang.php') && $task == 'tag')
+				if (JFile::exists(JPATH_ADMINISTRATOR.'/components/com_falang/falang.php') && $task == 'tag')
 				{
 
 					$registry = JFactory::getConfig();
@@ -595,8 +601,8 @@ class K2ModelItemlist extends K2Model
 
 	function getCategoryTree($categories, $associations = false)
 	{
-		$mainframe = JFactory::getApplication();
-		$db = JFactory::getDBO();
+		$application = JFactory::getApplication();
+		$db = JFactory::getDbo();
 		$user = JFactory::getUser();
 		$aid = (int)$user->get('aid');
 		if (!is_array($categories))
@@ -607,7 +613,7 @@ class K2ModelItemlist extends K2Model
 		$categories = array_unique($categories);
 		sort($categories);
 		$key = implode('|', $categories);
-		$clientID = $mainframe->getClientId();
+		$clientID = $application->getClientId();
 		static $K2CategoryTreeInstances = array();
 		if (isset($K2CategoryTreeInstances[$clientID]) && array_key_exists($key, $K2CategoryTreeInstances[$clientID]))
 		{
@@ -617,18 +623,18 @@ class K2ModelItemlist extends K2Model
 		while (count($array))
 		{
 			$query = "SELECT id
-						FROM #__k2_categories 
-						WHERE parent IN (".implode(',', $array).") 
+						FROM #__k2_categories
+						WHERE parent IN (".implode(',', $array).")
 						AND id NOT IN (".implode(',', $array).") ";
-			if ($mainframe->isSite())
+			if ($application->isSite())
 			{
 				$query .= "
-								AND published=1 
+								AND published=1
 								AND trash=0";
 				if (K2_JVERSION != '15')
 				{
 					$query .= " AND access IN(".implode(',', $user->getAuthorisedViewLevels()).")";
-					if ($mainframe->getLanguageFilter())
+					if ($application->getLanguageFilter())
 					{
 						$query .= " AND language IN(".$db->Quote(JFactory::getLanguage()->getTag()).", ".$db->Quote('*').")";
 					}
@@ -658,7 +664,7 @@ class K2ModelItemlist extends K2Model
 		$user = JFactory::getUser();
 		$aid = (int)$user->get('aid');
 		$catid = (int)$catid;
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 		$query = "SELECT * FROM #__k2_categories WHERE parent={$catid} AND published=1 AND trash=0 AND access<={$aid} ORDER BY ordering ";
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
@@ -681,7 +687,7 @@ class K2ModelItemlist extends K2Model
 		$user = JFactory::getUser();
 		$aid = (int)$user->get('aid');
 		$id = (int)$id;
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 		$query = "SELECT * FROM #__k2_categories WHERE parent={$id} AND published=1 AND trash=0 AND access<={$aid} ";
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
@@ -699,16 +705,16 @@ class K2ModelItemlist extends K2Model
 	function getCategoryFirstChildren($catid, $ordering = NULL)
 	{
 
-		$mainframe = JFactory::getApplication();
+		$application = JFactory::getApplication();
 		$user = JFactory::getUser();
 		$aid = $user->get('aid');
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 		$query = "SELECT * FROM #__k2_categories WHERE parent={$catid} AND published=1 AND trash=0";
 
 		if (K2_JVERSION != '15')
 		{
 			$query .= " AND access IN(".implode(',', $user->getAuthorisedViewLevels()).") ";
-			if ($mainframe->getLanguageFilter())
+			if ($application->getLanguageFilter())
 			{
 				$query .= " AND language IN(".$db->Quote(JFactory::getLanguage()->getTag()).", ".$db->Quote('*').")";
 			}
@@ -758,11 +764,11 @@ class K2ModelItemlist extends K2Model
 	function countCategoryItems($id)
 	{
 
-		$mainframe = JFactory::getApplication();
+		$application = JFactory::getApplication();
 		$user = JFactory::getUser();
 		$aid = (int)$user->get('aid');
 		$id = (int)$id;
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 
 		$jnow = JFactory::getDate();
 		$now = K2_JVERSION == '15' ? $jnow->toMySQL() : $jnow->toSql();
@@ -774,7 +780,7 @@ class K2ModelItemlist extends K2Model
 		if (K2_JVERSION != '15')
 		{
 			$query .= " AND access IN(".implode(',', $user->getAuthorisedViewLevels()).") ";
-			if ($mainframe->getLanguageFilter())
+			if ($application->getLanguageFilter())
 			{
 				$query .= " AND language IN(".$db->Quote(JFactory::getLanguage()->getTag()).", ".$db->Quote('*').")";
 			}
@@ -794,7 +800,7 @@ class K2ModelItemlist extends K2Model
 	function getUserProfile($id = NULL)
 	{
 
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 		if (is_null($id))
 			$id = JRequest::getInt('id');
 		else
@@ -808,29 +814,29 @@ class K2ModelItemlist extends K2Model
 	function getAuthorLatest($itemID, $limit, $userID)
 	{
 
-		$mainframe = JFactory::getApplication();
+		$application = JFactory::getApplication();
 		$user = JFactory::getUser();
 		$aid = (int)$user->get('aid');
 		$itemID = (int)$itemID;
 		$userID = (int)$userID;
 		$limit = (int)$limit;
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 
 		$jnow = JFactory::getDate();
 		$now = K2_JVERSION == '15' ? $jnow->toMySQL() : $jnow->toSql();
 		$nullDate = $db->getNullDate();
 
-		$query = "SELECT i.*, c.alias as categoryalias FROM #__k2_items as i 
-				LEFT JOIN #__k2_categories c ON c.id = i.catid 
-				WHERE i.id != {$itemID} 
-				AND i.published = 1 
-				AND ( i.publish_up = ".$db->Quote($nullDate)." OR i.publish_up <= ".$db->Quote($now)." ) 
+		$query = "SELECT i.*, c.alias as categoryalias FROM #__k2_items as i
+				LEFT JOIN #__k2_categories c ON c.id = i.catid
+				WHERE i.id != {$itemID}
+				AND i.published = 1
+				AND ( i.publish_up = ".$db->Quote($nullDate)." OR i.publish_up <= ".$db->Quote($now)." )
 				AND ( i.publish_down = ".$db->Quote($nullDate)." OR i.publish_down >= ".$db->Quote($now)." ) ";
 
 		if (K2_JVERSION != '15')
 		{
 			$query .= " AND i.access IN(".implode(',', $user->getAuthorisedViewLevels()).") ";
-			if ($mainframe->getLanguageFilter())
+			if ($application->getLanguageFilter())
 			{
 				$query .= " AND i.language IN(".$db->Quote(JFactory::getLanguage()->getTag()).", ".$db->Quote('*').")";
 			}
@@ -840,15 +846,15 @@ class K2ModelItemlist extends K2Model
 			$query .= " AND i.access <= {$aid} ";
 		}
 
-		$query .= " AND i.trash = 0 
-				AND i.created_by = {$userID} 
-				AND i.created_by_alias='' 
+		$query .= " AND i.trash = 0
+				AND i.created_by = {$userID}
+				AND i.created_by_alias=''
 				AND c.published = 1 ";
 
 		if (K2_JVERSION != '15')
 		{
 			$query .= " AND c.access IN(".implode(',', $user->getAuthorisedViewLevels()).") ";
-			if ($mainframe->getLanguageFilter())
+			if ($application->getLanguageFilter())
 			{
 				$query .= " AND c.language IN(".$db->Quote(JFactory::getLanguage()->getTag()).", ".$db->Quote('*').")";
 			}
@@ -858,7 +864,7 @@ class K2ModelItemlist extends K2Model
 			$query .= " AND c.access <= {$aid} ";
 		}
 
-		$query .= " AND c.trash = 0 
+		$query .= " AND c.trash = 0
 				ORDER BY i.created DESC";
 
 		$db->setQuery($query, 0, $limit);
@@ -873,22 +879,22 @@ class K2ModelItemlist extends K2Model
 			$item->imageLarge = '';
 			$item->imageXLarge = '';
 
-			if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$item->id).'_XS.jpg'))
+			if (JFile::exists(JPATH_SITE.'/media/k2/items/cache/'.md5("Image".$item->id).'_XS.jpg'))
 				$item->imageXSmall = JURI::root(true).'/media/k2/items/cache/'.md5("Image".$item->id).'_XS.jpg';
 
-			if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$item->id).'_S.jpg'))
+			if (JFile::exists(JPATH_SITE.'/media/k2/items/cache/'.md5("Image".$item->id).'_S.jpg'))
 				$item->imageSmall = JURI::root(true).'/media/k2/items/cache/'.md5("Image".$item->id).'_S.jpg';
 
-			if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$item->id).'_M.jpg'))
+			if (JFile::exists(JPATH_SITE.'/media/k2/items/cache/'.md5("Image".$item->id).'_M.jpg'))
 				$item->imageMedium = JURI::root(true).'/media/k2/items/cache/'.md5("Image".$item->id).'_M.jpg';
 
-			if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$item->id).'_L.jpg'))
+			if (JFile::exists(JPATH_SITE.'/media/k2/items/cache/'.md5("Image".$item->id).'_L.jpg'))
 				$item->imageLarge = JURI::root(true).'/media/k2/items/cache/'.md5("Image".$item->id).'_L.jpg';
 
-			if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$item->id).'_XL.jpg'))
+			if (JFile::exists(JPATH_SITE.'/media/k2/items/cache/'.md5("Image".$item->id).'_XL.jpg'))
 				$item->imageXLarge = JURI::root(true).'/media/k2/items/cache/'.md5("Image".$item->id).'_XL.jpg';
 
-			if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$item->id).'_Generic.jpg'))
+			if (JFile::exists(JPATH_SITE.'/media/k2/items/cache/'.md5("Image".$item->id).'_Generic.jpg'))
 				$item->imageGeneric = JURI::root(true).'/media/k2/items/cache/'.md5("Image".$item->id).'_Generic.jpg';
 		}
 
@@ -898,7 +904,7 @@ class K2ModelItemlist extends K2Model
 	function getRelatedItems($itemID, $tags, $params)
 	{
 
-		$mainframe = JFactory::getApplication();
+		$application = JFactory::getApplication();
 		$limit = $params->get('itemRelatedLimit', 10);
 		$itemID = (int)$itemID;
 		foreach ($tags as $tag)
@@ -910,7 +916,7 @@ class K2ModelItemlist extends K2Model
 
 		$user = JFactory::getUser();
 		$aid = (int)$user->get('aid');
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 
 		$jnow = JFactory::getDate();
 		$now = K2_JVERSION == '15' ? $jnow->toMySQL() : $jnow->toSql();
@@ -925,16 +931,16 @@ class K2ModelItemlist extends K2Model
 
 		$sql = implode(',', $itemsIDs);
 
-		$query = "SELECT i.*, c.alias as categoryalias FROM #__k2_items as i 
-				LEFT JOIN #__k2_categories c ON c.id = i.catid 
-				WHERE i.published = 1 
-				AND ( i.publish_up = ".$db->Quote($nullDate)." OR i.publish_up <= ".$db->Quote($now)." ) 
+		$query = "SELECT i.*, c.alias as categoryalias FROM #__k2_items as i
+				LEFT JOIN #__k2_categories c ON c.id = i.catid
+				WHERE i.published = 1
+				AND ( i.publish_up = ".$db->Quote($nullDate)." OR i.publish_up <= ".$db->Quote($now)." )
 				AND ( i.publish_down = ".$db->Quote($nullDate)." OR i.publish_down >= ".$db->Quote($now)." ) ";
 
 		if (K2_JVERSION != '15')
 		{
 			$query .= " AND i.access IN(".implode(',', $user->getAuthorisedViewLevels()).") ";
-			if ($mainframe->getLanguageFilter())
+			if ($application->getLanguageFilter())
 			{
 				$query .= " AND i.language IN(".$db->Quote(JFactory::getLanguage()->getTag()).", ".$db->Quote('*').")";
 			}
@@ -945,13 +951,13 @@ class K2ModelItemlist extends K2Model
 			$query .= " AND i.access <= {$aid} ";
 		}
 
-		$query .= " AND i.trash = 0 
+		$query .= " AND i.trash = 0
 				AND c.published = 1 ";
 
 		if (K2_JVERSION != '15')
 		{
 			$query .= " AND c.access IN(".implode(',', $user->getAuthorisedViewLevels()).") ";
-			if ($mainframe->getLanguageFilter())
+			if ($application->getLanguageFilter())
 			{
 				$query .= " AND c.language IN(".$db->Quote(JFactory::getLanguage()->getTag()).", ".$db->Quote('*').")";
 			}
@@ -961,13 +967,13 @@ class K2ModelItemlist extends K2Model
 			$query .= " AND c.access <= {$aid} ";
 		}
 
-		$query .= " AND c.trash = 0 
-				AND (i.id) IN ({$sql}) 
+		$query .= " AND c.trash = 0
+				AND (i.id) IN ({$sql})
 				ORDER BY i.created DESC";
 
 		$db->setQuery($query, 0, $limit);
 		$rows = $db->loadObjectList();
-		K2Model::addIncludePath(JPATH_COMPONENT.DS.'models');
+		K2Model::addIncludePath(JPATH_COMPONENT.'/models');
 		$model = K2Model::getInstance('Item', 'K2Model');
 		for ($key = 0; $key < sizeof($rows); $key++)
 		{
@@ -990,7 +996,7 @@ class K2ModelItemlist extends K2Model
 	{
 
 		jimport('joomla.filesystem.file');
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 		$language = JFactory::getLanguage();
 		$defaultLang = $language->getDefault();
 		$currentLang = $language->getTag();
@@ -1018,13 +1024,13 @@ class K2ModelItemlist extends K2Model
 			$type = 'any';
 		}
 
-		if (JFile::exists(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_joomfish'.DS.'joomfish.php') && $currentLang != $defaultLang)
+		if (JFile::exists(JPATH_ADMINISTRATOR.'/components/com_joomfish/joomfish.php') && $currentLang != $defaultLang)
 		{
 
 			$conditions = array();
 			$search_ignore = array();
 
-			$ignoreFile = $language->getLanguagePath().DS.$currentLang.DS.$currentLang.'.ignore.php';
+			$ignoreFile = $language->getLanguagePath().'/'.$currentLang.'/'.$currentLang.'.ignore.php';
 
 			if (JFile::exists($ignoreFile))
 			{
@@ -1107,7 +1113,7 @@ class K2ModelItemlist extends K2Model
 							$allIDs[] = $id;
 						}
 
-						if (JFile::exists(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_joomfish'.DS.'joomfish.php') && $currentLang != $defaultLang)
+						if (JFile::exists(JPATH_ADMINISTRATOR.'/components/com_joomfish/joomfish.php') && $currentLang != $defaultLang)
 						{
 
 							if (isset($allIDs) && count($allIDs))
@@ -1158,7 +1164,7 @@ class K2ModelItemlist extends K2Model
 	function getModuleItems($moduleID)
 	{
 
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 		$query = "SELECT * FROM #__modules WHERE id={$moduleID} AND published=1 AND client_id=0";
 		$db->setQuery($query, 0, 1);
 		$module = $db->loadObject();
@@ -1172,7 +1178,7 @@ class K2ModelItemlist extends K2Model
 			{
 
 				case 'mod_k2_content' :
-					require_once (JPATH_SITE.DS.'modules'.DS.'mod_k2_content'.DS.'helper.php');
+					require_once(JPATH_SITE.'/modules/mod_k2_content/helper.php');
 					$helper = new modK2ContentHelper;
 					$items = $helper->getItems($params, $format);
 					break;
@@ -1181,7 +1187,7 @@ class K2ModelItemlist extends K2Model
 					if ($params->get('module_usage') == 1)
 						JError::raiseError(404, JText::_('K2_NOT_FOUND'));
 
-					require_once (JPATH_SITE.DS.'modules'.DS.'mod_k2_comments'.DS.'helper.php');
+					require_once(JPATH_SITE.'/modules/mod_k2_comments/helper.php');
 					$helper = new modK2CommentsHelper;
 					$items = $helper->getLatestComments($params);
 
@@ -1211,20 +1217,20 @@ class K2ModelItemlist extends K2Model
 
 	public function getCategoriesTree()
 	{
-		$mainframe = JFactory::getApplication();
-		$clientID = $mainframe->getClientId();
-		$db = JFactory::getDBO();
+		$application = JFactory::getApplication();
+		$clientID = $application->getClientId();
+		$db = JFactory::getDbo();
 		$user = JFactory::getUser();
 		$aid = (int)$user->get('aid');
 
 		$query = "SELECT id, name,  parent	FROM #__k2_categories";
-		if ($mainframe->isSite())
+		if ($application->isSite())
 		{
 			$query .= " WHERE published=1  AND trash=0";
 			if (K2_JVERSION != '15')
 			{
 				$query .= " AND access IN(".implode(',', $user->getAuthorisedViewLevels()).")";
-				if ($mainframe->getLanguageFilter())
+				if ($application->getLanguageFilter())
 				{
 					$query .= " AND language IN(".$db->Quote(JFactory::getLanguage()->getTag()).", ".$db->Quote('*').")";
 				}

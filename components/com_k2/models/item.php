@@ -1,31 +1,30 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.8.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
-defined('_JEXEC') or die ;
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.model');
 
-JTable::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.DS.'tables');
+JTable::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_k2/tables');
 
 class K2ModelItem extends K2Model
 {
-
 	function getData()
 	{
-		$mainframe = JFactory::getApplication();
+		$application = JFactory::getApplication();
 		$id = JRequest::getInt('id');
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 		$query = "SELECT * FROM #__k2_items WHERE id={$id}";
 		if (K2_JVERSION != '15')
 		{
-			$languageFilter = $mainframe->getLanguageFilter();
+			$languageFilter = $application->getLanguageFilter();
 			if ($languageFilter)
 			{
 				$languageTag = JFactory::getLanguage()->getTag();
@@ -39,9 +38,8 @@ class K2ModelItem extends K2Model
 
 	function prepareItem($item, $view, $task)
 	{
-
 		jimport('joomla.filesystem.file');
-		JTable::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.DS.'tables');
+		JTable::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.'/tables');
 		$limitstart = JRequest::getInt('limitstart');
 		$application = JFactory::getApplication();
 		//Initialize params
@@ -70,7 +68,7 @@ class K2ModelItem extends K2Model
 		}
 
 		//Category
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 		$category = JTable::getInstance('K2Category', 'Table');
 		$category->load($item->catid);
 
@@ -99,11 +97,11 @@ class K2ModelItem extends K2Model
 		$item->params->merge($cparams);
 		$item->params->merge($iparams);
 
-		//Edit link
+		// Edit link
 		if (K2HelperPermissions::canEditItem($item->created_by, $item->catid))
 			$item->editLink = JRoute::_('index.php?option=com_k2&view=item&task=edit&cid='.$item->id.'&tmpl=component');
 
-		//Tags
+		// Tags
 		if (($view == 'item' && ($item->params->get('itemTags') || $item->params->get('itemRelated'))) || ($view == 'itemlist' && ($task == '' || $task == 'category') && $item->params->get('catItemTags')) || ($view == 'itemlist' && $task == 'user' && $item->params->get('userItemTags')) || ($view == 'latest' && $params->get('latestItemTags')))
 		{
 			$tags = $this->getItemTags($item->id);
@@ -114,7 +112,7 @@ class K2ModelItem extends K2Model
 			$item->tags = $tags;
 		}
 
-		//Image
+		// Image
 		$item->imageXSmall = '';
 		$item->imageSmall = '';
 		$item->imageMedium = '';
@@ -124,7 +122,7 @@ class K2ModelItem extends K2Model
 		$date = JFactory::getDate($item->modified);
 		$timestamp = '?t='.$date->toUnix();
 
-		if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$item->id).'_XS.jpg'))
+		if (JFile::exists(JPATH_SITE.'/media/k2/items/cache/'.md5("Image".$item->id).'_XS.jpg'))
 		{
 			$item->imageXSmall = JURI::base(true).'/media/k2/items/cache/'.md5("Image".$item->id).'_XS.jpg';
 			if ($params->get('imageTimestamp'))
@@ -133,7 +131,7 @@ class K2ModelItem extends K2Model
 			}
 		}
 
-		if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$item->id).'_S.jpg'))
+		if (JFile::exists(JPATH_SITE.'/media/k2/items/cache/'.md5("Image".$item->id).'_S.jpg'))
 		{
 			$item->imageSmall = JURI::base(true).'/media/k2/items/cache/'.md5("Image".$item->id).'_S.jpg';
 			if ($params->get('imageTimestamp'))
@@ -142,7 +140,7 @@ class K2ModelItem extends K2Model
 			}
 		}
 
-		if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$item->id).'_M.jpg'))
+		if (JFile::exists(JPATH_SITE.'/media/k2/items/cache/'.md5("Image".$item->id).'_M.jpg'))
 		{
 			$item->imageMedium = JURI::base(true).'/media/k2/items/cache/'.md5("Image".$item->id).'_M.jpg';
 			if ($params->get('imageTimestamp'))
@@ -151,7 +149,7 @@ class K2ModelItem extends K2Model
 			}
 		}
 
-		if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$item->id).'_L.jpg'))
+		if (JFile::exists(JPATH_SITE.'/media/k2/items/cache/'.md5("Image".$item->id).'_L.jpg'))
 		{
 			$item->imageLarge = JURI::base(true).'/media/k2/items/cache/'.md5("Image".$item->id).'_L.jpg';
 			if ($params->get('imageTimestamp'))
@@ -160,7 +158,7 @@ class K2ModelItem extends K2Model
 			}
 		}
 
-		if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$item->id).'_XL.jpg'))
+		if (JFile::exists(JPATH_SITE.'/media/k2/items/cache/'.md5("Image".$item->id).'_XL.jpg'))
 		{
 			$item->imageXLarge = JURI::base(true).'/media/k2/items/cache/'.md5("Image".$item->id).'_XL.jpg';
 			if ($params->get('imageTimestamp'))
@@ -169,7 +167,7 @@ class K2ModelItem extends K2Model
 			}
 		}
 
-		if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$item->id).'_Generic.jpg'))
+		if (JFile::exists(JPATH_SITE.'/media/k2/items/cache/'.md5("Image".$item->id).'_Generic.jpg'))
 		{
 			$item->imageGeneric = JURI::base(true).'/media/k2/items/cache/'.md5("Image".$item->id).'_Generic.jpg';
 			if ($params->get('imageTimestamp'))
@@ -178,19 +176,19 @@ class K2ModelItem extends K2Model
 			}
 		}
 
-		//Extra fields
-		if (($view == 'item' && $item->params->get('itemExtraFields')) || ($view == 'itemlist' && ($task == '' || $task == 'category') && $item->params->get('catItemExtraFields')) || ($view == 'itemlist' && $task == 'tag' && $item->params->get('tagItemExtraFields')) || ($view == 'itemlist' && ($task == 'search' || $task == 'date') && $item->params->get('genericItemExtraFields')))
+		// Extra fields
+		if ((($view == 'item' || $view == 'relatedByTag') && $item->params->get('itemExtraFields')) || ($view == 'itemlist' && ($task == '' || $task == 'category') && $item->params->get('catItemExtraFields')) || ($view == 'itemlist' && $task == 'tag' && $item->params->get('tagItemExtraFields')) || ($view == 'itemlist' && ($task == 'search' || $task == 'date') && $item->params->get('genericItemExtraFields')))
 		{
 			$item->extra_fields = $this->getItemExtraFields($item->extra_fields, $item);
 		}
 
-		//Attachments
+		// Attachments
 		if (($view == 'item' && $item->params->get('itemAttachments')) || ($view == 'itemlist' && ($task == '' || $task == 'category') && $item->params->get('catItemAttachments')))
 		{
 			$item->attachments = $this->getItemAttachments($item->id);
 		}
 
-		//Rating
+		// Rating
 		if (($view == 'item' && $item->params->get('itemRating')) || ($view == 'itemlist' && ($task == '' || $task == 'category') && $item->params->get('catItemRating')))
 		{
 			$item->votingPercentage = $this->getVotesPercentage($item->id);
@@ -198,7 +196,7 @@ class K2ModelItem extends K2Model
 
 		}
 
-		//Filtering
+		// Filtering
 		if ($params->get('introTextCleanup'))
 		{
 			$filterTags = preg_split('#[,\s]+#', trim($params->get('introTextCleanupExcludeTags')));
@@ -232,8 +230,9 @@ class K2ModelItem extends K2Model
 		$item->title = htmlspecialchars($item->title, ENT_QUOTES);
 		$item->image_caption = htmlspecialchars($item->image_caption, ENT_QUOTES);
 
-		//Author
-		if (($view == 'item' && ($item->params->get('itemAuthorBlock') || $item->params->get('itemAuthor'))) || ($view == 'itemlist' && ($task == '' || $task == 'category') && ($item->params->get('catItemAuthorBlock') || $item->params->get('catItemAuthor'))) || ($view == 'itemlist' && $task == 'user') || ($view == 'relatedByTag'))
+		// Author
+		$metaAuthor = K2_JVERSION != '15' && $application->getCfg('MetaAuthor');
+		if ($metaAuthor || ($view == 'item' && ($item->params->get('itemAuthorBlock') || $item->params->get('itemAuthor'))) ||  ($view == 'itemlist' && ($task == '' || $task == 'category') && ($item->params->get('catItemAuthorBlock') || $item->params->get('catItemAuthor'))) || ($view == 'itemlist' && $task == 'user') || ($view == 'relatedByTag'))
 		{
 			if (!empty($item->created_by_alias))
 			{
@@ -261,7 +260,7 @@ class K2ModelItem extends K2Model
 
 		}
 
-		//Num of comments
+		// Num of comments
 		if ($params->get('comments', 0) > 0)
 		{
 			$user = JFactory::getUser();
@@ -274,27 +273,25 @@ class K2ModelItem extends K2Model
 				$item->numOfComments = $this->countItemComments($item->id);
 			}
 		}
-		
+
 		return $item;
-		
 	}
 
 	function prepareFeedItem(&$item)
 	{
-
-		JTable::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.DS.'tables');
+		JTable::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.'/tables');
 		$params = K2HelperUtilities::getParams('com_k2');
 		$limitstart = 0;
 		$view = JRequest::getCmd('view');
-		//Category
+		// Category
 		$category = JTable::getInstance('K2Category', 'Table');
 		$category->load($item->catid);
 		$item->category = $category;
 
-		//Read more link
+		// Read more link
 		$item->link = urldecode(JRoute::_(K2HelperRoute::getItemRoute($item->id.':'.$item->alias, $item->catid.':'.urlencode($item->category->alias))));
 
-		//Filtering
+		// Filtering
 		if ($params->get('introTextCleanup'))
 		{
 			$filterTags = preg_split('#[,\s]+#', trim($params->get('introTextCleanupExcludeTags')));
@@ -311,20 +308,20 @@ class K2ModelItem extends K2Model
 			$item->fulltext = $filter->clean($item->fulltext);
 		}
 
-		//Description
+		// Description
 		$item->description = '';
 
-		//Item image
-		if ($params->get('feedItemImage') && JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$item->id).'_'.$params->get('feedImgSize').'.jpg'))
+		// Item image
+		if ($params->get('feedItemImage') && JFile::exists(JPATH_SITE.'/media/k2/items/cache/'.md5("Image".$item->id).'_'.$params->get('feedImgSize').'.jpg'))
 		{
 			$altText = $item->image_caption ? $item->image_caption : $item->title;
 			$item->description .= '<div class="K2FeedImage"><img src="'.JURI::root().'media/k2/items/cache/'.md5('Image'.$item->id).'_'.$params->get('feedImgSize').'.jpg" alt="'.$altText.'" /></div>';
 		}
 
-		//Item Introtext
+		// Item Introtext
 		if ($params->get('feedItemIntroText'))
 		{
-			//Introtext word limit
+			// Introtext word limit
 			if ($params->get('feedTextWordLimit') && $item->introtext)
 			{
 				$item->introtext = K2HelperUtilities::wordLimit($item->introtext, $params->get('feedTextWordLimit'));
@@ -332,13 +329,13 @@ class K2ModelItem extends K2Model
 			$item->description .= '<div class="K2FeedIntroText">'.$item->introtext.'</div>';
 		}
 
-		//Item Fulltext
+		// Item Fulltext
 		if ($params->get('feedItemFullText') && $item->fulltext)
 		{
 			$item->description .= '<div class="K2FeedFullText">'.$item->fulltext.'</div>';
 		}
 
-		//Item Tags
+		// Item Tags
 		if ($params->get('feedItemTags'))
 		{
 			$tags = $this->getItemTags($item->id);
@@ -353,7 +350,7 @@ class K2ModelItem extends K2Model
 			}
 		}
 
-		//Item Video
+		// Item Video
 		if ($params->get('feedItemVideo') && $item->video)
 		{
 			if (!empty($item->video) && JString::substr($item->video, 0, 1) !== '{')
@@ -393,7 +390,7 @@ class K2ModelItem extends K2Model
 			}
 		}
 
-		//Item gallery
+		// Item gallery
 		if ($params->get('feedItemGallery') && $item->gallery)
 		{
 			$params->set('galleries_rootfolder', 'media/k2/galleries');
@@ -421,7 +418,7 @@ class K2ModelItem extends K2Model
 			$item->description .= '<div class="K2FeedGallery">'.$item->text.'</div>';
 		}
 
-		//Item attachments
+		// Item attachments
 		if ($params->get('feedItemAttachments'))
 		{
 			$attachments = $this->getItemAttachments($item->id);
@@ -436,9 +433,13 @@ class K2ModelItem extends K2Model
 			}
 		}
 
-		//Author
+		// Author
 		if (!empty($item->created_by_alias))
 		{
+			if(!isset($item->author))
+			{
+				$item->author = new stdClass;
+			}
 			$item->author->name = $item->created_by_alias;
 			$item->author->email = '';
 		}
@@ -531,17 +532,16 @@ class K2ModelItem extends K2Model
 		jimport('joomla.filesystem.folder');
 		$params = K2HelperUtilities::getParams('com_k2');
 		$limitstart = JRequest::getInt('limitstart');
-		//Import plugins
+		// Import plugins
 		$dispatcher = JDispatcher::getInstance();
 		JPluginHelper::importPlugin('content');
 
 		if (!isset($this->isSigInstalled))
 		{
 			$this->isSigInstalled = (
-			JFile::exists(JPATH_SITE.'/plugins/content/jw_sigpro/jw_sigpro.php') || 
-			JFile::exists(JPATH_SITE.'/plugins/content/jw_sigpro/jw_sigpro/jw_sigpro.php') || 
-			JFile::exists(JPATH_SITE.'/plugins/content/jw_sig/jw_sig.php') || 
-			JFile::exists(JPATH_SITE.'/plugins/content/jw_sig/jw_sig/jw_sig.php')
+			JFile::exists(JPATH_SITE.'/plugins/content/jw_sigpro.php') ||
+			JFile::exists(JPATH_SITE.'/plugins/content/jw_sigpro/jw_sigpro.php') ||
+			JFile::exists(JPATH_SITE.'/plugins/content/jw_sigpro/jw_sigpro/jw_sigpro.php')
 			);
 		}
 
@@ -550,7 +550,7 @@ class K2ModelItem extends K2Model
 			$item->gallery = null;
 		}
 
-		//Gallery
+		// Gallery
 		if (($view == 'item' && $item->params->get('itemImageGallery')) || ($view == 'itemlist' && ($task == '' || $task == 'category') && $item->params->get('catItemImageGallery')) || ($view == 'relatedByTag'))
 		{
 			if ($item->gallery)
@@ -558,12 +558,36 @@ class K2ModelItem extends K2Model
 				if (JString::strpos($item->gallery, 'flickr.com') === false)
 				{
 					$item->gallery = "{gallery}{$item->id}{/gallery}";
-					if (!JFolder::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'galleries'.DS.$item->id))
+					if (!JFolder::exists(JPATH_SITE.'/media/k2/galleries/'.$item->id))
 					{
 						$item->gallery = null;
 					}
 				}
 				$params->set('galleries_rootfolder', 'media/k2/galleries');
+
+				if ($view == 'item')
+				{
+					$width = (int)$item->params->get('itemImageGalleryWidth');
+					$height = (int)$item->params->get('itemImageGalleryHeight');
+				}
+				else
+				{
+					$width = (int)$item->params->get('catItemImageGalleryWidth');
+					$height = (int)$item->params->get('catItemImageGalleryHeight');
+				}
+
+				if($width && $height) {
+					if (JString::strpos($item->gallery, 'flickr.com') !== false)
+					{
+						$sigParams = JComponentHelper::getParams('com_sigpro');
+						$item->gallery = str_replace('{/gallery}', ':'.$sigParams->get('flickrImageCount', 20).':'.$width.':'.$height.'{/gallery}', $item->gallery);
+					}
+					else
+					{
+						$item->gallery = str_replace('{/gallery}', ':'.$width.':'.$height.'{/gallery}', $item->gallery);
+					}
+				}
+
 				$item->text = $item->gallery;
 				if (K2_JVERSION == '15')
 				{
@@ -576,7 +600,7 @@ class K2ModelItem extends K2Model
 				else
 				{
 					$dispatcher->trigger('onContentPrepare', array(
-						'com_k2.'.$view,
+						'com_k2.'.$view.'-gallery',
 						&$item,
 						&$params,
 						$limitstart
@@ -586,7 +610,7 @@ class K2ModelItem extends K2Model
 			}
 		}
 
-		//Video
+		// Video
 		if (($view == 'item' && $item->params->get('itemVideo')) || ($view == 'itemlist' && ($task == '' || $task == 'category') && $item->params->get('catItemVideo')) || ($view == 'latest' && $item->params->get('latestItemVideo')) || ($view == 'relatedByTag'))
 		{
 			if (!empty($item->video) && JString::substr($item->video, 0, 1) !== '{')
@@ -638,7 +662,7 @@ class K2ModelItem extends K2Model
 				else
 				{
 					$dispatcher->trigger('onContentPrepare', array(
-						'com_k2.'.$view,
+						'com_k2.'.$view.'-media',
 						&$item,
 						&$params,
 						$limitstart
@@ -649,7 +673,7 @@ class K2ModelItem extends K2Model
 
 		}
 
-		//Plugins
+		// Plugins
 		$item->text = '';
 		$params->set('vfolder', NULL);
 		$params->set('afolder', NULL);
@@ -783,7 +807,7 @@ class K2ModelItem extends K2Model
 
 		}
 
-		//K2 plugins
+		// K2 plugins
 		$item->event->K2BeforeDisplay = '';
 		$item->event->K2AfterDisplay = '';
 		$item->event->K2AfterDisplayTitle = '';
@@ -886,31 +910,28 @@ class K2ModelItem extends K2Model
 			}
 		}
 		return $item;
-
 	}
 
 	function hit($id)
 	{
-
 		$row = JTable::getInstance('K2Item', 'Table');
 		$row->hit($id);
 	}
 
 	function vote()
 	{
+		$application = JFactory::getApplication();
+		JTable::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.'/tables');
 
-		$mainframe = JFactory::getApplication();
-		JTable::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.DS.'tables');
-
-		//Get item
+		// Get item
 		$item = JTable::getInstance('K2Item', 'Table');
 		$item->load(JRequest::getInt('itemID'));
 
-		//Get category
+		// Get category
 		$category = JTable::getInstance('K2Category', 'Table');
 		$category->load($item->catid);
 
-		//Access check
+		// Access check
 		$user = JFactory::getUser();
 		if (K2_JVERSION != '15')
 		{
@@ -927,7 +948,7 @@ class K2ModelItem extends K2Model
 			}
 		}
 
-		//Published check
+		// Published check
 		if (!$item->published || $item->trash)
 		{
 			JError::raiseError(404, JText::_('K2_ITEM_NOT_FOUND'));
@@ -941,7 +962,7 @@ class K2ModelItem extends K2Model
 
 		if ($rate >= 1 && $rate <= 5)
 		{
-			$db = JFactory::getDBO();
+			$db = JFactory::getDbo();
 			$userIP = $_SERVER['REMOTE_ADDR'];
 			$query = "SELECT * FROM #__k2_rating WHERE itemID =".(int)$item->id;
 			$db->setQuery($query);
@@ -973,7 +994,7 @@ class K2ModelItem extends K2Model
 			}
 
 		}
-		$mainframe->close();
+		$application->close();
 	}
 
 	function getRating($id)
@@ -984,7 +1005,7 @@ class K2ModelItem extends K2Model
 		{
 			return $K2RatingsInstances[$id];
 		}
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 		$query = "SELECT * FROM #__k2_rating WHERE itemID = ".$id;
 		$db->setQuery($query);
 		$vote = $db->loadObject();
@@ -994,8 +1015,7 @@ class K2ModelItem extends K2Model
 
 	function getVotesNum($itemID = NULL)
 	{
-
-		$mainframe = JFactory::getApplication();
+		$application = JFactory::getApplication();
 		$user = JFactory::getUser();
 		$xhr = false;
 		if (is_null($itemID))
@@ -1003,14 +1023,15 @@ class K2ModelItem extends K2Model
 			$itemID = JRequest::getInt('itemID');
 			$xhr = true;
 		}
-
 		$vote = $this->getRating($itemID);
-
 		if (!is_null($vote))
+		{
 			$rating_count = intval($vote->rating_count);
+		}
 		else
+		{
 			$rating_count = 0;
-
+		}
 		if ($rating_count != 1)
 		{
 			$result = "(".$rating_count." ".JText::_('K2_VOTES').")";
@@ -1022,29 +1043,27 @@ class K2ModelItem extends K2Model
 		if ($xhr)
 		{
 			echo $result;
-			$mainframe->close();
+			$application->close();
 		}
 		else
+		{
 			return $result;
+		}
 	}
 
 	function getVotesPercentage($itemID = NULL)
 	{
-
-		$mainframe = JFactory::getApplication();
+		$application = JFactory::getApplication();
 		$user = JFactory::getUser();
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 		$xhr = false;
 		$result = 0;
 		if (is_null($itemID))
 		{
-
 			$itemID = JRequest::getInt('itemID');
 			$xhr = true;
 		}
-
 		$vote = $this->getRating($itemID);
-
 		if (!is_null($vote) && $vote->rating_count != 0)
 		{
 			$result = number_format(intval($vote->rating_sum) / intval($vote->rating_count), 2) * 20;
@@ -1052,35 +1071,33 @@ class K2ModelItem extends K2Model
 		if ($xhr)
 		{
 			echo $result;
-			$mainframe->close();
+			$application->close();
 		}
 		else
+		{
 			return $result;
+		}
 	}
 
 	function comment()
 	{
-
-		$mainframe = JFactory::getApplication();
+		$application = JFactory::getApplication();
 		jimport('joomla.mail.helper');
-		JTable::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.DS.'tables');
+		JTable::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.'/tables');
 		$params = K2HelperUtilities::getParams('com_k2');
 		$user = JFactory::getUser();
 		$config = JFactory::getConfig();
-
-		JLoader::register('Services_JSON', JPATH_ADMINISTRATOR.DS.'components'.DS.'com_k2'.DS.'lib'.DS.'JSON.php');
-		$json = new Services_JSON;
 		$response = new JObject();
 
-		//Get item
+		// Get item
 		$item = JTable::getInstance('K2Item', 'Table');
 		$item->load(JRequest::getInt('itemID'));
 
-		//Get category
+		// Get category
 		$category = JTable::getInstance('K2Category', 'Table');
 		$category->load($item->catid);
 
-		//Access check
+		// Access check
 		if (K2_JVERSION != '15')
 		{
 			if (!in_array($item->access, $user->getAuthorisedViewLevels()) || !in_array($category->access, $user->getAuthorisedViewLevels()))
@@ -1096,7 +1113,7 @@ class K2ModelItem extends K2Model
 			}
 		}
 
-		//Published check
+		// Published check
 		if (!$item->published || $item->trash)
 		{
 			JError::raiseError(404, JText::_('K2_ITEM_NOT_FOUND'));
@@ -1106,42 +1123,38 @@ class K2ModelItem extends K2Model
 			JError::raiseError(404, JText::_('K2_ITEM_NOT_FOUND'));
 		}
 
-		//Check permissions
+		// Check permissions
 		if ((($params->get('comments') == '2') && ($user->id > 0) && K2HelperPermissions::canAddComment($item->catid)) || ($params->get('comments') == '1'))
 		{
-			
+
 			// If new antispam settings are not saved, show a message to the comments form and stop the comment submission
 			$antispamProtection = $params->get('antispam', null);
 			if(
-			$antispamProtection === null
-			|| (($antispamProtection == 'recaptcha' || $antispamProtection == 'both') && !$params->get('recaptcha_private_key'))
-			|| (($antispamProtection == 'akismet' || $antispamProtection == 'both') && !$params->get('akismetApiKey'))
+				$antispamProtection === null ||
+				(($antispamProtection == 'recaptcha' || $antispamProtection == 'both') && !$params->get('recaptcha_private_key')) ||
+				(($antispamProtection == 'akismet' || $antispamProtection == 'both') && !$params->get('akismetApiKey'))
 			)
 			{
 				$response->message = JText::_('K2_ANTISPAM_SETTINGS_ERROR');
-				echo $json->encode($response);
-				$mainframe->close();
+				$response->cssClass = 'k2FormLogError';
+				echo json_encode($response);
+				$application->close();
 			}
-			
 
 			$row = JTable::getInstance('K2Comment', 'Table');
 
 			if (!$row->bind(JRequest::get('post')))
 			{
 				$response->message = $row->getError();
-				echo $json->encode($response);
-				$mainframe->close();
+				$response->cssClass = 'k2FormLogError';
+				echo json_encode($response);
+				$application->close();
 			}
 
 			$row->commentText = JRequest::getString('commentText', '', 'default');
 			$row->commentText = strip_tags($row->commentText);
-			//Strip a tags since all urls will be converted to links automatically on runtime.
-			//Additionaly strip tables to avoid layout issues.
-			//Also strip all attributes except src, alt and title.
-			//$filter	= new JFilterInput(array('a', 'table'), array('src', 'alt', 'title'), 1);
-			//$row->commentText = $filter->clean( $row->commentText );
 
-			//Clean vars
+			// Clean vars
 			$filter = JFilterInput::getInstance();
 			$row->userName = $filter->clean($row->userName, 'username');
 			if ($row->commentURL && preg_match('/^((http|https|ftp):\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,6}((:[0-9]{1,5})?\/.*)?$/i', $row->commentURL))
@@ -1178,28 +1191,31 @@ class K2ModelItem extends K2Model
 			if (empty($userName) || $userName == JText::_('K2_ENTER_YOUR_NAME') || empty($commentText) || $commentText == JText::_('K2_ENTER_YOUR_MESSAGE_HERE') || empty($commentEmail) || $commentEmail == JText::_('K2_ENTER_YOUR_EMAIL_ADDRESS'))
 			{
 				$response->message = JText::_('K2_YOU_NEED_TO_FILL_IN_ALL_REQUIRED_FIELDS');
-				echo $json->encode($response);
-				$mainframe->close();
+				$response->cssClass = 'k2FormLogError';
+				echo json_encode($response);
+				$application->close();
 			}
 
 			if (!JMailHelper::isEmailAddress($commentEmail))
 			{
 				$response->message = JText::_('K2_INVALID_EMAIL_ADDRESS');
-				echo $json->encode($response);
-				$mainframe->close();
+				$response->cssClass = 'k2FormLogError';
+				echo json_encode($response);
+				$application->close();
 			}
 
 			if ($user->guest)
 			{
-				$db = JFactory::getDBO();
+				$db = JFactory::getDbo();
 				$query = "SELECT COUNT(*) FROM #__users WHERE name=".$db->Quote($userName)." OR email=".$db->Quote($commentEmail);
 				$db->setQuery($query);
 				$result = $db->loadresult();
 				if ($result > 0)
 				{
 					$response->message = JText::_('K2_THE_NAME_OR_EMAIL_ADDRESS_YOU_TYPED_IS_ALREADY_IN_USE');
-					echo $json->encode($response);
-					$mainframe->close();
+					$response->cssClass = 'k2FormLogError';
+					echo json_encode($response);
+					$application->close();
 				}
 
 			}
@@ -1209,34 +1225,48 @@ class K2ModelItem extends K2Model
 			{
 				if ($user->guest || $params->get('recaptchaForRegistered', 1))
 				{
+					if($params->get('recaptchaV2'))
+					{
+						require_once JPATH_SITE.'/components/com_k2/helpers/utilities.php';
+						if (!K2HelperUtilities::verifyRecaptcha())
+						{
+							$response->message = JText::_('K2_COULD_NOT_VERIFY_THAT_YOU_ARE_NOT_A_ROBOT');
+							$response->cssClass = 'k2FormLogError';
+							echo json_encode($response);
+							$application->close();
+						}
+					}
+					else
+					{
+						if (!function_exists('_recaptcha_qsencode'))
+						{
+							require_once(JPATH_SITE.'/media/k2/assets/vendors/google/recaptcha_legacy/recaptcha.php');
+						}
+						$privatekey = trim($params->get('recaptcha_private_key'));
+						$recaptcha_challenge_field = isset($_POST["recaptcha_challenge_field"]) ? $_POST["recaptcha_challenge_field"] : '';
+						$recaptcha_response_field = isset($_POST["recaptcha_response_field"]) ? $_POST["recaptcha_response_field"] : '';
+						$resp = recaptcha_check_answer($privatekey, $_SERVER["REMOTE_ADDR"], $recaptcha_challenge_field, $recaptcha_response_field);
+						if (!$resp->is_valid)
+						{
+							$response->message = JText::_('K2_THE_WORDS_YOU_TYPED_DID_NOT_MATCH_THE_ONES_DISPLAYED_PLEASE_TRY_AGAIN');
+							$response->cssClass = 'k2FormLogError';
+							echo json_encode($response);
+							$application->close();
+						}
+					}
 
-					if (!function_exists('_recaptcha_qsencode'))
-					{
-						require_once (JPATH_ADMINISTRATOR.DS.'components'.DS.'com_k2'.DS.'lib'.DS.'recaptchalib.php');
-					}
-					$privatekey = $params->get('recaptcha_private_key');
-					$recaptcha_challenge_field = isset($_POST["recaptcha_challenge_field"]) ? $_POST["recaptcha_challenge_field"] : '';
-					$recaptcha_response_field = isset($_POST["recaptcha_response_field"]) ? $_POST["recaptcha_response_field"] : '';
-					$resp = recaptcha_check_answer($privatekey, $_SERVER["REMOTE_ADDR"], $recaptcha_challenge_field, $recaptcha_response_field);
-					if (!$resp->is_valid)
-					{
-						$response->message = JText::_('K2_THE_WORDS_YOU_TYPED_DID_NOT_MATCH_THE_ONES_DISPLAYED_PLEASE_TRY_AGAIN');
-						echo $json->encode($response);
-						$mainframe->close();
-					}
 				}
 			}
 
 			// Akismet
 			if ($params->get('antispam') == 'akismet' || $params->get('antispam') == 'both')
 			{
-
 				if ($user->guest || $params->get('akismetForRegistered', 1))
 				{
 					if ($params->get('akismetApiKey'))
 					{
-						require_once (JPATH_ADMINISTRATOR.DS.'components'.DS.'com_k2'.DS.'lib'.DS.'akismet.class.php');
-						$akismetApiKey = $params->get('akismetApiKey');
+						require_once(JPATH_SITE.'/media/k2/assets/vendors/achingbrain/php5-akismet/akismet.class.php');
+						$akismetApiKey = trim($params->get('akismetApiKey'));
 						$akismet = new Akismet(JURI::root(false), $akismetApiKey);
 						$akismet->setCommentAuthor($userName);
 						$akismet->setCommentAuthorEmail($commentEmail);
@@ -1248,20 +1278,21 @@ class K2ModelItem extends K2Model
 							if ($akismet->isCommentSpam())
 							{
 								$response->message = JText::_('K2_SPAM_ATTEMPT_HAS_BEEN_DETECTED_THE_COMMENT_HAS_BEEN_REJECTED');
-								echo $json->encode($response);
-								$mainframe->close();
+								$response->cssClass = 'k2FormLogError';
+								echo json_encode($response);
+								$application->close();
 							}
 						}
 						catch(Exception $e)
 						{
 							$response->message = $e->getMessage();
-							echo $json->encode($response);
-							$mainframe->close();
+							$response->cssClass = 'k2FormLogSuccess';
+							echo json_encode($response);
+							$application->close();
 						}
 
 					}
 				}
-
 			}
 
 			if ($commentURL == JText::_('K2_ENTER_YOUR_SITE_URL') || $commentURL == "")
@@ -1276,7 +1307,7 @@ class K2ModelItem extends K2Model
 				}
 			}
 
-			if ($params->get('commentsPublishing'))
+			if ($params->get('commentsPublishing', false))
 			{
 				$row->published = 1;
 			}
@@ -1303,8 +1334,9 @@ class K2ModelItem extends K2Model
 			if (!$row->store())
 			{
 				$response->message = $row->getError();
-				echo $json->encode($response);
-				$mainframe->close();
+				$response->cssClass = 'k2FormLogError';
+				echo json_encode($response);
+				$application->close();
 			}
 
 			if ($row->published)
@@ -1313,24 +1345,27 @@ class K2ModelItem extends K2Model
 				if ($caching && $user->guest)
 				{
 					$response->message = JText::_('K2_THANK_YOU_YOUR_COMMENT_WILL_BE_PUBLISHED_SHORTLY');
-					echo $json->encode($response);
+					$response->cssClass = 'k2FormLogSuccess';
+					echo json_encode($response);
 				}
 				else
 				{
 					$response->message = JText::_('K2_COMMENT_ADDED_REFRESHING_PAGE');
+					$response->cssClass = 'k2FormLogSuccess';
 					$response->refresh = 1;
-					echo $json->encode($response);
+					echo json_encode($response);
 				}
 
 			}
 			else
 			{
 				$response->message = JText::_('K2_COMMENT_ADDED_AND_WAITING_FOR_APPROVAL');
-				echo $json->encode($response);
+				$response->cssClass = 'k2FormLogSuccess';
+				echo json_encode($response);
 			}
 
 		}
-		$mainframe->close();
+		$application->close();
 	}
 
 	function getItemTags($itemID)
@@ -1341,13 +1376,12 @@ class K2ModelItem extends K2Model
 		{
 			return $K2ItemTagsInstances[$itemID];
 		}
-		$db = JFactory::getDBO();
-
+		$db = JFactory::getDbo();
 		$query = "SELECT tag.*
-		FROM #__k2_tags AS tag
-		JOIN #__k2_tags_xref AS xref ON tag.id = xref.tagID
-		WHERE tag.published=1
-		AND xref.itemID = ".(int)$itemID." ORDER BY xref.id ASC";
+			FROM #__k2_tags AS tag
+			JOIN #__k2_tags_xref AS xref ON tag.id = xref.tagID
+			WHERE tag.published=1
+			AND xref.itemID = ".(int)$itemID." ORDER BY xref.id ASC";
 
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
@@ -1357,7 +1391,6 @@ class K2ModelItem extends K2Model
 
 	function getItemExtraFields($itemExtraFields, &$item = null)
 	{
-
 		static $K2ItemExtraFieldsInstances = array();
 		if ($item && isset($K2ItemExtraFieldsInstances[$item->id]))
 		{
@@ -1366,10 +1399,8 @@ class K2ModelItem extends K2Model
 		}
 
 		jimport('joomla.filesystem.file');
-		$db = JFactory::getDBO();
-		require_once (JPATH_ADMINISTRATOR.DS.'components'.DS.'com_k2'.DS.'lib'.DS.'JSON.php');
-		$json = new Services_JSON;
-		$jsonObjects = $json->decode($itemExtraFields);
+		$db = JFactory::getDbo();
+		$jsonObjects = json_decode($itemExtraFields);
 		$imgExtensions = array(
 			'jpg',
 			'jpeg',
@@ -1401,8 +1432,8 @@ class K2ModelItem extends K2Model
 
 		for ($i = 0; $i < $size; $i++)
 		{
-
 			$value = '';
+			$rawValue = '';
 			$values = array();
 			foreach ($jsonObjects as $object)
 			{
@@ -1413,6 +1444,7 @@ class K2ModelItem extends K2Model
 						$value = $object->value;
 						if ($rows[$i]->type == 'date' && $value)
 						{
+							$rawValue = $value;
 							$offset = (K2_JVERSION != '15') ? null : 0;
 							$value = JHTML::_('date', $value, JText::_('K2_DATE_FORMAT_LC'), $offset);
 						}
@@ -1447,14 +1479,17 @@ class K2ModelItem extends K2Model
 						foreach ($labels as $label)
 						{
 							$label = JString::trim($label);
-							$label = str_replace('-', ' ', $label);
-							$value .= '<a href="'.JRoute::_('index.php?option=com_k2&view=itemlist&task=search&searchword='.urlencode($label)).'">'.$label.'</a> ';
+							if($label != '')
+							{
+								$label = str_replace('-', ' ', $label);
+								$value .= '<a href="'.JRoute::_('index.php?option=com_k2&view=itemlist&task=search&searchword=' . urlencode($label)) . '">'.$label.'</a>';
+							}
 						}
 
 					}
 					else if ($rows[$i]->type == 'select' || $rows[$i]->type == 'radio')
 					{
-						foreach ($json->decode($rows[$i]->value) as $option)
+						foreach (json_decode($rows[$i]->value) as $option)
 						{
 							if ($option->value == $object->value)
 							{
@@ -1465,7 +1500,7 @@ class K2ModelItem extends K2Model
 					}
 					else if ($rows[$i]->type == 'multipleSelect')
 					{
-						foreach ($json->decode($rows[$i]->value) as $option)
+						foreach (json_decode($rows[$i]->value) as $option)
 						{
 							if (@in_array($option->value, $object->value))
 							{
@@ -1514,7 +1549,7 @@ class K2ModelItem extends K2Model
 
 							case 'lightbox' :
 
-								// Joomla! modal required
+								// Joomla modal required
 								if (!defined('K2_JOOMLA_MODAL_REQUIRED'))
 									define('K2_JOOMLA_MODAL_REQUIRED', true);
 
@@ -1522,11 +1557,11 @@ class K2ModelItem extends K2Model
 								$extension = JFile::getExt($filename);
 								if (!empty($extension) && in_array($extension, $imgExtensions))
 								{
-									$attributes = 'class="modal"';
+									$attributes = 'data-k2-modal="image"';
 								}
 								else
 								{
-									$attributes = 'class="modal" rel="{handler:\'iframe\',size:{x:'.$params->get('linkPopupWidth').',y:'.$params->get('linkPopupHeight').'}}"';
+									$attributes = 'data-k2-modal="iframe"';
 								}
 								break;
 						}
@@ -1568,7 +1603,7 @@ class K2ModelItem extends K2Model
 			}
 
 			// Detect alias
-			$tmpValues = $json->decode($rows[$i]->value);
+			$tmpValues = json_decode($rows[$i]->value);
 			if (isset($tmpValues[0]) && isset($tmpValues[0]->alias) && !empty($tmpValues[0]->alias))
 			{
 				$rows[$i]->alias = $tmpValues[0]->alias;
@@ -1585,6 +1620,10 @@ class K2ModelItem extends K2Model
 
 			if (JString::trim($value) != '')
 			{
+				if (JString::trim($rawValue) != '')
+				{
+					$rows[$i]->rawValue = $rawValue;
+				}
 				$rows[$i]->value = $value;
 				if (!is_null($item))
 				{
@@ -1635,8 +1674,7 @@ class K2ModelItem extends K2Model
 		{
 			return $K2ItemAttachmentsInstances[$itemID];
 		}
-
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 		$query = "SELECT * FROM #__k2_attachments WHERE itemID=".$itemID;
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
@@ -1651,11 +1689,10 @@ class K2ModelItem extends K2Model
 
 	function getItemComments($itemID, $limitstart, $limit, $published = true)
 	{
-
 		$params = K2HelperUtilities::getParams('com_k2');
 		$order = $params->get('commentsOrdering', 'DESC');
 		$ordering = ($order == 'DESC') ? 'DESC' : 'ASC';
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 		$query = "SELECT * FROM #__k2_comments WHERE itemID=".(int)$itemID;
 		if ($published)
 		{
@@ -1669,7 +1706,6 @@ class K2ModelItem extends K2Model
 
 	function countItemComments($itemID, $published = true)
 	{
-
 		$itemID = (int)$itemID;
 		$index = $itemID.'_'.(int)$published;
 		static $K2ItemCommentsCountInstances = array();
@@ -1677,8 +1713,7 @@ class K2ModelItem extends K2Model
 		{
 			return $K2ItemCommentsCountInstances[$index];
 		}
-
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 		$query = "SELECT COUNT(*) FROM #__k2_comments WHERE itemID=".$itemID;
 		if ($published)
 		{
@@ -1688,29 +1723,38 @@ class K2ModelItem extends K2Model
 		$result = $db->loadResult();
 		$K2ItemCommentsCountInstances[$index] = $result;
 		return $K2ItemCommentsCountInstances[$index];
-
 	}
 
 	function checkin()
 	{
-
-		$mainframe = JFactory::getApplication();
+	    $application = JFactory::getApplication();
 		$id = JRequest::getInt('cid');
-		$row = JTable::getInstance('K2Item', 'Table');
-		$row->load($id);
-		$row->checkin();
-		$mainframe->close();
+	    if($id)
+	    {
+			$row = JTable::getInstance('K2Item', 'Table');
+			$row->load($id);
+			$row->checkin();
+	    }
+	    else
+	    {
+			// Clean up SIGPro
+			$sigProFolder = JRequest::getCmd('sigProFolder');
+			if($sigProFolder && !is_numeric($sigProFolder) && JFolder::exists(JPATH_SITE.'/media/k2/galleries/'.$sigProFolder))
+			{
+				JFolder::delete(JPATH_SITE.'/media/k2/galleries/'.$sigProFolder);
+			}
+	    }
+		$application->close();
 	}
 
 	function getPreviousItem($id, $catid, $ordering)
 	{
-
-		$mainframe = JFactory::getApplication();
+		$application = JFactory::getApplication();
 		$user = JFactory::getUser();
 		$id = (int)$id;
 		$catid = (int)$catid;
 		$ordering = (int)$ordering;
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 
 		$jnow = JFactory::getDate();
 		$now = K2_JVERSION == '15' ? $jnow->toMySQL() : $jnow->toSql();
@@ -1728,7 +1772,7 @@ class K2ModelItem extends K2Model
 		$languageCondition = '';
 		if (K2_JVERSION != '15')
 		{
-			if ($mainframe->getLanguageFilter())
+			if ($application->getLanguageFilter())
 			{
 				$languageCondition = "AND language IN (".$db->quote(JFactory::getLanguage()->getTag()).",".$db->quote('*').")";
 			}
@@ -1750,13 +1794,12 @@ class K2ModelItem extends K2Model
 
 	function getNextItem($id, $catid, $ordering)
 	{
-
-		$mainframe = JFactory::getApplication();
+		$application = JFactory::getApplication();
 		$user = JFactory::getUser();
 		$id = (int)$id;
 		$catid = (int)$catid;
 		$ordering = (int)$ordering;
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 
 		$jnow = JFactory::getDate();
 		$now = K2_JVERSION == '15' ? $jnow->toMySQL() : $jnow->toSql();
@@ -1774,7 +1817,7 @@ class K2ModelItem extends K2Model
 		$languageCondition = '';
 		if (K2_JVERSION != '15')
 		{
-			if ($mainframe->getLanguageFilter())
+			if ($application->getLanguageFilter())
 			{
 				$languageCondition = "AND language IN (".$db->quote(JFactory::getLanguage()->getTag()).",".$db->quote('*').")";
 			}
@@ -1795,8 +1838,7 @@ class K2ModelItem extends K2Model
 
 	function getUserProfile($id = NULL)
 	{
-
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 		if (is_null($id))
 			$id = JRequest::getInt('id');
 
@@ -1812,5 +1854,4 @@ class K2ModelItem extends K2Model
 		$K2UsersInstances[$id] = $row;
 		return $row;
 	}
-
 }

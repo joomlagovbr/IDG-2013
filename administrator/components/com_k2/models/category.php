@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2.6.x
- * @package		K2
- * @author		JoomlaWorks http://www.joomlaworks.net
- * @copyright	Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @version    2.8.x
+ * @package    K2
+ * @author     JoomlaWorks http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
 // no direct access
@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 
 jimport('joomla.application.component.model');
 
-JTable::addIncludePath(JPATH_COMPONENT.DS.'tables');
+JTable::addIncludePath(JPATH_COMPONENT.'/tables');
 
 class K2ModelCategory extends K2Model
 {
@@ -27,16 +27,16 @@ class K2ModelCategory extends K2Model
 
     function save()
     {
-        $mainframe = JFactory::getApplication();
+        $application = JFactory::getApplication();
         jimport('joomla.filesystem.file');
-        require_once (JPATH_COMPONENT.DS.'lib'.DS.'class.upload.php');
+        require_once(JPATH_SITE.'/media/k2/assets/vendors/verot/class.upload.php/src/class.upload.php');
         $row = JTable::getInstance('K2Category', 'Table');
         $params = JComponentHelper::getParams('com_k2');
 
         if (!$row->bind(JRequest::get('post')))
         {
-        	$mainframe->enqueueMessage($row->getError(), 'error');
-            $mainframe->redirect('index.php?option=com_k2&view=categories');
+        	$application->enqueueMessage($row->getError(), 'error');
+            $application->redirect('index.php?option=com_k2&view=categories');
         }
 
         $isNew = ($row->id) ? false : true;
@@ -55,23 +55,23 @@ class K2ModelCategory extends K2Model
 
         if (!$row->id)
         {
-            $row->ordering = $row->getNextOrder('parent = '.$row->parent.' AND trash=0');
+            $row->ordering = $row->getNextOrder('parent = '.(int)$row->parent.' AND trash=0');
         }
 
         if (!$row->check())
         {
-        	$mainframe->enqueueMessage($row->getError(), 'error');
-            $mainframe->redirect('index.php?option=com_k2&view=category&cid='.$row->id);
+        	$application->enqueueMessage($row->getError(), 'error');
+            $application->redirect('index.php?option=com_k2&view=category&cid='.$row->id);
         }
 
         if (!$row->store())
         {
-        	$mainframe->enqueueMessage($row->getError(), 'error');
-            $mainframe->redirect('index.php?option=com_k2&view=categories');
+        	$application->enqueueMessage($row->getError(), 'error');
+            $application->redirect('index.php?option=com_k2&view=categories');
         }
 
         if (!$params->get('disableCompactOrdering'))
-            $row->reorder('parent = '.$row->parent.' AND trash=0');
+            $row->reorder('parent = '.(int)$row->parent.' AND trash=0');
 
         if ((int)$params->get('imageMemoryLimit'))
         {
@@ -80,18 +80,18 @@ class K2ModelCategory extends K2Model
 
         $files = JRequest::get('files');
 
-        $savepath = JPATH_ROOT.DS.'media'.DS.'k2'.DS.'categories'.DS;
+        $savepath = JPATH_ROOT.'/media/k2/categories/';
 
         $existingImage = JRequest::getVar('existingImage');
-        if (($files['image']['error'] === 0 || $existingImage) && !JRequest::getBool('del_image'))
+        if (($files['image']['error'] == 0 || $existingImage) && !JRequest::getBool('del_image'))
         {
-            if ($files['image']['error'] === 0)
+            if ($files['image']['error'] == 0)
             {
                 $image = $files['image'];
             }
             else
             {
-                $image = JPATH_SITE.DS.JPath::clean($existingImage);
+                $image = JPATH_SITE.'/'.JPath::clean($existingImage);
             }
 
             $handle = new Upload($image);
@@ -105,13 +105,13 @@ class K2ModelCategory extends K2Model
                 $handle->image_ratio_y = true;
                 $handle->image_x = $params->get('catImageWidth', '100');
                 $handle->Process($savepath);
-                if ($files['image']['error'] === 0)
+                if ($files['image']['error'] == 0)
                     $handle->Clean();
             }
             else
             {
-            	$mainframe->enqueueMessage($handle->error, 'error');
-                $mainframe->redirect('index.php?option=com_k2&view=categories');
+            	$application->enqueueMessage($handle->error, 'error');
+                $application->redirect('index.php?option=com_k2&view=categories');
             }
             $row->image = $handle->file_dst_name;
         }
@@ -120,17 +120,17 @@ class K2ModelCategory extends K2Model
         {
             $currentRow = JTable::getInstance('K2Category', 'Table');
             $currentRow->load($row->id);
-            if (JFile::exists(JPATH_ROOT.DS.'media'.DS.'k2'.DS.'categories'.DS.$currentRow->image))
+            if (JFile::exists(JPATH_ROOT.'/media/k2/categories/'.$currentRow->image))
             {
-                JFile::delete(JPATH_ROOT.DS.'media'.DS.'k2'.DS.'categories'.DS.$currentRow->image);
+                JFile::delete(JPATH_ROOT.'/media/k2/categories/'.$currentRow->image);
             }
             $row->image = '';
         }
 
         if (!$row->store())
         {
-        	$mainframe->enqueueMessage($row->getError(), 'error');
-            $mainframe->redirect('index.php?option=com_k2&view=categories');
+        	$application->enqueueMessage($row->getError(), 'error');
+            $application->redirect('index.php?option=com_k2&view=categories');
         }
 
         //Trigger the finder after save event
@@ -157,14 +157,14 @@ class K2ModelCategory extends K2Model
                 $link = 'index.php?option=com_k2&view=categories';
                 break;
         }
-		$mainframe->enqueueMessage($msg);
-        $mainframe->redirect($link);
+		$application->enqueueMessage($msg);
+        $application->redirect($link);
     }
 
     function countCategoryItems($catid, $trash = 0)
     {
 
-        $db = JFactory::getDBO();
+        $db = JFactory::getDbo();
         $catid = (int)$catid;
         $query = "SELECT COUNT(*) FROM #__k2_items WHERE catid={$catid} AND trash = ".(int)$trash;
         $db->setQuery($query);

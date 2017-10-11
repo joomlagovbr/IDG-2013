@@ -2,11 +2,11 @@
 <extension type="module" client="site" version="2.5" method="upgrade">
     <name>K2 Users</name>
     <author>JoomlaWorks</author>
-    <creationDate>February 28th, 2014</creationDate>
-    <copyright>Copyright (c) 2006 - 2014 JoomlaWorks Ltd. All rights reserved.</copyright>
+    <creationDate>August 18th, 2017</creationDate>
+    <copyright>Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.</copyright>
     <authorEmail>please-use-the-contact-form@joomlaworks.net</authorEmail>
     <authorUrl>www.joomlaworks.net</authorUrl>
-    <version>2.6.8</version>
+    <version>2.8.0</version>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
     <description>K2_MOD_K2_USERS_DESCRTIPTION</description>
     <files>
@@ -18,7 +18,7 @@
         <fields name="params">
             <fieldset name="basic" addfieldpath="/administrator/components/com_k2/elements/">
                 <field name="moduleclass_sfx" type="text" default="" label="K2_MODULE_CLASS_SUFFIX" description="K2_MODULE_CLASS_SUFFIX_DESCRIPTION"/>
-                <field name="getTemplate" type="moduletemplate" modulename="mod_k2_users" default="Default" label="K2_SELECT_SUBTEMPLATE" description="This module utilizes on-the-fly MVC template overrides. What this means is that you can create a new sub-template folder for this module within your Joomla! template's /html/mod_k2_users/ folder. The module will then pickup the new sub-template auto-magically, without you editing any XML file or doing any other non-designer work!"/>
+                <field name="getTemplate" type="moduletemplate" modulename="mod_k2_users" default="Default" label="K2_SELECT_SUBTEMPLATE" description="This module utilizes on-the-fly MVC template overrides. What this means is that you can create a new sub-template folder for this module within your Joomla template's /html/mod_k2_users/ folder. The module will then pickup the new sub-template auto-magically, without you editing any XML file or doing any other non-designer work!"/>
                 <field name="source" type="list" default="0" label="K2_SOURCE" description="">
                     <option value="filter">K2_RETRIEVE_USERS_USING_FILTERS</option>
                     <option value="specific">K2_RETRIEVE_SPECIFIC_USERS</option>
@@ -38,13 +38,13 @@
                 </field>
                 <field name="limit" type="text" default="4" size="4" label="K2_LIMIT" description=""/>
                 <field name="" type="header" default="K2_RETRIEVE_SPECIFIC_USERS" label="" description=""/>
-                <field name="userIDs" type="userslatest" default="" label="K2_SELECTED_USERS_SORT_WITH_DRAG_DROP" description="K2_DRAG_USERS_ONE_BY_ONE_TO_REORDER_THE_LIST_CLICK_THE_REMOVE_ICON_TO_REMOVE_A_USER_FROM_THE_LIST"/>
+                <field name="userIDs" type="k2modalselector" scope="users" default="" label="K2_SELECTED_USERS_SORT_WITH_DRAG_DROP" description="K2_DRAG_USERS_ONE_BY_ONE_TO_REORDER_THE_LIST_CLICK_THE_REMOVE_ICON_TO_REMOVE_A_USER_FROM_THE_LIST"/>
                 <field name="" type="header" default="K2_DISPLAY_OPTIONS" label="" description=""/>
-                <field name="userName" type="radio" default="1" label="K2_NAME" description="">
+                <field name="userName" type="radio" default="1" label="K2_NAME" description="" class="btn-group btn-group-yesno">
                     <option value="0">K2_HIDE</option>
                     <option value="1">K2_SHOW</option>
                 </field>
-                <field name="userAvatar" type="radio" default="1" label="K2_USER_AVATAR" description="">
+                <field name="userAvatar" type="radio" default="1" label="K2_USER_AVATAR" description="" class="btn-group btn-group-yesno">
                     <option value="0">K2_HIDE</option>
                     <option value="1">K2_SHOW</option>
                 </field>
@@ -53,20 +53,20 @@
                     <option value="custom">K2_USE_CUSTOM_WIDTH</option>
                 </field>
                 <field name="userAvatarWidth" type="text" default="50" size="4" label="K2_CUSTOM_WIDTH_FOR_USER_AVATAR_IN_PX" description=""/>
-                <field name="userDescription" type="radio" default="1" label="K2_USER_DESCRIPTION" description="">
+                <field name="userDescription" type="radio" default="1" label="K2_USER_DESCRIPTION" description="" class="btn-group btn-group-yesno">
                     <option value="0">K2_HIDE</option>
                     <option value="1">K2_SHOW</option>
                 </field>
                 <field name="userDescriptionWordLimit" type="text" default="" size="4" label="K2_WORD_LIMIT_FOR_USER_DESCRIPTION" description=""/>
-                <field name="userURL" type="radio" default="1" label="K2_URL" description="">
+                <field name="userURL" type="radio" default="1" label="K2_URL" description="" class="btn-group btn-group-yesno">
                     <option value="0">K2_HIDE</option>
                     <option value="1">K2_SHOW</option>
                 </field>
-                <field name="userEmail" type="radio" default="0" label="K2_EMAIL" description="">
+                <field name="userEmail" type="radio" default="0" label="K2_EMAIL" description="" class="btn-group btn-group-yesno">
                     <option value="0">K2_HIDE</option>
                     <option value="1">K2_SHOW</option>
                 </field>
-                <field name="userFeed" type="radio" default="1" label="K2_RSS_FEED_ICON" description="">
+                <field name="userFeed" type="radio" default="1" label="K2_RSS_FEED_ICON" description="" class="btn-group btn-group-yesno">
                     <option value="0">K2_HIDE</option>
                     <option value="1">K2_SHOW</option>
                 </field>
