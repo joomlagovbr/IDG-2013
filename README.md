@@ -3,7 +3,7 @@ Portal padrão em CMS Joomla 3.7.4
 
 Sobre esta versão
 ---------------------
-O Joomla 3.7.4 é recomendado para versões do PHP 5.3.10+. Compátivel com PHP 7+ 
+O Joomla 3.7.4 é recomendado para versões do PHP 5.3.10+. Compátivel com PHP 7+
 
 Acompanhe as atualizações do projeto
 ---------------------
@@ -48,7 +48,11 @@ Desenvolvimento
 
 Ultimas mudanças
 --------------------
--Correções no CSS referentes aos modulos, menus e banners
--Correções de nas funcionalidades da busca padrao, somente no Override de template."original nao afetado"
--Adição de novo Plugin de busca de busca por Menu(Descobrir item no gerenciador). Sera incorporado posteriormente.
+-   Correções no CSS referentes aos modulos, menus e banners
+-   Correções de nas funcionalidades da busca padrao, somente no Override de template."original nao afetado"
+-   Adição de novo Plugin de busca de busca por Menu(Descobrir item no gerenciador). Sera incorporado posteriormente.
 Opcional( se colocado  uma palavra chave no plugin e nos itens de menu, terão prioridade na busca.
+-   Update AllVideos 4.8.0
+-   Update K2 2.8.0
+-   Update Phoca Gallery 4.3.6
+-   Update Youtube Gallery 4.4.0
