@@ -1,9 +1,9 @@
 <?php
 /**
- * @package		
- * @subpackage	
- * @copyright	
- * @license		
+ * @package
+ * @subpackage
+ * @copyright
+ * @license
  */
 
 // no direct access
@@ -39,8 +39,8 @@ class TemplateContentCategoriesHelper extends TemplateContentCategoryHelper {
 
 		if($metadata->author != '')
 			return $metadata->author;
-		
-		return ''; 
+
+		return '';
 	}
 
 	static function getLastArticleModifiedDate( $view_object, $children = false )
@@ -60,7 +60,7 @@ class TemplateContentCategoriesHelper extends TemplateContentCategoryHelper {
 		}
 
 		$category_ids = array();
-		for ($i=0, $limit = count($items); $i < $limit; $i++) { 
+		for ($i=0, $limit = count($items); $i < $limit; $i++) {
 			$category_ids[] = $items[$i]->id;
 		}
 
