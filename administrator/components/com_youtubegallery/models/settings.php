@@ -1,8 +1,8 @@
 <?php
 /**
- * YoutubeGallery Joomla! 3.0 Native Component
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * YoutubeGallery Joomla! Native Component
+ * @version 4.4.0
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -93,45 +93,73 @@ class YoutubeGalleryModelSettings extends JModelAdmin
         }
 	*/
 
-	
+	static protected function makeQueryLine($field,$value)
+	{
+		return 'INSERT INTO `#__youtubegallery_settings` (`option`, `value`)
+		VALUES ("'.$field.'", "'.$value.'")
+		ON DUPLICATE KEY UPDATE `option`="'.$field.'", `value`="'.$value.'"';
+	}
         
 
         function store()
         {
-		
-		$vimeo_api_client_id=trim(preg_replace("/[^a-zA-Z0-9_]/", "", JRequest::getVar('vimeo_api_client_id')));
-        $vimeo_api_client_secret=trim(preg_replace("/[^a-zA-Z0-9_]/", "", JRequest::getVar('vimeo_api_client_secret')));
-		$youtube_public_api=trim(str_ireplace(array('select','=','update','insert'), '', JRequest::getVar('youtube_public_api')));
-	    
-	    
+		jimport('joomla.version');
+		$version = new JVersion();
+		$JoomlaVersionRelease=$version->RELEASE;
+
+		if($JoomlaVersionRelease>=3.0)
+		{
+			$jform=JRequest::getVar('jform');
+			$allowsef=trim(preg_replace("/[^0-9]/", "", $jform['allowsef']));
+			$getinfomethod=trim(preg_replace("/[^a-zA-Z0-9_-]/", "", $jform['getinfomethod']));
+			$vimeo_api_client_id=trim(preg_replace("/[^a-zA-Z0-9+\/_-]/", "", JRequest::getVar('vimeo_api_client_id')));
+			$vimeo_api_client_secret=trim(preg_replace("/[^a-zA-Z0-9+\/_-]/", "", JRequest::getVar('vimeo_api_client_secret')));
+			$soundcloud_api_client_id=trim(preg_replace("/[^a-zA-Z0-9_-]/", "", JRequest::getVar('soundcloud_api_client_id')));
+			$soundcloud_api_client_secret=trim(preg_replace("/[^a-zA-Z0-9_-]/", "", JRequest::getVar('soundcloud_api_client_secret')));
+			
+			//$youtube_api_client_id=trim(preg_replace("/[^a-zA-Z0-9_]/", "", JRequest::getVar('youtube_api_client_id')));
+			//$youtube_api_client_secret=trim(preg_replace("/[^a-zA-Z0-9_]/", "", JRequest::getVar('youtube_api_client_secret')));
+			$youtube_api_key=trim(preg_replace("/[^a-zA-Z0-9_-]/", "", JRequest::getVar('youtube_api_key')));
+			
+			$errorreporting=trim(preg_replace("/[^0-9]/", "", $jform['errorreporting']));
+		}
+		else
+		{
+			$allowsef=JRequest::getInt('allowsef');
+			$getinfomethod=JRequest::getCmd('getinfomethod');
+			$vimeo_api_client_id=trim(preg_replace("/[^a-zA-Z0-9_-]/", "", JRequest::getVar('vimeo_api_client_id')));
+			$vimeo_api_client_secret=trim(preg_replace("/[^a-zA-Z0-9_-]/", "", JRequest::getVar('vimeo_api_client_secret')));
+			$soundcloud_api_client_id=trim(preg_replace("/[^a-zA-Z0-9_-]/", "", JRequest::getVar('soundcloud_api_client_id')));
+			$soundcloud_api_client_secret=trim(preg_replace("/[^a-zA-Z0-9_-]/", "", JRequest::getVar('soundcloud_api_client_secret')));
+			
+			//$youtube_api_client_id=trim(preg_replace("/[^a-zA-Z0-9_]/", "", JRequest::getVar('youtube_api_client_id')));
+			//$youtube_api_client_secret=trim(preg_replace("/[^a-zA-Z0-9_]/", "", JRequest::getVar('youtube_api_client_secret')));
+			$youtube_api_key=trim(preg_replace("/[^a-zA-Z0-9_-]/", "", JRequest::getVar('youtube_api_key')));
+		}
+
 		$db = JFactory::getDBO();
-
-		//Load Theme Row
 		$query=array();
+		$query[] = YoutubeGalleryModelSettings::makeQueryLine('allowsef',$allowsef);
+		$query[] = YoutubeGalleryModelSettings::makeQueryLine('getinfomethod',$getinfomethod);
+		$query[] = YoutubeGalleryModelSettings::makeQueryLine('vimeo_api_client_id',$vimeo_api_client_id);
+		$query[] = YoutubeGalleryModelSettings::makeQueryLine('vimeo_api_client_secret',$vimeo_api_client_secret);
+		$query[] = YoutubeGalleryModelSettings::makeQueryLine('soundcloud_api_client_id',$soundcloud_api_client_id);
+		$query[] = YoutubeGalleryModelSettings::makeQueryLine('soundcloud_api_client_secret',$soundcloud_api_client_secret);
 		
-		$query[] = 'INSERT INTO `#__youtubegallery_settings` (`option`, `value`)
-		VALUES ("vimeo_api_client_id", "'.$vimeo_api_client_id.'")
-		ON DUPLICATE KEY UPDATE `option`="vimeo_api_client_id", `value`="'.$vimeo_api_client_id.'"';
-		
-		$query[] = 'INSERT INTO `#__youtubegallery_settings` (`option`, `value`)
-		VALUES ("vimeo_api_client_secret", "'.$vimeo_api_client_secret.'")
-		ON DUPLICATE KEY UPDATE `option`="vimeo_api_client_secret", `value`="'.$vimeo_api_client_secret.'"';
+		//$query[] = YoutubeGalleryModelSettings::makeQueryLine('youtube_api_client_id',$youtube_api_client_id);
+		//$query[] = YoutubeGalleryModelSettings::makeQueryLine('youtube_api_client_secret',$youtube_api_client_secret);
+		$query[] = YoutubeGalleryModelSettings::makeQueryLine('youtube_api_key',$youtube_api_key);
 
-        $query[] = 'INSERT INTO `#__youtubegallery_settings` (`option`, `value`)
-        VALUES ("youtube_public_api", "'.$youtube_public_api.'")
-        ON DUPLICATE KEY UPDATE `option`="youtube_public_api", `value`="'.$youtube_public_api.'"';		
+		if($JoomlaVersionRelease>=3.0)
+			$query[] = YoutubeGalleryModelSettings::makeQueryLine('errorreporting',$errorreporting);
 
 		foreach($query as $q)
 		{
-			//echo 'q='.$q.'<br/>';
 			$db->setQuery($q);
 			if (!$db->query())    die ( $db->stderr());
 		}
-		
 		return true;
-	
+
         }
-        
-    		
-		
+
 }

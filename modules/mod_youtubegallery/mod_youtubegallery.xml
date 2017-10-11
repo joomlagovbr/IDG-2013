@@ -2,20 +2,24 @@
 <extension type="module" version="3.0" client="site"  method="upgrade">
 	
     <name>Youtube Gallery Module</name>
-    <author>Design Compass corp</author>
-    <creationDate>December 2013</creationDate>
-    <copyright>Copyright (C) 2009-2013 DesignCompass corp. All rights reserved.</copyright>
+    <author>Ivan Komlev</author>
+    <creationDate>February 2016</creationDate>
+    <copyright>Copyright (C) 2009-2016 Ivan Komlev. All rights reserved.</copyright>
     <license>GNU General Public License</license>
     <authorEmail>support@joomlaboat.com</authorEmail>
     <authorUrl>http://www.joomlaboat.com/</authorUrl>
-    <version>3.5.9</version>
-    <description>MOD_YOUTUBEGALLERY_DESC</description>
+    <version>4.4.0</version>
+    <description><![CDATA[<p>YoutubeGallery Module to show Video Gallery (Video List with Theme) already created in Components/YoutubeGallery.</p>
+    ]]></description>
     <files>
         <filename module="mod_youtubegallery">mod_youtubegallery.php</filename>
-        <filename>mod_youtubegallery.xml</filename>
 	<filename>index.html</filename>
 	<filename>fields/ygmenu.php</filename>
     </files>
+    
+    <!-- Runs on install/uninstall/update; New in 2.5 -->
+    <scriptfile>script.php</scriptfile>
+
 	
 	<config>
 	<fields name="params">
@@ -35,6 +39,13 @@
                 />
 		
 		<field
+                                name="mobilethemeid"
+                                type="themesoptional"
+                                label="MOD_YOUTUBEGALLERY_MOBILETHEMENAME_LABEL"
+                                description="MOD_YOUTUBEGALLERY_MOBILETHEMENAME_DESC"
+                />
+		
+		<field
                             name="galleryalign"
                             type="list"
                             label="MOD_YOUTUBEGALLERY_ALIGN_LABEL"
@@ -45,11 +56,8 @@
                             <option value="center">MOD_YOUTUBEGALLERY_ALIGN_CENTER</option>
                             <option value="right">MOD_YOUTUBEGALLERY_ALIGN_RIGHT</option>
         </field>
-		<!-- ALTERACAO PROJET PORTAL PADRAO  -->
-		<field name="moduleclass_sfx" type="textarea" rows="3"
-		label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
-		description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
-		<!-- fim ALTERACAO PROJETO PORTAL PADRAO -->
+
+
 
 		<field
 				addfieldpath="modules/mod_youtubegallery/fields/"
@@ -62,6 +70,12 @@
 
 
 
+		
+		<field
+					name="moduleclass_sfx"
+					type="textarea" rows="3"
+					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
+					description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
 		
 		<field
 					name="cache"

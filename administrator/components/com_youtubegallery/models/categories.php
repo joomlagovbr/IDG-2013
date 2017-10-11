@@ -1,8 +1,8 @@
 <?php
 /**
- * YoutubeGallery Joomla! 3.0 Native Component
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * YoutubeGallery Joomla! Native Component
+ * @version 4.4.0
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -49,7 +49,7 @@ class YoutubeGalleryModelCategories extends JModelList
 
 				$context= 'com_youtubegallery.list.';
 
-				$filter_order			= $mainframe->getUserStateFromRequest( $context.'filter_order',		'filter_order',		'm.id',	'int' );//'m.ordering'
+				$filter_order			= $mainframe->getUserStateFromRequest( $context.'filter_order',		'filter_order',		'id',	'int' );//'m.ordering'
 				$filter_order_Dir		= $mainframe->getUserStateFromRequest( $context.'filter_order_Dir',	'filter_order_Dir',	'ASC',			'word' );
 		
 				$filter_rootparent		= $mainframe->getUserStateFromRequest( $context.'filter_rootparent','filter_rootparent','','int' );
@@ -65,9 +65,9 @@ class YoutubeGalleryModelCategories extends JModelList
 		
 				// just in case filter_order get's messed up
 				if ($filter_order) {
-					$orderby = ' ORDER BY '.$filter_order .' '. $filter_order_Dir .', m.parentid';//, m.ordering
+					$orderby = ' ORDER BY '.$filter_order .' '. $filter_order_Dir .', parentid';//, m.ordering
 				} else {
-					$orderby = ' ORDER BY m.parentid';//, m.ordering
+					$orderby = ' ORDER BY parentid';//, m.ordering
 				}
 
 				// select the records
@@ -188,7 +188,7 @@ class YoutubeGalleryModelCategories extends JModelList
         
        	function ConfirmRemove()
         {
-			
+				JRequest::setVar('hidemainmenu', true);
 				JToolBarHelper::title(JText::_( 'COM_YOUTUBEGALLERY_DELETE_CATEGORY_S' ));
 		
 				$cancellink='index.php?option=com_youtubegallery&view=categories';

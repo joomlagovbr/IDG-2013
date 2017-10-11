@@ -1,8 +1,8 @@
 <?php
 /**
- * Youtube Gallery Joomla! 3.0 Native Component
- * @version 3.5.9
- * @author DesignCompass corp <support@joomlaboat.com>
+ * Youtube Gallery Joomla! Native Component
+ * @version 4.4.0
+ * @author Ivan Komlev <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -72,8 +72,15 @@ switch($controllerName)
 }
  
 
-$controller = JControllerLegacy::getInstance('youtubeGallery');
+jimport('joomla.version');
+$version = new JVersion();
+$JoomlaVersionRelease=$version->RELEASE;
 
+if($JoomlaVersionRelease>=3.0)
+	$controller = JControllerLegacy::getInstance('youtubeGallery');
+else
+	$controller = JController::getInstance('youtubeGallery');
+	
 // Perform the Request task
 $controller->execute( JRequest::getCmd('task'));
 $controller->redirect();

@@ -1,8 +1,8 @@
 <?php
 /**
- * YoutubeGallery Joomla! 3.0 Native Component
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * YoutubeGallery Joomla! Native Component
+ * @version 4.4.0
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -22,7 +22,7 @@ class YoutubeGalleryControllerLinksForm extends JControllerForm
          * Proxy for getModel.
        */
        
-       	function display($cachable = false, $urlparams = Array())
+       	function display($cachable = false, $urlparams = array())
 	{
 		$task=$_POST['task'];
 		

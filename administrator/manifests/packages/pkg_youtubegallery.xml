@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <extension type="package" version="2.5">
+ <name>Youtube Gallery v4.4.0 Package (Free)</name>
+ <author>JoomlaBoat.com</author>
+ <creationDate>February 2016</creationDate>
+ <packagename>youtubegallery</packagename>
+ <version>4.4.0</version>
+ <url>http://www.joomlaboat.com/</url>
+ <packager>JoomlaBoat.com</packager>
+ <packagerurl>http://www.joomlaboat.com/youtube-gallery</packagerurl>
+ <description>Youtube Gallery v4.4.0 for Joomla 2.5/3.x (Free)</description>
+ <update>http://www.joomlaboat.com/youtube-gallery</update>
+ <files>
+   <file type="component" id="com_youtubegallery">com_youtubegallery.zip</file>
+   <file type="module" id="mod_youtubegallery" client="site">mod_youtubegallery.zip</file>
+   <file type="plugin" id="youtubegallery" group="content">plg_youtubegallery.zip</file>
+ </files>
+ </extension>

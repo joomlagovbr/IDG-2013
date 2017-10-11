@@ -1,8 +1,8 @@
 <?php
 /**
- * YoutubeGallery Joomla! 3.0 Native Component
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * YoutubeGallery Joomla! Native Component
+ * @version 4.4.0
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -11,41 +11,31 @@
 defined('_JEXEC') or die('Restricted access');
 JHtml::_('behavior.formvalidation');
 JHtml::_('behavior.tooltip');
+
+jimport('joomla.version');
+$version = new JVersion();
+$JoomlaVersionRelease=$version->RELEASE;
+
+$document = JFactory::getDocument();
+$document->addCustomTag('<link rel="stylesheet" href="components/com_youtubegallery/views/linksform/tmpl/wizard.css" type="text/css" />');
+$document->addCustomTag('<script src="components/com_youtubegallery/views/linksform/tmpl/wizard.js"></script>');
+
 ?>
 
-<script language="javascript">
-        function SwithTabs(nameprefix, count, activeindex)
-        {
-                for(i=0;i<count;i++)
-                {
-                        var obj=document.getElementById(nameprefix+i);
-                        obj.style.display="none";
-                }
-                
-                var obj=document.getElementById(nameprefix+activeindex);
-                obj.style.display="block";
-        }
-</script>
-
-<?php /*
-	   <form action="<?php echo JRoute::_('index.php?option=com_youtubegallery&layout=edit&id='.(int) $this->item->id); ?>" method="post" name="adminForm" id="youtubegallery-form" class="form-validate">
-	  */
-?>
-<style>
-#jform_videolist{
-		width:420px;
-}
-</style>
 <p style="text-align:left;">Upgrade to <a href="http://joomlaboat.com/youtube-gallery#pro-version" target="_blank">PRO version</a> to get more features</p>
-<form id="adminForm" action="<?php echo JRoute::_('index.php?option=com_youtubegallery'); ?>" method="post" class="form-inline">
+<?php if($JoomlaVersionRelease>=3.0): ?>
+	<form id="adminForm" action="<?php echo JRoute::_('index.php?option=com_youtubegallery'); ?>" method="post" class="form-inline">
+<?php else: ?>
+	<form action="<?php echo JRoute::_('index.php?option=com_youtubegallery&layout=edit&id='.(int) $this->item->id); ?>" method="post" name="adminForm" id="youtubegallery-form" class="form-validate">
+<?php endif; ?>
 
         <fieldset class="adminform">
                 <?php echo $this->form->getInput('id'); ?>
                 
                 
-                <legend><?php echo JText::_( 'COM_YOUTUBEGALLERY_FORM_DETAILS' ); ?> (PRO Version)</legend>
+                <legend><?php echo JText::_( 'COM_YOUTUBEGALLERY_FORM_DETAILS' ); ?> (Free Version)</legend>
                 
-				<table style="border:none;">
+		<table style="border:none;">
                         <tbody>
                                 <tr><td style="width:200px;"><?php echo $this->form->getLabel('catid'); ?></td><td>:</td><td><?php echo $this->form->getInput('catid'); ?></td></tr>
 								<tr><td style="width:200px;"><?php echo $this->form->getLabel('listname'); ?></td><td>:</td><td><?php echo $this->form->getInput('listname'); ?></td></tr>
@@ -53,158 +43,95 @@ JHtml::_('behavior.tooltip');
                 </table>
                 
 				
-				
                 <p><br/>
                 </p>
-                <?php //-------------------------- ?>
-                       
-                        <table style="border:none;">
+		<div style="display: none;top:0;left:0;position:fixed;width:100%;height:100%;background-color: black;    filter: alpha(opacity=50);    -moz-opacity: 0.5;    -khtml-opacity: 0.5;    opacity: 0.5;position: fixed;" id="YGShade">
+		</div>
+		
+		
+		<div style="display: none;position:absolute;top:0px;left:0px;width:100%;height:100%;" id="YGDialog"></div>
+		
+                
+                <div style="display: block;height:530px;border:none;" id="videolisttab_0" class="videolisttab_content">
+			<?php //Layout Wizard ?> <h4>Video Links | <a href="javascript: SwithTabs('videolisttab_',2,1)">Source</a></h4>
+			<div style="margin-top:0px;height:450px;border: 1px dotted #000000;padding:10px;margin:0px;overflow: scroll -moz-scrollbars-vertical;overflow-x: hidden;overflow-y: auto;">
+                                 
+				<table style="border:none;">
                                 <tbody>
                                         <tr>
-						<td style="vertical-align: top;" valign="top"><?php echo $this->form->getLabel('videolist'); ?>
-												<br/>
-												<?php echo $this->form->getInput('videolist'); ?>
-						</td>
-						<td style="vertical-align: bottom;" valign="bottom">
-
-						<div style="border: none;padding-left:10px;margin:0px;">
-                       
-						<p><b>Video Link Examples:</b></p>
-						<br/>
-						<ul>
-						<li>
-							<b>Youtube Video</b><br/>
-							http://www.youtube.com/watch?v=VSGMqfGmjG0<br/>
-							http://www.youtube.com/watch?v=baLkXC_qWJY&feature=related
-						</li>
+						<td style="vertical-align: middle;font-weight:bold;" valign="middle">Video Links</td>
+						<td style="vertical-align: middle;padding-left:20px;" valign="middle">
+							<div class="-wrapper" >
+								<button onclick="YGAddLink()" class="btn btn-small btn-success" type="button">
+								<span class="icon-new icon-white"></span><span style="margin-left:10px;">Add Link</span></button>
+							</div>
 							
-						<li>
-							<b>Youtube Video Playlist, Channel, Standard Feeds, and Search Results</b><br/>
-							http://www.youtube.com/playlist?list=PL5298F5DAD70298FC&feature=mh_lolz<br/>
-							http://www.youtube.com/user/ivankomlev/favorites<br/>
-							http://www.youtube.com/user/designcompasscorp<br/>
-							http://www.youtube.com/results?search_query=wins+compilation+2012<br/>
-							youtubestandard:<i>video_feed</i><br/>				
-							<a href="http://joomlaboat.com/youtube-gallery/youtube-gallery-standard-feeds" target="_blank">More about Standard Video Feeds</a>
-						</li>
-						
-						
-						<li>
-							<b>Vimeo Video</b><br/>
-							http://vimeo.com/8761657
-						</li>
-						
-						<li>
-							<b>Vimeo User Videos</b><br/>
-							http://vimeo.com/user12346578
-						</li>
-							
-						<li>
-							<b>Vimeo Channel</b><br/>
-							http://vimeo.com/channels/123456
-						</li>
-						
-						<li>
-							<b>Vimeo Album</b><br/>
-							https://vimeo.com/album/2585295
-						</li>
-						
-						<li>
-							<b>Break.com</b><br/>
-							http://www.break.com/pranks/biker-falls-off-dock-wall-2392751
-						</li>
-						
-						<li>
-							<b>Daily Motion</b><br/>
-							http://www.dailymotion.com/video/xrcy5b
-						</li>
-						
-						<li>
-							<b>Daily Motion Playlist</b><br/>
-							http://www.dailymotion.com/playlist/x2jcwc_f669221398_reality/1
-						</li>
-
-						<li>
-							<b>College Humor Video</b><br/>
-							http://www.collegehumor.com/video/6446891/what-pi-sounds-like
-						</li>
-						
-						<li>
-							<b>Own3D.tv Video (live and uploaded)</b><br/>
-							http://own3d.tv/l/153518<br/>
-							http://own3d.tv/v/816530
-						</li>
-						
-						<li>
-							<b>Present.me</b><br/>
-							http://www.present.me/view/82240-video-cv-blog-tutorials
-						</li>
-						
-						<li>
-							<b>Ustream.tv</b><br/>
-							http://www.ustream.tv/recorded/35745825
-						</li>
-						
-						<li>
-							<b>Local .FLV files</b><br/>
-							images/videos/test.flv
-						</li>
-						
-						<li>
-							<b>Video Lists</b><br/>
-							videolist:3 <i>Will insert all videos from Video List ID:3 to current video list.</i><br/>
-							videolist:all <i>Will insert all videos of all Video Lists.</i><br/>
-							videolist:catid:4<i>Will insert all videos of Video Lists of Category with ID #4.</i><br/>
-							videolist:category:music<i>Will insert all videos of Video Lists of Category "music"</i><br/>
-						</li>
-						
-						<hr/>
-						<p></p>
-							<b>Also you may have your own title, description and thumbnail for each video.</b>
-							To do this type comma then "<span style="color:green;">title</span>","<span style="color:green;">description</span>",
-							"<span style="color:green;">imageurl</span>","<span style="color:green;">special_parameters</span>",
-							"<span style="color:green;">startsecond</span>","<span style="color:green;">endsecond</span>"<br/>
-							Should look like: <b>http://www.youtube.com/watch?v=baLkXC_qWJY</b>,"<b>Video Title</b>","<b>Video description</b>","<b>images/customthumbnail.jpg</b>"<br/>
-							or<br/>
-							<b>http://www.youtube.com/watch?v=baLkXC_qWJY</b>,"<b>Video Title</b>",,"<b>images/customthumbnail.jpg</b>"
-						</p>
-						<p>
-							<b><span style="color:green;">Special parameters:</span></b> max-results=<i>NUMBER</i>,start-index=<i>NUMBER</i>,orderby=<i>FIELD_NAME</i><br/>
-							<a href="http://joomlaboat.com/youtube-gallery/youtube-gallery-special-parameters" target="_blank">More about Special Parameters</a>
-						</p>
-
-<p><b><span style="color:green;">startsecond</span></b> (supported players: AS3, AS2, HTML5)<br/>
-Values: A positive integer. This parameter causes the player to begin playing the video at the given number of seconds from the start of the video. Note that similar to the seekTo function, the player will look for the closest keyframe to the time you specify. This means sometimes the play head may seek to just before the requested time, usually no more than ~2 seconds.</p>
-
-
-
-<p><b><span style="color:green;">endsecond</span></b> (supported players: AS3)<br/>
- Values: A positive integer. This parameter specifies the time, measured in seconds from the start of the video, when the player should stop playing the video. Note that the time is measured from the beginning of the video and not from either the value of the start player parameter or the startSeconds parameter, which is used in YouTube Player API functions for loading or queueing a video.</p>
-
-						</div>
-
 						</td>
 					</tr>
-                                </tbody>
-                        </table>
-                
+				</tbody>
+				</table>
+				
+				
+				<!-- video links - dynamic-->
+				<br/>
+				<div id="ygvideolinkstable"></div>
+				
+				
+				
 
-						<br/>
+
+                        </div>
+		</div>
+		<div style="display: none;height:530px;border:none;" id="videolisttab_1" class="videolisttab_content">
+			<?php //Layout Wizard ?> <h4><a href="javascript: SwithTabs('videolisttab_',2,0);YGUpdatelinksTable();">Video Links</a> | Source</h4>
+                       <div style="margin-top:0px;height:450px;border: 1px dotted #000000;padding:10px;margin:0px;overflow: scroll -moz-scrollbars-vertical;overflow-x: hidden;overflow-y: auto;">
+
+			<?php
+			
+				$textarea_box=$this->form->getInput('videolist');
+				require_once('doc.php');
+			
+			?>
+			</div>
+		</div>
+		<span style="color:#008800"><i>1. Use "Order By" option in Theme settings to set the order, custom order is also available.</i></span><br/>
+		<span style="color:#008800"><i>2. If you have more than 25 videos in a single Play List (Channel etc.), please check this <a href="http://www.joomlaboat.com/youtube-gallery/f-a-q/is-there-a-limit-to-how-many-videos-can-be-shown?cbprofile=2" target="_blank">link</a>.</i></span>
+		<p><br/></p>
                 
                         <table style="border:none;">
                                 <tbody>
-
-                                        <tr><td style="width:200px;"><?php echo $this->form->getLabel('updateperiod'); ?></td><td>:</td><td><?php echo $this->form->getInput('updateperiod'); ?></td></tr>
-
+					<?php if($JoomlaVersionRelease>=3.0): ?>
+	                                        <tr><td style="width:200px;">
+							<?php echo $this->form->getLabel('updateperiod'); ?></td><td>:</td><td><?php echo $this->form->getInput('updateperiod'); ?></td></tr>
+					<?php else: ?>
+						<tr><td>
+							<?php echo $this->form->getLabel('updateperiod'); ?></td><td>:</td><td><?php echo $this->form->getInput('updateperiod'); ?></td></tr>
+					<?php endif; ?>
+					
+					<tr><td><?php echo $this->form->getLabel('description'); ?></td><td>:</td><td><?php echo $this->form->getInput('description'); ?></td></tr>
+					<tr><td><?php echo $this->form->getLabel('author'); ?></td><td>:</td><td>In Pro Version Only</td></tr>
+					<tr><td><?php echo $this->form->getLabel('authorurl'); ?></td><td>:</td><td>In Pro Version Only</td></tr>
+					<tr><td><?php echo $this->form->getLabel('watchusergroup'); ?></td><td>:</td><td>
+					In Pro Version Only
+					<div style="display:none;"><?php echo $this->form->getInput('watchusergroup'); ?></div>
+					</td></tr>
+					<tr><td><?php echo $this->form->getLabel('image'); ?></td><td>:</td><td>In Pro Version Only</td></tr>
+					<tr><td><?php echo $this->form->getLabel('note'); ?></td><td>:</td><td>In Pro Version Only</td></tr>
+					
                                 </tbody>
                         </table>
                 
-
+			<script>
+				YGSetVLTA('jform_videolist');
+				YGUpdatelinksTable();
+			</script>
 
         </fieldset>
         <div>
-                <input type="hidden" name="jform[id]" value="<?php echo (int)$this->item->id; ?>" />				
-                <input type="hidden" name="task" value="linksform.edit" />
+		<?php if($JoomlaVersionRelease>=3.0): ?>
+			<input type="hidden" name="jform[id]" value="<?php echo (int)$this->item->id; ?>" />				
+                <?php endif; ?>
+		<input type="hidden" name="task" value="linksform.edit" />
                 <?php echo JHtml::_('form.token'); ?>
         </div>
 </form>

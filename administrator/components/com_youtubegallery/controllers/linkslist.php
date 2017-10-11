@@ -1,8 +1,8 @@
 <?php
 /**
- * YoutubeGallery Joomla! 3.0 Native Component
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * YoutubeGallery Joomla! Native Component
+ * @version 4.4.0
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -26,8 +26,7 @@ class YoutubeGalleryControllerLinksList extends JControllerAdmin
 		function display($cachable = false, $urlparams = array())
 		{
 				$task=JRequest::getVar( 'task');
-				//echo '$task='.$task.'<br/>';
-				//die;
+
 				switch($task)
 				{
 						case 'delete':
@@ -54,6 +53,12 @@ class YoutubeGalleryControllerLinksList extends JControllerAdmin
 						case 'linkslist.refreshItem':
 								$this->refreshItem();
 								break;
+						case 'updateItem':
+								$this->updateItem();
+								break;
+						case 'linkslist.updateItem':
+								$this->updateItem();
+								break;
 						default:
 								JRequest::setVar( 'view', 'linkslist');
 								parent::display();
@@ -69,6 +74,32 @@ class YoutubeGalleryControllerLinksList extends JControllerAdmin
 		        return $model;
 		}
  
+		public function updateItem()
+		{
+				$model = $this->getModel('linksform');
+				$cid = JRequest::getVar( 'cid', array(), 'post', 'array' );
+
+				if (count($cid)<1)
+				{
+						$this->setRedirect( 'index.php?option=com_youtubegallery&view=linkslist', JText::_('COM_YOUTUBEGALLERY_NO_ITEMS_SELECTED'),'error' );
+                				return false;
+				}
+					    	    
+				if($model->RefreshPlayist($cid,true))
+				{
+						$msg = JText::_( 'COM_YOUTUBEGALLERY_VIDEOLIST_UPDATED_SUCCESSFULLY' );
+						$link 	= 'index.php?option=com_youtubegallery&view=linkslist';
+						$this->setRedirect($link, $msg);
+				}
+				else
+				{
+						$msg = JText::_( 'COM_YOUTUBEGALLERY_VIDEOLIST_WAS_UNABLE_TO_UPDATE' );
+						$link 	= 'index.php?option=com_youtubegallery&view=linkslist';
+						$this->setRedirect($link, $msg,'error');
+				}
+
+		}
+		
 		public function refreshItem()
 		{
 				
@@ -84,7 +115,7 @@ class YoutubeGalleryControllerLinksList extends JControllerAdmin
 						return false;
 				}
 					    	    
-				if($model->RefreshPlayist($cid))
+				if($model->RefreshPlayist($cid,false))
 				{
 						$msg = JText::_( 'COM_YOUTUBEGALLERY_VIDEOLIST_REFRESHED_SUCCESSFULLY' );
 						$link 	= 'index.php?option=com_youtubegallery&view=linkslist';
@@ -92,7 +123,7 @@ class YoutubeGalleryControllerLinksList extends JControllerAdmin
 				}
 				else
 				{
-						$msg = JText::_( 'COM_YOUTUBEGALLERY_VIDEOLIST_WAS_UNABLE_TO_REFRESHED' );
+						$msg = JText::_( 'COM_YOUTUBEGALLERY_VIDEOLIST_WAS_UNABLE_TO_REFRESH' );
 						$link 	= 'index.php?option=com_youtubegallery&view=linkslist';
 						$this->setRedirect($link, $msg,'error');
 				}

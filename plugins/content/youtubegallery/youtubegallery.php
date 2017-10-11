@@ -1,8 +1,8 @@
 <?php
 /**
- * YoutubeGallery Joomla! 3.0 Native Component
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * YoutubeGallery Joomla! Plugin
+ * @version 4.4.0
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -13,10 +13,39 @@ defined('_JEXEC') or die('Restricted access');
 if(!defined('DS'))
 	define('DS',DIRECTORY_SEPARATOR);
 
+jimport('joomla.version');
+$version = new JVersion();
+$JoomlaVersionRelease=$version->RELEASE;
+if($JoomlaVersionRelease<1.6)
+	$mainframe->registerEvent('onPrepareContent', 'plgContentYoutubeGallery');
+	
+//{
+	
+	function plgContentYouTubeGallery(&$row, &$params, $page=0)
+	{
+		echo 'sabaka';
+		if (is_object($row)) {
+			if(strpos($row->text,'youtubegallery')!==false)
+			{
+				//$pcyg = new plgContentYoutubeGallery;
+				plgContentYoutubeGallery::plgYoutubeGallery($row->text, false);
+				plgContentYoutubeGallery::plgYoutubeGallery($row->text, true);
+			}
+		}
+		else
+		{
+			if(strpos($row,'youtubegallery')!==false)
+			{
+				//$pcyg = new plgContentYoutubeGallery;
+				plgContentYoutubeGallery::plgYoutubeGallery($row, false);
+				plgContentYoutubeGallery::plgYoutubeGallery($row, true);
+			}
+		}
+	}
+/*}
+else
+{*/
 jimport('joomla.plugin.plugin');
-
-
-
 class plgContentYoutubeGallery extends JPlugin
 {
 
@@ -24,12 +53,12 @@ class plgContentYoutubeGallery extends JPlugin
 		
 		
 		$count=0;
-		$count+=$this->plgYoutubeGallery($article->text,true);
-		$count+=$this->plgYoutubeGallery($article->text,false);
+		$count+=plgContentYoutubeGallery::plgYoutubeGallery($article->text,true);
+		$count+=plgContentYoutubeGallery::plgYoutubeGallery($article->text,false);
 
 	}
 	
-	function strip_html_tags_textarea( $text )
+	public static function strip_html_tags_textarea( $text )
 	{
 	    $text = preg_replace(
         array(
@@ -43,29 +72,33 @@ class plgContentYoutubeGallery extends JPlugin
 	}
 	
 
-	function plgYoutubeGallery(&$text_original, $byId)
+	public static function plgYoutubeGallery(&$text_original, $byId)
 	{
-		
-		$text=$this->strip_html_tags_textarea($text_original);
+		require_once(JPATH_SITE.DS.'components'.DS.'com_youtubegallery'.DS.'includes'.DS.'misc.php');
+		$text=plgContentYoutubeGallery::strip_html_tags_textarea($text_original);
 	
 		$options=array();
 		if($byId)
-			$fList=$this->getListToReplace('youtubegalleryid',$options,$text);
+			$fList=plgContentYoutubeGallery::getListToReplace('youtubegalleryid',$options,$text);
 		else
-			$fList=$this->getListToReplace('youtubegallery',$options,$text);
+			$fList=plgContentYoutubeGallery::getListToReplace('youtubegallery',$options,$text);
 			
 	
 		if(count($fList)==0)
 			return 0;
 		
-		require_once(JPATH_SITE.DS.'components'.DS.'com_youtubegallery'.DS.'includes'.DS.'misc.php');
+		
 		require_once(JPATH_SITE.DS.'components'.DS.'com_youtubegallery'.DS.'includes'.DS.'render.php');
 		
-		
+		$errorreporting=(bool)YouTubeGalleryMisc::getSettingValue('errorreporting');
+		if($errorreporting)
+			error_reporting(E_ALL);
+		else
+			error_reporting(0);
 	
 		for($i=0; $i<count($fList);$i++)
 		{
-			$replaceWith=$this->getYoutubeGallery($options[$i],$i,$byId);
+			$replaceWith=plgContentYoutubeGallery::getYoutubeGallery($options[$i],$i,$byId);
 			$text_original=str_replace($fList[$i],$replaceWith,$text_original);	
 		}
 	
@@ -74,7 +107,7 @@ class plgContentYoutubeGallery extends JPlugin
 
 
 
-	function getYoutubeGallery($galleryparams,$count,$byId)
+	public static function getYoutubeGallery($galleryparams,$count,$byId)
 	{
 		$result='';
 		
@@ -82,13 +115,21 @@ class plgContentYoutubeGallery extends JPlugin
 		if(count($opt)<2)
 			return '<p>YoutubeGallery Theme Not Set</p>';
 	
-		
 		$db = JFactory::getDBO();
 		
 		if($byId)
 		{
 			$listid=(int)$opt[0];
-			$themeid=(int)$opt[1];
+			if(isset($opt[3]) and (int)$opt[3]!=0)
+			{
+				$isMobile=YouTubeGalleryMisc::check_user_agent('mobile');
+				if($isMobile)
+					$themeid=(int)$opt[3];
+				else
+					$themeid=(int)$opt[1];
+			}
+			else
+				$themeid=(int)$opt[1];
 						
 			$query_list = 'SELECT * FROM #__youtubegallery_videolists WHERE id='.$listid.' LIMIT 1';
 			$query_theme = 'SELECT * FROM #__youtubegallery_themes WHERE id='.$themeid.' LIMIT 1';
@@ -96,7 +137,16 @@ class plgContentYoutubeGallery extends JPlugin
 		else
 		{
 			$listname=trim($opt[0]);
-			$themename=trim($opt[1]);
+			if(isset($opt[3]) and trim($opt[3])!='')
+			{
+				$isMobile=YouTubeGalleryMisc::check_user_agent('mobile');
+				if($isMobile)
+					$themename=trim($opt[3]);
+				else
+					$themename=trim($opt[1]);
+			}
+			else
+				$themename=trim($opt[1]);
 			
 			$query_list = 'SELECT * FROM #__youtubegallery_videolists WHERE listname="'.$listname.'" LIMIT 1';
 			$query_theme = 'SELECT * FROM #__youtubegallery_themes WHERE themename="'.$themename.'" LIMIT 1';
@@ -132,11 +182,13 @@ class plgContentYoutubeGallery extends JPlugin
 
 		$misc->update_playlist();
 
-		$videoid=JRequest::getVar('videoid');
-		if(!isset($videoid))
+		$videoid=JRequest::getCmd('videoid','');
+		if(!isset($videoid) or $videoid=='')
 		{
-			$video=JRequest::getVar('video');
-			if(isset($video))
+			$video=JRequest::getVar('video','');
+			$video=preg_replace('/[^a-zA-Z0-9-_]+/', '', $video);
+			
+			if($video!='')
 				$videoid=YouTubeGalleryMisc::getVideoIDbyAlias($video);
 		}
 
@@ -169,7 +221,7 @@ class plgContentYoutubeGallery extends JPlugin
 	
 	
 
-	function getListToReplace($par,&$options,&$text)
+	public static function getListToReplace($par,&$options,&$text)
 	{
 		$temp_text=preg_replace("/<textarea\b[^>]*>(.*?)<\/textarea>/i", "", $text);
 		
@@ -195,9 +247,11 @@ class plgContentYoutubeGallery extends JPlugin
 			break;
 		
 		$notestr=substr($temp_text,$ps,$pe-$ps+1);
+		$fList[]=$notestr;
 
-			$options[]=substr($temp_text,$ps+$l,$pe-$ps-$l);
-			$fList[]=$notestr;
+		$opt_string=substr($temp_text,$ps+$l,$pe-$ps-$l);
+		$options[]=YouTubeGalleryMisc::html2txt($opt_string);
+			
 			
 
 		$offset=$ps+$l;
@@ -208,5 +262,7 @@ class plgContentYoutubeGallery extends JPlugin
 		return $fList;
 	}
 	
-}
+}//class
+
+//}//if($JoomlaVersionRelease<1.6)
 ?>

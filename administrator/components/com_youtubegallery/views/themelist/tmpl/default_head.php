@@ -1,21 +1,28 @@
 <?php
 /**
- * YoutubeGallery Joomla! 3.0 Native Component
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * YoutubeGallery Joomla! Native Component
+ * @version 4.4.0
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
 
 // No direct access to this file
 defined('_JEXEC') or die('Restricted Access');
+
+jimport('joomla.version');
+$version = new JVersion();
+$JoomlaVersionRelease=$version->RELEASE;
+
 ?>
 <tr>
         <th width="5">
                 <?php echo JText::_('COM_YOUTUBEGALLERY_ID'); ?>
         </th>
         <th width="20">
+                <?php if($JoomlaVersionRelease>=3.0): ?>
                 <input type="checkbox" name="checkall-toggle" value="" title="Check All" onclick="Joomla.checkAll(this)" />
+                <?php endif; ?>
         </th>                     
         <th align="left" style="text-align:left;">
                 <?php echo JText::_('COM_YOUTUBEGALLERY_THEMENAME'); ?>
@@ -26,7 +33,7 @@ defined('_JEXEC') or die('Restricted Access');
         </th>
         
         <th align="left" style="text-align:left;">
-                Export
+                Export (in Pro Version only)
         </th>
 </tr>
 

@@ -1,0 +1,1 @@
+ALTER TABLE `#__youtubegallery_videos` ADD COLUMN `datalink` varchar(1024) NOT NULL;

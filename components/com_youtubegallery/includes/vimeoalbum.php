@@ -1,8 +1,8 @@
 <?php
 /**
  * YoutubeGallery
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * @version 4.4.0
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -74,7 +74,7 @@ class VideoSource_VimeoAlbum
 		
 		$vimeo = new phpVimeo($consumer_key, $consumer_secret, $s_oauth_access_token, $s_oauth_access_token_secret);
 		
-		//echo '$album_id='.$album_id.'<br/>';;
+
 		$params = array();
 		$params['album_id'] = $album_id;
 		
@@ -90,15 +90,13 @@ class VideoSource_VimeoAlbum
 		
 		$videos = $vimeo->call('vimeo.albums.getVideos',$params);
 		
-		//print_r($videos);
+
 		
 		foreach($videos->videos->video as $video)
 		{
 			$videolist[] = 'http://vimeo.com/'.$video->id;
 		}
 		
-		//print_r($videolist);
-		//die;
 	
 		return $videolist;
 		

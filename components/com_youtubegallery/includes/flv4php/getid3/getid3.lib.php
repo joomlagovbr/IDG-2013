@@ -422,7 +422,7 @@ class getid3_lib
 
 
 	function image_type_to_mime_type($imagetypeid) {
-		// only available in PHP v4.3.0+
+		// only available in PHP v4.4.0+
 		static $image_type_to_mime_type = array();
 		if (empty($image_type_to_mime_type)) {
 			$image_type_to_mime_type[1]  = 'image/gif';                     // GIF
@@ -516,7 +516,7 @@ class getid3_lib
 
 	function md5_file($file) {
 
-		// md5_file() exists in PHP 4.2.0+.
+		// md5_file() exists in PHP 4.4.0+.
 		if (function_exists('md5_file')) {
 			return md5_file($file);
 		}
@@ -526,7 +526,7 @@ class getid3_lib
 			$RequiredFiles = array('cygwin1.dll', 'md5sum.exe');
 			foreach ($RequiredFiles as $required_file) {
 				if (!is_readable(GETID3_HELPERAPPSDIR.$required_file)) {
-					die(implode(' and ', $RequiredFiles).' are required in '.GETID3_HELPERAPPSDIR.' for getid3_lib::md5_file() to function under Windows in PHP < v4.2.0');
+					die(implode(' and ', $RequiredFiles).' are required in '.GETID3_HELPERAPPSDIR.' for getid3_lib::md5_file() to function under Windows in PHP < v4.4.0');
 				}
 			}
 			$commandline = GETID3_HELPERAPPSDIR.'md5sum.exe "'.str_replace('/', DIRECTORY_SEPARATOR, $file).'"';
@@ -549,7 +549,7 @@ class getid3_lib
 
 	function sha1_file($file) {
 
-		// sha1_file() exists in PHP 4.3.0+.
+		// sha1_file() exists in PHP 4.4.0+.
 		if (function_exists('sha1_file')) {
 			return sha1_file($file);
 		}
@@ -561,7 +561,7 @@ class getid3_lib
 			$RequiredFiles = array('cygwin1.dll', 'sha1sum.exe');
 			foreach ($RequiredFiles as $required_file) {
 				if (!is_readable(GETID3_HELPERAPPSDIR.$required_file)) {
-					die(implode(' and ', $RequiredFiles).' are required in '.GETID3_HELPERAPPSDIR.' for getid3_lib::sha1_file() to function under Windows in PHP < v4.3.0');
+					die(implode(' and ', $RequiredFiles).' are required in '.GETID3_HELPERAPPSDIR.' for getid3_lib::sha1_file() to function under Windows in PHP < v4.4.0');
 				}
 			}
 			$commandline = GETID3_HELPERAPPSDIR.'sha1sum.exe "'.str_replace('/', DIRECTORY_SEPARATOR, $file).'"';

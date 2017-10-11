@@ -1,0 +1,1 @@
+ALTER TABLE `#__youtubegallery_videos` ADD COLUMN `rawdata` text NOT NULL;

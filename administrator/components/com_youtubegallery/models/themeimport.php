@@ -1,15 +1,15 @@
 <?php
 /**
  * YoutubeGallery Joomla! 3.0 Native Component
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * @version 4.4.0
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
 
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
-jimport('joomla.application.component.model');
+jimport('joomla.application.component.modellist');
 jimport('joomla.filesystem.file');
 jimport('joomla.filesystem.folder' );
 jimport('joomla.filesystem.archive' );
@@ -20,7 +20,7 @@ if(!defined('DS'))
 /**
  * YoutubeGallery - Theme Import Model
  */
-class YoutubeGalleryModelThemeImport extends JModelLegacy
+class YoutubeGalleryModelThemeImport extends JModelList
 {
 		function upload_theme(&$msg)
         {
@@ -122,7 +122,7 @@ class YoutubeGalleryModelThemeImport extends JModelLegacy
 				}
 				else
 				{
-						$msg='Archive doesnt containe Gallery Data';
+						$msg="Archive doesn't containe Gallery Data";
 						return false;
 				}
 				
@@ -332,10 +332,10 @@ class YoutubeGalleryModelThemeImport extends JModelLegacy
         }
 		
 		function getFolderNameOnly($filename)
-        {
-				echo 'File name: '.$filename.'<br/>';
+		{
+				//echo 'File name: '.$filename.'<br/>';
 				
-                $p=explode('.',$filename);
+				$p=explode('.',$filename);
 				
 				if(count($p)<2)
 						return '';
@@ -343,45 +343,46 @@ class YoutubeGalleryModelThemeImport extends JModelLegacy
 				if(strtolower($p[1])!='zip')
 						return '';
 				
-                return $p[0];
-        }
+				return $p[0];
+		}
+	
 		function prepareFolderYG()
 		{
 				$path=JPATH_SITE.DS.'tmp'.DS;
                 
-                if(file_exists($path.'youtubegallery'))
-                {
-                        //JFolder::delete($path.'youtubegallery');
-                }
-                else
-                {
-                        echo 'Folder "tmp/youtubegallery" created.<br/>';
-                        mkdir($path.'youtubegallery');
-                }
+				if(file_exists($path.'youtubegallery'))
+				{
+				        //JFolder::delete($path.'youtubegallery');
+				}
+				else
+				{
+				        echo 'Folder "tmp/youtubegallery" created.<br/>';
+				        mkdir($path.'youtubegallery');
+				}
 		}
 		
 		function prepareFolder($folder_base_name, $path)
-        {
+		{
 				$this->prepareFolderYG();
 				
-                if(file_exists($path.$folder_base_name) or file_exists($path.$folder_base_name.'.zip'))
-                {
-                        $i=0;
-                                do
-                                {
-                                        $i++;
-                                        $folder=$folder_base_name.'_'.$i;
-                                }while(file_exists($path.$folder) or file_exists($path.$folder.'.zip'));
-                }
-                else
-                        $folder=$folder_base_name;
+				if(file_exists($path.$folder_base_name) or file_exists($path.$folder_base_name.'.zip'))
+				{
+						$i=0;
+						do
+						{
+								$i++;
+								$folder=$folder_base_name.'_'.$i;
+						}while(file_exists($path.$folder) or file_exists($path.$folder.'.zip'));
+				}
+				else
+				        $folder=$folder_base_name;
                 
-                if(mkdir($path.$folder)===false)
-                {
-                        echo '<p>Cannot create temporary folder in "tmp/"</p>';
-                        return '';
-                }
+				if(mkdir($path.$folder)===false)
+				{
+				        echo '<p>Cannot create temporary folder in "tmp/"</p>';
+				        return '';
+				}
                 
-                return $folder;
-        }
+				return $folder;
+		}
 }

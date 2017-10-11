@@ -1,8 +1,8 @@
 <?php
 /**
  * Youtubegallery - Search Module for Joomla! 2.5
- * @version 1.0.0
- * @author DesignCompass corp <admin@designcompasscorp.com>
+ * @version 4.4.01.0.0
+ * @author Ivan Komlev <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @license GNU/GPL
  **/

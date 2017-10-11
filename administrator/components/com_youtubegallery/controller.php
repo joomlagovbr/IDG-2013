@@ -1,8 +1,8 @@
 <?php
 /**
- * YoutubeGallery Joomla! 3.0 Native Component
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * YoutubeGallery Joomla! Native Component
+ * @version 4.4.0
+ * @author Ivan Komlev <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -16,8 +16,15 @@ jimport('joomla.application.component.controller');
 /**
  * General Controller of Youtube Gallery component
  */
-class YoutubeGalleryController extends JControllerLegacy
+jimport('joomla.version');
+$version = new JVersion();
+$JoomlaVersionRelease=$version->RELEASE;
+
+if($JoomlaVersionRelease>=3.0)
 {
+    
+    class YoutubeGalleryController extends JControllerLegacy
+    {
         /**
          * display task
          *
@@ -31,4 +38,24 @@ class YoutubeGalleryController extends JControllerLegacy
                 // call parent behavior
                 parent::display($cachable);
         }
+    }
+}
+else
+{
+    class YoutubeGalleryController extends JController
+    {
+        /**
+         * display task
+         *
+         * @return void
+         */
+        function display($cachable = false, $urlparams = null) 
+        {
+                // set default view if not set
+                JRequest::setVar('view', JRequest::getCmd('view', 'linkslist'));
+                
+                // call parent behavior
+                parent::display($cachable);
+        }
+    }
 }

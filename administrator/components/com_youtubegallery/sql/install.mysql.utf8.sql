@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS `#__youtubegallery_settings` (
   `option` varchar(50) NOT NULL,
-  `value` varchar(255),
+  `value` varchar(1024),
 
   PRIMARY KEY (`option`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
@@ -13,7 +13,12 @@ CREATE TABLE IF NOT EXISTS `#__youtubegallery_videolists` (
   `catid` int(11) NOT NULL,
   `updateperiod` float NOT NULL default 7,
   `lastplaylistupdate` datetime NOT NULL,
-
+  `description` text NOT NULL,
+  `author` varchar(50) NOT NULL,
+  `watchusergroup` smallint(6) NOT NULL,
+  `authorurl` varchar(1024) NOT NULL,
+  `image` varchar(1024) NOT NULL,
+  `note` varchar(256) NOT NULL,
 
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
@@ -92,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `#__youtubegallery_videos` (
   `listid` int(11) NOT NULL,
   `parentid` int(11) NOT NULL,
   `videosource` varchar(30) NOT NULL,
-  `videoid` varchar(30) NOT NULL,
+  `videoid` varchar(128) NOT NULL,
   `imageurl` varchar(1024) NOT NULL,
   `title` varchar(255) NOT NULL,
   `description` text NOT NULL,
@@ -135,6 +140,8 @@ CREATE TABLE IF NOT EXISTS `#__youtubegallery_videos` (
   `channel_totaluploadviews` int(11) NOT NULL default 0,
 
   `alias` varchar(255) NOT NULL,
+  `rawdata` mediumtext NOT NULL,
+  `datalink` varchar(1024) NOT NULL,
 
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;

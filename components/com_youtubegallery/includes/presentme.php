@@ -1,8 +1,8 @@
 <?php
 /**
  * YoutubeGallery
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * @version 4.4.0
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -88,9 +88,6 @@ class VideoSource_PresentMe
 			);
 		
 		
-			//print_r($videodata);
-			
-			//die;
 			return $videodata;
 		}
 		else

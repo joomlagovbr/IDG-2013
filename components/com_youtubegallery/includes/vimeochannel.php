@@ -1,8 +1,8 @@
 <?php
 /**
  * YoutubeGallery
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * @version 4.4.0
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -37,7 +37,7 @@ class VideoSource_VimeoChannel
 	    return '';
 	}
 	
-	public static function getVideoIDList($vimeo_user_link,$optionalparameters)
+	public static function getVideoIDList($vimeo_user_link,$optionalparameters,&$userid,&$datalink)
 	{
 		
 		$videolist=array();

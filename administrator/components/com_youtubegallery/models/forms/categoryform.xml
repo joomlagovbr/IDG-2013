@@ -30,6 +30,28 @@
                         default=""
                 />
 
+		<field
+                        name="description"
+                        type="textarea"
+                        label="COM_YOUTUBEGALLERY_FIELD_DESCRIPTION_LABEL"
+                        description="COM_YOUTUBEGALLERY_FIELD_DESCRIPTION_DESC"
+                        class="inputbox"
+                        default=""
+                        cols="150"
+                        rows="7"
+                />
+                
+                <field
+			cols="150"
+                        name="image"
+                        type="text"
+                        label="COM_YOUTUBEGALLERY_FIELD_IMAGE_LABEL"
+                        description="COM_YOUTUBEGALLERY_FIELD_IMAGE_DESC"
+                        size="40"
+                        class="inputbox"
+                        default=""
+                />
+
         </fieldset>
 
 </form>

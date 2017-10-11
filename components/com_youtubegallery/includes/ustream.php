@@ -1,8 +1,8 @@
 <?php
 /**
  * YoutubeGallery
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * @version 4.4.0
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -21,7 +21,8 @@ class VideoSource_Ustream
 
 	public static function extractUstreamID($theLink)
 	{
-		//http://www.ustream.tv/recorded/35745825
+		//http://www.ustream.tv/channel/nasa-tv-wallops
+		//http://www.ustream.tv/recorded/40925310 - recorded
 		$l=explode('/',$theLink);
 		if(count($l)>4)
 		{
@@ -125,14 +126,7 @@ class VideoSource_Ustream
 		$playerid='youtubegalleryplayerid_'.$videolist_row->id;
 		
 		$settings=array();
-		//$settings[]=array('autoplay',(int)$options['autoplay']);
-		//$settings[]=array('related',$options['relatedvideos']);
-		//$settings[]=array('controls',$options['controls']);
-		
-		//if($theme_row->logocover)
-		//	$settings[]=array('logo','0');
-		//else
-		//	$settings[]=array('logo','1');
+
 			
 		if($options['color1']!='')
 		{
@@ -153,9 +147,7 @@ class VideoSource_Ustream
 		$settingline=YouTubeGalleryMisc::CreateParamLine($settings);
 		
 		$result='';
-		
-		
-		
+
 		$result.='<iframe '
 			.' id="'.$playerid.'"';
 			

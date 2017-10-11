@@ -1,8 +1,8 @@
 <?php
 /**
  * YoutubeGallery Joomla! 3.0 Native Component
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * @version 4.4.0
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -135,7 +135,4 @@ class YoutubeGalleryControllerCategoryForm extends JControllerForm
 		$this->setRedirect( 'index.php?option=com_youtubegallery&view=categories');
 	}
 
-	/**
-	* Form for copying item(s) to a specific option
-	*/
 }
