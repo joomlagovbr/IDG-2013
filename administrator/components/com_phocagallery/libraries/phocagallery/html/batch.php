@@ -1,14 +1,14 @@
 <?php
-/*
- * @package		Joomla.Framework
- * @copyright	Copyright (C) 2005 - 2010 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
- *
- * @component Phoca Component
- * @copyright Copyright (C) Jan Pavelka www.phoca.cz
- * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License version 2 or later;
+/**
+ * @package   Phoca Gallery
+ * @author    Jan Pavelka - https://www.phoca.cz
+ * @copyright Copyright (C) Jan Pavelka https://www.phoca.cz
+ * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 and later
+ * @cms       Joomla
+ * @copyright Copyright (C) Open Source Matters. All rights reserved.
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  */
-
+defined('_JEXEC') or die;
 defined('JPATH_PLATFORM') or die;
 
 abstract class PhocaGalleryBatch
@@ -22,12 +22,12 @@ abstract class PhocaGalleryBatch
 			JHtml::_('select.option', 'm', JText::_('JLIB_HTML_BATCH_MOVE'))
 		);
 		
-		$db = &JFactory::getDBO();
+		$db = JFactory::getDBO();
 
        //build the list of categories
 		$query = 'SELECT a.title AS text, a.id AS value, a.parent_id as parentid'
 		. ' FROM #__phocagallery_categories AS a'
-		// TODO. ' WHERE a.published = '.(int)$published
+		// TO DO. ' WHERE a.published = '.(int)$published
 		. ' ORDER BY a.ordering';
 		$db->setQuery( $query );
 		$data = $db->loadObjectList();

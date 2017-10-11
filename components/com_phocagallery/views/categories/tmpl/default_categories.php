@@ -1,7 +1,18 @@
 <?php
+/*
+ * @package Joomla
+ * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+ *
+ * @component Phoca Gallery
+ * @copyright Copyright (C) Jan Pavelka www.phoca.cz
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ */
 defined('_JEXEC') or die('Restricted access');
 
+$this->cv = new stdClass();
 echo '<div id="pg-msnr-container">';
+
 foreach ($this->categories as $ck => $cv){
 
 
@@ -30,8 +41,15 @@ foreach ($this->categories as $ck => $cv){
 	echo '  </div>'. "\n";
 	echo ' </div>'. "\n";
 	
-	
-	echo '<div class="pg-csv-name"><a href="'.$cv->link.'">'.PhocaGalleryText::wordDelete($cv->title_self, $this->tmpl['char_cat_length_name'], '...').'</a>';
+	if ($this->tmpl['bootstrap_icons'] == 0) {
+		$cls 	= 'class="pg-csv-name"';
+		$icon	= '';
+	} else {
+		$cls 	= 'class="pg-csv-name-i"';
+		$icon	= PhocaGalleryRenderFront::renderIcon('category', '', ''). ' ';
+	}
+	echo '<div class="pg-box-img-bottom">';
+	echo '<div '.$cls.'>'.$icon.'<a href="'.$cv->link.'">'.PhocaGalleryText::wordDelete($cv->title_self, $this->tmpl['char_cat_length_name'], '...').'</a>';
 	if ($cv->numlinks > 0) {
 		echo ' <span class="pg-csv-count">('.$cv->numlinks.')</span>'. "\n";
 	}
@@ -44,8 +62,10 @@ foreach ($this->categories as $ck => $cv){
 		echo '<div class="pg-csv-descbox">' .(JHtml::_('content.prepare', $cv->description, 'com_phocagallery.category')).'</div>';
 	}
 	
+	$this->cv = $cv;
 	echo $this->loadTemplate('rating');
 	
+	echo '</div>'. "\n";// End pg-box-img-bottom
 	echo '</div>'. "\n";// End pg-csv-box
 }
 echo '</div>';

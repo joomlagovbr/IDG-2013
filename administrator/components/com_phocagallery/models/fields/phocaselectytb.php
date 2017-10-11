@@ -20,6 +20,7 @@ class JFormFieldPhocaSelectYtb extends JFormField
 		// Initialize variables.
 		$html = array();
 		
+		
 		$suffix	= '';
 		$catid	= $this->form->getValue('catid');
 		if ((int)$catid > 0) { 
@@ -35,12 +36,16 @@ class JFormFieldPhocaSelectYtb extends JFormField
 		$disabled	= ((string) $this->element['disabled'] == 'true') ? ' disabled="disabled"' : '';
 		$columns	= $this->element['cols'] ? ' cols="'.(int) $this->element['cols'].'"' : '';
 		$rows		= $this->element['rows'] ? ' rows="'.(int) $this->element['rows'].'"' : '';
+		//$required 	= ($v = $this->element['required']) ? ' required="required"' : '';
 
 		// Initialize JavaScript field attributes.
 		$onchange = (string) $this->element['onchange'];
 
 		// Load the modal behavior script.
-		JHtml::_('behavior.modal', 'a.modal_'.$this->id);
+		//JHtml::_('behavior.modal', 'a.modal_'.$this->id);
+		
+		JHtml::_('jquery.framework');
+		$idA		= 'pgselectytb';
 
 		// Build the script.
 		$script = array();
@@ -50,7 +55,8 @@ class JFormFieldPhocaSelectYtb extends JFormField
 		$script[] = '		document.getElementById("jform_description").value = desc;';
 		$script[] = '		document.getElementById("jform_filename").value = filename;';
 		$script[] = '		'.$onchange;
-		$script[] = '		SqueezeBox.close();';
+		//$script[] = '		SqueezeBox.close();';
+		$script[] = '		jQuery(\'#'.$idA.'\').modal(\'toggle\');';
 		$script[] = '	}';
 
 		// Add the script to the document head.
@@ -79,11 +85,35 @@ class JFormFieldPhocaSelectYtb extends JFormField
 				$columns.$rows.$class.$disabled.$onchange.'>' .
 				htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8') .
 				'</textarea>';
-		$html[] = '<a id="pgselectytb" class="modal_'.$this->id.' btn" title="'.JText::_('COM_PHOCAGALLERY_FORM_SELECT_YTB').'"'
-				.' href="'.($this->element['readonly'] ? '' : $link).'"'
-				.' rel="{handler: \'iframe\', size: {x: 650, y: 400}}">'
-				. JText::_('COM_PHOCAGALLERY_FORM_SELECT_YTB').'</a>';
-		$html[] = '</div>'. "\n";
+		//$html[] = '<a id="pgselectytb" class="modal_'.$this->id.' btn" title="'.JText::_('COM_PHOCAGALLERY_FORM_SELECT_YTB').'"'
+		//		.' href="'.($this->element['readonly'] ? '' : $link).'"'
+		//		.' rel="{handler: \'iframe\', size: {x: 650, y: 400}}">'
+		//		. JText::_('COM_PHOCAGALLERY_FORM_SELECT_YTB').'</a>';
+				
+		//$html[] = '<span class="input-append"><input type="text" ' . $required . ' id="' . $this->id . '" name="' . $this->name . '"'
+		//	. ' value="' . $this->value . '"' . $size . $class . ' />';
+		$html[] = '<a href="#'.$idA.'" role="button" class="btn " data-toggle="modal" title="' . JText::_('COM_PHOCAGALLERY_FORM_SELECT_YTB') . '">'
+			. '<span class="icon-list icon-white"></span> '
+			. JText::_('COM_PHOCAGALLERY_FORM_SELECT_YTB') . '</a></span>';
+		
+		$html[] = '</div>'. "\n";		
+		
+		$html[] = JHtml::_(
+			'bootstrap.renderModal',
+			$idA,
+			array(
+				'url'    => $link,
+				'title'  => JText::_('COM_PHOCAGALLERY_FORM_SELECT_YTB'),
+				'width'  => '700px',
+				'height' => '400px',
+				'modalWidth' => '80',
+				'bodyHeight' => '70',
+				'footer' => '<button type="button" class="btn" data-dismiss="modal" aria-hidden="true">'
+					. JText::_('COM_PHOCAGALLERY_CLOSE') . '</button>'
+			)
+		);		
+				
+		
 
 
 		return implode("\n", $html);

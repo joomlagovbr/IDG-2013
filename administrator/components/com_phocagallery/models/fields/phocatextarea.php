@@ -18,8 +18,8 @@ class JFormFieldPhocaTextArea extends JFormField
 
 	protected function getInput() {
 	
-		$document		= &JFactory::getDocument();
-		$option 		= JRequest::getCmd('option');
+		$document		= JFactory::getDocument();
+		$option 		= JFactory::getApplication()->input->getCmd('option');
 		$globalValue 	= $this->_getPhocaParams( $this->element['name'] );
 		
 		// Initialize some field attributes.
@@ -33,7 +33,7 @@ class JFormFieldPhocaTextArea extends JFormField
 		
 		$value 		= htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8');
 		
-		// TODO 1.6
+		// TO DO 1.6
 		// MENU - Set Default value to "" because of saving "" value into the menu link ( use global = "")
 		if ($option == "com_menus") {
 			$DefaultValue	= (string)$this->element['default'];

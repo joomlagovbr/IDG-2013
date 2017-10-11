@@ -33,7 +33,7 @@ class PhocaGalleryCpViewPhocaGalleryFb extends JViewLegacy
 
 
 		if (count($errors = $this->get('Errors'))) {
-			JError::raiseError(500, implode("\n", $errors));
+			throw new Exception(implode("\n", $errors), 500);
 			return false;
 		}
 
@@ -43,8 +43,8 @@ class PhocaGalleryCpViewPhocaGalleryFb extends JViewLegacy
 
 	protected function addToolbar() {
 		
-		require_once JPATH_COMPONENT.DS.'helpers'.DS.'phocagalleryfbs.php';
-		JRequest::setVar('hidemainmenu', true);
+		require_once JPATH_COMPONENT.'/helpers/phocagalleryfbs.php';
+		JFactory::getApplication()->input->set('hidemainmenu', true);
 		$bar 		= JToolBar::getInstance('toolbar');
 		$user		= JFactory::getUser();
 		$isNew		= ($this->item->id == 0);

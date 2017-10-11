@@ -21,8 +21,8 @@
 		<p>&nbsp;</p>
 		<?php /*
 		<div style="text-align:center;padding:0;margin:0;border:0">
-			<iframe style="padding:0;margin:0;border:0" src="http://www.phoca.cz/adv/phocagallery" noresize="noresize" frameborder="0" border="0" cellspacing="0" scrolling="no" width="500" marginwidth="0" marginheight="0" height="125">
-			<a href="http://www.phoca.cz/adv/phocagallery" target="_blank">Phoca Gallery</a>
+			<iframe style="padding:0;margin:0;border:0" src="https://www.phoca.cz/adv/phocagallery" noresize="noresize" frameborder="0" border="0" cellspacing="0" scrolling="no" width="500" marginwidth="0" marginheight="0" height="125">
+			<a href="https://www.phoca.cz/adv/phocagallery" target="_blank">Phoca Gallery</a>
 			</iframe> 
 		</div> */ ?>
 		<div class="alert alert-block alert-info ph-w80">
@@ -44,7 +44,7 @@
 
 		echo '<h3>'.  JText::_('COM_PHOCAGALLERY_COPYRIGHT').'</h3>'
 		.'<p>© 2007 - '.  date("Y"). ' Jan Pavelka</p>'
-		.'<p><a href="http://www.phoca.cz/" target="_blank">www.phoca.cz</a></p>';
+		.'<p><a href="https://www.phoca.cz/" target="_blank">www.phoca.cz</a></p>';
 
 		echo '<h3>'.  JText::_('COM_PHOCAGALLERY_LICENCE').'</h3>'
 		.'<p><a href="http://www.gnu.org/licenses/gpl-2.0.html" target="_blank">GPLv2</a></p>';
@@ -70,11 +70,11 @@
 		<p><a href="http://hunyadi.info.hu/en/projects/boxplus" target="_blank">boxplus</a> by <a target="_blank" href="http://hunyadi.info.hu/">Levente Hunyadi</a><br />
 		<a target="_blank" href="http://www.gnu.org/licenses/gpl.html">GPL</a></p>
 		
-		<p>Google™, Google Maps™, Google Picasa™ and YouTube Broadcast Yourself™ are registered trademarks of Google Inc.</p>
+		<p>Google™, Google Maps™, Google Picasa™, Google+™, Google Photos™ and YouTube Broadcast Yourself™ are registered trademarks of Google Inc.</p>
 		
 		<?php
 		echo '<div style="border-top:1px solid #c2c2c2"></div><p>&nbsp;</p>'
-.'<div class="btn-group"><a class="btn btn-large btn-primary" href="http://www.phoca.cz/version/index.php?phocagallery='.  $this->t['version'] .'" target="_blank"><i class="icon-loop icon-white"></i>&nbsp;&nbsp;'.  JText::_('COM_PHOCAGALLERY_CHECK_FOR_UPDATE') .'</a></div>';
+.'<div class="btn-group"><a class="btn btn-large btn-primary" href="https://www.phoca.cz/version/index.php?phocagallery='.  $this->t['version'] .'" target="_blank"><i class="icon-loop icon-white"></i>&nbsp;&nbsp;'.  JText::_('COM_PHOCAGALLERY_CHECK_FOR_UPDATE') .'</a></div>';
 		?>
 		
 	</div>

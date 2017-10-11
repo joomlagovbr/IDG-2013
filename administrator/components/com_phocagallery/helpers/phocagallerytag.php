@@ -14,7 +14,7 @@ class PhocaGalleryTagHelper
 {
 	public function getTags($fileId, $select = 0) {
 	
-		$db =& JFactory::getDBO();
+		$db =JFactory::getDBO();
 		
 		if ($select == 1) {
 			$query = 'SELECT r.tagid';
@@ -44,7 +44,7 @@ class PhocaGalleryTagHelper
 	
 	
 		if ((int)$fileId > 0) {
-			$db =& JFactory::getDBO();
+			$db =JFactory::getDBO();
 			$query = ' DELETE '
 					.' FROM #__phocagallery_tags_ref'
 					. ' WHERE fileid = '. (int)$fileId;
@@ -83,7 +83,7 @@ class PhocaGalleryTagHelper
 	
 	public function getAllTagsSelectBox($name, $id, $activeArray, $javascript = NULL, $order = 'id' ) {
 	
-		$db =& JFactory::getDBO();
+		$db =JFactory::getDBO();
 		$query = 'SELECT a.id AS value, a.title AS text'
 				.' FROM #__phocagallery_tags AS a'
 				. ' ORDER BY '. $order;

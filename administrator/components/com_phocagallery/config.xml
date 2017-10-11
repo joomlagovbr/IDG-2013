@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- last head 27 spacer 10-->
+<!-- last head 28 spacer 10-->
 <config>
 	<fields addfieldpath="/administrator/components/com_phocagallery/models/fields">
 		<fieldset name="categories" label="COM_PHOCAGALLERY_CONFIG_HEAD_CATEGORIES_VIEW_LABEL">
@@ -25,9 +25,12 @@
 
 <field name="categories_description" default="" buttons="0" width="330" type="editor" filter="safehtml" label="COM_PHOCAGALLERY_FIELD_CATEGORIES_VIEW_DESCRIPTION_LABEL" description="COM_PHOCAGALLERY_FIELD_CATEGORIES_VIEW_DESCRIPTION_DESC"/>
 
+
 <field name="image_categories_size" type="list" default="1" label="COM_PHOCAGALLERY_FIELD_IMAGE_CATEGORIES_SIZE_LABEL" description="COM_PHOCAGALLERY_FIELD_IMAGE_CATEGORIES_SIZE_DESC">
-	<option value="0">COM_PHOCAGALLERY_SMALL</option>
-	<option value="1">COM_PHOCAGALLERY_MEDIUM</option>
+   <option value="0">COM_PHOCAGALLERY_SMALL</option>
+   <option value="1">COM_PHOCAGALLERY_MEDIUM</option>
+   <option value="2">COM_PHOCAGALLERY_SMALL_FOLDER_ICON</option>
+   <option value="3">COM_PHOCAGALLERY_MEDIUM_FOLDER_ICON</option>
 </field>
 
 <field name="categories_image_ordering" type="list" default="10" label="COM_PHOCAGALLERY_FIELD_CATEGORIES_IMAGE_ORDERING_LABEL" description="COM_PHOCAGALLERY_FIELD_CATEGORIES_IMAGE_ORDERING_DESC">
@@ -85,6 +88,28 @@
 	<option value="1">COM_PHOCAGALLERY_YES</option>
 	<option value="0">COM_PHOCAGALLERY_NO</option>
 </field>
+
+	<field name="phocahead28" type="phocahead"  default="COM_PHOCAGALLERY_CONFIG_CATEGORIES_VIEW_LEGACY_SETTINGS_LABEL" label="" description=""/>
+	
+	<field name="display_image_categories" type="list" default="1" label="COM_PHOCAGALLERY_FIELD_DISPLAY_CATEGORIES_STYLE_LABEL" description="COM_PHOCAGALLERY_FIELD_DISPLAY_CATEGORIES_STYLE_DESC">
+	<option value="1">COM_PHOCAGALLERY_CATEGORIES_NOT_USED</option>
+	<option value="0">COM_PHOCAGALLERY_CATEGORIES_WITHOUT_IMAGES</option>
+	<option value="2">COM_PHOCAGALLERY_CATEGORIES_IMAGES_AND_DETAIL_INFORMATION</option>
+	<option value="3">COM_PHOCAGALLERY_CATEGORIES_IMAGES_AND_DETAIL_INFORMATION_FLOAT</option>
+	<option value="4">COM_PHOCAGALLERY_CATEGORIES_IMAGES_AND_DESCRIPTION_FLOAT</option>
+	<option value="5">COM_PHOCAGALLERY_CATEGORIES_CUSTOM</option>
+</field>
+	
+	<field name="equal_percentage_width" type="list" default="1" label="COM_PHOCAGALLERY_FIELD_EQUAL_PERCENTAGE_COL_WIDTH_LABEL" description="COM_PHOCAGALLERY_FIELD_EQUAL_PERCENTAGE_COL_WIDTH_DESC">
+	<option value="0">COM_PHOCAGALLERY_NO</option>
+	<option value="1">COM_PHOCAGALLERY_YES</option>
+</field>
+
+	<field name="categories_box_width" default="33%" size="10" type="phocatext" label="COM_PHOCAGALLERY_FIELD_CATEGORIES_BOX_WIDTH_LABEL" description="COM_PHOCAGALLERY_FIELD_CATEGORIES_BOX_WIDTH_DESC"/>
+	
+	<field name="categories_columns" default="1" size="10" type="phocatext" label="COM_PHOCAGALLERY_FIELD_NUMBER_COLUMNS_LABEL" description="COM_PHOCAGALLERY_FIELD_NUMBER_COLUMNS_DESC"/>
+	
+	
 	
 	</fieldset>
 	<fieldset name="category" label="COM_PHOCAGALLERY_CONFIG_HEAD_CATEGORY_VIEW_LABEL">
@@ -185,6 +210,12 @@
 	<option value="0">COM_PHOCAGALLERY_NO</option>
 </field>
 
+<field name="masonry_center" default="0" type="list" label="COM_PHOCAGALLERY_FIELD_MASONRY_CENTER_LABEL" description="COM_PHOCAGALLERY_FIELD_MASONRY_CENTER_DESC">
+	<option value="1">COM_PHOCAGALLERY_YES</option>
+	<option value="2">COM_PHOCAGALLERY_YES_FIT_WIDTH</option>
+	<option value="0">COM_PHOCAGALLERY_NO</option>
+</field>
+
 
 <field name="phocahead3" type="phocahead" phocaimage="icon-param-cscv.png" default="COM_PHOCAGALLERY_CONFIG_CATEGORY_VIEW_SETTINGS_CV_LABEL" label="" description="" />
 
@@ -210,6 +241,7 @@
 	<option value="0">COM_PHOCAGALLERY_NO</option>
 </field>
 
+<!--
 <field name="phocahead12" type="phocahead" default="COM_PHOCAGALLERY_CONFIG_COOLIRIS_SETTINGS_LABEL" label="" description=""/>
 
 <field name="enable_cooliris" type="list" default="0" label="COM_PHOCAGALLERY_FIELD_ENABLE_COOLIRIS_LABEL" description="COM_PHOCAGALLERY_FIELD_ENABLE_COOLIRIS_DESC">
@@ -223,7 +255,7 @@
 <field name="piclens_image" type="list" default="1" label="COM_PHOCAGALLERY_FIELD_COOLIRIS_IMAGE_LABEL" description="COM_PHOCAGALLERY_FIELD_COOLIRIS_IMAGE_DESC">
 	<option value="0">COM_PHOCAGALLERY_ORIGINAL_IMAGE</option>
 	<option value="1">COM_PHOCAGALLERY_THUMBNAIL_IMAGE</option>
-</field>
+</field> -->
 
 <field name="phocahead13" type="phocahead" default="COM_PHOCAGALLERY_CONFIG_SWITCH_SETTINGS_LABEL" label="" description=""/>
 
@@ -300,7 +332,7 @@
 	<fieldset name="detail" label="COM_PHOCAGALLERY_CONFIG_HEAD_DETAIL_VIEW_LABEL">
 
 <field name="phocahead4" type="phocahead" phocaimage="icon-param-dv.png" default="COM_PHOCAGALLERY_CONFIG_DETAIL_VIEW_LABEL" label="" description="" />
-<field name="detail_window" type="list" default="0" label="COM_PHOCAGALLERY_FIELD_DETAIL_WINDOW_LABEL" description="COM_PHOCAGALLERY_FIELD_DETAIL_WINDOW_DESC_DESC">
+<field name="detail_window" type="list" default="12" label="COM_PHOCAGALLERY_FIELD_DETAIL_WINDOW_LABEL" description="COM_PHOCAGALLERY_FIELD_DETAIL_WINDOW_DESC_DESC">
 	<option value="1">COM_PHOCAGALLERY_STANDARD_POPUP_WINDOW</option>
 	<option value="0">COM_PHOCAGALLERY_MODAL_POPUP_BOX</option>
 	<option value="2">COM_PHOCAGALLERY_MODAL_POPUP_BOX_IMAGE_ONLY</option>
@@ -313,6 +345,9 @@
 	<option value="8">COM_PHOCAGALLERY_SLIMBOX</option>
 	<option value="9">COM_PHOCAGALLERY_BOXPLUS</option>
 	<option value="10">COM_PHOCAGALLERY_BOXPLUS_IMAGE_ONLY</option>
+	<option value="11">COM_PHOCAGALLERY_MAGNIFIC</option>
+	<option value="12">COM_PHOCAGALLERY_MAGNIFIC_IMAGE_ONLY</option>
+	<option value="14">COM_PHOCAGALLERY_PHOTOSWIPE</option>
 </field>
 
 
@@ -345,6 +380,11 @@
 	<option value="8">8</option>
 	<option value="9">9</option>
 	<option value="10">10</option>
+</field>
+
+<field name="sb_slideshow_autostart" default="0"  type="list" label="COM_PHOCAGALLERY_FIELD_SHADOW_BOX_SLIDESHOW_AUTOSTART_LABEL" description="COM_PHOCAGALLERY_FIELD_SHADOW_BOX_SLIDESHOW_AUTOSTART_DESC">
+	<option value="0">COM_PHOCAGALLERY_NO</option>
+	<option value="1">COM_PHOCAGALLERY_YES</option>
 </field>
 
 <field name="sb_settings" type="phocatextarea" label="COM_PHOCAGALLERY_FIELD_SHADOWBOX_SETTINGS_LABEL" description="COM_PHOCAGALLERY_FIELD_SHADOWBOX_SETTINGS_DESC" rows="2" cols="26" default="overlayColor: '#000',overlayOpacity:0.5,resizeDuration:0.35,displayCounter:true,displayNav:true"/>
@@ -514,7 +554,23 @@
 	<option value="1">COM_PHOCAGALLERY_YES</option>
 </field>
 
+
+<field name="phocahead39" type="phocahead" default="COM_PHOCAGALLERY_CONFIG_PHOTOSWIPE_SETTINGS_LABEL" label="" description=""/>
+
+
+<field name="photoswipe_slideshow" type="list" default="1" label="COM_PHOCAGALLERY_FIELD_PHOTOSWIPE_SLIDESHOW_LABEL" description="COM_PHOCAGALLERY_FIELD_PHOTOSWIPE_SLIDESHOW_DESC">
+	<option value="0">COM_PHOCAGALLERY_DISABLED</option>
+	<option value="1">COM_PHOCAGALLERY_ENABLED</option>
+</field>
+
+<field name="photoswipe_display_caption" type="list" default="1" label="COM_PHOCAGALLERY_FIELD_DISPLAY_CAPTION_LABEL" description="COM_PHOCAGALLERY_FIELD_DISPLAY_CAPTION_DESC">
+	<option value="0">COM_PHOCAGALLERY_NO</option>
+	<option value="1">COM_PHOCAGALLERY_YES</option>
+</field>
+
+
 <field name="phocahead36" type="phocahead" default="COM_PHOCAGALLERY_YOUTUBE" label="" description="" />
+
 
 <field name="ytb_display" type="list" default="0" label="COM_PHOCAGALLERY_FIELD_YTB_WINDOW_LABEL" description="COM_PHOCAGALLERY_FIELD_YTB_WINDOW_DESC">
 	<option value="0">COM_PHOCAGALLERY_DEFAULT</option>
@@ -558,7 +614,7 @@
 
 <field name="slideshow_description" type="list" default="peekaboo" label="COM_PHOCAGALLERY_FIELD_SLIDESHOW_RANDOM_LABEL" description="COM_PHOCAGALLERY_FIELD_SLIDESHOW_RANDOM_DESC">
 	<option value="ondemand">COM_PHOCAGALLERY_ONDEMAND</option>
-	<option value="allways">COM_PHOCAGALLERY_ALLWAYS</option>
+	<option value="always">COM_PHOCAGALLERY_ALWAYS</option>
 	<option value="peekaboo">COM_PHOCAGALLERY_PEEKABOO</option>
 	<option value="none">COM_PHOCAGALLERY_NONE</option>
 </field>
@@ -572,6 +628,12 @@
 	</fieldset>
 	<fieldset name="general" label="COM_PHOCAGALLERY_CONFIG_GENERAL_SETTINGS_LABEL">
 
+	<field name="youtube_api_key" default=""  type="text" label="COM_PHOCAGALLERY_FIELD_YOUTUBE_API_KEY_LABEL" description="COM_PHOCAGALLERY_FIELD_YOUTUBE_API_KEY_DESC"/>
+	<field name="youtube_api_ssl" type="list" default="1" label="COM_PHOCAGALLERY_FIELD_YOUTUBE_API_SSL_ENABLED_LABEL" description="COM_PHOCAGALLERY_FIELD_YOUTUBE_API_SSL_ENABLED_DESC">
+	<option value="1">COM_PHOCAGALLERY_YES</option>
+	<option value="0">COM_PHOCAGALLERY_NO</option>
+</field>
+	
 <field name="phocagallery_width" default=""  type="phocatext" label="COM_PHOCAGALLERY_FIELD_PHOCA_GALLERY_WIDTH_LABEL" description="COM_PHOCAGALLERY_FIELD_PHOCA_GALLERY_WIDTH_DESC_DESC"/>
 <field name="phocagallery_center" type="list" default="0" label="COM_PHOCAGALLERY_FIELD_PHOCA_GALLERY_CENTER_LABEL" description="COM_PHOCAGALLERY_FIELD_PHOCA_GALLERY_CENTER_DESC">
 	<option value="1">COM_PHOCAGALLERY_YES_CATEGORY_VIEW</option>
@@ -579,6 +641,21 @@
 	<option value="3">COM_PHOCAGALLERY_YES_CATEGORY_AND_CATEGORIES_VIEW</option>
 	<option value="0">COM_PHOCAGALLERY_NO</option>
 </field>
+
+<field name="responsive" type="list" default="0" label="COM_PHOCAGALLERY_FIELD_RESPONSIVE_DESIGN_LABEL" description="COM_PHOCAGALLERY_FIELD_RESPONSIVE_DESIGN_DESC">
+	<option value="1">COM_PHOCAGALLERY_YES</option>
+	<option value="0">COM_PHOCAGALLERY_NO</option>
+</field>
+<field name="bootstrap_icons" type="list" default="0" label="COM_PHOCAGALLERY_FIELD_BOOTSTRAP3_ICONS_LABEL" description="COM_PHOCAGALLERY_FIELD_BOOTSTRAP3_ICONS_DESC">
+	<option value="1">COM_PHOCAGALLERY_YES</option>
+	<option value="0">COM_PHOCAGALLERY_NO</option>
+</field>
+
+<field name="equal_heights" type="list" default="0" label="COM_PHOCAGALLERY_FIELD_EQUAL_HEIGHTS_LABEL" description="COM_PHOCAGALLERY_FIELD_EQUAL_HEIGHTS_DESC">
+	<option value="1">COM_PHOCAGALLERY_YES</option>
+	<option value="0">COM_PHOCAGALLERY_NO</option>
+</field>
+
 
 <field name="gallery_metadesc" type="phocatextarea" label="COM_PHOCAGALLERY_FIELD_METADESC_LABEL" description="COM_PHOCAGALLERY_FIELD_METADESC_DESC" rows="2" cols="26" default=""/>
 <field name="gallery_metakey" type="phocatextarea" label="COM_PHOCAGALLERY_FIELD_METAKEY_LABEL" description="COM_PHOCAGALLERY_FIELD_METAKEY_DESC" rows="2" cols="26" default=""/>
@@ -656,6 +733,15 @@
 </field>
 
 <field name="phocahead19" type="phocahead" default="COM_PHOCAGALLERY_CONFIG_GEO_SETTINGS_LABEL" label="" description=""/>
+
+
+<field name="maps_api_key" default=""  type="text" label="COM_PHOCAGALLERY_FIELD_MAPS_API_KEY_LABEL" description="COM_PHOCAGALLERY_FIELD_MAPS_API_KEY_DESC"/>
+	<field name="maps_api_ssl" type="list" default="1" label="COM_PHOCAGALLERY_FIELD_MAPS_API_SSL_ENABLED_LABEL" description="COM_PHOCAGALLERY_FIELD_MAPS_API_SSL_ENABLED_DESC">
+	<option value="1">COM_PHOCAGALLERY_YES</option>
+	<option value="0">COM_PHOCAGALLERY_NO</option>
+</field>
+
+
 
 <field name="display_categories_geotagging" type="list" default="0" label="COM_PHOCAGALLERY_FIELD_DISPLAY_CATEGORIES_GEOTAGGING_LABEL" description="COM_PHOCAGALLERY_FIELD_DISPLAY_CATEGORIES_GEOTAGGING_DESC">
 	<option value="1">COM_PHOCAGALLERY_YES</option>
@@ -758,7 +844,7 @@
 	<option value="1">COM_PHOCAGALLERY_YES</option>
 </field>
 
-<field name="multiple_upload_method" type="list" default="1" label="COM_PHOCAGALLERY_FIELD_MULTIPLE_UPLOAD_METHOD_LABEL" description="COM_PHOCAGALLERY_FIELD_MULTIPLE_UPLOAD_METHOD_DESC">
+<field name="multiple_upload_method" type="list" default="4" label="COM_PHOCAGALLERY_FIELD_MULTIPLE_UPLOAD_METHOD_LABEL" description="COM_PHOCAGALLERY_FIELD_MULTIPLE_UPLOAD_METHOD_DESC">
 	<option value="1">COM_PHOCAGALLERY_FLASH_UPLOADER</option>
 	<option value="2">COM_PHOCAGALLERY_GEARS_UPLOADER</option>
 	<option value="3">COM_PHOCAGALLERY_SILVERLIGHT_UPLOADER</option> 
@@ -793,6 +879,10 @@
 	<option value="2">COM_PHOCAGALLERY_YES_UCP_ONLY</option>
 </field>
 
+
+<field name="default_access" default="1" type="accesslevel" label="COM_PHOCAGALLERY_FIELD_DEFAULT_ACCESS_LABEL" description="COM_PHOCAGALLERY_FIELD_DEFAULT_ACCESS_DESC" class="inputbox" size="1" />
+
+<field name="default_accessuserid" default="" type="phocausers" multiple="1" label="COM_PHOCAGALLERY_FIELD_DEFAULT_ACCESS_RIGHTS_LABEL" description="COM_PHOCAGALLERY_FIELD_DEFAULT_ACCESS_RIGHTS_DESC" class="inputbox" size="1" />
 
 <field name="phocahead10" type="phocahead" default="COM_PHOCAGALLERY_CONFIG_RATING_SETTINGS_LABEL" label="" description=""/>
 
@@ -869,13 +959,21 @@
 </field>
 
 <field name="additional_thumbnails" type="list" default="0" label="COM_PHOCAGALLERY_FIELD_ADDITIONAL_THUMBNAILS_LABEL" description="COM_PHOCAGALLERY_FIELD_ADDITIONAL_THUMBNAILS_DESC">
+	<option value="0">COM_PHOCAGALLERY_NO</option>
 	<option value="1">COM_PHOCAGALLERY_ONLY_MEDIUM_THUMBNAIL</option>
 	<option value="2">COM_PHOCAGALLERY_ONLY_SMALL_THUMBNAIL</option>
 	<option value="3">COM_PHOCAGALLERY_MEDIUM_AND_SMALL_THUMBNAIL</option>
-	<option value="0">COM_PHOCAGALLERY_NO</option>
+	<option value="7">COM_PHOCAGALLERY_ALL</option>
 </field>
 
+<field name="additional_thumbnail_margin" type="phocatext" size="3" default="0" label="COM_PHOCAGALLERY_FIELD_MARGIN_ADDITIONAL_THUMBNAILS_LABEL" description="COM_PHOCAGALLERY_FIELD_MARGIN_ADDITIONAL_THUMBNAILS_DESC"/>
+
 <field name="jpeg_quality" type="phocatext" size="3" default="85" label="COM_PHOCAGALLERY_FIELD_JPEG_QUALITY_LABEL" description="COM_PHOCAGALLERY_FIELD_JPEG_QUALITY_DESC"/>
+
+<field name="exif_rotate" type="list" default="0" label="COM_PHOCAGALLERY_FIELD_EXIF_ROTATE_LABEL" description="COM_PHOCAGALLERY_FIELD_EXIF_ROTATE_DESC">
+	<option value="1">COM_PHOCAGALLERY_YES</option>
+	<option value="0">COM_PHOCAGALLERY_NO</option>
+</field>
 
 
 
@@ -932,10 +1030,22 @@
 
 	</fieldset>
 	
-	
-	<fieldset name="permissions_LABEL" description="JCONFIG_PERMISSIONS_DESC" label="JCONFIG_PERMISSIONS_LABEL">
 
-		<field name="rules" type="rules" component="com_phocagallery" filter="rules" label="COM_PHOCAGALLERY_FIELD_JCONFIG_PERMISSIONS_LABEL" section="component" description="COM_PHOCAGALLERY_FIELD_DESC"/>
+	
+	<fieldset
+		name="permissions"
+		label="JCONFIG_PERMISSIONS_LABEL"
+		description="JCONFIG_PERMISSIONS_DESC"
+		>
+
+		<field
+			name="rules"
+			type="rules"
+			label="JCONFIG_PERMISSIONS_LABEL"
+			validate="rules"
+			filter="rules"
+			component="com_phocagallery"
+			section="component" />
 	</fieldset>
 	
 	</fields>

@@ -14,7 +14,48 @@ class PhocaGalleryViewInfo extends JViewLegacy
 {
 	public 		$tmpl;
 	protected 	$params;
+	
+	/*
+	public static function getGps($exifCoord) {
+		$degrees = count($exifCoord) > 0 ? self::gps2Num($exifCoord[0]) : 0;
+		$minutes = count($exifCoord) > 1 ? self::gps2Num($exifCoord[1]) : 0;
+		$seconds = count($exifCoord) > 2 ? self::gps2Num($exifCoord[2]) : 0;
 
+		//normalize
+		$minutes += 60 * ($degrees - floor($degrees));
+		$degrees = floor($degrees);
+
+		$seconds += 60 * ($minutes - floor($minutes));
+		$minutes = floor($minutes);
+
+		//extra normalization, probably not necessary unless you get weird data
+		if($seconds >= 60)
+		{
+		$minutes += floor($seconds/60.0);
+		$seconds -= 60*floor($seconds/60.0);
+		}
+
+		if($minutes >= 60)
+		{
+		$degrees += floor($minutes/60.0);
+		$minutes -= 60*floor($minutes/60.0);
+		}
+
+		return array('degrees' => $degrees, 'minutes' => $minutes, 'seconds' => $seconds);
+	}
+
+	public static function gps2Num($coordPart)
+	{
+		$parts = explode('/', $coordPart);
+
+		if(count($parts) <= 0)// jic
+		return 0;
+		if(count($parts) == 1)
+		return $parts[0];
+
+		return floatval($parts[0]) / floatval($parts[1]);
+	}
+*/
 	function display($tpl = null) {
 		
 		$app	= JFactory::getApplication();
@@ -24,8 +65,8 @@ class PhocaGalleryViewInfo extends JViewLegacy
 		$get['info']	= $app->input->get( 'info', '', 'string' );
 		$this->itemId	= $app->input->get('Itemid', 0, 'int');
 		
-		$document		= &JFactory::getDocument();		
-		$this->params	= &$app->getParams();
+		$document		= JFactory::getDocument();		
+		$this->params	= $app->getParams();
 		
 		$this->tmpl['enablecustomcss']				= $this->params->get( 'enable_custom_css', 0);
 		$this->tmpl['customcss']					= $this->params->get( 'custom_css', '');
@@ -85,7 +126,7 @@ class PhocaGalleryViewInfo extends JViewLegacy
 		$this->tmpl['exifinformation']	=$this->params->get( 'exif_information', 'FILE.FileName,FILE.FileDateTime,FILE.FileSize,FILE.MimeType,COMPUTED.Height,COMPUTED.Width,COMPUTED.IsColor,COMPUTED.ApertureFNumber,IFD0.Make,IFD0.Model,IFD0.Orientation,IFD0.XResolution,IFD0.YResolution,IFD0.ResolutionUnit,IFD0.Software,IFD0.DateTime,IFD0.Exif_IFD_Pointer,IFD0.GPS_IFD_Pointer,EXIF.ExposureTime,EXIF.FNumber,EXIF.ExposureProgram,EXIF.ISOSpeedRatings,EXIF.ExifVersion,EXIF.DateTimeOriginal,EXIF.DateTimeDigitized,EXIF.ShutterSpeedValue,EXIF.ApertureValue,EXIF.ExposureBiasValue,EXIF.MaxApertureValue,EXIF.MeteringMode,EXIF.LightSource,EXIF.Flash,EXIF.FocalLength,EXIF.SubSecTimeOriginal,EXIF.SubSecTimeDigitized,EXIF.ColorSpace,EXIF.ExifImageWidth,EXIF.ExifImageLength,EXIF.SensingMethod,EXIF.CustomRendered,EXIF.ExposureMode,EXIF.WhiteBalance,EXIF.DigitalZoomRatio,EXIF.FocalLengthIn35mmFilm,EXIF.SceneCaptureType,EXIF.GainControl,EXIF.Contrast,EXIF.Saturation,EXIF.Sharpness,EXIF.SubjectDistanceRange,GPS.GPSLatitudeRef,GPS.GPSLatitude,GPS.GPSLongitudeRef,GPS.GPSLongitude,GPS.GPSAltitudeRef,GPS.GPSAltitude,GPS.GPSTimeStamp,GPS.GPSStatus,GPS.GPSMapDatum,GPS.GPSDateStamp' );
 			
 		// MODEL
-		$model	= &$this->getModel();
+		$model	= $this->getModel();
 		$info	= $model->getData();
 		
 		// Back button
@@ -94,7 +135,7 @@ class PhocaGalleryViewInfo extends JViewLegacy
 			phocagalleryimport('phocagallery.image.image');
 			$this->tmpl['backbutton'] = '<div><a href="'.JRoute::_('index.php?option=com_phocagallery&view=category&id='. $info->catslug.'&Itemid='. $app->input->get('Itemid', 0, 'int')).'"'
 				.' title="'.JText::_( 'COM_PHOCAGALLERY_BACK_TO_CATEGORY' ).'">'
-				. JHtml::_('image', 'media/com_phocagallery/images/icon-up-images.png', JText::_( 'COM_PHOCAGALLERY_BACK_TO_CATEGORY' )).'</a></div>';
+				. PhocaGalleryRenderFront::renderIcon('icon-up-images', 'media/com_phocagallery/images/icon-up-images.png', JText::_('COM_PHOCAGALLERY_BACK_TO_CATEGORY'), 'ph-icon-up-images ph-icon-button').'</a></div>';
 		}
 		
 		// EXIF DATA
@@ -112,6 +153,8 @@ class PhocaGalleryViewInfo extends JViewLegacy
 		if ($originalFile != '' && function_exists('exif_read_data')) {
 			
 			$exif = @exif_read_data( $originalFile, 'IFD0');
+			
+
 		
 			if ($exif === false) {
 				$outputExif .= JText::_('COM_PHOCAGALLERY_NO_HEADER_DATA_FOUND');
@@ -152,7 +195,7 @@ class PhocaGalleryViewInfo extends JViewLegacy
 					} else {
 						$name = '';
 					}
-				
+			
 				
 					if ($section != '' && $name != '') {
 						
@@ -544,8 +587,13 @@ class PhocaGalleryViewInfo extends JViewLegacy
 								case 'GPSLatitude':
 								case 'GPSLongitude':
 									$exifValue = '';
+									
+									
+									//$gps = self::getGps($exif[$section][$name]);
+		
 									if (isset($exif[$section][$name][0])) {
 										list($l,$r)	= explode("/",$exif[$section][$name][0]);
+										
 										$d			= ($l/$r);
 										$exifValue 	.= $d . '&deg; ';
 									}
@@ -677,7 +725,7 @@ class PhocaGalleryViewInfo extends JViewLegacy
 		$app		= JFactory::getApplication();
 		$menus		= $app->getMenu();
 		$pathway 	= $app->getPathway();
-		$this->params		= &$app->getParams();
+		$this->params		= $app->getParams();
 		$title 		= null;
 		
 		$this->tmpl['gallerymetakey'] 		=$this->params->get( 'gallery_metakey', '' );
@@ -691,14 +739,23 @@ class PhocaGalleryViewInfo extends JViewLegacy
 			$this->params->def('page_heading', JText::_('JGLOBAL_ARTICLES'));
 		}
 
-		$title = $this->params->get('page_title', '');
+		$title = $this->params->get('page_title', '');		
 		if (empty($title)) {
 			$title = htmlspecialchars_decode($app->getCfg('sitename'));
-		} else if ($app->getCfg('sitename_pagetitles', 0)) {
+		} else if ($app->getCfg('sitename_pagetitles', 0) == 1) {
 			$title = JText::sprintf('JPAGETITLE', htmlspecialchars_decode($app->getCfg('sitename')), $title);
-		}
-		if (isset($item->title) && $item->title != '') {
-			$title = $title .' - ' .  $item->title;
+			
+			if (isset($item->title) && $item->title != '') {
+				$title = $title .' - ' .  $item->title;
+			}
+			
+		} else if ($app->getCfg('sitename_pagetitles', 0) == 2) {
+			
+			if (isset($item->title) && $item->title != '') {
+				$title = $title .' - ' .  $item->title;
+			}
+		
+			$title = JText::sprintf('JPAGETITLE', $title, htmlspecialchars_decode($app->getCfg('sitename')));
 		}
 		$this->document->setTitle($title);
 		
@@ -733,7 +790,7 @@ class PhocaGalleryViewInfo extends JViewLegacy
 			}
 		}*/
 		
-		// Breadcrumbs TODO (Add the whole tree)
+		// Breadcrumbs TO DO (Add the whole tree)
 		/*if (isset($this->category[0]->parentid)) {
 			if ($this->category[0]->parentid == 1) {
 			} else if ($this->category[0]->parentid > 0) {

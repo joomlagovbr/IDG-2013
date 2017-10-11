@@ -32,12 +32,12 @@ class PhocaGalleryCpViewPhocaGalleryUsers extends JViewLegacy
 		}
 	
 		$path 							= PhocaGalleryPath::getPath();
-		$this->tmpl['avatarpathabs']	= $path->avatar_abs . DS .'thumbs'.DS.'phoca_thumb_s_';
+		$this->tmpl['avatarpathabs']	= $path->avatar_abs . '/thumbs/phoca_thumb_s_';
 		$this->tmpl['avatarpathrel']	= $path->avatar_rel . 'thumbs/phoca_thumb_s_';
 		$this->tmpl['avtrpathrel']		= $path->avatar_rel;
 
 		JHTML::stylesheet('media/com_phocagallery/css/administrator/phocagallery.css' );
-		$document	= & JFactory::getDocument();
+		$document	= JFactory::getDocument();
 		//$document->addCustomTag(PhocaGalleryRenderAdmin::renderIeCssLink(1));
 		
 		// Button
@@ -53,7 +53,7 @@ class PhocaGalleryCpViewPhocaGalleryUsers extends JViewLegacy
 		
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
-			JError::raiseError(500, implode("\n", $errors));
+			throw new Exception(implode("\n", $errors), 500);
 			return false;
 		}
 		

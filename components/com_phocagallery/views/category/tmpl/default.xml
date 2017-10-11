@@ -48,6 +48,12 @@
 	
 	
 	<field name="@spacer" type="spacer" default="" label="" description="" />
+	
+	<field name="display_menu_link_title" type="list" default="1" label="COM_PHOCAGALLERY_FIELD_DISPLAY_MENU_LINK_TITLE_LABEL" description="COM_PHOCAGALLERY_FIELD_DISPLAY_MENU_LINK_TITLE_DESC">
+		<option value="0">COM_PHOCAGALLERY_HIDE</option>
+		<option value="1">COM_PHOCAGALLERY_DISPLAY</option>
+	</field>
+	
 	<field name="display_cat_name_title" type="list" default="1" label="COM_PHOCAGALLERY_FIELD_DISPLAY_CAT_NAME_IN_PAGE_TITLE_LABEL" description="COM_PHOCAGALLERY_FIELD_DISPLAY_CAT_NAME_IN_PAGE_TITLE_DESC">
 		<option value="0">COM_PHOCAGALLERY_HIDE</option>
 		<option value="1">COM_PHOCAGALLERY_DISPLAY</option>

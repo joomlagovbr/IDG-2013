@@ -19,12 +19,13 @@ class PhocaGalleryCpModelPhocaGalleryI extends JModelLegacy
 {
 	protected $option 			= 'com_phocagallery';
 	protected $text_prefix		= 'com_phocagallery';
+	//public 		$typeAlias 		= 'com_phocagallery.phocagalleryi';
 
 	function getFolderState($property = null) {
 		static $set;
 
 		if (!$set) {
-			$folder = JRequest::getVar( 'folder', '', '', 'path' );
+			$folder = JFactory::getApplication()->input->get( 'folder', '', '', 'path' );
 			$this->setState('folder', $folder);
 
 			$parent = str_replace("\\", "/", dirname($folder));
@@ -36,9 +37,9 @@ class PhocaGalleryCpModelPhocaGalleryI extends JModelLegacy
 	}
 
 	function getImages() {
-		$tab 			= JRequest::getVar( 'tab', '', '', 'string' );
-		$muFailed		= JRequest::getVar( 'mufailed', '0', '', 'int' );
-		$muUploaded		= JRequest::getVar( 'muuploaded', '0', '', 'int' );
+		$tab 			= JFactory::getApplication()->input->get( 'tab', '', '', 'string' );
+		$muFailed		= JFactory::getApplication()->input->get( 'mufailed', '0', '', 'int' );
+		$muUploaded		= JFactory::getApplication()->input->get( 'muuploaded', '0', '', 'int' );
 
 		$refreshUrl = 'index.php?option=com_phocagallery&view=phocagalleryi&tab='.$tab.'&mufailed='.$muFailed.'&muuploaded='.$muUploaded.'&tmpl=component';
 		$list = PhocaGalleryFileFolderList::getList(0,1,0,$refreshUrl);
@@ -46,7 +47,7 @@ class PhocaGalleryCpModelPhocaGalleryI extends JModelLegacy
 	}
 
 	function getFolders() {
-		$tab = JRequest::getVar( 'tab', 0, '', 'int' );
+		$tab = JFactory::getApplication()->input->get( 'tab', 0, '', 'int' );
 		$refreshUrl = 'index.php?option=com_phocagallery&view=phocagalleryi&tab='.$tab.'&tmpl=component';
 		$list = PhocaGalleryFileFolderList::getList(0,0,0,$refreshUrl);
 		return $list['folders'];

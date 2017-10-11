@@ -15,7 +15,8 @@ jimport('joomla.application.component.modellist');
 class PhocaGalleryCpModelPhocaGalleryCs extends JModelList
 {
 	
-	protected	$option 		= 'com_phocagallery';
+	protected	$option 	= 'com_phocagallery';
+	protected $total		= 0;
 	//public 		$context		= 'com_phocagallery.phocagallerycoimgs';
 	
 	public function __construct($config = array())
@@ -44,7 +45,7 @@ class PhocaGalleryCpModelPhocaGalleryCs extends JModelList
 		parent::__construct($config);
 	}
 	
-	protected function populateState()
+	protected function populateState($ordering = null, $direction = null)
 	{
 		// Initialise variables.
 		$app = JFactory::getApplication('administrator');
@@ -64,6 +65,10 @@ class PhocaGalleryCpModelPhocaGalleryCs extends JModelList
 
 		$language = $app->getUserStateFromRequest($this->context.'.filter.language', 'filter_language', '');
 		$this->setState('filter.language', $language);
+		
+		// Not used in SQL - used in view in recursive category tree function
+		$levels = $app->getUserStateFromRequest($this->context.'.filter.level', 'filter_level', '', 'string');
+		$this->setState('filter.level', $levels);
 
 		// Load the parameters.
 		$params = JComponentHelper::getParams('com_phocagallery');
@@ -206,6 +211,34 @@ class PhocaGalleryCpModelPhocaGalleryCs extends JModelList
 		}
 
 		// Filter by search in title
+		/*$search = $this->getState('filter.search');
+		if (!empty($search))
+		{
+			if (stripos($search, 'id:') === 0) {
+				$query->where('a.id = '.(int) substr($search, 3));
+			}
+			else
+			{
+				
+				$search = $db->Quote('%'.$db->escape($search, true).'%');
+				
+				// PHOCAEDIT - search parent categories of searched categories - so we can build whole tree
+				// Find all parent categories of searched category:
+				$searchParentCatString = $this->getParentCategoriesOfSearch($search);
+				$query->where('( a.title LIKE '.$search.' OR a.alias LIKE '.$search.' OR c.alias LIKE '.$search.' OR c.alias LIKE '.$search. $searchParentCatString.')');
+				
+				// 3 places changed:
+				// 1) here
+				// 2) the function below getParentCategoriesOfSearch
+				// 3) view cca line 48 - filter the categories and remove parents and remake the pagination
+				
+				// END PHOCAEDIT
+				
+				//$query->where('( a.title LIKE '.$search.' OR a.alias LIKE '.$search.' OR c.alias LIKE '.$search.' OR c.alias LIKE '.$search.')');
+			}
+		}*/
+		
+		// Filter by search in title
 		$search = $this->getState('filter.search');
 		if (!empty($search))
 		{
@@ -227,8 +260,8 @@ class PhocaGalleryCpModelPhocaGalleryCs extends JModelList
 		$query->group('a.id');
 
 		// Add the list ordering clause.
-		$orderCol	= $this->state->get('list.ordering');
-		$orderDirn	= $this->state->get('list.direction');
+		$orderCol	= $this->state->get('list.ordering', 'title');
+		$orderDirn	= $this->state->get('list.direction', 'asc');
 	/*	if ($orderCol == 'a.ordering' || $orderCol == 'parentcat_title') {
 			$orderCol = 'parentcat_title '.$orderDirn.', a.ordering';
 		}
@@ -242,6 +275,38 @@ class PhocaGalleryCpModelPhocaGalleryCs extends JModelList
 		return $query;
 	}
 	
+	protected function getParentCategoriesOfSearch($search = '', $string = '', $parentId = 0) {
+		
+		$db		= $this->getDbo();
+		
+		// Search the parent category by string
+		// But we must continue to whole tree to parent_id = 0, means to the root of category tree
+		// So if we stop with searched string, we need to go further with parentid until we reach 0
+		$s = false;
+		if ($parentId > 0) {
+			$q = 'SELECT a.id, a.parent_id FROM #__phocagallery_categories AS a WHERE a.id = '.(int)$parentId;
+			$db->setQuery($q);
+			$s = $db->loadObjectList();
+		} else if ($search != '') {
+			$q = 'SELECT a.id, a.parent_id FROM #__phocagallery_categories AS a WHERE ( a.title LIKE '.$search.' OR a.alias LIKE '.$search.')';
+			$db->setQuery($q);
+			$s = $db->loadObjectList();
+		}
+		
+		
+		// Try to add parent categories to search outcomes
+		
+		if (!empty($s)) {
+			foreach ($s as $k => $v) {
+				if ($v->parent_id > 0) {
+					$string .= ' OR a.id = '.(int)$v->parent_id;
+					$string = $this->getParentCategoriesOfSearch($search, $string, $v->parent_id);
+				}
+			}	
+		}
+		return $string;
+	}
+	
 	function getNotApprovedCategory() {
 		
 		$query = 'SELECT COUNT(a.id) AS count'
@@ -250,6 +315,44 @@ class PhocaGalleryCpModelPhocaGalleryCs extends JModelList
 		$this->_db->setQuery($query, 0, 1);
 		$countNotApproved = $this->_db->loadObject();
 		return $countNotApproved;
+	}
+	
+	public function getTotal() {
+		$store = $this->getStoreId('getTotal');
+		if (isset($this->cache[$store])) {
+			return $this->cache[$store];
+		}
+
+		// PHOCAEDIT
+		if (isset($this->total) && (int)$this->total > 0) {
+			$total = (int)$this->total;
+		} else {
+			$query = $this->_getListQuery();
+
+			try {
+				$total = (int) $this->_getListCount($query);
+			}
+			catch (RuntimeException $e) {
+				$this->setError($e->getMessage());
+
+				return false;
+			}
+		}
+
+		$this->cache[$store] = $total;
+		return $this->cache[$store];
+	}
+	
+	public function setTotal($total) {
+		// When we use new total and new pagination, we need to clean their cache
+		$store1 = $this->getStoreId('getTotal');
+		$store2 = $this->getStoreId('getStart');
+		$store3 = $this->getStoreId('getPagination');
+		
+		unset($this->cache[$store1]);
+		unset($this->cache[$store2]);
+		unset($this->cache[$store3]);
+		$this->total = (int)$total;
 	}
 }
 ?>

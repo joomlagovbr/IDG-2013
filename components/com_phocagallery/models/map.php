@@ -1,6 +1,6 @@
 <?php
 /*
- * @package Joomla 1.5
+ * @package Joomla
  * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  *
@@ -22,7 +22,7 @@ class PhocaGalleryModelMap extends JModelLegacy
 		$this->setId((int)$id);
 		$catid	= $app->input->get('catid', 0, 'int');
 		$this->setCatid((int)$catid);
-		$post	= JRequest::get('get');
+		//$post	= $app->input->get('get');
 	}
 	
 	function setId($id){

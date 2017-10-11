@@ -1,9 +1,20 @@
-<table>
+<?php
+/*
+ * @package		Joomla.Framework
+ * @copyright	Copyright (C) 2005 - 2010 Open Source Matters, Inc. All rights reserved.
+ * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ *
+ * @component Phoca Component
+ * @copyright Copyright (C) Jan Pavelka www.phoca.cz
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License version 2 or later;
+ */
+defined('_JEXEC') or die;
+?><table>
 	<tr>
 		<td><?php echo JText::_('COM_PHOCAGALLERY_FILENAME');?>:</td>
 		<td>
 		
-		<input type="file" id="file-upload" name="Filedata" />
+		<input type="file" id="file-upload" class="phfileuploadcheckcat" name="Filedata" />
 			<button class="btn btn-primary" id="file-upload-submit"><i class="icon-upload icon-white"></i> <?php echo JText::_('COM_PHOCAGALLERY_START_UPLOAD') ?></button>
 			<span id="upload-clear"></span>
 		</td>

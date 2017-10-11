@@ -1,6 +1,6 @@
 <?php
 /*
- * @package Joomla 1.5
+ * @package Joomla
  * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  *
@@ -41,7 +41,7 @@ class PhocaGalleryModelDetail extends JModelLegacy
 		
 		if (empty($this->_data)) {
 			$app				= JFactory::getApplication();
-			$params				= &$app->getParams();
+			$params				= $app->getParams();
 			//$image_ordering		= $params->get( 'image_ordering', 1 );
 			//$imageOrdering 		= PhocaGalleryOrdering::getOrderingString($image_ordering);
 			
@@ -57,7 +57,7 @@ class PhocaGalleryModelDetail extends JModelLegacy
 			$leftUser 	= ' LEFT JOIN #__users AS ua ON ua.id = a.userid';
 			
 
-			$query = 'SELECT a.*, c.accessuserid as cataccessuserid, c.access as cataccess,'
+			$query = 'SELECT a.*, c.accessuserid as cataccessuserid, c.access as cataccess, c.owner_id as owner_id, '
 					. $selectUser
 					.' CASE WHEN CHAR_LENGTH(c.alias) THEN CONCAT_WS(\':\', c.id, c.alias) ELSE c.id END as catslug,'
 					.' CASE WHEN CHAR_LENGTH(a.alias) THEN CONCAT_WS(\':\', a.id, a.alias) ELSE a.id END as slug'
@@ -86,13 +86,13 @@ class PhocaGalleryModelDetail extends JModelLegacy
 	}
 	
 	function hit($id) {
-		$table = & JTable::getInstance('phocagallery', 'Table');
+		$table = JTable::getInstance('phocagallery', 'Table');
 		$table->hit($id);
 		return true;
 	}
 	
 	function rate($data) {
-		$row =& $this->getTable('phocagalleryimgvotes', 'Table');
+		$row = $this->getTable('phocagalleryimgvotes', 'Table');
 		
 		if (!$row->bind($data)) {
 			$this->setError($this->_db->getErrorMsg());

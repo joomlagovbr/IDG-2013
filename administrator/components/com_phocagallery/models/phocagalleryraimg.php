@@ -42,7 +42,7 @@ class PhocaGalleryCpModelPhocaGalleryRaImg extends JModelList
 		parent::__construct($config);
 	}
 	
-	protected function populateState()
+	protected function populateState($ordering = null, $direction = null)
 	{
 		// Initialise variables.
 		$app = JFactory::getApplication('administrator');
@@ -68,7 +68,7 @@ class PhocaGalleryCpModelPhocaGalleryRaImg extends JModelList
 		$this->setState('params', $params);
 
 		// List state information.
-		parent::populateState('uc.username', 'asc');
+		parent::populateState('ua.username', 'asc');
 	}
 	
 	protected function getStoreId($id = '')
@@ -211,7 +211,7 @@ class PhocaGalleryCpModelPhocaGalleryRaImg extends JModelList
 		return true;
 	}
 	
-	protected function prepareTable(&$table)
+	protected function prepareTable($table)
 	{
 		jimport('joomla.filter.output');
 		$date = JFactory::getDate();

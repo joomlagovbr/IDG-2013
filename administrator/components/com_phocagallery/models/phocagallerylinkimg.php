@@ -1,6 +1,6 @@
 <?php
 /*
- * @package Joomla 1.5
+ * @package Joomla
  * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  *
@@ -10,6 +10,7 @@
  */
 defined('_JEXEC') or die();
 jimport('joomla.application.component.model');
+use Joomla\String\StringHelper;
 
 
 class PhocaGalleryCpModelPhocaGalleryLinkImg extends JModelLegacy
@@ -116,7 +117,7 @@ class PhocaGalleryCpModelPhocaGalleryLinkImg extends JModelLegacy
 		$filter_order		= $app->getUserStateFromRequest( $this->_context.'.filter_order',	'filter_order',	'a.ordering', 'cmd' );
 		$filter_order_Dir	= $app->getUserStateFromRequest( $this->_context.'.filter_order_Dir',	'filter_order_Dir',	'', 'word' );
 		$search				= $app->getUserStateFromRequest( $this->_context.'.search', 'search', '', 'string' );
-		$search				= JString::strtolower( $search );
+		$search				= StringHelper::strtolower( $search );
 
 		$where = array();
 

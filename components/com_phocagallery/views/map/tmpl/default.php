@@ -1,4 +1,14 @@
 <?php
+/*
+ * @package Joomla
+ * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+ *
+ * @component Phoca Gallery
+ * @copyright Copyright (C) Jan Pavelka www.phoca.cz
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ */
+ 
 defined('_JEXEC') or die('Restricted access');
 phocagalleryimport('phocagallery.render.rendermap');
 phocagalleryimport('phocagallery.text.text');
@@ -28,9 +38,11 @@ if (empty($this->map) || $this->map->longitude == '' || $this->map->latitude == 
 	echo '<div id="phocaMap" style="margin:0 auto;padding:0;'. $cmw. 'height:'.$this->tmpl['largemapheight'].'px">';
 	echo '</div></div>';
 
-	?><script type='text/javascript'>//<![CDATA[
-	google.load("maps", "3.x", {"other_params":"sensor=false"}); <?php 
 	$map	= new PhocaGalleryRenderMap();
+	//echo $map->loadApi();
+	?><script type='text/javascript'>//<![CDATA[
+	<?php 
+	
 	echo $map->createMap('phocaMap', 'mapPhocaMap', 'phocaLatLng', 'phocaOptions','tstPhocaMap', 'tstIntPhocaMap', $text);
 	echo $map->cancelEventF();
 	echo $map->checkMapF();
@@ -55,9 +67,11 @@ if (empty($this->map) || $this->map->longitude == '' || $this->map->latitude == 
 	echo $map->endMapF();
 	echo $map->setInitializeF();
 	?>//]]></script><?php
+	
+	echo $map->loadApi();
 }
 if ($this->tmpl['detailwindow'] == 7) {
 	echo '<div>&nbsp;</div>';
-	echo PhocaGalleryRenderFront::renderInfo();
+	echo '<div style="text-align:right;color:#ccc;display:block">Powered by <a href="https://www.phoca.cz/phocagallery">Phoca Gallery</a></div>';
 }
 ?>

@@ -19,7 +19,7 @@ class PhocaGalleryCpControllerPhocaGalleryefs extends JControllerAdmin
 		$this->registerTask('apply', 'save');
 	}
 
-	public function &getModel($name = 'PhocaGalleryef', $prefix = 'PhocaGalleryCpModel') {
+	public function &getModel($name = 'PhocaGalleryef', $prefix = 'PhocaGalleryCpModel', $config = array()) {
 		$model = parent::getModel($name, $prefix, array('ignore_request' => true));
 		return $model;
 	}

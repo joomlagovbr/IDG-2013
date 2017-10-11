@@ -1,20 +1,20 @@
 <?php
-/*
- * @package		Joomla.Framework
- * @copyright	Copyright (C) 2005 - 2010 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
- *
- * @component Phoca Component
- * @copyright Copyright (C) Jan Pavelka www.phoca.cz
- * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License version 2 or later;
+/**
+ * @package   Phoca Gallery
+ * @author    Jan Pavelka - https://www.phoca.cz
+ * @copyright Copyright (C) Jan Pavelka https://www.phoca.cz
+ * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 and later
+ * @cms       Joomla
+ * @copyright Copyright (C) Open Source Matters. All rights reserved.
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  */
 defined( '_JEXEC' ) or die( 'Restricted access' );
-if (is_file( JPATH_ADMINISTRATOR.DS.'components'.DS.'com_phocagallery'.DS.'libraries'.DS.'phocagallery'.DS.'facebook'.DS.'base_facebook.php') &&
-is_file( JPATH_ADMINISTRATOR.DS.'components'.DS.'com_phocagallery'.DS.'libraries'.DS.'phocagallery'.DS.'facebook'.DS.'facebook.php')) {
+if (is_file( JPATH_ADMINISTRATOR.'/components/com_phocagallery/libraries/phocagallery/facebook/base_facebook.php') &&
+is_file( JPATH_ADMINISTRATOR.'/components/com_phocagallery/libraries/phocagallery/facebook/facebook.php')) {
 	if (class_exists('FacebookApiException') && class_exists('Facebook')) {
 	} else {
-		require_once(  JPATH_ADMINISTRATOR.DS.'components'.DS.'com_phocagallery'.DS.'libraries'.DS.'phocagallery'.DS.'facebook'.DS.'base_facebook.php');
-		require_once(  JPATH_ADMINISTRATOR.DS.'components'.DS.'com_phocagallery'.DS.'libraries'.DS.'phocagallery'.DS.'facebook'.DS.'facebook.php');
+		require_once(  JPATH_ADMINISTRATOR.'/components/com_phocagallery/libraries/phocagallery/facebook/base_facebook.php');
+		require_once(  JPATH_ADMINISTRATOR.'/components/com_phocagallery/libraries/phocagallery/facebook/facebook.php');
 	}
 }
 
@@ -47,7 +47,7 @@ class PhocaGalleryFb
 	
 		$facebook 	= self::getAppInstance($appid, $appsid);
 		
-		$fbLogout = JRequest::getVar('fblogout', 0, '', 'int');
+		$fbLogout = JFactory::getApplication()->input->get('fblogout', 0, '', 'int');
 		if($fbLogout == 1) {
 			$facebook->destroySession();
 		}
@@ -105,7 +105,14 @@ class PhocaGalleryFb
 		} else {
 			
 		
-			$loginUrl = $facebook->getLoginUrl(array('req_perms' => 'user_photos,user_groups,offline_access,publish_stream,photo_upload,manage_pages', 'scope' => 'user_photos,user_groups,offline_access,publish_stream,photo_upload,manage_pages', 'cancel_url' => $uri->toString(), 'next' => $uri->toString()));
+			/*$loginUrl = $facebook->getLoginUrl(array('req_perms' => 'user_photos,user_groups,offline_access,publish_stream,photo_upload,manage_pages', 'scope' => 'user_photos,user_groups,offline_access,publish_stream,photo_upload,manage_pages', 'cancel_url' => $uri->toString(), 'next' => $uri->toString()));
+			*/
+			// v2.3
+			/*
+			$loginUrl = $facebook->getLoginUrl(array('req_perms' => 'user_photos,user_groups,manage_pages', 'scope' => 'user_photos,user_groups,manage_pages', 'cancel_url' => $uri->toString(), 'next' => $uri->toString()));
+			*/
+			// v2.5
+			$loginUrl = $facebook->getLoginUrl(array('req_perms' => 'user_photos,manage_pages,publish_actions', 'scope' => 'user_photos,manage_pages,publish_actions', 'cancel_url' => $uri->toString(), 'next' => $uri->toString()));
 			
 			$output['log']	= 0;
 			$output['html'] = '<div><a href="'. $loginUrl .'"><span class="btn btn-primary">'.JText::_('COM_PHOCAGALLERY_FB_LOGIN').'</span></a></div><p>&nbsp;</p>';
@@ -119,23 +126,32 @@ class PhocaGalleryFb
 		return $output;
 	}
 	
-	public function getFbAlbums ($appid, $appidfanpage, $appsid, $session, $aid = 0) {
+
+	
+	public static function getFbAlbums ($appid, $appidfanpage, $appsid, $session, $aid = 0, $albumN = array(), $next = '') {
 		$facebook 	= self::getAppInstance($appid, $appsid);
 		$facebook->setAccessToken($session['access_token']);
 		
 		$albums['data'] = array();
 		// Change the uid to fan page id => Fan PAGE has other UID
 		$userID = $newUID = $session['uid'];
+		
+		$nextS = '';
+		if ($next != '') {
+			$next	= parse_url($next, PHP_URL_QUERY);
+			$nextS	= '?'.strip_tags($next);
+		}
+			
 		if (isset($appidfanpage) && $appidfanpage != '') {
 			$newUID 	= $appidfanpage;
-			$albums = $facebook->api("/".$newUID."/albums");
+			$albums = $facebook->api("/".$newUID."/albums".$nextS);
 		} else {
-			$albums = $facebook->api("/me/albums");
+			$albums = $facebook->api("/me/albums".$nextS);
 		}
 		
 		/* $loginUrl = $facebook->getLoginUrl(array('scope' => 'user_photos'));
 		if ($aid > 0) {
-			// TODO - if used
+			// TO DO - if used
 			$albums = $facebook->api(array('method' => 'photos.getAlbums', 'aids' => $aid));
 		} else {
 			//$albums = $facebook->api(array('method' => 'photos.getAlbums', 'uid' => $newUID));
@@ -143,7 +159,17 @@ class PhocaGalleryFb
 			$albums = $facebook->api("/me/albums");
 			
 		} */
-		return $albums['data'];
+		if (!empty($albums['data'])) {
+			$albumN[] = $albums['data'];
+		}
+		
+		if (isset($albums['paging']['next']) && $albums['paging']['next'] != '') {
+			$albumN 	= self::getFbAlbums($appid, $appidfanpage, $appsid, $session, $aid, $albumN, $albums['paging']['next']);
+		
+			
+		}
+
+		return $albumN;
 	}
 	
 	/* BY ID
@@ -163,7 +189,7 @@ class PhocaGalleryFb
 	}*/
 	
 	
-	 public function getFbAlbumName ($appid, $appsid, $session, $aid) {
+	 public static function getFbAlbumName ($appid, $appsid, $session, $aid) {
 		$facebook 	= self::getAppInstance($appid, $appsid);
 		$facebook->setAccessToken($session['access_token']);
 		//$album = $facebook->api(array('method' => 'photos.getAlbums', 'aids' => $aid));
@@ -180,16 +206,34 @@ class PhocaGalleryFb
 		$facebook->setAccessToken($session['access_token']);
 		$images['data'] = array();
 		
+		
+		$fields = 'id,name,source,picture,created,created_time,images';
 		if ($aid > 0) {
 			//$images = $facebook->api(array('method' => 'photos.get', 'aid' => $aid));
 			if ((int)$limit > 0 && $fbAfter != '') {
-				$images = $facebook->api("/".$aid."/photos", 'GET', array('limit' => $limit,'after'  => $fbAfter));
+				$images = $facebook->api("/".$aid."/photos", 'GET', array('limit' => $limit,'after'  => $fbAfter, 'fields' => $fields));
 			} else if ((int)$limit > 0 && $fbAfter == '') {
-				$images = $facebook->api("/".$aid."/photos", 'GET', array('limit' => $limit));
+				$images = $facebook->api("/".$aid."/photos", 'GET', array('limit' => $limit, 'fields' => $fields));
 			} else {
-				$images = $facebook->api("/".$aid."/photos");
+				$images = $facebook->api("/".$aid."/photos", 'GET', array('fields' => $fields));
 			}
 		}
+		/*
+		$images = $facebook->api("/".$aid."/photos");
+		id (String
+		created_time (String
+		from (Array
+		height (Integer
+		icon (String
+		images (Array
+		link (String
+		name (String
+		picture (String
+		source (String
+		updated_time (String
+		width (Integer */
+
+
 		
 		$fbAfter = '';// Unset this variable and check again if there is still new after value (if there are more images to pagination)
 		if (isset($images['paging'])) {
@@ -300,7 +344,7 @@ class PhocaGalleryFb
 	}
 	
 	public final function __clone() {
-		JError::raiseWarning(500, 'Function Error: Cannot clone instance of Singleton pattern');// No JText - for developers only
+		throw new Exception('Function Error: Cannot clone instance of Singleton pattern', 500);
 		return false;
 	}
 }

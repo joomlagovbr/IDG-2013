@@ -1,6 +1,6 @@
 <?php
 /*
- * @package Joomla 1.5
+ * @package Joomla
  * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  *
@@ -12,13 +12,15 @@ defined('_JEXEC') or die();
 jimport( 'joomla.application.component.view');
 phocagalleryimport('phocagallery.comment.comment');
 phocagalleryimport('phocagallery.comment.commentimage');
+jimport( 'joomla.filesystem.file' );
+jimport( 'joomla.filesystem.folder' );
 
 class PhocaGalleryViewCommentImgA extends JViewLegacy
 {
 
 	function display($tpl = null){
 		
-		if (!JRequest::checkToken('request')) {
+		if (!JSession::checkToken('request')) {
 			$response = array(
 				'status' => '0',
 				'error' => JText::_('JINVALID_TOKEN')
@@ -44,9 +46,9 @@ class PhocaGalleryViewCommentImgA extends JViewLegacy
 		
 		if ($task == 'refreshcomment' && ((int)$param['display_comment_img'] == 2 || (int)$param['display_comment_img'] == 3)) {	
 		
-			$user 		=& JFactory::getUser();
-			//$view 		= JRequest::getVar( 'view', '', 'get', '', JREQUEST_NOTRIM  );
-			//$Itemid		= JRequest::getVar( 'Itemid', 0, '', 'int');
+			$user 		= JFactory::getUser();
+			//$view 		= J Request::get Var( 'view', '', 'get', '', J REQUEST_NOTRIM  );
+			//$Itemid		= J Request::get Var( 'Itemid', 0, '', 'int');
 		
 			$neededAccessLevels	= PhocaGalleryAccess::getNeededAccessLevels();
 			$access				= PhocaGalleryAccess::isAccess($user->getAuthorisedViewLevels(), $neededAccessLevels);
@@ -107,7 +109,7 @@ class PhocaGalleryViewCommentImgA extends JViewLegacy
 						$this->tmpl['path'] = PhocaGalleryPath::getPath();
 						$img = '<div style="width: 20px; height: 20px;">&nbsp;</div>';
 						if (isset($avatar->avatar) && $avatar->avatar != '') {
-							$pathAvatarAbs	= $this->tmpl['path']->avatar_abs  .'thumbs'.DS.'phoca_thumb_s_'. $avatar->avatar;
+							$pathAvatarAbs	= $this->tmpl['path']->avatar_abs  .'thumbs/phoca_thumb_s_'. $avatar->avatar;
 							$pathAvatarRel	= $this->tmpl['path']->avatar_rel . 'thumbs/phoca_thumb_s_'. $avatar->avatar;
 							if (JFile::exists($pathAvatarAbs)){
 								$avSize = getimagesize($pathAvatarAbs);

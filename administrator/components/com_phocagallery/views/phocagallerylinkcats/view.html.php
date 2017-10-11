@@ -1,6 +1,6 @@
 <?php
 /*
- * @package Joomla 1.5
+ * @package Joomla
  * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  *
@@ -28,17 +28,17 @@ class phocaGalleryCpViewphocaGalleryLinkCats extends JViewLegacy
 		}
 		
 		
-		$document	=& JFactory::getDocument();
-		$uri		=& JFactory::getURI();
+		$document	=JFactory::getDocument();
+		$uri		= JFactory::getURI();
 		JHTML::stylesheet( 'media/com_phocagallery/css/administrator/phocagallery.css' );
 		
-		$eName				= JRequest::getVar('e_name');
+		$eName				= JFactory::getApplication()->input->get('e_name');
 		$tmpl['ename']		= preg_replace( '#[^A-Z0-9\-\_\[\]]#i', '', $eName );
 		$tmpl['backlink']	= $tUri.'index.php?option=com_phocagallery&amp;view=phocagallerylinks&amp;tmpl=component&amp;e_name='.$tmpl['ename'];
 		
 		
 		// Category Tree
-		$db = &JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = 'SELECT a.title AS text, a.id AS value, a.parent_id as parentid'
 		. ' FROM #__phocagallery_categories AS a'
 	//	. ' WHERE a.published = 1' You can hide not published and not authorized categories too

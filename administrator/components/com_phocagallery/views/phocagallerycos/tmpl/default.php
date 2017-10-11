@@ -37,10 +37,7 @@ $sortFields = $this->getSortFields();
 echo $r->jsJorderTable($listOrder);
 
 echo $r->startForm($option, $tasks, 'adminForm');
-echo $r->startFilter($OPT.'_FILTER');
-echo $r->selectFilterPublished('JOPTION_SELECT_PUBLISHED', $this->state->get('filter.state'));
-//echo $r->selectFilterLanguage('JOPTION_SELECT_LANGUAGE', $this->state->get('filter.language'));
-echo $r->selectFilterCategory(PhocaGalleryCategory::options($option), 'JOPTION_SELECT_CATEGORY', $this->state->get('filter.category_id'));
+echo $r->startFilter();
 echo $r->endFilter();
 
 echo $r->startMainContainer();
@@ -51,6 +48,14 @@ echo $r->inputFilterSearchClear('JSEARCH_FILTER_SUBMIT', 'JSEARCH_FILTER_CLEAR')
 echo $r->inputFilterSearchLimit('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC', $this->pagination->getLimitBox());
 echo $r->selectFilterDirection('JFIELD_ORDERING_DESC', 'JGLOBAL_ORDER_ASCENDING', 'JGLOBAL_ORDER_DESCENDING', $listDirn);
 echo $r->selectFilterSortBy('JGLOBAL_SORT_BY', $sortFields, $listOrder);
+
+echo $r->startFilterBar(2);
+echo $r->selectFilterPublished('JOPTION_SELECT_PUBLISHED', $this->state->get('filter.state'));
+//echo $r->selectFilterLanguage('JOPTION_SELECT_LANGUAGE', $this->state->get('filter.language'));
+echo $r->selectFilterCategory(PhocaGalleryCategory::options($option), 'JOPTION_SELECT_CATEGORY', $this->state->get('filter.category_id'));
+echo $r->endFilterBar();
+
+
 echo $r->endFilterBar();		
 
 echo $r->startTable('categoryList');
@@ -92,36 +97,37 @@ $canEditCat		= $user->authorise('core.edit', $option);
 
 $iD = $i % 2;
 echo "\n\n";
-echo '<tr class="row'.$iD.'" sortable-group-id="'.$item->catid.'" item-id="'.$item->id.'" parents="'.$item->catid.'" level="0">'. "\n";
+//echo '<tr class="row'.$iD.'" sortable-group-id="'.$item->catid.'" item-id="'.$item->id.'" parents="'.$item->catid.'" level="0">'. "\n";
+echo '<tr class="row'.$iD.'" sortable-group-id="'.$item->catid.'" >'. "\n";
 
 echo $r->tdOrder($canChange, $saveOrder, $orderkey);
-echo $r->td(JHtml::_('grid.id', $i, $item->id), "small hidden-phone");
+echo $r->td(JHtml::_('grid.id', $i, $item->id), "small");
 
 $usrO = $item->commentname;
 if ($item->commentusername) {$usrO = $usrO . ' ('.$item->commentusername.')';}
-echo $r->td($usrO, "small hidden-phone");						
+echo $r->td($usrO, "small");						
 $checkO = '';
 if ($item->checked_out) {
 	$checkO .= JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, $tasks.'.', $canCheckin);
 }
 if ($canCreate || $canEdit) {
-	$checkO .= '<a href="'. JRoute::_($linkEdit).'">'. $this->escape($item->title).'</a>';
+	$checkO .= '<a href="'. JRoute::_($linkEdit).'">'. $this->escape($item->title). ' <small>('.$this->escape($item->comment).')</small></a>';
 } else {
-	$checkO .= $this->escape($item->title);
+	$checkO .= $this->escape($item->title). ' <small>('.$this->escape($item->comment).')</small>';
 }
 
-echo $r->td($checkO, "small hidden-phone");
-echo $r->td($item->date, "small hidden-phone");
+echo $r->td($checkO, "small");
+echo $r->td($item->date, "small");
 
-echo $r->td(JHtml::_('jgrid.published', $item->published, $i, $tasks.'.', $canChange), "small hidden-phone");
+echo $r->td(JHtml::_('jgrid.published', $item->published, $i, $tasks.'.', $canChange), "small");
 
 if ($canEditCat) {
 	$catO = '<a href="'. JRoute::_($linkCat).'">'. $this->escape($item->category_title).'</a>';
 } else {
 	$catO = $this->escape($item->category_title);
 }
-echo $r->td($catO, "small hidden-phone");	
-echo $r->td($item->id, "small hidden-phone");
+echo $r->td($catO, "small");	
+echo $r->td($item->id, "small");
 
 echo '</tr>'. "\n";
 						
@@ -134,7 +140,7 @@ echo $r->tblFoot($this->pagination->getListFooter(), 15);
 echo $r->endTable();
 
 
-echo $r->formInputs($listOrder, $originalOrders);
+echo $r->formInputs($listOrder, $listDirn, $originalOrders);
 echo $r->endMainContainer();
 echo $r->endForm();
 ?>

@@ -1,6 +1,15 @@
 <?php
+/*
+ * @package Joomla
+ * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+ *
+ * @component Phoca Gallery
+ * @copyright Copyright (C) Jan Pavelka www.phoca.cz
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ */
 defined('_JEXEC') or die('Restricted access');
-$user 	=& JFactory::getUser();
+$user 	= JFactory::getUser();
 
 //Ordering allowed ?
 $ordering = ($this->lists['order'] == 'a.ordering');
@@ -74,7 +83,7 @@ function insertLink() {
 <div id="phocagallery-links">
 <fieldset class="adminform">
 <legend><?php echo JText::_('COM_PHOCAGALLERY_IMAGES'); ?></legend>
-<form action="<?php echo $this->request_url; ?>" method="post" name="adminForm">
+<form action="<?php echo $this->request_url; ?>" method="post" name="adminForm"  id="adminForm">
 
 <div id="editcell">
 	<table class="admintable" width="100%">

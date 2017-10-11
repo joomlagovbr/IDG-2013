@@ -22,6 +22,7 @@ class PhocaGalleryCpModelPhocaGalleryC extends JModelAdmin
 	//protected 	$_data;
 	protected	$option 		= 'com_phocagallery';
 	protected 	$text_prefix	= 'com_phocagallery';
+	public 		$typeAlias 		= 'com_phocagallery.phocagalleryc';
 	
 	
 	protected function canDelete($record)
@@ -85,7 +86,7 @@ class PhocaGalleryCpModelPhocaGalleryC extends JModelAdmin
 		return $item;
 	}
 	
-	protected function prepareTable(&$table)
+	protected function prepareTable($table)
 	{
 		jimport('joomla.filter.output');
 		$date = JFactory::getDate();
@@ -148,7 +149,7 @@ class PhocaGalleryCpModelPhocaGalleryC extends JModelAdmin
 				if (!$this->canEditState($table)) {
 					// Prune items that you can't change.
 					unset($pks[$i]);
-					JError::raiseWarning(403, JText::_('JLIB_APPLICATION_ERROR_EDIT_STATE_NOT_PERMITTED'));
+					throw new Exception(JText::_('JLIB_APPLICATION_ERROR_EDIT_STATE_NOT_PERMITTED'), 403);
 				}
 			}
 		}
@@ -209,7 +210,7 @@ class PhocaGalleryCpModelPhocaGalleryC extends JModelAdmin
 		$data['uploaduserid'] = implode(',',$uploadUserIdArray);
 		$data['deleteuserid'] = implode(',',$deleteUserIdArray);
 		
-		//TODO - return message
+		//TO DO - return message
 		if(!isset($data['owner_id'])) { $data['owner_id'] = 0;}
 		// Owner can have only one main category - check it 
 		$errorMsgOwner		= '';
@@ -284,7 +285,7 @@ class PhocaGalleryCpModelPhocaGalleryC extends JModelAdmin
 		}
 		$this->setState($this->getName().'.new', $isNew);
 
-		$subTask = JRequest::getVar('subtask');
+		$subTask = JFactory::getApplication()->input->get('subtask');
 		
 		// TODO
 		if ((string)$subTask == 'loadextimgp') {
@@ -358,7 +359,7 @@ class PhocaGalleryCpModelPhocaGalleryC extends JModelAdmin
 	protected function storeOwnerCategory($data) {
 		
 		
-		$row =& $this->getTable('phocagalleryuser');
+		$row = $this->getTable('phocagalleryuser');
 		
 		// Bind the form fields to the table
 		if (!$row->bind($data)) {
@@ -406,11 +407,11 @@ class PhocaGalleryCpModelPhocaGalleryC extends JModelAdmin
 	public function uploadExtImagesFb($idCat, $data, &$errorMsg) {
 	
 		$idImg = 0;
-		if (JRequest::getVar( 'fbimg', 0, 'get', 'int' ) > 0) {
-			$data['extfbcatid']	= JRequest::getVar( 'fbalbum', '', 'get'  );
-			$data['extfbuid']	= JRequest::getVar( 'fbuser', '', 'get'  );
-			$data['language']	= JRequest::getVar( 'fblang', '', 'get'  );
-			$idImg				= JRequest::getVar( 'fbimg', '', 'get'  );
+		if (JFactory::getApplication()->input->get( 'fbimg', 0, 'get', 'int' ) > 0) {
+			$data['extfbcatid']	= JFactory::getApplication()->input->get( 'fbalbum', '', 'get'  );
+			$data['extfbuid']	= JFactory::getApplication()->input->get( 'fbuser', '', 'get'  );
+			$data['language']	= JFactory::getApplication()->input->get( 'fblang', '', 'get'  );
+			$idImg				= JFactory::getApplication()->input->get( 'fbimg', '', 'get'  );
 			
 		}
 	
@@ -480,13 +481,13 @@ class PhocaGalleryCpModelPhocaGalleryC extends JModelAdmin
 		
 		// In variable fbAfter we transfer the string which says - there is some after, there are images on FB yet to import
 		// In variable fbCount we store the infromation about that we redirecting the page and do a pagination loop
-		if (JRequest::getVar( 'fbcount', 0, 'get', 'int' ) > 0) {
+		if (JFactory::getApplication()->input->get( 'fbcount', 0, 'get', 'int' ) > 0) {
 			// Category is saved - use this id and don't save it again
-			$fbAfter 			= JRequest::getVar( 'fbafter', '', 'get' );
-			$fbCount 			= JRequest::getVar( 'fbcount', 0, 'get' );
-			$data['extfbuid']	= JRequest::getVar( 'fbuser', '', 'get' );
-			$data['extfbcatid']	= JRequest::getVar( 'fbalbum', '', 'get' );
-			$data['language']	= JRequest::getVar( 'fblang', '', 'get' );
+			$fbAfter 			= JFactory::getApplication()->input->get( 'fbafter', '', 'get' );
+			$fbCount 			= JFactory::getApplication()->input->get( 'fbcount', 0, 'get' );
+			$data['extfbuid']	= JFactory::getApplication()->input->get( 'fbuser', '', 'get' );
+			$data['extfbcatid']	= JFactory::getApplication()->input->get( 'fbalbum', '', 'get' );
+			$data['language']	= JFactory::getApplication()->input->get( 'fblang', '', 'get' );
 			
 		}
 		
@@ -527,6 +528,8 @@ class PhocaGalleryCpModelPhocaGalleryC extends JModelAdmin
 				// $fbAfter - when this is active, it means, there are images on Facebook still so we loop the pagination
 				// if there is new $fbAfter (returned by reference), the pagination goes again
 				$images	= PhocaGalleryFb::getFbImages($user->appid, $user->appsid, $session, $fbAfter, $data['extfbcatid'], $fb_load_pagination);
+				
+				
 
 				
 			
@@ -591,24 +594,55 @@ class PhocaGalleryCpModelPhocaGalleryC extends JModelAdmin
 						}
 						*/
 
-						
+					
 						if(isset($value['images'])) {
                             
                             $imagesArray = $value['images'];
                         
                             $dataImg[$i]['extl']			= $imagesArray[0]['source'];
-                            $dataImg[$i]['extm']			= $imagesArray[1]['source'];
-                            $dataImg[$i]['exts']			= $imagesArray[2]['source'];
+							
+							// Sometimes Facebook does not return all sizes
+							if (isset($imagesArray[1]['source'])) {
+								$dataImg[$i]['extm']			= $imagesArray[1]['source'];
+                            } else {
+								$dataImg[$i]['extm']			= $imagesArray[0]['source'];
+							}
+							
+							if (isset($imagesArray[1]['source'])) {
+								$dataImg[$i]['exts']			= $imagesArray[2]['source'];
+                            } else {
+								$dataImg[$i]['exts']			= $imagesArray[0]['source'];
+							}
+							
                             
                             // Large
                             $dataImg[$i]['extw'][0]				= $imagesArray[0]['width'];
                             $dataImg[$i]['exth'][0]				= $imagesArray[0]['height'];
                             //Medium
-                            $dataImg[$i]['extw'][1]				= $imagesArray[1]['width'];
-                            $dataImg[$i]['exth'][1]				= $imagesArray[1]['height'];
-                            // Small
-                            $dataImg[$i]['extw'][2]				= $imagesArray[2]['width'];
-                            $dataImg[$i]['exth'][2]				= $imagesArray[2]['height'];
+							if (isset($imagesArray[1]['width'])) {
+								$dataImg[$i]['extw'][1]				= $imagesArray[1]['width'];
+                            } else {
+								$dataImg[$i]['extw'][1]				= $imagesArray[0]['width'];
+							}
+							
+							if (isset($imagesArray[1]['height'])) {
+								$dataImg[$i]['exth'][1]				= $imagesArray[1]['height'];
+                            } else {
+								$dataImg[$i]['exth'][1]				= $imagesArray[0]['height'];
+							}
+							
+							if (isset($imagesArray[2]['width'])) {
+								$dataImg[$i]['extw'][2]				= $imagesArray[2]['width'];
+                            } else {
+								$dataImg[$i]['extw'][2]				= $imagesArray[0]['width'];
+							}
+							
+							if (isset($imagesArray[2]['height'])) {
+								$dataImg[$i]['exth'][2]				= $imagesArray[2]['height'];
+                            } else {
+								$dataImg[$i]['exth'][2]				= $imagesArray[0]['height'];
+							}
+	
                         
 							/*
                             $f = 0;
@@ -665,6 +699,8 @@ class PhocaGalleryCpModelPhocaGalleryC extends JModelAdmin
 						$dataImg[$i]['language']	= $data['language'];
 						$i++;
 					}
+					
+					
 					
 					// THIRD
 					if ($fbAfter != '') {
@@ -866,12 +902,12 @@ class PhocaGalleryCpModelPhocaGalleryC extends JModelAdmin
 		$errorMsgA = $errorMsgI = '';
 		
 		//FIRST
-		if (JRequest::getVar( 'picstart', 0, 'get', 'int' ) > 0) {
+		if (JFactory::getApplication()->input->get( 'picstart', 0, 'get', 'int' ) > 0) {
 			// Category is saved - use this id and don't save it again
-			$data['exta']		= JRequest::getVar( 'picalbum', '', 'get'  );
-			$data['extu']		= JRequest::getVar( 'picuser', '', 'get'  );
-			$data['extauth']	= JRequest::getVar( 'picauth', '', 'get'  );
-			$data['language']	= JRequest::getVar( 'piclang', '', 'get'  );
+			$data['exta']		= JFactory::getApplication()->input->get( 'picalbum', '', 'get'  );
+			$data['extu']		= JFactory::getApplication()->input->get( 'picuser', '', 'get'  );
+			$data['extauth']	= JFactory::getApplication()->input->get( 'picauth', '', 'get'  );
+			$data['language']	= JFactory::getApplication()->input->get( 'piclang', '', 'get'  );
 		}
 				
 		$album = $this->picasaAlbum($data['extu'], $data['extauth'], $data['exta'], $errorMsgA);
@@ -885,9 +921,9 @@ class PhocaGalleryCpModelPhocaGalleryC extends JModelAdmin
 		
 				
 		// SECOND	
-		if (JRequest::getVar( 'picstart', 0, 'get', 'int' ) > 0) {
+		if (JFactory::getApplication()->input->get( 'picstart', 0, 'get', 'int' ) > 0) {
 			// Category is saved - use this id and don't save it again
-			$id	= JRequest::getVar( 'id', 0, 'get', 'int' );
+			$id	= JFactory::getApplication()->input->get( 'id', 0, 'get', 'int' );
 		} else {
 			$id	= 	$idCat;//you get id and you store the table data
 		}
@@ -898,7 +934,7 @@ class PhocaGalleryCpModelPhocaGalleryC extends JModelAdmin
 			if ($album && (int)$album['id'] > 0) {
 			
 				// PAGINATION
-				$start	= JRequest::getVar( 'picstart', 1, 'get', 'int' );
+				$start	= JFactory::getApplication()->input->get( 'picstart', 1, 'get', 'int' );
 				$max	= $picasa_load_pagination;
 				$pagination	= '&start-index='.(int)$start.'&max-results='.(int)$max;
 				$picImg = $this->picasaImages($data['extu'],$data['extauth'], $album['id'], $id, $data['language'], $pagination, $errorMsgI);
@@ -967,7 +1003,7 @@ class PhocaGalleryCpModelPhocaGalleryC extends JModelAdmin
 	 */
 	public function getOwnerMainCategory($userId, $categoryId, $parentId, &$errorMsgOwner) {
 		
-		$db =& JFactory::getDBO();
+		$db =JFactory::getDBO();
 		
 		// It is new subcategory, check if parent category has the same owner
 		// If not don't assing the owner
@@ -1012,7 +1048,7 @@ class PhocaGalleryCpModelPhocaGalleryC extends JModelAdmin
 	/*
 	function accessmenu($id, $access) {
 		$app	= JFactory::getApplication();
-		$row =& $this->getTable();
+		$row = $this->getTable();
 		if (!$row->load($id)) {
 			$this->setError($this->_db->getErrorMsg());
 			return false;
@@ -1030,7 +1066,7 @@ class PhocaGalleryCpModelPhocaGalleryC extends JModelAdmin
 		}
 	}*/
 
-	function delete($cid = array()) {
+	function delete(&$cid = array()) {
 		$app	= JFactory::getApplication();
 		$db 	= JFactory::getDBO();
 		
@@ -1049,7 +1085,7 @@ class PhocaGalleryCpModelPhocaGalleryC extends JModelAdmin
 			$db->setQuery( $query );
 				
 			if (!($rows2 = $db->loadObjectList())) {
-				JError::raiseError( 500, $db->stderr('Load Data Problem') );
+				throw new Exception($db->stderr('Load Data Problem'), 500);
 				return false;
 			}
 
@@ -1080,7 +1116,8 @@ class PhocaGalleryCpModelPhocaGalleryC extends JModelAdmin
 				$db->setQuery( $query );
 
 				if (!($rows = $db->loadObjectList())) {
-					JError::raiseError( 500, $db->stderr('Load Data Problem') );
+	
+					throw new Exception($db->stderr('Load Data Problem'), 500);
 					return false;
 				}
 				
@@ -1157,7 +1194,7 @@ class PhocaGalleryCpModelPhocaGalleryC extends JModelAdmin
 				$xml .= '  <atom:icon>'.JURI::root() . $piclensImg. '</atom:icon>'. "\n\n";
 
 				$xml .= '  <title>Phoca Gallery</title>'. "\n";
-				$xml .= '  <link>http://www.phoca.cz/</link>'. "\n";
+				$xml .= '  <link>https://www.phoca.cz/</link>'. "\n";
 				$xml .= '  <description>Phoca Gallery</description>'. "\n";
 				
 				$query = 'SELECT a.id, a.title, a.filename, a.description, a.extid, a.extl, a.exto'
@@ -1218,7 +1255,7 @@ class PhocaGalleryCpModelPhocaGalleryC extends JModelAdmin
 				echo $xml;
 				$xmlToWrite = ob_get_contents();
 				ob_end_clean();
-				if(!JFile::write( $path->image_abs . DS . $vcid.'.rss', $xmlToWrite)) {
+				if(!JFile::write( $path->image_abs . '/'. $vcid.'.rss', $xmlToWrite)) {
 					$message = 'COM_PHOCAGALLERY_ERROR_SAVING_RSS';
 					return false;
 				}
@@ -1249,7 +1286,7 @@ class PhocaGalleryCpModelPhocaGalleryC extends JModelAdmin
 		// PUBLIC OR UNLISTED ALBUM
 		if ($authkey == ''){
 			// PUBLIC ALBUM
-			$userAddress 	= 'http://picasaweb.google.com/data/feed/api/user/'.htmlentities($user).'?kind=album&access=public&alt=json';
+			$userAddress 	= 'http://photos.googleapis.com/data/feed/api/user/'.htmlentities($user).'?kind=album&access=public&alt=json';
 			$dataUser 		= PhocaGalleryPicasa::loadDataByAddress($userAddress, 'user', $errorMsg);
 			
 			
@@ -1294,14 +1331,14 @@ class PhocaGalleryCpModelPhocaGalleryC extends JModelAdmin
 			// UNLISTED ALBUM
 			
 			// First try the name
-			$userAddress 	= 'http://picasaweb.google.com/data/feed/api/user/'.htmlentities($user).'/album/'.htmlentities($album).'?authkey='.htmlentities($authkey).'&alt=json';
+			$userAddress 	= 'http://photos.googleapis.com/data/feed/api/user/'.htmlentities($user).'/album/'.htmlentities($album).'?authkey='.htmlentities($authkey).'&alt=json';
 			$dataUser		= PhocaGalleryPicasa::loadDataByAddress($userAddress, 'user', $errorMsg);
 			$dataUser 		= json_decode($dataUser);
 			
 			
 			// Second try the ID
 			if (!isset($dataUser->feed->entry)) {
-				$userAddress 	= 'http://picasaweb.google.com/data/feed/api/user/'.htmlentities($user).'/albumid/'.htmlentities($album).'?authkey='.htmlentities($authkey).'&alt=json';
+				$userAddress 	= 'http://photos.googleapis.com/data/feed/api/user/'.htmlentities($user).'/albumid/'.htmlentities($album).'?authkey='.htmlentities($authkey).'&alt=json';
 				$dataUser		= PhocaGalleryPicasa::loadDataByAddress($userAddress, 'user', $errorMsg);
 				$dataUser 		= json_decode($dataUser);
 				
@@ -1370,9 +1407,9 @@ class PhocaGalleryCpModelPhocaGalleryC extends JModelAdmin
 		
 		// LARGE AND SMALL( AND MEDIUM) - will be the same everywhere so we take them in one
 		if ($authkey == ''){
-			$albumAddressLSM	= 'http://picasaweb.google.com/data/feed/api/user/'.htmlentities($user).'/albumid/'.$albumId.'?alt=json&kind=photo'.$size['lsm'].$pagination;
+			$albumAddressLSM	= 'http://photos.googleapis.com/data/feed/api/user/'.htmlentities($user).'/albumid/'.$albumId.'?alt=json&kind=photo'.$size['lsm'].$pagination;
 		} else {
-			$albumAddressLSM	= 'http://picasaweb.google.com/data/feed/api/user/'.htmlentities($user).'/albumid/'.$albumId.'?alt=json&kind=photo'.$size['lsm'].$pagination.'&authkey='.htmlentities($authkey);
+			$albumAddressLSM	= 'http://photos.googleapis.com/data/feed/api/user/'.htmlentities($user).'/albumid/'.$albumId.'?alt=json&kind=photo'.$size['lsm'].$pagination.'&authkey='.htmlentities($authkey);
 		}
 		
 		
@@ -1472,9 +1509,9 @@ class PhocaGalleryCpModelPhocaGalleryC extends JModelAdmin
 		// MEDIUM
 		if ($mediumT == 0) {
 			if ($authkey == ''){
-				$albumAddressM	= 'http://picasaweb.google.com/data/feed/api/user/'.htmlentities($user).'/albumid/'.$albumId.'?alt=json&kind=photo'.$size['m'].$pagination;
+				$albumAddressM	= 'http://photos.googleapis.com/data/feed/api/user/'.htmlentities($user).'/albumid/'.$albumId.'?alt=json&kind=photo'.$size['m'].$pagination;
 			} else {
-				$albumAddressM	= 'http://picasaweb.google.com/data/feed/api/user/'.htmlentities($user).'/albumid/'.$albumId.'?alt=json&kind=photo'.$size['m'].$pagination.'&authkey='.htmlentities($authkey);
+				$albumAddressM	= 'http://photos.googleapis.com/data/feed/api/user/'.htmlentities($user).'/albumid/'.$albumId.'?alt=json&kind=photo'.$size['m'].$pagination.'&authkey='.htmlentities($authkey);
 			}
 			$dataAlbumM 		= PhocaGalleryPicasa::loadDataByAddress($albumAddressM, 'album', $errorMsg);
 			if($dataAlbumM == '') {
@@ -1559,7 +1596,7 @@ class PhocaGalleryCpModelPhocaGalleryC extends JModelAdmin
 				
 				$data['catid']	= (int)$catid;
 				
-				$row =& $this->getTable('phocagallery');
+				$row = $this->getTable('phocagallery');
 				
 				/*
 				if(isset($data['id']) && $data['id'] > 0) {
@@ -1637,7 +1674,7 @@ class PhocaGalleryCpModelPhocaGalleryC extends JModelAdmin
 		}
 
 		// Check that the user has create permission for the component
-		$extension	= JRequest::getCmd('option');
+		$extension	= JFactory::getApplication()->input->getCmd('option');
 		$user		= JFactory::getUser();
 		if (!$user->authorise('core.create', $extension)) {
 			$this->setError(JText::_('JLIB_APPLICATION_ERROR_BATCH_CANNOT_CREATE'));
@@ -1645,7 +1682,7 @@ class PhocaGalleryCpModelPhocaGalleryC extends JModelAdmin
 		}
 		
 		//NEW
-		$i		= 0;
+		//$i		= 0;
 		//ENDNEW
 
 		// Parent exists so we let's proceed
@@ -1703,8 +1740,8 @@ class PhocaGalleryCpModelPhocaGalleryC extends JModelAdmin
 			$newId = $table->get('id');
 
 			// Add the new ID to the array
-			$newIds[$i]	= $newId;
-			$i++;
+			$newIds[$pk]	= $newId;
+			//$i++;
 			//ENDNEW
 		}
 
@@ -1746,7 +1783,7 @@ class PhocaGalleryCpModelPhocaGalleryC extends JModelAdmin
 		}
 
 		// Check that user has create and edit permission for the component
-		$extension	= JRequest::getCmd('option');
+		$extension	= JFactory::getApplication()->input->getCmd('option');
 		$user		= JFactory::getUser();
 		if (!$user->authorise('core.create', $extension)) {
 			$this->setError(JText::_('JLIB_APPLICATION_ERROR_BATCH_CANNOT_CREATE'));
@@ -1833,9 +1870,35 @@ class PhocaGalleryCpModelPhocaGalleryC extends JModelAdmin
 		}
 
 		$done = false;
+		
+		// Set some needed variables.
+		$this->user = JFactory::getUser();
+		$this->table = $this->getTable();
+		$this->tableClassName = get_class($this->table);
+		$this->contentType = new JUcmType;
+		$this->type = $this->contentType->getTypeByTable($this->tableClassName);
+		$this->batchSet = true;
+
+		if ($this->type == false)
+		{
+			$type = new JUcmType;
+			$this->type = $type->getTypeByAlias($this->typeAlias);
+		}
+		
+		//$this->tagsObserver = $this->table->getObserverOfClass('JTableObserverTags');
+		
+
 
 		if (!empty($commands['assetgroup_id'])) {
-			if (!$this->batchAccess($commands['assetgroup_id'], $pks)) {
+			if (!$this->batchAccess($commands['assetgroup_id'], $pks, $contexts)) {
+				return false;
+			}
+
+			$done = true;
+		}
+		
+		if (!empty($commands['accessuserid'])) {
+			if (!$this->batchAccessRights($commands['accessuserid'], $pks, $contexts)) {
 				return false;
 			}
 
@@ -1894,6 +1957,65 @@ class PhocaGalleryCpModelPhocaGalleryC extends JModelAdmin
 		}
 
 		// Clear the cache
+		$this->cleanCache();
+
+		return true;
+	}
+	
+	protected function batchAccessRights($value, $pks, $contexts)
+	{
+		$kF = array_search(-3, $value);
+		if ($kF === false) {
+		} else {
+			// -3 - keep original access rights, don't do anything
+			return true;
+		}
+		
+		$valueA = $value;
+		$value = implode(',',$valueA);
+		
+		
+		
+		if (empty($this->batchSet))
+		{
+			// Set some needed variables.
+			$this->user = JFactory::getUser();
+			$this->table = $this->getTable();
+			$this->tableClassName = get_class($this->table);
+			$this->contentType = new JUcmType;
+			$this->type = $this->contentType->getTypeByTable($this->tableClassName);
+		}
+
+		foreach ($pks as $pk)
+		{
+			
+			if ($this->user->authorise('core.edit', $contexts[$pk]))
+			{
+				$this->table->reset();
+				$this->table->load($pk);
+				$this->table->accessuserid = (string)$value;
+
+				/*if (!empty($this->type))
+				{
+					$this->createTagsHelper($this->tagsObserver, $this->type, $pk, $this->typeAlias, $this->table);
+				}*/
+
+				if (!$this->table->store())
+				{
+					$this->setError($this->table->getError());
+
+					return false;
+				}
+			}
+			else
+			{
+				$this->setError(JText::_('JLIB_APPLICATION_ERROR_BATCH_CANNOT_EDIT'));
+
+				return false;
+			}
+		}
+
+		// Clean the cache
 		$this->cleanCache();
 
 		return true;

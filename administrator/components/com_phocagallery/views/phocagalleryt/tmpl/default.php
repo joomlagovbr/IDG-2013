@@ -1,4 +1,13 @@
 <?php 
+/*
+ * @package Joomla
+ * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+ *
+ * @component Phoca Gallery
+ * @copyright Copyright (C) Jan Pavelka www.phoca.cz
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ */
 defined('_JEXEC') or die('Restricted access');
 JHTML::_('behavior.tooltip'); ?>
 
@@ -9,7 +18,7 @@ JHTML::_('behavior.tooltip'); ?>
 			Joomla.submitform(task, document.getElementById('phocagalleryt-form'));
 		}
 		else {
-			alert('<?php echo $this->escape(JText::_('JGLOBAL_VALIDATION_FORM_FAILED'));?>');
+			alert('<?php echo JText::_('JGLOBAL_VALIDATION_FORM_FAILED', true);?>');
 		}
 	}
 </script>
@@ -85,5 +94,5 @@ echo '<h4>'.JText::_('COM_PHOCAGALLERY_EDIT_CSS_FILES'). '</h4>';
 echo '<ul class="nav nav-tabs nav-stacked"><li><a href="index.php?option=com_phocagallery&view=phocagalleryefs"><i class="icon-edit"></i> '.JText::_('COM_PHOCAGALLERY_EDIT_CSS_FILES'). '</a></li></ul>';
 ?>
 
-<p>&nbsp;</p><div class="btn-group"><a class="btn btn-large btn-primary" href="http://www.phoca.cz/themes/" target="_blank"><i class="icon-grid-view-2 icon-white"></i>&nbsp;&nbsp;<?php echo JText::_('COM_PHOCAGALLERY_NEW_THEME_DOWNLOAD'); ?></a></div>
+<p>&nbsp;</p><div class="btn-group"><a class="btn btn-large btn-primary" href="https://www.phoca.cz/themes/" target="_blank"><i class="icon-grid-view-2 icon-white"></i>&nbsp;&nbsp;<?php echo JText::_('COM_PHOCAGALLERY_NEW_THEME_DOWNLOAD'); ?></a></div>
 

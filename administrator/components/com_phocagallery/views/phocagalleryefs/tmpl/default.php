@@ -37,10 +37,7 @@ $sortFields = $this->getSortFields();
 echo $r->jsJorderTable($listOrder);
 
 echo $r->startForm($option, $tasks, 'adminForm');
-echo $r->startFilter($OPT.'_FILTER');
-echo $r->selectFilterPublished('JOPTION_SELECT_PUBLISHED', $this->state->get('filter.state'));
-echo $r->selectFilterLanguage('JOPTION_SELECT_LANGUAGE', $this->state->get('filter.language'));
-echo $r->selectFilterCategory(PhocaGalleryCategory::options(1), 'COM_PHOCAGALLERY_FILTER_SELECT_TYPE', $this->state->get('filter.category_id'));
+echo $r->startFilter();
 echo $r->endFilter();
 
 echo $r->startMainContainer();
@@ -51,6 +48,13 @@ echo $r->inputFilterSearchClear('JSEARCH_FILTER_SUBMIT', 'JSEARCH_FILTER_CLEAR')
 echo $r->inputFilterSearchLimit('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC', $this->pagination->getLimitBox());
 echo $r->selectFilterDirection('JFIELD_ORDERING_DESC', 'JGLOBAL_ORDER_ASCENDING', 'JGLOBAL_ORDER_DESCENDING', $listDirn);
 echo $r->selectFilterSortBy('JGLOBAL_SORT_BY', $sortFields, $listOrder);
+
+echo $r->startFilterBar(2);
+echo $r->selectFilterPublished('JOPTION_SELECT_PUBLISHED', $this->state->get('filter.state'));
+echo $r->selectFilterLanguage('JOPTION_SELECT_LANGUAGE', $this->state->get('filter.language'));
+echo $r->selectFilterCategory(PhocaGalleryCategory::options(1), 'COM_PHOCAGALLERY_FILTER_SELECT_TYPE', $this->state->get('filter.category_id'));
+echo $r->endFilterBar();
+
 echo $r->endFilterBar();		
 
 echo $r->startTable('categoryList');
@@ -90,10 +94,11 @@ $linkEdit 		= JRoute::_( $urlEdit. $item->id );
 
 $iD = $i % 2;
 echo "\n\n";
-echo '<tr class="row'.$iD.'" sortable-group-id="'.$item->type.'" item-id="'.$item->id.'" parents="'.$item->type.'" level="0">'. "\n";
+//echo '<tr class="row'.$iD.'" sortable-group-id="'.$item->type.'" item-id="'.$item->id.'" parents="'.$item->type.'" level="0">'. "\n";
+echo '<tr class="row'.$iD.'" sortable-group-id="'.$item->type.'" >'. "\n";
 
 echo $r->tdOrder($canChange, $saveOrder, $orderkey);
-echo $r->td(JHtml::_('grid.id', $i, $item->id), "small hidden-phone");
+echo $r->td(JHtml::_('grid.id', $i, $item->id), "small");
 
 					
 $checkO = '';
@@ -106,7 +111,7 @@ if ($canCreate || $canEdit) {
 	$checkO .= $this->escape($item->title);
 }
 
-echo $r->td($checkO, "small hidden-phone");
+echo $r->td($checkO, "small");
 
 $filename 	= PhocaGalleryFile::existsCss($item->filename, $item->type);
 $main		= '';
@@ -114,24 +119,24 @@ if ((int)$item->type == 1) {
 	$main = ' <span class="label label-warning">'.JText::_('COM_PHOCAGALLERY_MAIN').'</span>';
 }
 if ($filename) {
-	echo $r->td($item->filename . $main .' <span class="label label-success">'.JText::_('COM_PHOCAGALLERY_FILE_EXISTS').'</span>', "small hidden-phone");
+	echo $r->td($item->filename . $main .' <span class="label label-success">'.JText::_('COM_PHOCAGALLERY_FILE_EXISTS').'</span>', "small");
 } else {
-	echo $r->td($item->filename  . $main .' <span class="label label-important">'.JText::_('COM_PHOCAGALLERY_FILE_DOES_NOT_EXIST').'</span>', "small hidden-phone");
+	echo $r->td($item->filename  . $main .' <span class="label label-important">'.JText::_('COM_PHOCAGALLERY_FILE_DOES_NOT_EXIST').'</span>', "small");
 }
 
-echo $r->td(JHtml::_('jgrid.published', $item->published, $i, $tasks.'.', $canChange), "small hidden-phone");
+echo $r->td(JHtml::_('jgrid.published', $item->published, $i, $tasks.'.', $canChange), "small");
 
 switch($item->type) {
 	case 2:
-		echo $r->td(JText::_('COM_PHOCAGALLERY_CUSTOM_CSS'), "small hidden-phone");	
+		echo $r->td(JText::_('COM_PHOCAGALLERY_CUSTOM_CSS'), "small");	
 	break;
 	case 1:
 	default:
-		echo $r->td(JText::_('COM_PHOCAGALLERY_MAIN_CSS'), "small hidden-phone");	
+		echo $r->td(JText::_('COM_PHOCAGALLERY_MAIN_CSS'), "small");	
 	break;
 }
 echo $r->tdLanguage($item->language, $item->language_title, $this->escape($item->language_title));
-echo $r->td($item->id, "small hidden-phone");
+echo $r->td($item->id, "small");
 
 echo '</tr>'. "\n";
 						
@@ -144,7 +149,7 @@ echo $r->tblFoot($this->pagination->getListFooter(), 15);
 echo $r->endTable();
 
 
-echo $r->formInputs($listOrder, $originalOrders);
+echo $r->formInputs($listOrder, $listDirn, $originalOrders);
 echo $r->endMainContainer();
 echo $r->endForm();
 ?>

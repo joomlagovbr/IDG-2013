@@ -67,7 +67,7 @@ class JFormFieldPhocaAccessLevel extends JFormFieldList
 
 		// Check for a database error.
 		if ($db->getErrorNum()) {
-			JError::raiseWarning(500, $db->getErrorMsg());
+			throw new Exception($db->getErrorMsg(), 500);
 			return null;
 		}
 

@@ -16,7 +16,7 @@
 
 <field name="ordering" type="phocagalleryOrdering" table="styles" class="inputbox" label="COM_PHOCAGALLERY_FIELD_ORDERING_LABEL" description="COM_PHOCAGALLERY_FIELD_ORDERING_DESC" />
 
-<field name="source" type="editor" editor="codemirror|none" buttons="no" label="COM_PHOCAGALLERY_FIELD_CSS_LABEL" description="COM_PHOCAGALLERY_FIELD_CSS_DESC"  filter="raw" height="400" />
+<field name="source" type="editor" editor="codemirror|none" buttons="no" label="COM_PHOCAGALLERY_FIELD_CSS_LABEL" description="COM_PHOCAGALLERY_FIELD_CSS_DESC" syntax="css" filter="raw" height="400" />
 
 	</fieldset>
 	

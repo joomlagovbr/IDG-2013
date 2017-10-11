@@ -1,6 +1,6 @@
 <?php
 /*
- * @package Joomla 1.5
+ * @package Joomla
  * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  *
@@ -25,7 +25,7 @@ class PhocaGalleryCpControllerPhocaGalleryM extends JControllerForm
 		$this->layout = 'edit';
 		// Register Extra tasks
 		//$this->registerTask( 'add'  , 	'eidt' );
-		//$view = JRequest::getVar( 'view' );
+		//$view = JFactory::getApplication()->input->get( 'view' );
 		
 	}
 
@@ -59,9 +59,10 @@ class PhocaGalleryCpControllerPhocaGalleryM extends JControllerForm
 	
 	/*
 	function save() {
-	JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
-		$post				= JRequest::get('post');
-		$data			= JRequest::getVar('jform', array(0), 'post', 'array');
+	JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		$post				= JFactory::getApplication()->input->get('post');
+		//$data			= JFactory::getApplication()->input->get('jform', array(0), 'post', 'array');
+		$data = $app->input->post->get('jform', array(), 'array');
 		
 		if(isset($post['foldercid'])) {
 			$data['foldercid']	= $post['foldercid'];
@@ -89,15 +90,15 @@ class PhocaGalleryCpControllerPhocaGalleryM extends JControllerForm
 	
 	
 	
-	function edit() {
-		//JRequest::setVar( 'view', 'phocagallerym' );
-		//JRequest::setVar( 'layout', 'Edit'  );
-		//JRequest::setVar( 'hidemainmenu', 1 );
+	function edit($key = NULL, $urlVar = NULL) {
+		//JFactory::getApplication()->input->set( 'view', 'phocagallerym' );
+		//JFactory::getApplication()->input->set( 'layout', 'Edit'  );
+		//JFactory::getApplication()->input->set( 'hidemainmenu', 1 );
 		//PhocaGalleryCpControllerPhocaGalleryM::display();
 		$this->setRedirect(JRoute::_('index.php?option='.$this->option.'&view='.$this->view_list.'&layout='.$this->layout, false));
 	}
 	
-	function cancel() {
+	function cancel($key = NULL) {
 		// Checkin the Phoca Gallery
 		//$model = $this->getModel( 'phocagallery' );
 		//$model->checkin();

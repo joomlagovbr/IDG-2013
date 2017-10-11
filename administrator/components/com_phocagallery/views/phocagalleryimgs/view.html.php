@@ -38,7 +38,7 @@ class PhocaGalleryCpViewPhocaGalleryImgs extends JViewLegacy
 		
 		
 		JHTML::stylesheet('media/com_phocagallery/css/administrator/phocagallery.css' );
-		$document	= & JFactory::getDocument();
+		$document	= JFactory::getDocument();
 		//$document->addCustomTag(PhocaGalleryRenderAdmin::renderIeCssLink(1));
 		
 		
@@ -55,7 +55,7 @@ class PhocaGalleryCpViewPhocaGalleryImgs extends JViewLegacy
 		
 		$db		    = JFactory::getDBO();*/
 
-		$this->tmpl['notapproved'] 	= & $this->get( 'NotApprovedImage' );
+		$this->tmpl['notapproved'] 	=  $this->get( 'NotApprovedImage' );
 	
 		// Button
 		JHTML::_('behavior.modal', 'a.modal_phocagalleryimgs');
@@ -77,7 +77,7 @@ class PhocaGalleryCpViewPhocaGalleryImgs extends JViewLegacy
 	
 	protected function addToolbar() {
 		
-		require_once JPATH_COMPONENT.DS.'helpers'.DS.'phocagalleryimgs.php';
+		require_once JPATH_COMPONENT.'/helpers/phocagalleryimgs.php';
 
 		
 		
@@ -138,7 +138,7 @@ class PhocaGalleryCpViewPhocaGalleryImgs extends JViewLegacy
 	
 		if (!empty($this->items)) {
 			
-			$params							= &JComponentHelper::getParams( 'com_phocagallery' );
+			$params							= JComponentHelper::getParams( 'com_phocagallery' );
 			$pagination_thumbnail_creation 	= $params->get( 'pagination_thumbnail_creation', 0 );
 			$clean_thumbnails 				= $params->get( 'clean_thumbnails', 0 );		
 		

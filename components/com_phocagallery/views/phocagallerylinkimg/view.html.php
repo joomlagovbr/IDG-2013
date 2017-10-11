@@ -1,6 +1,6 @@
 <?php
 /*
- * @package Joomla 1.5
+ * @package Joomla
  * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  *
@@ -10,6 +10,7 @@
  */ 
 defined('_JEXEC') or die();
 jimport( 'joomla.application.component.view' );
+use Joomla\String\StringHelper;
  
 class phocaGalleryViewphocaGalleryLinkImg extends JViewLegacy
 {
@@ -31,9 +32,9 @@ class phocaGalleryViewphocaGalleryLinkImg extends JViewLegacy
 			phocagalleryimport('phocagallery.file.filethumbnail');
 			$jsLink = JURI::base(true).'/administrator';
 		}
-		$document	=& JFactory::getDocument();
-		$uri		=& JFactory::getURI();
-		$db		    =& JFactory::getDBO();
+		$document	= JFactory::getDocument();
+		$uri		= JFactory::getURI();
+		$db		    = JFactory::getDBO();
 		JHTML::stylesheet( 'media/com_phocagallery/css/administrator/phocagallery.css' );
 		JHTML::stylesheet( 'components/com_phocagallery/assets/jcp/picker.css' );
 		$document->addScript(JURI::root(true) .'/components/com_phocagallery/assets/jcp/picker.js');
@@ -56,12 +57,12 @@ class phocaGalleryViewphocaGalleryLinkImg extends JViewLegacy
 		$filter_order		= $app->getUserStateFromRequest( $this->_context.'.filter_order',	'filter_order',	'a.ordering', 'cmd' );
 		$filter_order_Dir	= $app->getUserStateFromRequest( $this->_context.'.filter_order_Dir',	'filter_order_Dir',	'',	'word' );
 		$search				= $app->getUserStateFromRequest( $this->_context.'.search', 'search', '',	'string' );
-		$search				= JString::strtolower( $search );
+		$search				= StringHelper::strtolower( $search );
 
 		// Get data from the model
-		$items					= & $this->get( 'Data');
-		$total					= & $this->get( 'Total');
-		$tmpl['pagination'] 	= & $this->get( 'Pagination' );
+		$items					=  $this->get( 'Data');
+		$total					=  $this->get( 'Total');
+		$tmpl['pagination'] 	=  $this->get( 'Pagination' );
 		
 		// build list of categories
 		$javascript 	= 'class="inputbox" size="1" onchange="submitform( );"';
@@ -97,11 +98,13 @@ class phocaGalleryViewphocaGalleryLinkImg extends JViewLegacy
 		// search filter
 		$lists['search']	= $search;
 		
+		$user = JFactory::getUser();
+		$uriS = $uri->toString();
 		$this->assignRef('tmpl',		$tmpl);
 		$this->assignRef('button',		$button);
-		$this->assignRef('user',		JFactory::getUser());
+		$this->assignRef('user',		$user);
 		$this->assignRef('items',		$items);
-		$this->assignRef('request_url',	$uri->toString());
+		$this->assignRef('request_url',	$uriS);
 		
 		switch($tmpl['type']) {
 			

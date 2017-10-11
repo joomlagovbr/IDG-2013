@@ -1,25 +1,29 @@
-/* Ultimate Fade-in slideshow (v2.4)
-* Last updated: May 24th, 2010. This notice must stay intact for usage 
+/* Ultimate Fade-in slideshow (v2.6.1)
+* Last updated: March 7th, 2016. This notice must stay intact for usage 
 * Author: Dynamic Drive at http://www.dynamicdrive.com/
 * Visit http://www.dynamicdrive.com/ for full source code
 */
 
 //Oct 6th, 09' (v2.1): Adds option to randomize display order of images, via new option displaymode.randomize
 //May 24th, 10' (v2.4): Adds new "peakaboo" option to "descreveal" setting. oninit and onslide event handlers added.
-/*
-var fadeSlideShow_descpanel={
-	controls: [['x.png',7,7], ['restore.png',10,11], ['loading.gif',54,55]], //full URL and dimensions of close, restore, and loading images
-	fontStyle: 'normal 11px Verdana', //font style for text descriptions
-	slidespeed: 200 //speed of description panel animation (in millisec)
-}*/
+//June 22nd, 14' (v2.6): 1) Slideshow now responsive, supporting percentage values in the dimensions[w, h] option. 2) Swipe to navigate added on both desktop and mobile devices. 
+//June 22nd, 14' (v2.6.1): Enabled vertical swiping inside slideshow to scroll page 
 
-var fadeSlideShow_path =  '';
+//Unofficial Updates: (three following March 6 ,2016 - dates below mark their initial coding for version 2.4)
+//Sept 2nd, '11 Update for loading image bug see: http://www.dynamicdrive.com/forums/showthread.php?p=260188#post260188
+//Sept 4rth '11 Update for initial mouseover bug in some browsers - first image wouldn't show up if mouse was over the show as page loaded
+//Sept 13th '11 Update for missing first image bug in IE - added onerror to onload for routine that tests first image before getting underway
+
+//March 7, 2016 Update to prevent taps in most tap capable browsers from activating mouseover pause. Android sometimes still has this problem
+// adding this meta tag may help with that: <meta name="viewport" content="user-scalable=yes">
+
+
 var fadeSlideShow_descpanel={
-	//controls: [[fadeSlideShow_path+'/x.png',7,7], [fadeSlideShow_path+'/restore.png',10,11], [fadeSlideShow_path+'/loading.gif',54,55]],
-	controls: [[''], [''],['']],
+	controls: [['x.png', 7, 7], ['restore.png', 10, 11], ['loading.gif', 54, 55]], //full URL and dimensions of close, restore, and loading images
 	fontStyle: 'normal 11px Verdana', //font style for text descriptions
 	slidespeed: 200 //speed of description panel animation (in millisec)
 }
+
 //No need to edit beyond here...
 
 jQuery.noConflict()
@@ -34,6 +38,7 @@ function fadeSlideShow(settingarg){
 	setting.currentstep=0 //keep track of # of slides slideshow has gone through (applicable in displaymode='auto' only)
 	setting.totalsteps=setting.imagearray.length*(setting.displaymode.cycles>0? setting.displaymode.cycles : Infinity) //Total steps limit (applicable in displaymode='auto' only w/ cycles>0)
 	setting.fglayer=0, setting.bglayer=1 //index of active and background layer (switches after each change of slide)
+	setting.isflexible = /\%/.test(setting.dimensions[0]) || /\%/.test(setting.dimensions[1]) // test if one of slideshow dimension sides is a percentage value
 	setting.oninit=setting.oninit || function(){}
 	setting.onslide=setting.onslide || function(){}
 	if (setting.displaymode.randomize) //randomly shuffle order of images?
@@ -53,15 +58,20 @@ function fadeSlideShow(settingarg){
 		var setting=slideshow.setting
 		var fullhtml=fadeSlideShow.routines.getFullHTML(setting.imagearray) //get full HTML of entire slideshow
 		setting.$wrapperdiv=$('#'+setting.wrapperid).css({position:'relative', visibility:'visible', background:'white', overflow:'hidden', width:setting.dimensions[0], height:setting.dimensions[1]}).empty() //main slideshow DIV
+		setting.dimensions = [ // get dimensions of slideshow in pixels
+			setting.$wrapperdiv.outerWidth(),
+			setting.$wrapperdiv.outerHeight()
+		]
 		if (setting.$wrapperdiv.length==0){ //if no wrapper DIV found
 			//alert("Error: DIV with ID \""+setting.wrapperid+"\" not found on page.")
+			console.log("Error: DIV with ID \""+setting.wrapperid+"\" not found on page.");
 			return
 		}
 		setting.$gallerylayers=$('<div class="gallerylayer"></div><div class="gallerylayer"></div>') //two stacked DIVs to display the actual slide 
 			.css({position:'absolute', left:0, top:0, width:'100%', height:'100%', background:'white'})
 			.appendTo(setting.$wrapperdiv)
-		var $loadingimg=$('<img src="'+fadeSlideShow_descpanel.controls[2][0]+'" style="position:absolute;width:'+fadeSlideShow_descpanel.controls[2][1]+';height:'+fadeSlideShow_descpanel.controls[2][2]+'" />')
-			.css({left:setting.dimensions[0]/2-fadeSlideShow_descpanel.controls[2][1]/2, top:setting.dimensions[1]/2-fadeSlideShow_descpanel.controls[2][2]}) //center loading gif
+		var $loadingimg=$('<img src="'+fadeSlideShow_descpanel.controls[2][0]+'" style="position:absolute;width:'+fadeSlideShow_descpanel.controls[2][1]+'px;height:'+fadeSlideShow_descpanel.controls[2][2]+'px" />')
+			.css({zIndex:1000,left:setting.dimensions[0]/2-fadeSlideShow_descpanel.controls[2][1]/2, top:setting.dimensions[1]/2-fadeSlideShow_descpanel.controls[2][2]/2}) //center loading gif
 			.appendTo(setting.$wrapperdiv)
 		var $curimage=setting.$gallerylayers.html(fullhtml).find('img').hide().eq(setting.curimage) //prefill both layers with entire slideshow content, hide all images, and return current image
 		if (setting.longestdesc!="" && setting.descreveal!="none"){ //if at least one slide contains a description (versus feature is enabled but no descriptions defined) and descreveal not explicitly disabled
@@ -83,19 +93,84 @@ function fadeSlideShow(settingarg){
 				setting.$wrapperdiv.bind('mouseleave', function(){slideshow.showhidedescpanel('hide')})
 			}
 		}
-		setting.$wrapperdiv.bind('mouseenter', function(){setting.ismouseover=true}) //pause slideshow mouseover
 		setting.$wrapperdiv.bind('mouseleave', function(){setting.ismouseover=false})
-		if ($curimage.get(0).complete){ //accounf for IE not firing image.onload
+
+		if (setting.$wrapperdiv.swipe){ // if swipe enabled (swipe function exists)
+			var swipeOptions={ // swipe object variables
+				triggerOnTouchEnd : true,
+				triggerOnTouchLeave : true,
+				threshold: 75,
+				allowPageScroll: 'vertical',
+				excludedElements:[]
+			}
+
+			swipeOptions.swipeStatus = function(event, phase, direction, distance){
+				var evtparent = event.target.parentNode // check parent element of target image
+				if (phase == 'start' && evtparent.tagName == 'A'){ // cancel A action when finger makes contact with element
+					evtparent.onclick = function(){
+						return false
+					}
+				}
+				if (phase == 'cancel' && evtparent.tagName == 'A'){ // if swipe action canceled (so no proper swipe), enable A action
+					evtparent.onclick = function(){
+						return true
+					}
+				}
+				if (phase == 'end'){
+					var navkeyword = /(right)/i.test(direction)? 'prev' : 'next'
+					if ( /(left)|(right)/i.test(direction) )
+					slideshow.navigate(navkeyword)
+				}
+			}
+
+			setting.$wrapperdiv.swipe(swipeOptions)
+		} // end setting.$wrapperdiv.swipe check
+
+		slideshow.paginateinit($);
+		function loaded_or_error(){
 			$loadingimg.hide()
-			slideshow.paginateinit($)
+			setting.$wrapperdiv.bind('touchstart mouseenter', function(e){ //pause slideshow mouseover
+				setting.ismouseover = true;
+				if(e.type === 'touchstart'){
+					clearTimeout(setting.ismouseovertimer);
+					setting.ismouseovertimer = setTimeout(function(){setting.ismouseover = false;}, 600);
+				}
+			});
 			slideshow.showslide(setting.curimage)
 		}
-		else{ //initialize slideshow when first image has fully loaded
-			$loadingimg.hide()
-			slideshow.paginateinit($)
-			$curimage.bind('load', function(){slideshow.showslide(setting.curimage)})
+		if ($curimage.get(0).complete){loaded_or_error(); //accounf for IE firing image.onload too soon for cached and small images
+		} else { //initialize slideshow when first image has fully loaded or errors out
+			$(new Image()).bind('load error', loaded_or_error).attr('src', $curimage.attr('src'));
 		}
 		setting.oninit.call(slideshow) //trigger oninit() event
+
+		$(window).bind('resize', function(){ // when window is resized, reposition description panel and images
+			var slideshowdimensions = [
+				setting.$wrapperdiv.outerWidth(),
+				setting.$wrapperdiv.outerHeight()
+			]
+			if (slideshowdimensions[0] == setting.dimensions[0] && slideshowdimensions[1] == setting.dimensions[1]){ // if no change in image dimensions, just exit
+				return
+			}
+
+			setting.dimensions = slideshowdimensions // refresh image dimensions data
+			if (setting.$descpanel && setting.$descpanel.length == 1){ // if description panel enabled for slideshow
+				setting.$descpanel
+					.find('div')
+					.css({width:setting.$descpanel.width()-8})
+					.eq(2) // reference hidden description panel (used to calculate height of longest message
+					.css({height:'auto', background:'blue'}).html(setting.closebutton + setting.longestdesc).end() // populate hidden DIV with longest message
+				setting.panelheight = setting.$descpanel.find('div').eq(2).outerHeight() // then get height of that DIV
+				setting.$descpanel.css({height: setting.panelheight}) // reset main description panel height
+				if (!setting.$restorebutton || (setting.$restorebutton && setting.$restorebutton.css('visibility') == 'hidden')){ // if panel doesn't contain restore button (meaning it should always be repositioned onresize), or there is restore button and it's currenty hidden (meaning panel is currently not minimized)
+					setting.$descpanel.css({top:setting.dimensions[1]-setting.panelheight})
+				}
+			}
+			var $slideimage=setting.$gallerylayers.eq(setting.fglayer).find('img').eq(setting.curimage)
+			var imgdimensions=[$slideimage.width(), $slideimage.height()] //center align image
+			$slideimage.css({marginLeft: (imgdimensions[0]>0 && imgdimensions[0]<setting.dimensions[0])? setting.dimensions[0]/2-imgdimensions[0]/2 : 0})
+			$slideimage.css({marginTop: (imgdimensions[1]>0 && imgdimensions[1]<setting.dimensions[1])? setting.dimensions[1]/2-imgdimensions[1]/2 : 0})
+		})
 		$(window).bind('unload', function(){ //clean up and persist
 			if (slideshow.setting.persist) //remember last shown image's index
 				fadeSlideShow.routines.setCookie("gallery-"+setting.wrapperid, setting.curimage)
@@ -225,7 +300,7 @@ fadeSlideShow.routines={
 
 	getSlideHTML:function(imgelement){
 		var layerHTML=(imgelement[1])? '<a href="'+imgelement[1]+'" target="'+imgelement[2]+'">\n' : '' //hyperlink slide?
-		layerHTML+='<img src="'+imgelement[0]+'" style="border-width:0;" />\n'
+		layerHTML+='<img src="'+imgelement[0]+'" style="border-width:0;" class="" />\n'
 		layerHTML+=(imgelement[1])? '</a>\n' : ''
 		return layerHTML //return HTML for this layer
 	},
@@ -241,10 +316,11 @@ fadeSlideShow.routines={
 		setting.$descpanel=$('<div class="fadeslidedescdiv"></div>')
 			.css({position:'absolute', visibility:'hidden', width:'100%', left:0, top:setting.dimensions[1], font:fadeSlideShow_descpanel.fontStyle, zIndex:'1001'})
 			.appendTo(setting.$wrapperdiv)
-		$('<div class="descpanelbg"></div><div class="descpanelfg"></div>') //create inner nav panel DIVs
+		$('<div class="descpanelbg"></div><div class="descpanelfg"></div><div class="descpanelhidden"></div>') //create inner nav panel DIVs
 			.css({position:'absolute', left:0, top:0, width:setting.$descpanel.width()-8, padding:'4px'})
 			.eq(0).css({background:'black', opacity:0.7}).end() //"descpanelbg" div
 			.eq(1).css({color:'white'}).html(setting.closebutton + setting.longestdesc).end() //"descpanelfg" div
+			.eq(2).css({visibility: 'hidden', zIndex: -1}).html(setting.closebutton + setting.longestdesc).end() //"descpanelhidden" hidden div to re-get height of panel after populating it with text
 			.appendTo(setting.$descpanel)
 		setting.$descinner=setting.$descpanel.find('div.descpanelfg')
 		setting.panelheight=setting.$descinner.outerHeight()

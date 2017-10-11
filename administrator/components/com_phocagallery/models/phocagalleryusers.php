@@ -44,7 +44,7 @@ class PhocaGalleryCpModelPhocaGalleryUsers extends JModelList
 		parent::__construct($config);
 	}
 	
-	protected function populateState()
+	protected function populateState($ordering = null, $direction = null)
 	{
 		// Initialise variables.
 		$app = JFactory::getApplication('administrator');
@@ -70,7 +70,7 @@ class PhocaGalleryCpModelPhocaGalleryUsers extends JModelList
 		$this->setState('params', $params);
 
 		// List state information.
-		parent::populateState('uc.username', 'asc');
+		parent::populateState('ua.username', 'asc');
 	}
 	
 	protected function getStoreId($id = '')

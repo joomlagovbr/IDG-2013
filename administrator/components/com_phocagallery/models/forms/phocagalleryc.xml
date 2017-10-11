@@ -11,6 +11,8 @@
 
 <field name="parent_id" type="phocagallerycategory" label="COM_PHOCAGALLERY_FIELD_PARENT_CATEGORY_LABEL" description="COM_PHOCAGALLERY_FIELD_CATEGORY_CATEGORY_DESC"  class="inputbox" />
 
+<field name="image_id" type="phocaselectitem" label="COM_PHOCAGALLERY_FIELD_IMAGE_ID_LABEL" description="COM_PHOCAGALLERY_FIELD_IMAGE_ID_DESC"  class="inputbox" />
+
 
 
 <field name="ordering" type="PhocaGalleryOrdering" table="category" class="inputbox" label="COM_PHOCAGALLERY_FIELD_ORDERING_LABEL" description="COM_PHOCAGALLERY_FIELD_ORDERING_DESC" />

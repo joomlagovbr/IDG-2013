@@ -23,6 +23,20 @@ $published = $this->state->get('filter.state');
 				<?php echo JHtml::_('batch.access');?>
 			</div>
 		</div>
+		
+		<div class="control-group">
+			<div class="controls">
+				<label id="batch-accessuserid-lbl" for="batch-accessuserid" class="modalTooltip" title="<strong><?php echo JText::_('COM_PHOCAGALLERY_SET_ACCESS_RIGHTS_LEVEL'); ?></strong><br /><?php echo JText::_('COM_PHOCAGALLERY_NOT_MAKING_SELECTION_WILL_KEEP_ORIGINAL_ACCESS_RIGHTS_LEVELS'); ?>"><?php echo JText::_('COM_PHOCAGALLERY_SET_ACCESS_RIGHTS_LEVEL'); ?></label>
+	
+			
+				<?php
+				$userList = PhocaGalleryAccess::usersList( 'batch[accessuserid][]', 'batch-accessuserid', -3, 1, NULL, 'name', 0 );
+				echo $userList
+				?>
+			</div>
+		</div>
+		
+		
 		<div class="control-group">
 			<div class="controls">
 				<?php echo JHtml::_('batch.language'); ?>

@@ -18,8 +18,8 @@ class JFormFieldPhocaText extends JFormField
 
 	protected function getInput() {
 	
-		$document		= &JFactory::getDocument();
-		$option 		= JRequest::getCmd('option');
+		$document		= JFactory::getDocument();
+		$option 		= JFactory::getApplication()->input->getCmd('option');
 		$globalValue 	= $this->_getPhocaParams( $this->element['name'] );
 		
 		// Initialize some field attributes.
@@ -33,7 +33,7 @@ class JFormFieldPhocaText extends JFormField
 		
 		$value 		= htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8');
 		
-		// TODO 1.6
+		// TO DO 1.6
 		// MENU - Set Default value to "" because of saving "" value into the menu link ( use global = "")
 		if ($option == "com_menus") {
 			$DefaultValue	= (string)$this->element['default'];
@@ -61,10 +61,7 @@ class JFormFieldPhocaText extends JFormField
 	
 	protected function _setPhocaParams(){
 	
-		/*$table 				= JTable::getInstance('extension');
-		$idCom				= $table->find( array('element' => $component ));
-		$table->load($idCom);
-		$phocaParams 		= new JParameter( $table->params );*/
+	
 		$component 			= 'com_phocagallery';
 		$paramsC			= JComponentHelper::getParams($component) ;
 		$this->phocaParams	= $paramsC;

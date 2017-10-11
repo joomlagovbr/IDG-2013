@@ -17,10 +17,10 @@ class com_phocagalleryInstallerScript
 		//echo '<p>' . JText::_('COM_PHOCAGALLLERY_INSTALL_TEXT') . '</p>';
 		
 		
-		$folder[0][0]	=	'images' . DS . 'phocagallery' . DS ;
-		$folder[0][1]	= 	JPATH_ROOT . DS .  $folder[0][0];
-		$folder[1][0]	=	'images' . DS . 'phocagallery' . DS . 'avatars' . DS;
-		$folder[1][1]	= 	JPATH_ROOT . DS .  $folder[1][0];
+		$folder[0][0]	=	'images/phocagallery/' ;
+		$folder[0][1]	= 	JPATH_ROOT . '/'.  $folder[0][0];
+		$folder[1][0]	=	'images/phocagallery/avatars/';
+		$folder[1][1]	= 	JPATH_ROOT . '/' .  $folder[1][0];
 		
 		$message = '';
 		$error	 = array();
@@ -32,7 +32,7 @@ class com_phocagalleryInstallerScript
 				{
 					
 					$data = "<html>\n<body bgcolor=\"#FFFFFF\">\n</body>\n</html>";
-					JFile::write($value[1].DS."index.html", $data);
+					JFile::write($value[1]. '/'. "index.html", $data);
 					$message .= '<div><b><span style="color:#009933">Folder</span> ' . $value[0] 
 							   .' <span style="color:#009933">created!</span></b></div>';
 					$error[] = 0;
@@ -64,10 +64,12 @@ class com_phocagalleryInstallerScript
 	function update($parent) {
 		//echo '<p>' . JText::sprintf('COM_PHOCAGALLERY_UPDATE_TEXT', $parent->get('manifest')->version) . '</p>';
 		
-		$folder[0][0]	=	'images' . DS . 'phocagallery' . DS ;
-		$folder[0][1]	= 	JPATH_ROOT . DS .  $folder[0][0];
-		$folder[1][0]	=	'images' . DS . 'phocagallery' . DS . 'avatars' . DS;
-		$folder[1][1]	= 	JPATH_ROOT . DS .  $folder[1][0];
+
+		
+		$folder[0][0]	=	'images/phocagallery/' ;
+		$folder[0][1]	= 	JPATH_ROOT . '/'.  $folder[0][0];
+		$folder[1][0]	=	'images/phocagallery/avatars/';
+		$folder[1][1]	= 	JPATH_ROOT . '/' .  $folder[1][0];
 		
 		$message = '';
 		$error	 = array();
@@ -79,7 +81,7 @@ class com_phocagalleryInstallerScript
 				{
 					
 					$data = "<html>\n<body bgcolor=\"#FFFFFF\">\n</body>\n</html>";
-					JFile::write($value[1].DS."index.html", $data);
+					JFile::write($value[1]. '/'. "index.html", $data);
 					$message .= '<div><b><span style="color:#009933">Folder</span> ' . $value[0] 
 							   .' <span style="color:#009933">created!</span></b></div>';
 					$error[] = 0;

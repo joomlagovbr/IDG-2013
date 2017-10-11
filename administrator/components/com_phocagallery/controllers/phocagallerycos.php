@@ -18,7 +18,7 @@ class PhocaGalleryCpControllerPhocaGalleryCos extends JControllerAdmin
 {
 	protected	$option 		= 'com_phocagallery';
 	
-	public function &getModel($name = 'PhocaGalleryCo', $prefix = 'PhocaGalleryCpModel')
+	public function &getModel($name = 'PhocaGalleryCo', $prefix = 'PhocaGalleryCpModel', $config = array())
 	{
 		$model = parent::getModel($name, $prefix, array('ignore_request' => true));
 		return $model;

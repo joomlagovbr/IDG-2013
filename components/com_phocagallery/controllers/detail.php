@@ -12,19 +12,20 @@ phocagalleryimport('phocagallery.rate.rateimage');
 class PhocaGalleryControllerDetail extends PhocaGalleryController
 {
 	
-	function display() {
+	function display($cachable = false, $urlparams = false) {
 		if ( ! JFactory::getApplication()->input->get('view') ) {
-			JRequest::setVar('view', 'detail' );
+			JFactory::getApplication()->input->set('view', 'detail' );
 		}
-		parent::display();
+		
+		parent::display($cachable, $urlparams);
     }
 
 	function rate() {
 		$app	= JFactory::getApplication();
-		$params			= &$app->getParams();
+		$params			= $app->getParams();
 		$detailWindow	= $params->get( 'detail_window', 0 );
 		
-		$user 		=& JFactory::getUser();
+		$user 		= JFactory::getUser();
 		$view 		= $this->input->get( 'view', '', 'string'  );
 		$imgid 		= $this->input->get( 'id', '', 'string'  );
 		$catid 		= $this->input->get( 'catid', '', 'string'  );
@@ -70,6 +71,11 @@ class PhocaGalleryControllerDetail extends PhocaGalleryController
 				$msg = JText::_('COM_PHOCAGALLERY_ERROR_RATING_IMAGE');
 				} else {
 				$msg = JText::_('COM_PHOCAGALLERY_SUCCESS_RATING_IMAGE');
+				// Features added by Bernard Gilly - alphaplug.com
+				// load external plugins
+				$dispatcher = JDispatcher::getInstance();
+				JPluginHelper::importPlugin('phocagallery');
+				$results = $dispatcher->trigger( 'onVoteImage', array($imgid, $rating, $user->id ) );				
 				} 
 			} else {
 				$app->redirect(JRoute::_('index.php?option=com_users&view=login', false), JText::_('COM_PHOCAGALLERY_NOT_AUTHORISED_ACTION'));
@@ -80,7 +86,8 @@ class PhocaGalleryControllerDetail extends PhocaGalleryController
 		// we send infor about already rated via get and this get will be worked in view (detail - default.php) - vote=1
 		$msg = '';
 		
-		$this->setRedirect( JRoute::_('index.php?option=com_phocagallery&view=detail&catid='.$catIdAlias.'&id='.$imgIdAlias.$tmplCom.'&vote=1&Itemid='. $Itemid, false), $msg );
+		//$this->setRedirect( JRoute::_('index.php?option=com_phocagallery&view=detail&catid='.$catIdAlias.'&id='.$imgIdAlias.$tmplCom.'&vote=1&Itemid='. $Itemid, false), $msg );
+		$this->setRedirect( JRoute::_('index.php?option=com_phocagallery&view=detail&catid='.$catIdAlias.'&id='.$imgIdAlias.$tmplCom.'&vote=1&Itemid='. $Itemid, false) );
 	}
 }
 ?>

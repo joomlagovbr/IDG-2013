@@ -1,6 +1,6 @@
 <?php
 /*
- * @package Joomla 1.5
+ * @package Joomla
  * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  *
@@ -16,22 +16,22 @@ phocagalleryimport( 'phocagallery.facebook.fbsystem' );
 class PhocaGalleryCpViewphocaGalleryFbA extends JViewLegacy
 {
 	function display($tpl = null) {
-		$app	= JFactory::getApplication();
-		$document	=& JFactory::getDocument();
-		$uri		=& JFactory::getURI();
+		$app		= JFactory::getApplication();
+		$document	= JFactory::getDocument();
+		$uri		= JFactory::getURI();
 		JHTML::stylesheet('media/com_phocagallery/css/administrator/phocagallery.css' );
 		
-		$this->field	= JRequest::getVar('field');
+		$this->field	= JFactory::getApplication()->input->get('field');
 		$this->fce 		= 'phocaSelectFbAlbum_'.$this->field;
 		
-		//$eName	= JRequest::getVar('e_name');
+		//$eName	= JFactory::getApplication()->input->get('e_name');
 		//$eName	= preg_replace( '#[^A-Z0-9\-\_\[\]]#i', '', $eName );
 		
 		
 		
-		$uid	= JRequest::getVar('uid', 0, '', 'int');
+		$uid	= JFactory::getApplication()->input->get('uid', 0, '', 'int');
 		
-		$db = &JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = 'SELECT a.*'
 		. ' FROM #__phocagallery_fb_users AS a'
 		. ' WHERE a.published = 1'
@@ -45,8 +45,24 @@ class PhocaGalleryCpViewphocaGalleryFbA extends JViewLegacy
 			
 		} else {
 		
-			$session = PhocaGalleryFbSystem::setSessionData($user);		
-			$this->albums	= PhocaGalleryFb::getFbAlbums($user->appid, $user->fanpageid,  $user->appsid, $session);
+			$session 	= PhocaGalleryFbSystem::setSessionData($user);		
+			$albumN		= PhocaGalleryFb::getFbAlbums($user->appid, $user->fanpageid,  $user->appsid, $session);
+			
+			$albumR = array();
+			$i = 0;
+			if (!empty($albumN)) {
+				foreach($albumN as $k => $v) {
+					if (!empty($v)) {
+						foreach($v as $k2 => $v2) {
+							$albumR[$i]['id'] 	= $v2['id'];
+							$albumR[$i]['name'] = $v2['name'];
+							$i++;
+						}
+					}
+				}
+			}
+			$this->albums = $albumR;
+			
 			$this->userInfo = 1;
 		}
 			

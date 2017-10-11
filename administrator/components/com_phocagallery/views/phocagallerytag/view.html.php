@@ -32,8 +32,8 @@ class PhocaGalleryCpViewPhocaGalleryTag extends JViewLegacy
 	
 	protected function addToolbar() {
 		
-		require_once JPATH_COMPONENT.DS.'helpers'.DS.'phocagallerytags.php';
-		JRequest::setVar('hidemainmenu', true);
+		require_once JPATH_COMPONENT.'/helpers/phocagallerytags.php';
+		JFactory::getApplication()->input->set('hidemainmenu', true);
 
 		$user		= JFactory::getUser();
 		$isNew		= ($this->item->id == 0);

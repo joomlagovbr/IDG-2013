@@ -1,6 +1,6 @@
 <?php
 /*
- * @package Joomla 1.5
+ * @package Joomla
  * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  *
@@ -28,7 +28,7 @@ class PhocagalleryModelCategories extends JModelLegacy
 		$category_ordering	= $paramsC->get( 'category_ordering', 1 );
 		$context			= $this->_context.'.';
 	
-		// Get the pagination request variables
+		// Get the pagination r equest variables
 		$this->setState('limit', $app->getUserStateFromRequest($context .'limit', 'limit', $default_pagination, 'int'));
 		$this->setState('limitstart', $app->input->get('limitstart', 0, 'int'));
 		// In case limit has been changed, adjust limitstart accordingly
@@ -37,9 +37,9 @@ class PhocagalleryModelCategories extends JModelLegacy
 		$this->setState('filter.language',$app->getLanguageFilter());
 		
 		$this->setState('catordering', $app->getUserStateFromRequest($context .'catordering', 'catordering', $category_ordering, 'int'));
-		// Get the filter request variables
-		//$this->setState('filter_order', JRequest::get Cmd('filter_order', 'ordering'));
-		//$this->setState('filter_order_dir', JRequest::get Cmd('filter_order_Dir', 'ASC'));
+		// Get the filter r equest variables
+		//$this->setState('filter_order', J Request::get Cmd('filter_order', 'ordering'));
+		//$this->setState('filter_order_dir', J Request::get Cmd('filter_order_Dir', 'ASC'));
 	}
 
 	function getData() {
@@ -90,7 +90,7 @@ class PhocagalleryModelCategories extends JModelLegacy
 		
 		$app = JFactory::getApplication();
 		
-		$user	= &JFactory::getUser();
+		$user	= JFactory::getUser();
 		$gid	= $user->get('aid', 0);
 		
 		// Filter by language
@@ -100,7 +100,7 @@ class PhocagalleryModelCategories extends JModelLegacy
 		}
 		
 		// Params
-		$params	= &$app->getParams();
+		$params	= $app->getParams();
 		$display_subcategories	= $params->get( 'display_subcategories', 1 );
 		//$show_empty_categories= $params->get( 'display_empty_categories', 0 );
 		//$hide_categories 		= $params->get( 'hide_categories', '' );
@@ -168,6 +168,7 @@ class PhocagalleryModelCategories extends JModelLegacy
 				$tree[$iCT]->title 				= $show_text;
 				$tree[$iCT]->title_self 		= $key->title;
 				$tree[$iCT]->parent_id			= $key->parent_id;
+				$tree[$iCT]->image_id			= $key->image_id;
 				$tree[$iCT]->name				= $key->name;
 				$tree[$iCT]->alias				= $key->alias;
 				$tree[$iCT]->image				= $key->image;
@@ -208,6 +209,7 @@ class PhocagalleryModelCategories extends JModelLegacy
 				$tree[$iCT]->exts				= $key->exts;
 				$tree[$iCT]->extw				= $key->extw;
 				$tree[$iCT]->exth				= $key->exth;
+				$tree[$iCT]->date 				= $key->date;
 				
 				$tree[$iCT]->linkthumbnailpath	= '';
 				$iCT++;

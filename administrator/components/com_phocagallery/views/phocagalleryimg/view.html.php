@@ -53,8 +53,8 @@ class PhocaGalleryCpViewPhocaGalleryImg extends JViewLegacy
 	
 	protected function addToolbar() {
 		
-		require_once JPATH_COMPONENT.DS.'helpers'.DS.'phocagalleryimgs.php';
-		JRequest::setVar('hidemainmenu', true);
+		require_once JPATH_COMPONENT.'/helpers/phocagalleryimgs.php';
+		JFactory::getApplication()->input->set('hidemainmenu', true);
 		$bar 		= JToolBar::getInstance('toolbar');
 		$user		= JFactory::getUser();
 		$isNew		= ($this->item->id == 0);
@@ -62,7 +62,6 @@ class PhocaGalleryCpViewPhocaGalleryImg extends JViewLegacy
 		$canDo		= PhocaGalleryImgsHelper::getActions($this->state->get('filter.image_id'), $this->item->id);
 		$paramsC 	= JComponentHelper::getParams('com_phocagallery');
 
-		
 
 		$text = $isNew ? JText::_( 'COM_PHOCAGALLERY_NEW' ) : JText::_('COM_PHOCAGALLERY_EDIT');
 		JToolBarHelper::title(   JText::_( 'COM_PHOCAGALLERY_IMAGE' ).': <small><small>[ ' . $text.' ]</small></small>' , 'image');

@@ -1,6 +1,6 @@
 <?php
 /*
- * @package Joomla 1.5
+ * @package Joomla
  * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  *
@@ -22,30 +22,30 @@ class PhocaGalleryCpViewPhocaGalleryUpgrade extends JViewLegacy
 		$tmpl	= array();
 		$tmpl2	= array();
 		
-		$tmpl2['cat-geotitle']		= JRequest::getVar( 'cat-geotitle', 0, 'get', 'int' );
-		$tmpl2['cat-zoom']			= JRequest::getVar( 'cat-zoom', 0, 'get', 'int' );
-		$tmpl2['cat-longitude']		= JRequest::getVar( 'cat-longitude', 0, 'get', 'int' );
-		$tmpl2['cat-latitude']		= JRequest::getVar( 'cat-latitude', 0, 'get', 'int' );
-		$tmpl2['cat-userfolder']		= JRequest::getVar( 'cat-userfolder', 0, 'get', 'int' );
-		$tmpl2['cat-deleteuserid']	= JRequest::getVar( 'cat-deleteuserid', 0, 'get', 'int' );
-		$tmpl2['cat-uploaduserid']	= JRequest::getVar( 'cat-uploaduserid', 0, 'get', 'int' );
-		$tmpl2['cat-accessuserid']	= JRequest::getVar( 'cat-accessuserid', 0, 'get', 'int' );
+		$tmpl2['cat-geotitle']		= JFactory::getApplication()->input->get( 'cat-geotitle', 0, 'get', 'int' );
+		$tmpl2['cat-zoom']			= JFactory::getApplication()->input->get( 'cat-zoom', 0, 'get', 'int' );
+		$tmpl2['cat-longitude']		= JFactory::getApplication()->input->get( 'cat-longitude', 0, 'get', 'int' );
+		$tmpl2['cat-latitude']		= JFactory::getApplication()->input->get( 'cat-latitude', 0, 'get', 'int' );
+		$tmpl2['cat-userfolder']		= JFactory::getApplication()->input->get( 'cat-userfolder', 0, 'get', 'int' );
+		$tmpl2['cat-deleteuserid']	= JFactory::getApplication()->input->get( 'cat-deleteuserid', 0, 'get', 'int' );
+		$tmpl2['cat-uploaduserid']	= JFactory::getApplication()->input->get( 'cat-uploaduserid', 0, 'get', 'int' );
+		$tmpl2['cat-accessuserid']	= JFactory::getApplication()->input->get( 'cat-accessuserid', 0, 'get', 'int' );
 		
-		$tmpl2['img-geotitle']		= JRequest::getVar( 'img-geotitle', 0, 'get', 'int' );
-		$tmpl2['img-zoom']			= JRequest::getVar( 'img-zoom', 0, 'get', 'int' );
-		$tmpl2['img-longitude']		= JRequest::getVar( 'img-longitude', 0, 'get', 'int' );
-		$tmpl2['img-latitude']		= JRequest::getVar( 'img-latitude', 0, 'get', 'int' );
-		$tmpl2['img-videocode']		= JRequest::getVar( 'img-videocode', 0, 'get', 'int' );
-		$tmpl2['img-vmproductid']	= JRequest::getVar( 'img-vmproductid', 0, 'get', 'int' );
+		$tmpl2['img-geotitle']		= JFactory::getApplication()->input->get( 'img-geotitle', 0, 'get', 'int' );
+		$tmpl2['img-zoom']			= JFactory::getApplication()->input->get( 'img-zoom', 0, 'get', 'int' );
+		$tmpl2['img-longitude']		= JFactory::getApplication()->input->get( 'img-longitude', 0, 'get', 'int' );
+		$tmpl2['img-latitude']		= JFactory::getApplication()->input->get( 'img-latitude', 0, 'get', 'int' );
+		$tmpl2['img-videocode']		= JFactory::getApplication()->input->get( 'img-videocode', 0, 'get', 'int' );
+		$tmpl2['img-vmproductid']	= JFactory::getApplication()->input->get( 'img-vmproductid', 0, 'get', 'int' );
 		
-		$tmpl2['startimg']		= JRequest::getVar( 'startimg', 0, 'get', 'int' );
-		$tmpl2['lengthimg']		= JRequest::getVar( 'lengthimg', 100, 'get', 'int' );
+		$tmpl2['startimg']		= JFactory::getApplication()->input->get( 'startimg', 0, 'get', 'int' );
+		$tmpl2['lengthimg']		= JFactory::getApplication()->input->get( 'lengthimg', 100, 'get', 'int' );
 		
 		
-		$tmpl2['startcat']		= JRequest::getVar( 'startcat', 0, 'get', 'int' );
-		$tmpl2['lengthcat']		= JRequest::getVar( 'lengthcat', 100, 'get', 'int' );
+		$tmpl2['startcat']		= JFactory::getApplication()->input->get( 'startcat', 0, 'get', 'int' );
+		$tmpl2['lengthcat']		= JFactory::getApplication()->input->get( 'lengthcat', 100, 'get', 'int' );
 		
-		$tmpl2['task']			= JRequest::getVar( 'task', '', 'get', 'string' );
+		$tmpl2['task']			= JFactory::getApplication()->input->get( 'task', '', 'get', 'string' );
 		$newLengthImg			= 0;
 		$newLengthCat			= 0;
 		$linkToGallery			= '';
@@ -72,7 +72,7 @@ class PhocaGalleryCpViewPhocaGalleryUpgrade extends JViewLegacy
 		$tmpl['messagecat']	=	'';
 		
 	
-		$db			=& JFactory::getDBO();
+		$db			=JFactory::getDBO();
 		$dbPref 	= $db->getPrefix();
 		$msgSQL 	= '';
 		$msgFile	= '';

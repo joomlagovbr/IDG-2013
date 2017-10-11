@@ -1,6 +1,6 @@
 <?php
 /*
- * @package Joomla 1.5
+ * @package Joomla
  * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  *
@@ -19,7 +19,7 @@ class PhocaGalleryCpControllerPhocaGalleryinstall extends PhocaGalleryCpControll
 	}
 
 	function install() {		
-		$db			= &JFactory::getDBO();
+		$db			= JFactory::getDBO();
 		//$dbPref 	= $db->getPrefix();
 		$msgSQL 	= $msgFile = $msgError = '';		
 	
@@ -469,7 +469,7 @@ class PhocaGalleryCpControllerPhocaGalleryinstall extends PhocaGalleryCpControll
 	
 	function upgrade() {
 		
-		$db			=& JFactory::getDBO();
+		$db			=JFactory::getDBO();
 		//$dbPref 	= $db->getPrefix();
 		$msgSQL 	= $msgFile = $msgError = '';
 		
@@ -514,7 +514,7 @@ class PhocaGalleryCpControllerPhocaGalleryinstall extends PhocaGalleryCpControll
 	function AddColumnIfNotExists(&$errorMsg, $table, $column, $attributes = "INT( 11 ) NOT NULL default '0'", $after = '' ) {
 		
 		$app	= JFactory::getApplication();
-		$db				=& JFactory::getDBO();
+		$db				=JFactory::getDBO();
 		$columnExists 	= false;
 
 		$query = 'SHOW COLUMNS FROM '.$table;

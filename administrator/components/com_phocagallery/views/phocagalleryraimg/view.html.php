@@ -28,7 +28,7 @@ class PhocaGalleryCpViewPhocaGalleryRaImg extends JViewLegacy
 		
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
-			JError::raiseError(500, implode("\n", $errors));
+			throw new Exception(implode("\n", $errors), 500);
 			return false;
 		}
 		
@@ -46,6 +46,11 @@ class PhocaGalleryCpViewPhocaGalleryRaImg extends JViewLegacy
 		$canDo	= PhocaGalleryRaImgHelper::getActions($state->get('filter.category_id'));
 	
 		JToolBarHelper::title( JText::_( 'COM_PHOCAGALLERY_IMAGE_RATING' ), 'star' );
+		
+		// This button is unnecessary but it is displayed because Joomla! design bug
+		/*$bar = JToolBar::getInstance( 'toolbar' );
+		$dhtml = '<a href="index.php?option=com_phocagallery" class="btn btn-small"><i class="icon-home-2" title="'.JText::_('COM_PHOCAGALLERY_CONTROL_PANEL').'"></i> '.JText::_('COM_PHOCAGALLERY_CONTROL_PANEL').'</a>';
+		$bar->appendButton('Custom', $dhtml);*/
 		
 		if ($canDo->get('core.delete')) {
 			JToolBarHelper::deleteList(  JText::_( 'COM_PHOCAGALLERY_WARNING_DELETE_ITEMS' ), 'phocagalleryraimg.delete', 'COM_PHOCAGALLERY_DELETE');

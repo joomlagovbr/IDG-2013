@@ -21,8 +21,8 @@ class phocaGalleryViewphocaGalleryLinks extends JViewLegacy
 			$tUri = JURI::base();
 		}
 		
-		$document	=& JFactory::getDocument();
-		$uri		=& JFactory::getURI();
+		$document	= JFactory::getDocument();
+		$uri		= JFactory::getURI();
 		JHTML::stylesheet( 'media/com_phocagallery/css/administrator/phocagallery.css' );
 		
 		$eName	= $app->input->get('e_name', '', 'cmd');

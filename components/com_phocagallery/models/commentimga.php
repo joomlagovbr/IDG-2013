@@ -17,7 +17,7 @@ class PhocagalleryModelCommentImgA extends JModelLegacy
 	
 	function comment($data) {
 		
-		$row =& $this->getTable('phocagallerycommentimgs', 'Table');
+		$row = $this->getTable('phocagallerycommentimgs', 'Table');
 		
 		
 		if (!$row->bind($data)) {

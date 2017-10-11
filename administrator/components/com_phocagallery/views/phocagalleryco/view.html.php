@@ -40,7 +40,7 @@ class PhocaGalleryCpViewPhocaGalleryCo extends JViewLegacy
 
 	
 		if (count($errors = $this->get('Errors'))) {
-			JError::raiseError(500, implode("\n", $errors));
+			throw new Exception(implode("\n", $errors), 500);
 			return false;
 		}
 
@@ -71,7 +71,7 @@ class PhocaGalleryCpViewPhocaGalleryCo extends JViewLegacy
 			$itemInfo = $db->loadObject();
 			
 			if ($db->getErrorNum()) {
-				JError::raiseWarning(500, $db->getErrorMsg());
+				throw new Exception($db->getErrorMsg(), 500);
 			}
 			
 			return $itemInfo;
@@ -80,8 +80,8 @@ class PhocaGalleryCpViewPhocaGalleryCo extends JViewLegacy
 
 	protected function addToolbar() {
 		
-		require_once JPATH_COMPONENT.DS.'helpers'.DS.'phocagallerycos.php';
-		JRequest::setVar('hidemainmenu', true);
+		require_once JPATH_COMPONENT.'/helpers/phocagallerycos.php';
+		JFactory::getApplication()->input->set('hidemainmenu', true);
 		$bar 		= JToolBar::getInstance('toolbar');
 		$user		= JFactory::getUser();
 		$isNew		= ($this->item->id == 0);
