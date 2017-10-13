@@ -1,9 +1,9 @@
 <?php
 /**
- * @package
- * @subpackage
- * @copyright
- * @license
+ * @package		
+ * @subpackage	
+ * @copyright	
+ * @license		
  */
 
 // no direct access
@@ -30,35 +30,35 @@ class TemplateSearchHelper {
 				<?php echo $search->text; ?>
 			</label>
 			<?php
-		}
+		}		
 	}
 
 	static function displaySearchOnly( $searchareas = array() ) {
 		foreach ($searchareas['search'] as $val => $txt):
 			$checked = is_array($searchareas['active']) && in_array($val, $searchareas['active']) ? 'checked="checked"' : '';
-		?>
-		<label for="area-<?php echo $val;?>" class="checkbox">
-			<input type="checkbox" name="areas[]" value="<?php echo $val;?>" id="area-<?php echo $val;?>" <?php echo $checked;?> />
-			<?php echo JText::_($txt); ?>
-		</label>
+			?>
+			<label for="area-<?php echo $val;?>" class="checkbox">
+				<input type="checkbox" name="areas[]" value="<?php echo $val;?>" id="area-<?php echo $val;?>" <?php echo $checked;?> />
+				<?php echo JText::_($txt); ?>
+			</label>
 		<?php endforeach;
 	}
 
 	static function displayMetakeyLinks( $metakey, $link = '', $searchword = '' )
 	{
 		if(empty($link))
-			$link = 'index.php?ordering=newest&limit=20&areas[0]=contenttags&option=com_search&searchword=';
+			$link = 'index.php?ordering=newest&searchphrase=all&limit=20&areas[0]=contenttags&Itemid=181&option=com_search&searchword=';
 
 		$keys = explode(',', $metakey);
 		$count_keys = count($keys);
 		$lang = JFactory::getLanguage();
 
 		if(count($keys)==1)
-		{
+		{				
 			$keys =  explode(';', $metakey);
 			$count_keys = count($keys);
 		}
-		for ($i=1; $i <= $count_keys; $i++) {
+		for ($i=1; $i <= $count_keys; $i++) { 
 			if($i!=$count_keys)
 				$separator = '<span class="separator">,</span>';
 			else

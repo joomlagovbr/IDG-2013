@@ -1,16 +1,16 @@
 <?php
 /**
- * @package     Joomla.Site
- * @subpackage  com_search
- *
- * @copyright   Copyright (C) 2005 - 2017 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @package		
+ * @subpackage	
+ * @copyright	
+ * @license		
  */
 
+// no direct access
 defined('_JEXEC') or die;
 ?>
 <div class="tile-list-1">
-	<div class="search-results <?php echo $this->pageclass_sfx; ?> ">
+	<div class="search-results search-results<?php echo $this->pageclass_sfx; ?> ">
 	<?php foreach($this->results as $result) : ?>
 		<div class="tileItem">
 			<div class="span11 tileContent">
@@ -35,17 +35,14 @@ defined('_JEXEC') or die;
 		  			<p class="result-tags">Assuntos (Tags): <?php TemplateSearchHelper::displayMetakeyLinks( $result->metakey, '', $this->escape($this->origkeyword) ); ?> </p>
 		  			<?php endif; ?>
 					<?php if ($this->params->get('show_date') && $result->created != '') : ?>
-					<p class="result-created<?php echo $this->pageclass_sfx; ?>"><i class="icon-fixed-width icon-calendar"></i>&nbsp;<?php echo JText::sprintf('JGLOBAL_CREATED_DATE_ON', $result->created); ?></p>
+					<p class="result-created<?php echo $this->pageclass_sfx; ?>"><?php echo JText::sprintf('JGLOBAL_CREATED_DATE_ON', $result->created); ?></p>
 		  			<?php endif; ?>
 		  		</div>
 			</div>
 			<div class="span1 tileInfo">
-				<?php echo $this->pagination->limitstart + $result->count.'. ';?>
+				<?php echo $this->pagination->limitstart + $result->count.'. ';?>	
 			</div>
-		</div>
+		</div>	
 	<?php endforeach; ?>
 	</div>
-</div>
-<div class="pagination">
-	<?php echo $this->pagination->getPagesLinks(); ?>
 </div>
