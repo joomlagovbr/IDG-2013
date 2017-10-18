@@ -24,7 +24,7 @@ defined('_JEXEC') or die;
 	<?php if ($this->params->get('show_description_image') && $this->category->getParams()->get('image')) : ?>
 <div class="lightbox-image pull-left light-image-left light-image-horz">							
 	<div class="image-box">
-		<img class="img-rounded" src="<?php echo $this->category->getParams()->get('image'); ?>" alt="Imagem decorativa."/>				
+		<img class="img-rounded" src="<?php echo $this->category->getParams()->get('image'); ?>" alt="<?php echo JText::_('TPL_PADRAOGOVERNO01_IMAGEM_DECORATIVA'); ?>"/>				
 	</div>
 </div>
 	<?php endif; ?>

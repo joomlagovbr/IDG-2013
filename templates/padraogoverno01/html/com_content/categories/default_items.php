@@ -23,7 +23,7 @@ if (count($this->items[$this->parent->id]) > 0 && $this->maxLevelcat != 0):
 							?>
 							<div class="tileImage">									
 								<a href="<?php echo JRoute::_(ContentHelperRoute::getCategoryRoute($item->id));?>">
-									<img class="tileImage" src="<?php echo htmlspecialchars($params->image); ?>" alt="imagem ilustrativa" height="225" width="300" />	
+									<img class="tileImage" src="<?php echo htmlspecialchars($params->image); ?>" alt="<?php echo JText::_('TPL_PADRAOGOVERNO01_IMAGEM_DECORATIVA'); ?>" height="225" width="300" />	
 								</a>						
 							</div>
 							<?php
@@ -45,12 +45,12 @@ if (count($this->items[$this->parent->id]) > 0 && $this->maxLevelcat != 0):
 			        <?php endif; ?>						
 					<div class="keywords">
 						<?php if (!empty($item->metakey)) { ?>
-							 <p>Tags: <?php TemplateContentCategoriesHelper::displayMetakeyLinks($item->metakey); ?></p>
+							 <p><?php echo JText::_('TPL_PADRAOGOVERNO01_TAGS'); ?>: <?php TemplateContentCategoriesHelper::displayMetakeyLinks($item->metakey); ?></p>
 						<?php } ?>
 						<?php
 						$parent = $item->get('_parent');
 						if(is_object($parent)){ ?>
-							<p>Registrado em: <a href="<?php echo JRoute::_(ContentHelperRoute::getCategoryRoute($parent->id)); ?>">
+							<p><?php echo JText::_('TPL_PADRAOGOVERNO01_REGISTRADO_EM'); ?>: <a href="<?php echo JRoute::_(ContentHelperRoute::getCategoryRoute($parent->id)); ?>">
 								<?php echo $parent->title ?>
 							</a></p>
 						<?php
@@ -78,9 +78,6 @@ if (count($this->items[$this->parent->id]) > 0 && $this->maxLevelcat != 0):
 						<li><i class="icon-fixed-width"><strong><?php echo $item->numitems; ?></strong></i> <?php if($item->numitems==1): ?>item<?php else: ?>itens<?php endif; ?></li>
 					</ul>							            								
 				</div>
-
-				
-
 			</div>
 		
 		<?php endforeach; ?>
