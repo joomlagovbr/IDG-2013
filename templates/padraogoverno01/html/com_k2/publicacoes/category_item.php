@@ -60,7 +60,7 @@ K2HelperUtilities::setDefaultImage($this->item, 'itemlist', $this->params);
 	
 	<div class="keywords">
 		<?php if($this->item->params->get('catItemTags') && count($this->item->tags)): ?>
-		<p>Tags: 	
+		<p><?php echo JText::_('TPL_PADRAOGOVERNO01_TAGS'); ?>: 	
 		<!-- Item tags -->		
 		<?php $tags = array(); ?>
 	    <?php foreach ($this->item->tags as $tag): ?>
@@ -87,7 +87,7 @@ K2HelperUtilities::setDefaultImage($this->item, 'itemlist', $this->params);
 		<?php if($this->item->modified != '0000-00-00 00:00:00'): ?>
 		<!-- Date created -->
 		<p>			
-			&Uacute;ltima modifica&ccedil;&atilde;o em <?php echo JHTML::_('date', $this->item->modified , JText::_('DATE_FORMAT_LC2')); ?>
+			<?php echo JText::_('TPL_PADRAOGOVERNO01_ULTIMA_MODIFICACAO'); ?> <?php echo JHTML::_('date', $this->item->modified , JText::_('DATE_FORMAT_LC2')); ?>
 		</p>
 		<?php endif; ?>					
 	</div>

@@ -85,7 +85,7 @@ JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 	<?php if($this->item->metakey != '' || ($params->get('show_parent_category') && $this->item->parent_id != 1) || $params->get('show_category') || ($params->get('show_author') && !empty($this->item->author ))): ?>
 		<div class="keywords">
 			<?php if($this->item->metakey != ''): ?>
-		    <p>Tags: <?php TemplateContentCategoryHelper::displayMetakeyLinks($this->item->metakey); ?></p>
+		    <p><?php echo JText::_('TPL_PADRAOGOVERNO01_TAGS'); ?>: <?php TemplateContentCategoryHelper::displayMetakeyLinks($this->item->metakey); ?></p>
 			<?php endif; ?>
 			<?php if ($params->get('show_category') || ($params->get('show_parent_category') && $this->item->parent_id != 1)) : ?>		    	
 				<?php
@@ -108,7 +108,7 @@ JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 						$categories .= $this->escape($this->item->category_title);                                                              
 				endif;
 				?>
-				<p>Registrado em: <?php echo $categories; ?></p>
+				<p><?php echo JText::_('TPL_PADRAOGOVERNO01_REGISTRADO_EM'); ?>: <?php echo $categories; ?></p>
 			<?php endif; ?>	
 			<?php if ($params->get('show_author') && !empty($this->item->author )) : ?>				
 				<?php $author =  $this->item->author; ?>

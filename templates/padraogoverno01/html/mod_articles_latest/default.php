@@ -25,6 +25,6 @@ $catId = $params->get('catid');
 		<?php endforeach; ?>
 	</ul>
 	<div class="footer">
-		<a href="<?php echo JRoute::_(ContentHelperRoute::getCategoryRoute($catId[0])); ?>" class="link">Acesse a lista completa</a>
+		<a href="<?php echo JRoute::_(ContentHelperRoute::getCategoryRoute($catId[0])); ?>" class="link"><?php ECHO JText::_('TPL_PADRAOGOVERNO01_ACESSE_LISTA_COMPLETA'); ?></a>
 	</div>									
 </div>

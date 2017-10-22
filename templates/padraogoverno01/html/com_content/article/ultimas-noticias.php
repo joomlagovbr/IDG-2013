@@ -147,7 +147,7 @@ endif; ?>
 <?php if (isset($urls) AND ($params->get('urls_position')=='0')): ?>
 	<?php if($urls->urla || $urls->urlb || $urls->urlc): ?>
 	<blockquote>
-		<p>Links relacionados:</p>
+		<p><?php echo JText::_('TPL_PADRAOGOVERNO01_LINKS_RELACIONADOS'); ?>:</p>
 		<?php echo $this->loadTemplate('links'); ?>
 	</blockquote>
 	<?php endif; ?>
@@ -215,14 +215,13 @@ if (count($showBelowContent) > 0): ?>
 <div class="below-content">
 	<?php if (in_array('categories', $showBelowContent)): ?>
 	<div class="line">
-		registrado em:
-			<?php			
-			TemplateContentArticleHelper::displayCategoryLinks($categories, $this->item); ?>
+		<?php echo JText::_('TPL_PADRAOGOVERNO01_REGISTRADO_EM'); ?>:
+		<?php TemplateContentArticleHelper::displayCategoryLinks($categories, $this->item); ?>
 	</div>
 	<?php endif; ?>
 	<?php if (in_array('metakeys', $showBelowContent)): ?>
 	<div class="line">
-		Assunto(s):
+		<?php echo JText::_('TPL_PADRAOGOVERNO01_ASSUNTOS'); ?>:
 		<?php TemplateContentArticleHelper::displayMetakeyLinks( $this->item->metakey ); ?>		
 	</div>
 	<?php endif; ?>
@@ -230,7 +229,7 @@ if (count($showBelowContent) > 0): ?>
 	<?php if (isset($urls) AND $params->get('urls_position')!='0' ): ?>
 		<?php if($urls->urla || $urls->urlb || $urls->urlc): ?>
 		<div class="line">
-			<h3>link(s) relacionado(s):	</h3>
+			<h3><?php echo JText::_('TPL_PADRAOGOVERNO01_LINKS_RELACIONADOS'); ?>: </h3>
 			<?php echo $this->loadTemplate('links'); ?>
 		</div>
 		<?php endif; ?>

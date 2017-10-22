@@ -48,13 +48,13 @@ $active_item = TmplPadraoGoverno01Helper::getActiveItemid();
 
 </head>
 <body <?php echo TmplPadraoGoverno01Helper::getPageClass( $active_item, false, true ); ?>>
-    <a class="hide" id="topo" href="#accessibility">Ir direto para menu de acessibilidade.</a>
+    <a class="hide" id="topo" href="#accessibility"><?php echo JText::_('TPL_PADRAOGOVERNO01_IR_MENU_ACESSIBILIDADE'); ?></a>
     <noscript>
       <div class="error minor-font">
-        Seu navegador de internet está sem suporte à JavaScript. Por esse motivo algumas funcionalidades do site podem não estar acessíveis.
+        <?php echo JText::_('TPL_PADRAOGOVERNO01_NO_SCRIPT'); ?>
       </div>
     </noscript>
-    <!--[if lt IE 7]><center><strong>Atenção, a versão de seu navegador não é compatível com este sítio. Atualize seu navegador.</strong></center><![endif]-->
+    <!--[if lt IE 7]><center><strong><?php echo JText::_('TPL_PADRAOGOVERNO01_BROWSER_NAO_COMPATIVEL'); ?></strong></center><![endif]-->
      <?php $module_barra_do_governo = TmplPadraoGoverno01Helper::getModules('barra-do-governo') ?>
     <?php TmplPadraoGoverno01Helper::loadModuleByPosition('barra-do-governo', NULL, $module_barra_do_governo); ?>
     <div class="layout">
@@ -65,25 +65,25 @@ $active_item = TmplPadraoGoverno01Helper::getActiveItemid();
                         <ul id="accessibility">
                             <li>
                                 <a accesskey="1" href="#content" id="link-conteudo">
-                                    Ir para o conte&uacute;do
+                                    <?php echo JText::_('TPL_PADRAOGOVERNO01_LINK_CONTEUDO'); ?>
                                     <span>1</span>
                                 </a>
                             </li>
                             <li>
                                 <a accesskey="2" href="#navigation" id="link-navegacao">
-                                    Ir para o menu
+                                    <?php echo JText::_('TPL_PADRAOGOVERNO01_LINK_NAVEGACAO'); ?>
                                     <span>2</span>
                                 </a>
                             </li>
                             <li>
                                 <a accesskey="3" href="#portal-searchbox" id="link-buscar">
-                                    Ir para a busca
+                                    <?php echo JText::_('TPL_PADRAOGOVERNO01_LINK_BUSCAR'); ?>
                                     <span>3</span>
                                 </a>
                             </li>
                             <li>
                                 <a accesskey="4" href="#footer" id="link-rodape">
-                                    Ir para o rodap&eacute;
+                                    <?php echo JText::_('TPL_PADRAOGOVERNO01_LINK_RODAPE'); ?>
                                     <span>4</span>
                                 </a>
                             </li>
@@ -98,12 +98,12 @@ $active_item = TmplPadraoGoverno01Helper::getActiveItemid();
                 <!-- fim .row-fluid -->
                 <div class="row-fluid">
                     <div id="logo" class="span8<?php if($this->params->get('classe_nome_principal', '') != '') echo ' '.$this->params->get('classe_nome_principal'); ?>">
-                        <a href="<?php echo JURI::root(); ?>" title="<?php echo $this->params->get('nome_principal', 'Nome principal'); ?>">
+                        <a href="<?php echo JURI::root(); ?>" title="<?php echo $this->params->get('nome_principal', '???'); ?>">
                             <?php if( $this->params->get('emblema', '') != '' ): ?>
-                            <img src="<?php echo JURI::root(); ?><?php echo $this->params->get('emblema', ''); ?>" alt="<?php echo $this->params->get('nome_principal', 'Nome principal'); ?>" />
+                            <img src="<?php echo JURI::root(); ?><?php echo $this->params->get('emblema', ''); ?>" alt="<?php echo $this->params->get('nome_principal', '???'); ?>" />
                             <?php endif; ?>
                             <span class="portal-title-1"><?php echo $this->params->get('denominacao', ''); ?></span>
-                            <h1 class="portal-title corto"><?php echo $this->params->get('nome_principal', 'Nome principal'); ?></h1>
+                            <h1 class="portal-title corto"><?php echo $this->params->get('nome_principal', '???'); ?></h1>
                             <span class="portal-description"><?php echo $this->params->get('subordinacao', ''); ?></span>
                         </a>
                     </div>
@@ -130,18 +130,18 @@ $active_item = TmplPadraoGoverno01Helper::getActiveItemid();
                 <div class="row-fluid">
                     <?php if($this->countModules("menu-principal")): ?>
                     <div id="navigation" class="span3">
-                        <a href="#" class="visible-phone visible-tablet mainmenu-toggle btn"><i class="icon-list"></i>&nbsp;Menu</a>
+                        <a href="#" class="visible-phone visible-tablet mainmenu-toggle btn"><i class="icon-list"></i>&nbsp;<?php echo JText::_('TPL_PADRAOGOVERNO01_MENU'); ?></a>
                         <section id="navigation-section">
-                            <span class="hide">Início do menu principal</span>
+                            <span class="hide"><?php echo JText::_('TPL_PADRAOGOVERNO01_INI_MENU'); ?></span>
                             <jdoc:include type="modules" name="menu-principal" style="nav_span" headerLevel="2" />
-                            <span class="hide">Fim do menu principal</span>
+                            <span class="hide"><?php echo JText::_('TPL_PADRAOGOVERNO01_FIM_MENU'); ?></span>
                         </section>
                     </div>
                     <!-- fim #navigation.span3 -->
                     <?php endif; ?>
                     <div id="content" class="<?php if($this->countModules("menu-principal")): ?>span9<?php else: ?>span12 full<?php endif; ?><?php if( !TmplPadraoGoverno01Helper::isOnlyModulesPage() || @$active_item->home != 1 ): ?> internas<?php endif; ?>">
                         <section id="content-section">
-                            <span class="hide">Início do conteúdo da página</span>
+                            <span class="hide"><?php echo JText::_('TPL_PADRAOGOVERNO01_INI_CONTEUDO'); ?></span>
 
                             <?php if(TmplPadraoGoverno01Helper::hasMessage()):  ?>
                             <div class="row-fluid">
@@ -203,7 +203,7 @@ $active_item = TmplPadraoGoverno01Helper::getActiveItemid();
 
                             <?php endif; ?>
 
-                            <span class="hide">Fim do conteúdo da página</span>
+                            <span class="hide"><?php echo JText::_('TPL_PADRAOGOVERNO01_FIM_CONTEUDO'); ?></span>
                         </section>
                     </div>
                     <!-- fim #content.span9 -->
@@ -215,14 +215,14 @@ $active_item = TmplPadraoGoverno01Helper::getActiveItemid();
         <footer>
             <div class="footer-atalhos">
                 <div class="container">
-                    <div class="pull-right voltar-ao-topo"><a href="#portal-siteactions"><i class="icon-chevron-up"></i>&nbsp;Voltar para o topo</a></div>
+                    <div class="pull-right voltar-ao-topo"><a href="#portal-siteactions"><i class="icon-chevron-up"></i>&nbsp;<?php echo JText::_('TPL_PADRAOGOVERNO01_VOLTAR_TOPO'); ?></a></div>
                 </div>
             </div>
             <div class="container container-menus">
                 <div id="footer" class="row footer-menus">
-                    <span class="hide">Início da navegação de rodapé</span>
+                    <span class="hide"><?php echo JText::_('TPL_PADRAOGOVERNO01_INI_RODAPE'); ?></span>
                     <jdoc:include type="modules" name="menus-rodape" style="div_nav_rodape" headerLevel="2" />
-                    <span class="hide">Fim da navegação de rodapé</span>
+                    <span class="hide"><?php echo JText::_('TPL_PADRAOGOVERNO01_FIM_RODAPE'); ?></span>
                 </div>
                 <!-- fim .row -->
             </div>
@@ -230,23 +230,23 @@ $active_item = TmplPadraoGoverno01Helper::getActiveItemid();
             <div class="footer-logos">
                 <div class="container">
                     <?php if( $this->params->get('rodape_acesso_informacao', 1) == 1 ): ?>
-                        <a href="http://www.acessoainformacao.gov.br/" class="logo-acesso pull-left"><img src="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/images/acesso-a-informacao.png" alt="Acesso a Informação"></a>
+                        <a href="http://www.acessoainformacao.gov.br/" class="logo-acesso pull-left"><img src="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/images/acesso-a-informacao.png" alt="<?php JText::_('TPL_PADRAOGOVERNO01_ACESSO_INFORMACAO'); ?>"></a>
                     <?php endif; ?>
                     <?php if( $this->params->get('rodape_logo_brasil', 1) == 1 ): ?>
                         <!-- separador para fins de acessibilidade --><span class="hide">&nbsp;</span><!-- fim separador para fins de acessibilidade -->
-                        <a href="http://www.brasil.gov.br/" class="brasil pull-right"><img src="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/images/brasil.png" alt="Brasil - Governo Federal"></a>
+                        <a href="http://www.brasil.gov.br/" class="brasil pull-right"><img src="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/images/brasil.png" alt="<?php JText::_('TPL_PADRAOGOVERNO01_BRASIL_GOV'); ?>"></a>
                     <?php endif; ?>
                 </div>
             </div>
             <div class="footer-ferramenta">
                 <div class="container">
-                    <?php echo $this->params->get('mensagem_final_ferramenta', '<p>Desenvolvido com o CMS de c&oacute;digo aberto <a href="http://www.joomla.org">Joomla</a></p>'); ?>
+                    <?php echo $this->params->get('mensagem_final_ferramenta', '<p>'.JText::_('TPL_PADRAOGOVERNO01_DES_CODIGO_ABERTO').' <a href="http://www.joomla.org">Joomla</a></p>'); ?>
                 </div>
             </div>
             <div class="footer-atalhos visible-phone">
                 <div class="container">
-                    <span class="hide">Fim do conteúdo da página</span>
-                    <div class="pull-right voltar-ao-topo"><a href="#portal-siteactions"><i class="icon-chevron-up"></i>&nbsp;Voltar para o topo</a></div>
+                    <span class="hide"><?php echo JText::_('TPL_PADRAOGOVERNO01_FIM_CONTEUDO'); ?></span>
+                    <div class="pull-right voltar-ao-topo"><a href="#portal-siteactions"><i class="icon-chevron-up"></i>&nbsp;<?php echo JText::_('TPL_PADRAOGOVERNO01_VOLTAR_TOPO'); ?></a></div>
                 </div>
             </div>
         </footer>

@@ -11,12 +11,12 @@ defined('_JEXEC') or die;
 ?>
 <form action="<?php echo JRoute::_('index.php');?>" method="post" class="pull-right">
  	<fieldset>
-        <legend class="hide">Busca</legend>
-        <h2 class="hidden">Buscar no portal</h2>
+        <legend class="hide"><?php echo JText::_('TPL_PADRAOGOVERNO01_BUSCA'); ?></legend>
+        <h2 class="hidden"><?php echo JText::_('TPL_PADRAOGOVERNO01_BUSCA_NO_PORTAL'); ?></h2>
         <div class="input-append">
-        	<label for="portal-searchbox-field" class="hide">Busca: </label>
-        	<input type="text" id="portal-searchbox-field" class="searchField" placeholder="Buscar no portal" title="Buscar no portal" name="searchword">       
-            <button type="submit" class="btn searchButton"><span class="hide">Buscar</span><i class="icon-search"></i></button>
+        	<label for="portal-searchbox-field" class="hide"><?php echo JText::_('TPL_PADRAOGOVERNO01_BUSCA'); ?>: </label>
+        	<input type="text" id="portal-searchbox-field" class="searchField" placeholder="<?php echo JText::_('TPL_PADRAOGOVERNO01_BUSCA_NO_PORTAL'); ?>" title="<?php echo JText::_('TPL_PADRAOGOVERNO01_BUSCA_NO_PORTAL'); ?>" name="searchword">       
+            <button type="submit" class="btn searchButton"><span class="hide"><?php echo JText::_('TPL_PADRAOGOVERNO01_BUSCAR'); ?></span><i class="icon-search"></i></button>
 		</div>
 		<input type="hidden" name="task" value="search" />
 		<input type="hidden" name="option" value="com_search" />

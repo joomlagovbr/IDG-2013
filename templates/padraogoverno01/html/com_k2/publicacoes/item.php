@@ -35,7 +35,7 @@ TmplK2Helper::removeJs(array('com_k2/js/k2.js', 'js/mootools-core-uncompressed.j
 	<div class="content-header-options-1 row-fluid">
 		<div class="documentByLine span7">
 			<span class="documentCreated">
-			Publicado em <?php echo JHTML::_('date', $this->item->created , JText::_('DATE_FORMAT_LC2')); ?>
+			<?php echo JText::_('TPL_PADRAOGOVERNO01_PUBLICADO_EM'); ?> <?php echo JHTML::_('date', $this->item->created , JText::_('DATE_FORMAT_LC2')); ?>
 			</span>
 			<span class="separator"> | </span>
 			<?php if($this->item->params->get('itemAuthor')): ?>
@@ -45,7 +45,7 @@ TmplK2Helper::removeJs(array('com_k2/js/k2.js', 'js/mootools-core-uncompressed.j
 			<span class="separator"> | </span>
 			<?php endif; ?>
 			<span>
-			<a title="Voltar à página anterior" href="javascript:history.back()">Voltar à página anterior</a>
+			<a title="<?php echo JText::_('TPL_PADRAOGOVERNO01_VOLTAR_PAGINA'); ?>" href="javascript:history.back()"><?php echo JText::_('TPL_PADRAOGOVERNO01_VOLTAR_PAGINA'); ?></a>
 			</span>
 		</div>
 		<?php $modules = JModuleHelper::getModules( 'com_content-article-btns-social' );
@@ -108,7 +108,7 @@ TmplK2Helper::removeJs(array('com_k2/js/k2.js', 'js/mootools-core-uncompressed.j
 	<?php if($this->item->params->get('itemCategory')): ?>
 	<!-- Item category -->
 	<div class="line">
-		registrado em:
+		<?php echo JText::_('TPL_PADRAOGOVERNO01_REGISTRADO_EM'); ?>:
 		<span><a class="link-categoria" rel="tag" href="<?php echo $this->item->category->link; ?>"><?php echo $this->item->category->name; ?></a></span>
 	</div>
 	<?php endif; ?>
@@ -116,7 +116,7 @@ TmplK2Helper::removeJs(array('com_k2/js/k2.js', 'js/mootools-core-uncompressed.j
 	<?php if($this->item->params->get('itemTags') && count($this->item->tags)): ?>
 	<!-- Item tags -->
 	<div class="line">
-	 Assunto(s):
+	 <?php echo JText::_('TPL_PADRAOGOVERNO01_ASSUNTOS'); ?>:
 	 	<?php $tag_array = array(); ?>
 	    <?php foreach ($this->item->tags as $tag): ?>
 	    <?php $tag_array[] = '<span><a class="link-categoria" rel="tag" href="'.$tag->link.'">'.$tag->name.'</a></span>'; ?>

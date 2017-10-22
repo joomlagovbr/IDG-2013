@@ -51,6 +51,12 @@
 		<position>topo-main</position>
 	</positions>
 
+	<languages folder="language">
+		<language tag="pt-BR">pt-BR/pt-BR.tpl_padraogoverno01.ini</language>
+		<language tag="en-GB">en-GB/en-GB.tpl_padraogoverno01.ini</language>
+		<language tag="es-ES">es-ES/es-ES.tpl_padraogoverno01.ini</language>
+	</languages>
+
 	<config>
 		<fields name="params">
 			<fieldset name="advanced">
