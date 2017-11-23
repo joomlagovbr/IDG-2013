@@ -98,7 +98,7 @@ class ModeloArticle_content
 					//Filtra as categorias que deverão ser listadas.
 					$query->where('cont.catid IN ('.$subQuery.')');
 				}else{
-					$query->where('cont.catid = '.$cat);				
+					$query->where('cont.catid IN ('.$cat.')');
 				}
 			}
 
