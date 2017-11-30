@@ -182,6 +182,23 @@ div.item-description {
     margin-left: 0;
 }
 
+/* disallow scrolling when overlay is active */
+body.ifw-busy {
+	overflow: hidden;
+	-ms-overflow-style: none;
+}
+
+#appsloading {
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 1000;
+	opacity: .95;
+	-ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity = 95);
+	filter: alpha(opacity = 95);
+	background: url('../../../../media/jui/images/ajax-loader.gif') rgba(255,255,255,0.7) 50% 10px no-repeat;
+}
 /* Put breakpoints in when the design breaks, not at generic widths */
 @media (max-width: 869px) {
     .com-apps-sidebar .nav-header {
@@ -194,6 +211,12 @@ div.item-description {
         min-height: 90px;
     }
 
+}
+
+/* Fixes images which are too big */
+.com-apps-container .thumbnail .item-image img {
+	max-width: 100%;
+	max-height: 90%;
 }
 
 /* This is where the single column view starts */

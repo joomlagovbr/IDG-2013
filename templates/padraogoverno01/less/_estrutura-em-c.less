@@ -59,16 +59,15 @@ header {
         .searchButton { padding-bottom:4px; padding-right:8px; background: @cor-branco; border-left: none !important; position:relative; width:34px; height:30px }
         .searchButton i.icon-search { font-size:1.44em; color:@cor-iconsearch-header; .chrome_antialising (@cor-iconsearch-header; .4px ); position:absolute; left:6px; top:3px }
     }
-    #social-icons { margin:2px 0 2px 0;
+    #social-icons { margin:2px 0 2px 0; .opacity(@opacity-header-icons);
         li { margin: 0 0 0 6px }
-        a { color:@cor-links-header; .opacity(@opacity-header-icons);
+        a { color:@cor-links-header;
             i { font-size:1.70em; margin-top:5px; .chrome_antialising (@cor-links-header; .4px ) } 
             i.icon-youtube {  .chrome_antialising (@cor-links-header-hover; 0 ) !important }
-            &:hover { color:@cor-links-header-hover; .chrome_antialising (@cor-links-header-hover; .4px ); .opacity(100);}
+            &:hover { color:@cor-links-header-hover; .chrome_antialising (@cor-links-header-hover; .4px ) }
         }
         span { display:none !important; }
     }
-	
     div.sobre {
         background-color: @cor-barra-header; border-bottom:2px solid @cor-bordaprincipal-header;
         ul { margin:8px 0; line-height:1em }

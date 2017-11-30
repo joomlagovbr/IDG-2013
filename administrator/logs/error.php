@@ -5,3 +5,4 @@
 
 #Fields: datetime	priority clientip	category	message
 2017-10-11T17:28:42+00:00	INFO ::1	joomlafailure	Senha inválida
+2017-11-30T16:19:52+00:00	INFO ::1	joomlafailure	Senha inválida

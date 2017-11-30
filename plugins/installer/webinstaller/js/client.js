@@ -35,10 +35,12 @@ Joomla.loadweb = function(url) {
 	jQuery('html, body').animate({ scrollTop: 0 }, 0);
 	if (jQuery('#myTabContent').length) {
 		jQuery('#appsloading')
-			.css("top", jQuery('#myTabContent').position().top - jQuery(window).scrollTop())
-			.css("left", jQuery('#myTabContent').position().left - jQuery(window).scrollLeft())
-			.css("width", jQuery('#myTabContent').width())
-			.css("height", jQuery('#myTabContent').height());
+			.css("position", "absolute")
+			.css("left", "0")
+			.css("top", "0")
+			.css("width", "100%")
+			.css("height", "100%")
+			.appendTo(jQuery('#web').css('position', 'relative'));
 		jQuery.event.trigger("ajaxStart");
 	}
 
@@ -59,7 +61,12 @@ Joomla.loadweb = function(url) {
 				if (response.data.pluginuptodate == 0) {
 					txt = apps_updateavail1;
 				}
-				jQuery('#web').prepend(jQuery('<div class="alert alert-info j-jed-message" style="margin-bottom: 20px; line-height: 2em; color:#333333;">'+txt+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class="btn" type="button" value="'+btn+'" onclick="Joomla.submitbuttonInstallWebInstaller()" /></div>'));
+				if (apps_is_hathor) {
+					jQuery('#element-box').prepend(jQuery('<dl id="system-message"><dt class="info">info</dt><dd class="info message"><ul><li>'+txt+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class="btn" type="button" value="'+btn+'" onclick="Joomla.submitbuttonInstallWebInstaller()" /></li></ul></dd></dl>'));
+				}
+				else {
+					jQuery('#web').prepend(jQuery('<div class="alert alert-info j-jed-message" style="margin-bottom: 20px; line-height: 2em; color:#333333;">'+txt+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class="btn" type="button" value="'+btn+'" onclick="Joomla.submitbuttonInstallWebInstaller()" /></div>'));
+				}
 			}
 			if (jQuery('#myTabContent').length) {
 				jQuery.event.trigger("ajaxStop");
@@ -97,7 +104,7 @@ Joomla.loadweb = function(url) {
 		}
 	});
 	return true;
-}
+};
 
 Joomla.webpaginate = function(url, target) {
 	jQuery('#web-paginate-loader').show();
@@ -109,7 +116,7 @@ Joomla.webpaginate = function(url, target) {
 		jQuery('#web-paginate-loader').hide();
 		//jQuery('#web-paginate-error').hide();
 	});	
-}
+};
 
 Joomla.installfromwebexternal = function(redirect_url) {
 	var redirect_confirm = confirm('You will be redirected to the following link to complete the registration/purchase - \n'+redirect_url);
@@ -123,7 +130,7 @@ Joomla.installfromwebexternal = function(redirect_url) {
 		return true;
 	}
 	return false;
-}
+};
 
 Joomla.installfromweb = function(install_url, name) {
 	if ('' == install_url) {
@@ -141,7 +148,7 @@ Joomla.installfromweb = function(install_url, name) {
 	jQuery('#jed-container').slideUp(300);
 	jQuery('#uploadform-web').show();
 	return true;
-}
+};
 
 Joomla.installfromwebcancel = function() {
 	jQuery('#uploadform-web').hide();
@@ -149,7 +156,7 @@ Joomla.installfromwebcancel = function() {
 	if (Joomla.apps.list) {
 		jQuery(".list-view").click();
 	}
-}
+};
 
 Joomla.installfromwebajaxsubmit = function() {
 	var tail = '&view='+Joomla.apps.view;
@@ -170,7 +177,7 @@ Joomla.installfromwebajaxsubmit = function() {
 		tail += '&ordering='+ordering;
 	}
 	Joomla.loadweb(apps_base_url+'index.php?format=json&option=com_apps'+tail);
-}
+};
 
 Joomla.apps.clickforlinks = function () {
 	jQuery('a.transcode').each(function(index, value) {
@@ -199,27 +206,19 @@ Joomla.apps.clickforlinks = function () {
 		})();
 		jQuery(this).attr('href', '#');
 	});
-}
+};
 
 Joomla.apps.initialize = function() {
 	Joomla.apps.loaded = 1;
 	if (jQuery('#myTabContent').length) {
 		jQuery('<div id="appsloading"></div>')
-			.css("background", "rgba(255, 255, 255, .8) url('../media/jui/img/ajax-loader.gif') 50% 15% no-repeat")
-			.css("top", jQuery('#myTabContent').position().top - jQuery(window).scrollTop())
-			.css("left", jQuery('#myTabContent').position().left - jQuery(window).scrollLeft())
-			.css("width", jQuery('#myTabContent').width())
-			.css("height", jQuery('#myTabContent').height())
-			.css("position", "fixed")
-			.css("z-index", "1000")
-			.css("opacity", "0.80")
-			.css("-ms-filter", "progid:DXImageTransform.Microsoft.Alpha(Opacity = 80)")
-			.css("filter", "alpha(opacity = 80)")
-			.appendTo('#myTabContent');
+			.appendTo(jQuery('#web').css('position', 'absolute'));
 		jQuery('#appsloading').ajaxStart(function() {
+			jQuery('body').addClass('ifw-busy');
 			jQuery(this).show();
 		}).ajaxStop(function() {
 			jQuery(this).hide();
+			jQuery('body').removeClass('ifw-busy');
 		});
 	}
 
@@ -246,12 +245,12 @@ Joomla.apps.initialize = function() {
 	if (apps_installfrom_url != '') {
 		Joomla.installfromweb(apps_installfrom_url);
 	}
-}
+};
 
 Joomla.apps.initiateSearch = function() {
 	Joomla.apps.view = 'dashboard';
 	Joomla.installfromwebajaxsubmit();
-}
+};
 
 Joomla.apps.clicker = function() {
 	jQuery(".grid-view").live("click",function() {
@@ -268,7 +267,7 @@ Joomla.apps.clicker = function() {
 		jQuery("#btn-grid-view").removeClass("active");
 		jQuery("#btn-list-view").addClass("active");
 	});
-}
+};
 
 Joomla.submitbutton5 = function(pressbutton)
 {
@@ -292,4 +291,4 @@ Joomla.submitbutton5 = function(pressbutton)
 		form.installtype.value = 'web';
 		form.submit();
 	}
-}
+};

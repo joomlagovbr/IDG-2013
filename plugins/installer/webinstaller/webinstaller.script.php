@@ -21,7 +21,11 @@ class plginstallerwebinstallerInstallerScript
         public function postflight($route, $adapter)
         {
             $db = JFactory::getDbo();
-            $query = 'UPDATE ' . $db->quoteName('#__extensions') . ' SET ' . $db->quoteName('enabled') . ' = 1 WHERE ' . $db->quoteName('type') . ' = ' . $db->quote('plugin') . ' AND ' . $db->quoteName('element') . ' = ' . $db->quote('webinstaller');
+            $query = $db->getQuery(true);
+            $query->update($db->quoteName('#__extensions'))
+                ->set($db->quoteName('enabled') . ' = 1')
+                ->where($db->quoteName('type') . ' = ' . $db->quote('plugin'))
+                ->where($db->quoteName('element') . ' = ' . $db->quote('webinstaller'));
             $db->setQuery($query);
             $db->execute();
         }
