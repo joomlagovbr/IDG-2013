@@ -21,7 +21,8 @@ class PhocaGalleryFileUpload
 		$chunkMethod 	= $paramsC->get( 'multiple_upload_chunk', 0 );
 		$uploadMethod 	= $paramsC->get( 'multiple_upload_method', 4 );
 		
-		JResponse::allowCache(false);
+		$app 	= JFactory::getApplication();
+		$app->allowCache(false);
 		
 		// Chunk Files
 		header('Content-type: text/plain; charset=UTF-8');
@@ -313,7 +314,8 @@ class PhocaGalleryFileUpload
 		
 		$app			= JFactory::getApplication();
 		JSession::checkToken( 'request' ) or jexit( 'ERROR: '. JText::_('COM_PHOCAGALLERY_INVALID_TOKEN'));
-		JResponse::allowCache(false);
+		
+		$app->allowCache(false);
 		
 		$path			= PhocaGalleryPath::getPath();
 		$file 			= JFactory::getApplication()->input->files->get( 'Filedata', null );

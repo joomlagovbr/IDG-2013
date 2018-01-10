@@ -97,7 +97,7 @@ echo "\n\n";
 //echo '<tr class="row'.$iD.'" sortable-group-id="'.$item->type.'" item-id="'.$item->id.'" parents="'.$item->type.'" level="0">'. "\n";
 echo '<tr class="row'.$iD.'" sortable-group-id="'.$item->type.'" >'. "\n";
 
-echo $r->tdOrder($canChange, $saveOrder, $orderkey);
+echo $r->tdOrder($canChange, $saveOrder, $orderkey, $item->ordering);
 echo $r->td(JHtml::_('grid.id', $i, $item->id), "small");
 
 					

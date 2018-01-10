@@ -123,40 +123,40 @@ class PhocaGalleryCpViewPhocaGalleryCs extends JViewLegacy
 		$state	= $this->get('State');
 		$canDo	= PhocaGalleryCsHelper::getActions($state->get('filter.category_id'));
 		$user  = JFactory::getUser();
-		$bar = JToolBar::getInstance('toolbar');
+		$bar = JToolbar::getInstance('toolbar');
 		
-		JToolBarHelper::title( JText::_( 'COM_PHOCAGALLERY_CATEGORIES' ), 'folder' );
+		JToolbarHelper ::title( JText::_( 'COM_PHOCAGALLERY_CATEGORIES' ), 'folder' );
 		if ($canDo->get('core.create')) {
-			JToolBarHelper::addNew('phocagalleryc.add','JTOOLBAR_NEW');
+			JToolbarHelper ::addNew('phocagalleryc.add','JToolbar_NEW');
 		}
 		if ($canDo->get('core.edit')) {
-			JToolBarHelper::editList('phocagalleryc.edit','JTOOLBAR_EDIT');
+			JToolbarHelper ::editList('phocagalleryc.edit','JToolbar_EDIT');
 		}
 		if ($canDo->get('core.edit.state')) {
 
-			JToolBarHelper::divider();
-			JToolBarHelper::custom('phocagallerycs.publish', 'publish.png', 'publish_f2.png','JTOOLBAR_PUBLISH', true);
-			JToolBarHelper::custom('phocagallerycs.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
-			JToolBarHelper::custom( 'phocagallerycs.approve', 'approve.png', '', 'COM_PHOCAGALLERY_APPROVE' , true);
-			JToolBarHelper::custom( 'phocagallerycs.disapprove', 'disapprove.png', '',  'COM_PHOCAGALLERY_NOT_APPROVE' , true);
-			JToolBarHelper::custom('phocagallerycs.cooliris', 'cooliris.png', '',  'COM_PHOCAGALLERY_COOLIRIS' , true);
+			JToolbarHelper ::divider();
+			JToolbarHelper ::custom('phocagallerycs.publish', 'publish.png', 'publish_f2.png','JToolbar_PUBLISH', true);
+			JToolbarHelper ::custom('phocagallerycs.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JToolbar_UNPUBLISH', true);
+			JToolbarHelper ::custom( 'phocagallerycs.approve', 'approve.png', '', 'COM_PHOCAGALLERY_APPROVE' , true);
+			JToolbarHelper ::custom( 'phocagallerycs.disapprove', 'disapprove.png', '',  'COM_PHOCAGALLERY_NOT_APPROVE' , true);
+			JToolbarHelper ::custom('phocagallerycs.cooliris', 'cooliris.png', '',  'COM_PHOCAGALLERY_COOLIRIS' , true);
 		}
 
 		if ($canDo->get('core.delete')) {
-			JToolBarHelper::deleteList( JText::_( 'COM_PHOCAGALLERY_WARNING_DELETE_ITEMS' ), 'phocagallerycs.delete', 'COM_PHOCAGALLERY_DELETE');
+			JToolbarHelper ::deleteList( JText::_( 'COM_PHOCAGALLERY_WARNING_DELETE_ITEMS' ), 'phocagallerycs.delete', 'COM_PHOCAGALLERY_DELETE');
 		}
 		// Add a batch button
 		if ($user->authorise('core.edit'))
 		{
 			JHtml::_('bootstrap.modal', 'collapseModal');
-			$title = JText::_('JTOOLBAR_BATCH');
+			$title = JText::_('JToolbar_BATCH');
 			$dhtml = "<button data-toggle=\"modal\" data-target=\"#collapseModal\" class=\"btn btn-small\">
 						<i class=\"icon-checkbox-partial\" title=\"$title\"></i>
 						$title</button>";
 			$bar->appendButton('Custom', $dhtml, 'batch');
 		}
-		JToolBarHelper::divider();
-		JToolBarHelper::help( 'screen.phocagallery', true );
+		JToolbarHelper ::divider();
+		JToolbarHelper ::help( 'screen.phocagallery', true );
 	}
 	
 	

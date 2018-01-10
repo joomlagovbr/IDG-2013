@@ -46,18 +46,18 @@ class PhocaGalleryCpViewPhocaGalleryRa extends JViewLegacy
 		$state	= $this->get('State');
 		$canDo	= PhocaGalleryRaHelper::getActions($state->get('filter.category_id'));
 	
-		JToolBarHelper::title( JText::_( 'COM_PHOCAGALLERY_CATEGORY_RATING' ), 'star' );
+		JToolbarHelper ::title( JText::_( 'COM_PHOCAGALLERY_CATEGORY_RATING' ), 'star' );
 		
 		// This button is unnecessary but it is displayed because Joomla! design bug
-		/*$bar = JToolBar::getInstance( 'toolbar' );
+		/*$bar = JToolbar::getInstance( 'toolbar' );
 		$dhtml = '<a href="index.php?option=com_phocagallery" class="btn btn-small"><i class="icon-home-2" title="'.JText::_('COM_PHOCAGALLERY_CONTROL_PANEL').'"></i> '.JText::_('COM_PHOCAGALLERY_CONTROL_PANEL').'</a>';
 		$bar->appendButton('Custom', $dhtml);*/
 		
 		if ($canDo->get('core.delete')) {
-			JToolBarHelper::deleteList(  JText::_( 'COM_PHOCAGALLERY_WARNING_DELETE_ITEMS' ), 'phocagalleryra.delete', 'COM_PHOCAGALLERY_DELETE');
+			JToolbarHelper ::deleteList(  JText::_( 'COM_PHOCAGALLERY_WARNING_DELETE_ITEMS' ), 'phocagalleryra.delete', 'COM_PHOCAGALLERY_DELETE');
 		}
-		JToolBarHelper::divider();
-		JToolBarHelper::help( 'screen.phocagallery', true );
+		JToolbarHelper ::divider();
+		JToolbarHelper ::help( 'screen.phocagallery', true );
 	}
 	
 	protected function getSortFields() {

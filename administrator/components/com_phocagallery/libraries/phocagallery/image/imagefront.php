@@ -466,6 +466,7 @@ class PhocaGalleryImageFront
 			$rightDisplay = PhocaGalleryAccess::getUserRight('accessuserid', $images[0]->cataccessuserid, $images[0]->cataccess, $user->getAuthorisedViewLevels(), $user->get('id', 0), 0);
 		}
 		
+		
 		if ($rightDisplay == 0) {
 			$images = 0;
 		}
@@ -479,7 +480,7 @@ class PhocaGalleryImageFront
             $image->filename 	= '';
 			
 			
-			// TODO, if we find no image in subcategory we look at its subcategory (subcategory of subcategory)
+			// TO DO, if we find no image in subcategory we look at its subcategory (subcategory of subcategory)
 			// no to look if there is some subcategory on the same level
             $subCategories = PhocaGalleryImageFront::getRandomCategory($categoryid, $ordering);
 			

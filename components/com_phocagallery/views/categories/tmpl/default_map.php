@@ -25,7 +25,7 @@ echo '</div>';
 if ($this->tmplGeo['categorieslng'] == '' || $this->tmplGeo['categorieslat'] == '') {
 	echo '<p>' . JText::_('COM_PHOCAGALLERY_ERROR_MAP_NO_DATA') . '</p>';
 } else {
-	//echo '<script src="http://www.google.com/jsapi" type="text/javascript"></script>';
+	//echo '<script src="http://www.google.com/js api" type="text/javascript"></script>';
 	$map	= new PhocaGalleryRenderMap();
 	//echo $map->loadApi();
 	

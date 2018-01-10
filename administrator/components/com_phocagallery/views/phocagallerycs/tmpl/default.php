@@ -125,7 +125,7 @@ echo '<tr class="row'.$iD.'" sortable-group-id="'.$item->parent_id.'" item-id="'
 //echo '<tr class="row'.$iD.'" sortable-group-id="'.$item->parent_id.'" >'. "\n";
 
 
-echo $r->tdOrder($canChange, $saveOrder, $orderkey);
+echo $r->tdOrder($canChange, $saveOrder, $orderkey, $item->ordering);
 echo $r->td(JHtml::_('grid.id', $i, $item->id), "small");						
 $checkO = '';
 if ($item->checked_out) {

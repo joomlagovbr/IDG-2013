@@ -49,26 +49,26 @@ class PhocaGalleryCpViewPhocaGalleryFbs extends JViewLegacy
 		$state	= $this->get('State');
 		$canDo	= phocagalleryfbsHelper::getActions();
 	
-		JToolBarHelper::title( JText::_( 'COM_PHOCAGALLERY_FB_USERS' ), 'user' );
+		JToolbarHelper ::title( JText::_( 'COM_PHOCAGALLERY_FB_USERS' ), 'user' );
 	
 		if ($canDo->get('core.create')) {
-			JToolBarHelper::addNew( 'phocagalleryfb.add','JTOOLBAR_NEW');
+			JToolbarHelper ::addNew( 'phocagalleryfb.add','JToolbar_NEW');
 		}
 		if ($canDo->get('core.edit')) {
-			JToolBarHelper::editList('phocagalleryfb.edit','JTOOLBAR_EDIT');
+			JToolbarHelper ::editList('phocagalleryfb.edit','JToolbar_EDIT');
 		}
 		if ($canDo->get('core.edit.state')) {
 
-			JToolBarHelper::divider();
-			JToolBarHelper::custom('phocagalleryfbs.publish', 'publish.png', 'publish_f2.png','JTOOLBAR_PUBLISH', true);
-			JToolBarHelper::custom('phocagalleryfbs.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
+			JToolbarHelper ::divider();
+			JToolbarHelper ::custom('phocagalleryfbs.publish', 'publish.png', 'publish_f2.png','JToolbar_PUBLISH', true);
+			JToolbarHelper ::custom('phocagalleryfbs.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JToolbar_UNPUBLISH', true);
 		}
 	
 		if ($canDo->get('core.delete')) {
-			JToolBarHelper::deleteList(  JText::_( 'COM_PHOCAGALLERY_WARNING_DELETE_ITEMS' ), 'phocagalleryfbs.delete', 'COM_PHOCAGALLERY_DELETE');
+			JToolbarHelper ::deleteList(  JText::_( 'COM_PHOCAGALLERY_WARNING_DELETE_ITEMS' ), 'phocagalleryfbs.delete', 'COM_PHOCAGALLERY_DELETE');
 		}
-		JToolBarHelper::divider();
-		JToolBarHelper::help( 'screen.phocagallery', true );
+		JToolbarHelper ::divider();
+		JToolbarHelper ::help( 'screen.phocagallery', true );
 	}
 	
 	protected function getSortFields() {

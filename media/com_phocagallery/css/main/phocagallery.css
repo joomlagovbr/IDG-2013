@@ -116,7 +116,7 @@
 
 #phocagallery a:hover, #phocagallery a:active, #phocagallery a:focus,
 #phocagallery-statistics a:hover, #phocagallery-statistics a:active, #phocagallery-statistics a:focus {
-  background: none;
+ /* background: none;*/
   
   text-decoration:none;
 }
@@ -669,13 +669,13 @@ div.current dd {
 #phocagallery table tr td div.pg-imgbg a:focus,
 #phocagallery table tr td a:hover img,
 #phocagallery table tr td a:active img,
-#phocagallery table tr td a:focus img,
+#phocagallery table tr td a:focus img /*,
 #phocagallery a:hover img,
 #phocagallery a:active img,
 #phocagallery a:focus img,
 #main #phocagallery a:hover img,
 #main #phocagallery a:active img,
-#main #phocagallery a:focus img {
+#main #phocagallery a:focus img*/ {
      background-color: transparent;
      background: none;
 }
@@ -1008,7 +1008,7 @@ margin-left: -50%;
 @media screen and (min-width: 768px) {
   .pg-grid-sizer { width: 33.333%; }
 }
-
+/*
 .pg-box3 figure {
 	display: inline;
     -webkit-margin-before: 0;
@@ -1017,5 +1017,77 @@ margin-left: -50%;
     -webkit-margin-end: 0;
 	margin: 0;
 	padding: 0;
+	display:relative;
+}
+*/
+.pg-box3 figure {
+	position: relative;
+}
+img.youtube {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	z-index: 99;
+	-ms-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	opacity: 0.8;
+	background: url(../../images/ytb_play.png);
+}
+img.youtube:hover {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	z-index: 99;
+	-ms-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	opacity: 1;
+	background: url(../../images/ytb_play_active.png);
 }
 
+/* Photoswipe YouTube */ 
+.pswp__zoom-wrap {
+  text-align: center;
+}
+
+.pswp__zoom-wrap:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+
+.ph-pswp-wrapper {
+  line-height: 0;
+  width: 100%;
+  max-width: 900px;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 auto;
+  text-align: left;
+  z-index: 1045;
+}
+
+.ph-pswp-video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  /* 16:9 */
+  padding-top: 25px;
+  height: 0;
+  width: 100%;
+}
+
+.ph-pswp-video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+video {
+  width: 100% !important;
+  height: auto !important;
+}

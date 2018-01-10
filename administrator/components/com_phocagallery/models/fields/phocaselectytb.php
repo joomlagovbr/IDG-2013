@@ -41,8 +41,6 @@ class JFormFieldPhocaSelectYtb extends JFormField
 		// Initialize JavaScript field attributes.
 		$onchange = (string) $this->element['onchange'];
 
-		// Load the modal behavior script.
-		//JHtml::_('behavior.modal', 'a.modal_'.$this->id);
 		
 		JHtml::_('jquery.framework');
 		$idA		= 'pgselectytb';

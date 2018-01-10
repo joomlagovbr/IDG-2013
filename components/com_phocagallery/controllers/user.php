@@ -989,7 +989,8 @@ class PhocaGalleryControllerUser extends PhocaGalleryController
 	
 	function multipleupload() {
 	
-		JResponse::allowCache(false);
+		$app 	= JFactory::getApplication();
+		$app->allowCache(false);
 		
 		// Chunk Files
 		header('Content-type: text/plain; charset=UTF-8');

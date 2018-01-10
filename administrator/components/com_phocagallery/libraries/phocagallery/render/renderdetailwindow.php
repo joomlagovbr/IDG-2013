@@ -42,15 +42,21 @@ class PhocaGalleryRenderDetailWindow
 	public $bpContextmenu;
 	public $extension;
 	public $jakRandName;
+	public $articleId;
+	public $backend;
 
 	
 	public function __construct() {}
 	
 	public function setButtons($method = 0, $libraries = array(), $library = array()) {
 	
+	
 		$document					= JFactory::getDocument();
 		$paramsC 					= JComponentHelper::getParams('com_phocagallery') ;
 		$sb_slideshow_autostart		= $paramsC->get( 'sb_slideshow_autostart', 0 );
+		$disable_mootools_modal		= $paramsC->get( 'disable_mootools_modal', 0 );
+		
+		
 		
 		// BUTTON (IMAGE - standard, modal, shadowbox)
 		$this->b1 = new JObject();
@@ -67,6 +73,11 @@ class PhocaGalleryRenderDetailWindow
 		$this->b3->set('name', 'other');
 		$this->b3->set('options', '');//initialize
 		$this->b3->set('optionsrating', '');//initialize
+		
+		$path = JURI::base(true);
+		if ($this->backend == 1) {
+			$path = JURI::root(true);
+		}
 		
 	
 	
@@ -229,8 +240,7 @@ class PhocaGalleryRenderDetailWindow
 			}
 			
 
-
-			if (!isset($this->aritcleId)) {
+			if (!isset($this->articleId)) {
 				$this->articleId = '';
 			}
 			$document->addCustomTag( self::renderHighslideJS($this->extension, $this->popupWidth, $this->popupHeight, $this->hsSlideshow, $this->hsClass, $this->hsOutlineType, $this->hsOpacity, $this->hsCloseButton, $this->articleId));
@@ -238,11 +248,12 @@ class PhocaGalleryRenderDetailWindow
 			
 			
 			if ($method == 4) {
-				$this->b1->set('highslideonclick', 'return hs.htmlExpand(this, phocaZoom )');
+				$this->b1->set('highslideonclick', 'return hs.htmlExpand(this, phocaZoom'.$this->extension.$this->articleId.' )');
 			} else {
-				$this->b1->set('highslideonclick2', 'return hs.htmlExpand(this, phocaZoom )');
+				$this->b1->set('highslideonclick2', 'return hs.htmlExpand(this, phocaZoom'.$this->extension.$this->articleId.' )');
 		
 				$this->b1->set('highslideonclick', self::renderHighslideJSImage($this->extension, $this->hsClass, $this->hsOutlineType, $this->hsOpacity, $this->hsFullImg, $this->articleId));
+			
 			}
 			break;
 			
@@ -408,8 +419,8 @@ class PhocaGalleryRenderDetailWindow
 			$this->b2->set('methodname', 'magnific2');
 			$this->b3->set('methodname', 'magnific3');
 		
-			$document->addScript(JURI::base(true).'/components/com_phocagallery/assets/magnific/jquery.magnific-popup.min.js');
-			$document->addStyleSheet(JURI::base(true).'/components/com_phocagallery/assets/magnific/magnific-popup.css');
+			$document->addScript($path.'/components/com_phocagallery/assets/magnific/jquery.magnific-popup.min.js');
+			$document->addStyleSheet($path.'/components/com_phocagallery/assets/magnific/magnific-popup.css');
 			
 			$mT = array();
 			$mT[] = 'tLoading: \''.JText::_('COM_PHOCAGALLERY_LOADING').'\';';
@@ -604,11 +615,11 @@ class PhocaGalleryRenderDetailWindow
 	
 		if ($type == 'li')  {
 			$typeOutput = 'groupLI';
-		} else if ($type == 'pm')  {
+		} else if (strtolower($type) == 'pm' ) {
 			$typeOutput = 'groupPM';
-		} else if ($type == 'ri' ){
+		} else if (strtolower($type) == 'ri' ){
 			$typeOutput = 'groupRI';
-		} else if ($type == 'pl' ){
+		} else if (strtolower($type) == 'pl' ){
 			$typeOutput = 'groupPl';
 		} else {
 			$typeOutput = 'groupC';
@@ -640,19 +651,19 @@ class PhocaGalleryRenderDetailWindow
 	*/
 	public function renderHighslideJS($type, $front_modal_box_width, $front_modal_box_height, $slideshow = 0, $highslide_class = '',$highslide_outline_type = 'rounded-white', $highslide_opacity = 0, $highslide_close_button = 0, $slideShowGroup = 0) {	
 		
-		if ($type == 'li')  {
+		if (strtolower($type) == 'li')  {
 			$typeOutput = 'groupLI';
 			$varImage	= 'phocaImageLI';
 			$varZoom	= 'phocaZoomLI';
-		} else if ($type == 'pm')  {
+		} else if (strtolower($type) == 'pm')  {
 			$typeOutput = 'groupPM';
 			$varImage	= 'phocaImagePM';
 			$varZoom	= 'phocaZoomPM';
-		} else if ($type == 'ri' ){
+		} else if (strtolower($type) == 'ri' ){
 			$typeOutput = 'groupRI';
 			$varImage	= 'phocaImageRI';
 			$varZoom	= 'phocaZoomRI';
-		} else if ($type == 'pl' ){
+		} else if (strtolower($type) == 'pl' ){
 			$typeOutput = 'groupPl';
 			$varImage	= 'phocaImagePl';
 			$varZoom	= 'phocaZoomPl';
@@ -661,10 +672,10 @@ class PhocaGalleryRenderDetailWindow
 			$varImage	= 'phocaImage';
 			$varZoom	= 'phocaZoom';
 		}
-		
+	
 		$tag = '<script type="text/javascript">'
 		.'//<![CDATA[' ."\n"
-		.' var '.$varZoom.' = { '."\n"
+		.' var '.$varZoom.$slideShowGroup.' = { '."\n"
 		.' objectLoadTime : \'after\',';
 		if ($highslide_outline_type != 'none') {
 			$tag .= ' outlineType : \''.$highslide_outline_type.'\',';
@@ -791,6 +802,7 @@ class PhocaGalleryRenderDetailWindow
 		
 		$paramsC 				= JComponentHelper::getParams('com_phocagallery') ;
 		$photoswipe_slideshow	= $paramsC->get( 'photoswipe_slideshow', 1 );
+		$photoswipe_slide_effect= $paramsC->get( 'photoswipe_slide_effect', 0 );
 		
 		$o = '<!-- Root element of PhotoSwipe. Must have class pswp. -->
 <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
@@ -866,8 +878,13 @@ class PhocaGalleryRenderDetailWindow
 </div>';
 
 $o .=   '<script src="'.JURI::base(true).'/components/com_phocagallery/assets/photoswipe/js/photoswipe.min.js"></script>'. "\n"
-		.'<script src="'.JURI::base(true).'/components/com_phocagallery/assets/photoswipe/js/photoswipe-ui-default.min.js"></script>'. "\n"
-		.'<script src="'.JURI::base(true).'/components/com_phocagallery/assets/photoswipe/js/photoswipe-initialize.js"></script>'. "\n";
+		.'<script src="'.JURI::base(true).'/components/com_phocagallery/assets/photoswipe/js/photoswipe-ui-default.min.js"></script>'. "\n";
+		
+if ($photoswipe_slide_effect == 1) {
+	$o .= '<script src="'.JURI::base(true).'/components/com_phocagallery/assets/photoswipe/js/photoswipe-initialize-ratio.js"></script>'. "\n";
+} else {
+	$o .= '<script src="'.JURI::base(true).'/components/com_phocagallery/assets/photoswipe/js/photoswipe-initialize.js"></script>'. "\n";
+}
 
 		return $o;
 	}

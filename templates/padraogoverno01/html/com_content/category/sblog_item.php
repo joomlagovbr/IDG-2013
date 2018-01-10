@@ -82,7 +82,7 @@ JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 
 	<?php if($this->item->metakey != ''): ?>
 		<span class="keywords">
-		<?php echo JText::_('TPL_PADRAOGOVERNO01_TAGS'); ?>:
+		Tags:
 		<?php TemplateContentCategoryHelper::displayMetakeyLinks($this->item->metakey); ?>
 		</span>
 	<?php endif; ?>

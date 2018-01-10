@@ -180,7 +180,7 @@ class PhocaGalleryViewCategories extends JViewLegacy
 		$s .= '}'."\n";
 		
 		if ($this->tmpl['phocagallery_center'] == 2 || $this->tmpl['phocagallery_center'] == 3) {
-			$s = "\n" . '#pg-msnr-container {'."\n";
+			$s .= "\n" . '#pg-msnr-container {'."\n";
 			$s .= '   margin: 0 auto;'."\n";
 			$s .= '}'."\n";
 		}
@@ -209,6 +209,7 @@ class PhocaGalleryViewCategories extends JViewLegacy
 		// Add link and unset the categories which user cannot see (if it is enabled in params)
 		// If it will be unset while access view, we must sort the keys from category array - ACCESS
 		$unSet = 0;
+		
 		foreach ($this->categories as $key => $item) {
 
 			// Unset empty categories if it is set
@@ -374,12 +375,14 @@ class PhocaGalleryViewCategories extends JViewLegacy
 							// User has selected image in category edit
 							$selectedImg = PhocaGalleryImageFront::setFileNameByImageId((int)$item->image_id);
 							
-							if (isset($selectedImg->filename) && $selectedImg->filename != '') {
+						
+							if (isset($selectedImg->filename) && ($selectedImg->filename != '' && $selectedImg->filename != '-')) {
 								$fileThumbnail	= PhocaGalleryImageFront::displayCategoriesImageOrFolder($selectedImg->filename, $this->tmpl['image_categories_size'], $rightDisplayKey);
 								$this->categories[$key]->filename = $selectedImg->filename;
 								$this->categories[$key]->linkthumbnailpath   = $fileThumbnail->rel;
 							} else if (isset($selectedImg->exts) && isset($selectedImg->extm) && $selectedImg->exts != '' && $selectedImg->extm != '') {
 								$fileThumbnail		= PhocaGalleryImageFront::displayCategoriesExtImgOrFolder($selectedImg->exts, $selectedImg->extm, $selectedImg->extw, $selectedImg->exth, $this->tmpl['image_categories_size'], $rightDisplayKey);
+								
 								$this->categories[$key]->linkthumbnailpath	= $fileThumbnail->rel;
 								$this->categories[$key]->extw				= $fileThumbnail->extw;
 								$this->categories[$key]->exth				= $fileThumbnail->exth;
@@ -505,11 +508,11 @@ class PhocaGalleryViewCategories extends JViewLegacy
 		
 		$title = $this->params->get('page_title', '');		
 		if (empty($title)) {
-			$title = htmlspecialchars_decode($app->getCfg('sitename'));
-		} else if ($app->getCfg('sitename_pagetitles', 0) == 1) {
-			$title = JText::sprintf('JPAGETITLE', htmlspecialchars_decode($app->getCfg('sitename')), $title);
-		} else if ($app->getCfg('sitename_pagetitles', 0) == 2) {
-			$title = JText::sprintf('JPAGETITLE', $title, htmlspecialchars_decode($app->getCfg('sitename')));
+			$title = htmlspecialchars_decode($app->get('sitename'));
+		} else if ($app->get('sitename_pagetitles', 0) == 1) {
+			$title = JText::sprintf('JPAGETITLE', htmlspecialchars_decode($app->get('sitename')), $title);
+		} else if ($app->get('sitename_pagetitles', 0) == 2) {
+			$title = JText::sprintf('JPAGETITLE', $title, htmlspecialchars_decode($app->get('sitename')));
 		}	
 		
 		$this->document->setTitle($title);
@@ -524,7 +527,7 @@ class PhocaGalleryViewCategories extends JViewLegacy
 			$this->document->setMetadata('keywords', $this->params->get('menu-meta_keywords', ''));
 		}
 
-		if ($app->getCfg('MetaTitle') == '1' && $this->params->get('menupage_title', '')) {
+		if ($app->get('MetaTitle') == '1' && $this->params->get('menupage_title', '')) {
 			$this->document->setMetaData('title', $this->params->get('page_title', ''));
 		}		
 		

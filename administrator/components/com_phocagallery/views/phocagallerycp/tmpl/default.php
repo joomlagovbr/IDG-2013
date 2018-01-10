@@ -74,7 +74,8 @@
 		
 		<?php
 		echo '<div style="border-top:1px solid #c2c2c2"></div><p>&nbsp;</p>'
-.'<div class="btn-group"><a class="btn btn-large btn-primary" href="https://www.phoca.cz/version/index.php?phocagallery='.  $this->t['version'] .'" target="_blank"><i class="icon-loop icon-white"></i>&nbsp;&nbsp;'.  JText::_('COM_PHOCAGALLERY_CHECK_FOR_UPDATE') .'</a></div>';
+.'<div class="btn-group"><a class="btn btn-large btn-primary" href="https://www.phoca.cz/version/index.php?phocagallery='.  $this->t['version'] .'" target="_blank"><i class="icon-loop icon-white"></i>&nbsp;&nbsp;'.  JText::_('COM_PHOCAGALLERY_CHECK_FOR_UPDATE') .'</a></div>'
+.'<div style="float:right; margin: 0 10px"><a href="https://www.phoca.cz/" target="_blank">'.JHTML::_('image', $this->t['i'] . 'logo.png', 'Phoca.cz' ).'</a></div>';
 		?>
 		
 	</div>

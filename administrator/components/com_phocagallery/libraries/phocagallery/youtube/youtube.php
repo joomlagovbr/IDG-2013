@@ -197,7 +197,7 @@ class PhocaGalleryYoutube
 			/*$xml 	= str_replace('<media:', '<phcmedia', $xml);
 			$xml 	= str_replace('</media:', '</phcmedia', $xml);
 			
-			$data 	= JFactory::getXML($xml, false);
+			$data 	= simplexml_load_file($file);
 
 			//Title			
 			if (isset($data->title)) {

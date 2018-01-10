@@ -68,7 +68,7 @@ class PhocaGalleryCpModelPhocaGalleryT extends JModelAdmin
 		// Files - copy files in manifest
 		foreach ($this->_manifest->children() as $child)
 		{
-			if (is_a($child, 'JXMLElement') && $child->name() == 'files') {
+			if (is_a($child, 'SimpleXMLElement') && $child->getName() == 'files') {
 				if ($this->parseFiles($child) === false) {
 					$this->deleteTempFiles();
 					throw new Exception(JText::_('COM_PHOCAGALLERY_ERROR_FIND_INFO_INSTALL_PACKAGE'), 500);
@@ -265,7 +265,7 @@ class PhocaGalleryCpModelPhocaGalleryT extends JModelAdmin
 	function _getPackageFromUpload()
 	{
 		// Get the uploaded file information
-		$userfile = JFactory::getApplication()->input->files->get( 'Filedata', null );
+		$userfile = JFactory::getApplication()->input->files->get( 'Filedata', null, 'raw' );
 
 		
 		// Make sure that file uploads are enabled in php
@@ -361,15 +361,19 @@ class PhocaGalleryCpModelPhocaGalleryT extends JModelAdmin
 	}
 	
 	function _isManifest($file) {
-		$xml	= JFactory::getXML($file, true);
+		$xml	= simplexml_load_file($file);
 		if (!$xml) {
 			unset ($xml);
 			return null;
 		}
-		if (!is_object($xml) || ($xml->name() != 'install' )) {
+		
+		if (!is_object($xml) || ($xml->getName() != 'install' )) {
+			
 			unset ($xml);
 			return null;
 		}
+		
+		
 		return $xml;
 	}
 	
@@ -378,7 +382,8 @@ class PhocaGalleryCpModelPhocaGalleryT extends JModelAdmin
 		$copyfiles 		= array();
 		$copyfolders 	= array();
 
-		if (!is_a($element, 'JXMLElement') || !count($element->children())) {
+
+		if (!is_a($element, 'SimpleXMLElement') || !count($element->children())) {
 			return 0;// Either the tag does not exist or has no children therefore we return zero files processed.
 		}
 		
@@ -393,7 +398,7 @@ class PhocaGalleryCpModelPhocaGalleryT extends JModelAdmin
 		//$destination2 	= JPATH_SITE.'/media/com_phocagallery';
 
 		//foreach ($files as $file) {
-			//if ($file->name() == 'folder') {
+			//if ($file->na me() == 'folder') {
 			if(!empty($files->folder)){
 				foreach ($files->folder as $fk => $fv) {
 					$path['src']	= $source.'/'.$fv;

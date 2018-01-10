@@ -28,6 +28,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 $canOrder	= $user->authorise('core.edit.state', $option);
 $saveOrder	= $listOrder == 'a.ordering';
 if ($saveOrder) {
+	
 	$saveOrderingUrl = 'index.php?option='.$option.'&task='.$tasks.'.saveOrderAjax&tmpl=component';
 	JHtml::_('sortablelist.sortable', 'categoryList', 'adminForm', strtolower($listDirn), $saveOrderingUrl, false, true);
 }
@@ -120,7 +121,7 @@ echo "\n\n";
 //echo '<tr class="row'.$iD.'" sortable-group-id="'.$item->category_id.'" item-id="'.$item->id.'" parents="'.$item->category_id.'" level="0">'. "\n";
 echo '<tr class="row'.$iD.'" sortable-group-id="'.$item->category_id.'" >'. "\n";
 
-echo $r->tdOrder($canChange, $saveOrder, $orderkey);
+echo $r->tdOrder($canChange, $saveOrder, $orderkey, $item->ordering);
 echo $r->td(JHtml::_('grid.id', $i, $item->id), "small");
 echo $r->tdImage($item, $this->button, 'COM_PHOCAGALLERY_ENLARGE_IMAGE');						
 $checkO = '';

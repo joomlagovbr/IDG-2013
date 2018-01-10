@@ -239,7 +239,7 @@ class TemplateContentFeaturedHelper {
 		$class     = '';
 		$class_box = '';
 
-		$alt = 'alt="'.JText::_('TPL_PADRAOGOVERNO01_IMAGEM_SEM_DESCRICAO').'"';
+		$alt = 'alt="imagem sem descrição."';
 
 		if(is_file(JPATH_SITE.DS.$image_src)):
 			list($width, $height, $type, $attr) = getimagesize( JPATH_SITE.DS.$image_src );

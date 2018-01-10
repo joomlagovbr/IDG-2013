@@ -94,6 +94,11 @@ class PhocaGalleryCpModelPhocaGalleryC extends JModelAdmin
 
 		$table->title		= htmlspecialchars_decode($table->title, ENT_QUOTES);
 		$table->alias		= JApplication::stringURLSafe($table->alias);
+		$table->parent_id 	= PhocaGalleryUtils::getIntFromString($table->parent_id);
+		$table->image_id 	= PhocaGalleryUtils::getIntFromString($table->image_id);
+		$table->hits 		= PhocaGalleryUtils::getIntFromString($table->hits);
+		$table->zoom 		= PhocaGalleryUtils::getIntFromString($table->zoom);
+		$table->extfbuid 	= PhocaGalleryUtils::getIntFromString($table->extfbuid);
 
 		if (empty($table->alias)) {
 			$table->alias = JApplication::stringURLSafe($table->title);
@@ -287,7 +292,7 @@ class PhocaGalleryCpModelPhocaGalleryC extends JModelAdmin
 
 		$subTask = JFactory::getApplication()->input->get('subtask');
 		
-		// TODO
+		// TO DO
 		if ((string)$subTask == 'loadextimgp') {
 			if (isset($table->$pkName)) {
 				$errorMsg = '';
@@ -1032,7 +1037,7 @@ class PhocaGalleryCpModelPhocaGalleryC extends JModelAdmin
 				. ' WHERE cc.owner_id = '.(int)$userId
 				. ' AND cc.id <> '.(int)$categoryId // Check other categories
 				. ' AND cc.owner_id > 0' // Ignore -1
-				. ' AND cc.parent_id = 0';// TODO
+				. ' AND cc.parent_id = 0';// TO DO
 			
 			$db->setQuery( $query );
 			$ownerMainCategoryId = $db->loadObject();

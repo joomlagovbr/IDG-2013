@@ -129,7 +129,7 @@ class PhocagalleryModelCategories extends JModelLegacy
 		phocagalleryimport('phocagallery.ordering.ordering');
 		//$categoryOrdering = PhocaGalleryOrdering::getOrderingString($category_ordering, 2);
 		
-		$query = 'SELECT cc.*, a.catid, COUNT(a.id) AS numlinks, u.username AS username, r.count AS ratingcount, r.average AS ratingaverage, uc.avatar AS avatar, uc.approved AS avatarapproved, uc.published AS avatarpublished, a.filename, a.exts, a.extm, a.extw, a.exth,'
+		$query = 'SELECT cc.*, a.catid, COUNT(a.id) AS numlinks, u.username AS username, r.count AS ratingcount, r.average AS ratingaverage, uc.avatar AS avatar, uc.approved AS avatarapproved, uc.published AS avatarpublished, min(a.filename) as filename, min(a.extm) as extm, min(a.exts) as exts, min(a.exth) as exth, min(a.extw) as extw,'
 		. ' CASE WHEN CHAR_LENGTH(cc.alias) THEN CONCAT_WS(\':\', cc.id, cc.alias) ELSE cc.id END as slug'
 		. ' FROM #__phocagallery_categories AS cc'
 		//. ' LEFT JOIN #__phocagallery AS a ON a.catid = cc.id'
@@ -144,9 +144,10 @@ class PhocagalleryModelCategories extends JModelLegacy
 		. $whereLang
 		. $hideSubCatSql
 		//. $hideCatSql - need to be set in tree
-		. ' GROUP BY cc.id'
+		. ' GROUP BY cc.id, cc.parent_id, cc.owner_id, cc.image_id, cc.title, cc.name, cc.alias, cc.image, cc.section, cc.image_position, cc.description, cc.date, cc.published, cc.approved, cc.checked_out, cc.checked_out_time, cc.editor, cc.ordering, cc.access, cc.count, cc.hits, cc.accessuserid, cc.deleteuserid, cc.uploaduserid, cc.userfolder, cc.latitude, cc.longitude, cc.zoom, cc.geotitle, cc.extid, cc.exta, cc.extu, cc.extauth, cc.extfbuid, cc.extfbcatid, cc.params, cc.metakey, cc.metadesc, cc.metadata, cc.language, a.catid, u.username, r.count, r.average, uc.avatar, uc.approved, uc.published'
 		//. ' ORDER BY cc.'.$categoryOrdering;
 		.$catOrdering['output'];
+	
 	
 		return $query;
 	}

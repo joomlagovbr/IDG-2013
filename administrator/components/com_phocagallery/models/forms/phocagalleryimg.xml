@@ -29,12 +29,14 @@
 
 <field name="videocode" type="phocaselectytb"  rows="3" cols="5" label="COM_PHOCAGALLERY_FIELD_VIDEOCODE_LABEL" description="COM_PHOCAGALLERY_FIELD_VIDEOCODE_DESC" filter="raw" />
 
+<field name="pcproductid" type="text" class="inputbox" size="40" label="COM_PHOCAGALLERY_FIELD_PCPRODUCT_ID_LABEL" description="COM_PHOCAGALLERY_FIELD_PCPRODUCT_ID_DESC" />
+
 <field name="vmproductid" type="text" class="inputbox" size="40" label="COM_PHOCAGALLERY_FIELD_VMPRODUCT_ID_LABEL" description="COM_PHOCAGALLERY_FIELD_VMPRODUCT_ID_DESC" />
 
 
 
 			
-<field name="description" type="editor" buttons="true" hide="pagebreak,readmore" class="inputbox" label="COM_PHOCAGALLERY_FIELD_DESCRIPTION_LABEL" filter="safehtml" description="COM_PHOCAGALLERY_FIELD_DESCRIPTION_DESC" />
+<field name="description" type="editor" buttons="true" hide="pagebreak,readmore" class="inputbox" label="COM_PHOCAGALLERY_FIELD_DESCRIPTION_LABEL" filter="JComponentHelper::filterText" description="COM_PHOCAGALLERY_FIELD_DESCRIPTION_DESC" />
 
 <field name="extu" type="Text" class="inputbox" size="40" label="COM_PHOCAGALLERY_FIELD_PICASA_USER_LABEL" description="COM_PHOCAGALLERY_FIELD_PICASA_USER_DESC"  />
 <field name="exta" type="Text" class="inputbox" size="40" label="COM_PHOCAGALLERY_FIELD_PICASA_ALBUM_LABEL" description="COM_PHOCAGALLERY_FIELD_PICASA_ALBUM_DESC"  />
@@ -96,7 +98,7 @@
 	<option	value="0">COM_PHOCAGALLERY_NOT_APPROVED</option>
 </field>
 
-<field name="date" type="Calendar" class="inputbox" label="COM_PHOCAGALLERY_FIELD_DATE_LABEL" description="COM_PHOCAGALLERY_FIELD_DATE_DESC" filter="safehtml" />
+<field name="date" type="Calendar" class="inputbox" label="COM_PHOCAGALLERY_FIELD_DATE_LABEL" description="COM_PHOCAGALLERY_FIELD_DATE_DESC" filter="JComponentHelper::filterText" />
 
 <field name="hits" type="Text" class="inputbox" size="6" label="COM_PHOCAGALLERY_FIELD_HITS" description="COM_PHOCAGALLERY_FIELD_HITS_DESC" />
 

@@ -146,7 +146,11 @@ class PhocaGalleryFileUploadMultiple
 		$js.='	pgJQ("#'.$name.'").pluploadQueue({'."\n";
 		$js.='		runtimes : \''.$runtime.'\','."\n";
 		$js.='		url : \''.$this->url.'\','."\n";
-		$js.='		max_file_size : \''.$this->maxFileSize.'\','."\n";
+		//$js.='		max_file_size : \''.$this->maxFileSize.'\','."\n";
+		
+		if ($this->maxFileSize != '0b') {
+			$js.='		max_file_size : \''.$this->maxFileSize.'\','."\n";
+		}
 		
 		if ($chunkEnabled == 1) {
 			$js.='		chunk_size : \'1mb\','."\n";

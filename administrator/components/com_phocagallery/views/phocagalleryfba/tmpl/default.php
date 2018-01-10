@@ -31,7 +31,7 @@ if ($this->userInfo == 1 ){
 } else {
 	echo '<div>'.JText::_('COM_PHOCAGALLERY_FB_SELECT_USER').'</div>';
 	echo '<p>&nbsp;</p>';
-	echo '<div><a style="text-decoration:underline" href="#" onclick=" if (window.parent) window.parent.SqueezeBox.close();">'.JText::_('COM_PHOCAGALLERY_CLOSE_WINDOW').'</a></div>';
+	echo '<div><a style="text-decoration:underline" href="#" onclick="window.parent.closeModal();">'.JText::_('COM_PHOCAGALLERY_CLOSE_WINDOW').'</a></div>';
 	
 }
 

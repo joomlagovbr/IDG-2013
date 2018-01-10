@@ -71,6 +71,7 @@ class PhocaGalleryCpControllerPhocaGalleryImgs extends JControllerAdmin
 		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 		$pks = $this->input->post->get('cid', array(), 'array');
 		$order = $this->input->post->get('order', array(), 'array');
+		
 		JArrayHelper::toInteger($pks);
 		JArrayHelper::toInteger($order);
 		$model = $this->getModel();

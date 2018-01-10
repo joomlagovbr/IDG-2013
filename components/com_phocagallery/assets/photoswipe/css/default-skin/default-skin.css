@@ -226,21 +226,21 @@ a.pswp__share--facebook:before {
   pointer-events: none; }
 
 a.pswp__share--facebook:hover {
-  background: #3E5C9A;
+  background: #3E5C9A !important;
   color: #FFF; }
   a.pswp__share--facebook:hover:before {
     border-bottom-color: #3E5C9A; }
 
 a.pswp__share--twitter:hover {
-  background: #55ACEE;
+  background: #55ACEE !important;
   color: #FFF; }
 
 a.pswp__share--pinterest:hover {
-  background: #CCC;
+  background: #CCC !important;
   color: #CE272D; }
 
 a.pswp__share--download:hover {
-  background: #DDD; }
+  background: #DDD !important; }
 
 /*
 

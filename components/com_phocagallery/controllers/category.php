@@ -480,7 +480,7 @@ class PhocaGalleryControllerCategory extends PhocaGalleryController
 		}
 		
 		$catidAlias	= $catid;// for return
-		// Set the limistart (TODO)
+		// Set the limistart (TO DO)
 		if ($limitStart > 0) {
 			$limitStartUrl	= '&limitstart='.$limitStart;	
 		} else {
@@ -577,7 +577,9 @@ class PhocaGalleryControllerCategory extends PhocaGalleryController
 	
 	function multipleupload() {
 	
-		JResponse::allowCache(false);
+		
+		$app 	= JFactory::getApplication();
+		$app->allowCache(false);
 		
 		// Chunk Files
 		header('Content-type: text/plain; charset=UTF-8');

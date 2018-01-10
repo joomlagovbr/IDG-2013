@@ -10,6 +10,8 @@
  */
 defined('_JEXEC') or die();
 jimport( 'joomla.application.component.view' );
+phocagalleryimport('phocagallery.library.library');
+phocagalleryimport('phocagallery.render.renderdetailwindow');
 
 jimport( 'joomla.filesystem.file' ); 
 class PhocaGalleryCpViewPhocaGalleryUsers extends JViewLegacy
@@ -41,7 +43,7 @@ class PhocaGalleryCpViewPhocaGalleryUsers extends JViewLegacy
 		//$document->addCustomTag(PhocaGalleryRenderAdmin::renderIeCssLink(1));
 		
 		// Button
-		JHTML::_('behavior.modal', 'a.modal_phocagalleryusers');
+		/*
 		$this->button = new JObject();
 		$this->button->set('modal', true);
 		$this->button->set('methodname', 'modal-button');
@@ -49,7 +51,17 @@ class PhocaGalleryCpViewPhocaGalleryUsers extends JViewLegacy
 		$this->button->set('text', JText::_('COM_PHOCAGALLERY_DISPLAY_IMAGE_DETAIL'));
 		//$this->button->set('name', 'image');
 		$this->button->set('modalname', 'modal_phocagalleryusers');
-		$this->button->set('options', "{handler: 'image', size: {x: 200, y: 150}}");
+		$this->button->set('options', "{handler: 'image', size: {x: 200, y: 150}}");*/
+		
+		$library 			= PhocaGalleryLibrary::getLibrary();
+		$libraries			= array();
+		$btn 				= new PhocaGalleryRenderDetailWindow();
+		$btn->popupWidth 	= '640';
+		$btn->popupHeight 	= '480';
+		$btn->backend		= 1;
+		
+		$btn->setButtons(12, $libraries, $library);
+		$this->button = $btn->getB1();
 		
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
@@ -69,34 +81,34 @@ class PhocaGalleryCpViewPhocaGalleryUsers extends JViewLegacy
 		$state	= $this->get('State');
 		$canDo	= PhocaGalleryUsersHelper::getActions($state->get('filter.category_id'));
 		
-		JToolBarHelper::title( JText::_( 'COM_PHOCAGALLERY_USERS' ), 'users' );
+		JToolbarHelper ::title( JText::_( 'COM_PHOCAGALLERY_USERS' ), 'users' );
 		
 		if ($canDo->get('core.edit.state')) {
 
-			JToolBarHelper::custom('phocagalleryusers.publish', 'publish.png', 'publish_f2.png','JTOOLBAR_PUBLISH', true);
-			JToolBarHelper::custom('phocagalleryusers.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
-			JToolBarHelper::custom( 'phocagalleryusers.approve', 'approve.png', '', 'COM_PHOCAGALLERY_APPROVE' , true);
-			JToolBarHelper::custom( 'phocagalleryusers.disapprove', 'disapprove.png', '', 'COM_PHOCAGALLERY_NOT_APPROVE' , true);
-			JToolBarHelper::divider();
+			JToolbarHelper ::custom('phocagalleryusers.publish', 'publish.png', 'publish_f2.png','JToolbar_PUBLISH', true);
+			JToolbarHelper ::custom('phocagalleryusers.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JToolbar_UNPUBLISH', true);
+			JToolbarHelper ::custom( 'phocagalleryusers.approve', 'approve.png', '', 'COM_PHOCAGALLERY_APPROVE' , true);
+			JToolbarHelper ::custom( 'phocagalleryusers.disapprove', 'disapprove.png', '', 'COM_PHOCAGALLERY_NOT_APPROVE' , true);
+			JToolbarHelper ::divider();
 		}
 		
 		if ($canDo->get('core.admin')) {
-			$bar = JToolBar::getInstance('toolbar');
+			$bar = JToolbar::getInstance('toolbar');
 		/*$bar->appendButton( 'Custom', '<a href="#" onclick="javascript:if(confirm(\''.addslashes(JText::_('COM_PHOCAGALLERY_WARNING_AUTHORIZE_ALL')).'\')){submitbutton(\'phocagalleryusers.approveall\');}" class="toolbar"><span class="icon-32-authorizeall" title="'.JText::_('COM_PHOCAGALLERY_APPROVE_ALL').'" type="Custom"></span>'.JText::_('COM_PHOCAGALLERY_APPROVE_ALL').'</a>');*/
 		
 			$dhtml = '<button class="btn btn-small" onclick="javascript:if(confirm(\''.addslashes(JText::_('COM_PHOCAGALLERY_WARNING_AUTHORIZE_ALL')).'\')){submitbutton(\'phocagalleryusers.approveall\');}" ><i class="icon-authorizeall" title="'.JText::_('COM_PHOCAGALLERY_APPROVE_ALL').'"></i> '.JText::_('COM_PHOCAGALLERY_APPROVE_ALL').'</button>';
 			$bar->appendButton('Custom', $dhtml);
 		
 		
-			JToolBarHelper::divider();
+			JToolbarHelper ::divider();
 		}
 		
 		if ($canDo->get('core.delete')) {
-			JToolBarHelper::deleteList(  'COM_PHOCAGALLERY_WARNING_DELETE_ITEMS_AVATAR', 'phocagalleryusers.delete', 'COM_PHOCAGALLERY_DELETE');
+			JToolbarHelper ::deleteList(  'COM_PHOCAGALLERY_WARNING_DELETE_ITEMS_AVATAR', 'phocagalleryusers.delete', 'COM_PHOCAGALLERY_DELETE');
 		}
 	
-		JToolBarHelper::divider();
-		JToolBarHelper::help( 'screen.phocagallery', true );
+		JToolbarHelper ::divider();
+		JToolbarHelper ::help( 'screen.phocagallery', true );
 	}
 	
 	protected function getSortFields() {

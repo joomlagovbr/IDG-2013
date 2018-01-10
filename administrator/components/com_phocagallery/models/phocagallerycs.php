@@ -152,7 +152,7 @@ class PhocaGalleryCpModelPhocaGalleryCs extends JModelList
 		$query->select(
 			$this->getState(
 				'list.select',
-				'a.*'
+				'a.id, a.title, a.name, a.parent_id, a.owner_id, a.alias, a.access, a.ordering, a.count, a.params, a.accessuserid, a.uploaduserid, a.deleteuserid, a.userfolder, a.latitude, a.longitude, a.image, a.section, a.image_position, a.checked_out_time, a.checked_out, a.hits, a.approved, a.zoom, a.geotitle, a.description, a.published, a.language'
 			)
 		);
 		$query->from('`#__phocagallery_categories` AS a');
@@ -184,9 +184,9 @@ class PhocaGalleryCpModelPhocaGalleryCs extends JModelList
 		$query->join('LEFT', '#__phocagallery_votes_statistics AS v ON v.catid = a.id');
 		
 		$query->select('cc.countid AS countid');
-		$query->join('LEFT', '(SELECT cc.parent_id, count(*) AS countid'
+		$query->join('LEFT', '(SELECT cc.parent_id, count(cc.id) AS countid'
 		. ' FROM #__phocagallery_categories AS cc'
-		.' GROUP BY cc.parent_id ) AS cc'
+		.' GROUP BY cc.parent_id, cc.id ) AS cc'
 		.' ON a.parent_id = cc.parent_id');
 		
 
@@ -257,7 +257,7 @@ class PhocaGalleryCpModelPhocaGalleryCs extends JModelList
 			$query->where('a.language = ' . $db->quote($language));
 		}
 		
-		$query->group('a.id');
+		$query->group('a.id, a.parent_id, a.owner_id, a.image_id, a.title, a.name, l.title, uc.name, ag.title, c.id, c.title, ua.id, ua.username, ua.name, v.average, cc.countid, a.alias, a.access, a.ordering, a.count, a.params, a.accessuserid, a.uploaduserid, a.deleteuserid, a.userfolder, a.latitude, a.longitude, a.image, a.section, a.image_position, a.checked_out, a.checked_out_time, a.hits, a.approved, a.zoom, a.geotitle, a.description, a.published, a.language');
 
 		// Add the list ordering clause.
 		$orderCol	= $this->state->get('list.ordering', 'title');

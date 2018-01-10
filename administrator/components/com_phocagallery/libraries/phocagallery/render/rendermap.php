@@ -27,7 +27,7 @@ class PhocaGalleryRenderMap
 	  
 		$paramsC 	= JComponentHelper::getParams('com_phocagallery');
 		$key 		= $paramsC->get( 'maps_api_key', '' );
-		$ssl 		= $paramsC->get( 'maps_api_ssl', 0 );
+		$ssl 		= $paramsC->get( 'maps_api_ssl', 1 );
 		
 		if ($ssl) {
 			$h = 'https://';

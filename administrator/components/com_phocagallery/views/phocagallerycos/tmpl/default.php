@@ -100,7 +100,7 @@ echo "\n\n";
 //echo '<tr class="row'.$iD.'" sortable-group-id="'.$item->catid.'" item-id="'.$item->id.'" parents="'.$item->catid.'" level="0">'. "\n";
 echo '<tr class="row'.$iD.'" sortable-group-id="'.$item->catid.'" >'. "\n";
 
-echo $r->tdOrder($canChange, $saveOrder, $orderkey);
+echo $r->tdOrder($canChange, $saveOrder, $orderkey, $item->ordering);
 echo $r->td(JHtml::_('grid.id', $i, $item->id), "small");
 
 $usrO = $item->commentname;

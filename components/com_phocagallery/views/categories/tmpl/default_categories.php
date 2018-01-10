@@ -32,6 +32,7 @@ foreach ($this->categories as $ck => $cv){
 		echo JHtml::_( 'image', $cv->linkthumbnailpath, $cv->title, array( 'style' => 'width:'. $correctImageRes['width'] .'px;height:'.$correctImageRes['height'] .'px;'));
 		
 	} else {
+		
 		echo JHtml::_( 'image', $cv->linkthumbnailpath, $cv->title);
 	}
 	

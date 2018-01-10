@@ -91,21 +91,21 @@ class PhocaGalleryViewCooliris3DWall extends JViewLegacy
 
 		$title = $this->params->get('page_title', '');		
 		if (empty($title)) {
-			$title = htmlspecialchars_decode($app->getCfg('sitename'));
-		} else if ($app->getCfg('sitename_pagetitles', 0) == 1) {
-			$title = JText::sprintf('JPAGETITLE', htmlspecialchars_decode($app->getCfg('sitename')), $title);
+			$title = htmlspecialchars_decode($app->get('sitename'));
+		} else if ($app->get('sitename_pagetitles', 0) == 1) {
+			$title = JText::sprintf('JPAGETITLE', htmlspecialchars_decode($app->get('sitename')), $title);
 			
 			if ($this->tmpl['display_cat_name_title'] == 1 && isset($this->category->title) && $this->category->title != '') {
 				$title = $title .' - ' .  $this->category->title;
 			}
 			
-		} else if ($app->getCfg('sitename_pagetitles', 0) == 2) {
+		} else if ($app->get('sitename_pagetitles', 0) == 2) {
 			
 			if ($this->tmpl['display_cat_name_title'] == 1 && isset($this->category->title) && $this->category->title != '') {
 				$title = $title .' - ' .  $this->category->title;
 			}
 		
-			$title = JText::sprintf('JPAGETITLE', $title, htmlspecialchars_decode($app->getCfg('sitename')));
+			$title = JText::sprintf('JPAGETITLE', $title, htmlspecialchars_decode($app->get('sitename')));
 		}
 		
 		$this->document->setTitle($title);
@@ -126,11 +126,11 @@ class PhocaGalleryViewCooliris3DWall extends JViewLegacy
 			$this->document->setMetadata('keywords', $this->params->get('menu-meta_keywords', ''));
 		}
 
-		if ($app->getCfg('MetaTitle') == '1' && $this->params->get('menupage_title', '')) {
+		if ($app->get('MetaTitle') == '1' && $this->params->get('menupage_title', '')) {
 			$this->document->setMetaData('title', $this->params->get('page_title', ''));
 		}
 
-		/*if ($app->getCfg('MetaAuthor') == '1') {
+		/*if ($app->get('MetaAuthor') == '1') {
 			$this->document->setMetaData('author', $this->item->author);
 		}
 

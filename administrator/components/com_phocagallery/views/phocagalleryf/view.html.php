@@ -19,7 +19,8 @@ class PhocaGalleryCpViewPhocagalleryF extends JViewLegacy
 	public function display($tpl = null) {
 
 		$params = JComponentHelper::getParams( 'com_phocagallery' );
-		JResponse::allowCache(false);
+		$app 	= JFactory::getApplication();
+		$app->allowCache(false);
 		JHTML::stylesheet('media/com_phocagallery/css/administrator/phocagallery.css' );
 		
 		$document	= JFactory::getDocument();

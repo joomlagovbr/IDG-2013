@@ -15,7 +15,7 @@
 
 <field name="ordering" type="phocagalleryOrdering" table="tag" class="inputbox" label="COM_PHOCAGALLERY_FIELD_ORDERING_LABEL" description="COM_PHOCAGALLERY_FIELD_ORDERING_DESC" />
 
-<field name="description" type="editor" buttons="true" hide="pagebreak,readmore" class="inputbox" label="COM_PHOCAGALLERY_FIELD_DESCRIPTION_LABEL" filter="safehtml" description="COM_PHOCAGALLERY_FIELD_DESCRIPTION_DESC" />
+<field name="description" type="editor" buttons="true" hide="pagebreak,readmore" class="inputbox" label="COM_PHOCAGALLERY_FIELD_DESCRIPTION_LABEL" filter="JComponentHelper::filterText" description="COM_PHOCAGALLERY_FIELD_DESCRIPTION_DESC" />
 
 	</fieldset>
 	

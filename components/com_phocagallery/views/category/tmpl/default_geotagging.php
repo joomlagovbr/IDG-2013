@@ -11,7 +11,8 @@
 defined('_JEXEC') or die('Restricted access');
 phocagalleryimport('phocagallery.render.rendermap');
 
-echo '<script src="http://www.google.com/jsapi" type="text/javascript"></script>';
+
+$map	= new PhocaGalleryRenderMap();
 echo '<noscript>'.JText::_('COM_PHOCAGALLERY_ERROR_MAP_ENABLE_JAVASCRIPT').'</noscript>';
 echo '<div style="font-size:1px;height:1px;margin:0px;padding:0px;">&nbsp;</div>';
 echo '<div align="center" style="margin:0;padding:0;margin-top:10px;">';
@@ -24,7 +25,7 @@ echo '<div id="phocaMap" style="margin:0;padding:0;'. $cmw. 'height:'.$this->tmp
 echo '</div></div>';
 
 
-$map	= new PhocaGalleryRenderMap();
+
 //echo $map->loadApi();
 
 ?><script type='text/javascript'>//<![CDATA[

@@ -10,7 +10,10 @@
  */
 defined('_JEXEC') or die('Restricted access');
 phocagalleryimport('phocagallery.render.rendermap');
-echo '<script src="http://www.google.com/jsapi" type="text/javascript"></script>';
+
+
+$map	= new PhocaGalleryRenderMap();
+echo $map->loadApi();
 echo '<noscript>'.JText::_('COM_PHOCAGALLERY_GOOGLE_MAPS_ENABLE_JS').'</noscript>';
 echo '<div align="center" style="margin:0;padding:0;text-align: center;">';
 echo '<div id="phocaMap" style="margin:0 auto;padding:0;width:520px;height:460px;"></div></div>';
@@ -22,7 +25,7 @@ $document->addCustomTag( "<style type=\"text/css\"> \n"
 				}'
 			." </style> \n");
 
-$map	= new PhocaGalleryRenderMap();
+
 //echo $map->loadApi();
 ?><script type='text/javascript'>//<![CDATA[
 <?php 

@@ -56,7 +56,7 @@ class JFormFieldPhocaAccessLevel extends JFormFieldList
 
 		$query->select('a.id AS value, a.title AS text');
 		$query->from('#__viewlevels AS a');
-		$query->group('a.id');
+		$query->group('a.id, a.title');
 		$query->order('a.ordering ASC');
 		$query->where('a.id <> 1');//PHOCAEDIT
 		$query->order('`title` ASC');

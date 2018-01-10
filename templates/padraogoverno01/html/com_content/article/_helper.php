@@ -278,7 +278,7 @@ class TemplateContentArticleHelper {
 						</div>
 						<div class="modal-footer">
 							<div class="pull-left"><?php echo htmlspecialchars($images->image_fulltext_alt); ?></div>
-							<button class="btn pull-right" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('TPL_PADRAOGOVERNO01_FECHAR'); ?></button>					
+							<button class="btn pull-right" data-dismiss="modal" aria-hidden="true">fechar</button>					
 						</div>
 					</div>
 					<!-- end modal -->

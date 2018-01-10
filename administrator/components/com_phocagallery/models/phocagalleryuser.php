@@ -155,7 +155,7 @@ class PhocaGalleryCpModelPhocaGalleryUser extends JModelAdmin
 	}
 	
 	
-	/*TODO - add rules like in approve */
+	/*TO DO - add rules like in approve */
 	function approveall() {
 	
 		//$user 	=& JFactory::getUser();

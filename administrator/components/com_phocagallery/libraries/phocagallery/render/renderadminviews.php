@@ -15,7 +15,7 @@ class PhocaGalleryRenderAdminViews
 	public function __construct(){}
 	
 	public function jsJorderTable($listOrder) {
-		return '<script type="text/javascript">' . "\n"
+		/*return '<script type="text/javascript">' . "\n"
 		.'Joomla.orderTable = function() {' . "\n"
 		.'  table = document.getElementById("sortTable");' . "\n"
 		.'  direction = document.getElementById("directionTable");' . "\n"
@@ -27,7 +27,8 @@ class PhocaGalleryRenderAdminViews
 		.'  }' . "\n"
 		.'  Joomla.tableOrdering(order, dirn, \'\');' . "\n"
 		.'}' . "\n"
-		.'</script>' . "\n";
+		.'</script>' . "\n";*/
+		return "";
 	}
 	
 	public function startForm($option, $view, $id = 'adminForm', $name = 'adminForm') {
@@ -201,7 +202,7 @@ class PhocaGalleryRenderAdminViews
 		.'</th>'. "\n";
 	}
 	
-	public function tdOrder($canChange, $saveOrder, $orderkey){
+	public function tdOrder($canChange, $saveOrder, $orderkey, $ordering = 0){
 	
 		$o = '<td class="order nowrap center">'. "\n";
 		if ($canChange) {
@@ -215,7 +216,7 @@ class PhocaGalleryRenderAdminViews
 		} else {
 			$o .= '<span class="sortable-handler inactive"><i class="icon-menu"></i></span>'."\n";
 		}
-		$orderkeyPlus = $orderkey + 1;
+		$orderkeyPlus = $ordering;//$orderkey + 1;
 		$o .= '<input type="text" style="display:none" name="order[]" size="5" value="'.$orderkeyPlus.'" />'. "\n"
 		.'</td>'. "\n"; 
 		return $o;
@@ -274,7 +275,7 @@ class PhocaGalleryRenderAdminViews
 	
 	public function tdImage($item, $button, $txtE, $class = '', $avatarAbs = '', $avatarRel = '') {
 		$o = '<td class="'.$class.'">'. "\n";
-		$o .= '<div class="phocagallery-box-file">'. "\n"
+		$o .= '<div class="pg-msnr-container"><div class="phocagallery-box-file">'. "\n"
 			.' <center>'. "\n"
 			.'  <div class="phocagallery-box-file-first">'. "\n"
 			.'   <div class="phocagallery-box-file-second">'. "\n"
@@ -284,10 +285,11 @@ class PhocaGalleryRenderAdminViews
 		if ($avatarAbs != '' && $avatarRel != '') {
 			// AVATAR
 			if (JFile::exists($avatarAbs.$item->avatar)){
-				$o .= '<a class="'. $button->modalname.'"'
-				.' title="'. $button->text.'"'
+				$o .= '<a class="'. $button->methodname.'"'
+				//.' title="'. $button->text.'"'
 				.' href="'.JURI::root().$avatarRel.$item->avatar.'" '
-				.' rel="'. $button->options.'" >'
+				//.' rel="'. $button->options.'"'
+				. ' >'
 				.'<img src="'.JURI::root().$avatarRel.$item->avatar.'?imagesid='.md5(uniqid(time())).'" alt="'.JText::_($txtE).'" />'
 				.'</a>';
 			} else {
@@ -302,7 +304,8 @@ class PhocaGalleryRenderAdminViews
 				$correctImageRes 	= PhocaGalleryImage::correctSizeWithRate($resW[2], $resH[2], 50, 50);
 				$imgLink			= $item->extl;
 				
-				$o .= '<a class="'. $button->modalname.'" title="'.$button->text.'" href="'. $imgLink .'" rel="'. $button->options.'" >'
+				//$o .= '<a class="'. $button->modalname.'" title="'.$button->text.'" href="'. $imgLink .'" rel="'. $button->options.'" >'
+				$o .= '<a class="'. $button->methodname.'"  href="'. $imgLink .'" >'
 				. '<img src="'.$item->exts.'?imagesid='.md5(uniqid(time())).'" width="'.$correctImageRes['width'].'" height="'.$correctImageRes['height'].'" alt="'.JText::_($txtE).'" />'
 				.'</a>'. "\n";
 			} else if (isset ($item->fileoriginalexist) && $item->fileoriginalexist == 1) {
@@ -311,8 +314,9 @@ class PhocaGalleryRenderAdminViews
 				$correctImageRes 	= PhocaGalleryImage::correctSizeWithRate($imageRes['w'], $imageRes['h'], 50, 50);
 				$imgLink			= PhocaGalleryFileThumbnail::getThumbnailName($item->filename, 'large');
 				
-				$o .= '<a class="'. $button->modalname.'" title="'. $button->text.'" href="'. JURI::root(). $imgLink->rel.'" rel="'. $button->options.'" >'
-				. '<img src="'.JURI::root().$item->linkthumbnailpath.'?imagesid='.md5(uniqid(time())).'" width="'.$correctImageRes['width'].'" height="'.$correctImageRes['height'].'" alt="'.JText::_($txtE).'" />'
+				//$o .= '<a class="'. $button->modalname.'" title="'. $button->text.'" href="'. JURI::root(). $imgLink->rel.'" rel="'. $button->options.'" >'
+				$o .= '<a class="'. $button->methodname.'"  href="'. JURI::root(). $imgLink->rel.'"  >'
+				. '<img src="'.JURI::root().$item->linkthumbnailpath.'?imagesid='.md5(uniqid(time())).'" width="'.$correctImageRes['width'].'" height="'.$correctImageRes['height'].'" alt="'.JText::_($txtE).'" itemprop="thumbnail" />'
 				.'</a>'. "\n";
 			} else {
 				$o .= JHTML::_( 'image', 'media/com_phocagallery/images/administrator/phoca_thumb_s_no_image.gif', '');
@@ -323,7 +327,7 @@ class PhocaGalleryRenderAdminViews
 			.'   </div>'. "\n"
 			.'  </div>'. "\n"
 			.' </center>'. "\n"
-			.'</div>'. "\n";
+			.'</div></div>'. "\n";
 		$o .=  '</td>'. "\n";
 		return $o;
 	}

@@ -37,6 +37,7 @@ class PhocaGalleryCpViewPhocaGalleryUpgrade extends JViewLegacy
 		$tmpl2['img-latitude']		= JFactory::getApplication()->input->get( 'img-latitude', 0, 'get', 'int' );
 		$tmpl2['img-videocode']		= JFactory::getApplication()->input->get( 'img-videocode', 0, 'get', 'int' );
 		$tmpl2['img-vmproductid']	= JFactory::getApplication()->input->get( 'img-vmproductid', 0, 'get', 'int' );
+		$tmpl2['img-pcproductid']	= JFactory::getApplication()->input->get( 'img-pcproductid', 0, 'get', 'int' );
 		
 		$tmpl2['startimg']		= JFactory::getApplication()->input->get( 'startimg', 0, 'get', 'int' );
 		$tmpl2['lengthimg']		= JFactory::getApplication()->input->get( 'lengthimg', 100, 'get', 'int' );
@@ -392,8 +393,8 @@ class PhocaGalleryCpViewPhocaGalleryUpgrade extends JViewLegacy
 	}
 	
 	function _setToolbar() {
-		JToolBarHelper::title(   JText::_( 'Phoca Gallery Upgrade' ), 'phoca' );
-		JToolBarHelper::help( 'screen.phocagallery', true );
+		JToolbarHelper ::title(   JText::_( 'Phoca Gallery Upgrade' ), 'phoca' );
+		JToolbarHelper ::help( 'screen.phocagallery', true );
 	}
 	
 	function getParamsArray($params='', $param='accessuserid')  {	

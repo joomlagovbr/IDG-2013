@@ -2,12 +2,12 @@
 <extension method="upgrade" type="component" version="3">
 	<name>com_phocagallery</name>
 	<author>Jan Pavelka (www.phoca.cz)</author>
-	<creationDate>07/07/2017</creationDate>
+	<creationDate>01/01/2018</creationDate>
 	<authorEmail></authorEmail>
 	<authorUrl>www.phoca.cz</authorUrl>
 	<copyright>Jan Pavelka</copyright>
 	<license>GNU/GPL</license>
-	<version>4.3.6</version>
+	<version>4.3.9</version>
 	<description>Phoca Gallery</description>
 	<scriptfile>install/script.php</scriptfile>
 
@@ -95,7 +95,7 @@
 
 	</administration>
 	<updateservers>
-		<server type="extension" priority="1" name="updates"><![CDATA[https://raw.githubusercontent.com/PhocaCz/PhocaGallery/master/manifest.xml]]></server>
+		<server type="extension" name="com_phocagallery">https://raw.githubusercontent.com/PhocaCz/PhocaGallery/master/manifest.xml</server>
 	</updateservers>
 
 </extension>

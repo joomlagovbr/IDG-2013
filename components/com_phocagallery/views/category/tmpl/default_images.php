@@ -9,6 +9,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
 defined('_JEXEC') or die('Restricted access');
+phocagalleryimport( 'phocagallery.youtube.youtube');
 $app	= JFactory::getApplication();
 // - - - - - - - - - - 
 // Images
@@ -92,14 +93,19 @@ if (!empty($this->items)) {
 					echo ' '. $cv->datasize;
 				}
 				
-				
+				if (isset($cv->videocode) && $cv->videocode != '' && $cv->videocode != '0')
+                {
+                    echo 'data-type="video" data-video="<div class=\'ph-pswp-wrapper\'><div class=\'ph-pswp-video-wrapper\'>' . str_replace('"', "'", PhocaGalleryYoutube::displayVideo($cv->videocode)) . '</div></div>"';
+                }
 				echo ' >';// A End
 
+				$cv->ooverlibclass['class'] .= " c-Image c-Image--shaded";
+				
 				// IMG Start
 				if ($extImage) {
 					//echo JHtml::_( 'image', $cv->extm, $cv->altvalue, array('width' => $correctImageRes['width'], 'height' => $correctImageRes['height'], 'class' => 'pg-image'));
 					
-					echo JHtml::_( 'image', $cv->extm, $cv->altvalue, array('style' => 'width:'. $correctImageRes['width'] .'px;height:'.$correctImageRes['height'] .'px;', 'class' => 'pg-image', 'itemprop' => "thumbnail"));
+					echo JHtml::_( 'image', $cv->extm, $cv->altvalue, array('style' => 'width:'. $correctImageRes['width'] .'px;height:'.$correctImageRes['height'] .'px;', 'class' => 'pg-image c-Image c-Image--shaded', 'itemprop' => "thumbnail"));
 					
 				} else {
 					
@@ -122,7 +128,7 @@ if (!empty($this->items)) {
 				// IMG Start
 				if ($extImage && isset($cv->extm) && isset($correctImageRes['width']) && isset($correctImageRes['width'])) {
 					
-					echo JHtml::_( 'image', $cv->extm, '', array('width' => $correctImageRes['width'], 'height' => $correctImageRes['height'], 'class' => PhocaGalleryRenderFront::renderImageClass($cv->extm), 'itemprop' => "thumbnail"));
+					echo JHtml::_( 'image', $cv->extm, '', array('width' => $correctImageRes['width'], 'height' => $correctImageRes['height'], 'class' => PhocaGalleryRenderFront::renderImageClass($cv->extm)  . ' c-Image c-Image--shaded', 'itemprop' => "thumbnail"));
 				} else {
 					//echo JHtml::_( 'image', $cv->linkthumbnailpath, '', array( 'class' => PhocaGalleryRenderFront::renderImageClass($cv->linkthumbnailpath), 'itemprop' => "thumbnail") );
 					echo JHtml::_( 'image', $cv->linkthumbnailpath, '', array( 'class' => PhocaGalleryRenderFront::renderImageClass($cv->linkthumbnailpath) . ' pg-image img img-responsive', 'itemprop' => "thumbnail") );
@@ -144,12 +150,18 @@ if (!empty($this->items)) {
 			} // if type 2 else type 0, 1 (image, category, folder)
 			
 			// A CLOSE
+			if (isset($cv->videocode) && $cv->videocode != '' && $cv->videocode != '0')
+            {
+                echo JHtml::_( 'image', 'media/com_phocagallery/images/ytb_empty.png', '', array('class' => "youtube"));
+            }																		   
 			echo '</a>';
+			
+			
 			
 			if ($this->tmpl['detail_window'] == 14 && $cv->type == 2) {
 				
-				if ($this->tmpl['photoswipe_display_caption'] == 1) {
-					echo '<figcaption itemprop="caption description">'. $cv->title.'</figcaption>';
+				if (isset($cv->photoswipecaption)) {
+					echo '<figcaption itemprop="caption description">'. $cv->photoswipecaption.'</figcaption>';
 				}
 				echo '</figure>';
 			}
@@ -229,7 +241,8 @@ if (!empty($this->items)) {
 
 			if ($cv->display_icon_detail == 1 	||
 			$cv->display_icon_download > 0 		|| 
-			$cv->display_icon_vm 				|| 
+			$cv->display_icon_vm 				||
+			$cv->display_icon_pc 				||			
 			$cv->start_cooliris == 1 			|| 
 			$cv->trash == 1 					|| 
 			$cv->publish_unpublish == 1 		|| 
@@ -387,6 +400,14 @@ if (!empty($this->items)) {
 						.' href="'. $extLink2 .'" target="'.$cv->extlink2[2] .'" '.$cv->extlink2[5].'>'
 						.$cv->extlink2[4].'</a>';
 					
+				}
+				
+				// ICON Phoca Cart Product
+				if ($cv->display_icon_pc == 1) {
+					echo ' <a title="'.JText::_('COM_PHOCAGALLERY_ESHOP').'" href="'. JRoute::_($cv->pclink).'">';
+					//echo JHtml::_('image', $this->tmpl['icon_path'].'icon-cart.png', JText::_('COM_PHOCAGALLERY_ESHOP'));
+					echo PhocaGalleryRenderFront::renderIcon('cart', $this->tmpl['icon_path'].'icon-cart.png', JText::_('COM_PHOCAGALLERY_ESHOP'));
+					echo '</a>';
 				}
 				
 				// ICON VirtueMart Product

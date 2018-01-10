@@ -22,7 +22,7 @@ class PhocaGalleryCpViewPhocagalleryYtb extends JViewLegacy
 
 		$params = JComponentHelper::getParams( 'com_phocagallery' );
 		$app 	= JFactory::getApplication();
-		JResponse::allowCache(false);
+		$app->allowCache(false);
 		JHTML::stylesheet('media/com_phocagallery/css/administrator/phocagallery.css' );
 		
 		$document	= JFactory::getDocument();

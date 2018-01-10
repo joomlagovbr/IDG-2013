@@ -102,7 +102,7 @@ class PhocaGalleryPaginationUserImage extends JPagination
 		$selected = $this->viewall ? 0 : $this->limit;
 
 		// Build the select list
-		if ($app->isAdmin()) {
+		if ($app->isClient('administrator')) {
 			$html = JHTML::_('select.genericlist',  $limits, 'limitimage', 'class="inputbox input-mini" size="1" onchange="Joomla.submitform();"', 'value', 'text', $selected);
 		} else {
 			$html = JHTML::_('select.genericlist',  $limits, 'limitimage', 'class="inputbox input-mini" size="1" onchange="this.form.submit()"', 'value', 'text', $selected);

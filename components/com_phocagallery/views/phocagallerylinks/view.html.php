@@ -17,7 +17,7 @@ class phocaGalleryViewphocaGalleryLinks extends JViewLegacy
 		
 		//Frontend Changes
 		$tUri = '';
-		if (!$app->isAdmin()) {
+		if (!$app->isClient('administrator')) {
 			$tUri = JURI::base();
 		}
 		

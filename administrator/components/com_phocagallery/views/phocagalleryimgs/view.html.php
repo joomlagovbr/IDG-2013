@@ -9,7 +9,10 @@
  */
 defined( '_JEXEC' ) or die();
 jimport( 'joomla.application.component.view' );
- 
+phocagalleryimport('phocagallery.library.library');
+phocagalleryimport('phocagallery.render.renderdetailwindow');
+
+
 class PhocaGalleryCpViewPhocaGalleryImgs extends JViewLegacy
 {
 
@@ -58,7 +61,7 @@ class PhocaGalleryCpViewPhocaGalleryImgs extends JViewLegacy
 		$this->tmpl['notapproved'] 	=  $this->get( 'NotApprovedImage' );
 	
 		// Button
-		JHTML::_('behavior.modal', 'a.modal_phocagalleryimgs');
+		/*
 		$this->button = new JObject();
 		$this->button->set('modal', true);
 		$this->button->set('methodname', 'modal-button');
@@ -66,7 +69,18 @@ class PhocaGalleryCpViewPhocaGalleryImgs extends JViewLegacy
 		$this->button->set('text', JText::_('COM_PHOCAGALLERY_DISPLAY_IMAGE_DETAIL'));
 		//$this->button->set('name', 'image');
 		$this->button->set('modalname', 'modal_phocagalleryimgs');
-		$this->button->set('options', "{handler: 'image', size: {x: 200, y: 150}}");
+		$this->button->set('options', "{handler: 'image', size: {x: 200, y: 150}}");*/
+		
+		
+		$library 			= PhocaGalleryLibrary::getLibrary();
+		$libraries			= array();
+		$btn 				= new PhocaGalleryRenderDetailWindow();
+		$btn->popupWidth 	= '640';
+		$btn->popupHeight 	= '480';
+		$btn->backend		= 1;
+		
+		$btn->setButtons(12, $libraries, $library);
+		$this->button = $btn->getB1();
 
 		
 		$this->addToolbar();
@@ -84,14 +98,14 @@ class PhocaGalleryCpViewPhocaGalleryImgs extends JViewLegacy
 		$state	= $this->get('State');
 		$canDo	= PhocaGalleryImgsHelper::getActions($state->get('filter.image_id'));
 		$user  = JFactory::getUser();
-		$bar = JToolBar::getInstance('toolbar');
-		JToolBarHelper::title( JText::_('COM_PHOCAGALLERY_IMAGES'), 'image.png' );
+		$bar = JToolbar::getInstance('toolbar');
+		JToolbarHelper ::title( JText::_('COM_PHOCAGALLERY_IMAGES'), 'image.png' );
 		if ($canDo->get('core.create')) {
-			JToolBarHelper::addNew( 'phocagalleryimg.add','JTOOLBAR_NEW');
-			JToolBarHelper::custom( 'phocagallerym.edit', 'multiple.png', '', 'COM_PHOCAGALLERY_MULTIPLE_ADD' , false);
+			JToolbarHelper ::addNew( 'phocagalleryimg.add','JToolbar_NEW');
+			JToolbarHelper ::custom( 'phocagallerym.edit', 'multiple.png', '', 'COM_PHOCAGALLERY_MULTIPLE_ADD' , false);
 		}
 		if ($canDo->get('core.edit')) {
-			JToolBarHelper::editList('phocagalleryimg.edit','JTOOLBAR_EDIT');
+			JToolbarHelper ::editList('phocagalleryimg.edit','JToolbar_EDIT');
 		}
 		
 		if ($canDo->get('core.create')) {			
@@ -107,30 +121,30 @@ class PhocaGalleryCpViewPhocaGalleryImgs extends JViewLegacy
 		
 		if ($canDo->get('core.edit.state')) {
 
-			JToolBarHelper::divider();
-			JToolBarHelper::custom('phocagalleryimgs.publish', 'publish.png', 'publish_f2.png','JTOOLBAR_PUBLISH', true);
-			JToolBarHelper::custom('phocagalleryimgs.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
-			JToolBarHelper::custom( 'phocagalleryimgs.approve', 'approve.png', '',  'COM_PHOCAGALLERY_APPROVE' , true);
-			JToolBarHelper::custom( 'phocagalleryimgs.disapprove', 'disapprove.png', '',  'COM_PHOCAGALLERY_NOT_APPROVE' , true);
+			JToolbarHelper ::divider();
+			JToolbarHelper ::custom('phocagalleryimgs.publish', 'publish.png', 'publish_f2.png','JToolbar_PUBLISH', true);
+			JToolbarHelper ::custom('phocagalleryimgs.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JToolbar_UNPUBLISH', true);
+			JToolbarHelper ::custom( 'phocagalleryimgs.approve', 'approve.png', '',  'COM_PHOCAGALLERY_APPROVE' , true);
+			JToolbarHelper ::custom( 'phocagalleryimgs.disapprove', 'disapprove.png', '',  'COM_PHOCAGALLERY_NOT_APPROVE' , true);
 		}
 
 		if ($canDo->get('core.delete')) {
-			JToolBarHelper::deleteList( JText::_( 'COM_PHOCAGALLERY_WARNING_DELETE_ITEMS' ), 'phocagalleryimgs.delete', 'COM_PHOCAGALLERY_DELETE');
+			JToolbarHelper ::deleteList( JText::_( 'COM_PHOCAGALLERY_WARNING_DELETE_ITEMS' ), 'phocagalleryimgs.delete', 'COM_PHOCAGALLERY_DELETE');
 		}
 		
 		// Add a batch button
 		if ($user->authorise('core.edit'))
 		{
 			JHtml::_('bootstrap.modal', 'collapseModal');
-			$title = JText::_('JTOOLBAR_BATCH');
+			$title = JText::_('JToolbar_BATCH');
 			$dhtml = "<button data-toggle=\"modal\" data-target=\"#collapseModal\" class=\"btn btn-small\">
 						<i class=\"icon-checkbox-partial\" title=\"$title\"></i>
 						$title</button>";
 			$bar->appendButton('Custom', $dhtml, 'batch');
 		}
 		
-		JToolBarHelper::divider();
-		JToolBarHelper::help( 'screen.phocagallery', true );
+		JToolbarHelper ::divider();
+		JToolbarHelper ::help( 'screen.phocagallery', true );
 	}
 	
 	

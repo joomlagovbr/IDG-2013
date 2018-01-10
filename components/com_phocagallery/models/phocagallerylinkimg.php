@@ -117,7 +117,7 @@ class PhocaGalleryModelPhocaGalleryLinkImg extends JModelLegacy
 		$app	= JFactory::getApplication();
 		
 		// Get the pagination request variables
-		$limit	= $app->getUserStateFromRequest( $this->_context.'.list.limit', 'limit', $app->getCfg('list_limit'), 'int' );
+		$limit	= $app->getUserStateFromRequest( $this->_context.'.list.limit', 'limit', $app->get('list_limit'), 'int' );
 		$limitstart	= $app->getUserStateFromRequest( $this->_context.'.limitstart', 'limitstart',	0, 'int' );
 		// In case limit has been changed, adjust limitstart accordingly
 		$limitstart = ($limit != 0 ? (floor($limitstart / $limit) * $limit) : 0);

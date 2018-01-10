@@ -48,23 +48,23 @@ class PhocaGalleryCpViewPhocaGalleryCoImgs extends JViewLegacy
 		$state	= $this->get('State');
 		$canDo	= PhocaGalleryCoImgsHelper::getActions($state->get('filter.category_id'));
 	
-		JToolBarHelper::title( JText::_( 'COM_PHOCAGALLERY_IMAGE_COMMENTS' ), 'comment' );
+		JToolbarHelper ::title( JText::_( 'COM_PHOCAGALLERY_IMAGE_COMMENTS' ), 'comment' );
 	
 		if ($canDo->get('core.edit')) {
-			JToolBarHelper::editList('phocagallerycoimg.edit','JTOOLBAR_EDIT');
+			JToolbarHelper ::editList('phocagallerycoimg.edit','JToolbar_EDIT');
 		}
 		if ($canDo->get('core.edit.state')) {
 
-			JToolBarHelper::divider();
-			JToolBarHelper::custom('phocagallerycoimgs.publish', 'publish.png', 'publish_f2.png','JTOOLBAR_PUBLISH', true);
-			JToolBarHelper::custom('phocagallerycoimgs.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
+			JToolbarHelper ::divider();
+			JToolbarHelper ::custom('phocagallerycoimgs.publish', 'publish.png', 'publish_f2.png','JToolbar_PUBLISH', true);
+			JToolbarHelper ::custom('phocagallerycoimgs.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JToolbar_UNPUBLISH', true);
 		}
 	
 		if ($canDo->get('core.delete')) {
-			JToolBarHelper::deleteList(  JText::_( 'COM_PHOCAGALLERY_WARNING_DELETE_ITEMS' ), 'phocagallerycoimgs.delete', 'COM_PHOCAGALLERY_DELETE');
+			JToolbarHelper ::deleteList(  JText::_( 'COM_PHOCAGALLERY_WARNING_DELETE_ITEMS' ), 'phocagallerycoimgs.delete', 'COM_PHOCAGALLERY_DELETE');
 		}
-		JToolBarHelper::divider();
-		JToolBarHelper::help( 'screen.phocagallery', true );
+		JToolbarHelper ::divider();
+		JToolbarHelper ::help( 'screen.phocagallery', true );
 	}
 	
 	protected function getSortFields() {

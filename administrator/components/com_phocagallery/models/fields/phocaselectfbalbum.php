@@ -33,8 +33,7 @@ class JFormFieldPhocaSelectFbAlbum extends JFormField
 		
 		$link = 'index.php?option=com_phocagallery&amp;view=phocagalleryfba&amp;tmpl=component&amp;field='.$this->id. $suffix;
 	
-		// Load the modal behavior script.
-		JHtml::_('behavior.modal', 'a.modal_'.$this->id);
+
 		
 		
 		
@@ -44,40 +43,67 @@ class JFormFieldPhocaSelectFbAlbum extends JFormField
 		
 	
 		// Build the script.
-		$script = array();
+	/*	$script = array();
 		$script[] = '	function phocaSelectFbAlbum_'.$this->id.'(title) {';
 		$script[] = '		document.getElementById("'.$this->id.'_id").value = title;';
 		$script[] = '		'.$onchange;
 		$script[] = '		SqueezeBox.close();';
+		$script[] = '	}';*/
+		
+		JHtml::_('jquery.framework');
+		$idA		= 'pgselectfbalbum';
+
+		// Build the script.
+		$script = array();
+		$script[] = '	function phocaSelectFBAlbum_'.$this->id.'(title) {';
+		$script[] = '		document.getElementById("'.$this->id.'").value = title;';
+		$script[] = '		'.$onchange;
+		//$script[] = '		SqueezeBox.close();';
+		$script[] = '		jQuery(\'#'.$idA.'\').modal(\'toggle\');';
 		$script[] = '	}';
+		
+		$script[] = 'window.closeModal = function(){';
+		$script[] = '   jQuery(\'#'.$idA.'\').modal(\'hide\');';
+		$script[] = '}';
 
 		// Add the script to the document head.
 		JFactory::getDocument()->addScriptDeclaration(implode("\n", $script));
 		
-/*
-		$html[] = '<div class="fltlft">';
-		$html[] = '	<input type="text" id="'.$this->id.'_id" name="'.$this->name.'" value="'. $this->value.'"' .
-					' '.$attr.' />';
-		$html[] = '</div>';
+
 		
-		
-		// Create the user select button.
-		$html[] = '<div class="button2-left">';
-		$html[] = '  <div class="blank">';
-		$html[] = '		<a id="pglinktoalbum" class="modal_'.$this->id.'" title="'.JText::_('COM_PHOCAGALLERY_FB_SELECT_ALBUM').'"' .
-							' href="'.($this->element['readonly'] ? '' : $link).'"' .
-							' rel="{handler: \'iframe\', size: {x: 650, y: 375}}">';
-		$html[] = '			'.JText::_('COM_PHOCAGALLERY_FB_SELECT_ALBUM').'</a>';
-		$html[] = '  </div>';
-		$html[] = '</div>';*/
-		
-		$html[] = '<div class="input-append">';
+	/*	$html[] = '<div class="input-append">';
 		$html[] = '<input type="text" id="'.$this->id.'_id" name="'.$this->name.'" value="'. $this->value.'"' .' '.$attr.' />';
 		$html[] = '<a id="pglinktoalbum" class="modal_'.$this->id.' btn" title="'.JText::_('COM_PHOCAGALLERY_FB_SELECT_ALBUM').'"'
 				.' href="'.($this->element['readonly'] ? '' : $link).'"'
 				.' rel="{handler: \'iframe\', size: {x: 650, y: 400}}">'
 				. JText::_('COM_PHOCAGALLERY_FB_SELECT_ALBUM').'</a>';
-		$html[] = '</div>'. "\n";
+		$html[] = '</div>'. "\n";*/
+		
+		
+		$html[] = '<div class="input-append">';
+
+		$html[] = '<span class="input-append"><input type="text" id="' . $this->id . '" name="' . $this->name . '"'
+			. ' value="' . $this->value . '"' . $attr . ' />';
+		$html[] = '<a href="#'.$idA.'" role="button" class="btn " data-toggle="modal" title="' . JText::_('COM_PHOCAGALLERY_FB_SELECT_ALBUM') . '">'
+			. '<span class="icon-list icon-white"></span> '
+			. JText::_('COM_PHOCAGALLERY_FB_SELECT_ALBUM') . '</a></span>';
+		
+		$html[] = '</div>'. "\n";		
+		
+		$html[] = JHtml::_(
+			'bootstrap.renderModal',
+			$idA,
+			array(
+				'url'    => $link,
+				'title'  => JText::_('COM_PHOCAGALLERY_FB_SELECT_ALBUM'),
+				'width'  => '700px',
+				'height' => '400px',
+				'modalWidth' => '80',
+				'bodyHeight' => '70',
+				'footer' => '<button type="button" class="btn" data-dismiss="modal" aria-hidden="true">'
+					. JText::_('COM_PHOCAGALLERY_CLOSE') . '</button>'
+			)
+		);
 		
 
 

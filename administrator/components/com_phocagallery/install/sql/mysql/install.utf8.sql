@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS `#__phocagallery` (
   `userid` int(11) NOT NULL DEFAULT '0',
   `videocode` text,
   `vmproductid` int(11) NOT NULL DEFAULT '0',
+  `pcproductid` int(11) NOT NULL DEFAULT '0',
   `imgorigsize` int(11) NOT NULL DEFAULT '0',
   `published` tinyint(1) NOT NULL DEFAULT '0',
   `approved` tinyint(1) NOT NULL DEFAULT '0',

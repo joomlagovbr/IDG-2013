@@ -278,8 +278,13 @@ class PhocagalleryModelCategory extends JModelLegacy
 		
 		//$query = 'SELECT c.*, COUNT(a.id) countimage' ... Cannot be used because get error if there is no image
 		//$query = 'SELECT cc.*, a.filename, a.extm, a.exts, a.extw, a.exth'
-		$query = 'SELECT cc.id, cc.title, cc.alias, cc.published, cc.approved, cc.parent_id, cc.deleteuserid, cc.accessuserid, cc.uploaduserid, cc.access, cc.image_id, a.filename, a.extm, a.exts, a.extw, a.exth, a.extid'
-			.' FROM #__phocagallery_categories AS cc'
+		//$query = 'SELECT cc.id, cc.title, cc.alias, cc.published, cc.approved, cc.parent_id, cc.deleteuserid, cc.accessuserid, cc.uploaduserid, cc.access, cc.image_id';
+		
+		//$query = 'SELECT DISTINCT cc.id, cc.title, cc.alias, cc.published, cc.approved, cc.parent_id, cc.deleteuserid, cc.accessuserid, cc.uploaduserid, cc.access, cc.image_id, a.filename, a.extm, a.exts, a.extw, a.exth, a.extid';
+		
+		$query = 'SELECT DISTINCT cc.id, cc.title, cc.alias, cc.published, cc.approved, cc.parent_id, cc.deleteuserid, cc.accessuserid, cc.uploaduserid, cc.access, cc.image_id, min(a.filename) as filename, min(a.extm) as extm, min(a.exts) as exts, min(a.extw) as extw, min(a.exth) as exth, min(a.extid) as extid';
+		
+		$query .= ' FROM #__phocagallery_categories AS cc'
 			.' LEFT JOIN #__phocagallery AS a ON cc.id = a.catid'
 			.' WHERE cc.parent_id = '.(int) $this->_id
 			.' AND cc.published = 1'
@@ -292,11 +297,15 @@ class PhocagalleryModelCategory extends JModelLegacy
         //	.' WHERE a.catid = c.id' 
         //	.' AND a.published = 1) > 0'
 			. $whereLang
-			.' GROUP BY cc.id'
+			//.' GROUP BY cc.id, cc.title, cc.alias, cc.published, cc.approved, cc.parent_id, cc.deleteuserid, cc.accessuserid, cc.uploaduserid, cc.access, cc.image_id, a.filename, a.extm, a.exts, a.extw, a.exth, a.extid'
+			.' GROUP BY cc.id, cc.title, cc.alias, cc.published, cc.approved, cc.parent_id, cc.deleteuserid, cc.accessuserid, cc.uploaduserid, cc.access, cc.image_id'
 			.$categoryOrdering['output'];
+			
+			
 			
 		$this->_db->setQuery($query);
 		$subCategory = $this->_db->loadObjectList();
+		
 		return $subCategory;
 	}
 	

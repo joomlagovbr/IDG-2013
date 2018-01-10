@@ -97,10 +97,10 @@ class PhocaGalleryCpViewPhocaGalleryT extends JViewLegacy
 
 	protected function addToolbar() {
 		
-		JToolBarHelper::title(   JText::_( 'COM_PHOCAGALLERY_THEMES' ), 'grid-view-2');
-		JToolBarHelper::cancel('phocagalleryt.cancel', 'JTOOLBAR_CLOSE');
-		JToolBarHelper::divider();
-		JToolBarHelper::help( 'screen.phocagallery', true );
+		JToolbarHelper ::title(   JText::_( 'COM_PHOCAGALLERY_THEMES' ), 'grid-view-2');
+		JToolbarHelper ::cancel('phocagalleryt.cancel', 'JToolbar_CLOSE');
+		JToolbarHelper ::divider();
+		JToolbarHelper ::help( 'screen.phocagallery', true );
 	}
 	
 	function themeName() {
@@ -117,7 +117,7 @@ class PhocaGalleryCpViewPhocaGalleryT extends JViewLegacy
 			
 				if(!is_null($manifest)) {
 					foreach ($manifest->children() as $key => $value){
-						if ((string)$value->name() == 'name') {
+						if ((string)$value->getName() == 'name') {
 							return (string)$value;
 						}
 					}
@@ -130,16 +130,22 @@ class PhocaGalleryCpViewPhocaGalleryT extends JViewLegacy
 		}
 	}
 	
+	
+	
 	function _isManifest($file) {
-		$xml	= JFactory::getXML($file, true);
+		$xml	= simplexml_load_file($file);
 		if (!$xml) {
 			unset ($xml);
 			return null;
 		}
-		if (!is_object($xml) || ($xml->name() != 'install' )) {
+		
+		if (!is_object($xml) || ($xml->getName() != 'install' )) {
+			
 			unset ($xml);
 			return null;
 		}
+		
+		
 		return $xml;
 	}
 }

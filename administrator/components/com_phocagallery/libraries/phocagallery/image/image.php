@@ -288,7 +288,7 @@ class PhocaGalleryImage
 				.' FROM #__phocagallery AS a'
 				.' LEFT JOIN #__phocagallery_categories AS c ON c.id = a.catid'
 				.' WHERE a.id = '.(int)$id
-				.' GROUP BY a.id'
+				.' GROUP BY a.id, a.title, c.title'
 				.' ORDER BY a.id'
 				.' LIMIT 1';
 		$db->setQuery($query);

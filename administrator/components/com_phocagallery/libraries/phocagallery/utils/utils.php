@@ -132,5 +132,18 @@ class PhocaGalleryUtils
 		$a['tasks'] = $a['task']. 's';
 		return $a;
 	}
+	
+	public static function getIntFromString($string) {
+		
+		if (empty($string)) {
+			return 0;
+		}
+		$int	= '';//$int = 0
+		$parts 	= explode(':', $string);
+		if (isset($parts[0])) {
+			$int = (int)$parts[0];
+		}
+		return $int;
+	}
 }
 ?>

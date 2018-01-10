@@ -26,7 +26,7 @@ class phocaGalleryCpViewphocaGalleryLinkImg extends JViewLegacy
 		//Frontend Changes
 		$tUri = '';
 		$jsLink = JURI::base(true);
-		if (!$app->isAdmin()) {
+		if (!$app->isClient('administrator')) {
 			$tUri = JURI::base();
 			phocagalleryimport('phocagallery.render.renderadmin');
 			phocagalleryimport('phocagallery.file.filethumbnail');

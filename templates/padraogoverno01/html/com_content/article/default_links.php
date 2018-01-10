@@ -97,7 +97,7 @@ if ($urls && (!empty($urls->urla) || !empty($urls->urlb) || !empty($urls->urlc))
 			<iframe src="<?php echo JURI::root().'templates/padraogoverno01/html/index.html' ?>" height="500" width="100%" frameborder="0"></iframe>
 		</div>
 		<div class="modal-footer">			
-			<button class="btn pull-right" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('TPL_PADRAOGOVERNO01_FECHAR'); ?></button>					
+			<button class="btn pull-right" data-dismiss="modal" aria-hidden="true">fechar</button>					
 		</div>
 	</div>
 	<!-- end modal -->

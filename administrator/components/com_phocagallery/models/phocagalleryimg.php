@@ -99,6 +99,10 @@ class PhocaGalleryCpModelPhocaGalleryImg extends JModelAdmin
 
 		$table->title		= htmlspecialchars_decode($table->title, ENT_QUOTES);
 		$table->alias		= JApplication::stringURLSafe($table->alias);
+		$table->hits 		= PhocaGalleryUtils::getIntFromString($table->hits);
+		$table->zoom 		= PhocaGalleryUtils::getIntFromString($table->zoom);
+		$table->pcproductid = PhocaGalleryUtils::getIntFromString($table->pcproductid);
+		$table->vmproductid = PhocaGalleryUtils::getIntFromString($table->vmproductid);
 
 		if (empty($table->alias)) {
 			$table->alias = JApplication::stringURLSafe($table->title);

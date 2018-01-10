@@ -112,17 +112,17 @@ class PhocaGalleryCpViewPhocaGalleryIn extends JViewLegacy
 	protected function addToolBar(){
 		require_once JPATH_COMPONENT.'/helpers/phocagallerycp.php';
 		$canDo = PhocaGalleryCpHelper::getActions(NULL);
-        JToolBarHelper::title(JText::_('COM_PHOCAGALLERY_PG_INFO'), 'info');
+        JToolbarHelper ::title(JText::_('COM_PHOCAGALLERY_PG_INFO'), 'info');
 		
 		// This button is unnecessary but it is displayed because Joomla! design bug
-		$bar = JToolBar::getInstance( 'toolbar' );
+		$bar = JToolbar::getInstance( 'toolbar' );
 		$dhtml = '<a href="index.php?option=com_phocagallery" class="btn btn-small"><i class="icon-home-2" title="'.JText::_('COM_PHOCAGALLERY_CONTROL_PANEL').'"></i> '.JText::_('COM_PHOCAGALLERY_CONTROL_PANEL').'</a>';
 		$bar->appendButton('Custom', $dhtml);
 		
 		if ($canDo->get('core.admin')) {
-			JToolbarHelper::preferences('com_phocagallery');
+			JToolbarHelper ::preferences('com_phocagallery');
 		}
-	    JToolBarHelper::help( 'screen.phocagallery', true );	   
+	    JToolbarHelper ::help( 'screen.phocagallery', true );	   
     }
 }
 ?>

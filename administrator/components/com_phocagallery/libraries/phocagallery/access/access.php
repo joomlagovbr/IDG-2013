@@ -73,7 +73,7 @@ class PhocaGalleryAccess
 		$rightGroupA 	= array();
 		$rightGroupA[]	= (int)$rightGroup;
 		if(!empty($nAL)){
-			$rightGroupA = array_merge($nAL, $rightGroupA);
+			//$rightGroupA = array_merge($nAL, $rightGroupA);
 		}
 		
 		// User ACL
@@ -205,7 +205,7 @@ class PhocaGalleryAccess
 		. ' JOIN #__user_usergroup_map AS m ON m.user_id = u.id'
 		. ' WHERE u.block = 0'
 		. $and
-		. ' GROUP BY u.id'
+		. ' GROUP BY u.id, u.name'
 		. ' ORDER BY '. $order;
 		
 		
@@ -294,7 +294,7 @@ class PhocaGalleryAccess
 		. ' JOIN #__user_usergroup_map AS m ON m.user_id = u.id'
 		. ' WHERE u.block = 0'
 		. $and
-		. ' GROUP BY u.id'
+		. ' GROUP BY u.id, u.name'
 		. ' ORDER BY '. $order;
 		
 		

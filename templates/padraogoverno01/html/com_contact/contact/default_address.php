@@ -27,22 +27,22 @@ defined('_JEXEC') or die;
 	<?php endif; ?>
 	<?php if ($this->contact->suburb && $this->params->get('show_suburb')) : ?>
 		<span class="contact-suburb">
-		| <?php echo $this->contact->suburb; ?>
+		|	<?php echo $this->contact->suburb; ?>
 		</span>
 	<?php endif; ?>
 	<?php if ($this->contact->state && $this->params->get('show_state')) : ?>
 		<span class="contact-state">
-		- <?php echo $this->contact->state; ?>
+		-	<?php echo $this->contact->state; ?>
 		</span>
 	<?php endif; ?>
 	<?php if ($this->contact->postcode && $this->params->get('show_postcode')) : ?>
 		<span class="contact-postcode">
-		| CEP: <?php echo $this->contact->postcode; ?>
+		|	CEP: <?php echo $this->contact->postcode; ?>
 		</span>
 	<?php endif; ?>
 	<?php if ($this->contact->country && $this->params->get('show_country')) : ?>
 		<span class="contact-country">
-		- <?php echo $this->contact->country; ?>
+		-	<?php echo $this->contact->country; ?>
 		</span>
 	<?php endif; ?>
 <?php endif; ?>
@@ -71,6 +71,7 @@ defined('_JEXEC') or die;
 			<?php echo JText::_('COM_CONTACT_TELEPHONE'); ?>
 		</h3>
 	<p>
+	
 		<span class="contact-telephone">
 			<?php echo nl2br($this->contact->telephone); ?>
 		</span>

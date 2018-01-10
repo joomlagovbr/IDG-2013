@@ -119,7 +119,7 @@ class PhocaGalleryCpModelPhocaGalleryUsers extends JModelList
 		$query->select(
 			$this->getState(
 				'list.select',
-				'a.*'
+				'a.id, a.ordering, a.avatar, a.published, a.approved'
 			)
 		);
 		$query->from('#__phocagallery_user AS a');
@@ -136,13 +136,26 @@ class PhocaGalleryCpModelPhocaGalleryUsers extends JModelList
 		$query->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
 		
 		$query->select('c.countcid');
-		$query->join('LEFT', '(SELECT  c.owner_id, c.id, count(*) AS countcid'
+		/*$query->join('LEFT', '(SELECT  c.owner_id, c.id, count(*) AS countcid'
+			. ' FROM #__phocagallery_categories AS c'
+			. ' GROUP BY c.owner_id, c.id) AS c '
+			. ' ON a.userid = c.owner_id ');*/
+			
+		$query->join('LEFT', '(SELECT  c.owner_id,count(c.id) AS countcid'
 			. ' FROM #__phocagallery_categories AS c'
 			. ' GROUP BY c.owner_id) AS c '
 			. ' ON a.userid = c.owner_id ');
 			
 		$query->select('i.countiid');	
-		$query->join('LEFT', '(SELECT i.catid, uc.userid AS uid, count(i.id) AS countiid'
+		/*$query->join('LEFT', '(SELECT i.catid, uc.userid AS uid, count(i.id) AS countiid'
+			. ' FROM #__phocagallery AS i'
+			. ' LEFT JOIN #__phocagallery_categories AS cc ON cc.id = i.catid'
+			. ' LEFT JOIN #__phocagallery_user AS uc ON uc.userid = cc.owner_id'
+			. ' GROUP BY uc.userid, i.catid'
+			. ' ) AS i '
+			. ' ON i.uid = c.owner_id');*/
+			
+		$query->join('LEFT', '(SELECT uc.userid AS uid, count(i.id) AS countiid'
 			. ' FROM #__phocagallery AS i'
 			. ' LEFT JOIN #__phocagallery_categories AS cc ON cc.id = i.catid'
 			. ' LEFT JOIN #__phocagallery_user AS uc ON uc.userid = cc.owner_id'
@@ -190,7 +203,7 @@ class PhocaGalleryCpModelPhocaGalleryUsers extends JModelList
 			}
 		}
 		
-		$query->group('a.id');
+		$query->group('ua.id, a.id, l.title, ua.username, ua.name, uc.name, c.countcid, i.countiid, a.ordering, a.avatar, a.published, a.approved');
 
 		// Add the list ordering clause.
 		$orderCol	= $this->state->get('list.ordering');

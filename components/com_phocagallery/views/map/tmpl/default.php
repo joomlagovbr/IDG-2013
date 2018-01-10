@@ -25,8 +25,10 @@ if (empty($this->map) || $this->map->longitude == '' || $this->map->latitude == 
 	$text .='<td valign="top" align="left">'.JHtml::_( 'image', $this->map->thumbnail, addslashes($this->map->geotitle)) . '</td>';
 	$text .='<td valign="top" align="left">'. PhocaGalleryText::strTrimAll(addslashes($this->map->description)).'</td>';
 	$text .='</tr></table></div>';
+	
+	$map	= new PhocaGalleryRenderMap();
 
-	echo '<script src="http://www.google.com/jsapi" type="text/javascript"></script>';
+
 	echo '<noscript>'.JText::_('COM_PHOCAGALLERY_ERROR_MAP_ENABLE_JAVASCRIPT').'</noscript>';
 	
 	$cmw = '';
@@ -38,7 +40,7 @@ if (empty($this->map) || $this->map->longitude == '' || $this->map->latitude == 
 	echo '<div id="phocaMap" style="margin:0 auto;padding:0;'. $cmw. 'height:'.$this->tmpl['largemapheight'].'px">';
 	echo '</div></div>';
 
-	$map	= new PhocaGalleryRenderMap();
+	
 	//echo $map->loadApi();
 	?><script type='text/javascript'>//<![CDATA[
 	<?php 

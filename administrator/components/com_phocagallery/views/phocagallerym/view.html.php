@@ -191,15 +191,15 @@ class PhocaGalleryCpViewPhocaGalleryM extends JViewLegacy
 		$state	= $this->get('State');
 		$canDo	= PhocaGalleryMHelper::getActions($state->get('filter.multiple'));
 		
-		JToolBarHelper::title( JText::_( 'COM_PHOCAGALLERY_MULTIPLE_ADD' ), 'plus' );
+		JToolbarHelper ::title( JText::_( 'COM_PHOCAGALLERY_MULTIPLE_ADD' ), 'plus' );
 
 		if ($canDo->get('core.create')){
-			JToolBarHelper::save('phocagallerym.save', 'JTOOLBAR_SAVE');
+			JToolbarHelper ::save('phocagallerym.save', 'JToolbar_SAVE');
 		}
 		
-		JToolBarHelper::cancel('phocagallerym.cancel', 'JTOOLBAR_CLOSE');
-		JToolBarHelper::divider();
-		JToolBarHelper::help( 'screen.phocagallery', true );
+		JToolbarHelper ::cancel('phocagallerym.cancel', 'JToolbar_CLOSE');
+		JToolbarHelper ::divider();
+		JToolbarHelper ::help( 'screen.phocagallery', true );
 	}
 }
 ?>

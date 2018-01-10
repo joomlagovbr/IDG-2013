@@ -62,7 +62,7 @@ echo $r->navigation($tabs);
 echo '<div class="tab-content">'. "\n";
 
 echo '<div class="tab-pane active" id="general">'."\n"; 
-$formArray = array ('title', 'alias', 'catid', 'ordering', 'filename', 'videocode', 'vmproductid');
+$formArray = array ('title', 'alias', 'catid', 'ordering', 'filename', 'videocode', 'pcproductid', 'vmproductid');
 echo $r->group($this->form, $formArray);
 
 echo $this->form->getInput('extid');

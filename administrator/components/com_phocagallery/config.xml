@@ -23,7 +23,7 @@
 	<option value="16">COM_PHOCAGALLERY_HITS_DESC</option>
 </field>
 
-<field name="categories_description" default="" buttons="0" width="330" type="editor" filter="safehtml" label="COM_PHOCAGALLERY_FIELD_CATEGORIES_VIEW_DESCRIPTION_LABEL" description="COM_PHOCAGALLERY_FIELD_CATEGORIES_VIEW_DESCRIPTION_DESC"/>
+<field name="categories_description" default="" buttons="0" width="330" type="editor" filter="JComponentHelper::filterText" label="COM_PHOCAGALLERY_FIELD_CATEGORIES_VIEW_DESCRIPTION_LABEL" description="COM_PHOCAGALLERY_FIELD_CATEGORIES_VIEW_DESCRIPTION_DESC"/>
 
 
 <field name="image_categories_size" type="list" default="1" label="COM_PHOCAGALLERY_FIELD_IMAGE_CATEGORIES_SIZE_LABEL" description="COM_PHOCAGALLERY_FIELD_IMAGE_CATEGORIES_SIZE_DESC">
@@ -564,9 +564,18 @@
 </field>
 
 <field name="photoswipe_display_caption" type="list" default="1" label="COM_PHOCAGALLERY_FIELD_DISPLAY_CAPTION_LABEL" description="COM_PHOCAGALLERY_FIELD_DISPLAY_CAPTION_DESC">
+	<option value="1">COM_PHOCAGALLERY_ONLY_TITLE</option>
+	<option value="2">COM_PHOCAGALLERY_ONLY_DESCRIPTION</option>
+	<option value="3">COM_PHOCAGALLERY_TITLE_AND_DESCRIPTION</option>
+	<option value="0">COM_PHOCAGALLERY_NONE</option>
+</field>
+
+<field name="photoswipe_slide_effect" type="list" default="0" label="COM_PHOCAGALLERY_FIELD_PHOTOSWIPE_DISABLE_SLIDE_EFFECT_LABEL" description="COM_PHOCAGALLERY_FIELD_PHOTOSWIPE_DISABLE_SLIDE_EFFECT_DESC">
 	<option value="0">COM_PHOCAGALLERY_NO</option>
 	<option value="1">COM_PHOCAGALLERY_YES</option>
 </field>
+
+
 
 
 <field name="phocahead36" type="phocahead" default="COM_PHOCAGALLERY_YOUTUBE" label="" description="" />
@@ -652,6 +661,11 @@
 </field>
 
 <field name="equal_heights" type="list" default="0" label="COM_PHOCAGALLERY_FIELD_EQUAL_HEIGHTS_LABEL" description="COM_PHOCAGALLERY_FIELD_EQUAL_HEIGHTS_DESC">
+	<option value="1">COM_PHOCAGALLERY_YES</option>
+	<option value="0">COM_PHOCAGALLERY_NO</option>
+</field>
+
+<field name="disable_mootools_modal" type="list" default="0" label="COM_PHOCAGALLERY_FIELD_DISABLE_MOOTOOLS_MODAL_LABEL" description="COM_PHOCAGALLERY_FIELD_DISABLE_MOOTOOLS_MODAL_DESC">
 	<option value="1">COM_PHOCAGALLERY_YES</option>
 	<option value="0">COM_PHOCAGALLERY_NO</option>
 </field>
@@ -772,12 +786,26 @@
 <field name="category_map_width" default="" size="10" type="phocatext" label="COM_PHOCAGALLERY_FIELD_CATEGORY_MAP_WIDTH_LABEL" description="COM_PHOCAGALLERY_FIELD_CATEGORY_MAP_WIDTH_DESC"/>
 <field name="category_map_height" default="400" size="10" type="phocatext" label="COM_PHOCAGALLERY_FIELD_CATEGORY_MAP_HEIGHT_LABEL" description="COM_PHOCAGALLERY_FIELD_CATEGORY_MAP_HEIGHT_DESC"/>
 
+
+
+<field name="phocahead40" type="phocahead" default="COM_PHOCAGALLERY_CONFIG_PHOCACART_SETTINGS_LABEL" label="" description=""/>
+
+<field name="display_icon_pc" type="list" default="0" label="COM_PHOCAGALLERY_FIELD_DISPLAY_PC_LINK_LABEL" description="COM_PHOCAGALLERY_FIELD_DISPLAY_PC_LINK_DESC">
+	<option value="1">COM_PHOCAGALLERY_YES</option>
+	<option value="0">COM_PHOCAGALLERY_NO</option>
+</field>
+
+
+
 <field name="phocahead27" type="phocahead" default="COM_PHOCAGALLERY_CONFIG_VIRTUEMART_SETTINGS_LABEL" label="" description=""/>
 
 <field name="display_icon_vm" type="list" default="0" label="COM_PHOCAGALLERY_FIELD_DISPLAY_VM_LINK_LABEL" description="COM_PHOCAGALLERY_FIELD_DISPLAY_VM_LINK_DESC">
 	<option value="1">COM_PHOCAGALLERY_YES</option>
 	<option value="0">COM_PHOCAGALLERY_NO</option>
 </field>
+
+
+
 	
 
 

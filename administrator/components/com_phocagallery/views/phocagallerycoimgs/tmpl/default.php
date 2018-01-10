@@ -101,7 +101,7 @@ $iD = $i % 2;
 echo "\n\n";
 //echo '<tr class="row'.$iD.'" sortable-group-id="'.$item->image_id.'" item-id="'.$item->id.'" parents="'.$item->image_id.'" level="0">'. "\n";
 echo '<tr class="row'.$iD.'" sortable-group-id="'.$item->image_id.'" >'. "\n";
-echo $r->tdOrder($canChange, $saveOrder, $orderkey);
+echo $r->tdOrder($canChange, $saveOrder, $orderkey, $item->ordering);
 echo $r->td(JHtml::_('grid.id', $i, $item->id), "small");
 
 $usrO = $item->commentname;
