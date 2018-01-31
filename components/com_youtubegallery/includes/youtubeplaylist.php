@@ -1,8 +1,8 @@
 <?php
 /**
  * YoutubeGallery
- * @version 4.4.0
- * @author Ivan Komlev< <support@joomlaboat.com>
+ * @version 3.5.9
+ * @author DesignCompass corp< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -19,6 +19,7 @@ class VideoSource_YoutubePlaylist
 {
 	public static function extractYouTubePlayListID($youtubeURL)
 	{
+				
 		$arr=YouTubeGalleryMisc::parse_query($youtubeURL);
 		
 		$p=$arr['list'];
@@ -26,109 +27,81 @@ class VideoSource_YoutubePlaylist
 		if(strlen($p)<3)
 			return '';
 		
-		$allowedtypes=array('PL');//,'FL');
-		$t=substr($p,0,2);
-		if(!in_array($t,$allowedtypes))
+		if(substr($p,0,2)!='PL')
 			return ''; //incorrect playlist ID
 		 
-		return substr($p,2); //return without leading "PL"
+	    return substr($p,2); //return without leading "PL"
 	}
 	
-	public static function getVideoIDList($youtubeURL,$optionalparameters,&$playlistid,&$datalink)
+	public static function getVideoIDList($youtubeURL,$optionalparameters,&$playlistid)
 	{
-		$api_key = YouTubeGalleryMisc::getSettingValue('youtube_api_key');
-		
-		if($api_key=='')
-			return array();
-		
-		$playlistid=VideoSource_YoutubePlaylist::extractYouTubePlayListID($youtubeURL);
-		
-		$videolist=VideoSource_YoutubePlaylist::getPlaylistVideos($playlistid,$datalink,$api_key,$optionalparameters);
-		
-		return $videolist;
-	}
-	
-	public static function getPlaylistVideos($playlistid,&$datalink,$api_key,$optionalparameters)
-	{
-		$base_url='https://www.googleapis.com/youtube/v3';
-		$videolist=array();
-		
-		if($playlistid=='')
-			return $videolist; //playlist id not found
-		
-		$part='id,snippet';
-		
 		$optionalparameters_arr=explode(',',$optionalparameters);
 		
+		$videolist=array();
+		
 		$spq=implode('&',$optionalparameters_arr);
-		$spq=str_replace('max-results','maxResults',$spq); //API 2 -> API 3 conversion
-		$datalink = $base_url.'/playlistItems?part='.$part.'&key='.$api_key.'&playlistId='.$playlistid.($spq!='' ? '&'.$spq : '' );
 		
-		$opt="";
-		$count=YouTubeGalleryMisc::getMaxResults($spq,$opt);
-		if($count<1)
-			$maxResults=1;
-		elseif($count>50)
-			$maxResults=50;
-		else
-			$maxResults=$count;
-				
-		$videos_found=0;
-		$nextPageToken='';
-		while($videos_found<$count)
+		$videolist=array();
+		
+		$playlistid=VideoSource_YoutubePlaylist::extractYouTubePlayListID($youtubeURL);
+
+		if($playlistid=='')
+			return $videolist; //playlist id not found
+
+		//alteracoes projeto portal padrao
+		require_once JPATH_ADMINISTRATOR . '/components/com_youtubegallery/google/_videos.php';
+		$videos = new YoutubeVideos();
+		
+		$videos_raw = $videos->getVideosFromPlaylist( $playlistid, 30, 'date' );
+
+		for ($i=0, $limit=count($videos_raw); $i < $limit; $i++)
 		{
-			$newspq=str_replace($opt,'maxResults='.$maxResults,$spq);
-
-			$url = $base_url.'/playlistItems?part='.$part.'&key='.$api_key.'&playlistId='.$playlistid.($newspq!='' ? '&'.$newspq : '' );
-			if($nextPageToken!='')
-				$url.='&pageToken='.$nextPageToken;
-		
-			$htmlcode=YouTubeGalleryMisc::getURLData($url);
-			
-			//echo '$htmlcode=';
-			
-			//print_r($htmlcode);
-		
-			if($htmlcode=='')
-				return $videolist;
-		
-			$j=json_decode($htmlcode);
-			if(!$j)
-				return 'Connection Error';
-
-			if(isset($j->nextPageToken))
-				$nextPageToken=$j->nextPageToken;
-			else
-				$nextPageToken='';
-				
-			$pageinfo=$j->pageInfo;
-			if($pageinfo->totalResults<$count)
-				$count=$pageinfo->totalResults;
-			
-			$items=$j->items;
-			
-			if(count($items)<$maxResults)
-				$maxResults=count($items);
-		
-			foreach($items as $item)
-			{
-				if($item->kind=='youtube#playlistItem')
-				{
-					$s=$item->snippet->resourceId;
-					if($s->kind=='youtube#video')
-					{
-						$videoId=$s->videoId;
-						$videolist[] = 'https://www.youtube.com/watch?v='.$videoId;
-					}
-				}
-			}
-			
-			$videos_found+=$maxResults;
-			if($count-$videos_found<50)
-				$maxResults=$count-$videos_found;
+			$url = 'https://www.youtube.com/watch?v=' . $videos_raw[$i]->contentDetails->videoId;
+			$videolist[] = $url;
 		}
-		
+
 		return $videolist;
+
+		
+		// $url = 'http://gdata.youtube.com/feeds/api/playlists/'.$playlistid.($spq!='' ? '?'.$spq : '' ) ; //&max-results=10;
+		
+		// $xml=false;
+		// $htmlcode=YouTubeGalleryMisc::getURLData($url);
+
+		// if(strpos($htmlcode,'<?xml version')===false)
+		// {
+		// 	if(strpos($htmlcode,'Invalid id')===false)
+		// 		return 'Cannot load data, Invalid id';
+
+		// 	return 'Cannot load data, no connection';
+		// }
+		
+		// $xml = simplexml_load_string($htmlcode);
+		
+		// if($xml){
+		// 	foreach ($xml->entry as $entry)
+		// 	{
+
+		// 		$media = $entry->children('http://search.yahoo.com/mrss/');
+		// 		$link = $media->group->player->attributes();
+		// 		if(isset($link))
+		// 		{
+		// 			if(isset($link['url']))
+		// 			{
+		// 				$videolist[] = $link['url'];
+		// 			}
+		// 		}//if(isset($link)
+		// 	}//foreach ($xml->entry as $entry)
+		// }//if($xml){
+		
+		// return $videolist;
+		
 	}
+	
+	
+
+
 }
+
+
 ?>

@@ -1,14 +1,4 @@
-<?php 
-/*
- * @package Joomla
- * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
- *
- * @component Phoca Gallery
- * @copyright Copyright (C) Jan Pavelka www.phoca.cz
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- */
-defined('_JEXEC') or die('Restricted access');
+<?php defined('_JEXEC') or die('Restricted access');
 echo '<div id="phocagallery" class="pg-detail-view-multibox'.$this->params->get( 'pageclass_sfx' ).'">';
 if ($this->tmpl['backbutton'] != '') {
 	echo $this->tmpl['backbutton'];
@@ -82,8 +72,7 @@ echo '<div class="pg-multibox-title">'.$this->item->title.'</div>'. "\n";
 // Description
 if ($this->tmpl['mb_desc']) {
 
-//echo '<div class="pg-multibox-desc">'.$this->item->description.'</div>'. "\n";
-echo '<div class="pg-multibox-desc">'.JHtml::_('content.prepare', $this->item->description, 'com_phocagallery.item').'</div>'. "\n";
+echo '<div class="pg-multibox-desc">'.$this->item->description.'</div>'. "\n";
 }
 
 // Uploaded By
@@ -167,7 +156,7 @@ if ($this->tmpl['mb_comments']) {
 		echo $this->loadTemplate('comments-fb');
 	} else if ((int)$this->tmpl['externalcommentsystem'] == 1) {
 		if (JComponentHelper::isEnabled('com_jcomments', true)) {
-			include_once(JPATH_BASE.'/components/com_jcomments/jcomments.php');
+			include_once(JPATH_BASE.DS.'components'.DS.'com_jcomments'.DS.'jcomments.php');
 			echo JComments::showComments($this->item->id, 'com_phocagallery_images', JText::_('COM_PHOCAGALLERY_IMAGE') .' '. $this->item->title);	
 		}
 	} else {
@@ -188,6 +177,6 @@ echo '</div>'. "\n";
 
 if ($this->tmpl['detailwindow'] == 7) {
 	echo '<p>&nbsp;</p>';
-	echo '<div style="text-align:right;color:#ccc;display:block">Powered by <a href="https://www.phoca.cz/phocagallery">Phoca Gallery</a></div>';
+	echo PhocaGalleryRenderFront::renderInfo();
 }
 ?>

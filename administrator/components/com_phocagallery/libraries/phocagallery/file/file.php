@@ -1,12 +1,12 @@
 <?php
-/**
- * @package   Phoca Gallery
- * @author    Jan Pavelka - https://www.phoca.cz
- * @copyright Copyright (C) Jan Pavelka https://www.phoca.cz
- * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 and later
- * @cms       Joomla
- * @copyright Copyright (C) Open Source Matters. All rights reserved.
- * @license   http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+/*
+ * @package Joomla 1.5
+ * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+ *
+ * @component Phoca Gallery
+ * @copyright Copyright (C) Jan Pavelka www.phoca.cz
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
 defined( '_JEXEC' ) or die( 'Restricted access' );
 jimport( 'joomla.filesystem.folder' ); 
@@ -16,7 +16,7 @@ phocagalleryimport('phocagallery.path.path');
 
 class PhocaGalleryFile
 {
-	public static function getTitleFromFile(&$filename, $displayExt = 0) {
+	function getTitleFromFile(&$filename, $displayExt = 0) {
 		
 		
 		$filename 			= str_replace('//', '/', $filename);
@@ -38,12 +38,12 @@ class PhocaGalleryFile
 		}
 	}
 	
-	public static function removeExtension($filename) {
+	function removeExtension($filename) {
 		return substr($filename, 0, strrpos( $filename, '.' ));
 	}
 
 	
-	public static function getMimeType($filename) {
+	function getMimeType($filename) {
 		$ext = JFile::getExt($filename);		
 		switch(strtolower($ext)) {
 			case 'png':
@@ -63,9 +63,9 @@ class PhocaGalleryFile
 		return $mime;
 	}
 	
-	public static function getFileSize($filename, $readable = 1) {
+	function getFileSize($filename, $readable = 1) {
 		
-		$path			= PhocaGalleryPath::getPath();
+		$path			= &PhocaGalleryPath::getPath();
 		$fileNameAbs	= JPath::clean($path->image_abs . $filename);
 		
 		if (!JFile::exists($fileNameAbs)) {
@@ -82,7 +82,7 @@ class PhocaGalleryFile
 	/*
 	 * http://aidanlister.com/repos/v/function.size_readable.php
 	 */
-	public static function getFileSizeReadable ($size, $retstring = null, $onlyMB = false) {
+	function getFileSizeReadable ($size, $retstring = null, $onlyMB = false) {
 	
 		if ($onlyMB) {
 			$sizes = array('B', 'kB', 'MB');
@@ -103,7 +103,7 @@ class PhocaGalleryFile
         return sprintf($retstring, $size, $sizestring);
 	}
 	
-	public static function getFileOriginal($filename, $rel = 0) {
+	function getFileOriginal($filename, $rel = 0) {
 		$path	= PhocaGalleryPath::getPath();
 		if ($rel == 1) {
 			return str_replace('//', '/', $path->image_rel . $filename);
@@ -112,7 +112,7 @@ class PhocaGalleryFile
 		}
 	}
 	
-	public static function getFileFormat($filename) {
+	function getFileFormat($filename) {
 		$path	= PhocaGalleryPath::getPath();
 		$file	= JPath::clean($path->image_abs . $filename);
 		$size	= getimagesize($file);
@@ -123,7 +123,7 @@ class PhocaGalleryFile
 		}
 	}
 	
-	public static function existsFileOriginal($filename) {
+	public function existsFileOriginal($filename) {
 		$fileOriginal = PhocaGalleryFile::getFileOriginal($filename);
 		if (JFile::exists($fileOriginal)) {
 			return true;
@@ -133,7 +133,7 @@ class PhocaGalleryFile
 	}
 	
 	
-	public static function deleteFile ($filename) {			
+	function deleteFile ($filename) {			
 		$fileOriginal = PhocaGalleryFile::getFileOriginal($filename);
 		if (JFile::exists($fileOriginal)){
 			JFile::delete($fileOriginal);
@@ -142,7 +142,7 @@ class PhocaGalleryFile
 		return false;
 	}
 	
-	public static function existsCss($file, $type) {
+	public function existsCss($file, $type) {
 		$path = self::getCSSPath($type);
 		if (file_exists($path.$file) && $file != '') {
 			return $path.$file;
@@ -150,7 +150,7 @@ class PhocaGalleryFile
 		return false;
 	}
 	
-	public static function getCSSPath($type, $rel = 0) {
+	public function getCSSPath($type, $rel = 0) {
 		$paths		= PhocaGalleryPath::getPath();
 		if ($rel == 1) {
 			if ($type == 1) {
@@ -167,13 +167,12 @@ class PhocaGalleryFile
 		}
 	}
 	
-	public static function getCSSFile($id = 0, $fullPath = 0) {
+	public function getCSSFile($id = 0, $fullPath = 0) {
 		if ((int)$id > 0) {
 			$db = JFactory::getDBO();
 			$query = 'SELECT a.filename as filename, a.type as type'
 				.' FROM #__phocagallery_styles AS a'
-			    .' WHERE a.id = '.(int) $id
-				.' ORDER BY a.id';
+			    .' WHERE a.id = '.(int) $id;
 			$db->setQuery($query, 0, 1);
 			$filename = $db->loadObject();
 			if (isset($filename->filename) && $filename->filename != '') {

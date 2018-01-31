@@ -1,12 +1,12 @@
 <?php
-/**
- * @package   Phoca Gallery
- * @author    Jan Pavelka - https://www.phoca.cz
- * @copyright Copyright (C) Jan Pavelka https://www.phoca.cz
- * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 and later
- * @cms       Joomla
- * @copyright Copyright (C) Open Source Matters. All rights reserved.
- * @license   http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+/*
+ * @package		Joomla.Framework
+ * @copyright	Copyright (C) 2005 - 2010 Open Source Matters, Inc. All rights reserved.
+ * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ *
+ * @component Phoca Component
+ * @copyright Copyright (C) Jan Pavelka www.phoca.cz
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License version 2 or later;
  */
 defined( '_JEXEC' ) or die( 'Restricted access' );
 jimport( 'joomla.filesystem.folder' ); 
@@ -15,14 +15,13 @@ phocagalleryimport( 'phocagallery.image.image');
 phocagalleryimport( 'phocagallery.file.fileuploadfront' );
 class PhocaGalleryFileUpload
 {
-	public static function realMultipleUpload( $frontEnd = 0) {
+	public function realMultipleUpload( $frontEnd = 0) {
 		
 		$paramsC 		= JComponentHelper::getParams('com_phocagallery');
 		$chunkMethod 	= $paramsC->get( 'multiple_upload_chunk', 0 );
-		$uploadMethod 	= $paramsC->get( 'multiple_upload_method', 4 );
+		$uploadMethod 	= $paramsC->get( 'multiple_upload_method', 1 );
 		
-		$app 	= JFactory::getApplication();
-		$app->allowCache(false);
+		JResponse::allowCache(false);
 		
 		// Chunk Files
 		header('Content-type: text/plain; charset=UTF-8');
@@ -33,25 +32,25 @@ class PhocaGalleryFileUpload
 		header("Pragma: no-cache");
 		
 		// Invalid Token
-		JSession::checkToken( 'request' ) or jexit(json_encode(array( 'jsonrpc' => '2.0', 'result' => 'error', 'code' => 100,
+		JRequest::checkToken( 'request' ) or jexit(json_encode(array( 'jsonrpc' => '2.0', 'result' => 'error', 'code' => 100,
 				'message' => JText::_('COM_PHOCAGALLERY_ERROR').': ',
 				'details' => JText::_('COM_PHOCAGALLERY_INVALID_TOKEN'))));
 
 		// Set FTP credentials, if given
-		$ftp = JClientHelper::setCredentialsFromRequest('ftp');
+		$ftp =& JClientHelper::setCredentialsFromRequest('ftp');
 		
 		$path			= PhocaGalleryPath::getPath();
-		$file 			= JFactory::getApplication()->input->files->get( 'file', null );
-		$chunk 			= JFactory::getApplication()->input->get( 'chunk', 0, '', 'int' );
-		$chunks 		= JFactory::getApplication()->input->get( 'chunks', 0, '', 'int' );
-		$folder			= JFactory::getApplication()->input->get( 'folder', '', '', 'path' );
+		$file 			= JRequest::getVar( 'file', '', 'files', 'array' );
+		$chunk 			= JRequest::getVar( 'chunk', 0, '', 'int' );
+		$chunks 		= JRequest::getVar( 'chunks', 0, '', 'int' );
+		$folder			= JRequest::getVar( 'folder', '', '', 'path' );
 		
 		// Make the filename safe
 		if (isset($file['name'])) {
 			$file['name']	= JFile::makeSafe($file['name']);
 		}
 		if (isset($folder) && $folder != '') {
-			$folder	= $folder . '/';
+			$folder	= $folder . DS;
 		}
 		
 		$chunkEnabled = 0;
@@ -88,7 +87,7 @@ class PhocaGalleryFileUpload
 				// and we recognize there is one - ok don't upload it BUT the file will be damaged by
 				// parts uploaded by the new file - so this is why we are using temp file in Chunk method
 				$stream 				= JFactory::getStream();// Chunk Files
-				$tempFolder				= 'pgpluploadtmpfolder/';
+				$tempFolder				= 'pgpluploadtmpfolder'.DS;
 				$filepathImgFinal 		= JPath::clean($path->image_abs.$folder.strtolower($file['name']));
 				$filepathImgTemp 		= JPath::clean($path->image_abs.$folder.$tempFolder.strtolower($file['name']));
 				$filepathFolderFinal 	= JPath::clean($path->image_abs.$folder);
@@ -278,7 +277,7 @@ class PhocaGalleryFileUpload
 				}
 				
 				
-				if(!JFile::upload($file['tmp_name'], $filepathImgFinal, false, true)) {
+				if(!JFile::upload($file['tmp_name'], $filepathImgFinal)) {
 					jexit(json_encode(array( 'jsonrpc' => '2.0', 'result' => 'error', 'code' => 109,
 					'message' => JText::_('COM_PHOCAGALLERY_ERROR').': ',
 					'details' => JText::_('COM_PHOCAGALLERY_ERROR_UNABLE_TO_UPLOAD_FILE') .'<br />'
@@ -306,29 +305,28 @@ class PhocaGalleryFileUpload
 	}
 	
 	
-	public static function realSingleUpload( $frontEnd = 0 ) {
+	public function realSingleUpload( $frontEnd = 0 ) {
 		
 	//	$paramsC 		= JComponentHelper::getParams('com_phocagallery');
 	//	$chunkMethod 	= $paramsC->get( 'multiple_upload_chunk', 0 );
-	//	$uploadMethod 	= $paramsC->get( 'multiple_upload_method', 4 );
+	//	$uploadMethod 	= $paramsC->get( 'multiple_upload_method', 1 );
 		
 		$app			= JFactory::getApplication();
-		JSession::checkToken( 'request' ) or jexit( 'ERROR: '. JText::_('COM_PHOCAGALLERY_INVALID_TOKEN'));
-		
-		$app->allowCache(false);
+		JRequest::checkToken( 'request' ) or jexit( 'ERROR: '. JText::_('COM_PHOCAGALLERY_INVALID_TOKEN'));
+		JResponse::allowCache(false);
 		
 		$path			= PhocaGalleryPath::getPath();
-		$file 			= JFactory::getApplication()->input->files->get( 'Filedata', null );
-		$folder			= JFactory::getApplication()->input->get( 'folder', '', '', 'path' );
-		$format			= JFactory::getApplication()->input->get( 'format', 'html', '', 'cmd');
-		$return			= JFactory::getApplication()->input->get( 'return-url', null, 'post', 'base64' );//includes field
-		$viewBack		= JFactory::getApplication()->input->get( 'viewback', '', '', '' );
-		$tab			= JFactory::getApplication()->input->get( 'tab', '', '', 'string' );
-		$field			= JFactory::getApplication()->input->get( 'field' );
+		$file 			= JRequest::getVar( 'Filedata', '', 'files', 'array' );
+		$folder			= JRequest::getVar( 'folder', '', '', 'path' );
+		$format			= JRequest::getVar( 'format', 'html', '', 'cmd');
+		$return			= JRequest::getVar( 'return-url', null, 'post', 'base64' );//includes field
+		$viewBack		= JRequest::getVar( 'viewback', '', '', '' );
+		$tab			= JRequest::getVar( 'tab', '', '', 'int' );
+		$field			= JRequest::getVar( 'field' );
 		$errUploadMsg	= '';
 		$folderUrl 		= $folder;
 		$tabUrl			= '';
-		$component		= JFactory::getApplication()->input->get( 'option', '', '', 'string' );
+		$component		= JRequest::getVar( 'option', '', '', 'string' );
 		
 		// In case no return value will be sent (should not happen)
 		if ($component != '' && $frontEnd == 0) {
@@ -340,7 +338,7 @@ class PhocaGalleryFileUpload
 			$tabUrl = '&tab='.(string)$tab;
 		}
 		
-		$ftp = JClientHelper::setCredentialsFromRequest('ftp');
+		$ftp =& JClientHelper::setCredentialsFromRequest('ftp');
 		
 		// Make the filename safe
 		if (isset($file['name'])) {
@@ -349,7 +347,7 @@ class PhocaGalleryFileUpload
 		
 		
 		if (isset($folder) && $folder != '') {
-			$folder	= $folder . '/';
+			$folder	= $folder . DS;
 		}
 		
 		
@@ -369,28 +367,10 @@ class PhocaGalleryFileUpload
 				}
 			
 			
-				/*if ($return) {
-					$app->enqueueMessage( $errUploadMsg, 'error');
-					$app->redirect(base64_decode($return).'&folder='.$folderUrl);
-					exit;
-				} else {
-					$app->enqueueMessage( $errUploadMsg, 'error');
-					$app->redirect($componentUrl, $errUploadMsg, 'error');
-					exit;
-				}*/
-				
-				
 				if ($return) {
-					$app->enqueueMessage( $errUploadMsg, 'error');
-					if ($frontEnd > 0) {
-					
-						$app->redirect(base64_decode($return));
-					} else {
-						$app->redirect(base64_decode($return).'&folder='.$folderUrl);
-					}
+					$app->redirect(base64_decode($return).'&folder='.$folderUrl, $errUploadMsg, 'error');
 					exit;
 				} else {
-					$app->enqueueMessage( $errUploadMsg, 'error');
 					$app->redirect($componentUrl, $errUploadMsg, 'error');
 					exit;
 				}
@@ -398,24 +378,20 @@ class PhocaGalleryFileUpload
 
 			if (JFile::exists($filepath)) {
 				if ($return) {
-					$app->enqueueMessage( JText::_('COM_PHOCAGALLERY_FILE_ALREADY_EXISTS'), 'error');
-					$app->redirect(base64_decode($return).'&folder='.$folderUrl);
+					$app->redirect(base64_decode($return).'&folder='.$folderUrl, JText::_('COM_PHOCAGALLERY_FILE_ALREADY_EXISTS'), 'error');
 					exit;
 				} else {
-					$app->enqueueMessage(JText::_('COM_PHOCAGALLERY_FILE_ALREADY_EXISTS'), 'error');
-					$app->redirect($componentUrl);
+					$app->redirect($componentUrl, JText::_('COM_PHOCAGALLERY_FILE_ALREADY_EXISTS'), 'error');
 					exit;
 				}
 			}
 
-			if (!JFile::upload($file['tmp_name'], $filepath, false, true)) {
+			if (!JFile::upload($file['tmp_name'], $filepath)) {
 				if ($return) {
-					$app->enqueueMessage( JText::_('COM_PHOCAGALLERY_ERROR_UNABLE_TO_UPLOAD_FILE'), 'error');
-					$app->redirect(base64_decode($return).'&folder='.$folderUrl);
+					$app->redirect(base64_decode($return).'&folder='.$folderUrl, JText::_('COM_PHOCAGALLERY_ERROR_UNABLE_TO_UPLOAD_FILE'), 'error');
 					exit;
 				} else {
-					$app->enqueueMessage( JText::_('COM_PHOCAGALLERY_ERROR_UNABLE_TO_UPLOAD_FILE'), 'error');
-					$app->redirect($componentUrl);
+					$app->redirect($componentUrl, JText::_('COM_PHOCAGALLERY_ERROR_UNABLE_TO_UPLOAD_FILE'), 'error');
 					exit;
 				}
 			} else {
@@ -425,11 +401,9 @@ class PhocaGalleryFileUpload
 				}
 			
 				if ($return) {
-					$app->enqueueMessage( JText::_('COM_PHOCAGALLERY_SUCCESS_FILE_UPLOAD'));
-					$app->redirect(base64_decode($return).'&folder='.$folderUrl);
+					$app->redirect(base64_decode($return).'&folder='.$folderUrl, JText::_('COM_PHOCAGALLERY_SUCCESS_FILE_UPLOAD'));
 					exit;
 				} else {
-					$app->enqueueMessage( JText::_('COM_PHOCAGALLERY_SUCCESS_FILE_UPLOAD'));
 					$app->redirect($componentUrl, JText::_('COM_PHOCAGALLERY_SUCCESS_FILE_UPLOAD'));
 					exit;
 				}
@@ -437,26 +411,22 @@ class PhocaGalleryFileUpload
 		} else {
 			$msg = JText::_('COM_PHOCAGALLERY_ERROR_UNABLE_TO_UPLOAD_FILE');
 			if ($return) {
-				$app->enqueueMessage( $msg);
-				$app->redirect(base64_decode($return).'&folder='.$folderUrl);
+				$app->redirect(base64_decode($return).'&folder='.$folderUrl, $msg);
 				exit;
 			} else {
 				switch ($viewBack) {
 					case 'phocagalleryi':
-						$app->enqueueMessage( $msg, 'error');
-						$app->redirect('index.php?option=com_phocagallery&view=phocagalleryi&tmpl=component'.$tabUrl.'&folder='.$folder.'&field='.$field);
+						$app->redirect('index.php?option=com_phocagallery&view=phocagalleryi&tmpl=component'.$tabUrl.'&folder='.$folder.'&field='.$field, $msg, 'error');
 						exit;
 					break;
 				
 					case 'phocagallerym':
-						$app->enqueueMessage( $msg, 'error');
-						$app->redirect('index.php?option=com_phocagallery&view=phocagallerym&layout=form&hidemainmenu=1'.$tabUrl.'&folder='.$folder);
+						$app->redirect('index.php?option=com_phocagallery&view=phocagallerym&layout=form&hidemainmenu=1'.$tabUrl.'&folder='.$folder, $msg, 'error');
 						exit;
 					break;
 					
 					default:
-						$app->enqueueMessage( $msg, 'error');
-						$app->redirect('index.php?option=com_phocagallery');
+						$app->redirect('index.php?option=com_phocagallery', $msg, 'error');
 						exit;
 					break;
 				
@@ -466,22 +436,22 @@ class PhocaGalleryFileUpload
 		
 	}
 	
-	public static function realJavaUpload( $frontEnd = 0 ) {		
+	function realJavaUpload( $frontEnd = 0 ) {		
 		
 		$app	= JFactory::getApplication();
 
-		JSession::checkToken( 'request' ) or exit( 'ERROR: '. JText::_('COM_PHOCAGALLERY_INVALID_TOKEN'));
+		JRequest::checkToken( 'request' ) or exit( 'ERROR: '. JText::_('COM_PHOCAGALLERY_INVALID_TOKEN'));
 		
-	//	$files 	= JFactory::getApplication()->input->get( 'Filedata', '', 'files', 'array' );
+	//	$files 	= JRequest::getVar( 'Filedata', '', 'files', 'array' );
 		
 		$path		= PhocaGalleryPath::getPath();
-		$folder		= JFactory::getApplication()->input->get( 'folder', '', '', 'path' );
+		$folder		= JRequest::getVar( 'folder', '', '', 'path' );
 		
 		if (isset($folder) && $folder != '') {
-			$folder	= $folder . '/';
+			$folder	= $folder . DS;
 		}
 		$errUploadMsg	= '';
-		$ftp 			= JClientHelper::setCredentialsFromRequest('ftp');
+		$ftp 			=& JClientHelper::setCredentialsFromRequest('ftp');
 		
 		foreach ($_FILES as $fileValue => $file) {
 			echo('File key: '. $fileValue . "\n");
@@ -506,7 +476,7 @@ class PhocaGalleryFileUpload
 					exit( 'ERROR: '.JText::_('COM_PHOCAGALLERY_FILE_ALREADY_EXISTS'));
 				}
 
-				if (!JFile::upload($file['tmp_name'], $filepath, false, true)) {
+				if (!JFile::upload($file['tmp_name'], $filepath)) {
 					exit( 'ERROR: '.JText::_('COM_PHOCAGALLERY_ERROR_UNABLE_TO_UPLOAD_FILE'));
 				}
 				if ((int)$frontEnd > 0) {
@@ -535,9 +505,9 @@ class PhocaGalleryFileUpload
 	 */
 
 	
-	public static function canUpload( $file, &$errUploadMsg, $frontEnd = 0, $chunkEnabled = 0, $realSize = 0 ) {
+	function canUpload( $file, &$errUploadMsg, $frontEnd = 0, $chunkEnabled = 0, $realSize = 0 ) {
 		
-		$params 	= JComponentHelper::getParams( 'com_phocagallery' );
+		$params 	= &JComponentHelper::getParams( 'com_phocagallery' );
 		$paramsL 	= array();
 		$paramsL['upload_extensions'] 	= 'gif,jpg,png,jpeg';
 		$paramsL['image_extensions'] 	= 'gif,jpg,png,jpeg';
@@ -703,7 +673,7 @@ class PhocaGalleryFileUpload
 		$options = PhocaGalleryFileUpload::getJSObject($opt);
 
 		// Attach tooltips to document
-		$document =JFactory::getDocument();
+		$document =& JFactory::getDocument();
 		$uploaderInit = 'sBrowseCaption=\''.JText::_('Browse Files', true).'\';
 				sRemoveToolTip=\''.JText::_('Remove from queue', true).'\';
 				window.addEvent(\'load\', function(){
@@ -745,7 +715,7 @@ class PhocaGalleryFileUpload
 		return $object;
 	}*/
 	
-	public static function renderFTPaccess() {
+	function renderFTPaccess() {
 	
 		$ftpOutput = '<fieldset title="'.JText::_('COM_PHOCAGALLERY_FTP_LOGIN_LABEL'). '">'
 		.'<legend>'. JText::_('COM_PHOCAGALLERY_FTP_LOGIN_LABEL').'</legend>'
@@ -762,7 +732,7 @@ class PhocaGalleryFileUpload
 		return $ftpOutput;
 	}
 	
-	public static function renderCreateFolder($sessName, $sessId, $currentFolder, $viewBack, $attribs = '') {
+	function renderCreateFolder($sessName, $sessId, $currentFolder, $viewBack, $attribs = '') {
 	
 		if ($attribs != '') {
 			$attribs = '&amp;'.$attribs;

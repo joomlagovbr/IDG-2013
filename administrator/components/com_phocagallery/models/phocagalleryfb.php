@@ -15,7 +15,6 @@ class PhocaGalleryCpModelPhocaGalleryFb extends JModelAdmin
 {
 	protected $option 		= 'com_phocagallery';
 	protected $text_prefix 	= 'com_phocagallery';
-	public 		$typeAlias 		= 'com_phocagallery.phocagalleryfb';
 
 	protected function canDelete($record)
 	{
@@ -83,7 +82,7 @@ class PhocaGalleryCpModelPhocaGalleryFb extends JModelAdmin
 		return $condition;
 	}*/
 	
-	protected function prepareTable($table)
+	protected function prepareTable(&$table)
 	{
 		jimport('joomla.filter.output');
 		$date = JFactory::getDate();

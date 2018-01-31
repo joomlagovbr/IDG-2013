@@ -37,7 +37,7 @@ class PhocaGalleryCpModelPhocaGalleryTags extends JModelList
 		parent::__construct($config);
 	}
 	
-	protected function populateState($ordering = null, $direction = null)
+	protected function populateState()
 	{
 		// Initialise variables.
 		$app = JFactory::getApplication('administrator');

@@ -1,25 +1,7 @@
-<?php 
-/*
- * @package Joomla
- * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
- *
- * @component Phoca Gallery
- * @copyright Copyright (C) Jan Pavelka www.phoca.cz
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- */
-defined('_JEXEC') or die('Restricted access');
+<?php defined('_JEXEC') or die('Restricted access');
 echo '<div id="phocagallery" class="pg-detail-view'.$this->params->get( 'pageclass_sfx' ).'">';
 if ($this->tmpl['backbutton'] != '') {
 	echo $this->tmpl['backbutton'];
-}
-
-if($this->tmpl['responsive'] == 1) {
-	$iW = '';
-	$iH = '';
-} else {
-	$iW = 'width:'.$this->item->realimagewidth. 'px;';
-	$iH = 'height:'.$this->tmpl['largeheight'].'px;';
 }
 
 switch ($this->tmpl['detailwindow']) {
@@ -27,12 +9,9 @@ switch ($this->tmpl['detailwindow']) {
 	case 7:
 	case 9:
 	case 10:
-	case 11:
 		$closeImage 	= $this->item->linkimage;
 		$closeButton 	= '';
 	break;
-
-	
 	default:
 		$closeButton 	= '<td align="center">' . str_replace("%onclickclose%", $this->tmpl['detailwindowclose'], $this->item->closebutton). '</td>';
 		$closeImage 	= '<a href="#" onclick="'.$this->tmpl['detailwindowclose'].'" style="margin:auto;padding:0">'.$this->item->linkimage.'</a>';
@@ -40,12 +19,12 @@ switch ($this->tmpl['detailwindow']) {
 
 }
 
-echo '<div class="ph-mc" style="padding-top:10px">'
-	.'<table border="0" class="ph-w100 ph-mc" cellpadding="0" cellspacing="0">'
+echo '<center style="padding-top:10px">'
+	.'<table border="0" width="100%" cellpadding="0" cellspacing="0">'
 	.'<tr>'
-	.'<td colspan="6" align="center" valign="middle"'
-	.' style="'.$iH.'vertical-align: middle;" >'
-	.'<div id="phocaGalleryImageBox" style="'.$iW.'margin: auto;padding: 0;">'
+	.'<td colspan="6" align="center" valign="middle" height="'.$this->tmpl['largeheight'].'"'
+	.' style="height:'.$this->tmpl['largeheight'].'px;vertical-align: middle;" >'
+	.'<div id="phocaGalleryImageBox" style="width:'.$this->item->realimagewidth.'px;margin: auto;padding: 0;">'
 	.$closeImage;
 			
 $titleDesc = '';
@@ -91,7 +70,7 @@ if ($this->tmpl['detailbuttons'] == 1){
 	.'</tr>';
 }
 
-echo '</table></div>';
+echo '</table></center>';
 echo $this->loadTemplate('rating');
 // Tags
 if ($this->tmpl['displaying_tags_output'] != '') {
@@ -103,13 +82,11 @@ if ($this->tmpl['detailwindow'] == 7) {
 	
 	if ($this->tmpl['externalcommentsystem'] == 1) {
 		if (JComponentHelper::isEnabled('com_jcomments', true)) {
-			include_once(JPATH_BASE.'/components/com_jcomments/jcomments.php');
+			include_once(JPATH_BASE.DS.'components'.DS.'com_jcomments'.DS.'jcomments.php');
 			echo JComments::showComments($this->item->id, 'com_phocagallery_images', JText::_('COM_PHOCAGALLERY_IMAGE') .' '. $this->item->title);
 		}
-	} else if ($this->tmpl['externalcommentsystem'] == 2) {
-		echo $this->loadTemplate('comments-fb');	
 	}
-	echo '<div style="text-align:right;color:#ccc;display:block">Powered by <a href="https://www.phoca.cz/phocagallery">Phoca Gallery</a></div>';
+	echo PhocaGalleryRenderFront::renderInfo();
 }
 echo '</div>';
 echo '<div id="phocaGallerySlideshowC" style="display:none"></div>';

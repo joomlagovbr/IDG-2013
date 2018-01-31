@@ -28,7 +28,7 @@ Joomla.submitbutton = function(task)
 		Joomla.submitform(task, document.getElementById('adminForm'));
 	}
 	else {
-		alert('<?php echo JText::_('JGLOBAL_VALIDATION_FORM_FAILED', true);?>');
+		alert('<?php echo $this->escape(JText::_('JGLOBAL_VALIDATION_FORM_FAILED'));?>');
 	}
 }
 </script><?php
@@ -119,7 +119,7 @@ if (isset($this->item->appid) && $this->item->appid != ''
 		}
 		*/
 		
-		$div	= array();
+		$div[]	= array();
 		$script = array();
 		$fields = array( 'uid', 'secret', 'access_token');
 		

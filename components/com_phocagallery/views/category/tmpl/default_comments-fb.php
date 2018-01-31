@@ -1,19 +1,9 @@
-<?php 
-/*
- * @package Joomla
- * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
- *
- * @component Phoca Gallery
- * @copyright Copyright (C) Jan Pavelka www.phoca.cz
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- */
-defined('_JEXEC') or die('Restricted access'); 
+<?php defined('_JEXEC') or die('Restricted access'); 
 
 ?><div id="phocagallery-comments"><?php
 	echo '<div style="font-size:1px;height:1px;margin:0px;padding:0px;">&nbsp;</div>';//because of IE bug 
 	
-	$uri 		= JFactory::getURI();
+	$uri 		= &JFactory::getURI();
 	$getParamsArray = explode(',', 'start,limitstart,template,fb_comment_id');
 	if (!empty($getParamsArray) ) {
 		foreach($getParamsArray as $key => $value) {
@@ -29,7 +19,7 @@ defined('_JEXEC') or die('Restricted access');
 		if ((int)$this->tmpl['fb_comment_count'] > 0) {
 			$cCount = 'numposts="'.$this->tmpl['fb_comment_count'].'"';
 		}
-
+$this->tmpl['fb_comment_width'] = 200;
 ?><fb:comments href="<?php echo $uri->toString(); ?>" simple="1" <?php echo $cCount;?> width="<?php echo (int)$this->tmpl['fb_comment_width'] ?>"></fb:comments>
 <div id="fb-root"></div>
 <script>

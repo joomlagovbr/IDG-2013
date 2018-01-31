@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="component" version="2.5" method="upgrade">
-        <name>Youtube Gallery</name>
-        <author>Ivan Komlev</author>
+<extension type="component" version="3.0" method="upgrade">
+        <name>COM_YOUTUBEGALLERY</name>
+        <author>DesignCompass corp</author>
         <authorEmail>support@joomlaboat.com</authorEmail>
         <authorUrl>http://joomlaboat.com</authorUrl>
 	<license>GNU General Public License</license>
-        <copyright>Copyright (C) Ivan Komlev. All rights reserved.</copyright>
-        <creationDate>February 2016</creationDate>
-        <version>4.4.0</version>
+        <copyright>Copyright (C) Design Compass corp. All rights reserved.</copyright>
+        <creationDate>December 2013</creationDate>
+        <version>3.5.9</version>
         <description>COM_YOUTUBEGALLERY_DESCRIPTION</description>
-          
+        
+        
+        <scriptfile>install.php</scriptfile>
+        <installfile>install.php</installfile>
+        
         <install> <!-- Runs on install -->
                 <sql>
                         <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
                 </sql>
-		<schemas>
-                        <schemapath type="mysql">sql/updates/mysql</schemapath>
-                </schemas>
         </install>
         
-	<!-- Runs on install/uninstall/update; New in 2.5 -->
-    	<scriptfile>script.php</scriptfile>
         
         <uninstall> <!-- Runs on uninstall -->
                 <sql>
@@ -31,9 +30,6 @@
 
         
         <update>
-		<sql>
-                        <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
-                </sql>
                 <schemas>
                         <schemapath type="mysql">sql/updates/mysql</schemapath>
                 </schemas>
@@ -59,13 +55,6 @@
         <administration>
                 <!-- Administration Menu Section -->
                 <menu>COM_YOUTUBEGALLERY_MENU</menu>
-		<submenu>
-			<menu link="option=com_youtubegallery&amp;view=linkslist" view="linkslist" img="" alt="Video Lists">Video Lists</menu>
-			<menu link="option=com_youtubegallery&amp;view=themelist" view="themelist" img="" alt="Themes">Themes</menu>
-			<menu link="option=com_youtubegallery&amp;view=categories" view="categories" img="" alt="Categories">Categories</menu>
-			<menu link="option=com_youtubegallery&amp;view=settings&amp;layout=edit" view="settings" img="" alt="Settings">Settings</menu>
-		</submenu>
-
                 <!-- Administration Main File Copy Section -->
                 <!-- Note the folder attribute: This attribute describes the folder
                         to copy FROM in the package to install therefore files copied
@@ -92,5 +81,14 @@
                         <language tag="en-GB">language/en-GB/en-GB.com_youtubegallery.sys.ini</language>
                 </languages>
         </administration>               
-
+ 
+ 
+        <modules>
+                <module folder="modules" module="mod_youtubegallery" name="Youtube Gallery" />
+        </modules>
+        
+        <plugins>
+                <plugin folder="plugins/content" plugin="youtubegallery" name="Content - Youtube Gallery" group="content" />
+        </plugins>
+        
 </extension>

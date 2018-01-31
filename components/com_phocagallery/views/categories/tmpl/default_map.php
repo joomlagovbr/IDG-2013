@@ -1,13 +1,4 @@
 <?php
-/*
- * @package Joomla
- * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
- *
- * @component Phoca Gallery
- * @copyright Copyright (C) Jan Pavelka www.phoca.cz
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- */
 defined('_JEXEC') or die('Restricted access');
 phocagalleryimport('phocagallery.render.rendermap');
 
@@ -25,10 +16,7 @@ echo '</div>';
 if ($this->tmplGeo['categorieslng'] == '' || $this->tmplGeo['categorieslat'] == '') {
 	echo '<p>' . JText::_('COM_PHOCAGALLERY_ERROR_MAP_NO_DATA') . '</p>';
 } else {
-	//echo '<script src="http://www.google.com/js api" type="text/javascript"></script>';
-	$map	= new PhocaGalleryRenderMap();
-	//echo $map->loadApi();
-	
+	echo '<script src="http://www.google.com/jsapi" type="text/javascript"></script>';
 	echo '<noscript>'.JText::_('COM_PHOCAGALLERY_ERROR_MAP_ENABLE_JAVASCRIPT').'</noscript>';
 	echo '<div style="font-size:1px;height:1px;margin:0px;padding:0px;">&nbsp;</div>';
 	echo '<div align="center" style="margin:0;padding:0;margin-top:10px;">';
@@ -41,8 +29,8 @@ if ($this->tmplGeo['categorieslng'] == '' || $this->tmplGeo['categorieslat'] == 
 	echo '</div></div>';
 	
 	?><script type='text/javascript'>//<![CDATA[
-	<?php
-	
+	google.load("maps", "3.x", {"other_params":"sensor=false"}); <?php 
+	$map	= new PhocaGalleryRenderMap();
 	echo $map->createMap('phocaMap', 'mapPhocaMap', 'phocaLatLng', 'phocaOptions','tstPhocaMap', 'tstIntPhocaMap');
 	echo $map->cancelEventF();
 	echo $map->checkMapF();
@@ -73,12 +61,12 @@ if ($this->tmplGeo['categorieslng'] == '' || $this->tmplGeo['categorieslat'] == 
 					$correctImageRes = PhocaGalleryPicasa::correctSizeWithRate($category->extw, $category->exth, $this->tmpl['picasa_correct_width'], $this->tmpl['picasa_correct_height']);
 					$imgLink = JHtml::_( 'image', $category->linkthumbnailpath, str_replace('&raquo;', '-',$category->title), array('width' => $correctImageRes['width'], 'height' => $correctImageRes['height']));
 				} else {
-					$imgLink = JHtml::_( 'image', $category->linkthumbnailpath, PhocaGalleryText::strTrimAll(addslashes($category->geotitle )));
+					$imgLink = JHtml::_( 'image', $category->linkthumbnailpath, $category->geotitle );
 				}
 				$text = '<div style="text-align:left">'
 				.'<table border="0" cellspacing="5" cellpadding="5">'
 				.'<tr>'
-				.'<td align="left" colspan="2"><b><a href="'.$category->link.'">'. PhocaGalleryText::strTrimAll(addslashes($category->geotitle)).'</a></b></td>'
+				.'<td align="left" colspan="2"><b><a href="'.$category->link.'">'. $category->geotitle.'</a></b></td>'
 				.'</tr>'
 				.'<tr>'
 				.'<td valign="top" align="left"><a href="'.$category->link.'">'. $imgLink . '</a></td>'
@@ -97,9 +85,6 @@ if ($this->tmplGeo['categorieslng'] == '' || $this->tmplGeo['categorieslat'] == 
 	echo $map->endMapF();
 	echo $map->setInitializeF();
 	?>//]]></script><?php
-	echo $map->loadApi();
 }
-
-
-echo '<div>&nbsp;</div><div style="text-align:right;color:#ccc;display:block">Powered by <a href="https://www.phoca.cz/phocagallery">Phoca Gallery</a></div></div>';
+echo '<div>&nbsp;</div><div>' .PhocaGalleryUtils::displayFooter().'</div></div>';
 ?>

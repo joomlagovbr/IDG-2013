@@ -1,12 +1,12 @@
 <?php
-/**
- * @package   Phoca Gallery
- * @author    Jan Pavelka - https://www.phoca.cz
- * @copyright Copyright (C) Jan Pavelka https://www.phoca.cz
- * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 and later
- * @cms       Joomla
- * @copyright Copyright (C) Open Source Matters. All rights reserved.
- * @license   http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+/*
+ * @package Joomla 1.5
+ * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+ *
+ * @component Phoca Gallery
+ * @copyright Copyright (C) Jan Pavelka www.phoca.cz
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
@@ -15,12 +15,12 @@ class PhocaGalleryRenderDetailButton
 	protected $_imgordering		= array();
 	public $type				= '';
 	
-	public function __construct() {
+	function __construct() {
 		$this->_setImageOrdering();
 		$this->type = '';
 	}
 
-	protected function _setImageOrdering() {
+	function _setImageOrdering() {
 		
 		if (empty($this->_imgordering)) {
 			$app				= JFactory::getApplication();
@@ -32,14 +32,14 @@ class PhocaGalleryRenderDetailButton
 		
 	}
 	
-	public function setType($type) {
+	function setType($type) {
 		$this->type = $type;
 	}
 	
 	/*
 	* Get the next button in Gallery - in opened window
 	*/
-	public function getNext ($catid, $id, $ordering, $hrefOnly = 0)  {
+	function getNext ($catid, $id, $ordering, $hrefOnly = 0)  {
 	
 		$app			= JFactory::getApplication();
 		$db 			= JFactory::getDBO();
@@ -60,7 +60,7 @@ class PhocaGalleryRenderDetailButton
 		//in the server. If the next id has no file in the server we must go from next_id to next next_id
 		if ($c == 'count' || $c == 'average') {
 		
-			$query = 'SELECT a.id, a.alias, c.id as catid, c.alias as catalias, a.filename as filename, b.id AS currentid,'
+			$query = 'SELECT a.id, a.filename as filename, b.id AS currentid,'
 			.' CASE WHEN CHAR_LENGTH(c.alias) THEN CONCAT_WS(\':\', c.id, c.alias) ELSE c.id END as catslug,'
 			.' CASE WHEN CHAR_LENGTH(a.alias) THEN CONCAT_WS(\':\', a.id, a.alias) ELSE a.id END as slug'
 			.' FROM #__phocagallery AS a'
@@ -80,7 +80,7 @@ class PhocaGalleryRenderDetailButton
 			.' AND a.published = 1'
 			.' ORDER BY ra.'.$c.' '.$s.', a.id '.$s;
 		} else {
-			$query = 'SELECT a.id, a.alias, c.id as catid, c.alias as catalias, a.filename as filename, b.id AS currentid,'
+			$query = 'SELECT a.id, a.filename as filename, b.id AS currentid,'
 			.' CASE WHEN CHAR_LENGTH(c.alias) THEN CONCAT_WS(\':\', c.id, c.alias) ELSE c.id END as catslug,'
 			.' CASE WHEN CHAR_LENGTH(a.alias) THEN CONCAT_WS(\':\', a.id, a.alias) ELSE a.id END as slug'
 			.' FROM #__phocagallery AS a,'
@@ -106,46 +106,28 @@ class PhocaGalleryRenderDetailButton
 		}
 		
 		$href = '';
-		$next = '<div class="'.$class.'"'.$idCss.'>';
-		
-		if ($this->type == 'multibox') {
-			$next .= JHTML::_('image', 'media/com_phocagallery/images/'.$imgName.'-grey.png', JText::_( 'COM_PHOCAGALLERY_NEXT_IMAGE' )).'</div>';
-		} else {
-			$next .= PhocaGalleryRenderFront::renderIcon('next', 'media/com_phocagallery/images/icon-next-grey.png', JText::_( 'COM_PHOCAGALLERY_NEXT_IMAGE' ),  'ph-icon-disabled').'</div>';
-		}
-		//non-active button will be displayed as Default, we will see if we find active link
+		$next = '<div class="'.$class.'"'.$idCss.'>'
+		.JHTML::_('image', 'media/com_phocagallery/images/'.$imgName.'-grey.png', JText::_( 'COM_PHOCAGALLERY_NEXT_IMAGE' )).'</div>';//non-active button will be displayed as Default, we will see if we find active link
 		foreach ($nextAll as $key => $value) {
 			
 			// Is there some next id, if not end this and return grey link
 			if (isset($value->id) && $value->id > 0) {
 
 				// onclick="disableBackAndNext()"
-				//$href	= JRoute::_('index.php?option=com_phocagallery&view=detail&catid='. $value->catslug.'&id='.$value->slug.$tmplCom.'&Itemid='. JFactory::getApplication()->input->get('Itemid', 1, 'get', 'int'));
-				
-				$href	= JRoute::_(PhocaGalleryRoute::getImageRoute($value->id, $value->catid, $value->alias, $value->catalias) . $tmplCom);
+				$href	= JRoute::_('index.php?option=com_phocagallery&view=detail&catid='. $value->catslug.'&id='.$value->slug.$tmplCom.'&Itemid='. JRequest::getVar('Itemid', 1, 'get', 'int'));
 				
 				$next = '<div class="'.$class.'"'.$idCss.'>' // because of not conflict with beez
 				.'<a href="'.$href.'"'
-				.' title="'.JText::_( 'COM_PHOCAGALLERY_NEXT_IMAGE' ).'" id="next" >';
+				.' title="'.JText::_( 'COM_PHOCAGALLERY_NEXT_IMAGE' ).'" id="next" >'
 				
-				if ($this->type == 'multibox') {
-					$next .= JHTML::_('image', 'media/com_phocagallery/images/'.$imgName.'.png', JText::_( 'COM_PHOCAGALLERY_NEXT_IMAGE' )).'</div>';
-				} else {
-					$next .= PhocaGalleryRenderFront::renderIcon('next', 'media/com_phocagallery/images/icon-next.png', JText::_( 'COM_PHOCAGALLERY_NEXT_IMAGE' )).'</div>';
-				}
+				. JHTML::_('image', 'media/com_phocagallery/images/'.$imgName.'.png', JText::_( 'COM_PHOCAGALLERY_NEXT_IMAGE' )).'</a></div>';
 				
 				break;// end it, we must need not to find next ordering
 				
 			} else {
 				$href = '';
-				$next = '<div class="'.$class.'"'.$idCss.'>';
-				
-				if ($this->type == 'multibox') {
-					$next .= JHTML::_('image', 'media/com_phocagallery/images/'.$imgName.'-grey.png', JText::_( 'COM_PHOCAGALLERY_NEXT_IMAGE' )).'</div>';
-				} else {
-					$next .= PhocaGalleryRenderFront::renderIcon('next', 'media/com_phocagallery/images/icon-next-grey.png', JText::_( 'COM_PHOCAGALLERY_NEXT_IMAGE' ),  'ph-icon-disabled').'</div>';
-				}
-				//.JHTML::_('image', 'media/com_phocagallery/images/'.$imgName.'-grey.png', JText::_( 'COM_PHOCAGALLERY_NEXT_IMAGE' )).'</div>';
+				$next = '<div class="'.$class.'"'.$idCss.'>'
+				.JHTML::_('image', 'media/com_phocagallery/images/'.$imgName.'-grey.png', JText::_( 'COM_PHOCAGALLERY_NEXT_IMAGE' )).'</div>';
 				break;// end it, we must need not to find next ordering
 			}
 		} 
@@ -158,11 +140,11 @@ class PhocaGalleryRenderDetailButton
 	  /*
 	* Get the prev button in Gallery - in openwindow
 	*/
-	public function getPrevious ($catid, $id, $ordering) {
+	function getPrevious ($catid, $id, $ordering) {
 	
 		$app	= JFactory::getApplication();
-		$db 			= JFactory::getDBO();
-		$params			= $app->getParams();
+		$db 			= &JFactory::getDBO();
+		$params			= &$app->getParams();
 		$detailWindow	= $params->get( 'detail_window', 0 );
 		if ($detailWindow == 7) {
 			$tmplCom = '';
@@ -178,7 +160,7 @@ class PhocaGalleryRenderDetailButton
 		//in the server. If the next id has no file in the server we must go from next_id to next next_id
 		if ($c == 'count' || $c == 'average') {
 		
-			$query = 'SELECT a.id, a.alias, c.id as catid, c.alias as catalias, a.filename as filename, b.id AS currentid,'
+			$query = 'SELECT a.id, a.filename as filename, b.id AS currentid,'
 			.' CASE WHEN CHAR_LENGTH(c.alias) THEN CONCAT_WS(\':\', c.id, c.alias) ELSE c.id END as catslug,'
 			.' CASE WHEN CHAR_LENGTH(a.alias) THEN CONCAT_WS(\':\', a.id, a.alias) ELSE a.id END as slug'
 			.' FROM #__phocagallery AS a'
@@ -198,7 +180,7 @@ class PhocaGalleryRenderDetailButton
 			.' AND a.published = 1'
 			.' ORDER BY ra.'.$c.' '.$sR.', a.id '.$sR;
 		} else {
-			$query = 'SELECT a.id, a.alias, c.id as catid, c.alias as catalias, a.filename as filename, b.id AS currentid,'
+			$query = 'SELECT a.id, a.filename as filename, b.id AS currentid,'
 			.' CASE WHEN CHAR_LENGTH(c.alias) THEN CONCAT_WS(\':\', c.id, c.alias) ELSE c.id END as catslug,'
 			.' CASE WHEN CHAR_LENGTH(a.alias) THEN CONCAT_WS(\':\', a.id, a.alias) ELSE a.id END as slug'
 			.' FROM #__phocagallery AS a,'
@@ -223,55 +205,33 @@ class PhocaGalleryRenderDetailButton
 			$idCss		= ' id="phocagallerymultiboxprev" ';
 		}
 	
-		$prev = '<div class="'.$class.'"'.$idCss.'>';
-		//.JHTML::_('image', 'media/com_phocagallery/images/'.$imgName.'-grey.png', JText::_( 'COM_PHOCAGALLERY_PREV_IMAGE' )).'</div>';
-		if ($this->type == 'multibox') {
-			$prev .= JHTML::_('image', 'media/com_phocagallery/images/'.$imgName.'-grey.png', JText::_( 'COM_PHOCAGALLERY_PREV_IMAGE' )).'</div>';
-		} else {
-			$prev .= PhocaGalleryRenderFront::renderIcon('prev', 'media/com_phocagallery/images/icon-prev-grey.png', JText::_( 'COM_PHOCAGALLERY_PREV_IMAGE' ),  'ph-icon-disabled').'</div>';
-		}
-		
-		//non-active button will be displayed as Default, we will see if we find active link
+		$prev = '<div class="'.$class.'"'.$idCss.'>'
+		.JHTML::_('image', 'media/com_phocagallery/images/'.$imgName.'-grey.png', JText::_( 'COM_PHOCAGALLERY_PREV_IMAGE' )).'</div>';//non-active button will be displayed as Default, we will see if we find active link
 		foreach ($prevAll as $key => $value) {
 			
 			// Is there some next id, if not end this and return grey link
 			if (isset($value->id) && $value->id > 0) {
 				
-				$href	= JRoute::_(PhocaGalleryRoute::getImageRoute($value->id, $value->catid, $value->alias, $value->catalias).$tmplCom);
 				//onclick="disableBackAndPrev()"
 				$prev = '<div class="'.$class.'"'.$idCss.'>' // because of not conflict with beez 
-				.'<a href="'.$href.'"'
-				.' title="'.JText::_( 'COM_PHOCAGALLERY_PREV_IMAGE' ).'" id="prev" >';
-				
-				if ($this->type == 'multibox') {
-					$prev .= JHTML::_('image', 'media/com_phocagallery/images/'.$imgName.'.png', JText::_( 'COM_PHOCAGALLERY_PREV_IMAGE' )).'</a></div>';
-				} else {
-					$prev .= PhocaGalleryRenderFront::renderIcon('prev', 'media/com_phocagallery/images/icon-prev.png', JText::_( 'COM_PHOCAGALLERY_PREV_IMAGE' ),  '').'</a></div>';
-				}
-		
-				
+				.'<a href="'.JRoute::_('index.php?option=com_phocagallery&view=detail&catid='. $value->catslug.'&id='.$value->slug.$tmplCom.'&Itemid='. JRequest::getVar('Itemid', 1, 'get', 'int')).'"'
+				.' title="'.JText::_( 'COM_PHOCAGALLERY_PREV_IMAGE' ).'" id="prev" >'
+				.JHTML::_('image', 'media/com_phocagallery/images/'.$imgName.'.png', JText::_( 'COM_PHOCAGALLERY_PREV_IMAGE' )).'</a></div>';
 				break;// end it, we must need not to find next ordering
 				
 			} else {
-				$prev = '<div class="'.$class.'"'.$idCss.'>';
-				
-				if ($this->type == 'multibox') {
-					$prev .= JHTML::_('image', 'media/com_phocagallery/images/'.$imgName.'-grey.png', JText::_( 'COM_PHOCAGALLERY_PREV_IMAGE' )).'</div>';
-				} else {
-					$prev .= PhocaGalleryRenderFront::renderIcon('prev', 'media/com_phocagallery/images/icon-prev-grey.png', JText::_( 'COM_PHOCAGALLERY_PREV_IMAGE' ),  'ph-icon-disabled').'</div>';
-				}
-				
-				
+				$prev = '<div class="'.$class.'"'.$idCss.'>'
+				.JHTML::_('image', 'media/com_phocagallery/images/'.$imgName.'-grey.png', JText::_( 'COM_PHOCAGALLERY_NEXT_IMAGE' )) . '</div>';
 				break;// end it, we must need not to find next ordering
 			}
 		} 
 		return $prev;
 	}
 	
-	public function getReload($catidSlug, $idSlug) {
+	function getReload($catidSlug, $idSlug) {
 		
 		$app	= JFactory::getApplication();
-		$params			= $app->getParams();
+		$params			= &$app->getParams();
 		$detailWindow	= $params->get( 'detail_window', 0 );
 		if ($detailWindow == 7) {
 			$tmplCom = '';
@@ -279,22 +239,14 @@ class PhocaGalleryRenderDetailButton
 			$tmplCom = '&tmpl=component';
 		}
 		
-		$i = explode(':', $idSlug);
-		$id 		= $i[0];
-		$alias		= $i[1];
-		$j = explode(':', $catidSlug);
-		$catid		= $j[0];
-		$catalias	= $j[1];
-		$href	= JRoute::_(PhocaGalleryRoute::getImageRoute($id, $catid, $alias, $catalias).$tmplCom);
-		
-		$reload =  '<div class="pg-imgbgd"><a href="'.$href.'" onclick="%onclickreload%" title="'.JText::_( 'COM_PHOCAGALLERY_REFRESH' ).'" >'. PhocaGalleryRenderFront::renderIcon('reload', 'media/com_phocagallery/images/icon-reload.png', JText::_( 'COM_PHOCAGALLERY_REFRESH' )).'</a></div>';
+		$reload =  '<div class="pg-imgbgd"><a href="'.JRoute::_('index.php?option=com_phocagallery&view=detail&catid='.$catidSlug.'&id='.$idSlug.$tmplCom.'&Itemid='. JRequest::getVar('Itemid', 1, 'get', 'int')).'" onclick="%onclickreload%" title="'.JText::_( 'COM_PHOCAGALLERY_REFRESH' ).'" >'.JHTML::_('image', 'media/com_phocagallery/images/icon-reload.png', JText::_( 'COM_PHOCAGALLERY_REFRESH' )).'</a></div>';
 			
 		return $reload;
 	}
 	
-	public function getClose($catidSlug, $idSlug) {
+	function getClose($catidSlug, $idSlug) {
 		$app	= JFactory::getApplication();
-		$params			= $app->getParams();
+		$params			= &$app->getParams();
 		$detailWindow	= $params->get( 'detail_window', 0 );
 		
 		if ($detailWindow == 7 ) {
@@ -306,22 +258,15 @@ class PhocaGalleryRenderDetailButton
 			//$onclick = 'onclick="window.parent.pgcbp.close();"';
 			return '';// Will be set in boxplus javascript
 		}
-		$i = explode(':', $idSlug);
-		$id 		= $i[0];
-		$alias		= $i[1];
-		$j = explode(':', $catidSlug);
-		$catid		= $j[0];
-		$catalias	= $j[1];
-		$href	= JRoute::_(PhocaGalleryRoute::getImageRoute($id, $catid, $alias, $catalias));
-		$close =  '<div class="pg-imgbgd"><a href="'.$href.'" '.$onclick.' title="'.JText::_( 'COM_PHOCAGALLERY_CLOSE_WINDOW').'" >'. PhocaGalleryRenderFront::renderIcon('off', 'media/com_phocagallery/images/icon-exit.png', JText::_( 'COM_PHOCAGALLERY_CLOSE_WINDOW' )).'</a></div>';
+		$close =  '<div class="pg-imgbgd"><a href="'.JRoute::_('index.php?option=com_phocagallery&view=detail&catid='.$catidSlug.'&id='.$idSlug.'&tmpl=component'.'&Itemid='. JRequest::getVar('Itemid', 1, 'get', 'int')).'" '.$onclick.' title="'.JText::_( 'COM_PHOCAGALLERY_CLOSE_WINDOW').'" >'. JHTML::_('image', 'media/com_phocagallery/images/icon-exit.png', JText::_( 'COM_PHOCAGALLERY_CLOSE_WINDOW' )).'</a></div>';
 
 		
 		return $close;
 	}
 	
-	public function getCloseText($catidSlug, $idSlug) {
+	function getCloseText($catidSlug, $idSlug) {
 		$app	= JFactory::getApplication();
-		$params			= $app->getParams();
+		$params			= &$app->getParams();
 		$detailWindow	= $params->get( 'detail_window', 0 );
 		if ($detailWindow == 7) {
 			return '';
@@ -332,15 +277,8 @@ class PhocaGalleryRenderDetailButton
 			//$onclick = 'onclick="window.parent.pgcbpi.close();"';
 			return '';// Will be set in boxplus javascript
 		}
-		$i = explode(':', $idSlug);
-		$id 		= $i[0];
-		$alias		= $i[1];
-		$j = explode(':', $catidSlug);
-		$catid		= $j[0];
-		$catalias	= $j[1];
-		$href	= JRoute::_(PhocaGalleryRoute::getImageRoute($id, $catid, $alias, $catalias));
 		
-		$close =  '<a style="text-decoration:underline" href="'.$href.'" '.$onclick.' title="'.JText::_( 'COM_PHOCAGALLERY_CLOSE_WINDOW').'" >'. JText::_( 'COM_PHOCAGALLERY_CLOSE_WINDOW' ).'</a>';
+		$close =  '<a style="text-decoration:underline" href="'.JRoute::_('index.php?option=com_phocagallery&view=detail&catid='.$catidSlug.'&id='.$idSlug.'&tmpl=component'.'&Itemid='. JRequest::getVar('Itemid', 1, 'get', 'int')).'" '.$onclick.' title="'.JText::_( 'COM_PHOCAGALLERY_CLOSE_WINDOW').'" >'. JText::_( 'COM_PHOCAGALLERY_CLOSE_WINDOW' ).'</a>';
 		
 		return $close;
 	}
@@ -348,13 +286,13 @@ class PhocaGalleryRenderDetailButton
 	/*
 	* Get Slideshow  - 1. data for javascript, 2. data for displaying buttons
 	*/
-	public function getJsSlideshow($catid, $id, $slideshow = 0, $catidSlug, $idSlug) {
+	function getJsSlideshow($catid, $id, $slideshow = 0, $catidSlug, $idSlug) {
 		
 		jimport('joomla.filesystem.file');
 		phocagalleryimport('phocagallery.file.filethumbnail');
 		$app	= JFactory::getApplication();
-		$db 				= JFactory::getDBO();
-		$params				= $app->getParams();
+		$db 				= &JFactory::getDBO();
+		$params				= &$app->getParams();
 		//$image_ordering		= $params->get( 'image_ordering', 1 );
 		//$imageOrdering 		= PhocaGalleryOrdering::getOrderingString($image_ordering);
 		$detailWindow		= $params->get( 'detail_window', 0 );
@@ -363,14 +301,6 @@ class PhocaGalleryRenderDetailButton
 		} else {
 			$tmplCom = '&tmpl=component';
 		}
-		
-		$i = explode(':', $idSlug);
-		$id 		= $i[0];
-		$alias		= $i[1];
-		$j = explode(':', $catidSlug);
-		$catid		= $j[0];
-		$catalias	= $j[1];
-		$href	= PhocaGalleryRoute::getImageRoute($id, $catid, $alias, $catalias) . $tmplCom;
 		
 		// 1. GET DATA FOR JAVASCRIPT
 		$jsSlideshowData['files'] = '';
@@ -438,22 +368,19 @@ class PhocaGalleryRenderDetailButton
 			if ($slideshow==1) {
 				
 				$jsSlideshowData['icons'] = '<div class="pg-imgbgd">' // because of not conflict with beez
-				.'<a href="'.JRoute::_($href.'&phocaslideshow=0').'" title="'.JText::_( 'COM_PHOCAGALLERY_STOP_SLIDESHOW' ).'" >'
+				.'<a href="'.JRoute::_('index.php?option=com_phocagallery&view=detail&catid='.$catidSlug.'&id='.$idSlug.$tmplCom.'&phocaslideshow=0'.'&Itemid='. JRequest::getVar('Itemid', 1, 'get', 'int')).'" title="'.JText::_( 'COM_PHOCAGALLERY_STOP_SLIDESHOW' ).'" >'
 				
-				//.JHTML::_('image', 'media/com_phocagallery/images/icon-stop.png', JText::_( 'COM_PHOCAGALLERY_STOP_SLIDESHOW' )).'</a></div>'
-				.PhocaGalleryRenderFront::renderIcon('stop', 'media/com_phocagallery/images/icon-stop.png', JText::_( 'COM_PHOCAGALLERY_STOP_SLIDESHOW' )).'</a></div>'
+				.JHTML::_('image', 'media/com_phocagallery/images/icon-stop.png', JText::_( 'COM_PHOCAGALLERY_STOP_SLIDESHOW' )).'</a></div>'
+				
 				.'</td><td align="center">'//.'&nbsp;'
-				//.JHTML::_('image', 'media/com_phocagallery/images/icon-play-grey.png', JText::_( 'COM_PHOCAGALLERY_START_SLIDESHOW' ));
-				.PhocaGalleryRenderFront::renderIcon('play', 'media/com_phocagallery/images/icon-play-grey.png', JText::_( 'COM_PHOCAGALLERY_STOP_SLIDESHOW' ), 'ph-icon-disabled');
+				.JHTML::_('image', 'media/com_phocagallery/images/icon-play-grey.png', JText::_( 'COM_PHOCAGALLERY_START_SLIDESHOW' ));
 			} else {
-				$jsSlideshowData['icons'] = PhocaGalleryRenderFront::renderIcon('stop', 'media/com_phocagallery/images/icon-stop-grey.png', JText::_( 'COM_PHOCAGALLERY_STOP_SLIDESHOW' ), 'ph-icon-disabled')
-				//JHTML::_('image', 'media/com_phocagallery/images/icon-stop-grey.png', JText::_( 'COM_PHOCAGALLERY_STOP_SLIDESHOW' ))
+				$jsSlideshowData['icons'] = JHTML::_('image', 'media/com_phocagallery/images/icon-stop-grey.png', JText::_( 'COM_PHOCAGALLERY_STOP_SLIDESHOW' ))
 				.'</td><td align="center">'//.'&nbsp;'
 				.'<div class="pg-imgbgd">' // because of not conflict with beez
-				.'<a href="'.JRoute::_($href.'&phocaslideshow=1').'" title="'.JText::_( 'COM_PHOCAGALLERY_START_SLIDESHOW' ).'">'
+				.'<a href="'.JRoute::_('index.php?option=com_phocagallery&view=detail&catid='.$catidSlug.'&id='.$idSlug.'&phocaslideshow=1'.$tmplCom.'&Itemid='. JRequest::getVar('Itemid', 1, 'get', 'int')).'" title="'.JText::_( 'COM_PHOCAGALLERY_START_SLIDESHOW' ).'">'
 				
-				//. JHTML::_('image', 'media/com_phocagallery/images/icon-play.png', JText::_( 'COM_PHOCAGALLERY_START_SLIDESHOW' )).'</a></div>';
-				.PhocaGalleryRenderFront::renderIcon('play', 'media/com_phocagallery/images/icon-play.png', JText::_( 'COM_PHOCAGALLERY_START_SLIDESHOW' )).'</a></div>';
+				. JHTML::_('image', 'media/com_phocagallery/images/icon-play.png', JText::_( 'COM_PHOCAGALLERY_START_SLIDESHOW' )).'</a></div>';
 			}
 		} else {
 			$jsSlideshowData['icons'] = '';

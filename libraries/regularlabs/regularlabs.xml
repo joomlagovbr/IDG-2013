@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.4" type="library" method="upgrade">
+	<name>Regular Labs Library</name>
+	<libraryname>regularlabs</libraryname>
+	<description></description>
+	<version>18.1.20362</version>
+	<creationDate>January 2018</creationDate>
+	<author>Regular Labs (Peter van Westen)</author>
+	<authorEmail>info@regularlabs.com</authorEmail>
+	<authorUrl>https://www.regularlabs.com</authorUrl>
+	<copyright>Copyright © 2018 Regular Labs - All Rights Reserved</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+
+	<scriptfile>script.install.php</scriptfile>
+
+	<files>
+		<folder>vendor</folder>
+		<folder>src</folder>
+		<file>autoload.php</file>
+		<file>regularlabs.xml</file>
+		<folder>fields</folder>
+		<folder>helpers</folder>
+		<filename>script.install.helper.php</filename>
+	</files>
+
+	<media folder="media" destination="regularlabs">
+		<folder>css</folder>
+		<folder>fonts</folder>
+		<folder>images</folder>
+		<folder>js</folder>
+		<folder>less</folder>
+	</media>
+</extension>

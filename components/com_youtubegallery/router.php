@@ -1,95 +1,46 @@
 <?php
 /**
- * YouTubeGallery Joomla! Native Component
- * @version 4.4.0
- * @author Ivan Komlev <support@joomlaboat.com>
+ * YouTubeGallery Joomla! 3.0 Native Component
+ * @version 3.5.9
+ * @author DesignCompass Corp <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
 
 // no direct access
 defined('_JEXEC') or die('Restricted access');
-
-if(!defined('DS'))
-	define('DS',DIRECTORY_SEPARATOR);
-	
 function YouTubeGalleryBuildRoute(&$query) {
 
        $segments = array();
        if(isset($query['view']))
        {
-	      if (empty($query['Itemid'])) {
-		     $segments[] = $query['view'];
-	      }
-              unset( $query['view'] );
+                $segments[] = $query['view'];
+                unset( $query['view'] );
        }
-       
-       
-       if(isset($query['video']))
+	   
+	   /*if(isset($query['videoid']))
        {
-	      $segments[] = $query['video'];
-	      unset( $query['video'] ); 
-       }
-       elseif(isset($query['videoid']))
-       {
-	      require_once(JPATH_SITE.DS.'components'.DS.'com_youtubegallery'.DS.'includes'.DS.'misc.php');
-	      
-	      $allowsef=YouTubeGalleryMisc::getSettingValue('allowsef');
-	      if($allowsef==1)
-	      {
+                $segments[] = $query['videoid'];
+                unset( $query['videoid'] );
+       }*/
 
-		     $videoid=$query['videoid'];
-	      
-		     $db = JFactory::getDBO();
-		
-		     $db->setQuery('SELECT `alias` FROM `#__youtubegallery_videos` WHERE `videoid`="'.$videoid.'" LIMIT 1');
-		     if (!$db->query())    die ('yg router.php 1 err:'. $db->stderr());
-		     $rows = $db->loadObjectList();
-		     
-		     if(count($rows)!=0)
-		     {
-			    $row=$rows[0];
-			    if($row->alias!='')
-		         	   $segments[] = $row->alias;
-       
-			    unset( $query['videoid'] ); 
-		     }
-	      }
-       }
        return $segments;
 
+
 }
+function YouTubeGalleryParseRoute($segments) {
 
-function YouTubeGalleryParseRoute($segments)
-{
-       $vars = array();
-       $vars['view'] = 'youtubegallery';
-  
-       $sIndex=0;
-
-
-       if(isset($segments[$sIndex]))
+  $vars = array();
+       /*switch($segments[0])
        {
-	      $alias=str_replace(':','-',$segments[$sIndex]);
-	      $alias=preg_replace('/[^a-zA-Z0-9-_]+/', '', $alias);
-	      
-	      $db = JFactory::getDBO();
-	   	
-	      $db->setQuery('SELECT `videoid` FROM `#__youtubegallery_videos` WHERE `alias`="'.$alias.'" LIMIT 1');
-	      if (!$db->query())    die ('yg router.php 2 err:'. $db->stderr());
-	   
-	      $rows = $db->loadObjectList();
-	   
-	      if(count($rows)==0)
-		     $vars['videoid'] = '';
-	      else
-	      {
-			  $row=$rows[0];
-			  $vars['videoid'] = $row->videoid;
-	      }
-	   
-       }
+               //case 'youtubegallery':
+                    //   $vars['view'] = 'youtubegallery';
+					  // $vars['videoid'] = $segments[1];
+                       break;
+              
+       }*/
        return $vars;
-}
 
+
+}
 ?>

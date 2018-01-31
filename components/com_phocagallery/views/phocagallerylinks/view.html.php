@@ -17,12 +17,12 @@ class phocaGalleryViewphocaGalleryLinks extends JViewLegacy
 		
 		//Frontend Changes
 		$tUri = '';
-		if (!$app->isClient('administrator')) {
+		if (!$app->isAdmin()) {
 			$tUri = JURI::base();
 		}
 		
-		$document	= JFactory::getDocument();
-		$uri		= JFactory::getURI();
+		$document	=& JFactory::getDocument();
+		$uri		=& JFactory::getURI();
 		JHTML::stylesheet( 'media/com_phocagallery/css/administrator/phocagallery.css' );
 		
 		$eName	= $app->input->get('e_name', '', 'cmd');

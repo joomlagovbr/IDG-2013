@@ -1,12 +1,12 @@
 <?php
-/**
- * @package   Phoca Gallery
- * @author    Jan Pavelka - https://www.phoca.cz
- * @copyright Copyright (C) Jan Pavelka https://www.phoca.cz
- * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 and later
- * @cms       Joomla
- * @copyright Copyright (C) Open Source Matters. All rights reserved.
- * @license   http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+/*
+ * @package Joomla 1.5
+ * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+ *
+ * @component Phoca Gallery
+ * @copyright Copyright (C) Jan Pavelka www.phoca.cz
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
@@ -20,31 +20,11 @@ class PhocaGalleryRenderMap
 	var $_tst		= 'tstPhocaMap';
 	var $_tstint	= 'tstIntPhocaMap';
 	
-	public function __construct() {
+	function __construct() {
 	}
 	
-	public function loadApi() {
-	  
-		$paramsC 	= JComponentHelper::getParams('com_phocagallery');
-		$key 		= $paramsC->get( 'maps_api_key', '' );
-		$ssl 		= $paramsC->get( 'maps_api_ssl', 1 );
-		
-		if ($ssl) {
-			$h = 'https://';
-		} else {
-			$h = 'http://';
-		}
-		if ($key) {
-			$k = '&key='.strip_tags($key);
-		} else {
-			$k = '';
-		}
 
-		return '<script async defer src="'.$h.'maps.googleapis.com/maps/api/js?callback=initMap'.$k.'" type="text/javascript"></script>';
-   }
-	
-
-	public function createMap($id, $map, $latlng, $options, $tst, $tstint) {
+	function createMap($id, $map, $latlng, $options, $tst, $tstint) {
 		$this->_id		= $id;
 		$this->_map 	= $map;
 		$this->_latlng 	= $latlng;
@@ -59,32 +39,32 @@ class PhocaGalleryRenderMap
 		return $js;
 	}
 	
-	public function setMap() {
+	function setMap() {
 		return 'var '.$this->_map.' = new google.maps.Map(document.getElementById(\''.$this->_id.'\'), '.$this->_options.');'."\n";
 	}
 	
-	public function setLatLng($latitude, $longitude) {
+	function setLatLng($latitude, $longitude) {
 		return 'var '.$this->_latlng.' = new google.maps.LatLng('.$latitude .', '. $longitude .');'."\n";
 	}
 	
-	public function startOptions() {
+	function startOptions() {
 		return 'var '.$this->_options.' = {'."\n";
 	}
 	
-	public function endOptions (){
+	function endOptions (){
 		return '};'."\n";
 	}
 	
 	// Options
-	public function setZoomOpt($zoom) {
+	function setZoomOpt($zoom) {
 		return 'zoom: '.$zoom;
 	}
 	
-	public function setCenterOpt() {
+	function setCenterOpt() {
 		return 'center: '.$this->_latlng;
 	}
 	
-	public function setTypeControlOpt( $typeControl = 1 ) {
+	function setTypeControlOpt( $typeControl = 1 ) {
 		$output = '';
 		if ($typeControl == 0) {
 			$output = 'mapTypeControl: false';
@@ -108,7 +88,7 @@ class PhocaGalleryRenderMap
 		return $output;
 	}
 	
-	public function setNavigationControlOpt( $navControl = 1) {
+	function setNavigationControlOpt( $navControl = 1) {
 		$output = '';
 		if ($navControl == 0) {
 			$output = 'navigationControl: false';
@@ -135,7 +115,7 @@ class PhocaGalleryRenderMap
 		return $output;
 	}
 	
-	public function setScaleControlOpt( $scaleControl = 0) {
+	function setScaleControlOpt( $scaleControl = 0) {
 		$output = '';
 		if ($scaleControl == 0) {
 			$output = 'scaleControl: false';
@@ -145,7 +125,7 @@ class PhocaGalleryRenderMap
 		return $output;
 	}
 
-	public function setScrollWheelOpt($enable = 1) {
+	function setScrollWheelOpt($enable = 1) {
 		if ($enable == 1) {
 			return 'scrollwheel: true';
 		} else {
@@ -153,7 +133,7 @@ class PhocaGalleryRenderMap
 		}
 	}
 	
-	public function setDisableDoubleClickZoomOpt($disable = 0) {
+	function setDisableDoubleClickZoomOpt($disable = 0) {
 		if ($disable == 1) {
 			return 'disableDoubleClickZoom: true';
 		} else {
@@ -161,7 +141,7 @@ class PhocaGalleryRenderMap
 		}
 	}
 	
-	public function setMapTypeOpt( $mapType = 0 ) {
+	function setMapTypeOpt( $mapType = 0 ) {
 		$output = '';
 		
 		switch($mapType) {
@@ -185,7 +165,7 @@ class PhocaGalleryRenderMap
 	}
 	
 
-	public function setMarker($id, $title, $description, $latitude, $longitude, $icon = 0, $text = '' ) {
+	function setMarker($id, $title, $description, $latitude, $longitude, $icon = 0, $text = '' ) {
 		jimport('joomla.filter.output');
 		phocagalleryimport('phocagallery.text.text');
 		$output = '';
@@ -221,7 +201,7 @@ class PhocaGalleryRenderMap
 		return $output;
 	}
 	
-	public function setMarkerIcon($icon) {
+	function setMarkerIcon($icon) {
 		
 		$output['icon']	= 0;
 		$output['js'] 	= '';
@@ -255,25 +235,24 @@ class PhocaGalleryRenderMap
 		return $output;	
 	}
 	
-	public function setInitializeF() {
+	function setInitializeF() {
 	
-		/* google.load("maps", "3.x", {"other_params":"sensor=false"}); */
-		$js = 'function initMap() {'."\n"
+		$js = 'function initialize() {'."\n"
 			 .'   '.$this->_tst.'.setAttribute("oldValue",0);'."\n"
 		     .'   '.$this->_tst.'.setAttribute("refreshMap",0);'."\n"
 		     .'   '.$this->_tstint.' = setInterval("CheckPhocaMap()",500);'."\n"
-			.'}'."\n";
-			//.'google.setOnLoadCallback(initMap);'."\n";
+			.'}'."\n"
+			.'google.setOnLoadCallback(initialize);'."\n";
 		return $js;
 	}
 	
-	public function setListener() {
+	function setListener() {
 		$js = 'google.maps.event.addDomListener('.$this->_tst.', \'DOMMouseScroll\', CancelEventPhocaMap);'."\n"
 		     .'google.maps.event.addDomListener('.$this->_tst.', \'mousewheel\', CancelEventPhocaMap);';
 		return $js;
 	}
 	
-	public function checkMapF() {
+	function checkMapF() {
 		$js ='function CheckPhocaMap() {'."\n"
 			.'   if ('.$this->_tst.') {'."\n"
 			.'      if ('.$this->_tst.'.offsetWidth != '.$this->_tst.'.getAttribute("oldValue")) {'."\n"	
@@ -292,7 +271,7 @@ class PhocaGalleryRenderMap
 	}
 
 	
-	public function cancelEventF() {
+	function cancelEventF() {
 		$js ='function CancelEventPhocaMap(event) { '."\n"
 			.'   var e = event; '."\n"
 			.'   if (typeof e.preventDefault == \'function\') e.preventDefault(); '."\n"
@@ -305,19 +284,19 @@ class PhocaGalleryRenderMap
 		return $js;
 	}
 	
-	public function startMapF() {
+	function startMapF() {
 		$js = 'function getPhocaMap(){'."\n"
 			 .'   if ('.$this->_tst.'.offsetWidth > 0) {'."\n";
 		return $js;
 	}
 	
-	public function endMapF() {
+	function endMapF() {
 		$js = '   }'."\n"
 			 .'}'."\n";
 		return $js;
 	}
 	
-	public function exportZoom($zoom, $value = '', $jForm = '') {
+	function exportZoom($zoom, $value = '', $jForm = '') {
 		$js ='var phocaStartZoom 	= '.$zoom.';'."\n"
 			.'var phocaZoom 		= null;'."\n"
 			.'google.maps.event.addListener('.$this->_map.', "zoom_changed", function(phocaStartZoom, phocaZoom) {'."\n"
@@ -332,7 +311,7 @@ class PhocaGalleryRenderMap
 	}
 	
 	
-	public function exportMarker($id, $latitude, $longitude, $valueLat = '', $valueLng = '', $jFormLat = '', $jFormLng = '') {
+	function exportMarker($id, $latitude, $longitude, $valueLat = '', $valueLng = '', $jFormLat = '', $jFormLng = '') {
 		
 		$js = 'var phocaPoint'.$id.' = new google.maps.LatLng('. $latitude.', ' .$longitude.');'."\n";
 		$js .= 'var markerPhocaMarker'.$id.' = new google.maps.Marker({'."\n"

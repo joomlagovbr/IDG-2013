@@ -2,7 +2,7 @@
 /**
  * Joomla! Content Management System
  *
- * @copyright  Copyright (C) 2005 - 2017 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -627,6 +627,7 @@ class SiteRouter extends Router
 		{
 			// Make sure any menu vars are used if no others are specified
 			$query = $uri->getQuery(true);
+
 			if ($this->_mode != 1
 				&& isset($query['Itemid'])
 				&& (count($query) === 2 || (count($query) === 3 && isset($query['lang']))))
@@ -707,23 +708,18 @@ class SiteRouter extends Router
 
 		if ($itemid === null)
 		{
-			if ($option = $uri->getVar('option'))
+			if (!$uri->getVar('option'))
 			{
-				$item = $this->menu->getItem($this->getVar('Itemid'));
+				$option = $this->getVar('option');
 
-				if ($item !== null && $item->component === $option)
-				{
-					$uri->setVar('Itemid', $item->id);
-				}
-			}
-			else
-			{
-				if ($option = $this->getVar('option'))
+				if ($option)
 				{
 					$uri->setVar('option', $option);
 				}
 
-				if ($itemid = $this->getVar('Itemid'))
+				$itemid = $this->getVar('Itemid');
+
+				if ($itemid)
 				{
 					$uri->setVar('Itemid', $itemid);
 				}

@@ -18,28 +18,22 @@ class PhocaGalleryCpViewPhocagalleryF extends JViewLegacy
 	
 	public function display($tpl = null) {
 
-		$params = JComponentHelper::getParams( 'com_phocagallery' );
-		$app 	= JFactory::getApplication();
-		$app->allowCache(false);
+		$params = &JComponentHelper::getParams( 'com_phocagallery' );
+		JResponse::allowCache(false);
 		JHTML::stylesheet('media/com_phocagallery/css/administrator/phocagallery.css' );
 		
-		$document	= JFactory::getDocument();
+		$document	= & JFactory::getDocument();
 		//$document->addCustomTag(PhocaGalleryRenderAdmin::renderIeCssLink(1));
 
 		$path 			= PhocaGalleryPath::getPath();
 		
-		$this->field	= JFactory::getApplication()->input->get('field');
+		$this->field	= JRequest::getVar('field');
 		$this->fce 		= 'phocaSelectFolder_'.$this->field;
 		
-		/*$this->assignRef('session', JFactory::getSession());
+		$this->assignRef('session', JFactory::getSession());
 		$this->assign('path_orig_rel', $path->image_rel);
 		$this->assignRef('folders', $this->get('folders'));
-		$this->assignRef('state', $this->get('state'));*/
-		
-		$this->assign('session', JFactory::getSession());
-		$this->assign('path_orig_rel', $path->image_rel);
-		$this->assign('folders', $this->get('folders'));
-		$this->assign('state', $this->get('state'));
+		$this->assignRef('state', $this->get('state'));
 
 		parent::display($tpl);
 	}

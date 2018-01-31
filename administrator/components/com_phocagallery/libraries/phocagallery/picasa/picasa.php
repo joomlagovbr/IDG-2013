@@ -1,12 +1,12 @@
 <?php
-/**
- * @package   Phoca Gallery
- * @author    Jan Pavelka - https://www.phoca.cz
- * @copyright Copyright (C) Jan Pavelka https://www.phoca.cz
- * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 and later
- * @cms       Joomla
- * @copyright Copyright (C) Open Source Matters. All rights reserved.
- * @license   http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+/*
+ * @package Joomla 1.5
+ * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+ *
+ * @component Phoca Gallery
+ * @copyright Copyright (C) Jan Pavelka www.phoca.cz
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
 defined( '_JEXEC' ) or die( 'Restricted access' );
 phocagalleryimport('phocagallery.utils.utils');
@@ -14,7 +14,7 @@ phocagalleryimport('phocagallery.utils.utils');
 class PhocaGalleryPicasa
 {
 
-	public static function getSize(&$mediumT) {
+	function getSize(&$mediumT) {
 	
 		// If small and medium can be taken from $thumbSize, take it from here as these images can be cropped
 		$thumbSize 	= array(32, 48, 64, 72, 104, 144, 150, 160);
@@ -106,7 +106,7 @@ class PhocaGalleryPicasa
 	 */
 	 
 	
-	public static function correctSizeWithRate($width, $height, $corWidth = 100, $corHeight = 100, $diffThumbHeight = 0) {
+	function correctSizeWithRate($width, $height, $corWidth = 100, $corHeight = 100, $diffThumbHeight = 0) {
 		
 		
 		
@@ -151,7 +151,7 @@ class PhocaGalleryPicasa
 	/* 
 	 * Used while pagination
 	 */
-	public static function renderProcessPage($id, $refreshUrl, $countInfo = '') {
+	function renderProcessPage($id, $refreshUrl, $countInfo = '') {
 		
 		echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">' . "\n";
 		echo '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-en" lang="en-en" dir="ltr" >'. "\n";
@@ -175,7 +175,7 @@ class PhocaGalleryPicasa
 		exit;
 	}
 	
-	public static function loadDataByAddress($address, $type, &$errorMsg) {
+	function loadDataByAddress($address, $type, &$errorMsg) {
 	
 		$curl = $fopen = 1;
 		$data	= '';

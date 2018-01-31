@@ -1,6 +1,6 @@
 <?php
 /*
- * @package Joomla
+ * @package Joomla 1.5
  * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  *
@@ -24,12 +24,11 @@ class PhocaGalleryViewComment extends JViewLegacy
 	function display($tpl = null) {
 		$app	= JFactory::getApplication();
 		
-		$document		= JFactory::getDocument();		
-		$this->params	= $app->getParams();
-		$user 			= JFactory::getUser();
-		$uri 			= JFactory::getURI();
+		$document		= &JFactory::getDocument();		
+		$this->params	= &$app->getParams();
+		$user 			= &JFactory::getUser();
+		$uri 			= &JFactory::getURI();
 		$this->itemId	= $app->input->get('Itemid', 0, 'int');
-		$this->tmpl['icon_path']	= 'media/com_phocagallery/images/';
 		
 		
 		
@@ -38,7 +37,7 @@ class PhocaGalleryViewComment extends JViewLegacy
 		
 		
 		// PLUGIN WINDOW - we get information from plugin
-		$get = array();
+		$get = '';
 		$get['comment']			= $app->input->get( 'comment', '', 'string' );
 		$this->tmpl['id']		= $app->input->get('id', 0, 'int');
 		$this->tmpl['catid'] 	= $app->input->get('catid', '', 'string');
@@ -121,7 +120,7 @@ class PhocaGalleryViewComment extends JViewLegacy
 		$this->tmpl['detailwindowbackgroundcolor']	= $this->params->get( 'detail_window_background_color', '#ffffff' );
 		$this->tmpl['detailwindow']			 		= $this->params->get( 'detail_window', 0 );
 		$description_lightbox_font_color 			= $this->params->get( 'description_lightbox_font_color', '#ffffff' );
-		
+		$this->tmpl['pgl'] 							= PhocaGalleryRenderInfo::getPhocaIc((int)$this->params->get( 'display_phoca_info', 1 ));
 		$description_lightbox_bg_color 				= $this->params->get( 'description_lightbox_bg_color', '#000000' );
 		$description_lightbox_font_size 			= $this->params->get( 'description_lightbox_font_size', 12 );
 
@@ -132,7 +131,7 @@ class PhocaGalleryViewComment extends JViewLegacy
 			." #sbox-window {background-color:#fff;padding:5px} \n" 
 			." </style> \n");
 		
-		$model	= $this->getModel();
+		$model	= &$this->getModel();
 		$item	= $model->getData();
 		
 		$this->tmpl['imgtitle']	=	$item->title;
@@ -159,7 +158,7 @@ class PhocaGalleryViewComment extends JViewLegacy
 			phocagalleryimport('phocagallery.image.image');
 			$this->tmpl['backbutton'] = '<div><a href="'.JRoute::_('index.php?option=com_phocagallery&view=category&id='. $this->tmpl['catid'].'&Itemid='. $this->itemId).'"'
 				.' title="'.JText::_( 'COM_PHOCAGALLERY_BACK_TO_CATEGORY' ).'">'
-				. PhocaGalleryRenderFront::renderIcon('icon-up-images', 'media/com_phocagallery/images/icon-up-images.png', JText::_('COM_PHOCAGALLERY_BACK_TO_CATEGORY'), 'ph-icon-up-images ph-icon-button').'</a></div>';
+				. JHtml::_('image', 'media/com_phocagallery/images/icon-up-images.png', JText::_( 'COM_PHOCAGALLERY_BACK_TO_CATEGORY' )).'</a></div>';
 				
 			// Get file thumbnail or No Image
 			$item->filenameno		= $item->filename;
@@ -213,7 +212,7 @@ class PhocaGalleryViewComment extends JViewLegacy
 		$app		= JFactory::getApplication();
 		$menus		= $app->getMenu();
 		$pathway 	= $app->getPathway();
-		//$this->params		= $app->getParams();
+		//$this->params		= &$app->getParams();
 		$title 		= null;
 		
 		$this->tmpl['gallerymetakey'] 		= $this->params->get( 'gallery_metakey', '' );
@@ -227,24 +226,15 @@ class PhocaGalleryViewComment extends JViewLegacy
 			$this->params->def('page_heading', JText::_('JGLOBAL_ARTICLES'));
 		}
 
-		$title = $this->params->get('page_title', '');				
-		
+		$title = $this->params->get('page_title', '');
 		if (empty($title)) {
-			$title = htmlspecialchars_decode($app->get('sitename'));
-		} else if ($app->get('sitename_pagetitles', 0) == 1) {
-			$title = JText::sprintf('JPAGETITLE', htmlspecialchars_decode($app->get('sitename')), $title);
-			
-			if (isset($item->title) && $item->title != '') {
-				$title = $title .' - ' .  $item->title;
-			}
-			
-		} else if ($app->get('sitename_pagetitles', 0) == 2) {
-			
-			if (isset($item->title) && $item->title != '') {
-				$title = $title .' - ' .  $item->title;
-			}
-		
-			$title = JText::sprintf('JPAGETITLE', $title, htmlspecialchars_decode($app->get('sitename')));
+			$title = htmlspecialchars_decode($app->getCfg('sitename'));
+		} else if ($app->getCfg('sitename_pagetitles', 0)) {
+			$title = JText::sprintf('JPAGETITLE', htmlspecialchars_decode($app->getCfg('sitename')), $title);
+		}
+
+		if (isset($item->title) && $item->title != '') {
+			$title = $title .' - ' .  $item->title;
 		}
 		
 		$this->document->setTitle($title);
@@ -265,11 +255,11 @@ class PhocaGalleryViewComment extends JViewLegacy
 			$this->document->setMetadata('keywords', $this->params->get('menu-meta_keywords', ''));
 		}
 
-		if ($app->get('MetaTitle') == '1' && $this->params->get('menupage_title', '')) {
+		if ($app->getCfg('MetaTitle') == '1' && $this->params->get('menupage_title', '')) {
 			$this->document->setMetaData('title', $this->params->get('page_title', ''));
 		}
 
-		/*if ($app->get('MetaAuthor') == '1') {
+		/*if ($app->getCfg('MetaAuthor') == '1') {
 			$this->document->setMetaData('author', $this->item->author);
 		}
 
@@ -280,7 +270,7 @@ class PhocaGalleryViewComment extends JViewLegacy
 			}
 		}*/
 		
-		// Breadcrumbs TO DO (Add the whole tree)
+		// Breadcrumbs TODO (Add the whole tree)
 		/*if (isset($this->category[0]->parentid)) {
 			if ($this->category[0]->parentid == 1) {
 			} else if ($this->category[0]->parentid > 0) {

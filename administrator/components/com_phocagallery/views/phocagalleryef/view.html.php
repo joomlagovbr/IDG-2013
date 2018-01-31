@@ -58,7 +58,7 @@ class PhocaGalleryCpViewPhocaGalleryEf extends JViewLegacy
 		
 		
 		if (count($errors = $this->get('Errors'))) {
-			throw new Exception(implode("\n", $errors), 500);
+			JError::raiseError(500, implode("\n", $errors));
 			return false;
 		}
 
@@ -68,9 +68,9 @@ class PhocaGalleryCpViewPhocaGalleryEf extends JViewLegacy
 
 	protected function addToolbar() {
 		
-		require_once JPATH_COMPONENT.'/helpers/phocagalleryefs.php';
-		JFactory::getApplication()->input->set('hidemainmenu', true);
-		$bar 		= JToolbar::getInstance('toolbar');
+		require_once JPATH_COMPONENT.DS.'helpers'.DS.'phocagalleryefs.php';
+		JRequest::setVar('hidemainmenu', true);
+		$bar 		= JToolBar::getInstance('toolbar');
 		$user		= JFactory::getUser();
 		$isNew		= ($this->item->id == 0);
 		$checkedOut	= !($this->item->checked_out == 0 || $this->item->checked_out == $user->get('id'));
@@ -78,17 +78,17 @@ class PhocaGalleryCpViewPhocaGalleryEf extends JViewLegacy
 		$paramsC 	= JComponentHelper::getParams('com_phocagallery');
 
 		$text = $isNew ? JText::_( 'COM_PHOCAGALLERY_NEW' ) : JText::_('COM_PHOCAGALLERY_EDIT');
-		JToolbarHelper ::title(   JText::_( 'COM_PHOCAGALLERY_STYLE' ).': <small><small>[ ' . $text.' ]</small></small>' , 'eye');
+		JToolBarHelper::title(   JText::_( 'COM_PHOCAGALLERY_STYLE' ).': <small><small>[ ' . $text.' ]</small></small>' , 'eye');
 
 		// If not checked out, can save the item.
 		if (!$checkedOut && $canDo->get('core.edit')){
-			JToolbarHelper ::apply('phocagalleryef.apply', 'JToolbar_APPLY');
-			JToolbarHelper ::save('phocagalleryef.save', 'JToolbar_SAVE');
+			JToolBarHelper::apply('phocagalleryef.apply', 'JTOOLBAR_APPLY');
+			JToolBarHelper::save('phocagalleryef.save', 'JTOOLBAR_SAVE');
 		}
 
-		JToolbarHelper ::cancel('phocagalleryef.cancel', 'JToolbar_CLOSE');
-		JToolbarHelper ::divider();
-		JToolbarHelper ::help( 'screen.phocagallery', true );
+		JToolBarHelper::cancel('phocagalleryef.cancel', 'JTOOLBAR_CLOSE');
+		JToolBarHelper::divider();
+		JToolBarHelper::help( 'screen.phocagallery', true );
 	}
 
 }

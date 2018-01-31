@@ -34,7 +34,7 @@ class PhocaGalleryCpViewPhocaGalleryEfs extends JViewLegacy
 		
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
-			throw new Exception(implode("\n", $errors), 500);
+			JError::raiseError(500, implode("\n", $errors));
 			return false;
 		}
 		
@@ -50,27 +50,27 @@ class PhocaGalleryCpViewPhocaGalleryEfs extends JViewLegacy
 		$state	= $this->get('State');
 		$canDo	= PhocaGalleryEfsHelper::getActions($state->get('filter.category_id'));
 	
-		JToolbarHelper ::title( JText::_( 'COM_PHOCAGALLERY_STYLES' ), 'eye' );
+		JToolBarHelper::title( JText::_( 'COM_PHOCAGALLERY_STYLES' ), 'eye' );
 		
 		if ($canDo->get('core.create')) {
-			JToolbarHelper ::addNew( 'phocagalleryef.add','JToolbar_NEW');
+			JToolBarHelper::addNew( 'phocagalleryef.add','JTOOLBAR_NEW');
 		}
 		
 		if ($canDo->get('core.edit')) {
-			JToolbarHelper ::editList('phocagalleryef.edit','JToolbar_EDIT');
+			JToolBarHelper::editList('phocagalleryef.edit','JTOOLBAR_EDIT');
 		}
 		if ($canDo->get('core.edit.state')) {
 
-			JToolbarHelper ::divider();
-			JToolbarHelper ::custom('phocagalleryefs.publish', 'publish.png', 'publish_f2.png','JToolbar_PUBLISH', true);
-			JToolbarHelper ::custom('phocagalleryefs.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JToolbar_UNPUBLISH', true);
+			JToolBarHelper::divider();
+			JToolBarHelper::custom('phocagalleryefs.publish', 'publish.png', 'publish_f2.png','JTOOLBAR_PUBLISH', true);
+			JToolBarHelper::custom('phocagalleryefs.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
 		}
 	
 		if ($canDo->get('core.delete')) {
-			JToolbarHelper ::deleteList(  JText::_( 'COM_PHOCAGALLERY_WARNING_DELETE_ITEMS' ), 'phocagalleryefs.delete', 'COM_PHOCAGALLERY_DELETE');
+			JToolBarHelper::deleteList(  JText::_( 'COM_PHOCAGALLERY_WARNING_DELETE_ITEMS' ), 'phocagalleryefs.delete', 'COM_PHOCAGALLERY_DELETE');
 		}
-		JToolbarHelper ::divider();
-		JToolbarHelper ::help( 'screen.phocagallery', true );
+		JToolBarHelper::divider();
+		JToolBarHelper::help( 'screen.phocagallery', true );
 	}
 	
 	protected function getSortFields() {

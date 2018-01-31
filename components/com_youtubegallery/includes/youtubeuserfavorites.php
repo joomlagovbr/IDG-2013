@@ -1,8 +1,8 @@
 <?php
 /**
  * YoutubeGallery
- * @version 4.4.0
- * @author Ivan Komlev< <support@joomlaboat.com>
+ * @version 3.5.9
+ * @author DesignCompass corp< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -14,7 +14,7 @@ if(!defined('DS'))
 	define('DS',DIRECTORY_SEPARATOR);
 
 require_once(JPATH_SITE.DS.'components'.DS.'com_youtubegallery'.DS.'includes'.DS.'misc.php');
-require_once(JPATH_SITE.DS.'components'.DS.'com_youtubegallery'.DS.'includes'.DS.'youtubeplaylist.php');
+
 
 class VideoSource_YoutubeUserFavorites
 {
@@ -22,6 +22,7 @@ class VideoSource_YoutubeUserFavorites
 	{
 		//link example: http://www.youtube.com/user/acharnesnews/favorites
 		$matches=explode('/',$youtubeURL);
+	
 
 		if (count($matches) >3)
 		{
@@ -34,51 +35,43 @@ class VideoSource_YoutubeUserFavorites
 	    return '';
 	}
 	
-	public static function getVideoIDList($youtubeURL,$optionalparameters,&$userid,&$datalink)
+	public static function getVideoIDList($youtubeURL,$optionalparameters,&$userid)
 	{
+		
+		
+		
+		$optionalparameters_arr=explode(',',$optionalparameters);
 		$videolist=array();
-		$base_url='https://www.googleapis.com/youtube/v3';
-		$api_key = YouTubeGalleryMisc::getSettingValue('youtube_api_key');
 		
-		if($api_key=='')
-			return $videolist;
-		
+		$spq=implode('&',$optionalparameters_arr);
+
 		$userid=VideoSource_YoutubeUserFavorites::extractYouTubeUserID($youtubeURL);
-		
+
 		if($userid=='')
 			return $videolist; //user id not found
-		
-		//------------- step 1 get user favorites plylist id
-		$part='contentDetails';
-		$url=$base_url.'/channels?forUsername='.$userid.'&key='.$api_key.'&part='.$part;
-		
-		$htmlcode=YouTubeGalleryMisc::getURLData($url);
-		//echo '$htmlcode='.$htmlcode.'</br>';
-		
-		if($htmlcode=='')
-			return $videolist;
 
-		$j=json_decode($htmlcode);
-		if(!$j)
-			return 'Connection Error';
+		//alteracoes projeto portal padrao
+		require_once JPATH_ADMINISTRATOR . '/components/com_youtubegallery/google/_videos.php';
+		$videos = new YoutubeVideos();
+		$channelID = $videos->getChannelId($userid);
+		@$channelID = $channelID[0];
+		$video_raw = $videos->getVideosFromChannel( $channelID, 30, 'date' );
 		
-		$items=$j->items;
+		if($userid=='' || empty($channelID))
+			return $videolist; //user id not found
 		
-		$playlistid='';
-		if(isset($items[0]->contentDetails->relatedPlaylists->uploads))
-		{
-			$playlistid=$items[0]->contentDetails->relatedPlaylists->favorites;
-			if($playlistid=='')
-				return $videolist; //user not found or no files uploaded
+		for ($i=0,$limit=count($video_raw); $i < $limit; $i++)
+		{ 
+			$videolist[] = 'https://www.youtube.com/watch?v='.$video_raw[$i]['id']['videoId'];
 		}
-		//echo '$playlistid='.$playlistid.'</br>';
 		
-		// ----------------------- step 2 - get videos
-		
-		$videolist=VideoSource_YoutubePlaylist::getPlaylistVideos($playlistid,$datalink,$api_key,$optionalparameters);
-		//print_r($videolist);
-		//die;
 		return $videolist;
+
 	}
+	
+	
+
 }
+
+
 ?>

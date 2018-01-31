@@ -1,0 +1,65 @@
+/**
+ * @package         Regular Labs Library
+ * @version         18.1.20362
+ * 
+ * @author          Peter van Westen <info@regularlabs.com>
+ * @link            http://www.regularlabs.com
+ * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ */
+@import "init.less";
+@import "font.less";
+
+body.reglab-popup {
+	@import "form.less";
+
+	padding: 0;
+	.container-fluid {
+		padding: 0 20px;
+	}
+	.navbar {
+		.btn-toolbar,
+		#toolbar {
+			margin-top:    2px;
+			margin-bottom: 2px;
+		}
+	}
+	.header {
+		margin-left:  0;
+		margin-right: 0;
+		&.has-navbar-fixed-top {
+			margin-top:     44px;
+			margin-bottom:  10px;
+			padding-top:    2px;
+			padding-bottom: 2px;
+		}
+	}
+	.subhead {
+		margin-left:   0;
+		margin-right:  0;
+		padding-left:  0;
+		padding-right: 0;
+	}
+	.page-title {
+		text-align: left;
+	}
+	label > span[class^="icon-reglab"] {
+		padding: 1px 0 3px;
+	}
+
+	.reglab-overlay {
+		background-color: #000000;
+		position:         fixed;
+		left:             0;
+		top:              0;
+		width:            100%;
+		height:           100%;
+		z-index:          5000;
+		opacity:          .2;
+		cursor:           wait;
+	}
+
+	.chzn-container-single .chzn-single div b {
+		background: none !important;
+	}
+}

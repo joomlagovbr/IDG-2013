@@ -1,38 +1,40 @@
 <?php
 /**
- * @package
- * @subpackage
- * @copyright
- * @license
+ * @package               
+ * @subpackage	
+ * @copyright        
+ * @license          
  */
 
 // No direct access.
 defined('_JEXEC') or die;
-require_once JPATH_SITE .'/templates/'.$this->template.'/helper.php';
+
+//inclusao de cabecalho
 header('Content-Type: text/html; charset=utf-8');
+
+require JPATH_SITE .'/templates/'.$this->template.'/helper.php';
 if(!@isset($this->params))
 {
 	$app = JFactory::getApplication();
 	$this->params = $app->getTemplate(true)->params;
 }
-TmplPadraoGoverno01Helper::init( $this );
-$active_item = TmplPadraoGoverno01Helper::getActiveItemid();
 TmplPadraoGoverno01Helper::clearDefaultScripts( $this );
+$active_item = TmplPadraoGoverno01Helper::getActiveItemid();
+// var_dump($active_item);die()
 ?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="pt-br" dir="ltr"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang="pt-br" dir="ltr"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9" lang="pt-br" dir="ltr"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang="pt-br" dir="ltr"> <!--<![endif]-->
-<head>
+<head>    
     <!--[if lt IE 9]><script src="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/js/html5shiv.js"></script><![endif]-->
     <link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/bootstrap/css/bootstrap.min.css" type='text/css'/>
-    <link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/css/template-<?php echo $this->params->get('cor', 'verde'); ?>.css" type='text/css'/>
+    <link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/css/template-<?php echo $this->params->get('cor', 'verde'); ?>.css" type='text/css'/>      
     <link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/font-awesome/css/font-awesome.min.css" type='text/css'/>
-    <link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/css/custom.css" type='text/css'/>
     <!--[if lt IE 10]><link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/css/ie.css" /><![endif]-->
     <!--[if lt IE 9]><link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/css/ie8.css" /><![endif]-->
-    <!--[if lt IE 8]><link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/css/ie7.css" /><link rel="stylesheet" href="font-awesome/css/font-awesome-ie7.min.css" /><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/css/ie7.css" /><link rel="stylesheet" href="font-awesome/css/font-awesome-ie7.min.css" /><![endif]-->        
     <?php if(TmplPadraoGoverno01Helper::beforeHead('local_jquery', $this)) TmplPadraoGoverno01Helper::getJqueryScripts( $this ); ?>
     <?php if(TmplPadraoGoverno01Helper::beforeHead('local_mainscript', $this)) TmplPadraoGoverno01Helper::getTemplateMainScripts( $this ); ?>
     <title>Erro <?php echo $this->error->getCode(); ?> - <?php echo $this->error->getMessage(); ?></title>
@@ -49,6 +51,7 @@ TmplPadraoGoverno01Helper::clearDefaultScripts( $this );
       </div>
     </noscript>
     <!--[if lt IE 7]><center><strong>Atenção, a versão de seu navegador não é compatível com este sítio. Atualize seu navegador.</strong></center><![endif]-->
+    <jdoc:include type="modules" name="barra-do-governo" />
     <?php $module_barra_do_governo = TmplPadraoGoverno01Helper::getModules('barra-do-governo') ?>
     <?php TmplPadraoGoverno01Helper::loadModuleByPosition('barra-do-governo', NULL, $module_barra_do_governo); ?>
     <div class="layout">

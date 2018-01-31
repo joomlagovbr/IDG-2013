@@ -16,7 +16,6 @@ class PhocaGalleryCpModelPhocaGalleryUser extends JModelAdmin
 	
 	protected	$option 		= 'com_phocagallery';
 	protected 	$text_prefix	= 'com_phocagallery';
-	public 		$typeAlias 		= 'com_phocagallery.phocagalleryuser';
 	
 	protected function canDelete($record)
 	{
@@ -93,7 +92,7 @@ class PhocaGalleryCpModelPhocaGalleryUser extends JModelAdmin
 				if (!$this->canEditState($table)) {
 					// Prune items that you can't change.
 					unset($pks[$i]);
-					throw new Exception(JText::_('JLIB_APPLICATION_ERROR_EDIT_STATE_NOT_PERMITTED'), 403);
+					JError::raiseWarning(403, JText::_('JLIB_APPLICATION_ERROR_EDIT_STATE_NOT_PERMITTED'));
 				}
 			}
 		}
@@ -126,7 +125,7 @@ class PhocaGalleryCpModelPhocaGalleryUser extends JModelAdmin
 
 	function __construct() {
 		parent::__construct();
-		$array = JFactory::getApplication()->input->get('cid',  0, '', 'array');
+		$array = JRequest::getVar('cid',  0, '', 'array');
 		$this->setId((int)$array[0]);
 	}
 
@@ -134,7 +133,7 @@ class PhocaGalleryCpModelPhocaGalleryUser extends JModelAdmin
 		$this->_id	= $id;
 	}
 */
-/*TO DO - add rules like in approve */
+/*TODO - add rules like in approve */
 	function delete($cid = array()) {
 
 		if (count( $cid )) {
@@ -155,7 +154,7 @@ class PhocaGalleryCpModelPhocaGalleryUser extends JModelAdmin
 	}
 	
 	
-	/*TO DO - add rules like in approve */
+	/*TODO - add rules like in approve */
 	function approveall() {
 	
 		//$user 	=& JFactory::getUser();
@@ -180,7 +179,7 @@ class PhocaGalleryCpModelPhocaGalleryUser extends JModelAdmin
 		return true;
 	}
 	
-	protected function prepareTable($table)
+	protected function prepareTable(&$table)
 	{
 		jimport('joomla.filter.output');
 		$date = JFactory::getDate();

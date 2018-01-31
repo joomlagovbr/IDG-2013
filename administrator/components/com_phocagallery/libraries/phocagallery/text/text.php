@@ -1,28 +1,27 @@
 <?php
-/**
- * @package   Phoca Gallery
- * @author    Jan Pavelka - https://www.phoca.cz
- * @copyright Copyright (C) Jan Pavelka https://www.phoca.cz
- * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 and later
- * @cms       Joomla
- * @copyright Copyright (C) Open Source Matters. All rights reserved.
- * @license   http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+/*
+ * @package Joomla 1.5
+ * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+ *
+ * @component Phoca Gallery
+ * @copyright Copyright (C) Jan Pavelka www.phoca.cz
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
 defined( '_JEXEC' ) or die( 'Restricted access' );
-use Joomla\String\StringHelper;
 
 class PhocaGalleryText
 {
-	public static function wordDelete($string,$length,$end = '...') {
-		if (StringHelper::strlen($string) < $length || StringHelper::strlen($string) == $length) {
+	function wordDelete($string,$length,$end = '...') {
+		if (JString::strlen($string) < $length || JString::strlen($string) == $length) {
 			return $string;
 		} else {
-			return StringHelper::substr($string, 0, $length) . $end;
+			return JString::substr($string, 0, $length) . $end;
 		}
 	}
 	
-	public static function wordDeleteWhole($string,$length,$end = '...') {
-		if (StringHelper::strlen($string) < $length || StringHelper::strlen($string) == $length) {
+	function wordDeleteWhole($string,$length,$end = '...') {
+		if (JString::strlen($string) < $length || JString::strlen($string) == $length) {
 			return $string;
 		} else {
 			preg_match('/(.{' . $length . '}.*?)\b/', $string, $matches);
@@ -31,7 +30,7 @@ class PhocaGalleryText
 	}
 
 	
-	public static function strTrimAll($input) {
+	function strTrimAll($input) {
 		$output	= '';
 	    $input	= trim($input);
 	    for($i=0;$i<strlen($input);$i++) {
@@ -44,9 +43,9 @@ class PhocaGalleryText
 	    return $output;
 	}
 	
-	public static function getAliasName($name) {
+	function getAliasName($name) {
 		
-		$paramsC		= JComponentHelper::getParams( 'com_phocagallery' );
+		$paramsC		= &JComponentHelper::getParams( 'com_phocagallery' );
 		$alias_iconv	= $paramsC->get( 'alias_iconv', 0 );
 		
 		$iconv = 0;

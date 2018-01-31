@@ -1,12 +1,12 @@
 <?php
-/**
- * @package   Phoca Gallery
- * @author    Jan Pavelka - https://www.phoca.cz
- * @copyright Copyright (C) Jan Pavelka https://www.phoca.cz
- * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 and later
- * @cms       Joomla
- * @copyright Copyright (C) Open Source Matters. All rights reserved.
- * @license   http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+/*
+ * @package Joomla 1.5
+ * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+ *
+ * @component Phoca Gallery
+ * @copyright Copyright (C) Jan Pavelka www.phoca.cz
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
@@ -17,7 +17,7 @@ class PhocaGalleryOrdering
 	 * 2 ... category
 	 * 1 ... image
 	 */
-	public static function getOrderingString ($ordering, $type = 1) {
+	function getOrderingString ($ordering, $type = 1) {
 		
 		$oO = array();
 		// Default
@@ -134,7 +134,7 @@ class PhocaGalleryOrdering
 		return $oO;
 	}
 	
-	public static function renderOrderingFront( $selected, $type = 1) {
+	public function renderOrderingFront( $selected, $type = 1) {
 		
 		switch($type) {
 			case 2:
@@ -153,7 +153,7 @@ class PhocaGalleryOrdering
 		return $html;
 	}
 		
-	public static function getOrderingImageArray() {
+	public function getOrderingImageArray() {
 		$imgOrdering	= array(
 				1 => JText::_('COM_PHOCAGALLERY_ORDERING_ASC'),
 				2 => JText::_('COM_PHOCAGALLERY_ORDERING_DESC'),
@@ -172,7 +172,7 @@ class PhocaGalleryOrdering
 		return $imgOrdering;
 	}
 	
-	public static function getOrderingCategoryArray() {
+	public function getOrderingCategoryArray() {
 		$imgOrdering	= array(
 				1 => JText::_('COM_PHOCAGALLERY_ORDERING_ASC'),
 				2 => JText::_('COM_PHOCAGALLERY_ORDERING_DESC'),

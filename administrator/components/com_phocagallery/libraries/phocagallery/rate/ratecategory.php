@@ -1,20 +1,20 @@
 <?php
-/**
- * @package   Phoca Gallery
- * @author    Jan Pavelka - https://www.phoca.cz
- * @copyright Copyright (C) Jan Pavelka https://www.phoca.cz
- * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 and later
- * @cms       Joomla
- * @copyright Copyright (C) Open Source Matters. All rights reserved.
- * @license   http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+/*
+ * @package Joomla 1.5
+ * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+ *
+ * @component Phoca Gallery
+ * @copyright Copyright (C) Jan Pavelka www.phoca.cz
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
 class PhocaGalleryRateCategory
 {
-	public static function updateVoteStatistics( $catid ) {
+	function updateVoteStatistics( $catid ) {
 		
-		$db =JFactory::getDBO();
+		$db =& JFactory::getDBO();
 		
 		// Get AVG and COUNT
 		$query = 'SELECT COUNT(vs.id) AS count, AVG(vs.rating) AS average'
@@ -33,8 +33,7 @@ class PhocaGalleryRateCategory
 			// Insert or update
 			$query = 'SELECT vs.id AS id'
 					.' FROM #__phocagallery_votes_statistics AS vs'
-				    .' WHERE vs.catid = '.(int) $catid
-					.' ORDER BY vs.id';
+				    .' WHERE vs.catid = '.(int) $catid;
 			$db->setQuery($query, 0, 1);
 			$votesStatisticsId = $db->loadObject();
 		
@@ -46,9 +45,11 @@ class PhocaGalleryRateCategory
 					.' , average = ' .(float)$votesStatistics->average
 				    .' WHERE catid = '.(int) $catid;
 				$db->setQuery($query);
-				$db->execute();
 				
-				
+				if (!$db->query()) {
+					$this->setError('Database Error Voting 1');
+					return false;
+				}
 			
 			} else {
 			
@@ -59,9 +60,11 @@ class PhocaGalleryRateCategory
 					.' , '.(float)$votesStatistics->average
 					.')';
 				$db->setQuery($query);
-				$db->execute();
 				
-				
+				if (!$db->query()) {
+					$this->setError('Database Error Voting 2');
+					return false;
+				}
 			
 			}
 		} else {
@@ -70,9 +73,9 @@ class PhocaGalleryRateCategory
 		return true;
 	}
 	
-	public static function getVotesStatistics($id) {
+	function getVotesStatistics($id) {
 	
-		$db =JFactory::getDBO();
+		$db =& JFactory::getDBO();
 		$query = 'SELECT vs.count AS count, vs.average AS average'
 				.' FROM #__phocagallery_votes_statistics AS vs'
 			    .' WHERE vs.catid = '.(int) $id;
@@ -82,14 +85,13 @@ class PhocaGalleryRateCategory
 		return $votesStatistics;
 	}
 	
-	public static function checkUserVote($catid, $userid) {
+	function checkUserVote($catid, $userid) {
 		
-		$db =JFactory::getDBO();
+		$db =& JFactory::getDBO();
 		$query = 'SELECT v.id AS id'
 			    .' FROM #__phocagallery_votes AS v'
 			    .' WHERE v.catid = '. (int)$catid 
-				.' AND v.userid = '. (int)$userid
-				.' ORDER BY v.id';
+				.' AND v.userid = '. (int)$userid;
 		$db->setQuery($query, 0, 1);
 		$checkUserVote = $db->loadObject();
 			

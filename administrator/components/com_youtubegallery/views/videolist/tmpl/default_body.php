@@ -1,21 +1,14 @@
 <?php
 /**
- * YoutubeGallery Joomla! Native Component
- * @version 4.4.0
- * @author Ivan Komlev< <support@joomlaboat.com>
+ * YoutubeGallery Joomla! 3.0 Native Component
+ * @version 3.5.9
+ * @author DesignCompass corp< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
 
 // No direct access to this file
 defined('_JEXEC') or die('Restricted Access');
-require_once(JPATH_SITE.DS.'components'.DS.'com_youtubegallery'.DS.'includes'.DS.'misc.php');
-$getinfomethod=YouTubeGalleryMisc::getSettingValue('getinfomethod');
-
-$s=false;
-if (isset($_SERVER["HTTPS"]) and $_SERVER["HTTPS"] == "on")
-	$s=true;
-	
 ?>
 <?php foreach($this->items as $i => $item):
 
@@ -28,13 +21,11 @@ if (isset($_SERVER["HTTPS"]) and $_SERVER["HTTPS"] == "on")
                 <td>
 			
 		<?php
-			if($item->isvideo)
-			{
-				
+			
 			$images=explode(',',$item->imageurl);
 			if(count($images)>0 and $item->imageurl!='')
 			{
-
+				echo '<p style="text-align:center;">';
 				$index=0;
 				if($item->custom_imageurl!='')
 				{
@@ -46,23 +37,16 @@ if (isset($_SERVER["HTTPS"]) and $_SERVER["HTTPS"] == "on")
 						if($index>=count($images))
 							$index=count($images)-1;
 							
-						$img=$images[$index];
+						echo '<img src="'.$images[$index].'" style="width:100px;" />';
 					}	
 					else
-						$img=$item->custom_imageurl;
+						echo '<img src="'.$item->custom_imageurl.'" style="width:100px;" />';
 				}
-				else
-					$img=$images[0];
+					else
+						echo '<img src="'.$images[0].'" style="width:100px;" />';
 					
-				if($s)
-					$img=str_replace('http:','https:',$img);
-					
-				if(strpos($img,'://')===false and $img!='' and $img[0]!='/')
-					$img='../'.$img;
-					
-				echo '<p style="text-align:center;"><img src="'.$img.'" style="width:100px;" /></p><p style="text-align:center;">';
 				
-
+				echo '</p><p style="text-align:center;">';
 				$i=0;
 				foreach($images as $img)
 				{
@@ -74,48 +58,23 @@ if (isset($_SERVER["HTTPS"]) and $_SERVER["HTTPS"] == "on")
 				}
 				echo '</p>';
 			}
-			
-			}else
-				echo 'Playlist/Videolist';
 		?>
 		</td>
                 <td><a href="<?php echo $item->link; ?>" target="_blank"><?php echo $item->videosource; ?></a></td>
                 <td><a href="<?php echo $item->link; ?>" target="_blank"><?php echo $item->videoid; ?></a></td>
-                <td><div id="video_<?php echo $item->id;?>_title"><?php echo $item->title; ?></div></td>
-                <td><div id="video_<?php echo $item->id;?>_description"><?php echo $item->description; ?></div></td>
-                <td><div id="video_<?php echo $item->id;?>_lastupdate"><?php echo $item->lastupdate; ?></div></td>
-                <td style="text-align: center;">
-		
-		<?php
-		
-		if($getinfomethod=='js' or $getinfomethod=='jsmanual')
-		{
-			$pair=explode(',',$item->datalink);
-			$link=$pair[0];
-		
-			echo '
-		<script>
-		function UpdateVideoData_'.$item->id.'()
-		{
-			UpdateVideoData("'.$link.'","'.$item->videoid.'",'.$item->id.');
-		}
-		</script>
-		';
-			echo '<div id="video_'.$item->id.'_status"><a href="javascript:UpdateVideoData_'.$item->id.'()">Update</a></div>';
-		}
-		else
-		{
-			if($item->status==200)
-			        echo '<span style="color:green;">Ok</span>';
-			elseif($item->status==0)
-			        echo '<span style="color:black;">-</span>';
-			else
-			        echo '<span style="color:red;font-weight:bold;">Error: '.$item->status.'</span>';
-		}
-		
-                ?>
-		
-		</td>
+                <td><?php echo $item->title; ?></td>
+                <td><?php echo $item->description; ?></td>
+                <td><?php echo $item->lastupdate; ?></td>
+                <td><?php
+                
+                if($item->status==200)
+                        echo '<span style="color:green;">Ok</span>';
+                elseif($item->status==0)
+                        echo '<span style="color:black;">-</span>';
+                else
+                        echo '<span style="color:red;font-weight:bold;">Error: '.$item->status.'</span>';
+                
+                ?></td>
                 <td><?php echo $item->ordering; ?></td>
         </tr>
 				

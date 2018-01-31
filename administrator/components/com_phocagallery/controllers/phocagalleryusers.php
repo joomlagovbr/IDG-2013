@@ -25,7 +25,7 @@ class PhocaGalleryCpControllerPhocaGalleryUsers extends JControllerAdmin
 	
 	}
 	
-	public function &getModel($name = 'PhocaGalleryUser', $prefix = 'PhocaGalleryCpModel', $config = array())
+	public function &getModel($name = 'PhocaGalleryUser', $prefix = 'PhocaGalleryCpModel')
 	{
 		$model = parent::getModel($name, $prefix, array('ignore_request' => true));
 		return $model;
@@ -34,16 +34,16 @@ class PhocaGalleryCpControllerPhocaGalleryUsers extends JControllerAdmin
 	function approve()
 	{
 		// Check for request forgeries
-		JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
+		JRequest::checkToken() or die(JText::_('JINVALID_TOKEN'));
 
 		// Get items to publish from the request.
-		$cid	= JFactory::getApplication()->input->get('cid', array(), '', 'array');
+		$cid	= JRequest::getVar('cid', array(), '', 'array');
 		$data	= array('approve' => 1, 'disapprove' => 0);
 		$task 	= $this->getTask();
 		$value	= JArrayHelper::getValue($data, $task, 0, 'int');
 
 		if (empty($cid)) {
-			throw new Exception(JText::_($this->text_prefix.'_NO_ITEM_SELECTED'), 500);
+			JError::raiseWarning(500, JText::_($this->text_prefix.'_NO_ITEM_SELECTED'));
 		} else {
 			// Get the model.
 			$model = $this->getModel();
@@ -54,7 +54,7 @@ class PhocaGalleryCpControllerPhocaGalleryUsers extends JControllerAdmin
 			// Publish the items.
 			
 			if (!$model->approve($cid, $value)) {
-				throw new Exception($model->getError(), 500);
+				JError::raiseWarning(500, $model->getError());
 			} else {
 				if ($value == 1) {
 					$ntext = $this->text_prefix.'_N_ITEMS_APPROVED';
@@ -67,7 +67,7 @@ class PhocaGalleryCpControllerPhocaGalleryUsers extends JControllerAdmin
 
 		$this->setRedirect(JRoute::_('index.php?option='.$this->option.'&view='.$this->view_list, false));
 	}
-	/* TO DO - get the same rules as approve has */
+	/* TODO - get the same rules as approve has */
 	function approveall() {
 
 		$model = $this->getModel('phocagalleryuser');

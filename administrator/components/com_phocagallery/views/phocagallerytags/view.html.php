@@ -31,7 +31,7 @@ class phocagalleryCpViewPhocaGalleryTags extends JViewLegacy
 		
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
-			throw new Exception(implode("\n", $errors), 500);
+			JError::raiseError(500, implode("\n", $errors));
 			return false;
 		}
 		
@@ -47,27 +47,27 @@ class phocagalleryCpViewPhocaGalleryTags extends JViewLegacy
 		$state	= $this->get('State');
 		$canDo	= PhocaGalleryTagsHelper::getActions($state->get('filter.tag_id'));
 	
-		JToolbarHelper ::title( JText::_( 'COM_PHOCAGALLERY_TAGS' ), 'tags.png' );
+		JToolBarHelper::title( JText::_( 'COM_PHOCAGALLERY_TAGS' ), 'tags.png' );
 	
 		if ($canDo->get('core.create')) {
-			JToolbarHelper ::addNew('phocagallerytag.add','JToolbar_NEW');
+			JToolBarHelper::addNew('phocagallerytag.add','JTOOLBAR_NEW');
 		}
 	
 		if ($canDo->get('core.edit')) {
-			JToolbarHelper ::editList('phocagallerytag.edit','JToolbar_EDIT');
+			JToolBarHelper::editList('phocagallerytag.edit','JTOOLBAR_EDIT');
 		}
 		if ($canDo->get('core.edit.state')) {
 
-			JToolbarHelper ::divider();
-			JToolbarHelper ::custom('phocagallerytags.publish', 'publish.png', 'publish_f2.png','JToolbar_PUBLISH', true);
-			JToolbarHelper ::custom('phocagallerytags.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JToolbar_UNPUBLISH', true);
+			JToolBarHelper::divider();
+			JToolBarHelper::custom('phocagallerytags.publish', 'publish.png', 'publish_f2.png','JTOOLBAR_PUBLISH', true);
+			JToolBarHelper::custom('phocagallerytags.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
 		}
 	
 		if ($canDo->get('core.delete')) {
-			JToolbarHelper ::deleteList( 'COM_PHOCAGALLERY_WARNING_DELETE_ITEMS', 'phocagallerytags.delete', 'COM_PHOCAGALLERY_DELETE');
+			JToolBarHelper::deleteList( 'COM_PHOCAGALLERY_WARNING_DELETE_ITEMS', 'phocagallerytags.delete', 'COM_PHOCAGALLERY_DELETE');
 		}
-		JToolbarHelper ::divider();
-		JToolbarHelper ::help( 'screen.phocagallery', true );
+		JToolBarHelper::divider();
+		JToolBarHelper::help( 'screen.phocagallery', true );
 	}
 	
 	protected function getSortFields() {

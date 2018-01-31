@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.4" type="plugin" group="system" method="upgrade">
+	<name>plg_system_regularlabs</name>
+	<description>PLG_SYSTEM_REGULARLABS_DESC</description>
+	<version>18.1.20362</version>
+	<creationDate>January 2018</creationDate>
+	<author>Regular Labs (Peter van Westen)</author>
+	<authorEmail>info@regularlabs.com</authorEmail>
+	<authorUrl>https://www.regularlabs.com</authorUrl>
+	<copyright>Copyright © 2018 Regular Labs - All Rights Reserved</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+
+	<scriptfile>script.install.php</scriptfile>
+
+	<files>
+		<filename plugin="regularlabs">regularlabs.php</filename>
+		<filename>script.install.helper.php</filename>
+		<folder>language</folder>
+		<folder>src</folder>
+		<folder>vendor</folder>
+	</files>
+
+	<config>
+		<fields name="params" addfieldpath="/libraries/regularlabs/fields">
+			<fieldset name="description">
+				<field name="@header" type="rl_header_library"
+					   label="REGULAR_LABS_LIBRARY"
+					   description="REGULAR_LABS_LIBRARY_DESC"
+					   warning="REGULAR_LABS_LIBRARY_DESC_WARNING" />
+			</fieldset>
+			<fieldset name="basic">
+				<field name="combine_admin_menu" type="radio" class="btn-group" default="0"
+					   label="RL_COMBINE_ADMIN_MENU"
+					   description="RL_COMBINE_ADMIN_MENU_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="show_help_menu" type="radio" class="btn-group" default="1"
+					   label="RL_SHOW_HELP_MENU"
+					   description="RL_SHOW_HELP_MENU_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="max_list_count" type="text" size="10" class="input-mini" default="5000"
+					   label="RL_MAX_LIST_COUNT"
+					   description="RL_MAX_LIST_COUNT_DESC" />
+			</fieldset>
+		</fields>
+	</config>
+</extension>

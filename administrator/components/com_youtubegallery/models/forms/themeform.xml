@@ -252,7 +252,7 @@
                         
                 </field>
                 
-		<field
+				<field
                         name="showinfo"
                         type="radio"
                         label="COM_YOUTUBEGALLERY_FIELD_SHOWINFO_LABEL"
@@ -306,12 +306,15 @@
                         label="COM_YOUTUBEGALLERY_FIELD_PLAYERTYPE_LABEL"
                         description="COM_YOUTUBEGALLERY_FIELD_PLAYERTYPE_DESC"
                         class="inputbox"
-                        default="100"
+                        default="-1"
                 >
-                        <option value="100">COM_YOUTUBEGALLERY_PLAYERTYPE_AUTO</option>
-			<option value="5">COM_YOUTUBEGALLERY_PLAYERTYPE_HTML5_API</option>                        
-			<option value="1">COM_YOUTUBEGALLERY_PLAYERTYPE_HTML5</option>
+                        
+                        <option value="1">COM_YOUTUBEGALLERY_PLAYERTYPE_HTML5</option>
+                        <option value="5">COM_YOUTUBEGALLERY_PLAYERTYPE_HTML5_API</option>
                         <option value="0">COM_YOUTUBEGALLERY_PLAYERTYPE_FLASH3</option>
+                        <option value="2">COM_YOUTUBEGALLERY_PLAYERTYPE_FLASH3_WITH_CHECK</option>
+                        <option value="3">COM_YOUTUBEGALLERY_PLAYERTYPE_FLASH2</option>
+                        <option value="4">COM_YOUTUBEGALLERY_PLAYERTYPE_FLASH2_WITH_CHECK</option>
                         
                 </field>
                 
@@ -508,7 +511,6 @@
                         <option value="2">COM_YOUTUBEGALLERY_FIELD_OPEN_TOP_AND_JUMP</option>
                         <option value="3">COM_YOUTUBEGALLERY_FIELD_OPEN_BLANK_AND_JUMP</option>
                         <option value="4">COM_YOUTUBEGALLERY_FIELD_OPEN_UPDATE_PLAYER</option>
-                        <option value="5">COM_YOUTUBEGALLERY_FIELD_OPEN_UPDATE_PLAYER_AND_JUMP</option>
                 </field>
                 
                 <field
@@ -557,7 +559,7 @@
                 
                 <field
                         name="prepareheadtags"
-                        type="list"
+                        type="radio"
                         label="COM_YOUTUBEGALLERY_FIELD_PREPAREHEADTAGS_LABEL"
                         description="COM_YOUTUBEGALLERY_FIELD_PREPAREHEADTAGS_DESC"
                         class="inputbox"
@@ -575,15 +577,14 @@
 
                 <field
                         name="responsive"
-                        type="list"
+                        type="radio"
                         label="COM_YOUTUBEGALLERY_FIELD_RESPONSIVE_LABEL"
                         description="COM_YOUTUBEGALLERY_FIELD_RESPONSIVE_DESC"
                         class="inputbox"
-                        default="2"
+                        default="1"
                 >
-                        <option value="2">COM_YOUTUBEGALLERY_FIELD_RESPONSIVE_CSS</option>
-                        <option value="1">COM_YOUTUBEGALLERY_FIELD_RESPONSIVE_JAVASCRIPT</option>
-                        <option value="0">COM_YOUTUBEGALLERY_FIELD_RESPONSIVE_DISABLED</option>
+                        <option value="1">COM_YOUTUBEGALLERY_YES</option>
+                        <option value="0">COM_YOUTUBEGALLERY_NO</option>
                         
                 </field>
                 

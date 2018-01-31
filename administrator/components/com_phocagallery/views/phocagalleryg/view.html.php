@@ -19,10 +19,10 @@ class PhocaGalleryCpViewPhocagalleryG extends JViewLegacy
 	
 	public function display($tpl = null) {
 
-		$params	 			= JComponentHelper::getParams( 'com_phocagallery' );
-		$this->latitude		= JFactory::getApplication()->input->get( 'lat', '50.079623358200884', 'get', 'string' );
-		$this->longitude	= JFactory::getApplication()->input->get( 'lng', '14.429919719696045', 'get', 'string' );
-		$this->zoom			= JFactory::getApplication()->input->get( 'zoom', '2', 'get', 'string' );
+		$params	 			= &JComponentHelper::getParams( 'com_phocagallery' );
+		$this->latitude		= JRequest::getVar( 'lat', '50.079623358200884', 'get', 'string' );
+		$this->longitude	= JRequest::getVar( 'lng', '14.429919719696045', 'get', 'string' );
+		$this->zoom			= JRequest::getVar( 'zoom', '2', 'get', 'string' );
 		parent::display($tpl);
 	}
 }

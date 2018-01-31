@@ -1,6 +1,6 @@
 <?php
 /*
- * @package Joomla
+ * @package Joomla 1.5
  * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  *
@@ -30,7 +30,7 @@ class PhocagalleryModelCooliris3DWall extends JModelLegacy
 			$this->_db->setQuery($query, 0, 1);
 			$category = $this->_db->loadObject();
 			
-			$user = JFactory::getUser();
+			$user = &JFactory::getUser();
 			// USER RIGHT - ACCESS - - - - - -
 			$rightDisplay	= 1;//default is set to 1 (all users can see the category)
 			if (!empty($category)) {
@@ -38,7 +38,7 @@ class PhocagalleryModelCooliris3DWall extends JModelLegacy
 			}
 			
 			if ($rightDisplay == 0) {
-				$uri 			= JFactory::getURI();
+				$uri 			= &JFactory::getURI();
 				$tmpl['pl']		= 'index.php?option=com_users&view=login&return='.base64_encode($uri->toString());
 				$app->redirect(JRoute::_($tmpl['pl'], false), JText::_('COM_PHOCAGALLERY_NOT_AUTHORISED_ACTION'));
 				exit;

@@ -20,7 +20,7 @@ class JFormFieldPhocaSelectFbUser extends JFormField
 
 	protected function getInput() {
 		
-		$db = JFactory::getDBO();
+		$db = &JFactory::getDBO();
 
        //build the list of categories
 		$query = 'SELECT a.id AS value, '
@@ -31,8 +31,8 @@ class JFormFieldPhocaSelectFbUser extends JFormField
 		$db->setQuery( $query );
 		$items = $db->loadObjectList();
 	
-		// TO DO - check for other views than category edit
-		/*$view 	= JFactory::getApplication()->input->get( 'view' );
+		// TODO - check for other views than category edit
+		/*$view 	= JRequest::getVar( 'view' );
 		$catId	= -1;
 		if ($view == 'phocagalleryc') {
 			$id 	= $this->form->getValue('id'); // id of current category

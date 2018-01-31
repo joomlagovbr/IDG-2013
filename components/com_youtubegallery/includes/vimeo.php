@@ -1,10 +1,8 @@
 <?php
-//use Vimeo\Vimeo;
-
 /**
  * YoutubeGallery
- * @version 4.4.0
- * @author Ivan Komlev< <support@joomlaboat.com>
+ * @version 3.5.9
+ * @author DesignCompass corp< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -63,10 +61,7 @@ class VideoSource_Vimeo
 		//--------------
 		
 		
-		require_once('Vimeo/Vimeo.php');
-		//require_once('Vimeo/Exceptions/ExceptionInterface.php');
-		//require_once('Vimeo/Exceptions/VimeoRequestException.php');
-		//require_once('Vimeo/Exceptions/VimeoUploadException.php');
+		require_once('vimeo_api.php');
 		
 		if(!isset($_SESSION))
 			session_start();
@@ -82,94 +77,62 @@ class VideoSource_Vimeo
 			$oauth_access_token_secret='';
 			
 		
-		$vimeo = new Vimeo($consumer_key, $consumer_secret, $oauth_access_token, $oauth_access_token_secret);
+		$vimeo = new phpVimeo($consumer_key, $consumer_secret, $oauth_access_token, $oauth_access_token_secret);
 
-		//echo '$consumer_secret=
-//'.$consumer_secret.'
-//<br/>';
+		$params = array();
+	        $params['video_id'] = $videoid;
 		
-		
-		
-	//	print_r($vimeo);
-		
-		//$params = array();
-	        //$params['video_id'] = $videoid;
-		
-		//print_r($params);
-		//array('page' => 1, 'per_page' => 50, 'query' => '', 'sort' => 'relevant', 'direction' => 'desc', 'filter' => 'CC')
-		$video_info = $video_info = $vimeo->request('/videos/'.$videoid, array());
-		//$video_info = $vimeo->call('videos.getInfo',$params);
-		//print_r($video_info);
-		$video_body=$video_info['body'];
-		
-		//print_r($video_body );
-		//die;
-		
-		if(isset($video_body))
+		$video_info = $vimeo->call('videos.getInfo',$params);
+
+		if(isset($video_info))
 		{
-			if(!$video_body)
+			if(!$video_info)
 				return array('videosource'=>'vimeo', 'videoid'=>$videoid, 'imageurl'=>$theImage, 'title'=>'***Video not found***','description'=>'Video not Found or Permission Denied.');
 			
 			if($customimage!='')
 				$theImage=$customimage;
 			else
-			{
-				$images=array();
-				foreach($video_body['pictures']['sizes'] as $image)
-				{
-					$images[]=$image['link'];
-				}
-				
-				$theImage=implode(',',$images);
-			}
+				$theImage=$video_info->video[0]->thumbnails->thumbnail[1]->_content;
 		
 			if($customtitle=='')
-				$theTitle=$video_body['name'];
+				$theTitle=$video_info->video[0]->title;
 			else
 				$theTitle=$customtitle;
 			
 			if($customdescription=='')
-				$Description=$video_body['description'];	
+				$Description=$video_info->video[0]->description;	
 			else
 				$Description=$customdescription;
 			
 			$keywords=array();
 			
-			if(isset($video_body['tags']))
+			if(isset($video_info->video[0]->tags->tag))
 			{
-				foreach($video_body['tags'] as $tag)
+				foreach($video_info->video[0]->tags->tag as $tag)
 				{
-					$keywords[]=$tag['tag'];
+					$keywords[]=$tag->_content;
 				}
 			}
 			
-			$videodata=
-			array(
+			return array(
 				'videosource'=>'vimeo',
 				'videoid'=>$videoid,
 				'imageurl'=>$theImage,
 				'title'=>$theTitle,
 				'description'=>$Description,
-				'publisheddate'=>$video_body['created_time'],
-				'duration'=>$video_body['duration'],
+				'publisheddate'=>$video_info->video[0]->upload_date,
+				'duration'=>$video_info->video[0]->duration,
 				'rating_average'=>0,
 				'rating_max'=>0,
 				'rating_min'=>0,
 				'rating_numRaters'=>0,
-				'statistics_favoriteCount'=>$video_body['metadata']['connections']['likes']['total'],
-				'statistics_viewCount'=>$video_body['stats']['plays'],
+				'statistics_favoriteCount'=>$video_info->video[0]->number_of_likes,
+				'statistics_viewCount'=>$video_info->video[0]->number_of_plays,
 				'keywords'=>implode(',',$keywords)
 			);
-			
-			//print_r($videodata);
-			//die;
-			return $videodata;
-			
 		}
 		else
 			return array('videosource'=>'vimeo', 'videoid'=>$videoid, 'imageurl'=>$theImage, 'title'=>'***Video not found***','description'=>$Description);
-		
-		//die;
 	}
 	
 	public static function renderVimeoPlayer($options, $width, $height, &$videolist_row, &$theme_row)
@@ -201,15 +164,6 @@ class VideoSource_Vimeo
 		if($options['color1']!='')
 			$settings[]=array('color',$options['color1']);
 			
-			
-		if($options['playertype']==100)
-		{
-			if(YouTubeGalleryMisc::check_user_agent_for_apple())
-				$options['playertype']=1; //1 = HTML5
-			else
-				$options['playertype']=0; //0= Flash
-		}
-
 		
 		YouTubeGalleryMisc::ApplyPlayerParameters($settings,$options['youtubeparams']);
 		
@@ -248,7 +202,7 @@ class VideoSource_Vimeo
 			
 			$result.='></iframe>';
 		}
-		elseif($options['playertype']==0 or $options['playertype']==3) //Flash Player without detection 
+		else
 		{
 			//if($options['playertype']==0 or $options['playertype']==3) //Flash AS 2.0 or 3.0 Player
 			//elseif($options['playertype']==0 or $options['playertype']==3) //Flash AS 2.0 or 3.0 Player
@@ -275,7 +229,8 @@ class VideoSource_Vimeo
 				.'</embed>';
 			$result.='</object>';
 		}
-		elseif($options['playertype']==2 or $options['playertype']==4) //Flash Player with detection 2 and 4
+
+		if($options['playertype']==2 or $options['playertype']==4) //Flash Player with detection 3 and 2
 		{
 			$data=$vimeoserver.'moogaloop.swf?clip_id='.$videoidkeyword.'&amp;'.$settingline;
 			

@@ -38,10 +38,8 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 			</legend>
 
 			<div class="filter-search pull-left">
-              <label class="filter-search-lbl" for="filter-search"><?php /*echo JText::_('COM_CONTENT_'.$this->params->get('filter_field').'_FILTER_LABEL').'&#160;'; */ ?>
-				<input type="text" name="filter-search" id="filter-search" value="<?php echo $this->escape($this->state->get('list.filter')); ?>" class="inputbox" onchange="document.adminForm.submit();" title="<?php echo JText::_('COM_CONTENT_FILTER_SEARCH_DESC'); ?>" />
-              <input type="submit" value="Buscar" class="acao-busca">
-              </label>
+				<label class="filter-search-lbl" for="filter-search"><?php echo JText::_('COM_CONTENT_'.$this->params->get('filter_field').'_FILTER_LABEL').'&#160;'; ?>
+				<input type="text" name="filter-search" id="filter-search" value="<?php echo $this->escape($this->state->get('list.filter')); ?>" class="inputbox" onchange="document.adminForm.submit();" title="<?php echo JText::_('COM_CONTENT_FILTER_SEARCH_DESC'); ?>" /></label>
 			</div>
 			<?php endif; ?>
 

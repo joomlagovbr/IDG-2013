@@ -1,12 +1,12 @@
 <?php
-/**
- * @package   Phoca Gallery
- * @author    Jan Pavelka - https://www.phoca.cz
- * @copyright Copyright (C) Jan Pavelka https://www.phoca.cz
- * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 and later
- * @cms       Joomla
- * @copyright Copyright (C) Open Source Matters. All rights reserved.
- * @license   http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+/*
+ * @package Joomla 1.5
+ * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+ *
+ * @component Phoca Gallery
+ * @copyright Copyright (C) Jan Pavelka www.phoca.cz
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
@@ -15,11 +15,11 @@ class PhocaGalleryPaginationUserSubCat extends JPagination
 {
 	var $_tabId;
 	
-	public function setTab($tabId) {
+	function setTab($tabId) {
 		$this->_tabId = (string)$tabId;
 	}
 	
-	public function _buildDataObject()
+	function _buildDataObject()
 	{
 		$tabLink = '';
 		if ((string)$this->_tabId > 0) {
@@ -84,7 +84,7 @@ class PhocaGalleryPaginationUserSubCat extends JPagination
 		return $data;
 	}
 	
-	public function getLimitBox()
+	function getLimitBox()
 	{
 		$app	= JFactory::getApplication();
 
@@ -102,7 +102,7 @@ class PhocaGalleryPaginationUserSubCat extends JPagination
 		$selected = $this->viewall ? 0 : $this->limit;
 
 		// Build the select list
-		if ($app->isClient('administrator')) {
+		if ($app->isAdmin()) {
 			$html = JHTML::_('select.genericlist',  $limits, 'limitsubcat', 'class="inputbox input-mini" size="1" onchange="Joomla.submitform();"', 'value', 'text', $selected);
 		} else {
 			$html = JHTML::_('select.genericlist',  $limits, 'limitsubcat', 'class="inputbox input-mini" size="1"  onchange="this.form.submit()"', 'value', 'text', $selected);
@@ -111,7 +111,7 @@ class PhocaGalleryPaginationUserSubCat extends JPagination
 	}
 	
 	
-	public function orderUpIcon($i, $condition = true, $task = '#', $alt = 'COM_PHOCAGALLERY_MOVE_UP', $enabled = true, $checkbox = 'cb') {
+	function orderUpIcon($i, $condition = true, $task = '#', $alt = 'COM_PHOCAGALLERY_MOVE_UP', $enabled = true) {
 		
 		
 		$alt = JText::_($alt);
@@ -133,7 +133,7 @@ class PhocaGalleryPaginationUserSubCat extends JPagination
 	}
 
 
-	public function orderDownIcon($i, $n, $condition = true, $task = '#', $alt = 'COM_PHOCAGALLERY_MOVE_DOWN', $enabled = true, $checkbox = 'cb'){
+	function orderDownIcon($i, $n, $condition = true, $task = '#', $alt = 'COM_PHOCAGALLERY_MOVE_DOWN', $enabled = true){
 	
 		$alt = JText::_($alt);
 

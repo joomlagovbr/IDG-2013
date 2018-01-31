@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.4" type="plugin" group="editors-xtd" method="upgrade">
+	<name>plg_editors-xtd_articlesanywhere</name>
+	<description>PLG_EDITORS-XTD_ARTICLESANYWHERE_DESC</description>
+	<version>7.5.1</version>
+	<creationDate>January 2018</creationDate>
+	<author>Regular Labs (Peter van Westen)</author>
+	<authorEmail>info@regularlabs.com</authorEmail>
+	<authorUrl>https://www.regularlabs.com</authorUrl>
+	<copyright>Copyright © 2018 Regular Labs - All Rights Reserved</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+
+	<scriptfile>script.install.php</scriptfile>
+
+	<files>
+		<filename plugin="articlesanywhere">articlesanywhere.php</filename>
+		<filename>popup.php</filename>
+		<filename>helper.php</filename>
+		<filename>script.install.helper.php</filename>
+		<folder>language</folder>
+		<folder>layouts</folder>
+	</files>
+
+	<config>
+		<fields name="params" addfieldpath="/libraries/regularlabs/fields">
+			<fieldset name="description">
+				<field name="@loadlanguage_regularlabs" type="rl_loadlanguage" extension="plg_system_regularlabs" />
+				<field name="@loadlanguage" type="rl_loadlanguage" extension="plg_editors-xtd_articlesanywhere" />
+				<field name="@license" type="rl_license" extension="ARTICLES_ANYWHERE" />
+				<field name="@version" type="rl_version" extension="ARTICLES_ANYWHERE" />
+				<field name="@dependency" type="rl_dependency"
+					   label="AA_THE_SYSTEM_PLUGIN"
+					   file="/plugins/system/articlesanywhere/articlesanywhere.php" />
+				<field name="@header" type="rl_header"
+					   label="ARTICLES_ANYWHERE"
+					   description="ARTICLES_ANYWHERE_DESC"
+					   url="https://www.regularlabs.com/articlesanywhere" />
+
+				<field name="@notice_settings" type="rl_plaintext"
+					   description="AA_SETTINGS,&lt;a href=&quot;index.php?option=com_plugins&amp;filter_folder=system&amp;filter_search=articles anywhere&quot; target=&quot;_blank&quot;&gt;,&lt;/a&gt;" />
+			</fieldset>
+		</fields>
+	</config>
+</extension>

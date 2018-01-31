@@ -1,8 +1,8 @@
 <?php
 /**
  * YoutubeGallery
- * @version 4.4.0
- * @author Ivan Komlev< <support@joomlaboat.com>
+ * @version 3.5.9
+ * @author DesignCompass corp< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -21,16 +21,17 @@ class VideoSource_DailyMotion
 
 	public static function extractDailyMotionID($theLink)
 	{
-
+		//print_r($theLink);
 		if(strpos($theLink,'dailymotion.com/video/')===false)
 		{
 			//http://www.dailymotion.com/au/relevance/search/camp+fire+1/1#video=x16ckln
 			$l=explode('#',$theLink);
-
+			//print_r($l);
 			if(count($l)>1)
 			{
 				$a=explode('=',$l[1]);
-
+				//print_r($a);
+				//die;
 				if(count($a)>1)
 					return $a[1];
 			}
@@ -47,7 +48,7 @@ class VideoSource_DailyMotion
 				return $b[0];
 			}
 		}
-
+		//die;
 		return '';
 		
 	}

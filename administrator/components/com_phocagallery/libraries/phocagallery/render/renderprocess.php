@@ -1,30 +1,25 @@
 <?php
-/**
- * @package   Phoca Gallery
- * @author    Jan Pavelka - https://www.phoca.cz
- * @copyright Copyright (C) Jan Pavelka https://www.phoca.cz
- * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 and later
- * @cms       Joomla
- * @copyright Copyright (C) Open Source Matters. All rights reserved.
- * @license   http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+/*
+ * @package		Joomla.Framework
+ * @copyright	Copyright (C) 2005 - 2010 Open Source Matters, Inc. All rights reserved.
+ * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ *
+ * @component Phoca Component
+ * @copyright Copyright (C) Jan Pavelka www.phoca.cz
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License version 2 or later;
  */
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
 class PhocaGalleryRenderProcess
 {	
-	//public $stopThumbnailsCreating; // display the posibility (link) to disable the thumbnails creating
-	//public $headerAdded;// HTML Header was added by Stop Thumbnails creating, don't add it into a site again;
-	
-	private static $renderProcess = array();
-	private static $renderHeader = array();
-	
-	private function __construct(){}
+	public $stopThumbnailsCreating = null; // display the posibility (link) to disable the thumbnails creating
+	public $headerAdded			= null;// HTML Header was added by Stop Thumbnails creating, don't add it into a site again;
 
 
-	public static function getProcessPage ($filename, $thumbInfo, $refresh_url, $errorMsg = '' ) {
+	public function getProcessPage ( $filename, $thumbInfo, $refresh_url, $errorMsg = '' ) {
 		
-		$countImg 		= (int)JFactory::getApplication()->input->get( 'countimg', 0, 'get', 'INT' );
-		$currentImg 	= (int)JFactory::getApplication()->input->get( 'currentimg',0, 'get','INT' );
+		$countImg 		= (int)JRequest::getVar( 'countimg', 0, 'get', 'INT' );
+		$currentImg 	= (int)JRequest::getVar( 'currentimg',0, 'get','INT' );
 		$paths			= PhocaGalleryPath::getPath();
 		
 		if ($currentImg == 0) {
@@ -32,18 +27,10 @@ class PhocaGalleryRenderProcess
 		}
 		$nextImg = $currentImg + 1;
 		
-		$view 		= JFactory::getApplication()->input->get( 'view', '', 'get', 'string' );
-
-		//we are in whole window - not in modal box
-		
-		if ($view == 'phocagalleryi' || $view == 'phocagalleryd') {
-			$header = self::getHeader('processpage');
-			
-			if ($header != '') {
-				echo $header;
-				$boxStyle = self::getBoxStyle();
-				echo '<div style="'.$boxStyle.'">';
-			}
+		if (!isset($this->headerAdded) || (isset($this->headerAdded) && $this->headerAdded == 0)) {
+			echo self::getHeader();
+			$boxStyle = self::getBoxStyle();
+			echo '<div style="'.$boxStyle.'">';
 		}
 		
 		echo '<span>'. JText::_( 'COM_PHOCAGALLERY_THUMBNAIL_GENERATING_WAIT' ) . '</span>';
@@ -136,7 +123,7 @@ class PhocaGalleryRenderProcess
 				break;	
 			}
 			
-			//$view 		= JFactory::getApplication()->input->get( 'view' );
+			$view 		= JRequest::setVar( 'view' );
 
 			//we are in whole window - not in modal box
 			if ($view != 'phocagalleryi' && $view != 'phocagalleryd') {
@@ -152,7 +139,7 @@ class PhocaGalleryRenderProcess
 				
 				echo '<tr><td>- ' .JText::_( 'COM_PHOCAGALLERY_MEDIA_MANAGER_SOLUTION' ).' <br /> <a href="index.php?option=com_media">' .JText::_( 'COM_PHOCAGALLERY_MEDIA_MANAGER_LINK' ).'</a><div class="hr"></div></td></tr>';
 				
-				echo '<tr><td>- <a href="https://www.phoca.cz/documentation/" target="_blank">' .JText::_( 'COM_PHOCAGALLERY_GO_TO_PHOCA_GALLERY_USER_MANUAL' ).'</a></td></tr>';
+				echo '<tr><td>- <a href="http://www.phoca.cz/documentation/" target="_blank">' .JText::_( 'COM_PHOCAGALLERY_GO_TO_PHOCA_GALLERY_USER_MANUAL' ).'</a></td></tr>';
 				
 				echo '</table>';
 				echo '</div>';
@@ -191,92 +178,70 @@ class PhocaGalleryRenderProcess
 			echo '<meta http-equiv="refresh" content="0;url='.$refresh_url.'&countimg='.$countImg.'&currentimg='.$nextImg.'" />';
 		}
 		
-		echo '</div></body></html>';
+		echo '</div></center></body></html>';
 		exit;
 	}
 	
 	
-	public static function displayStopThumbnailsCreating($element = null) {
-		
-		if( is_null( $element ) ) {
-			throw new Exception('Function Error: No element added', 500);
-			return false;
-		}
+	public function displayStopThumbnailsCreating() {
 		
 		// 1 ... link was displayed
 		// 0 ... display the link "Stop ThumbnailsCreation
-		$view 		= JFactory::getApplication()->input->get( 'view' );
+		$view 		= JRequest::setVar( 'view' );
 
 		//we are in whole window - not in modal box
-		if ($view == 'phocagalleryi' || $view == 'phocagalleryd') {
-			//$this->stopThumbnailsCreating = 1;
-			self::$renderProcess[$element] = '';
-			return self::$renderProcess[$element];
-		} else {
-			
-			
+		if ($view != 'phocagalleryi' && $view != 'phocagalleryd') {
 		
-			if( !array_key_exists( $element, self::$renderProcess ) ) {
-				
-			//if (!isset($this->stopThumbnailsCreating) || (isset($this->stopThumbnailsCreating) && $this->stopThumbnailsCreating == 0)) {
+			if (!isset($this->stopThumbnailsCreating) || (isset($this->stopThumbnailsCreating) && $this->stopThumbnailsCreating == 0)) {
 				// Add stop thumbnails creation in case e.g. of Fatal Error which returns 'ImageCreateFromJPEG'
-				$stopText = self::getHeader('processpage');
+				$stopText = self::getHeader();
 				$boxStyle = self::getBoxStyle();
 				$stopText .= '<div style="'.$boxStyle.'">';// End will be added getProcessPage
 				$stopText .= '<div style="text-align:right;margin-bottom: 15px;"><a style="font-family: sans-serif, Arial;font-weight:bold;color:#e33131;font-size:12px;" href="index.php?option=com_phocagallery&task=phocagalleryimg.disablethumbs" title="' .JText::_( 'COM_PHOCAGALLERY_STOP_THUMBNAIL_GENERATION_DESC' ).'">' .JText::_( 'COM_PHOCAGALLERY_STOP_THUMBNAIL_GENERATION' ).'</a></div>';
-				//$this->stopThumbnailsCreating = 1;// it was added to the site, don't add the same code (because there are 3 thumnails - small, medium, large)
-				//$this->headerAdded = 1;
-				self::$renderProcess[$element] = $stopText;
+				$this->stopThumbnailsCreating = 1;// it was added to the site, don't add the same code (because there are 3 thumnails - small, medium, large)
+				$this->headerAdded = 1;
+				return $stopText;
+				
 			} else {
-				self::$renderProcess[$element] = '';
+				return '';
 			}
-			return self::$renderProcess[$element];
-		}
-	}
-	
-	
-	protected static function getHeader( $element = null) {
-	
-		if( is_null( $element ) ) {
-			throw new Exception('Function Error: No element added', 500);
-			return false;
-		}
-		
-		if( !array_key_exists( $element, self::$renderHeader ) ) {
-			// test utf-8 ä, ö, ü, č, ř, ž, ß
-			$paths	= PhocaGalleryPath::getPath();
-			$bgImg 	= JURI::root(true).'/media/com_phocagallery/images/administrator/image-bg.jpg';
-			
-			$o = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">' . "\n";
-			$o .= '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-en" lang="en-en" dir="ltr" >'. "\n";
-			$o .= '<head>'. "\n";
-			$o .= '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />'. "\n\n";
-			$o .= '<title>'.JText::_( 'COM_PHOCAGALLERY_THUMBNAIL_GENERATING').'</title>'. "\n";
-			$o .= '<link rel="stylesheet" href="'.$paths->media_css_rel_full.'administrator/phocagallery.css" type="text/css" />';
-			
-			$o .= "\n" . '<style type="text/css"> html { 
-			background: url('.$bgImg.') no-repeat center center fixed; 
-			-webkit-background-size: cover;
-			-moz-background-size: cover;
-			-o-background-size: cover;
-			background-size: cover;
-			}' . "\n" . '.hr { border-bottom: 1px solid #ccc; margin-top: 10px;}'. "\n" . '</style>' . "\n";
-			
-			$o .= "\n" . '<!--[if IE]>' . '<style type="text/css">' ."\n";
-			$o .= "\n" . 'html { background-image: none;}';
-			$o .= "\n" . '<![endif]-->' . "\n" . '</style>' . "\n";
-			
-			$o .= '</head>'. "\n";
-			$o .= '<body>'. "\n";
-			self::$renderHeader[$element] = $o;
 		} else {
-			self::$renderHeader[$element] = '';
+			$this->stopThumbnailsCreating = 1;
 		}
-		
-		return self::$renderHeader[$element];
 	}
 	
-	protected static function getBoxStyle() {
+	
+	protected function getHeader() {
+		
+		// test utf-8 ä, ö, ü, č, ř, ž, ß
+		$paths	= PhocaGalleryPath::getPath();
+		$bgImg 	= JURI::root(true).'/media/com_phocagallery/images/administrator/image-bg.jpg';
+		
+		$o = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">' . "\n";
+		$o .= '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-en" lang="en-en" dir="ltr" >'. "\n";
+		$o .= '<head>'. "\n";
+		$o .= '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />'. "\n\n";
+		$o .= '<title>'.JText::_( 'COM_PHOCAGALLERY_THUMBNAIL_GENERATING').'</title>'. "\n";
+		$o .= '<link rel="stylesheet" href="'.$paths->media_css_rel_full.'administrator/phocagallery.css" type="text/css" />';
+		
+		$o .= "\n" . '<style type="text/css"> html { 
+		background: url('.$bgImg.') no-repeat center center fixed; 
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+		background-size: cover;
+		}' . "\n" . '.hr { border-bottom: 1px solid #ccc; margin-top: 10px;}'. "\n" . '</style>' . "\n";
+		
+		$o .= "\n" . '<!--[if IE]>' . '<style type="text/css">' ."\n";
+		$o .= "\n" . 'html { background-image: none;}';
+		$o .= "\n" . '<![endif]-->' . "\n" . '</style>' . "\n";
+		
+		$o .= '</head>'. "\n";
+		$o .= '<body>'. "\n";
+		return $o;
+	}
+	
+	protected function getBoxStyle() {
 		$o = 'position: absolute; 
 		min-width: 430px; top: 20px; right: 20px; 
 		color: #555; background: #fff;  

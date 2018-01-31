@@ -1,8 +1,8 @@
 <?php
 /**
  * YoutubeGallery
- * @version 4.4.0
- * @author Ivan Komlev< <support@joomlaboat.com>
+ * @version 3.5.9
+ * @author DesignCompass corp< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -35,9 +35,14 @@ class VideoSource_DailymotionPlaylist
 	    return $p2[0]; //return without everything after _
 	}
 	
-	public static function getVideoIDList($URL,$optionalparameters,&$playlistid,&$datalink)
+	public static function getVideoIDList($URL,$optionalparameters,&$playlistid)
 	{
                 //https://api.dailymotion.com/playlist/xy4h8/videos
+		//$optionalparameters_arr=explode(',',$optionalparameters);
+		
+		//$videolist=array();
+		
+		//$spq=implode('&',$optionalparameters_arr);
 		
 		$videolist=array();
 		
@@ -46,25 +51,32 @@ class VideoSource_DailymotionPlaylist
 			return $videolist; //playlist id not found
                     
                     
-		$apiurl = 'https://api.dailymotion.com/playlist/'.$playlistid.'/videos';
-		$datalink=$apiurl;
-                
-		$htmlcode=YouTubeGalleryMisc::getURLData($apiurl);
+                //echo '$playlistid='.$playlistid.'<br/>';
 		
-		if($htmlcode=='')
-			return $videolist;
-
+		$apiurl = 'https://api.dailymotion.com/playlist/'.$playlistid.'/videos';
+                //$apiurl = 'https://api.dailymotion.com/playlist/xy4h8/videos';
+		//echo '$apiurl ='.$apiurl .'<br/>';
+		//$xml=false;
+		$htmlcode=YouTubeGalleryMisc::getURLData($apiurl);
+                //echo '$htmlcode='.$htmlcode.'<br/>';
                 
-
+                //die;
 		if(!isset($htmlcode) or $htmlcode=='' or $htmlcode[0]!='{')
+
 		{
+			//if(strpos($htmlcode,'Invalid id')===false)
+			//	return 'Cannot load data, Invalid id';
+
 			return 'Cannot load data, no connection or access denied';
 		}
 		$streamData = json_decode($htmlcode);
+//                print_r($streamData );
+
 
 
 		foreach ($streamData->list as $entry)
 		{
+                    //print_r($entry);
                     $videolist[] = 'http://www.dailymotion.com/playlist/'.$entry->id;
                     //http://www.dailymotion.com/playlist/x1crql_BigCatRescue_funny-action-big-cats/1#video=x986zk
 
@@ -80,6 +92,8 @@ class VideoSource_DailymotionPlaylist
 		}//foreach ($xml->entry as $entry)
 		
 		
+                //print_r($videolist);
+                //die;
 		return $videolist;
             
             

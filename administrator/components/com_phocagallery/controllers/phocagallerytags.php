@@ -18,7 +18,7 @@ class PhocaGalleryCpControllerPhocaGalleryTags extends JControllerAdmin
 	
 	
 	
-	public function &getModel($name = 'PhocaGalleryTag', $prefix = 'PhocaGalleryCpModel', $config = array())
+	public function &getModel($name = 'PhocaGalleryTag', $prefix = 'PhocaGalleryCpModel')
 	{
 		$model = parent::getModel($name, $prefix, array('ignore_request' => true));
 		return $model;

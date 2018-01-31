@@ -1,6 +1,6 @@
 <?php 
 /*
- * @package Joomla
+ * @package Joomla 1.5
  * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  *
@@ -11,11 +11,11 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
 if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
 if (! class_exists('PhocaGalleryLoader')) {
-    require_once( JPATH_ADMINISTRATOR.'/components/com_phocagallery/libraries/loader.php');
+    require_once( JPATH_ADMINISTRATOR.DS.'components'.DS.'com_phocagallery'.DS.'libraries'.DS.'loader.php');
 }
 
 // Require the base controller
-require_once( JPATH_COMPONENT.'/controller.php' );
+require_once( JPATH_COMPONENT.DS.'controller.php' );
 phocagalleryimport('phocagallery.utils.settings');
 phocagalleryimport('phocagallery.path.path');
 phocagalleryimport('phocagallery.path.route');
@@ -34,15 +34,12 @@ phocagalleryimport('phocagallery.utils.utils');
 phocagalleryimport('phocagallery.utils.extension');
 phocagalleryimport('phocagallery.tag.tag');
 phocagalleryimport('phocagallery.html.category');
-phocagalleryimport('phocagallery.html.grid');
 //phocagalleryimport('phocagallery.utils.utils');
 //PhocaGalleryRenderFront::correctRender();
 
-
 // Require specific controller if requested
-
-if($controller = JFactory::getApplication()->input->get( 'controller')) {
-    $path = JPATH_COMPONENT.'/controllers/'.$controller.'.php';
+if($controller = JRequest::getWord('controller')) {
+    $path = JPATH_COMPONENT.DS.'controllers'.DS.$controller.'.php';
     if (file_exists($path)) {
         require_once $path;
     } else {

@@ -1,8 +1,8 @@
 <?php
 /**
  * YoutubeGallery
- * @version 4.4.0
- * @author Ivan Komlev< <support@joomlaboat.com>
+ * @version 3.5.9
+ * @author DesignCompass corp< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -20,7 +20,7 @@ class VideoSource_YoutubeStandard
 {
 
 	
-	public static function getVideoIDList($youtubeURL,$optionalparameters,&$playlistid,&$datalink)
+	public static function getVideoIDList($youtubeURL,$optionalparameters,&$playlistid)
 	{
 		$linkPair=explode(':',$youtubeURL);
 		
@@ -77,7 +77,6 @@ class VideoSource_YoutubeStandard
 				return array();	
 			break;
 		}
-		$datalink=$url;
 			
 		
 		$optionalparameters_arr=explode(',',$optionalparameters);
@@ -86,14 +85,10 @@ class VideoSource_YoutubeStandard
 		$spq=implode('&',$optionalparameters_arr);
 		
 		
-		$spq=str_replace('max-results','maxResults',$spq);
 		$url.= ($spq!='' ? '?'.$spq : '' );
 		
 		$xml=false;
 		$htmlcode=YouTubeGalleryMisc::getURLData($url);
-		
-		if($htmlcode=='')
-			return $videolist;
 
 		if(strpos($htmlcode,'<?xml version')===false)
 		{

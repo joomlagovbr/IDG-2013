@@ -16,7 +16,7 @@ class PhocaGalleryModelRatingImgA extends JModelLegacy
 {
 	
 	function rate($data) {
-		$row = $this->getTable('phocagalleryimgvotes');
+		$row =& $this->getTable('phocagalleryimgvotes');
 		
 		if (!$row->bind($data)) {
 			$this->setError($this->_db->getErrorMsg());

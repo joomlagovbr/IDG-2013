@@ -1,6 +1,6 @@
 <?php
 /*
- * @package Joomla
+ * @package Joomla 1.5
  * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  *
@@ -8,9 +8,6 @@
  * @copyright Copyright (C) Jan Pavelka www.phoca.cz
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
- 
-defined('_JEXEC') or die;
-
 jimport('joomla.application.component.controller');
 
 $l['cp']	= array('COM_PHOCAGALLERY_CONTROL_PANEL', '');
@@ -28,8 +25,8 @@ $l['ef']	= array('COM_PHOCAGALLERY_STYLES', 'phocagalleryefs');
 $l['in']	= array('COM_PHOCAGALLERY_INFO', 'phocagalleryin');
 
 // Submenu view
-//$view	= JFactory::getApplication()->input->get( 'view', '', '', 'string', J REQUEST_ALLOWRAW );
-//$layout	= JFactory::getApplication()->input->get( 'layout', '', '', 'string', J REQUEST_ALLOWRAW );
+//$view	= JRequest::getVar( 'view', '', '', 'string', JREQUEST_ALLOWRAW );
+//$layout	= JRequest::getVar( 'layout', '', '', 'string', JREQUEST_ALLOWRAW );
 $view	= JFactory::getApplication()->input->get('view');
 $layout	= JFactory::getApplication()->input->get('layout');
 
@@ -56,8 +53,8 @@ if ($layout == 'edit') {
 
 class PhocaGalleryCpController extends JControllerLegacy
 {
-	function display($cachable = false, $urlparams = Array()) {
-		parent::display($cachable, $urlparams);
+	function display() {
+		parent::display();
 	}
 }
 ?>

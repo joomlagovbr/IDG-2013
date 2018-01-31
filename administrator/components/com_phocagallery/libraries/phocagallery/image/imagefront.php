@@ -1,12 +1,12 @@
 <?php
-/**
- * @package   Phoca Gallery
- * @author    Jan Pavelka - https://www.phoca.cz
- * @copyright Copyright (C) Jan Pavelka https://www.phoca.cz
- * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 and later
- * @cms       Joomla
- * @copyright Copyright (C) Open Source Matters. All rights reserved.
- * @license   http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+/*
+ * @package Joomla 1.5
+ * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+ *
+ * @component Phoca Component
+ * @copyright Copyright (C) Jan Pavelka www.phoca.cz
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
@@ -16,11 +16,11 @@ class PhocaGalleryImageFront
 	 * IMAGE BACKGROUND - CATEGORIES VIEW - INTERNAL IMAGE
 	 * 0-small,1-medium,2-smallFolder,3-mediumFolder,4-smallShadow,5-mediumShadow,6-smallFolderShadow,7-mediumFolderShadow
 	 */
-	public static function getCategoriesImageBackground($imgCatSize, $smallImgHeigth, $smallImgWidth, $mediumImgHeight, $mediumImgWidth) {
+	function getCategoriesImageBackground($imgCatSize, $smallImgHeigth, $smallImgWidth, $mediumImgHeight, $mediumImgWidth) {
 		
 		phocagalleryimport('phocagallery.image.image');
 		phocagalleryimport('phocagallery.path.path');
-		$path		= PhocaGalleryPath::getPath();
+		$path		= &PhocaGalleryPath::getPath();
 		$imgBg 		= new JObject();
 		
 		switch ($imgCatSize) {	
@@ -60,14 +60,14 @@ class PhocaGalleryImageFront
 	 * IMAGE OR FOLDER - CATEGORIES VIEW - INTERNAL IMAGE
 	 * 0-small,1-medium,2-smallFolder,3-mediumFolder,4-smallShadow,5-mediumShadow,6-smallFolderShadow,7-mediumFolderShadow
 	 */
-	public static function displayCategoriesImageOrFolder ($filename, $imgCategoriesSize, $rightDisplayKey = 0) {
+	function displayCategoriesImageOrFolder ($filename, $imgCategoriesSize, $rightDisplayKey = 0) {
 		
 		phocagalleryimport('phocagallery.image.image');
 		phocagalleryimport('phocagallery.path.path');
 		phocagalleryimport('phocagallery.file.filethumbnail');
 		
 		
-		$path		= PhocaGalleryPath::getPath();
+		$path		= &PhocaGalleryPath::getPath();
 
 		// if category is not accessable, display the key in the image:
 		$key = '';
@@ -114,12 +114,12 @@ class PhocaGalleryImageFront
 	 * IMAGE OR FOLDER - CATEGORIES VIEW - EXTERNAL IMAGE
 	 * 0-small,1-medium,2-smallFolder,3-mediumFolder,4-smallShadow,5-mediumShadow,6-smallFolderShadow,7-mediumFolderShadow
 	 */
-	public static function displayCategoriesExtImgOrFolder ($exts, $extm, $extw, $exth, $imgCategoriesSize, $rightDisplayKey = 0) {
+	function displayCategoriesExtImgOrFolder ($exts, $extm, $extw, $exth, $imgCategoriesSize, $rightDisplayKey = 0) {
 		
 		phocagalleryimport('phocagallery.image.image');
 		phocagalleryimport('phocagallery.path.path');
 		phocagalleryimport('phocagallery.file.filethumbnail');
-		$path		= PhocaGalleryPath::getPath();
+		$path		= &PhocaGalleryPath::getPath();
 		
 		$fileThumbnail =  new JObject;
 		$fileThumbnail->rel 	= '';
@@ -179,7 +179,7 @@ class PhocaGalleryImageFront
 	/*
 	 * IMAGE OR FOLDER - CATEGORY VIEW - INTERNAL IMAGE
 	 */
-	public static function displayCategoryImageOrFolder ($filename, $size, $rightDisplayKey, $param= 'display_category_icon_image') {
+	function displayCategoryImageOrFolder ($filename, $size, $rightDisplayKey, $param= 'display_category_icon_image') {
 		
 		phocagalleryimport('phocagallery.image.image');
 		phocagalleryimport('phocagallery.path.path');
@@ -187,7 +187,7 @@ class PhocaGalleryImageFront
 		
 		$paramsC = JComponentHelper::getParams('com_phocagallery') ;
 		
-		$path						= PhocaGalleryPath::getPath();
+		$path						= &PhocaGalleryPath::getPath();
 		$fileThumbnail				= PhocaGalleryFileThumbnail::getThumbnailName($filename, $size);
 		$displayCategoryIconImage	= $paramsC->get( $param, 0 );
 		$imageBackgroundShadow 		= $paramsC->get( 'image_background_shadow', 'None' );
@@ -216,13 +216,13 @@ class PhocaGalleryImageFront
 	/*
 	 * IMAGE OR FOLDER - CATEGORY VIEW - EXTERNAL IMAGE
 	 */
-	public static function displayCategoryExtImgOrFolder ($extS, $extM, $size, $rightDisplayKey, $param= 'display_category_icon_image') {
+	function displayCategoryExtImgOrFolder ($extS, $extM, $size, $rightDisplayKey, $param= 'display_category_icon_image') {
 		
 		phocagalleryimport('phocagallery.image.image');
 		phocagalleryimport('phocagallery.path.path');
 		
 		$paramsC = JComponentHelper::getParams('com_phocagallery') ;
-		$path				= PhocaGalleryPath::getPath();
+		$path				= &PhocaGalleryPath::getPath();
 
 	
 		$fileThumbnail = new JObject();
@@ -270,7 +270,7 @@ class PhocaGalleryImageFront
 	 * We now the path from CATEGORY VIEW, we only change the path for CATEGORIES VIEW
 	 * If there is a folder icon - medium to small main, if image - phoca_thumb_m to phoca_thumb_s
 	 */
-	public static function displayCategoriesCVImageOrFolder ($linkThumbnailPath, $imgCategoriesSizeCV) {
+	function displayCategoriesCVImageOrFolder ($linkThumbnailPath, $imgCategoriesSizeCV) {
 
 		switch((int)$imgCategoriesSizeCV) {
 			case 0:
@@ -293,7 +293,7 @@ class PhocaGalleryImageFront
 	 * IMAGE OR FOLDER - CATEGORIES VIEW IN CATEGORY VIEW- EXTERNAL IMAGE
 	 * 0-small,1-medium,2-smallFolder,3-mediumFolder,4-smallShadow,5-mediumShadow,6-smallFolderShadow,7-mediumFolderShadow
 	 */
-	public static function displayCategoriesCVExtImgOrFolder ($linkThumbnailPathM, $linkThumbnailPathS, $linkThumbnailPath, $imgCategoriesSizeCV) {
+	function displayCategoriesCVExtImgOrFolder ($linkThumbnailPathM, $linkThumbnailPathS, $linkThumbnailPath, $imgCategoriesSizeCV) {
 		switch((int)$imgCategoriesSizeCV) {
 			case 0:
 			case 2:
@@ -324,12 +324,12 @@ class PhocaGalleryImageFront
 	/*
 	 * IMAGE OR NO IMAGE - CATEGORY VIEW - INTERNAL IMAGE
 	 */
-	public static function displayCategoryImageOrNoImage ($filename, $size) {
+	function displayCategoryImageOrNoImage ($filename, $size) {
 	
 		phocagalleryimport('phocagallery.image.image');
 		phocagalleryimport('phocagallery.path.path');
 		phocagalleryimport('phocagallery.file.filethumbnail');
-		$path			= PhocaGalleryPath::getPath();
+		$path			= &PhocaGalleryPath::getPath();
 		$fileThumbnail	= PhocaGalleryFileThumbnail::getThumbnailName($filename, $size);
 		
 		
@@ -354,7 +354,7 @@ class PhocaGalleryImageFront
 	/*
 	* BACK FOLDER - CATEGORY VIEW
 	*/
-	public static function displayBackFolder ($size, $rightDisplayKey) {
+	function displayBackFolder ($size, $rightDisplayKey) {
 	
 		$fileThumbnail = new JObject;
 		
@@ -366,7 +366,7 @@ class PhocaGalleryImageFront
 		
 		phocagalleryimport('phocagallery.image.image');
 		phocagalleryimport('phocagallery.path.path');
-		$path				= PhocaGalleryPath::getPath();
+		$path				= &PhocaGalleryPath::getPath();
 		$fileThumbnail->abs = '';
 		$paramsC 			= JComponentHelper::getParams('com_phocagallery') ;
 		
@@ -379,9 +379,9 @@ class PhocaGalleryImageFront
 		return $fileThumbnail->rel;	
 	}
 	
-	public static function getCategoryImages($categoryid, $categoryImageOrdering = '') {
+	function getCategoryImages($categoryid, $categoryImageOrdering = '') {
 		
-		$db 	=JFactory::getDBO();
+		$db 	=& JFactory::getDBO();
 		$user 	= JFactory::getUser();
 		$image 	= '';
 		
@@ -414,9 +414,7 @@ class PhocaGalleryImageFront
 		}
 		
 		if ($rightDisplay == 0) {
-			$images = array();
-			$images[0] = new StdClass();
-			$images[0]->notaccess = 1;
+			$images = 0;
 		}
 		
         return $images;
@@ -430,9 +428,9 @@ class PhocaGalleryImageFront
 	 * $extImageSize - 1 - small, 2 - medium, 3 - large
 	 * Is called random but the ordering can be set
 	 */
-	public static function getRandomImageRecursive($categoryid, $categoryImageOrdering = '', $extImage = 0, $extImageSize = 1) {
+	function getRandomImageRecursive($categoryid, $categoryImageOrdering = '', $extImage = 0, $extImageSize = 1) {
 		
-		$db 	=JFactory::getDBO();
+		$db 	=& JFactory::getDBO();
 		$user 	= JFactory::getUser();
 		$image 	= new stdClass();
 		
@@ -442,7 +440,7 @@ class PhocaGalleryImageFront
 		} else {
 			// This is special case where we change category to image
 			$ordering = ' ORDER BY a.'.$categoryImageOrdering['column'] . ' ' .$categoryImageOrdering['sort'];
-			$orderingRandomCat = ' ORDER BY c.ordering'; //TO DO - can be changed to category_ordering parameter
+			$orderingRandomCat = ' ORDER BY c.ordering'; //TODO - can be changed to category_ordering parameter
 		}
 		
 		
@@ -466,7 +464,6 @@ class PhocaGalleryImageFront
 			$rightDisplay = PhocaGalleryAccess::getUserRight('accessuserid', $images[0]->cataccessuserid, $images[0]->cataccess, $user->getAuthorisedViewLevels(), $user->get('id', 0), 0);
 		}
 		
-		
 		if ($rightDisplay == 0) {
 			$images = 0;
 		}
@@ -480,7 +477,7 @@ class PhocaGalleryImageFront
             $image->filename 	= '';
 			
 			
-			// TO DO, if we find no image in subcategory we look at its subcategory (subcategory of subcategory)
+			// TODO, if we find no image in subcategory we look at its subcategory (subcategory of subcategory)
 			// no to look if there is some subcategory on the same level
             $subCategories = PhocaGalleryImageFront::getRandomCategory($categoryid, $ordering);
 			
@@ -520,8 +517,8 @@ class PhocaGalleryImageFront
 		}
     }
 	
-	public static function getRandomCategory($parentid, $ordering = ' ORDER BY RAND()') {
-        $db 	=JFactory::getDBO();
+	function getRandomCategory($parentid, $ordering = ' ORDER BY RAND()') {
+        $db 	=& JFactory::getDBO();
 		
 		$groups = JFactory::getUser()->getAuthorisedViewLevels();
 		if (count($groups)) {
@@ -543,7 +540,7 @@ class PhocaGalleryImageFront
     }
 
 
-	public static function getSizeString($size) {
+	function getSizeString($size) {
 		switch((int)$size) {
 			case 3: case 7: case 1: case 5: 
 			$output = 'm';
@@ -556,13 +553,12 @@ class PhocaGalleryImageFront
 		return $output;
 	}
 	
-	public static function renderMosaic($images, $size = 0, $extImg = 0, $w = 100, $h = 100) {
+	public function renderMosaic($images, $size = 0, $extImg = 0, $w = 100, $h = 100) {
 		
 		$o = '';
 		phocagalleryimport('phocagallery.file.filethumbnail');
 		$count 	= count($images);
 		$m1 	= mt_rand(0,1);
-		
 		
 		switch($count) {
 			case 1:
@@ -588,48 +584,34 @@ class PhocaGalleryImageFront
 			break;
 		}
 
-		// NOT ACCESS 
-		if (isset($images[0]->notaccess) && $images[0]->notaccess == 1) {
-			$stNA = 'width: '.($w ).'px; height: '.($h ).'px; margin: 0 auto;';
-			$o .= '<div style="text-align: center;'.$stNA.'">';
-			$o .= '<div class="pg-multi-img" style="margin: 0 auto;'.$stNA.'" ><img src="'.JURI::base(true).'/media/com_phocagallery/images/icon-folder-medium-key.png" style="margin: 0 auto;'.$stNA.'" alt="" /></div>';
-			$o .= '</div>';
-			return $o;
-		}
+		$i 	= self::getMosaicFields($a, $images, $size, $extImg, $w, $h);
+		$m2 = mt_rand(0,1);
 		
-		if (isset($a)) {
-			$i 	= self::getMosaicFields($a, $images, $size, $extImg, $w, $h);
-
-			$m2 = mt_rand(0,1);
-			
-			$o .= '<div style="width: '.$i['w'].'px; height: '.$i['h'].'px">';
-			if ($m2 == 1) {
-				$o .= '<div style="float:left;width:'.$i['w1'].'px;">';
-				$o .= $i['b1'];
-				$o .= '</div>';
-				$o .= '<div style="float:left;width:'.$i['w2'].'px;">';
-				$o .= $i['b2'];
-				$o .= '</div>';
-			} else {
-				$o .= '<div style="float:right;width:'.$i['w1'].'px;">';
-				$o .= $i['b1'];
-				$o .= '</div>';
-				$o .= '<div style="float:right;width:'.$i['w2'].'px;">';
-				$o .= $i['b2'];
-				$o .= '</div>';
-			}
+		$o .= '<div style="width: '.$i['w'].'px; height: '.$i['h'].'px">';
+		if ($m2 == 1) {
+			$o .= '<div style="float:left;width:'.$i['w1'].'px;">';
+			$o .= $i['b1'];
+			$o .= '</div>';
+			$o .= '<div style="float:left;width:'.$i['w2'].'px;">';
+			$o .= $i['b2'];
 			$o .= '</div>';
 		} else {
-			$o .= '<div></div>';
+			$o .= '<div style="float:right;width:'.$i['w1'].'px;">';
+			$o .= $i['b1'];
+			$o .= '</div>';
+			$o .= '<div style="float:right;width:'.$i['w2'].'px;">';
+			$o .= $i['b2'];
+			$o .= '</div>';
 		}
+		$o .= '</div>';
 		
 		return $o;
 	}
 	
 
 	
-	public static function getMosaicFields($a, $images, $size = 0, $extImg = 0, $w = 100, $h = 100) {
-
+	public function getMosaicFields($a, $images, $size = 0, $extImg = 0, $w = 100, $h = 100) {
+	
 
 		if ($size == 1) {
 			$i0 = 'medium';// |
@@ -652,7 +634,7 @@ class PhocaGalleryImageFront
 				$o['h'] = (int)$h;
 				$o['w1']= (int)$w * 2;
 				$o['w2']= (int)$w;
-			
+				
 				$wi	= $w * 2; $hi = $h * 2;
 				$attr = 'style="width:'.$wi.'px;height:'.$hi.'px"';
 				$wi	= $w ; $hi = $h;
@@ -665,8 +647,8 @@ class PhocaGalleryImageFront
 				$t 		= PhocaGalleryFileThumbnail::getThumbnailName($images[0]->filename, $i3);
 				$i[0][0]= $t->rel;
 				
-				$t 		= PhocaGalleryFileThumbnail::getThumbnailName($images[0]->filename, $i1);
-				$iS 	= @getimagesize($t->abs); //INHIBITERROR
+				$t 		= PhocaGalleryFileThumbnail::getThumbnailName($images[0]->filename, $i0);
+				$iS 	= getimagesize($t->abs);
 				$i[1][0]= $t->rel;
 				$i[1][1]= $iS[0];
 				$i[1][2]= $iS[1];
@@ -702,7 +684,7 @@ class PhocaGalleryImageFront
 				$i[0][0]= $t->rel;
 				
 				$t 		= PhocaGalleryFileThumbnail::getThumbnailName($images[1]->filename, $i1);
-				$iS 	= @getimagesize($t->abs); //INHIBITERROR
+				$iS 	= getimagesize($t->abs);
 				$i[1][0]= $t->rel;
 				$i[1][1]= $iS[0];
 				$i[1][2]= $iS[1];
@@ -745,7 +727,7 @@ class PhocaGalleryImageFront
 				$i[1][0]= $t->rel;
 				
 				$t 		= PhocaGalleryFileThumbnail::getThumbnailName($images[2]->filename, $i0);
-				$iS 	= @getimagesize($t->abs); //INHIBITERROR
+				$iS 	= getimagesize($t->abs);
 				$i[2][0]= $t->rel;
 				$i[2][1]= $iS[0];
 				$i[2][2]= $iS[1];
@@ -782,7 +764,7 @@ class PhocaGalleryImageFront
 					  '<span class="pg-multi-img"><img src="'.$images[2]->extm.'" '.$attr2.' alt="" /></span>';
 			} else {
 				$t 		= PhocaGalleryFileThumbnail::getThumbnailName($images[0]->filename, $i1);
-				$iS 	= @getimagesize($t->abs); //INHIBITERROR
+				$iS 	= getimagesize($t->abs);
 				$i[0][0]= $t->rel;
 				$i[0][1]= $iS[0];
 				$i[0][2]= $iS[1];
@@ -830,7 +812,7 @@ class PhocaGalleryImageFront
 						  '<span class="pg-multi-img"><img src="'.$images[3]->extm.'" '.$attr3.' alt="" /></span>';
 			} else {
 				$t 		= PhocaGalleryFileThumbnail::getThumbnailName($images[0]->filename, $i1);
-				$iS 	= @getimagesize($t->abs); //INHIBITERROR
+				$iS 	= getimagesize($t->abs);
 				$i[0][0]= $t->rel;
 				$i[0][1]= $iS[0];
 				$i[0][2]= $iS[1];
@@ -868,8 +850,7 @@ class PhocaGalleryImageFront
 				$o['w2']= (int)$w * 2;
 				
 				$wi	= $w; $hi = $h * 2;
-				
-				$attr = 'style="width:'.$wi.'px;height:'.$hi.'px"';
+				$attr = 'width="'.$wi.'px;height="'.$hi.'"';
 				$wi	= $w; $hi = $h;
 				$attr1 = 'style="width:'.$wi.'px;height:'.$hi.'px"';
 				$attr2 = 'style="width:'.$wi.'px;height:'.$hi.'px"';
@@ -883,7 +864,7 @@ class PhocaGalleryImageFront
 						  '<span class="pg-multi-img"><img src="'.$images[4]->extm.'" '.$attr4.' alt="" /></span>';
 			} else {
 				$t 		= PhocaGalleryFileThumbnail::getThumbnailName($images[0]->filename, $i1);
-				$iS 	= @getimagesize($t->abs); //INHIBITERROR
+				$iS 	= getimagesize($t->abs);
 				$i[0][0]= $t->rel;
 				$i[0][1]= $iS[0];
 				$i[0][2]= $iS[1];
@@ -937,7 +918,7 @@ class PhocaGalleryImageFront
 					  '<span class="pg-multi-img"><img src="'.$images[3]->extm.'" '.$attr3.' alt="" /></span>';
 			} else {
 				$t 		= PhocaGalleryFileThumbnail::getThumbnailName($images[0]->filename, $i1);
-				$iS 	= @getimagesize($t->abs); //INHIBITERROR
+				$iS 	= getimagesize($t->abs);
 				$i[0][0]= $t->rel;
 				$i[0][1]= $iS[0];
 				$i[0][2]= $iS[1];
@@ -968,23 +949,6 @@ class PhocaGalleryImageFront
 		}
 		
 	
-	}
-	
-	public static function setFileNameByImageId($id = 0) {
-		
-		$f = '';
-		if ((int)$id > 0) {
-			$db 	= JFactory::getDBO();
-			$query = ' SELECT a.filename, a.extid, a.exts, a.extm, a.extw, a.exth'
-					.' FROM #__phocagallery AS a'
-					.' WHERE a.id = '.(int)$id
-					.' ORDER BY a.id'
-					.' LIMIT 1';
-			$db->setQuery($query);
-			$f = $db->loadObject();
-		}
-		
-		return $f;
 	}
 
 }

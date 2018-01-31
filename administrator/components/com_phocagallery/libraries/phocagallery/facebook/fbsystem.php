@@ -1,18 +1,18 @@
 <?php
-/**
- * @package   Phoca Gallery
- * @author    Jan Pavelka - https://www.phoca.cz
- * @copyright Copyright (C) Jan Pavelka https://www.phoca.cz
- * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 and later
- * @cms       Joomla
- * @copyright Copyright (C) Open Source Matters. All rights reserved.
- * @license   http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+/*
+ * @package		Joomla.Framework
+ * @copyright	Copyright (C) 2005 - 2010 Open Source Matters, Inc. All rights reserved.
+ * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ *
+ * @component Phoca Component
+ * @copyright Copyright (C) Jan Pavelka www.phoca.cz
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License version 2 or later;
  */
 
-defined('_JEXEC') or die;
+
 class PhocaGalleryFbSystem
 {	
-	public static function setSessionData($data) {
+	public function setSessionData($data) {
 		
 		$session = array();
 		// Don't set the session, in other way the SIG will be not the same
@@ -32,22 +32,25 @@ class PhocaGalleryFbSystem
 		return $session;
 	}
 	
-	public static function getFbUserInfo ($id) {
+	public function getFbUserInfo ($id) {
 		
-		$db = JFactory::getDBO();
+		$db = &JFactory::getDBO();
 
        //build the list of categories
 		$query = 'SELECT a.*'
 		. ' FROM #__phocagallery_fb_users AS a'
 		. ' WHERE a.id ='.(int)$id;
 		$db->setQuery( $query );
-	
+		if (!$db->query()) {
+			$this->setError($db->getErrorMsg());
+			return false;
+		}
 		
 		$item = $db->loadObject();
 		return $item;
 	}
 	
-	public static function getCommentsParams($id) {
+	public function getCommentsParams($id) {
 	
 		$o = array();
 		$item = self::getFbUserInfo($id);
@@ -67,9 +70,9 @@ class PhocaGalleryFbSystem
 		return $o;
 	}
 	
-	public static function getImageFromCat($idCat, $idImg = 0) {
+	public function getImageFromCat($idCat, $idImg = 0) {
 	
-		$db = JFactory::getDBO();
+		$db = &JFactory::getDBO();
 		
 		$nextImg = '';
 		if ($idImg > 0) {
@@ -97,7 +100,7 @@ class PhocaGalleryFbSystem
 		} else {
 			$img['caption']	= $item->title;
 		}
-		//TO DO TEST EXT IMAGE
+		//TODO TEST EXT IMAGE
 		if (isset($item->extid) && $item->extid != '') {
 			$img['extid']		= $item->extid;
 		}
@@ -113,7 +116,7 @@ class PhocaGalleryFbSystem
 	/* 
 	 * Used while pagination
 	 */
-	public static function renderProcessPage($id, $refreshUrl, $countInfo = '', $import = 0) {
+	function renderProcessPage($id, $refreshUrl, $countInfo = '', $import = 0) {
 	
 		if ($import == 0) {
 			$stopText = JText::_( 'COM_PHOCAGALLERY_STOP_UPLOADING_FACEBOOK_IMAGES' );

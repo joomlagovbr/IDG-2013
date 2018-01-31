@@ -25,11 +25,10 @@ $OPT		= strtoupper($option);
 	Joomla.submitbutton = function(task)
 	{
 		if (task == '<?php echo $task ?>.cancel' || document.formvalidator.isValid(document.id('adminForm'))) {
-			<?php echo $this->form->getField('source')->save(); ?>
 			Joomla.submitform(task, document.getElementById('adminForm'));
 		}
 		else {
-			alert('<?php echo JText::_('JGLOBAL_VALIDATION_FORM_FAILED', true);?>');
+			alert('<?php echo $this->escape(JText::_('JGLOBAL_VALIDATION_FORM_FAILED'));?>');
 		}
 	}
 </script><?php

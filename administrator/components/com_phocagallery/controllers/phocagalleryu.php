@@ -22,7 +22,7 @@ class PhocaGalleryCpControllerPhocaGalleryu extends PhocaGalleryCpController
 	function createfolder() {
 		$app	= JFactory::getApplication();
 		// Check for request forgeries
-		JSession::checkToken() or jexit( 'Invalid Token' );
+		JRequest::checkToken() or jexit( 'Invalid Token' );
 
 		// Set FTP credentials, if given
 		jimport('joomla.client.helper');
@@ -33,15 +33,12 @@ class PhocaGalleryCpControllerPhocaGalleryu extends PhocaGalleryCpController
 		//$folder_permissions = octdec((int)$folder_permissions);
 
 		$path			= PhocaGalleryPath::getPath();
-		//$folderNew		= J Request::getCmd( 'foldername', '');
-		//$folderCheck	= JFactory::getApplication()->input->get( 'foldername', null, '', 'string', J REQUEST_ALLOWRAW);
-		$folderNew      = $app->input->getstring('foldername', '');
-		//$folderCheck    = $app->input->getstring('foldername', null, '', 'string', J REQUEST_ALLOWRAW);
-		$folderCheck    = $app->input->getstring('foldername', null, '', 'string');
-		$parent			= JFactory::getApplication()->input->get( 'folderbase', '', '', 'path' );
-		$tab			= JFactory::getApplication()->input->get( 'tab', '', '', 'string' );
-		$field			= JFactory::getApplication()->input->get( 'field');
-		$viewBack		= JFactory::getApplication()->input->get( 'viewback', '', '', '' );
+		$folderNew		= JRequest::getCmd( 'foldername', '');
+		$folderCheck	= JRequest::getVar( 'foldername', null, '', 'string', JREQUEST_ALLOWRAW);
+		$parent			= JRequest::getVar( 'folderbase', '', '', 'path' );
+		$tab			= JRequest::getVar( 'tab', '', '', 'string' );
+		$field			= JRequest::getVar( 'field');
+		$viewBack		= JRequest::getVar( 'viewback', '', '', '' );
 		
 		$link = '';
 		switch ($viewBack) {
@@ -57,23 +54,20 @@ class PhocaGalleryCpControllerPhocaGalleryu extends PhocaGalleryCpController
 				$link = 'index.php?option=com_phocagallery&view=phocagalleryf&tmpl=component&folder='.$parent.'&field='.$field;
 			break;
 			
-			default:
-				$app->enqueueMessage(JText::_('COM_PHOCAGALLERY_ERROR_CONTROLLER'));
-				$app->redirect('index.php?option=com_phocagallery');
+			Default:
+				$app->redirect('index.php?option=com_phocagallery', JText::_('COM_PHOCAGALLERY_ERROR_CONTROLLER'));
 			break;
 		
 		}
 
-		//JFactory::getApplication()->input->set('folder', $parent);
-		JFactory::getApplication()->input->set('folder', $parent);
+		JRequest::setVar('folder', $parent);
 
 		if (($folderCheck !== null) && ($folderNew !== $folderCheck)) {
-			$app->enqueueMessage(JText::_('COM_PHOCAGALLERY_WARNING_DIRNAME'));
-			$app->redirect($link);
+			$app->redirect($link, JText::_('COM_PHOCAGALLERY_WARNING_DIRNAME'));
 		}
 
 		if (strlen($folderNew) > 0) {
-			$folder = JPath::clean($path->image_abs. '/'. $parent. '/'. $folderNew);
+			$folder = JPath::clean($path->image_abs.DS.$parent.DS.$folderNew);
 			if (!JFolder::exists($folder) && !JFile::exists($folder)) {
 				//JFolder::create($path, $folder_permissions );
 				switch((int)$folder_permissions) {
@@ -96,16 +90,14 @@ class PhocaGalleryCpControllerPhocaGalleryu extends PhocaGalleryCpController
 				}
 				if (isset($folder)) {
 					$data = "<html>\n<body bgcolor=\"#FFFFFF\">\n</body>\n</html>";
-					JFile::write($folder. '/'. "index.html", $data);
+					JFile::write($folder.DS."index.html", $data);
 				}
 				
-				$app->enqueueMessage(JText::_('COM_PHOCAGALLERY_SUCCESS_FOLDER_CREATING'));
-				$app->redirect($link);
+				$app->redirect($link, JText::_('COM_PHOCAGALLERY_SUCCESS_FOLDER_CREATING'));
 			} else {
-				$app->enqueueMessage(JText::_('COM_PHOCAGALLERY_ERROR_FOLDER_CREATING_EXISTS'));
-				$app->redirect($link);
+				$app->redirect($link, JText::_('COM_PHOCAGALLERY_ERROR_FOLDER_CREATING_EXISTS'));
 			}
-			//JFactory::getApplication()->input->set('folder', ($parent) ? $parent.'/'.$folder : $folder);
+			//JRequest::setVar('folder', ($parent) ? $parent.'/'.$folder : $folder);
 		}
 		$app->redirect($link);
 	}

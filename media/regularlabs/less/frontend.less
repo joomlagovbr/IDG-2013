@@ -1,0 +1,78 @@
+/**
+ * @package         Regular Labs Library
+ * @version         18.1.20362
+ * 
+ * @author          Peter van Westen <info@regularlabs.com>
+ * @link            http://www.regularlabs.com
+ * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ */
+@import "../../jui/less/mixins.less";
+@import "../../jui/less/variables.less";
+@import "../../jui/less/grid.less";
+@import "../../jui/less/forms.less";
+@import "../../jui/less/dropdowns.less";
+@import "../../jui/less/wells.less";
+@import "../../jui/less/component-animations.less";
+@import "../../jui/less/close.less";
+@import "../../jui/less/buttons.less";
+@import "../../jui/less/button-groups.less";
+@import "../../jui/less/alerts.less";
+@import "../../jui/less/tooltip.less";
+@import "../../jui/less/accordion.less";
+@import "../../jui/less/utilities.less";
+@import "../../jui/less/bootstrap-extended.less";
+@import "../../../administrator/templates/isis/less/icomoon.less";
+@import "multiselect.less";
+
+/* Chosen color styles */
+[class^="chzn-color"].chzn-single,
+[class*=" chzn-color"].chzn-single,
+[class^="chzn-color"].chzn-single .chzn-single-with-drop,
+[class*=" chzn-color"].chzn-single .chzn-single-with-drop {
+	.box-shadow(none);
+}
+
+.chzn-color.chzn-single[rel="value_1"],
+.chzn-color-reverse.chzn-single[rel="value_0"],
+.chzn-color-state.chzn-single[rel="value_1"] {
+	.buttonBackground(@btnSuccessBackground, @btnSuccessBackgroundHighlight);
+}
+
+.chzn-color.chzn-single[rel="value_0"],
+.chzn-color-reverse.chzn-single[rel="value_1"],
+.chzn-color-state.chzn-single[rel="value_0"],
+.chzn-color-state.chzn-single[rel="value_-1"],
+.chzn-color-state.chzn-single[rel="value_-2"] {
+	.buttonBackground(@btnDangerBackground, @btnDangerBackgroundHighlight);
+}
+
+/* Min-width on buttons */
+.controls .btn-group > .btn {
+	min-width: 50px;
+}
+
+.controls .btn-group.btn-group-yesno > .btn {
+	min-width: 84px;
+	padding:   2px 12px;
+}
+
+.control-label {
+	> label {
+		> h4 {
+			margin-bottom: 0;
+		}
+	}
+}
+
+.controls {
+	> fieldset {
+		margin-bottom:  0;
+		padding-top:    0;
+		padding-bottom: 0;
+	}
+}
+
+.chzn-container .chzn-drop {
+	z-index: 1040;
+}

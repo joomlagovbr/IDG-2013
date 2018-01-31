@@ -2,12 +2,12 @@
 <extension method="upgrade" type="component" version="3">
 	<name>com_phocagallery</name>
 	<author>Jan Pavelka (www.phoca.cz)</author>
-	<creationDate>01/01/2018</creationDate>
+	<creationDate>13/11/2013</creationDate>
 	<authorEmail></authorEmail>
 	<authorUrl>www.phoca.cz</authorUrl>
 	<copyright>Jan Pavelka</copyright>
 	<license>GNU/GPL</license>
-	<version>4.3.9</version>
+	<version>4.0.4</version>
 	<description>Phoca Gallery</description>
 	<scriptfile>install/script.php</scriptfile>
 
@@ -24,9 +24,7 @@
 	</uninstall>
 
 	<update>
-		<schemas>
-			<schemapath type="mysql">update/sql/mysql</schemapath>
-		</schemas>
+		<schemas/>
 	</update>
 
 	<files folder="site">
@@ -84,7 +82,6 @@
 			<folder>libraries</folder>
 			<folder>models</folder>
 			<folder>tables</folder>
-			<folder>update</folder>
 			<folder>views</folder>
 		</files>
 
@@ -94,8 +91,4 @@
 		</languages>
 
 	</administration>
-	<updateservers>
-		<server type="extension" name="com_phocagallery">https://raw.githubusercontent.com/PhocaCz/PhocaGallery/master/manifest.xml</server>
-	</updateservers>
-
 </extension>

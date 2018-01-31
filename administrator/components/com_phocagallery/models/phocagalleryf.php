@@ -1,6 +1,6 @@
 <?php
 /*
- * @package Joomla
+ * @package Joomla 1.5
  * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  *
@@ -12,16 +12,15 @@ defined('_JEXEC') or die();
 jimport('joomla.application.component.model');
 jimport('joomla.filesystem.folder');
 jimport('joomla.filesystem.file');
-setlocale(LC_ALL, 'C.UTF-8', 'C');
 
 class PhocaGalleryCpModelPhocaGalleryF extends JModelLegacy
 {
-	function getState($property = NULL, $default = NULL) {
+	function getState($property = null) {
 		static $set;
 
 		if (!$set) {
-			$folder = JFactory::getApplication()->input->get( 'folder', '', '', 'path' );
-			$upload = JFactory::getApplication()->input->get( 'upload', '', '', 'int' );
+			$folder = JRequest::getVar( 'folder', '', '', 'path' );
+			$upload = JRequest::getVar( 'upload', '', '', 'int' );
 			$this->setState('folder', $folder);
 			$parent = str_replace("\\", "/", dirname($folder));
 			$parent = ($parent == '.') ? null : $parent;
@@ -75,7 +74,7 @@ class PhocaGalleryCpModelPhocaGalleryF extends JModelLegacy
 			foreach ($folder_list as $folder) {
 				$tmp 							= new JObject();
 				$tmp->name 						= basename($folder);
-				$tmp->path_with_name 			= str_replace(DS, '/', JPath::clean($orig_path . '/'. $folder));
+				$tmp->path_with_name 			= str_replace(DS, '/', JPath::clean($orig_path . DS . $folder));
 				$tmp->path_without_name_relative= $path->image_rel . str_replace($orig_path_server, '', $tmp->path_with_name);
 				$tmp->path_with_name_relative_no= str_replace($orig_path_server, '', $tmp->path_with_name);	
 				$folders[] = $tmp;

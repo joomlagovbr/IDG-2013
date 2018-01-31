@@ -1,6 +1,6 @@
 <?php
 /*
- * @package Joomla
+ * @package Joomla 1.5
  * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  *
@@ -14,7 +14,6 @@ defined('_JEXEC') or die('Restricted access');
 
 // Include library dependencies
 jimport('joomla.filter.input');
-use Joomla\String\StringHelper;
 
 class TablePhocaGallery extends JTable
 {
@@ -73,7 +72,7 @@ class TablePhocaGallery extends JTable
 		if (!empty($this->metakey)) {
 			// only process if not empty
 			$bad_characters = array("\n", "\r", "\"", "<", ">"); // array of characters to remove
-			$after_clean = StringHelper::str_ireplace($bad_characters, "", $this->metakey); // remove bad characters
+			$after_clean = JString::str_ireplace($bad_characters, "", $this->metakey); // remove bad characters
 			$keys = explode(',', $after_clean); // create array using commas as delimiter
 			$clean_keys = array();
 			foreach($keys as $key) {
@@ -88,7 +87,7 @@ class TablePhocaGallery extends JTable
 		if (!empty($this->metadesc)) {
 			// only process if not empty
 			$bad_characters = array("\"", "<", ">");
-			$this->metadesc = StringHelper::str_ireplace($bad_characters, "", $this->metadesc);
+			$this->metadesc = JString::str_ireplace($bad_characters, "", $this->metadesc);
 		}
 
 		return true;

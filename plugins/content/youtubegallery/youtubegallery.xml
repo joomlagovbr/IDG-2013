@@ -1,43 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="2.5" type="plugin" group="content" method="upgrade" client="site">
+<extension version="3.0" type="plugin" group="content" method="upgrade" client="site">
 	
     <name>Content - Youtube Gallery</name>
-    <author>Ivan Komlev</author>
-    <creationDate>February 2016</creationDate>
-    <copyright>Copyright (C) 2009-2016 Ivan Komlev. All rights reserved.</copyright>
+    <author>DesignCompass corp</author>
+    <creationDate>December 2013</creationDate>
+    <copyright>Copyright (C) 2009-2013 DesignCompass corp. All rights reserved.</copyright>
     <license>GNU General Public License</license>
     <authorEmail>support@joomlaboat.com</authorEmail>
     <authorUrl>http://www.joomlaboat.com/</authorUrl>
-    <version>4.4.0</version>
-    <description><![CDATA[
-    <p>A plugin to show Youtube Gallery in any article.</p>
-<p>Plugin to show a catalog of selected YouTube (not only) videos. All you need is to create a Video List and a Theme (or you may download free Theme).</p>
-
-
-<hr>
-
-<h1>Plugin usage:</h1>
-
-<p>Type the special keyword {youtubegallery=<i>Video List Name,Theme Name</i>} or {youtubegalleryid=<i>Video List ID,Theme ID</i>} inside of any article.</p>
-
-<p>Example:</p>
-
-<p style='color:#007000;'>{youtubegallery=My First Gallery,Simple Grid} - will show the gallery "My First Gallery", but create Video List and Theme first.
-
-<hr/>
-
-<p>For more info <a href='http://joomlaboat.com/youtube-gallery' target='_blank'>click here</a></p>
-
-<p>To take the logo off <a href='http://joomlaboat.com/youtube-gallery#pro-version' target='_blank'>click here</a></p>
-
-    ]]></description>
+    <version>3.5.9</version>
+    <description>YOUTUBEGALLERYDESCRIPTION</description>
     <files>
         <filename plugin="youtubegallery">youtubegallery.php</filename>
-	<filename>index.html</filename>
+		<filename>index.html</filename>
     </files>
-    
-    <!-- Runs on install/uninstall/update; New in 2.5 -->
-    <scriptfile>script.php</scriptfile>
 	
 	<config>
 		<fields name="params">

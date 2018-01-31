@@ -22,7 +22,7 @@
 
 
 			
-<field name="comment" type="editor" buttons="true" hide="pagebreak,readmore" class="inputbox" label="COM_PHOCAGALLERY_FIELD_COMMENT_LABEL" description="COM_PHOCAGALLERY_FIELD_COMMENT_DESC" filter="JComponentHelper::filterText" />
+<field name="comment" type="editor" buttons="true" hide="pagebreak,readmore" class="inputbox" label="COM_PHOCAGALLERY_FIELD_COMMENT_LABEL" description="COM_PHOCAGALLERY_FIELD_COMMENT_DESC" filter="safehtml" />
 		
 
 
@@ -39,7 +39,7 @@
 
 
 
-<field name="date" type="Calendar" class="inputbox" label="COM_PHOCAGALLERY_FIELD_DATE_LABEL" description="COM_PHOCAGALLERY_FIELD_DATE_DESC" filter="JComponentHelper::filterText" />
+<field name="date" type="Calendar" class="inputbox" label="COM_PHOCAGALLERY_FIELD_DATE_LABEL" description="COM_PHOCAGALLERY_FIELD_DATE_DESC" filter="safehtml" />
 
 
 	</fieldset>

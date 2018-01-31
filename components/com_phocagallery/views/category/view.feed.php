@@ -1,6 +1,6 @@
 <?php
 /*
- * @package Joomla
+ * @package Joomla 1.5
  * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  *
@@ -25,9 +25,9 @@ class PhocaGalleryViewCategory extends JViewLegacy
 		$app		= JFactory::getApplication();
 		$user 		= JFactory::getUser();
 		$userLevels	= implode (',', $user->getAuthorisedViewLevels());
-		$db 		= JFactory::getDBO();
+		$db 		= &JFactory::getDBO();
 		$menu 		= $app->getMenu();
-		$document	= JFactory::getDocument();
+		$document	= &JFactory::getDocument();
 		$params 	= $app->getParams();
 		
 		// Specific category

@@ -1,12 +1,12 @@
 <?php
-/**
- * @package   Phoca Gallery
- * @author    Jan Pavelka - https://www.phoca.cz
- * @copyright Copyright (C) Jan Pavelka https://www.phoca.cz
- * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 and later
- * @cms       Joomla
- * @copyright Copyright (C) Open Source Matters. All rights reserved.
- * @license   http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+/*
+ * @package Joomla 1.5
+ * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+ *
+ * @component Phoca Gallery
+ * @copyright Copyright (C) Jan Pavelka www.phoca.cz
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
 defined( '_JEXEC' ) or die( 'Restricted access' );
 jimport( 'joomla.filesystem.folder' ); 
@@ -15,20 +15,9 @@ phocagalleryimport('phocagallery.render.renderprocess');
 phocagalleryimport('phocagallery.file.file');
 phocagalleryimport('phocagallery.image.image');
 
-register_shutdown_function(function(){
-	$error = error_get_last();
-	if(null !== $error) {
-		if (isset($error['type']) && $error['type'] == 1) {
-			$app		= JFactory::getApplication();
-			$app->redirect('index.php?option=com_phocagallery&view=phocagalleryfe&error=1');
-			exit;
-		}
-	}
-});
-
 class PhocaGalleryImageRotate
 {
-	public static function rotateImage($thumbName, $size, $angle=90, &$errorMsg) {
+	function rotateImage($thumbName, $size, $angle=90, &$errorMsg) {
 	
 		$params 		= JComponentHelper::getParams('com_phocagallery') ;
 		$jfile_thumbs	= $params->get( 'jfile_thumbs', 1 );
@@ -74,52 +63,28 @@ class PhocaGalleryImageRotate
 						$errorMsg = 'ErrorNoJPGFunction';
 						return false;
 					}
-					//$image1 = ImageCreateFromJPEG($fileIn);
-					try {
-						$image1 = ImageCreateFromJPEG($fileIn);
-					} catch(\Exception $exception) {
-						$errorMsg = 'ErrorJPGFunction';
-						return false;
-					}
+					$image1 = ImageCreateFromJPEG($fileIn);
 					break;
 	            case IMAGETYPE_PNG :
 					if (!function_exists('ImageCreateFromPNG')) {
 						$errorMsg = 'ErrorNoPNGFunction';
 						return false;
 					}
-					//$image1 = ImageCreateFromPNG($fileIn);
-					try {
-						$image1 = ImageCreateFromPNG($fileIn);
-					} catch(\Exception $exception) {
-						$errorMsg = 'ErrorPNGFunction';
-						return false;
-					}
+					$image1 = ImageCreateFromPNG($fileIn);
 					break;
 	            case IMAGETYPE_GIF :
 					if (!function_exists('ImageCreateFromGIF')) {
 						$errorMsg = 'ErrorNoGIFFunction';
 						return false;
 					}
-					//$image1 = ImageCreateFromGIF($fileIn);
-					try {
-						$image1 = ImageCreateFromGIF($fileIn);
-					} catch(\Exception $exception) {
-						$errorMsg = 'ErrorGIFFunction';
-						return false;
-					}
+					$image1 = ImageCreateFromGIF($fileIn);
 					break;
 	            case IMAGETYPE_WBMP:
 					if (!function_exists('ImageCreateFromWBMP')) {
 						$errorMsg = 'ErrorNoWBMPFunction';
 						return false;
 					}
-					//$image1 = ImageCreateFromWBMP($fileIn);
-					try {
-						$image1 = ImageCreateFromWBMP($fileIn);
-					} catch(\Exception $exception) {
-						$errorMsg = 'ErrorWBMPFunction';
-						return false;
-					}
+					$image1 = ImageCreateFromWBMP($fileIn);
 					break;
 	            Default:
 					$errorMsg = 'ErrorNotSupportedImage';
@@ -342,7 +307,7 @@ class PhocaGalleryImageRotate
 	It's a workaround to enables image rotation on distributions which do not
 	use the bundled gd library (e.g. Debian, Ubuntu).
 	*/
-	public static function imageRotate($src_img, $angle, $colBlack = 0) {
+	function imageRotate($src_img, $angle, $colBlack = 0) {
 
 		if (!imageistruecolor($src_img))
 		{

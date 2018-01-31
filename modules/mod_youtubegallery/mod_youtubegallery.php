@@ -1,8 +1,8 @@
 <?php
 /**
- * Youtube Gallery Joomla! Module
- * @version 4.4.0
- * @author Ivan Komlev< <support@joomlaboat.com>
+ * youtubegallery Joomla! 3.0 Native Component
+ * @version 3.5.9 (MODIFICADA - projeto portal padrão)
+ * @author DesignCompass corp< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -16,133 +16,107 @@ if(!defined('DS'))
 require_once(JPATH_SITE.DS.'components'.DS.'com_youtubegallery'.DS.'includes'.DS.'render.php');
 require_once(JPATH_SITE.DS.'components'.DS.'com_youtubegallery'.DS.'includes'.DS.'misc.php');
 
-$errorreporting=(bool)YouTubeGalleryMisc::getSettingValue('errorreporting');
-if($errorreporting)
-    error_reporting(E_ALL);
-else
-    error_reporting(0);
-
 $listid=(int)$params->get( 'listid' );
-    
-//Get Theme
-if(YouTubeGalleryMisc::check_user_agent('mobile'))
-{
-	//Use Mobile Theme if set.
-	$themeid=(int)$params->get( 'mobilethemeid' );
-	if($themeid==0)
-	    $themeid=(int)$params->get( 'themeid' );
-}
-else
-	$themeid=(int)$params->get( 'themeid' );
+$themeid=(int)$params->get( 'themeid' );
 
 $align='';
 
+//ALTERACAO PROJETO PORTAL PADRAO: codigo movido para camada de template e chamada de tmpl realizada após as linhas comentadas.
+/*
 if($listid!=0 and $themeid!=0)
 {
 	$misc=new YouTubeGalleryMisc;
 	
-	$videolist_and_theme_found=true;
-	
+    
 	if(!$misc->getVideoListTableRow($listid))
-	{
 		echo '<p>No video found</p>';
-		$videolist_and_theme_found=false;
-	}
 	
 	if(!$misc->getThemeTableRow($themeid))
-	{
-		echo '<p>Theme not found</p>';
-		$videolist_and_theme_found=false;
-	}
-	
-	if($videolist_and_theme_found)
-	{
-		
-		$firstvideo='';
-		$youtubegallerycode='';
-		$total_number_of_rows=0;
-
-		$misc->update_playlist();
-
-		$videoid=JRequest::getCmd('videoid','');
-		if(!isset($videoid) or $videoid=='')
-		{
-			$video=JRequest::getVar('video','');
-			$video=preg_replace('/[^a-zA-Z0-9-_]+/', '', $video);
+		echo '<p>No theme found</p>';
 			
-			if($video!='')
-				$videoid=YouTubeGalleryMisc::getVideoIDbyAlias($video);
-		}
-	
-		if($misc->theme_row->playvideo==1 and $videoid!='')
-			$misc->theme_row->autoplay=1;
-	
-		$videoid_new=$videoid;
-		$videolist=$misc->getVideoList_FromCache_From_Table($videoid_new,$total_number_of_rows);
-	
-		if($videoid=='')
-		{
-			if($misc->theme_row->playvideo==1 and $videoid_new!='')
-				$videoid=$videoid_new;
-		}
-	
-		$custom_itemid=(int)$params->get( 'customitemid' );
-	
-		$renderer= new YouTubeGalleryRenderer;
-	
-		$gallerymodule=$renderer->render(
-			$videolist,
-			$misc->videolist_row,
-			$misc->theme_row,
-			$total_number_of_rows,
-			$videoid,
-			$custom_itemid
-		);
-    
-		if($params->get( 'allowcontentplugins' ))
-		{
-			$o = new stdClass();
-			$o->text=$gallerymodule;
-						
-			$dispatcher	= JDispatcher::getInstance();
-							
-			JPluginHelper::importPlugin('content');
-					
-			$r = $dispatcher->trigger('onContentPrepare', array ('com_content.article', &$o, &$params_, 0));
-							
-			$gallerymodule=$o->text;
-		}
-    
-		$align=$params->get( 'galleryalign' );
-	
-		switch($align)
-		{
-		   	case 'left' :
-		   		$youtubegallerycode.= '<div style="float:left;position:relative;">'.$gallerymodule.'</div>';
-			break;
+	$firstvideo='';
+	$youtubegallerycode='';
+	$total_number_of_rows=0;
 
-			case 'center' :
-		   		$youtubegallerycode.= '<div style="width:'.$misc->theme_row->width.'px;margin-left:auto;margin-right:auto;position:relative;">'.$gallerymodule.'</div>';
-			break;
-        	
-		   	case 'right' :
-		  		$youtubegallerycode.= '<div style="float:right;position:relative;">'.$gallerymodule.'</div>';
-			break;
-	
-		   	default :
-		   		$youtubegallerycode.= $gallerymodule;
-			break;
-	
-		}//switch($align)
+	$misc->update_playlist();
+
+	$videoid=JRequest::getVar('videoid');
+	if(!isset($videoid))
+	{
+		$video=JRequest::getVar('video');
+		if(isset($video))
+			$videoid=YouTubeGalleryMisc::getVideoIDbyAlias($video);
 	}
-	else
-		echo '<p style="background-color:red;color:white;">Youtube Gallery: Video List and Theme not found.</p>';
-		
+	
+	if($misc->theme_row->playvideo==1 and $videoid!='')
+		$misc->theme_row->autoplay=1;
+	
+	$videoid_new=$videoid;
+	$videolist=$misc->getVideoList_FromCache_From_Table($videoid_new,$total_number_of_rows);
+	
+	if($videoid=='')
+	{
+		if($misc->theme_row->playvideo==1 and $videoid_new!='')
+			$videoid=$videoid_new;
+	}
+	
+	$custom_itemid=(int)$params->get( 'customitemid' );
+	
+	$renderer= new YouTubeGalleryRenderer;
+	
+	$gallerymodule=$renderer->render(
+		$videolist,
+		$misc->videolist_row,
+		$misc->theme_row,
+		$total_number_of_rows,
+		$videoid,
+		$custom_itemid
+	);
+
+	//$app		= JFactory::getApplication();
+    
+	if($params->get( 'allowcontentplugins' ))
+	{
+		$o = new stdClass();
+		$o->text=$gallerymodule;
+						
+		$dispatcher	= JDispatcher::getInstance();
+							
+		JPluginHelper::importPlugin('content');
+					
+		$r = $dispatcher->trigger('onContentPrepare', array ('com_content.article', &$o, &$params_, 0));
+							
+		$gallerymodule=$o->text;
+	}
+    
+	$align=$params->get( 'galleryalign' );
+	
+	switch($align)
+	{
+	   	case 'left' :
+	   		$youtubegallerycode.= '<div style="float:left;position:relative;">'.$gallerymodule.'</div>';
+   		break;
+
+		case 'center' :
+	   		$youtubegallerycode.= '<div style="width:'.$misc->theme_row->width.'px;margin-left:auto;margin-right:auto;position:relative;">'.$gallerymodule.'</div>';
+   		break;
+        	
+	   	case 'right' :
+	  		$youtubegallerycode.= '<div style="float:right;position:relative;">'.$gallerymodule.'</div>';
+   		break;
+	
+	   	default :
+	   		$youtubegallerycode.= $gallerymodule;
+   		break;
+	}//switch($align)
+	
 	echo $youtubegallerycode;
 	
 }
 else
-	echo '<p>Video list or Theme not selected</p>';
+	echo '<p>Video list or Theme not selected</p>'; //*/
+require JModuleHelper::getLayoutPath('mod_youtubegallery', $params->get('layout', 'default'));
+//fim ALTERACAO PROJETO PORTAL PADRAO
 
 
 

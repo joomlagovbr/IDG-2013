@@ -1,8 +1,8 @@
 <?php
 /**
  * YoutubeGallery
- * @version 4.4.0
- * @author Ivan Komlev< <support@joomlaboat.com>
+ * @version 3.5.9
+ * @author DesignCompass corp< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -163,11 +163,13 @@ $result.='<object type="application/x-shockwave-flash" data="'.$player.'" width=
 		$size=array(120,90);
 		$s=explode(';',$cssstyle);
 		$c=0;
-
+		//echo '<br/>s=';
+		//print_r($s);
 		foreach($s as $a)
 		{
 			$p=explode(':',$a);
-
+			//echo '<br/>p=';
+			//print_r($p);
 			if(count($p)>0)
 			{
 				$o=strtolower($p[0]);
@@ -187,7 +189,8 @@ $result.='<object type="application/x-shockwave-flash" data="'.$player.'" width=
 			if($c==2)
 				break;
 		}
-
+		//echo '<br/>size=';
+		//print_r($size);
 		
 		return $size;
 	}
@@ -252,9 +255,8 @@ $result.='<object type="application/x-shockwave-flash" data="'.$player.'" width=
 		$result='';
 		//http://flv-player.net/players/maxi/license/
 		$result.='<div style=""><object type="application/x-shockwave-flash" id="'.$playerid.'" alt="'.$title.'" data="'.$player.'" width="'.$width.'" height="'.$height.'" '
-			.'style="margin:0 !important;padding: 0 !important;border:none !important;"'
+			.'style="margin:0 !important;padding: 0 !important;border:none !important;">'
 			.($theme_row->responsive==1 ? ' onLoad="YoutubeGalleryAutoResizePlayer'.$videolist_row->id.'();"' : '')
-			.'>'
 			.'<param name="movie" value="'.$player.'" />';
 
 			$p='';

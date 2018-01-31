@@ -1,13 +1,13 @@
 -- -------------------------------------------------------------------- --
 -- Phoca Gallery manual installation                                    --
 -- -------------------------------------------------------------------- --
--- See documentation on https://www.phoca.cz/                            --
+-- See documentation on http://www.phoca.cz/                            --
 --                                                                      --
 -- Change all prefixes #__ to prefix which is set in your Joomla! site  --
 -- (e.g. from #__phocagallery to jos_phocagallery)                      --
 -- Run this SQL queries in your database tool, e.g. in phpMyAdmin       --
 -- If you have questions, just ask in Phoca Forum                       --
--- https://www.phoca.cz/forum/                                           --
+-- http://www.phoca.cz/forum/                                           --
 -- -------------------------------------------------------------------- --
 
 CREATE TABLE IF NOT EXISTS `#__phocagallery` (
@@ -28,7 +28,6 @@ CREATE TABLE IF NOT EXISTS `#__phocagallery` (
   `userid` int(11) NOT NULL DEFAULT '0',
   `videocode` text,
   `vmproductid` int(11) NOT NULL DEFAULT '0',
-  `pcproductid` int(11) NOT NULL DEFAULT '0',
   `imgorigsize` int(11) NOT NULL DEFAULT '0',
   `published` tinyint(1) NOT NULL DEFAULT '0',
   `approved` tinyint(1) NOT NULL DEFAULT '0',
@@ -58,7 +57,6 @@ CREATE TABLE IF NOT EXISTS `#__phocagallery_categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `parent_id` int(11) NOT NULL DEFAULT '0',
   `owner_id` int(11) NOT NULL DEFAULT '0',
-  `image_id` int(11) NOT NULL DEFAULT '0',
   `title` varchar(255) NOT NULL DEFAULT '',
   `name` varchar(255) NOT NULL DEFAULT '',
   `alias` varchar(255) NOT NULL DEFAULT '',
@@ -202,7 +200,8 @@ CREATE TABLE IF NOT EXISTS `#__phocagallery_styles` (
 INSERT INTO `#__phocagallery_styles` (`id`, `title`, `alias`, `filename`, `menulink`, `type`, `published`, `checked_out`, `checked_out_time`, `ordering`, `params`, `language`) VALUES
 (1, 'Phocagallery', 'phocagallery', 'phocagallery.css', '', 1, 1, 0, '0000-00-00 00:00:00', 1, NULL, '*'),
 (2, 'Rating', '', 'rating.css', NULL, 1, 1, 0, '0000-00-00 00:00:00', 2, NULL, '*'),
-(3, 'Default', '', 'default.css', NULL, 2, 1, 0, '0000-00-00 00:00:00', 3, NULL, '*');
+(3, 'Default', '', 'default.css', NULL, 2, 1, 0, '0000-00-00 00:00:00', 3, NULL, '*'),
+(4, 'Bootstrap', '', 'bootstrap.min.css', NULL, 1, 0, 0, '0000-00-00 00:00:00', 4, NULL, '*');
 
 CREATE TABLE IF NOT EXISTS `#__phocagallery_tags` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

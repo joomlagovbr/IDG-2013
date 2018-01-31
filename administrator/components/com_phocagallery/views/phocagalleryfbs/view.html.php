@@ -32,7 +32,7 @@ class PhocaGalleryCpViewPhocaGalleryFbs extends JViewLegacy
 		
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
-			throw new Exception(implode("\n", $errors), 500);
+			JError::raiseError(500, implode("\n", $errors));
 			return false;
 		}
 		
@@ -49,26 +49,26 @@ class PhocaGalleryCpViewPhocaGalleryFbs extends JViewLegacy
 		$state	= $this->get('State');
 		$canDo	= phocagalleryfbsHelper::getActions();
 	
-		JToolbarHelper ::title( JText::_( 'COM_PHOCAGALLERY_FB_USERS' ), 'user' );
+		JToolBarHelper::title( JText::_( 'COM_PHOCAGALLERY_FB_USERS' ), 'user' );
 	
 		if ($canDo->get('core.create')) {
-			JToolbarHelper ::addNew( 'phocagalleryfb.add','JToolbar_NEW');
+			JToolBarHelper::addNew( 'phocagalleryfb.add','JTOOLBAR_NEW');
 		}
 		if ($canDo->get('core.edit')) {
-			JToolbarHelper ::editList('phocagalleryfb.edit','JToolbar_EDIT');
+			JToolBarHelper::editList('phocagalleryfb.edit','JTOOLBAR_EDIT');
 		}
 		if ($canDo->get('core.edit.state')) {
 
-			JToolbarHelper ::divider();
-			JToolbarHelper ::custom('phocagalleryfbs.publish', 'publish.png', 'publish_f2.png','JToolbar_PUBLISH', true);
-			JToolbarHelper ::custom('phocagalleryfbs.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JToolbar_UNPUBLISH', true);
+			JToolBarHelper::divider();
+			JToolBarHelper::custom('phocagalleryfbs.publish', 'publish.png', 'publish_f2.png','JTOOLBAR_PUBLISH', true);
+			JToolBarHelper::custom('phocagalleryfbs.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
 		}
 	
 		if ($canDo->get('core.delete')) {
-			JToolbarHelper ::deleteList(  JText::_( 'COM_PHOCAGALLERY_WARNING_DELETE_ITEMS' ), 'phocagalleryfbs.delete', 'COM_PHOCAGALLERY_DELETE');
+			JToolBarHelper::deleteList(  JText::_( 'COM_PHOCAGALLERY_WARNING_DELETE_ITEMS' ), 'phocagalleryfbs.delete', 'COM_PHOCAGALLERY_DELETE');
 		}
-		JToolbarHelper ::divider();
-		JToolbarHelper ::help( 'screen.phocagallery', true );
+		JToolBarHelper::divider();
+		JToolBarHelper::help( 'screen.phocagallery', true );
 	}
 	
 	protected function getSortFields() {

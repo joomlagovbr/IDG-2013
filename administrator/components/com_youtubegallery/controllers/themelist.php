@@ -1,8 +1,8 @@
 <?php
 /**
- * YoutubeGallery Joomla! Native Component
- * @version 4.4.0
- * @author Ivan Komlev< <support@joomlaboat.com>
+ * YoutubeGallery Joomla! 3.0 Native Component
+ * @version 3.5.9
+ * @author DesignCompass corp< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -22,7 +22,7 @@ class YoutubeGalleryControllerThemeList extends JControllerAdmin
 		 * Proxy for getModel.
 		 */
 		
-		function display($cachable = false, $urlparams = array())
+		function display()
 		{
 				switch(JRequest::getVar( 'task'))
 				{
@@ -59,7 +59,7 @@ class YoutubeGalleryControllerThemeList extends JControllerAdmin
 				
 		}
 	
-		public function getModel($name = 'ThemeList', $prefix = 'YoutubeGalleryModel', $config = array()) 
+		public function getModel($name = 'ThemeList', $prefix = 'YoutubeGalleryModel') 
 		{
 		        $model = parent::getModel($name, $prefix, array('ignore_request' => true));
 		        return $model;

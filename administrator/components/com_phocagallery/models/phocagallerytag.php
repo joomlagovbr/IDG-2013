@@ -16,7 +16,6 @@ class PhocaGalleryCpModelPhocaGalleryTag extends JModelAdmin
 {
 	protected	$option 		= 'com_phocagallery';
 	protected 	$text_prefix	= 'com_phocagallery';
-	public 		$typeAlias 		= 'com_phocagallery.phocagallerytag';
 	
 	protected function canDelete($record)
 	{
@@ -57,7 +56,7 @@ class PhocaGalleryCpModelPhocaGalleryTag extends JModelAdmin
 		return $data;
 	}
 	
-	protected function prepareTable($table)
+	protected function prepareTable(&$table)
 	{
 		jimport('joomla.filter.output');
 		$date = JFactory::getDate();

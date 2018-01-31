@@ -50,15 +50,15 @@ class PhocaGalleryCpViewPhocaGalleryC extends JViewLegacy
 		//$this->item	=& $this->get('Data');
 	
 		//Image button
-	/*	$link = 'index.php?option=com_phocagallery&amp;view=phocagalleryf&amp;tmpl=component';
-	
+		$link = 'index.php?option=com_phocagallery&amp;view=phocagalleryf&amp;tmpl=component';
+		JHTML::_('behavior.modal', 'a.modal-button');
 		$button = new JObject();
 		$button->set('modal', true);
 		$button->set('link', $link);
 		$button->set('text', JText::_('COM_PHOCAGALLERY_FOLDER'));
 		$button->set('name', 'image');
 		$button->set('modalname', 'modal-button');
-		$button->set('options', "{handler: 'iframe', size: {x: 620, y: 400}}");*/
+		$button->set('options', "{handler: 'iframe', size: {x: 620, y: 400}}");
 		
 		$lists 	= array();		
 		$isNew	= ((int)$this->item->id == 0);
@@ -82,9 +82,9 @@ class PhocaGalleryCpViewPhocaGalleryC extends JViewLegacy
 	
 	protected function addToolbar() {
 		
-		require_once JPATH_COMPONENT.'/helpers/phocagallerycs.php';
-		JFactory::getApplication()->input->set('hidemainmenu', true);
-		$bar 		= JToolbar::getInstance('toolbar');
+		require_once JPATH_COMPONENT.DS.'helpers'.DS.'phocagallerycs.php';
+		JRequest::setVar('hidemainmenu', true);
+		$bar 		= & JToolBar::getInstance('toolbar');
 		$user		= JFactory::getUser();
 		$isNew		= ($this->item->id == 0);
 		$checkedOut	= !($this->item->checked_out == 0 || $this->item->checked_out == $user->get('id'));
@@ -94,36 +94,36 @@ class PhocaGalleryCpViewPhocaGalleryC extends JViewLegacy
 		
 
 		$text = $isNew ? JText::_( 'COM_PHOCAGALLERY_NEW' ) : JText::_('COM_PHOCAGALLERY_EDIT');
-		JToolbarHelper ::title(   JText::_( 'COM_PHOCAGALLERY_CATEGORY' ).': <small><small>[ ' . $text.' ]</small></small>' , 'folder');
+		JToolBarHelper::title(   JText::_( 'COM_PHOCAGALLERY_CATEGORY' ).': <small><small>[ ' . $text.' ]</small></small>' , 'folder');
 
 		// If not checked out, can save the item.
 		if (!$checkedOut && $canDo->get('core.edit')){
-			JToolbarHelper ::apply('phocagalleryc.apply', 'JToolbar_APPLY');
-			JToolbarHelper ::save('phocagalleryc.save', 'JToolbar_SAVE');
-			JToolbarHelper ::addNew('phocagalleryc.save2new', 'JToolbar_SAVE_AND_NEW');
+			JToolBarHelper::apply('phocagalleryc.apply', 'JTOOLBAR_APPLY');
+			JToolBarHelper::save('phocagalleryc.save', 'JTOOLBAR_SAVE');
+			JToolBarHelper::addNew('phocagalleryc.save2new', 'JTOOLBAR_SAVE_AND_NEW');
 			$this->tmpl['enablepicasaloading'] = $paramsC->get( 'enable_picasa_loading', 1 );
 			$this->tmpl['enablefacebookloading'] = $paramsC->get( 'enable_facebook_loading', 1 );			
 			if($this->tmpl['enablepicasaloading'] == 1){
-				JToolbarHelper ::custom('phocagalleryc.loadextimgp', 'loadextp.png', '', 'COM_PHOCAGALLERY_P_IMPORT' , false);
+				JToolBarHelper::custom('phocagalleryc.loadextimgp', 'loadextp.png', '', 'COM_PHOCAGALLERY_P_IMPORT' , false);
 			}
 			if($this->tmpl['enablefacebookloading'] == 1){
-				JToolbarHelper ::custom('phocagalleryc.loadextimgf', 'loadextf.png', '', 'COM_PHOCAGALLERY_FB_IMPORT' , false);
-				JToolbarHelper ::custom('phocagalleryc.uploadextimgf', 'uploadextf.png', '', 'COM_PHOCAGALLERY_FB_EXPORT' , false);
+				JToolBarHelper::custom('phocagalleryc.loadextimgf', 'loadextf.png', '', 'COM_PHOCAGALLERY_FB_IMPORT' , false);
+				JToolBarHelper::custom('phocagalleryc.uploadextimgf', 'uploadextf.png', '', 'COM_PHOCAGALLERY_FB_EXPORT' , false);
 			}
 		}
 		// If an existing item, can save to a copy.
 		if (!$isNew && $canDo->get('core.create')) {
-			//JToolbarHelper ::custom('phocagalleryc.save2copy', 'copy.png', 'copy_f2.png', 'JToolbar_SAVE_AS_COPY', false);
+			//JToolBarHelper::custom('phocagalleryc.save2copy', 'copy.png', 'copy_f2.png', 'JTOOLBAR_SAVE_AS_COPY', false);
 		}
 		if (empty($this->item->id))  {
-			JToolbarHelper ::cancel('phocagalleryc.cancel', 'JToolbar_CANCEL');
+			JToolBarHelper::cancel('phocagalleryc.cancel', 'JTOOLBAR_CANCEL');
 		}
 		else {
-			JToolbarHelper ::cancel('phocagalleryc.cancel', 'JToolbar_CLOSE');
+			JToolBarHelper::cancel('phocagalleryc.cancel', 'JTOOLBAR_CLOSE');
 		}
 
-		JToolbarHelper ::divider();
-		JToolbarHelper ::help( 'screen.phocagallery', true );
+		JToolBarHelper::divider();
+		JToolBarHelper::help( 'screen.phocagallery', true );
 	}
 }
 ?>

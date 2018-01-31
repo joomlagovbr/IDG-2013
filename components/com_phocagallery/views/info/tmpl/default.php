@@ -1,15 +1,4 @@
-<?php 
-/*
- * @package Joomla
- * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
- *
- * @component Phoca Gallery
- * @copyright Copyright (C) Jan Pavelka www.phoca.cz
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- */
-
-defined('_JEXEC') or die('Restricted access');
+<?php defined('_JEXEC') or die('Restricted access');
 if ($this->tmpl['backbutton'] != '') {
 	echo $this->tmpl['backbutton'];
 }
@@ -20,5 +9,5 @@ echo '<div id="phoca-exif" class="pg-info-view'.$this->params->get( 'pageclass_s
 .'</table>'
 .'</div>';
 if ($this->tmpl['detailwindow'] == 7) {
-	echo '<div style="text-align:right;color:#ccc;display:block">Powered by <a href="https://www.phoca.cz/phocagallery">Phoca Gallery</a></div>';
+	echo PhocaGalleryRenderFront::renderInfo();
 }

@@ -56,7 +56,7 @@ class JFormFieldPhocaAccessLevel extends JFormFieldList
 
 		$query->select('a.id AS value, a.title AS text');
 		$query->from('#__viewlevels AS a');
-		$query->group('a.id, a.title');
+		$query->group('a.id');
 		$query->order('a.ordering ASC');
 		$query->where('a.id <> 1');//PHOCAEDIT
 		$query->order('`title` ASC');
@@ -67,7 +67,7 @@ class JFormFieldPhocaAccessLevel extends JFormFieldList
 
 		// Check for a database error.
 		if ($db->getErrorNum()) {
-			throw new Exception($db->getErrorMsg(), 500);
+			JError::raiseWarning(500, $db->getErrorMsg());
 			return null;
 		}
 

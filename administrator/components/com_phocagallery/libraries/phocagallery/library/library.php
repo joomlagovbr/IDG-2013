@@ -1,12 +1,12 @@
 <?php
-/**
- * @package   Phoca Gallery
- * @author    Jan Pavelka - https://www.phoca.cz
- * @copyright Copyright (C) Jan Pavelka https://www.phoca.cz
- * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 and later
- * @cms       Joomla
- * @copyright Copyright (C) Open Source Matters. All rights reserved.
- * @license   http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+/*
+ * @package Joomla 1.5
+ * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+ *
+ * @component Phoca Component
+ * @copyright Copyright (C) Jan Pavelka www.phoca.cz
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
 defined('JPATH_BASE') or die();
 
@@ -22,7 +22,7 @@ class PhocaGalleryLibrary extends JObject
 //		$this->libraries= '';
 	}
 
-	public static function getInstance($library = '') {
+	function &getInstance($library = '') {
 		static $instances;
 
 		if (!isset( $instances )) {
@@ -39,16 +39,16 @@ class PhocaGalleryLibrary extends JObject
 		return $instances[$library];
 	}
 
-	public static function getLibrary( $library = '' ) {
+	function getLibrary( $library = '' ) {
 		
-		$instance 			= PhocaGalleryLibrary::getInstance($library);
+		$instance 			= &PhocaGalleryLibrary::getInstance($library);
 		$instance->name		= $library;
 		
 		return $instance;
 	}
 
-	public static function setLibrary( $library = '', $value = 1 ) {
-		$instance 			= PhocaGalleryLibrary::getInstance($library);
+	function setLibrary( $library = '', $value = 1 ) {
+		$instance 			= &PhocaGalleryLibrary::getInstance($library);
 		$instance->name		= $library;
 		$instance->value	= $value;
 		return $instance;

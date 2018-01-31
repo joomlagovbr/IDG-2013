@@ -22,7 +22,7 @@ class PhocaGalleryCpViewPhocaGalleryT extends JViewLegacy
 
 	public function display($tpl = null) {
 		
-		$document	= JFactory::getDocument();
+		$document	= &JFactory::getDocument();
 		JHTML::stylesheet( 'media/com_phocagallery/css/administrator/phocagallery.css' );
 		JHTML::stylesheet( 'administrator/components/com_phocagallery/assets/jcp/picker.css' );
 		$document->addScript(JURI::base(true).'/components/com_phocagallery/assets/jcp/picker.js');
@@ -44,13 +44,13 @@ class PhocaGalleryCpViewPhocaGalleryT extends JViewLegacy
 		$this->tmpl['sih']		= $params->get('small_image_height', 50 );
 		
 		//After creating an image (post with data);
-		$this->tmpl['ssbgc']	= JFactory::getApplication()->input->get( 'ssbgc', '', '', 'string' );
-		$this->tmpl['sibgc']	= JFactory::getApplication()->input->get( 'sibgc', '', '', 'string' );
-		$this->tmpl['sibrdc']	= JFactory::getApplication()->input->get( 'sibrdc', '', '', 'string' );
-		$this->tmpl['sie']		= JFactory::getApplication()->input->get( 'sie', '', '', 'int' );
-		$this->tmpl['siec']		= JFactory::getApplication()->input->get( 'siec', '', '', 'string' );
-		$siw					= JFactory::getApplication()->input->get( 'siw', '', '', 'int' );
-		$sih					= JFactory::getApplication()->input->get( 'sih', '', '', 'int' );
+		$this->tmpl['ssbgc']	= JRequest::getVar( 'ssbgc', '', '', 'string' );
+		$this->tmpl['sibgc']	= JRequest::getVar( 'sibgc', '', '', 'string' );
+		$this->tmpl['sibrdc']	= JRequest::getVar( 'sibrdc', '', '', 'string' );
+		$this->tmpl['sie']		= JRequest::getVar( 'sie', '', '', 'int' );
+		$this->tmpl['siec']		= JRequest::getVar( 'siec', '', '', 'string' );
+		$siw					= JRequest::getVar( 'siw', '', '', 'int' );
+		$sih					= JRequest::getVar( 'sih', '', '', 'int' );
 		
 		$this->tmpl['ssbgc']	= PhocaGalleryUtils::filterInput($this->tmpl['ssbgc']);
 		$this->tmpl['sibgc']	= PhocaGalleryUtils::filterInput($this->tmpl['sibgc']);
@@ -69,13 +69,13 @@ class PhocaGalleryCpViewPhocaGalleryT extends JViewLegacy
 		$this->tmpl['mih']		= $params->get('medium_image_height', 100 );
 		
 		//After creating an image (post with data);
-		$this->tmpl['msbgc']	= JFactory::getApplication()->input->get( 'msbgc', '', '', 'string' );
-		$this->tmpl['mibgc']	= JFactory::getApplication()->input->get( 'mibgc', '', '', 'string' );
-		$this->tmpl['mibrdc']	= JFactory::getApplication()->input->get( 'mibrdc', '', '', 'string' );
-		$this->tmpl['mie']		= JFactory::getApplication()->input->get( 'mie', '', '', 'int' );
-		$this->tmpl['miec']		= JFactory::getApplication()->input->get( 'miec', '', '', 'string' );
-		$miw					= JFactory::getApplication()->input->get( 'miw', '', '', 'int' );
-		$mih					= JFactory::getApplication()->input->get( 'mih', '', '', 'int' );
+		$this->tmpl['msbgc']	= JRequest::getVar( 'msbgc', '', '', 'string' );
+		$this->tmpl['mibgc']	= JRequest::getVar( 'mibgc', '', '', 'string' );
+		$this->tmpl['mibrdc']	= JRequest::getVar( 'mibrdc', '', '', 'string' );
+		$this->tmpl['mie']		= JRequest::getVar( 'mie', '', '', 'int' );
+		$this->tmpl['miec']		= JRequest::getVar( 'miec', '', '', 'string' );
+		$miw					= JRequest::getVar( 'miw', '', '', 'int' );
+		$mih					= JRequest::getVar( 'mih', '', '', 'int' );
 		
 		$this->tmpl['msbgc']	= PhocaGalleryUtils::filterInput($this->tmpl['msbgc']);
 		$this->tmpl['mibgc']	= PhocaGalleryUtils::filterInput($this->tmpl['mibgc']);
@@ -97,10 +97,10 @@ class PhocaGalleryCpViewPhocaGalleryT extends JViewLegacy
 
 	protected function addToolbar() {
 		
-		JToolbarHelper ::title(   JText::_( 'COM_PHOCAGALLERY_THEMES' ), 'grid-view-2');
-		JToolbarHelper ::cancel('phocagalleryt.cancel', 'JToolbar_CLOSE');
-		JToolbarHelper ::divider();
-		JToolbarHelper ::help( 'screen.phocagallery', true );
+		JToolBarHelper::title(   JText::_( 'COM_PHOCAGALLERY_THEMES' ), 'grid-view-2');
+		JToolBarHelper::cancel('phocagalleryt.cancel', 'JTOOLBAR_CLOSE');
+		JToolBarHelper::divider();
+		JToolBarHelper::help( 'screen.phocagallery', true );
 	}
 	
 	function themeName() {
@@ -117,7 +117,7 @@ class PhocaGalleryCpViewPhocaGalleryT extends JViewLegacy
 			
 				if(!is_null($manifest)) {
 					foreach ($manifest->children() as $key => $value){
-						if ((string)$value->getName() == 'name') {
+						if ((string)$value->name() == 'name') {
 							return (string)$value;
 						}
 					}
@@ -130,22 +130,16 @@ class PhocaGalleryCpViewPhocaGalleryT extends JViewLegacy
 		}
 	}
 	
-	
-	
 	function _isManifest($file) {
-		$xml	= simplexml_load_file($file);
+		$xml	= JFactory::getXML($file, true);
 		if (!$xml) {
 			unset ($xml);
 			return null;
 		}
-		
-		if (!is_object($xml) || ($xml->getName() != 'install' )) {
-			
+		if (!is_object($xml) || ($xml->name() != 'install' )) {
 			unset ($xml);
 			return null;
 		}
-		
-		
 		return $xml;
 	}
 }

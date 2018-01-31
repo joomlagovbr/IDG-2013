@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
 	<div class="contact-address">
 	<?php if ($this->params->get('address_check') > 0) : ?>
 		<h3>
-			<?php echo JText::_('COM_CONTACT_ADDRESS'); ?>
+			Endereço
 		</h3>
 		<address>
 	<?php endif; ?>
@@ -57,7 +57,7 @@ defined('_JEXEC') or die;
 <?php endif; ?>
 <?php if ($this->contact->email_to && $this->params->get('show_email')) : ?>	
 		<h3>
-			<?php echo JText::_('COM_CONTACT_EMAIL_LABEL'); ?>
+			E-mail
 		</h3>
 	<p>
 		<span class="contact-emailto">
@@ -68,7 +68,7 @@ defined('_JEXEC') or die;
 
 <?php if ($this->contact->telephone && $this->params->get('show_telephone')) : ?>
 		<h3>
-			<?php echo JText::_('COM_CONTACT_TELEPHONE'); ?>
+			Telefone
 		</h3>
 	<p>
 	
@@ -80,7 +80,7 @@ defined('_JEXEC') or die;
 <?php if ($this->contact->fax && $this->params->get('show_fax')) : ?>
 	
 		<h3>
-			<?php echo JText::_('COM_CONTACT_FAX'); ?>
+			Fax
 		</h3>
 	<p>
 		<span class="contact-fax">
@@ -90,7 +90,7 @@ defined('_JEXEC') or die;
 <?php endif; ?>
 <?php if ($this->contact->mobile && $this->params->get('show_mobile')) :?>
 		<h3>
-			<?php echo JText::_('COM_CONTACT_MOBILE'); ?>
+			Celular
 		</h3>
 	<p>
 		<span class="contact-mobile">
@@ -100,7 +100,7 @@ defined('_JEXEC') or die;
 <?php endif; ?>
 <?php if ($this->contact->webpage && $this->params->get('show_webpage')) : ?>
 	<h3>
-		<?php echo JText::_('JSITE'); ?>
+		Site
 	</h3>
 	<p>
 		<span class="contact-webpage">

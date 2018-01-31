@@ -46,7 +46,7 @@ class PhocaGalleryCpModelPhocaGalleryImgs extends JModelList
 		parent::__construct($config);
 	}
 	
-	protected function populateState($ordering = null, $direction = null)
+	protected function populateState()
 	{
 		// Initialise variables.
 		$app = JFactory::getApplication('administrator');
@@ -66,9 +66,6 @@ class PhocaGalleryCpModelPhocaGalleryImgs extends JModelList
 
 		$language = $app->getUserStateFromRequest($this->context.'.filter.language', 'filter_language', '');
 		$this->setState('filter.language', $language);
-		
-
-	
 
 		// Load the parameters.
 		$params = JComponentHelper::getParams('com_phocagallery');
@@ -120,8 +117,6 @@ class PhocaGalleryCpModelPhocaGalleryImgs extends JModelList
 		// Join over the language
 		$query->select('l.title AS language_title');
 		$query->join('LEFT', '`#__languages` AS l ON l.lang_code = a.language');
-		
-		
 
 		// Join over the users for the checked out user.
 		
@@ -165,11 +160,6 @@ class PhocaGalleryCpModelPhocaGalleryImgs extends JModelList
 		if (is_numeric($categoryId)) {
 			$query->where('a.catid = ' . (int) $categoryId);
 		}
-		
-		// Filter on the language.
-		if ($language = $this->getState('filter.language')) {
-			$query->where('a.language = ' . $db->quote($language));
-		}
 
 		// Filter by search in title
 		$search = $this->getState('filter.search');
@@ -185,7 +175,7 @@ class PhocaGalleryCpModelPhocaGalleryImgs extends JModelList
 			}
 		}
 		
-	//	$query->group('a.id');
+		$query->group('a.id');
 
 		// Add the list ordering clause.
 		$orderCol	= $this->state->get('list.ordering');

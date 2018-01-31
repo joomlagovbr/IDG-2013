@@ -13,17 +13,17 @@ phocagalleryimport('phocagallery.comment.commentimage');
 class PhocaGalleryControllerComment extends PhocaGalleryController
 {
 	
-	function display($cachable = false, $urlparams = false) {
+	function display() {
 	
 		if ( ! JFactory::getApplication()->input->get('view') )  {
-			JFactory::getApplication()->input->set('view', 'comment' );
+			JRequest::setVar('view', 'comment' );
 		}
-		parent::display($cachable, $urlparams);
+		parent::display();
     }
 	
 	function comment() {
 	
-		JSession::checkToken() or jexit( 'Invalid Token' );
+		JRequest::checkToken() or jexit( 'Invalid Token' );
 		phocagalleryimport('phocagallery.comment.comment');
 		phocagalleryimport('phocagallery.comment.commentimage');
 		$app				= JFactory::getApplication();
@@ -92,21 +92,15 @@ class PhocaGalleryControllerComment extends PhocaGalleryController
 					$msg = JText::_('COM_PHOCAGALLERY_ERROR_COMMENT_SUBMITTING');
 					} else {
 					$msg = JText::_('COM_PHOCAGALLERY_SUCCESS_COMMENT_SUBMIT');
-					// Features by Bernard Gilly - alphaplug.com
-					// load external plugins
-					$dispatcher = JDispatcher::getInstance();
-					JPluginHelper::importPlugin('phocagallery');
-					$results = $dispatcher->trigger( 'onCommentImage', array($id, $catid, $post['title'], $post['comment'], $user->id ) );					
 					} 
 				} else {
-					$app->enqueueMessage(JText::_('COM_PHOCAGALLERY_NOT_AUTHORISED_ACTION'));
-					$app->redirect(JRoute::_('index.php?option=com_users&view=login', false));
+					$app->redirect(JRoute::_('index.php?option=com_users&view=login', false), JText::_('COM_PHOCAGALLERY_NOT_AUTHORISED_ACTION'));
 					exit;
 				}
 			}
 		}
-		$app->enqueueMessage($msg);
-		$this->setRedirect( JRoute::_('index.php?option=com_phocagallery&view=comment&catid='.$catidAlias.'&id='.$imgidAlias.$tmplCom.'&Itemid='. $Itemid, false));
+		
+		$this->setRedirect( JRoute::_('index.php?option=com_phocagallery&view=comment&catid='.$catidAlias.'&id='.$imgidAlias.$tmplCom.'&Itemid='. $Itemid, false), $msg );
 	}
 }
 ?>

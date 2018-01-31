@@ -24,7 +24,7 @@ JHtml::_('behavior.tooltip');
 			
 			<div class="control-group">
               <label class="control-label required" for="jform_contact_name">
-				<?php echo JText::_('COM_CONTACT_CONTACT_EMAIL_NAME_LABEL'); ?>
+				Nome
               	<span class="star"> *</span>
               </label>
               <div class="controls">
@@ -34,7 +34,7 @@ JHtml::_('behavior.tooltip');
 
 			<div class="control-group">
               <label class="control-label required" for="jform_contact_email">
-				<?php echo JText::_('COM_CONTACT_EMAIL_LABEL'); ?>
+				E-mail
               	<span class="star"> *</span>
               </label>
               <div class="controls">
@@ -44,7 +44,7 @@ JHtml::_('behavior.tooltip');
 
 			<div class="control-group">
               <label class="control-label required" for="jform_contact_subject">
-				<?php echo JText::_('COM_CONTACT_CONTACT_MESSAGE_SUBJECT_LABEL'); ?>
+				Assunto
               	<span class="star"> *</span>
               </label>
               <div class="controls">
@@ -54,7 +54,7 @@ JHtml::_('behavior.tooltip');
 
 			<div class="control-group">
               <label class="control-label required" for="jform_contact_message">
-				<?php echo JText::_('COM_CONTACT_CONTACT_ENTER_MESSAGE_LABEL'); ?>
+				Mensagem
               	<span class="star"> *</span>
               </label>
               <div class="controls">
@@ -66,7 +66,7 @@ JHtml::_('behavior.tooltip');
 			<div class="control-group offset4">
 				<label for="jform_contact_email_copy" class="checkbox">
 					<?php echo $this->form->getInput('contact_email_copy'); ?>
-					<?php echo JText::_('COM_CONTACT_CONTACT_EMAIL_A_COPY_LABEL'); ?>
+					Enviar cópia da mensagem.
 				</label>
 			</div>
 			<?php 	} ?>

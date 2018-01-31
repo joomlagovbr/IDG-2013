@@ -27,7 +27,7 @@ class TmplPadraoGoverno01Helper
 
 		$cor = JFactory::getApplication()->input->get('cor', '');
 		if($cor=='verde' || $cor=='azul' || $cor=='branco' || $cor=='amarelo')
-			$tmpl->params->set('cor', $cor);
+		    $tmpl->params->set('cor', $cor);
 	}
 
 	static function getScripts( &$tmpl )
@@ -43,41 +43,29 @@ class TmplPadraoGoverno01Helper
 		{
 			self::clearDefaultScripts( $tmpl );
 		}
-
+		
 		return array('scripts'=> array(), 'script'=> array());
 	}
 
 	static function clearDefaultScripts( &$tmpl, $return = false )
 	{
 		$clear_default_javascript = $tmpl->params->get('clear_default_javascript', 0);
-		$new_scripts = $scripts = $tmpl->_scripts;
+		$new_scripts = $scripts = $tmpl->_scripts; 		
 		$new_script  = $script = $tmpl->_script;
 		$user = JFactory::getUser();
 
-		// if ($clear_default_javascript == 1 && $user->guest == 1) {
-		if ($clear_default_javascript == 1 && !$user->get('isRoot')) {
-			unset($new_scripts[$tmpl->baseurl.'/media/system/js/mootools-core.js']);
-			unset($new_scripts[$tmpl->baseurl.'/media/system/js/mootools-more.js']);
+		if ($clear_default_javascript == 1 && $user->guest == 1) {
+	 		unset($new_scripts[$tmpl->baseurl.'/media/system/js/mootools-core.js']);
 			unset($new_scripts[$tmpl->baseurl.'/media/system/js/core.js']);
-			unset($new_scripts[$tmpl->baseurl.'/media/system/js/caption.js']);
+			unset($new_scripts[$tmpl->baseurl.'/media/system/js/caption.js']);        
 
-			unset($new_scripts[$tmpl->baseurl.'/media/system/js/mootools-core-uncompressed.js']);
-			unset($new_scripts[$tmpl->baseurl.'/media/system/js/mootools-more.js']);
-			unset($new_scripts[$tmpl->baseurl.'/media/system/js/core-uncompressed.js']);
-			unset($new_scripts[$tmpl->baseurl.'/media/system/js/modal-uncompressed.js']);
-			unset($new_scripts[$tmpl->baseurl.'/media/system/js/modal.js']);
-
-			$limit_new_script = count($new_script);
-			foreach ($new_script as $k => $v) {
-				if(strpos($v, "new JCaption('img.caption');") !== false){
-					unset($new_script[$k]);
-					break;
-				}
-				if(strpos($v, "SqueezeBox.initialize({});") !== false){
-					unset($new_script[$k]);
-					break;
-				}
-			}
+	 		$limit_new_script = count($new_script);
+	 		foreach ($new_script as $k => $v) {
+	 			if(strpos($v, "new JCaption('img.caption');") !== false){
+	 				unset($new_script[$k]);
+					break; 				
+	 			}
+	 		}
 			$tmpl->_scripts = $new_scripts;
 			$tmpl->_script  = $new_script;
 		}
@@ -87,8 +75,8 @@ class TmplPadraoGoverno01Helper
 			$return_array = array();
 			$return_array['scripts'] = $scripts;
 			$return_array['script']  = $script;
-			return $return_array;
-		}
+			return $return_array;			
+		}		
 	}
 
 	/*
@@ -118,7 +106,7 @@ class TmplPadraoGoverno01Helper
 			}
 			$buffer .= '></script><noscript>&nbsp;<!-- item para fins de acessibilidade --></noscript>' . $lnEnd;
 		}
-
+		
 		foreach ($javascript['script'] as $type => $content)
 		{
 			$buffer .= $tab . '<script type="' . $type . '">' . $lnEnd;
@@ -135,18 +123,16 @@ class TmplPadraoGoverno01Helper
 	{
 		?>
 		<script src="<?php echo $tmpl->baseurl; ?>/templates/<?php echo $tmpl->template; ?>/js/jquery.min.js" type="text/javascript"></script><noscript>&nbsp;<!-- item para fins de acessibilidade --></noscript>
-		<script src="<?php echo $tmpl->baseurl; ?>/templates/<?php echo $tmpl->template; ?>/js/jquery-noconflict.js" type="text/javascript"></script><noscript>&nbsp;<!-- item para fins de acessibilidade --></noscript>
+    	<script src="<?php echo $tmpl->baseurl; ?>/templates/<?php echo $tmpl->template; ?>/js/jquery-noconflict.js" type="text/javascript"></script><noscript>&nbsp;<!-- item para fins de acessibilidade --></noscript>
 		<?php
 	}
 
 	static function getTemplateMainScripts( &$tmpl )
 	{
-		JHtml::_('jquery.framework');
-		$doc = JFactory::getDocument();
-		$doc->addScript(JURI::base(true) . '/media/jui/js/bootstrap.min.js');
 		?>
-		<script src="<?php echo $tmpl->baseurl; ?>/templates/<?php echo $tmpl->template; ?>/js/jquery.cookie.js" type="text/javascript"></script><noscript>&nbsp;<!-- item para fins de acessibilidade --></noscript>
-		<script src="<?php echo $tmpl->baseurl; ?>/templates/<?php echo $tmpl->template; ?>/js/template.js" type="text/javascript"></script><noscript>&nbsp;<!-- item para fins de acessibilidade --></noscript>
+		<script src="<?php echo $tmpl->baseurl; ?>/templates/<?php echo $tmpl->template; ?>/bootstrap/js/bootstrap.min.js" type="text/javascript"></script><noscript>&nbsp;<!-- item para fins de acessibilidade --></noscript>
+	    <script src="<?php echo $tmpl->baseurl; ?>/templates/<?php echo $tmpl->template; ?>/js/jquery.cookie.js" type="text/javascript"></script><noscript>&nbsp;<!-- item para fins de acessibilidade --></noscript>
+	    <script src="<?php echo $tmpl->baseurl; ?>/templates/<?php echo $tmpl->template; ?>/js/template.js" type="text/javascript"></script><noscript>&nbsp;<!-- item para fins de acessibilidade --></noscript>
 		<?php
 	}
 
@@ -184,22 +170,16 @@ class TmplPadraoGoverno01Helper
 	static function getFontStyle( &$tmpl )
 	{
 		if($tmpl->params->get('font_style_url', '') != 'NENHUM'):
-			?>
+		?>
 		<link href='<?php echo str_replace(array('{SITE}', '{LOCALFONT}'), array(substr(JURI::root(),0,-1), JURI::root().'templates/'.$tmpl->template.'/css/fontes.css'), $tmpl->params->get('font_style_url', 'http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600,800,700') ); ?>'  rel='stylesheet' type='text/css'>
 		<?php
 		endif;
 	}
-	static function getCustomStyle( &$tmpl ){
-		?>
-		<link rel="stylesheet" href="<?php echo $tmpl->baseurl; ?>/templates/<?php echo $tmpl->template; ?>/css/custom.css" type='text/css'/>
-		<?php
-	}
-
 
 	static function getIconsStyle( &$tmpl )
 	{
 		if($tmpl->params->get('icon_style', 'bitmap-portal-brasil') == 'bitmap-portal-brasil'):
-			?>
+		?>
 		<link rel="stylesheet" href="<?php echo $tmpl->baseurl; ?>/templates/<?php echo $tmpl->template; ?>/css/icones-bmp-<?php echo $tmpl->params->get('cor', 'verde'); ?>.css" type='text/css'/>
 		<?php
 		endif;
@@ -211,7 +191,7 @@ class TmplPadraoGoverno01Helper
 		$jinput = $app->input;
 		$itemid = $jinput->get('Itemid', 0, 'integer');
 		$menu = $app->getMenu();
-		return $menu->getItem($itemid);
+		return $menu->getItem($itemid);		
 	}
 
 	static function isProtostarCssNeededForComponent()
@@ -225,7 +205,7 @@ class TmplPadraoGoverno01Helper
 
 		if ($tmpl!='component')
 			return false;
-
+		
 		//inclusao de artigos em frontend
 		if($option=='com_content' && ($layout=='modal' || $layout=='pagebreak'))
 			return true;
@@ -241,10 +221,10 @@ class TmplPadraoGoverno01Helper
 	{
 		$app = JFactory::getApplication();
 		$menu = $app->getMenu();
-
+		
 		if(!$activeItemid)
 			return '';
-
+		
 		$params = $menu->getParams( $activeItemid->id );
 		return $params->get( $param );
 	}
@@ -269,7 +249,7 @@ class TmplPadraoGoverno01Helper
 
 	static function getPagePositionPreffix($activeItemid)
 	{
-		$pos_preffix = self::getPageClass($activeItemid, true);
+		$pos_preffix = self::getPageClass($activeItemid, true);		
 		if(empty($pos_preffix))
 		{
 			$jinput = JFactory::getApplication()->input;
@@ -289,7 +269,7 @@ class TmplPadraoGoverno01Helper
 	{
 		$jinput = JFactory::getApplication()->input;
 		$option = $jinput->get('option', '', 'string');
-
+		
 		//informar aqui componentes que desejar utilizar para páginas internas de capa, que exibirão somente modulos:
 		$onlyModules = array('com_blankcomponent','NOME_OUTRO_COMPONENTE');
 
@@ -317,58 +297,58 @@ class TmplPadraoGoverno01Helper
 					echo $mod;
 				}
 				else
-					echo JModuleHelper::renderModule($mod, $attribs);
+					echo JModuleHelper::renderModule($mod, $attribs);							
 			}
 			else
 				echo JModuleHelper::renderModule($mod);
 
-			endforeach;
-		}
+		endforeach;
+	}
 
-		static function getModules($position = NULL)
+	static function getModules($position = NULL)
+	{
+		if(is_null($position))
+			return array();
+
+		$modules = JModuleHelper::getModules( $position );
+		return $modules;
+	}
+
+	static function hasMessage()
+	{
+		$message = JFactory::getApplication()->getMessageQueue();
+
+        if (count($message) > 0)
+        {
+        	if(count($message)==1 && is_null($message[0]['message']))
+        		return false;
+
+        	return true;
+        }
+
+        return false;
+	}
+
+	static function debug( $preffix = '', $active_item = 0 )
+	{
+		if(JFactory::getConfig()->get('debug')==1)
 		{
-			if(is_null($position))
-				return array();
-
-			$modules = JModuleHelper::getModules( $position );
-			return $modules;
-		}
-
-		static function hasMessage()
-		{
-			$message = JFactory::getApplication()->getMessageQueue();
-
-			if (count($message) > 0)
-			{
-				if(count($message)==1 && is_null($message[0]['message']))
-					return false;
-
-				return true;
-			}
-
-			return false;
-		}
-
-		static function debug( $preffix = '', $active_item = 0 )
-		{
-			if(JFactory::getConfig()->get('debug')==1)
-			{
 			// var_dump($active_item);
-				echo '<strong>Debug de template</strong><br />';
-				echo '<strong>Prefixo de posicoes de modulo:</strong> '.$preffix.'<br />';
-				echo '<strong>ID Item de menu ativo:</strong> '.$active_item->id.'<br />';
-				echo '<strong>LINK Item de menu ativo:</strong> '.$active_item->link.'<br />';
-			}
-		}
-
-		static function addHeaders()
-		{
-		//inclusao de cabecalho para correcao de possivel problema de compatibilidade para IE9 abaixo
-			header('X-UA-Compatible: IE=edge,chrome=1');
-		}
-
-		static function setGenerator( $generator = '' )
-		{
-			JFactory::getDocument()->setGenerator( $generator );
+			echo '<strong>Debug de template</strong><br />';
+			echo '<strong>Prefixo de posicoes de modulo:</strong> '.$preffix.'<br />';
+			echo '<strong>ID Item de menu ativo:</strong> '.$active_item->id.'<br />';
+			echo '<strong>LINK Item de menu ativo:</strong> '.$active_item->link.'<br />';
 		}
 	}
+
+	static function addHeaders()
+	{
+		//inclusao de cabecalho para correcao de possivel problema de compatibilidade para IE9 abaixo
+		header('X-UA-Compatible: IE=edge,chrome=1');
+	}
+
+	static function setGenerator( $generator = '' )
+	{
+		JFactory::getDocument()->setGenerator( $generator );
+	}
+}

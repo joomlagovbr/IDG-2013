@@ -1,8 +1,8 @@
 <?php
 /**
  * YoutubeGallery
- * @version 4.4.0
- * @author Ivan Komlev< <support@joomlaboat.com>
+ * @version 3.5.9
+ * @author DesignCompass corp< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -25,7 +25,6 @@ class VideoSource_YoutubeSearch
 		$p=urldecode($arr['search_query']);
 		if(!isset($p) or $p=='')
 			return ''; //incorrect Link
-		
 		//echo $p;
 		//die;
 		
@@ -37,82 +36,38 @@ class VideoSource_YoutubeSearch
 	    return $keywords;
 	}
 	
-	public static function getVideoIDList($youtubeURL,$optionalparameters,&$playlistid,&$datalink)
+	public static function getVideoIDList($youtubeURL,$optionalparameters,&$playlistid)
 	{
 		$optionalparameters_arr=explode(',',$optionalparameters);
-		$videolist=array();
-		$base_url='https://www.googleapis.com/youtube/v3';
-		$api_key = YouTubeGalleryMisc::getSettingValue('youtube_api_key');
 		
-		if($api_key=='')
-			return $videolist;
+		$videolist=array();
 		
 		$spq=implode('&',$optionalparameters_arr);
+		
+		$videolist=array();
+		
 		$keywords=VideoSource_YoutubeSearch::extractYouTubeSearchKeywords($youtubeURL);
-		
-		if($keywords=='')
-			return $videolist; //WRONG LINK id not found
-		
-		$part='id,snippet';
-		$spq=str_replace('max-results','maxResults',$spq);
-		$datalink = $base_url.'/search?q='.urlencode($keywords).'&part='.$part.'&key='.$api_key.($spq!='' ? '&'.$spq : '' );
+		// echo '$keywords='.$keywords.'<br/>';
+		// die;
 
-		$opt="";
-		$count=YouTubeGalleryMisc::getMaxResults($spq,$opt);
-		if($count<1)
-			$maxResults=1;
-		elseif($count>50)
-			$maxResults=50;
-		else
-			$maxResults=$count;
-				
-		$videos_found=0;
-		$nextPageToken='';
-		while($videos_found<$count)
+		require_once JPATH_ADMINISTRATOR . '/components/com_youtubegallery/google/_videos.php';
+		$videos = new YoutubeVideos();
+		$videos_raw = $videos->getVideosFromSearch( $keywords );
+		$videolist = array();
+		for ($i=0, $limit=count($videos_raw); $i < $limit; $i++)
 		{
-			$newspq=str_replace($opt,'maxResults='.$maxResults,$spq);
-			$url = $base_url.'/search?q='.urlencode($keywords).'&part='.$part.'&key='.$api_key.($newspq!='' ? '&'.$newspq : '' );
-			if($nextPageToken!='')
-				$url.='&pageToken='.$nextPageToken;
-
-			$htmlcode=YouTubeGalleryMisc::getURLData($url);
-		
-			if($htmlcode=='')
-				return $videolist;
-
-			$j=json_decode($htmlcode);
-			if(!$j)
-				return 'Connection Error';
-
-			$nextPageToken=$j->nextPageToken;
-				
-			$pageinfo=$j->pageInfo;
-			if($pageinfo->totalResults<$count)
-				$count=$pageinfo->totalResults;
-		
-			$items=$j->items;
-			
-			if(count($items)<$maxResults)
-				$maxResults=count($items);
-		
-			foreach($items as $item)
-			{
-				if($item->kind=='youtube#searchResult')
-				{
-					$s=$item->id;
-					if($s->kind=='youtube#video')
-					{
-						$videoId=$s->videoId;
-						$videolist[] = 'https://www.youtube.com/watch?v='.$videoId;
-					}
-				}
-			}
-			
-			$videos_found+=$maxResults;
-			if($count-$videos_found<50)
-				$maxResults=$count-$videos_found;
+			$url = 'https://www.youtube.com/watch?v=' . $videos_raw[$i]->id->videoId;
+			$videolist[] = $url;
 		}
+
 		return $videolist;
+		
 	}
+	
+	
+
+
 }
+
+
 ?>

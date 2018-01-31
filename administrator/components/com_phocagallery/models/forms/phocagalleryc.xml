@@ -11,8 +11,6 @@
 
 <field name="parent_id" type="phocagallerycategory" label="COM_PHOCAGALLERY_FIELD_PARENT_CATEGORY_LABEL" description="COM_PHOCAGALLERY_FIELD_CATEGORY_CATEGORY_DESC"  class="inputbox" />
 
-<field name="image_id" type="phocaselectitem" label="COM_PHOCAGALLERY_FIELD_IMAGE_ID_LABEL" description="COM_PHOCAGALLERY_FIELD_IMAGE_ID_DESC"  class="inputbox" />
-
 
 
 <field name="ordering" type="PhocaGalleryOrdering" table="category" class="inputbox" label="COM_PHOCAGALLERY_FIELD_ORDERING_LABEL" description="COM_PHOCAGALLERY_FIELD_ORDERING_DESC" />
@@ -34,7 +32,7 @@
 <field name="zoom" type="phocaselectmap"  label="COM_PHOCAGALLERY_FIELD_ZOOM_LABEL" description="COM_PHOCAGALLERY_FIELD_ZOOM_DESC" class="inputbox" size="40" />
 <field name="geotitle" type="Text" class="inputbox" size="40" label="COM_PHOCAGALLERY_FIELD_GEOTITLE_LABEL" description="COM_PHOCAGALLERY_FIELD_GEOTITLE_DESC"  />
 	
-<field name="description" type="editor" buttons="true" hide="pagebreak,readmore" class="inputbox" label="COM_PHOCAGALLERY_FIELD_DESCRIPTION_LABEL" filter="JComponentHelper::filterText" description="COM_PHOCAGALLERY_FIELD_DESCRIPTION_DESC" /> 
+<field name="description" type="editor" buttons="true" hide="pagebreak,readmore" class="inputbox" label="COM_PHOCAGALLERY_FIELD_DESCRIPTION_LABEL" filter="safehtml" description="COM_PHOCAGALLERY_FIELD_DESCRIPTION_DESC" /> 
 
 <field name="extu" type="Text" class="inputbox" size="40" label="COM_PHOCAGALLERY_FIELD_PICASA_USER_LABEL" description="COM_PHOCAGALLERY_FIELD_PICASA_USER_DESC"  />
 <field name="exta" type="Text" class="inputbox" size="40" label="COM_PHOCAGALLERY_FIELD_PICASA_ALBUM_LABEL" description="COM_PHOCAGALLERY_FIELD_PICASA_ALBUM_DESC"  />
@@ -68,7 +66,7 @@
 	<option	value="0">COM_PHOCAGALLERY_NOT_APPROVED</option>
 </field>
 
-<field name="date" type="Calendar" class="inputbox" label="COM_PHOCAGALLERY_FIELD_DATE_LABEL" description="COM_PHOCAGALLERY_FIELD_DATE_DESC" filter="JComponentHelper::filterText" />
+<field name="date" type="Calendar" class="inputbox" label="COM_PHOCAGALLERY_FIELD_DATE_LABEL" description="COM_PHOCAGALLERY_FIELD_DATE_DESC" filter="safehtml" />
 
 <field name="hits" type="Text" class="inputbox" size="6" label="COM_PHOCAGALLERY_FIELD_HITS" description="COM_PHOCAGALLERY_FIELD_HITS_DESC" />
 

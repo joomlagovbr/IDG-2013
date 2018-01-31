@@ -32,8 +32,8 @@ class PhocaGalleryCpViewPhocaGalleryTag extends JViewLegacy
 	
 	protected function addToolbar() {
 		
-		require_once JPATH_COMPONENT.'/helpers/phocagallerytags.php';
-		JFactory::getApplication()->input->set('hidemainmenu', true);
+		require_once JPATH_COMPONENT.DS.'helpers'.DS.'phocagallerytags.php';
+		JRequest::setVar('hidemainmenu', true);
 
 		$user		= JFactory::getUser();
 		$isNew		= ($this->item->id == 0);
@@ -44,24 +44,24 @@ class PhocaGalleryCpViewPhocaGalleryTag extends JViewLegacy
 		
 
 		$text = $isNew ? JText::_( 'COM_PHOCAGALLERY_NEW' ) : JText::_('COM_PHOCAGALLERY_EDIT');
-		JToolbarHelper ::title(   JText::_( 'COM_PHOCAGALLERY_TAG' ).': <small><small>[ ' . $text.' ]</small></small>' , 'tags.png');
+		JToolBarHelper::title(   JText::_( 'COM_PHOCAGALLERY_TAG' ).': <small><small>[ ' . $text.' ]</small></small>' , 'tags.png');
 
 		// If not checked out, can save the item.
 		if (!$checkedOut && $canDo->get('core.edit')){
-			JToolbarHelper ::apply('phocagallerytag.apply', 'JToolbar_APPLY');
-			JToolbarHelper ::save('phocagallerytag.save', 'JToolbar_SAVE');
-			JToolbarHelper ::addNew('phocagallerytag.save2new', 'JToolbar_SAVE_AND_NEW');
+			JToolBarHelper::apply('phocagallerytag.apply', 'JTOOLBAR_APPLY');
+			JToolBarHelper::save('phocagallerytag.save', 'JTOOLBAR_SAVE');
+			JToolBarHelper::addNew('phocagallerytag.save2new', 'JTOOLBAR_SAVE_AND_NEW');
 		}
 	
 		if (empty($this->item->id))  {
-			JToolbarHelper ::cancel('phocagallerytag.cancel', 'JToolbar_CANCEL');
+			JToolBarHelper::cancel('phocagallerytag.cancel', 'JTOOLBAR_CANCEL');
 		}
 		else {
-			JToolbarHelper ::cancel('phocagallerytag.cancel', 'JToolbar_CLOSE');
+			JToolBarHelper::cancel('phocagallerytag.cancel', 'JTOOLBAR_CLOSE');
 		}
 
-		JToolbarHelper ::divider();
-		JToolbarHelper ::help( 'screen.phocagallery', true );
+		JToolBarHelper::divider();
+		JToolBarHelper::help( 'screen.phocagallery', true );
 	}
 }
 ?>

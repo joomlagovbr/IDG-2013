@@ -1,6 +1,6 @@
 <?php
 /*
- * @package Joomla
+ * @package Joomla 1.5
  * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  *
@@ -46,7 +46,7 @@ class PhocaGalleryCpControllerPhocaGalleryImg extends JControllerForm
 	/*
 	function deletethumbs()
 	{
-		$cid	= JFactory::getApplication()->input->get( 'cid', array(0), 'get', 'array' );
+		$cid	= JRequest::getVar( 'cid', array(0), 'get', 'array' );
 		
 		$model	= &$this->getModel( 'phocagallery' );
 		if ($model->deletethumbs($cid[0])) {
@@ -61,8 +61,8 @@ class PhocaGalleryCpControllerPhocaGalleryImg extends JControllerForm
 	}
 	*/
 	function rotate() {
-		$id		= JFactory::getApplication()->input->get( 'id', 0, 'get', 'int' );
-		$angle	= JFactory::getApplication()->input->get( 'angle', 90, 'get', 'int' );
+		$id		= JRequest::getVar( 'id', 0, 'get', 'int' );
+		$angle	= JRequest::getVar( 'angle', 90, 'get', 'int' );
 		$model	= $this->getModel( 'phocagalleryimg' );
 		
 		$message 		= '';
@@ -85,9 +85,9 @@ class PhocaGalleryCpControllerPhocaGalleryImg extends JControllerForm
 	function thumbs() {
 		$msg = JText::_( 'COM_PHOCAGALLERY_SUCCESS_SAVE_MULTIPLE' );
 		
-		$countcat		= JFactory::getApplication()->input->get( 'countcat', 0, 'get', 'int' );
-		$countimg		= JFactory::getApplication()->input->get( 'countimg', 0, 'get', 'int' );
-		//$imagesid		= JFactory::getApplication()->input->get( 'imagesid', 0, 'get', 'int' );
+		$countcat		= JRequest::getVar( 'countcat', 0, 'get', 'int' );
+		$countimg		= JRequest::getVar( 'countimg', 0, 'get', 'int' );
+		//$imagesid		= JRequest::getVar( 'imagesid', 0, 'get', 'int' );
 		
 		$link = 'index.php?option=com_phocagallery&view=phocagalleryimgs&countcat='.$countcat.'&countimg='.$countimg.'&imagesid='.md5(time());	
 		//$link = 'index.php?option=com_phocagallery&view=phocagalleryimgs';
@@ -108,12 +108,11 @@ class PhocaGalleryCpControllerPhocaGalleryImg extends JControllerForm
 	
 
 	function recreate() {
-		$cid = JFactory::getApplication()->input->get( 'cid', array(), '', 'array' );
+		$cid = JRequest::getVar( 'cid', array(), '', 'array' );
 		JArrayHelper::toInteger($cid);
 
 		if (count( $cid ) < 1) {
-			throw new Exception(JText::_( 'COM_PHOCAGALLERY_SELECT_ITEM_RECREATE' ), 500);
-			return false;
+			JError::raiseError(500, JText::_( 'COM_PHOCAGALLERY_SELECT_ITEM_RECREATE' ) );
 		}
 		$message = '';
 		$model = $this->getModel( 'phocagalleryimg' );
@@ -126,8 +125,8 @@ class PhocaGalleryCpControllerPhocaGalleryImg extends JControllerForm
 		$this->setRedirect( 'index.php?option=com_phocagallery&view=phocagalleryimgs', $message );
 	}
 	
-	public function batch($model = null) {
-		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+	public function batch() {
+		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
 		// Set the model
 		$model	= $this->getModel('phocagalleryimg', '', array());

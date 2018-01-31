@@ -1,20 +1,20 @@
 <?php
-/**
- * @package   Phoca Gallery
- * @author    Jan Pavelka - https://www.phoca.cz
- * @copyright Copyright (C) Jan Pavelka https://www.phoca.cz
- * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 and later
- * @cms       Joomla
- * @copyright Copyright (C) Open Source Matters. All rights reserved.
- * @license   http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+/*
+ * @package		Joomla.Framework
+ * @copyright	Copyright (C) 2005 - 2010 Open Source Matters, Inc. All rights reserved.
+ * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ *
+ * @component Phoca Component
+ * @copyright Copyright (C) Jan Pavelka www.phoca.cz
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License version 2 or later;
  */
 defined('_JEXEC') or die;
 
 class PhocaGalleryTag
 {
-	public static function getTags($imgId, $select = 0) {
+	public function getTags($imgId, $select = 0) {
 	
-		$db =JFactory::getDBO();
+		$db =& JFactory::getDBO();
 		
 		if ($select == 1) {
 			$query = 'SELECT r.tagid';
@@ -24,12 +24,14 @@ class PhocaGalleryTag
 		$query .= ' FROM #__phocagallery_tags AS a'
 				//.' LEFT JOIN #__phocagallery AS f ON f.id = r.imgid'
 				.' LEFT JOIN #__phocagallery_tags_ref AS r ON a.id = r.tagid'
-			    .' WHERE r.imgid = '.(int) $imgId
-				.' ORDER BY a.id';
+			    .' WHERE r.imgid = '.(int) $imgId;
 		$db->setQuery($query);
 		
 
-		
+		if (!$db->query()) {
+			echo PhocaGalleryException::renderErrorInfo('Database Error: Getting Selected Tags - Check "#__phocagallery_tags" or "#__phocagallery_tags_ref" table in your database.');
+			return false;
+		}
 		if ($select == 1) {
 			$tags = $db->loadColumn();
 		} else {
@@ -39,16 +41,19 @@ class PhocaGalleryTag
 		return $tags;
 	}
 	
-	public static function storeTags($tagsArray, $imgId) {
+	public function storeTags($tagsArray, $imgId) {
 	
 	
 		if ((int)$imgId > 0) {
-			$db =JFactory::getDBO();
+			$db =& JFactory::getDBO();
 			$query = ' DELETE '
 					.' FROM #__phocagallery_tags_ref'
 					. ' WHERE imgid = '. (int)$imgId;
 			$db->setQuery($query);
-			$db->execute();
+			if (!$db->query()) {
+				$this->setError('Database Error - Deleting Image Id Tags');
+				return false;
+			}
 			
 			if (!empty($tagsArray)) {
 				
@@ -66,7 +71,10 @@ class PhocaGalleryTag
 								.' VALUES '.(string)$valuesString;
 
 					$db->setQuery($query);
-					$db->execute();
+					if (!$db->query()) {
+						$this->setError('Database Error - Insert Image Id Tags');
+						return false;
+					}
 					
 				}
 			}
@@ -74,15 +82,18 @@ class PhocaGalleryTag
 	
 	}
 	
-	public static function getAllTagsSelectBox($name, $id, $activeArray, $javascript = NULL, $order = 'id' ) {
+	public function getAllTagsSelectBox($name, $id, $activeArray, $javascript = NULL, $order = 'id' ) {
 	
-		$db =JFactory::getDBO();
+		$db =& JFactory::getDBO();
 		$query = 'SELECT a.id AS value, a.title AS text'
 				.' FROM #__phocagallery_tags AS a'
 				. ' ORDER BY '. $order;
 		$db->setQuery($query);
 		
-		
+		if (!$db->query()) {
+			$this->setError('Database Error - Getting All Tags');
+			return false;
+		}
 		
 		$tags = $db->loadObjectList();
 		
@@ -91,7 +102,7 @@ class PhocaGalleryTag
 		return $tagsO;
 	}
 	
-	public static function displayTags($imgId, $popupLink = 0) {
+	public function displayTags($imgId, $popupLink = 0) {
 	
 		$o 		= '';
 		$db 	= JFactory::getDBO();
@@ -105,7 +116,10 @@ class PhocaGalleryTag
 		$db->setQuery($query);
 		$imgObject = $db->loadObjectList();
 		
-		
+		if (!$db->query()) {
+			$this->setError($db->getErrorMsg());
+			return false;
+		}
 		
 		/*
 		if ($popupLink == 1) {
@@ -140,7 +154,10 @@ class PhocaGalleryTag
 					$db->setQuery($query, 0, 1);
 					$category = $db->loadObject();
 					
-					
+					if (!$db->query()) {
+						$this->setError($db->getErrorMsg());
+						return false;
+					}
 					if (isset($category->id) && isset($category->alias)) {
 						$link = PhocaGalleryRoute::getCategoryRoute($category->id, $category->alias);
 						$o .= '<a href="'.$link.'" '.$targetO.'>'.$v->title.'</a>';

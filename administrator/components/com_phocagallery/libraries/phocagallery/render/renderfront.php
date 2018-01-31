@@ -1,19 +1,19 @@
 <?php
-/**
- * @package   Phoca Gallery
- * @author    Jan Pavelka - https://www.phoca.cz
- * @copyright Copyright (C) Jan Pavelka https://www.phoca.cz
- * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 and later
- * @cms       Joomla
- * @copyright Copyright (C) Open Source Matters. All rights reserved.
- * @license   http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+/*
+ * @package Joomla 1.5
+ * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+ *
+ * @component Phoca Gallery
+ * @copyright Copyright (C) Jan Pavelka www.phoca.cz
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
 class PhocaGalleryRenderFront
 {
 	// hotnew
-	public static function getOverImageIcons($date, $hits) {
+	function getOverImageIcons($date, $hits) {
 		$app	= JFactory::getApplication();
 		$params = $app->getParams();
 		$new	= $params->get( 'display_new', 0 );
@@ -46,7 +46,7 @@ class PhocaGalleryRenderFront
 		return $output;
 	}
 	
-	public static function renderCommentJS($chars) {
+	function renderCommentJS($chars) {
 		
 		$tag = "<script type=\"text/javascript\">" 
 		."function countChars() {" . "\n"
@@ -82,7 +82,7 @@ class PhocaGalleryRenderFront
 		return $tag;
 	}
 	
-	public static function renderCategoryCSS($font_color, $background_color, $border_color, $imageBgCSS,$imageBgCSSIE, $border_color_hover, $background_color_hover, $ol_fg_color, $ol_bg_color, $ol_tf_color, $ol_cf_color, $margin_box, $padding_box, $opacity = 0.8) {
+	function renderCategoryCSS($font_color, $background_color, $border_color, $imageBgCSS,$imageBgCSSIE, $border_color_hover, $background_color_hover, $ol_fg_color, $ol_bg_color, $ol_tf_color, $ol_cf_color, $margin_box, $padding_box, $opacity = 0.8) {
 		
 		$opacityPer = (float)$opacity * 100;
 		
@@ -129,7 +129,7 @@ class PhocaGalleryRenderFront
 		return $tag;
 	}
 	
-	public static function renderIeHover() {
+	function renderIeHover() {
 		
 		$tag = '<!--[if lt IE 7]>' . "\n" . '<style type="text/css">' . "\n"
 		.'.phocagallery-box-file{' . "\n"
@@ -143,7 +143,7 @@ class PhocaGalleryRenderFront
 		
 	}
 	
-	public static function renderPicLens($categoryId) {
+	function renderPicLens($categoryId) {
 		$tag ="<link id=\"phocagallerypiclens\" rel=\"alternate\" href=\""
 		.JURI::base(true)."/images/phocagallery/"
 		.$categoryId.".rss\" type=\"application/rss+xml\" title=\"\" />"
@@ -157,7 +157,7 @@ class PhocaGalleryRenderFront
 	
 	}
 	
-	public static function renderOnUploadJS() {
+	function renderOnUploadJS() {
 		
 		$tag = "<script type=\"text/javascript\"> \n"
 		. "function OnUploadSubmitUserPG() { \n"
@@ -176,7 +176,7 @@ class PhocaGalleryRenderFront
 		return $tag;
 	}
 	
-	public static function renderOnUploadCategoryJS() {
+	function renderOnUploadCategoryJS() {
 		
 		$tag = "<script type=\"text/javascript\"> \n"
 		. "function OnUploadSubmitCategoryPG(idLoad) { \n"
@@ -187,7 +187,7 @@ class PhocaGalleryRenderFront
 		return $tag;
 	}
 	
-	public static function renderDescriptionUploadJS($chars) {
+	function renderDescriptionUploadJS($chars) {
 		
 		$tag = "<script type=\"text/javascript\"> \n"
 		//. "function OnUploadSubmit() { \n"
@@ -214,7 +214,7 @@ class PhocaGalleryRenderFront
 		return $tag;
 	}
 	
-	public static function renderDescriptionCreateCatJS($chars) {
+	function renderDescriptionCreateCatJS($chars) {
 		
 		$tag = "<script type=\"text/javascript\"> \n"
 		."function countCharsCreateCat() {" . "\n"
@@ -250,7 +250,7 @@ class PhocaGalleryRenderFront
 		return $tag;
 	}
 	
-	public static function renderDescriptionCreateSubCatJS($chars) {
+	function renderDescriptionCreateSubCatJS($chars) {
 		
 		$tag = "<script type=\"text/javascript\"> \n"
 		."function countCharsCreateSubCat() {" . "\n"
@@ -291,7 +291,7 @@ class PhocaGalleryRenderFront
 		return $tag;
 	}
 	
-	public static function renderHighslideJSAll() {
+	function renderHighslideJSAll() {
 		
 		$tag = '<script type="text/javascript">'
 		.'//<![CDATA[' ."\n"
@@ -310,7 +310,7 @@ class PhocaGalleryRenderFront
 	 * @param string $waitImage Image which will be displayed as while loading
 	 * @return string Switch image javascript
 	 */
-	public static function switchImage($waitImage) {	
+	function switchImage($waitImage) {	
 		$js  = "\t". '<script language="javascript" type="text/javascript">'."\n".'var pcid = 0;'."\n"
 		     . 'var waitImage = new Image();' . "\n"
 			 . 'waitImage.src = \''.$waitImage.'\';' . "\n";
@@ -343,7 +343,7 @@ class PhocaGalleryRenderFront
 	}
 	
 	
-	public static function userTabOrdering() {	
+	function userTabOrdering() {	
 		$js  = "\t". '<script language="javascript" type="text/javascript">'."\n"
 			 . 'function tableOrdering( order, dir, task )' . "\n"
 			 . '{ ' . "\n"
@@ -364,7 +364,7 @@ class PhocaGalleryRenderFront
 		return $js;
 	}
 	
-	public static function saveOrderUserJS() {
+	function saveOrderUserJS() {
 		$js  = '<script language="javascript" type="text/javascript">'."\n"
 			.'function saveordersubcat(task){'. "\n"
 			."\t".'document.phocagallerysubcatform.task.value=\'saveordersubcat\';'. "\n"
@@ -378,7 +378,7 @@ class PhocaGalleryRenderFront
 		return $js;
 	}
 	
-	public static function getAltValue($altValue = 0, $title = '', $description = '', $metaDesc = '') {
+	function getAltValue($altValue = 0, $title = '', $description = '', $metaDesc = '') {
 		$output = '';
 		switch ($altValue) {
 			case 1:
@@ -451,7 +451,7 @@ class PhocaGalleryRenderFront
 		return htmlspecialchars( $output);
 	}
 	
-	public static function renderCloseReloadDetail($detailWindow, $type = 0) {
+	function renderCloseReloadDetail($detailWindow, $type = 0) {
 		$o = array();
 		
 		if ($detailWindow == 1) {
@@ -469,11 +469,6 @@ class PhocaGalleryRenderFront
 			$output['detailwindowreload']	= '';
 			// Should not happen as it should be reloaded to login page
 			$closeLink = '<div><a href="'.JURI::base(true).'" >'.JText::_('COM_PHOCAGALLERY_MAIN_SITE').'</a></div>';
-		// Magnific iframe
-		} else if ($detailWindow == 11) {
-			$output['detailwindowclose']	= '';
-			$output['detailwindowreload']	= '';
-			$closeLink = '<div><a href="javascript:void(0);" class="mfp-close" >'.JText::_('COM_PHOCAGALLERY_CLOSE_WINDOW').'</a></div>';
 		// Modal Box
 		} else {
 			//$this->tmpl['detailwindowclose']	= 'window.parent.document.getElementById(\'sbox-window\').close();';
@@ -496,17 +491,17 @@ class PhocaGalleryRenderFront
 		
 	}
 	
-	public static function renderInfo() {
+	function renderInfo() {
 		return '<div style="text-align: center; color: rgb(211, 211, 211);">Powe'
 				. 'red by <a href="http://www.ph'
 				. 'oca.cz" style="text-decoration: none;" target="_blank" title="Phoc'
-				. 'a.cz">Phoca</a> <a href="https://www.phoca.cz/phocaga'
+				. 'a.cz">Phoca</a> <a href="http://www.phoca.cz/phocaga'
 				. 'llery" style="text-decoration: none;" target="_blank" title="Phoca Gal'
 				. 'lery">Gall'
 				. 'ery</a></div>';
 	}
 	
-	public static function renderFeedIcon($type = 'categories', $paramsIcons = true, $catid = 0, $catidAlias = '') {
+	function renderFeedIcon($type = 'categories', $paramsIcons = true, $catid = 0, $catidAlias = '') {
 		
 		$paramsC 	= JComponentHelper::getParams('com_phocagallery') ;
 		$df 		= $paramsC->get('display_feed', 1);
@@ -534,7 +529,7 @@ class PhocaGalleryRenderFront
 	function correctRender() {
 		if (class_exists('plgSystemRedact')) {
 			echo "Phoca Gallery doesn't work in case Redact plugin is enabled. Please disable this plugin to run Phoca Gallery";exit;
-			$db =JFactory::getDBO();
+			$db =& JFactory::getDBO();
 			$query = 'SELECT a.params AS params'
 					.' FROM #__plugins AS a'
 					.' WHERE a.element = \'redact\''
@@ -559,7 +554,7 @@ class PhocaGalleryRenderFront
 		
 		if (class_exists('plgSystemReReplacer')) {
 			echo "Phoca Gallery doesn't work in case ReReplacer plugin is enabled. Please disable this plugin to run Phoca Gallery";exit;
-			/*$db =JFactory::getDBO();
+			/*$db =& JFactory::getDBO();
 			$query = 'SELECT a.id, a.search'
 					.' FROM #__rereplacer AS a'
 					.' WHERE (a.search LIKE \'%phoca.cz%\''
@@ -588,7 +583,7 @@ class PhocaGalleryRenderFront
 	
 	}*/
 	
-	public static function renderAAttribute($detailWindow, $buttonOptions, $lingOrig, $hSOnClick, $hsOnClick2, $linkNr, $catAlias) {
+	public function renderAAttribute($detailWindow, $buttonOptions, $lingOrig, $hSOnClick, $hsOnClick2, $linkNr, $catAlias) {
 	
 		if ($detailWindow == 1) {
 			return ' onclick="'. $buttonOptions.'"';
@@ -601,8 +596,6 @@ class PhocaGalleryRenderFront
 			return '';
 		} else if ($detailWindow == 8) {
 			return ' rel="lightbox-'.$catAlias.'" ';
-		} else if ($detailWindow == 14) {
-			return $buttonOptions;
 		} else {
 			return ' rel="'.$buttonOptions.'"';
 		}
@@ -610,7 +603,7 @@ class PhocaGalleryRenderFront
 		return '';
 	}
 	
-	public static function renderAAttributeTitle($detailWindow, $buttonOptions, $lingOrig, $hsOnClick, $hsOnClick2, $linkNr, $catAlias) {
+	public function renderAAttributeTitle($detailWindow, $buttonOptions, $lingOrig, $hsOnClick, $hsOnClick2, $linkNr, $catAlias) {
 			
 		if ($detailWindow == 1) {
 			return ' onclick="'. $buttonOptions.'"';
@@ -626,8 +619,6 @@ class PhocaGalleryRenderFront
 			return '';
 		} else if ($detailWindow == 8) {
 			return ' rel="lightbox-'.$catAlias.'2" ';
-		} else if ($detailWindow == 14) {
-			return ' rel="'.$buttonOptions.'"';
 		} else {
 			return ' rel="'.$buttonOptions.'"';
 		}
@@ -635,7 +626,7 @@ class PhocaGalleryRenderFront
 		return '';
 	}
 	
-	public static function renderAAttributeStat($detailWindow, $buttonOptions, $lingOrig, $hSOnClick, $hsOnClick2, $linkNr, $catAlias, $suffix) {
+	public function renderAAttributeStat($detailWindow, $buttonOptions, $lingOrig, $hSOnClick, $hsOnClick2, $linkNr, $catAlias, $suffix) {
 			
 		if ($detailWindow == 1) {
 			return ' onclick="'. $buttonOptions.'"';
@@ -647,16 +638,14 @@ class PhocaGalleryRenderFront
 			return ' onclick="'. $hSOnClick2.'"';
 		} else if ($detailWindow == 8) {
 			return ' rel="lightbox-'.$catAlias.'-'.$suffix.'" ';
-		} else if ($detailWindow == 14) {
-			return ' '.$buttonOptions;
 		} else {
-			return ' rel="'.$buttonOptions.'"';
+			return ' rel="'. $buttonOptions.'"';
 		}
 		
 		return '';
 	}
 	
-	public static function renderAAttributeOther($detailWindow, $buttonOptionsOther, $hSOnClick, $hSOnClick2) {
+	public function renderAAttributeOther($detailWindow, $buttonOptionsOther, $hSOnClick, $hSOnClick2) {
 	
 		if ($detailWindow == 1) {
 			return ' onclick="'. $buttonOptionsOther.'"';
@@ -666,15 +655,13 @@ class PhocaGalleryRenderFront
 			return ' onclick="'. $hSOnClick2.'"';
 		} else if ($detailWindow == 7 ) {
 			return '';
-		} else if ($detailWindow == 14) {
-			return ' rel="'.$buttonOptionsOther.'"';
 		} else {
 			return ' rel="'.$buttonOptionsOther.'"';
 		}
 		return '';
 	}
 	
-	public static function renderASwitch($switchW, $switchH, $switchFixedSize, $extWSwitch, $extHSwitch, $extL, $linkThumbPath) {
+	public function renderASwitch($switchW, $switchH, $switchFixedSize, $extWSwitch, $extHSwitch, $extL, $linkThumbPath) {
 	
 		if ($extL != '') {
 			// Picasa
@@ -700,7 +687,7 @@ class PhocaGalleryRenderFront
 		return '';
 	}
 	
-	public static function renderImageClass($image) {
+	public function renderImageClass($image) {
 	
 		$isFolder 	= strpos($image, 'com_phocagallery/assets/images/icon-folder');
 		$isUp 		= strpos($image, 'com_phocagallery/assets/images/icon-up');
@@ -713,17 +700,17 @@ class PhocaGalleryRenderFront
 		}
 	}
 	
-	public static function displayCustomCSS($customCss) {
+	public function displayCustomCSS($customCss) {
 		if ($customCss != ''){
 			$customCss = str_replace('background: url(images/', 'background: url('.JURI::base(true).'/media/com_phocagallery/images/', $customCss);
-			$document	= JFactory::getDocument();
+			$document	= &JFactory::getDocument();
 			$document->addCustomTag( "\n <style type=\"text/css\"> \n" 
 				.strip_tags($customCss)
 				."\n </style> \n");
 		}
 	}
 	
-	public static function renderAllCSS( $noBootStrap = 0) {
+	public function renderAllCSS( $noBootStrap = 0) {
 		$app	= JFactory::getApplication();
 		$itemid	= $app->input->get('Itemid', 0, 'int');
 		$db 	= JFactory::getDBO();
@@ -744,7 +731,7 @@ class PhocaGalleryRenderFront
 				}
 				$path = PhocaGalleryFile::getCSSPath($fv->type, 1);
 			
-				if ($fv->menulink != '' && (int)$fv->menulink > 1) {
+				if ($fv->menulink != '') {
 					$menuLinks 	= explode(',', $fv->menulink);
 					$isIncluded	= in_array((int)$itemid, $menuLinks);
 					if ($isIncluded) {
@@ -756,78 +743,5 @@ class PhocaGalleryRenderFront
 			}
 		}
 	}
-	public static function renderIcon($type, $img, $alt, $class = '', $attributes = '') {
-		
-		//return JHtml::_('image', $img, $alt);
-		
-		$paramsC = JComponentHelper::getParams('com_phocagallery');
-		$bootstrap_icons = $paramsC->get( 'bootstrap_icons', 0 );
-		
-		if ($bootstrap_icons == 0) {
-			return JHtml::_('image', $img, $alt, $attributes);
-		}
-		
-		$i = '';
-		switch($type) {
-			
-			case 'view':			$i = 'zoom-in';break;
-			case 'download':		$i = 'download-alt';break;
-			case 'geo':				$i = 'globe';break;
-			case 'bold':			$i = 'bold';break;
-			case 'italic':			$i = 'italic';break;
-			case 'underline':		$i = 'text-color';break;
-			case 'camera':			$i = 'camera';break;
-			case 'comment':			$i = 'comment';break;
-			case 'comment-a':		$i = 'comment';break; //ph-icon-animated
-			case 'comment-fb':		$i = 'comment';break; //ph-icon-fb
-			case 'cart':			$i = 'shopping-cart';break;
-			case 'extlink1':		$i = 'share';break;
-			case 'extlinkk2':		$i = 'share';break;
-			case 'trash':			$i = 'trash';break;
-			case 'publish':			$i = 'ok';break;
-			case 'unpublish':		$i = 'remove';break;
-			case 'viewed':			$i = 'modal-window';break;
-			case 'calendar':		$i = 'calendar';break;
-			case 'vote':			$i = 'star';break;
-			case 'statistics':		$i = 'stats';break;
-			case 'category':		$i = 'folder-close';break;
-			case 'subcategory':		$i = 'folder-open';break;
-			case 'upload':			$i = 'upload';break;
-			case 'upload-ytb':		$i = 'upload';break;
-			case 'upload-multiple':	$i = 'upload';break;
-			case 'upload-java':		$i = 'upload';break;
-			case 'user':			$i = 'user';break;
-			case 'icon-up-images':	$i = 'arrow-left';break;
-			case 'icon-up':			$i = 'arrow-up';break;
-			case 'minus-sign':		$i = 'minus-sign';break;
-			case 'next':			$i = 'forward';break;
-			case 'prev':			$i = 'backward';break;
-			case 'reload':			$i = 'repeat';break;
-			case 'play':			$i = 'play';break;
-			case 'stop':			$i = 'stop';break;
-			case 'pause':			$i = 'pause';break;
-			case 'off':				$i = 'off';break;
-			case 'image':			$i = 'picture';break;
-			case 'save':			$i = 'floppy-disk';break;
-		
-		
-			
-			
-			// NOT glyphicon
-			// smile, sad, lol, confused, wink, cooliris
-			
-			// Classes
-			// ph-icon-animated, ph-icon-fb, icon-up-images, ph-icon-disabled
-			
-			default:
-				if ($img != '') {
-					return JHtml::_('image', $img, $alt, $attributes);
-				}
-			break;
-		}
-		
-		return '<span class="glyphicon glyphicon-'.$i.' '.$class.'"></span>';
-	}
-	
 }
 ?>

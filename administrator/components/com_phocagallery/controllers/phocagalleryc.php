@@ -26,17 +26,17 @@ class PhocaGalleryCpControllerPhocaGalleryc extends JControllerForm
 		// In case the "Load" button will be saved, two actions need to be done:
 		// 1) Save (apply) the category data (we use Joomla! framework controller so we need to set save method, task = apply
 		// 2) load external images - we need to identify "Load", but task is apply, so we use subtask = loadextimg
-		$task = JFactory::getApplication()->input->get('task');
+		$task = JRequest::getVar('task');
 		if ((string)$task == 'loadextimgp') {
 			if ($this->registerTask( 'loadextimgp', 'save')) {
-				JFactory::getApplication()->input->set('task','apply');// we need to apply category data
-				JFactory::getApplication()->input->set('subtask','loadextimgp');// we need to get info to run loading images
+				JRequest::setVar('task','apply');// we need to apply category data
+				JRequest::setVar('subtask','loadextimgp');// we need to get info to run loading images
 			}
 		}
 		if ((string)$task == 'loadextimgf') {
 			if ($this->registerTask( 'loadextimgf', 'save')) {
-				JFactory::getApplication()->input->set('task','apply');// we need to apply category data
-				JFactory::getApplication()->input->set('subtask','loadextimgf');// we need to get info to run loading images
+				JRequest::setVar('task','apply');// we need to apply category data
+				JRequest::setVar('subtask','loadextimgf');// we need to get info to run loading images
 			}
 		}
 		$this->registerTask( 'uploadextimgf', 'uploadExtImgF');
@@ -52,8 +52,8 @@ class PhocaGalleryCpControllerPhocaGalleryc extends JControllerForm
 	
 	function loadExtImgPgn() {
 
-		$picStart	= JFactory::getApplication()->input->get( 'picstart', 0, 'get', 'int' );
-		$idCat		= JFactory::getApplication()->input->get( 'id', 0, 'get', 'int' );
+		$picStart	= JRequest::getVar( 'picstart', 0, 'get', 'int' );
+		$idCat		= JRequest::getVar( 'id', 0, 'get', 'int' );
 		if ($picStart > 0 && $idCat > 0) {
 			$model		= $this->getModel();
 			$message	= '';
@@ -64,8 +64,8 @@ class PhocaGalleryCpControllerPhocaGalleryc extends JControllerForm
 	
 	function loadExtImgPgnFb() {
 
-		$fbCount	= JFactory::getApplication()->input->get( 'fbcount', 0, 'get', 'int' );
-		$idCat		= JFactory::getApplication()->input->get( 'id', 0, 'get', 'int' );
+		$fbCount	= JRequest::getVar( 'fbcount', 0, 'get', 'int' );
+		$idCat		= JRequest::getVar( 'id', 0, 'get', 'int' );
 		if ($fbCount > 0 && $idCat > 0) {
 			$model		= $this->getModel();
 			$message	= '';
@@ -75,8 +75,8 @@ class PhocaGalleryCpControllerPhocaGalleryc extends JControllerForm
 	}
 	function uploadExtImgF() {
 		
-		$idCat	= JFactory::getApplication()->input->get( 'id', 0, 'get', 'int' );
-		$data	= JFactory::getApplication()->input->get('jform', array(), 'post', 'array');
+		$idCat	= JRequest::getVar( 'id', 0, 'get', 'int' );
+		$data	= JRequest::getVar('jform', array(), 'post', 'array');
 		
 		if (isset($data['extfbuid']) && $data['extfbuid'] > 0 && isset($data['extfbcatid']) && $data['extfbcatid'] != '' ) {
 			if ($idCat > 0) {
@@ -93,8 +93,8 @@ class PhocaGalleryCpControllerPhocaGalleryc extends JControllerForm
 	
 	function uploadExtImgFPgn() {
 		
-		$fbImg		= JFactory::getApplication()->input->get( 'fbimg', 0, 'get', 'int' );
-		$idCat		= JFactory::getApplication()->input->get( 'id', 0, 'get', 'int' );
+		$fbImg		= JRequest::getVar( 'fbimg', 0, 'get', 'int' );
+		$idCat		= JRequest::getVar( 'id', 0, 'get', 'int' );
 		if ($fbImg > 0 && $idCat > 0) {
 			$model		= $this->getModel();
 			$message	= '';
@@ -131,15 +131,14 @@ class PhocaGalleryCpControllerPhocaGalleryc extends JControllerForm
 	public function save($key = null, $urlVar = null)
 	{
 		// Check for request forgeries.
-		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
 		// Initialise variables.
 		$app		= JFactory::getApplication();
 		$lang		= JFactory::getLanguage();
 		$model		= $this->getModel();
 		$table		= $model->getTable();
-		//$data		= JFactory::getApplication()->input->get('jform', array(), 'post', 'array');
-		$data		= $app->input->post->get('jform', array(), 'array');
+		$data		= JRequest::getVar('jform', array(), 'post', 'array');
 		$checkin	= property_exists($table, 'checked_out');
 		$context	= "$this->option.edit.$this->context";
 		$task		= $this->getTask();
@@ -154,7 +153,7 @@ class PhocaGalleryCpControllerPhocaGalleryc extends JControllerForm
 			$urlVar = $key;
 		}
 
-		$recordId	= JFactory::getApplication()->input->getInt($urlVar);
+		$recordId	= JRequest::getInt($urlVar);
 
 		$session	= JFactory::getSession();
 		$registry	= $session->get('registry');
@@ -218,7 +217,7 @@ class PhocaGalleryCpControllerPhocaGalleryc extends JControllerForm
 			// Push up to three validation messages out to the user.
 			for ($i = 0, $n = count($errors); $i < $n && $i < 3; $i++)
 			{
-				if (!empty($errors[$i])) {
+				if (JError::isError($errors[$i])) {
 					$app->enqueueMessage($errors[$i]->getMessage(), 'warning');
 				}
 				else {
@@ -313,8 +312,8 @@ class PhocaGalleryCpControllerPhocaGalleryc extends JControllerForm
 		return true;
 	}
 	
-	public function batch($model = null) {
-		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+	public function batch() {
+		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
 		// Set the model
 		$model	= $this->getModel('phocagalleryc', '', array());

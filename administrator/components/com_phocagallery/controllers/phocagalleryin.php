@@ -15,7 +15,7 @@ class PhocaGalleryCpControllerPhocaGalleryIn extends PhocaGalleryCpController
 		parent::__construct();
 	}
 	
-	function cancel($key = NULL) {
+	function cancel() {
 		$this->setRedirect( 'index.php?option=com_phocagallery' );
 	}
 }

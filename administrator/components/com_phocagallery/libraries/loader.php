@@ -8,7 +8,6 @@
  * @copyright Copyright (C) Jan Pavelka www.phoca.cz
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License version 2 or later;
  */
-defined('_JEXEC') or die;
 if (!defined('DS')) {
 	define('DS', DIRECTORY_SEPARATOR);
 }
@@ -26,7 +25,7 @@ class PhocaGalleryLoader extends JLoader
 		
 		if (!isset($paths[$keyPath])) {
 			if ( !$base ) {
-				$base =  JPATH_ADMINISTRATOR.'/components/com_phocagallery/libraries';
+				$base =  JPATH_ADMINISTRATOR.DS.'components'.DS.'com_phocagallery'.DS.'libraries';
 			}
 
 			$parts = explode( '.', $filePath );
@@ -48,14 +47,14 @@ class PhocaGalleryLoader extends JLoader
 			
 			if (strpos($filePath, 'phocagallery') === 0) {
 				$className	= 'PhocaGallery'.$className;
-				$classes	= JLoader::register($className, $base. '/'. $path.'.php');
+				$classes	= JLoader::register($className, $base.DS.$path.'.php');
 				$rs			= isset($classes[strtolower($className)]);
 			} else {
 				// If it is not in the joomla namespace then we have no idea if
 				// it uses our pattern for class names/files so just include
 				// if the file exists or set it to false if not
 
-				$filename = $base. '/'. $path.'.php';
+				$filename = $base.DS.$path.'.php';
 				if (is_file($filename)) {
 					$rs   = (bool) include $filename;
 				} else {

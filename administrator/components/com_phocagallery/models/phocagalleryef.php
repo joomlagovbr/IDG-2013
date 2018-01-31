@@ -15,7 +15,6 @@ class PhocaGalleryCpModelPhocaGalleryEf extends JModelAdmin
 {
 	protected	$option 		= 'com_phocagallery';
 	protected 	$text_prefix	= 'com_phocagallery';
-	public 		$typeAlias 		= 'com_phocagallery.phocagalleryef';
 	
 	protected function canDelete($record)
 	{
@@ -56,7 +55,7 @@ class PhocaGalleryCpModelPhocaGalleryEf extends JModelAdmin
 		return $data;
 	}
 	
-	protected function prepareTable($table)
+	protected function prepareTable(&$table)
 	{
 		jimport('joomla.filter.output');
 		$date = JFactory::getDate();
@@ -177,12 +176,10 @@ class PhocaGalleryCpModelPhocaGalleryEf extends JModelAdmin
 		$return = JFile::write($filePath, $data['source']);
 
 		// Try to make the template file unwriteable.
-		/*if (!$ftp['enabled'] && JPath::isOwner($filePath) && !JPath::setPermissions($filePath, '0444')) {
+		if (!$ftp['enabled'] && JPath::isOwner($filePath) && !JPath::setPermissions($filePath, '0444')) {
 			$this->setError(JText::_('COM_PHOCAGALLERY_ERROR_SOURCE_FILE_NOT_UNWRITABLE'));
 			return false;
-		} else*/
-			
-		if (!$return) {
+		} elseif (!$return) {
 			$this->setError(JText::sprintf('COM_PHOCAGALLERY_ERROR_FAILED_TO_SAVE_FILENAME', $fileName));
 			return false;
 		}
@@ -251,12 +248,12 @@ class PhocaGalleryCpModelPhocaGalleryEf extends JModelAdmin
 					$error = $this->getError();
 					if ($error)
 					{
-						JLog::add($error, JLog::WARNING, ' ');
+						JLog::add($error, JLog::WARNING, 'jerror');
 						return false;
 					}
 					else
 					{
-						JLog::add(JText::_('JLIB_APPLICATION_ERROR_DELETE_NOT_PERMITTED'), JLog::WARNING, ' ');
+						JLog::add(JText::_('JLIB_APPLICATION_ERROR_DELETE_NOT_PERMITTED'), JLog::WARNING, 'jerror');
 						return false;
 					}
 				}

@@ -1,6 +1,6 @@
 <?php
 /*
- * @package Joomla
+ * @package Joomla 1.5
  * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  *
@@ -19,7 +19,7 @@ class PhocaGalleryCpControllerPhocaGalleryinstall extends PhocaGalleryCpControll
 	}
 
 	function install() {		
-		$db			= JFactory::getDBO();
+		$db			= &JFactory::getDBO();
 		//$dbPref 	= $db->getPrefix();
 		$msgSQL 	= $msgFile = $msgError = '';		
 	
@@ -47,7 +47,6 @@ class PhocaGalleryCpControllerPhocaGalleryinstall extends PhocaGalleryCpControll
 		$query.=' '.$db->quoteName('userid').' int(11) NOT NULL default \'0\','."\n";
 		$query.=' '.$db->quoteName('videocode').' text,'."\n";
 		$query.=' '.$db->quoteName('vmproductid').' int(11) NOT NULL default \'0\','."\n";
-		$query.=' '.$db->quoteName('pcproductid').' int(11) NOT NULL default \'0\','."\n";
 		$query.=' '.$db->quoteName('imgorigsize').' int(11) NOT NULL default \'0\','."\n";
 		$query.=' '.$db->quoteName('published').' tinyint(1) NOT NULL default \'0\','."\n";
 		$query.=' '.$db->quoteName('approved').' tinyint(1) NOT NULL default \'0\','."\n";
@@ -470,7 +469,7 @@ class PhocaGalleryCpControllerPhocaGalleryinstall extends PhocaGalleryCpControll
 	
 	function upgrade() {
 		
-		$db			=JFactory::getDBO();
+		$db			=& JFactory::getDBO();
 		//$dbPref 	= $db->getPrefix();
 		$msgSQL 	= $msgFile = $msgError = '';
 		
@@ -515,7 +514,7 @@ class PhocaGalleryCpControllerPhocaGalleryinstall extends PhocaGalleryCpControll
 	function AddColumnIfNotExists(&$errorMsg, $table, $column, $attributes = "INT( 11 ) NOT NULL default '0'", $after = '' ) {
 		
 		$app	= JFactory::getApplication();
-		$db				=JFactory::getDBO();
+		$db				=& JFactory::getDBO();
 		$columnExists 	= false;
 
 		$query = 'SHOW COLUMNS FROM '.$table;

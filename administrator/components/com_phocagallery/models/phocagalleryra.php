@@ -41,7 +41,7 @@ class PhocaGalleryCpModelPhocaGalleryRa extends JModelList
 		parent::__construct($config);
 	}
 	
-	protected function populateState($ordering = null, $direction = null)
+	protected function populateState()
 	{
 		// Initialise variables.
 		$app = JFactory::getApplication('administrator');
@@ -161,7 +161,7 @@ class PhocaGalleryCpModelPhocaGalleryRa extends JModelList
 			}
 		}
 		
-		//$query->group('a.id');
+		$query->group('a.id');
 
 		// Add the list ordering clause.
 		$orderCol	= $this->state->get('list.ordering');
@@ -207,7 +207,7 @@ class PhocaGalleryCpModelPhocaGalleryRa extends JModelList
 		return true;
 	}
 	
-	protected function prepareTable($table)
+	protected function prepareTable(&$table)
 	{
 		jimport('joomla.filter.output');
 		$date = JFactory::getDate();

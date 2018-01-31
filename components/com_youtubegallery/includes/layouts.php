@@ -1,8 +1,8 @@
 <?php
 /**
  * YoutubeGallery Joomla! 3.0 Native Component
- * @version 4.4.0
- * @author Ivan Komlev< <support@joomlaboat.com>
+ * @version 3.5.9
+ * @author DesignCompass corp< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -87,7 +87,7 @@ class YoutubeGalleryLayouts
 				[if:count]
 							
 							<hr '.($theme_row->linestyle!='' ? ' style="'.$theme_row->linestyle.'" ' : '').' />
-							[navigationbar:[cols],[width]]
+							[navigationbar:classictable,simple]
 						
 				[endif:count]
 			';

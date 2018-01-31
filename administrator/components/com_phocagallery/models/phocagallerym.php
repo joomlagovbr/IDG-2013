@@ -14,13 +14,11 @@ jimport('joomla.application.component.modeladmin');
 jimport('joomla.filesystem.folder');
 jimport('joomla.filesystem.file');
 phocagalleryimport('phocagallery.file.filefolderlist');
-setlocale(LC_ALL, 'C.UTF-8', 'C');
 
 class PhocaGalleryCpModelPhocaGalleryM extends JModelAdmin
 {
 	protected $option 			= 'com_phocagallery';
 	protected $text_prefix		= 'com_phocagallery';
-	public 		$typeAlias 		= 'com_phocagallery.phocagallerym';
 	
 	protected $imageCount		= 0;
 	protected $categoryCount	= 0;
@@ -116,20 +114,15 @@ class PhocaGalleryCpModelPhocaGalleryM extends JModelAdmin
 	function save($data) {		
 		$app	= JFactory::getApplication();
 	
-		$foldercid	= JFactory::getApplication()->input->get('foldercid', array(), 'raw');
-		$cid	= JFactory::getApplication()->input->get('cid', 0, 'raw');
-		$data	= JFactory::getApplication()->input->get('jform', array(0), 'post', 'array');
+		$post	= JRequest::get('post');
+		$data	= JRequest::getVar('jform', array(0), 'post', 'array');
 		
 		
-		if(isset($foldercid)) {
-			$data['foldercid']	= $foldercid;
-		} else {
-			$data['foldercid']	= array();
+		if(isset($post['foldercid'])) {
+			$data['foldercid']	= $post['foldercid'];
 		}
-		if(isset($cid)) {
-			$data['cid']		= $cid;
-		} else {
-			$data['cid']	= array();
+		if(isset($post['cid'])) {
+			$data['cid']		= $post['cid'];
 		}
 		
 		if (isset($data['catid']) && (int)$data['catid'] > 0) {
@@ -139,7 +132,7 @@ class PhocaGalleryCpModelPhocaGalleryM extends JModelAdmin
 		}
 		
 		//Params
-		$params				= JComponentHelper::getParams( 'com_phocagallery' );
+		$params				= &JComponentHelper::getParams( 'com_phocagallery' );
 		$clean_thumbnails 	= $params->get( 'clean_thumbnails', 0 );
 		
 		//Get folder variables from Helper
@@ -159,7 +152,6 @@ class PhocaGalleryCpModelPhocaGalleryM extends JModelAdmin
 		$this->_db->setQuery( $query );
 	    $existingImages = $this->_db->loadObjectList() ;
 		
-		$result = new stdClass();
 		$result->category_count = 0;
 		$result->image_count 	= 0;
 		
@@ -174,7 +166,7 @@ class PhocaGalleryCpModelPhocaGalleryM extends JModelAdmin
 		}
 	
 		// Only Imagees will be saved
-		if (isset($data['cid']) && !empty($data['cid'])) {
+		if (isset($data['cid'])) {
 			foreach ($data['cid'] as $filename) {				
 				if ($filename) {
 					$ext = strtolower(JFile::getExt($filename));
@@ -185,7 +177,7 @@ class PhocaGalleryCpModelPhocaGalleryM extends JModelAdmin
 					}
 					if ($ext == 'jpg' || $ext == 'png' || $ext == 'gif' || $ext == 'jpeg') {	
 			
-						$row = $this->getTable('phocagallery');
+						$row =& $this->getTable('phocagallery');
 						
 						$datam = array();
 						$datam['published']		= $data['published'];
@@ -333,7 +325,7 @@ class PhocaGalleryCpModelPhocaGalleryM extends JModelAdmin
 	
 		if ($fileList !== false) {
 			foreach ($fileList as $filename) {
-			    $storedfilename	= ltrim(str_replace(DS, '/', JPath::clean($rel_path . '/'. $filename )), '/');
+			    $storedfilename	= ltrim(str_replace(DS, '/', JPath::clean($rel_path . DS . $filename )), '/');
 				$ext = strtolower(JFile::getExt($filename));
 				// Don't create thumbnails from defined files (don't save them into a database)...			
 				$dontCreateThumb	= PhocaGalleryFileThumbnail::dontCreateThumb ($filename);
@@ -341,12 +333,12 @@ class PhocaGalleryCpModelPhocaGalleryM extends JModelAdmin
 					$ext = '';// WE USE $ext FOR NOT CREATE A THUMBNAIL CLAUSE
 				}
 				if ($ext == 'jpg' || $ext == 'png' || $ext == 'gif' || $ext == 'jpeg') {				
-					if (JFile::exists($fullPath. '/'. $filename) && 
+					if (JFile::exists($fullPath.DS.$filename) && 
 					    substr($filename, 0, 1) != '.' && 
 						strtolower($filename) !== 'index.html' &&
 						!$this->_ImageExist($existingImages, $storedfilename, $category_id) ) {
 						
-						$row = $this->getTable('phocagallery');
+						$row =& $this->getTable('phocagallery');
 						
 						$datam = array();
 						$datam['published']		= $data['published'];
@@ -423,8 +415,6 @@ class PhocaGalleryCpModelPhocaGalleryM extends JModelAdmin
 	}
 	
 	protected function _createCategoriesRecursive(&$origPathServer, $path, &$existingCategories, &$existingImages, $parentId = 0, $data = array() ) {
-	
-		$totalresult = new stdClass();
 		$totalresult->image_count 		= 0 ;
 		$totalresult->category_count	= 0 ;
 				
@@ -439,7 +429,7 @@ class PhocaGalleryCpModelPhocaGalleryM extends JModelAdmin
 		
 		// Category doesn't exist
 		if ( $id == -1 ) {
-		  $row = $this->getTable('phocagalleryc');
+		  $row =& $this->getTable('phocagalleryc');
 		  $row->published 	= $data['published'];
 		  $row->approved	= $data['approved'];
 		  $row->language	= $data['language'];
@@ -453,13 +443,11 @@ class PhocaGalleryCpModelPhocaGalleryM extends JModelAdmin
 		  $row->ordering 	= $row->getNextOrder( "parent_id = " . $this->_db->Quote($row->parent_id) );				
 		
 		  if (!$row->check()) {
-			
-			throw new Exception($db->stderr('Check Problem'), 500);
+			JError::raiseError(500, $row->getError('Check Problem') );
 		  }
 
 		  if (!$row->store()) {
-		
-			throw new Exception($db->stderr('Store Problem'), 500);
+			JError::raiseError(500, $row->getError('Store Problem') );
 		  }
 		  
 		  $category 			= new JObject();
@@ -502,7 +490,7 @@ class PhocaGalleryCpModelPhocaGalleryM extends JModelAdmin
 		static $set;
 
 		if (!$set) {
-			$folder = JFactory::getApplication()->input->get( 'folder', '', '', 'path' );
+			$folder = JRequest::getVar( 'folder', '', '', 'path' );
 			$this->setState('folder', $folder);
 
 			$parent = str_replace("\\", "/", dirname($folder));

@@ -1,9 +1,9 @@
 <?php
 /**
- * @package
- * @subpackage
- * @copyright
- * @license
+ * @package		
+ * @subpackage	
+ * @copyright	
+ * @license		
  */
 
 // no direct access
@@ -81,28 +81,28 @@ endif; ?>
 			<?php endif; ?>
 			<?php if(($params->get('show_create_date')) or ($params->get('show_modify_date')) or ($params->get('show_publish_date')) or ($params->get('show_hits'))/* or ($params->get('show_category'))*/): ?><span class="separator">|</span><?php endif; ?>
 		<?php endif; ?>
-
+		
 		<?php if ($params->get('show_create_date')) : ?>
 			<span class="documentCreated">
-				<?php echo JText::sprintf('COM_CONTENT_CREATED_DATE_ON', JHtml::_('date', $this->item->created, JText::_('DATE_FORMAT_LC2'))); ?>
+				<?php echo JText::sprintf('COM_CONTENT_CREATED_DATE_ON', JHtml::_('date', $this->item->created, JText::_('DATE_FORMAT_LC2'))); ?>			
 			</span>
 			<?php if(($params->get('show_modify_date')) or ($params->get('show_publish_date')) or ($params->get('show_hits'))/* or ($params->get('show_category'))*/): ?><span class="separator">|</span><?php endif; ?>
-		<?php endif; ?>
+		<?php endif; ?>	
 
 		<?php if ($params->get('show_publish_date')) : ?>
 			<span class="documentPublished">
 				<?php echo JText::sprintf('COM_CONTENT_PUBLISHED_DATE_ON', JHtml::_('date', $this->item->publish_up, JText::_('DATE_FORMAT_LC2'))); ?>
 			</span>
 			<?php if(($params->get('show_hits')) or ($params->get('show_modify_date'))/* or ($params->get('show_category'))*/): ?><span class="separator">|</span><?php endif; ?>
-		<?php endif; ?>
+		<?php endif; ?>	
 
 		<?php if ($params->get('show_modify_date')) : ?>
 			<span class="documentModified">
 				<?php echo JText::sprintf('COM_CONTENT_LAST_UPDATED', JHtml::_('date', $this->item->modified, JText::_('DATE_FORMAT_LC2'))); ?>
 			</span>
 			<?php if(($params->get('show_hits')) /*or ($params->get('show_category'))*/): ?><span class="separator">|</span><?php endif; ?>
-		<?php endif; ?>
-
+		<?php endif; ?>	
+		
 		<?php if ($params->get('show_hits')) : ?>
 			<span class="documentHits">
 				<?php echo JText::sprintf('COM_CONTENT_ARTICLE_HITS', $this->item->hits); ?>
@@ -131,10 +131,10 @@ endif; ?>
 				<?php $html = str_replace('{SITE}', JURI::root(), $html); ?>
 				<?php echo $html; ?>
 			<?php endforeach; ?>
-		</div>
-	<?php
+		</div>		
+	<?php	
 		endif;
-	 ?>
+	 ?>	
 </div>
 <!-- fim .content-header-options-1 -->
 
@@ -222,15 +222,15 @@ if (count($showBelowContent) > 0): ?>
 	<?php if (in_array('categories', $showBelowContent)): ?>
 	<div class="line">
 		registrado em:
-			<?php
+			<?php			
 			TemplateContentArticleHelper::displayCategoryLinks($categories, $this->item); ?>
 	</div>
 	<?php endif; ?>
-
+	
 	<?php if (in_array('metakeys', $showBelowContent)): ?>
 	<div class="line">
 		Assunto(s):
-		<?php TemplateContentArticleHelper::displayMetakeyLinks( $this->item->metakey ); ?>
+		<?php TemplateContentArticleHelper::displayMetakeyLinks( $this->item->metakey ); ?>		
 	</div>
 	<?php endif; ?>
 

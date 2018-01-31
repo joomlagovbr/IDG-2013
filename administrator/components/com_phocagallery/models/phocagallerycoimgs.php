@@ -46,7 +46,7 @@ class PhocaGalleryCpModelPhocaGalleryCoImgs extends JModelList
 		parent::__construct($config);
 	}
 	
-	protected function populateState($ordering = null, $direction = null)
+	protected function populateState()
 	{
 		// Initialise variables.
 		$app = JFactory::getApplication('administrator');
@@ -170,7 +170,7 @@ class PhocaGalleryCpModelPhocaGalleryCoImgs extends JModelList
 			}
 		}
 		
-	//	$query->group('a.id');
+		$query->group('a.id');
 
 		// Add the list ordering clause.
 		$orderCol	= $this->state->get('list.ordering');

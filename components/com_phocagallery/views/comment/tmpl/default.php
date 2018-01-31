@@ -1,14 +1,4 @@
-<?php 
-/*
- * @package Joomla
- * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
- *
- * @component Phoca Gallery
- * @copyright Copyright (C) Jan Pavelka www.phoca.cz
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- */
-defined('_JEXEC') or die('Restricted access');
+<?php defined('_JEXEC') or die('Restricted access');
 if ($this->tmpl['backbutton'] != '' && $this->tmpl['enable_multibox_iframe'] != 1) {
 	echo $this->tmpl['backbutton'];
 } 
@@ -19,12 +9,12 @@ if (($this->tmpl['detailwindow'] == 7 || $this->tmpl['display_comment_nopup'] ==
 
 if ($this->tmpl['externalcommentsystem'] == 1) {
 	if (JComponentHelper::isEnabled('com_jcomments', true)) {
-		include_once(JPATH_BASE.'/components/com_jcomments/jcomments.php');
+		include_once(JPATH_BASE.DS.'components'.DS.'com_jcomments'.DS.'jcomments.php');
 		echo JComments::showComments($this->item->id, 'com_phocagallery_images', JText::_('COM_PHOCAGALLERY_IMAGE') .' '. $this->item->title);
 	}
 } else if($this->tmpl['externalcommentsystem'] == 2) {
 	
-	$uri 		= JFactory::getURI();
+	$uri 		= &JFactory::getURI();
 	$getParamsArray = explode(',', 'start,limitstart,template,fb_comment_id,tmpl');
 	if (!empty($getParamsArray) ) {
 		foreach($getParamsArray as $key => $value) {
@@ -68,8 +58,7 @@ if ($this->tmpl['externalcommentsystem'] == 1) {
 } else {
 
 	if (!empty($this->commentitem)){
-		//$userImage	= JHtml::_( 'image', 'media/com_phocagallery/images/icon-user.png', '');
-		$userImage	= PhocaGalleryRenderFront::renderIcon('user', 'media/com_phocagallery/images/icon-user.png', '');
+		$userImage	= JHtml::_( 'image', 'media/com_phocagallery/images/icon-user.png', '');
 		$smileys = PhocaGalleryComment::getSmileys();
 			
 		foreach ($this->commentitem as $itemValue) {
@@ -110,35 +99,35 @@ if ($this->tmpl['externalcommentsystem'] == 1) {
 			.'<td>&nbsp;</td>'
 			.'<td>'
 			.'<a href="#" onclick="pasteTag(\'b\', true); return false;">'
-			. PhocaGalleryRenderFront::renderIcon('bold', $this->tmpl['icon_path'].'icon-b.png', JText::_('COM_PHOCAGALLERY_BOLD'))
+			. JHtml::_('image', 'media/com_phocagallery/images/icon-b.png', JText::_('COM_PHOCAGALLERY_BOLD'))
 			.'</a>&nbsp;'
 			
 			.'<a href="#" onclick="pasteTag(\'i\', true); return false;">'
-			. PhocaGalleryRenderFront::renderIcon('italic', $this->tmpl['icon_path'].'icon-i.png', JText::_('COM_PHOCAGALLERY_ITALIC'))
+			. JHtml::_('image', 'media/com_phocagallery/images/icon-i.png', JText::_('COM_PHOCAGALLERY_ITALIC'))
 			.'</a>&nbsp;'
 			
 			.'<a href="#" onclick="pasteTag(\'u\', true); return false;">'
-			. PhocaGalleryRenderFront::renderIcon('underline', $this->tmpl['icon_path'].'icon-u.png', JText::_('COM_PHOCAGALLERY_UNDERLINE'))
+			. JHtml::_('image', 'media/com_phocagallery/images/icon-u.png', JText::_('COM_PHOCAGALLERY_UNDERLINE'))
 			.'</a>&nbsp;&nbsp;'
 				
 			.'<a href="#" onclick="pasteSmiley(\':)\'); return false;">'
-			. PhocaGalleryRenderFront::renderIcon('smile', $this->tmpl['icon_path'].'icon-s-smile.png', JText::_('COM_PHOCAGALLERY_SMILE'))
+			. JHtml::_('image', 'media/com_phocagallery/images/icon-s-smile.png', JText::_('COM_PHOCAGALLERY_SMILE'))
 			.'</a>&nbsp;'
 			
 			.'<a href="#" onclick="pasteSmiley(\':lol:\'); return false;">'
-			. PhocaGalleryRenderFront::renderIcon('lol', $this->tmpl['icon_path'].'icon-s-lol.png', JText::_('COM_PHOCAGALLERY_LOL'))
+			. JHtml::_('image', 'media/com_phocagallery/images/icon-s-lol.png', JText::_('COM_PHOCAGALLERY_LOL'))
 			.'</a>&nbsp;'
 			
 			.'<a href="#" onclick="pasteSmiley(\':(\'); return false;">'
-			. PhocaGalleryRenderFront::renderIcon('sad', $this->tmpl['icon_path'].'icon-s-sad.png', JText::_('COM_PHOCAGALLERY_SAD'))
+			. JHtml::_('image', 'media/com_phocagallery/images/icon-s-sad.png', JText::_('COM_PHOCAGALLERY_SAD'))
 			.'</a>&nbsp;'
 			
 			.'<a href="#" onclick="pasteSmiley(\':?\'); return false;">'
-			. PhocaGalleryRenderFront::renderIcon('confused', $this->tmpl['icon_path'].'icon-s-confused.png', JText::_('COM_PHOCAGALLERY_CONFUSED'))
+			. JHtml::_('image', 'media/com_phocagallery/images/icon-s-confused.png', JText::_('COM_PHOCAGALLERY_CONFUSED'))
 			.'</a>&nbsp;'
 			
 			.'<a href="#" onclick="pasteSmiley(\':wink:\'); return false;">'
-			. PhocaGalleryRenderFront::renderIcon('wink', $this->tmpl['icon_path'].'icon-s-wink.png', JText::_('COM_PHOCAGALLERY_WINK'))
+			. JHtml::_('image', 'media/com_phocagallery/images/icon-s-wink.png', JText::_('COM_PHOCAGALLERY_WINK'))
 			.'</a>&nbsp;'
 			.'</td>'
 			.'</tr>';
@@ -179,6 +168,6 @@ if ($this->tmpl['externalcommentsystem'] == 1) {
 }
 echo '</div>';
 if ($this->tmpl['detailwindow'] == 7 || $this->tmpl['display_comment_nopup'] == 1) {
-	echo '<div style="text-align:right;color:#ccc;display:block">Powered by <a href="https://www.phoca.cz/phocagallery">Phoca Gallery</a></div>';
+	PhocaGalleryUtils::displayFooter();
 }
 ?>

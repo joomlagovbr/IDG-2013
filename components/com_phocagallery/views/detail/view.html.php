@@ -27,12 +27,12 @@ class PhocaGalleryViewDetail extends JViewLegacy
 	function display($tpl = null) {
 		
 		$app					= JFactory::getApplication();
-		$document				= JFactory::getDocument();		
+		$document				= &JFactory::getDocument();		
 		$this->params			= $app->getParams();
-		$user					= JFactory::getUser();
+		$user					= &JFactory::getUser();
 		$var['slideshow']		= $app->input->get('phocaslideshow', 0, 'int');
 		$var['download'] 		= $app->input->get('phocadownload', 0, 'int');
-		$uri 					= JFactory::getURI();
+		$uri 					= &JFactory::getURI();
 		$this->tmpl['action']	= $uri->toString();
 		$path					= PhocaGalleryPath::getPath();
 		$this->itemId			= $app->input->get('Itemid', 0, 'int');
@@ -66,8 +66,6 @@ class PhocaGalleryViewDetail extends JViewLegacy
 		$this->tmpl['multibox_fixed_cols']			= $this->params->get( 'multibox_fixed_cols', 1 );
 		$this->tmpl['display_multibox']				= $this->params->get( 'display_multibox', array(1,2));
 		$this->tmpl['display_title_description']	= $this->params->get( 'display_title_description', 0);
-		$this->tmpl['responsive']					= $this->params->get( 'responsive', 0 );
-		$this->tmpl['bootstrap_icons']				= $this->params->get( 'bootstrap_icons', 0 );
 		
 		// CSS
 		PhocaGalleryRenderFront::renderAllCSS(1);
@@ -151,24 +149,13 @@ class PhocaGalleryViewDetail extends JViewLegacy
 		if ($this->tmpl['detailwindow'] == 7) {
 	
 		} else {
-				
-			$oS = " html, body, .contentpane, #all, #main {".$oH."padding:0px !important;margin:0px !important; width: 100% !important; max-width: 100% !important;} \n"
+			$document->addCustomTag( "<style type=\"text/css\"> \n" 
+				." html, body, .contentpane, #all, #main {".$oH."padding:0px !important;margin:0px !important; width: 100% !important; max-width: 100% !important;} \n"
 				// gantry-fix-begin
 				."body {min-width:100%} \n"
-				.".rt-container {width:100%} \n";
+				.".rt-container {width:100%} \n"
 				// gantry-fix-end
-			if ($this->tmpl['responsive'] == 1) {
-				$oS .= "html, body {height:100%;} \n"
-				. ".pg-detail-view {
-					position: relative;
-					top: 50%;
-					transform: perspective(1px) translateY(-50%);
-				} \n";
-				
-			}	
-				
-				
-				$document->addCustomTag( "<style type=\"text/css\"> \n" . $oS . " </style> \n");
+				." </style> \n");
 		}
 		
 		// Download from the detail view which is not in the popupbox
@@ -184,7 +171,7 @@ class PhocaGalleryViewDetail extends JViewLegacy
 
 		
 		// Model
-		$model	= $this->getModel();
+		$model	= &$this->getModel();
 		$item	= $model->getData();
 		
 		//Multibox Thumbnails
@@ -199,12 +186,9 @@ class PhocaGalleryViewDetail extends JViewLegacy
 		// User Avatar
 		$this->tmpl['useravatarimg'] 		= '';
 		$this->tmpl['useravatarmiddle'] 	= '';
-		$userAvatar = false;
-		if (isset($item->userid)) {
-			$userAvatar						= PhocaGalleryUser::getUserAvatar($item->userid);
-		}
+		$userAvatar						= PhocaGalleryUser::getUserAvatar($item->userid);
 		if ($userAvatar) {
-			$pathAvatarAbs	= $path->avatar_abs  .'thumbs/phoca_thumb_s_'. $userAvatar->avatar;
+			$pathAvatarAbs	= $path->avatar_abs  .'thumbs'.DS.'phoca_thumb_s_'. $userAvatar->avatar;
 			$pathAvatarRel	= $path->avatar_rel . 'thumbs/phoca_thumb_s_'. $userAvatar->avatar;
 			if (JFile::exists($pathAvatarAbs)){
 				$sIH	= $this->params->get( 'small_image_height', 50 );
@@ -282,14 +266,14 @@ class PhocaGalleryViewDetail extends JViewLegacy
 				$item->exth	= $exth[0];
 			}
 			$correctImageRes 		= PhocaGalleryPicasa::correctSizeWithRate($item->extw, $item->exth, $this->tmpl['picasa_correct_width_l'], $this->tmpl['picasa_correct_height_l']);
-			$item->linkimage		= JHtml::_( 'image', $item->extl, $item->altvalue, array('width' => $correctImageRes['width'], 'height' => $correctImageRes['height'], 'class' => 'pg-detail-image img img-responsive'));
+			$item->linkimage		= JHtml::_( 'image', $item->extl, $item->altvalue, array('width' => $correctImageRes['width'], 'height' => $correctImageRes['height'], 'class' => 'pg-detail-image'));
 			$item->realimagewidth 	= $correctImageRes['width'];
 			$item->realimageheight	= $correctImageRes['height'];
 
 			
 		} else {
 			$item->linkthumbnailpath	= PhocaGalleryImageFront::displayCategoryImageOrNoImage($item->filenameno, 'large');
-			$item->linkimage			= JHtml::_( 'image', $item->linkthumbnailpath, $item->altvalue, array( 'class' => 'pg-detail-image img img-responsive'));
+			$item->linkimage			= JHtml::_( 'image', $item->linkthumbnailpath, $item->altvalue, array( 'class' => 'pg-detail-image'));
 			$realImageSize 				= PhocaGalleryImage::getRealImageSize ($item->filenameno);
 			$item->imagesize			= PhocaGalleryImage::getImageSize($item->filenameno, 1);
 			if (isset($realImageSize['w']) && isset($realImageSize['h'])) {
@@ -366,7 +350,7 @@ class PhocaGalleryViewDetail extends JViewLegacy
 			phocagalleryimport('phocagallery.image.image');
 			$this->tmpl['backbutton'] = '<div><a href="'.JRoute::_('index.php?option=com_phocagallery&view=category&id='. $item->catslug.'&Itemid='. $this->itemId).'"'
 				.' title="'.JText::_( 'COM_PHOCAGALLERY_BACK_TO_CATEGORY' ).'">'
-				. PhocaGalleryRenderFront::renderIcon('icon-up-images', 'media/com_phocagallery/images/icon-up-images.png', JText::_('COM_PHOCAGALLERY_BACK_TO_CATEGORY'), 'ph-icon-up-images ph-icon-button').'</a></div>';
+				. JHtml::_('image', 'media/com_phocagallery/images/icon-up-images.png', JText::_( 'COM_PHOCAGALLERY_BACK_TO_CATEGORY' )).'</a></div>';
 				
 		}
 		
@@ -444,7 +428,7 @@ class PhocaGalleryViewDetail extends JViewLegacy
 		$app		= JFactory::getApplication();
 		$menus		= $app->getMenu();
 		$pathway 	= $app->getPathway();
-		//$this->params		= $app->getParams();
+		//$this->params		= &$app->getParams();
 		$title 		= null;
 		
 		$this->tmpl['gallerymetakey'] 		= $this->params->get( 'gallery_metakey', '' );
@@ -458,23 +442,14 @@ class PhocaGalleryViewDetail extends JViewLegacy
 			$this->params->def('page_heading', JText::_('JGLOBAL_ARTICLES'));
 		}
 
-		$title = $this->params->get('page_title', '');		
+		$title = $this->params->get('page_title', '');
 		if (empty($title)) {
-			$title = htmlspecialchars_decode($app->get('sitename'));
-		} else if ($app->get('sitename_pagetitles', 0) == 1) {
-			$title = JText::sprintf('JPAGETITLE', htmlspecialchars_decode($app->get('sitename')), $title);
-			
-			if (isset($item->title) && $item->title != '') {
-				$title = $title .' - ' .  $item->title;
-			}
-			
-		} else if ($app->get('sitename_pagetitles', 0) == 2) {
-			
-			if (isset($item->title) && $item->title != '') {
-				$title = $title .' - ' .  $item->title;
-			}
-		
-			$title = JText::sprintf('JPAGETITLE', $title, htmlspecialchars_decode($app->get('sitename')));
+			$title = htmlspecialchars_decode($app->getCfg('sitename'));
+		} else if ($app->getCfg('sitename_pagetitles', 0)) {
+			$title = JText::sprintf('JPAGETITLE', htmlspecialchars_decode($app->getCfg('sitename')), $title);
+		}
+		if (isset($item->title) && $item->title != '') {
+			$title = $title .' - ' .  $item->title;
 		}
 		$this->document->setTitle($title);
 		
@@ -494,11 +469,11 @@ class PhocaGalleryViewDetail extends JViewLegacy
 			$this->document->setMetadata('keywords', $this->params->get('menu-meta_keywords', ''));
 		}
 
-		if ($app->get('MetaTitle') == '1' && $this->params->get('menupage_title', '')) {
+		if ($app->getCfg('MetaTitle') == '1' && $this->params->get('menupage_title', '')) {
 			$this->document->setMetaData('title', $this->params->get('page_title', ''));
 		}
 
-		/*if ($app->get('MetaAuthor') == '1') {
+		/*if ($app->getCfg('MetaAuthor') == '1') {
 			$this->document->setMetaData('author', $this->item->author);
 		}
 
@@ -509,7 +484,7 @@ class PhocaGalleryViewDetail extends JViewLegacy
 			}
 		}*/
 		
-		// Breadcrumbs TO DO (Add the whole tree)
+		// Breadcrumbs TODO (Add the whole tree)
 		/*if (isset($this->category[0]->parentid)) {
 			if ($this->category[0]->parentid == 1) {
 			} else if ($this->category[0]->parentid > 0) {
@@ -520,26 +495,5 @@ class PhocaGalleryViewDetail extends JViewLegacy
 		if (!empty($this->category[0]->title)) {
 			$pathway->addItem($this->category[0]->title);
 		}*/
-				
-		
-		// Features added by Bernard Gilly - alphaplug.com
-		// load external plugins		
-		/*$user       = JFactory::getUser();	
-		$imgid      = $item->id;
-		$catid		= $item->catid;
-		$db	   		= JFactory::getDBO();
-		$query 		= "SELECT owner_id FROM #__phocagallery_categories WHERE `id`='$catid'";
-		$db->setQuery( $query );
-		$ownerid 	= $db->loadResult();				
-		$dispatcher = JDispatcher::getInstance();
-		JPluginHelper::importPlugin('phocagallery');
-		$results 	= $dispatcher->trigger( 'onViewImage', array($imgid, $catid, $ownerid, $user->id ) );*/
-
-		$user       = JFactory::getUser();		
-		$dispatcher = JDispatcher::getInstance();
-		JPluginHelper::importPlugin('phocagallery');
-		$results 	= $dispatcher->trigger( 'onViewImage', array((int)$item->id, (int)$item->catid, (int)$item->owner_id, (int)$user->id ) );		
-		
-
 	}
 }

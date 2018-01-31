@@ -1,9 +1,9 @@
-Portal padrão em CMS Joomla 3.7.4
+Portal padrão em CMS Joomla 3.6.5
 ================
 
 Sobre esta versão
 ---------------------
-O Joomla 3.7.4 é recomendado para versões do PHP 5.3.10+. Compátivel com PHP 7+
+O Joomla 3.6.5 é recomendado para versões do PHP 5.3.10+. 
 
 Acompanhe as atualizações do projeto
 ---------------------
@@ -28,9 +28,6 @@ Não é mais necessário alterar o arquivo configuration.php manualmente.
 
 O instalador padrão do CMS Joomla! 3.x foi customizado para configurar uma instalação padrão do CMS Joomla! com componentes, módulos, template e conteúdo de exemplo do Portal Padrão.
 
-Após concluir instalação e entrar no administrativo, rodar reparos no banco de dados.
-Cole o link /administrator/index.php?option=com_installer&view=database, e execute o clicando no botão 'Corrigir'
-
 
 Documentação
 ---------------------
@@ -45,25 +42,3 @@ Confira a documentação disponível até o momento no repositório provisório 
 Desenvolvimento
 ---------------------
 -   [Comunidade Joomla Calango](http://www.joomlacalango.org/)
-
-Configuração para desenvolvimento
----------------------
-O fonte do projeto usa [LESS](http://lesscss.org/), que precisa ser compilado para CSS. Esse processo foi automatizado independente de ambiente de desenvolvimento e IDE, usando a ferramenta [Gulp](http://gulpjs.com/), para o usar você precisa:
-   - Instalar o [Nodejs](https://nodejs.org);
-   - Instalar de forma global o GULP
-        - `` npm install --global gulp-cli `` para instalar o [gulpjs](https://gulpjs.com/);
-   - Após a instalação, um terminal, dentro da pasta raiz do projeto execute os comandos:
-        - `` npm install `` para instalar as dependências (somente uma vez);
-        - `` gulp watch `` para monitorar alterações nos aquivos LESS e compilar para CSS sem compressão (durante o desenvolvimento);
-        - `` gulp less `` para compilar e "comprimir" os aquivos LESS para CSS (para gerar uma versão final);
-
-Ultimas mudanças
---------------------
--   Correções no CSS referentes aos modulos, menus e banners
--   Correções de nas funcionalidades da busca padrao, somente no Override de template."original nao afetado"
--   +Adição de novo Plugin de busca de busca por Menu(Descobrir item no gerenciador). Sera incorporado posteriormente.
-    +Opcional (se colocado  uma palavra chave no plugin e nos itens de menu, terão prioridade na busca).
--   Update AllVideos 4.8.0
--   Update K2 2.8.0
--   Update Phoca Gallery 4.3.6
--   Update Youtube Gallery 4.4.0

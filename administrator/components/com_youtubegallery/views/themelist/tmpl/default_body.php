@@ -1,8 +1,8 @@
 <?php
 /**
- * YoutubeGallery Joomla! Native Component
- * @version 4.4.0
- * @author Ivan Komlev< <support@joomlaboat.com>
+ * YoutubeGallery Joomla! 3.0 Native Component
+ * @version 3.5.9
+ * @author DesignCompass corp< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -25,7 +25,7 @@ defined('_JEXEC') or die('Restricted Access');
                         <?php echo JHtml::_('grid.id', $i, $item->id); ?>
                 </td>
                 <td>
-                        <a href="<?php echo $link2edit; ?>"<?php echo ($item->readonly ? ' style="color:green;"' : ''); ?>><?php echo $item->themename; ?></a>
+                        <a href="<?php echo $link2edit; ?>"><?php echo $item->themename; ?></a>
                 </td>
                 
                 <td<?php echo ($item->readonly ? ' style="color:green;"' : ''); ?>>
@@ -39,7 +39,8 @@ defined('_JEXEC') or die('Restricted Access');
                         
                         ?>
                         
-                </td>      
+                </td>
+                
                 
                 
                 

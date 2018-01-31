@@ -1,0 +1,378 @@
+/**
+ * @package         Regular Labs Library
+ * @version         18.1.20362
+ * 
+ * @author          Peter van Westen <info@regularlabs.com>
+ * @link            http://www.regularlabs.com
+ * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ */
+@import "init.less";
+@import "font.less";
+@import "form.less";
+
+.rl_tablelist {
+	td {
+		height: 22px;
+		color:  @gray;
+	}
+	td.has-context {
+		height: 23px;
+	}
+}
+
+fieldset.rl_plaintext {
+	margin-top: 5px;
+}
+
+.rl_code {
+	#font > #family > .monospace;
+	color: @grayLight;
+}
+
+.well {
+	.well {
+		border-color: darken(@wellBackground, 7%);
+	}
+}
+
+div.rl_well {
+	padding-bottom: 0;
+	h4 {
+		margin-top: 6px;
+	}
+
+	&.alert-success,
+	&.alert-error {
+		color: @grayDark;
+	}
+}
+
+.well-striped:nth-child(even) {
+	background-color: lighten(@wellBackground, 3%);
+}
+
+.alert-inline {
+	margin: 14px 0 0;
+}
+
+.rl_btn-ignore.btn-danger.active {
+	background-color: @grayLight;
+	border:           1px solid rgba(0, 0, 0, 0.2);
+	&:hover,
+	&:focus {
+		background-color: darken(@grayLight, 15%);
+	}
+}
+
+.rl_btn-exclude.btn-success.active {
+	background-color: @btnDangerBackground;
+	border:           1px solid rgba(0, 0, 0, 0.2);
+	&:hover,
+	&:focus {
+		background-color: darken(@btnDangerBackground, 15%);
+	}
+}
+
+.rl_textarea {
+	.box-sizing(border-box);
+}
+
+.header .icon-nonumber:before {
+	font-size: 20px !important;
+}
+
+.header .status .icon-nonumber:before {
+	font-size: 16px !important;
+}
+
+.icon-back:before {
+	content: "\e008";
+}
+
+.icon-spin {
+	-webkit-animation: spin .5s infinite linear;
+	animation:         spin .5s infinite linear;
+}
+
+@-webkit-keyframes spin {
+	0% {
+		-webkit-transform: rotate(0deg)
+	}
+	100% {
+		-webkit-transform: rotate(359deg)
+	}
+}
+
+@-moz-keyframes spin {
+	0% {
+		-moz-transform: rotate(0deg)
+	}
+	100% {
+		-moz-transform: rotate(359deg)
+	}
+}
+
+@-ms-keyframes spin {
+	0% {
+		-ms-transform: rotate(0deg)
+	}
+	100% {
+		-ms-transform: rotate(359deg)
+	}
+}
+
+@-o-keyframes spin {
+	0% {
+		-o-transform: rotate(0deg)
+	}
+	100% {
+		-o-transform: rotate(359deg)
+	}
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg)
+	}
+	100% {
+		transform: rotate(359deg)
+	}
+}
+
+.inlist .simplecolors-swatch span {
+	position: relative;
+}
+
+/* Dropdown and dropup fixes */
+.btn-toolbar .modal,
+.btn-toolbar .dropdown-menu {
+	font-size: 13px;
+}
+
+@media (min-width: 768px) {
+	.dropdown {
+		display: inline-block;
+	}
+
+	.dropdown-menu.dropup-menu {
+		bottom: 100%;
+		top:    auto;
+	}
+}
+
+/* popovers */
+.popover {
+	width:     auto;
+	min-width: 200px;
+}
+
+/* icons */
+.icon-color {
+	background: transparent url(../images/icon-color.png) no-repeat;
+	width:      16px !important;
+	height:     16px !important;
+}
+
+.clearfix {
+	.clearfix();
+}
+
+.thumbnail-small > .thumbnail > img {
+	max-width: 40px;
+}
+
+#key_button,
+#jform_key_button {
+	margin-left: 8px;
+}
+
+.ghosted {
+	.opacity(60);
+}
+
+.rl_licence {
+	margin-top: 30px;
+	text-align: center;
+}
+
+.rl_footer {
+	margin-top: 30px;
+
+	div {
+		margin-top: 30px;
+		text-align: center;
+	}
+
+	.rl_footer_review {
+		margin-top: 5px;
+
+		a.stars {
+			display: inline-block;
+
+			.icon-star {
+				color:  mix(@yellow, @orange);
+				margin: 0;
+				.transition-duration(500ms);
+			}
+
+			&:hover {
+				text-decoration: none;
+				.icon-star {
+					.rotate(216deg);
+				}
+			}
+		}
+	}
+
+	.rl_footer_logo {
+		img {
+			vertical-align: -40%;
+		}
+	}
+
+	.rl_footer_copyright {
+		margin-top: 3px;
+		font-size:  0.7em;
+		.opacity(60);
+	}
+}
+
+.rl_simplecategory_new {
+	margin-top: 4px;
+}
+
+.rl_codemirror .CodeMirror-activeline-background {
+	background: rgba(164, 194, 235, .1);
+}
+
+/* better responsiveness */
+@media (min-width: 768px) and (max-width: 1200px) {
+	.row-fluid [class*="span"] {
+		&.span-md-12 {
+			width:       100%;
+			*width:      99.94680851063829%;
+			margin-left: 0;
+		}
+
+		&.span-md-11 {
+			width:  91.48936170212765%;
+			*width: 91.43617021276594%;
+		}
+
+		&.span-md-10 {
+			width:  82.97872340425532%;
+			*width: 82.92553191489361%;
+		}
+
+		&.span-md-9 {
+			width:  74.46808510638297%;
+			*width: 74.41489361702126%;
+		}
+
+		&.span-md-8 {
+			width:  65.95744680851064%;
+			*width: 65.90425531914893%;
+		}
+
+		&.span-md-7 {
+			width:  57.44680851063829%;
+			*width: 57.39361702127659%;
+		}
+
+		&.span-md-6 {
+			width:  48.93617021276595%;
+			*width: 48.88297872340425%;
+		}
+
+		&.span-md-5 {
+			width:  40.42553191489362%;
+			*width: 40.37234042553192%;
+		}
+
+		&.span-md-4 {
+			width:  31.914893617021278%;
+			*width: 31.861702127659576%;
+		}
+
+		&.span-md-3 {
+			width:  23.404255319148934%;
+			*width: 23.351063829787233%;
+		}
+
+		&.span-md-2 {
+			width:  14.893617021276595%;
+			*width: 14.840425531914894%;
+		}
+
+		&.span-md-1 {
+			width:  6.382978723404255%;
+			*width: 6.329787234042553%;
+		}
+	}
+}
+
+@media (min-width: 1200px) and (max-width: 1400px) {
+	.row-fluid [class*="span"] {
+		&.span-lg-12 {
+			width:       100%;
+			*width:      99.94680851063829%;
+			margin-left: 0;
+		}
+
+		&.span-lg-11 {
+			width:  91.48936170212765%;
+			*width: 91.43617021276594%;
+		}
+
+		&.span-lg-10 {
+			width:  82.97872340425532%;
+			*width: 82.92553191489361%;
+		}
+
+		&.span-lg-9 {
+			width:  74.46808510638297%;
+			*width: 74.41489361702126%;
+		}
+
+		&.span-lg-8 {
+			width:  65.95744680851064%;
+			*width: 65.90425531914893%;
+		}
+
+		&.span-lg-7 {
+			width:  57.44680851063829%;
+			*width: 57.39361702127659%;
+		}
+
+		&.span-lg-6 {
+			width:  48.93617021276595%;
+			*width: 48.88297872340425%;
+		}
+
+		&.span-lg-5 {
+			width:  40.42553191489362%;
+			*width: 40.37234042553192%;
+		}
+
+		&.span-lg-4 {
+			width:  31.914893617021278%;
+			*width: 31.861702127659576%;
+		}
+
+		&.span-lg-3 {
+			width:  23.404255319148934%;
+			*width: 23.351063829787233%;
+		}
+
+		&.span-lg-2 {
+			width:  14.893617021276595%;
+			*width: 14.840425531914894%;
+		}
+
+		&.span-lg-1 {
+			width:  6.382978723404255%;
+			*width: 6.329787234042553%;
+		}
+	}
+}

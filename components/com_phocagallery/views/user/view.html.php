@@ -1,6 +1,6 @@
 <?php
 /*
- * @package Joomla
+ * @package Joomla 1.5
  * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  *
@@ -20,7 +20,6 @@ phocagalleryimport('phocagallery.avatar.avatar');
 phocagalleryimport('phocagallery.render.renderadmin');
 phocagalleryimport('phocagallery.html.category');
 //phocagalleryimport('phocagallery.pagination.paginationuser');
-use Joomla\String\StringHelper;
 
 class PhocaGalleryViewUser extends JViewLegacy
 {
@@ -31,25 +30,23 @@ class PhocaGalleryViewUser extends JViewLegacy
 	function display($tpl = null) {
 		
 		$app				= JFactory::getApplication();
-		$document			= JFactory::getDocument();
-		$uri 				= JFactory::getURI();
+		$document			= &JFactory::getDocument();
+		$uri 				= &JFactory::getURI();
 		$menus				= $app->getMenu();
 		$menu				= $menus->getActive();
-		$this->params		= $app->getParams();
-		$user 				= JFactory::getUser();
+		$this->params		= &$app->getParams();
+		$user 				= &JFactory::getUser();
 		$path				= PhocaGalleryPath::getPath();
 		$this->itemId			= $app->input->get('Itemid', 0, 'int');
 	
 		$neededAccessLevels	= PhocaGalleryAccess::getNeededAccessLevels();
 		$access				= PhocaGalleryAccess::isAccess($user->getAuthorisedViewLevels(), $neededAccessLevels);
-		
-	
 
 		$this->tmpl['pi']		= 'media/com_phocagallery/images/';
 		$this->tmpl['pp']		= 'index.php?option=com_phocagallery&view=user&controller=user';
 		$this->tmpl['pl']		= 'index.php?option=com_users&view=login&return='.base64_encode($this->tmpl['pp'].'&Itemid='. $this->itemId);
 		// LIBRARY
-		$library 							= PhocaGalleryLibrary::getLibrary();
+		$library 							= &PhocaGalleryLibrary::getLibrary();
 		//$libraries['pg-css-ie'] 			= $library->getLibrary('pg-css-ie');
 		
 		// Only registered users
@@ -68,12 +65,6 @@ class PhocaGalleryViewUser extends JViewLegacy
 		}
 		
 		PhocaGalleryRenderFront::renderAllCSS();
-		
-		// Custom order
-		// administrator\components\com_phocagallery\libraries\phocagallery\html\grid.php replaces
-		// libraries\cms\html\grid.php (libraries\joomla\grid\grid.php) and the javascript: 
-		// media\system\js\core-uncompressed.js (core.js)
-		PhocaGalleryGrid::renderSortJs();
 		
 	
 		
@@ -94,7 +85,9 @@ class PhocaGalleryViewUser extends JViewLegacy
 		
 		$this->tmpl['maxuploadchar']		= $this->params->get( 'max_upload_char', 1000 );
 		$this->tmpl['maxcreatecatchar']		= $this->params->get( 'max_create_cat_char', 1000 );
+		$this->tmpl['dp'] 					= PhocaGalleryRenderInfo::getPhocaIc((int)$this->params->get( 'display_phoca_info', 1 ));
 		$this->tmpl['showpageheading'] 		= $this->params->get( 'show_page_heading', 1 );
+
 		$this->tmpl['javaboxwidth'] 		= $this->params->get( 'java_box_width', 480 );
 		$this->tmpl['javaboxheight'] 		= $this->params->get( 'java_box_height', 480 );
 		$this->tmpl['enableuploadavatar'] 	= $this->params->get( 'enable_upload_avatar', 1 );
@@ -108,7 +101,7 @@ class PhocaGalleryViewUser extends JViewLegacy
 		$this->tmpl['enablejava'] 			= $this->params->get( 'enable_java', -1);
 		$this->tmpl['enablemultiple'] 		= $this->params->get( 'enable_multiple', 0 );
 		$this->tmpl['ytbupload'] 			= $this->params->get( 'youtube_upload', 0 );
-		$this->tmpl['multipleuploadmethod'] = $this->params->get( 'multiple_upload_method', 4 );
+		$this->tmpl['multipleuploadmethod'] = $this->params->get( 'multiple_upload_method', 1 );
 		$this->tmpl['multipleresizewidth'] 	= $this->params->get( 'multiple_resize_width', -1 );
 		$this->tmpl['multipleresizeheight'] = $this->params->get( 'multiple_resize_height', -1 );
 		$this->tmpl['usersubcatcount']		= $this->params->get( 'user_subcat_count', 5 );
@@ -176,8 +169,7 @@ class PhocaGalleryViewUser extends JViewLegacy
 		// ACTION
 		$this->tmpl['action']	= $uri->toString();
 		$this->tmpl['ftp'] 		= !JClientHelper::hasCredentials('ftp');
-		$sess = JFactory::getSession();
-		$this->assignRef('session', $sess);
+		$this->assignRef('session', JFactory::getSession());
 
 		
 		// SEF problem
@@ -214,7 +206,7 @@ class PhocaGalleryViewUser extends JViewLegacy
 		$userAvatar					= $model->getUserAvatar($user->id);
 		
 		if ($userAvatar) {
-			$pathAvatarAbs	= $path->avatar_abs  .'thumbs/phoca_thumb_m_'. $userAvatar->avatar;
+			$pathAvatarAbs	= $path->avatar_abs  .'thumbs'.DS.'phoca_thumb_m_'. $userAvatar->avatar;
 			$pathAvatarRel	= $path->avatar_rel . 'thumbs/phoca_thumb_m_'. $userAvatar->avatar;
 			if (JFile::exists($pathAvatarAbs)){
 				$this->tmpl['useravatarimg']	= '<img src="'.JURI::base(true) . '/' . $pathAvatarRel.'?imagesid='.md5(uniqid(time())).'" alt="" />';
@@ -225,7 +217,7 @@ class PhocaGalleryViewUser extends JViewLegacy
 		if ($ownerMainCategory) {
 			$this->tmpl['usermaincategory'] =  $ownerMainCategory->title;
 		} else {	
-			$this->tmpl['usermaincategory'] =  PhocaGalleryRenderFront::renderIcon('minus-sign',$this->tmpl['pi'].'icon-unpublish.png', JText::_('COM_PHOCAGALLERY_NOT_CREATED'))
+			$this->tmpl['usermaincategory'] =  JHtml::_('image',$this->tmpl['pi'].'icon-unpublish.png', JText::_('COM_PHOCAGALLERY_NOT_CREATED')) 
 			.' ('.JText::_('COM_PHOCAGALLERY_NOT_CREATED').')';
 		}
 		$this->tmpl['usersubcategory'] 		= $model->getCountUserSubCat($user->id);
@@ -292,7 +284,7 @@ class PhocaGalleryViewUser extends JViewLegacy
 			if (strpos($search_subcat, '"') !== false) {
 				$search_subcat = str_replace(array('=', '<'), '', $search_subcat);
 			}
-			$search_subcat			= StringHelper::strtolower( $search_subcat );
+			$search_subcat			= JString::strtolower( $search_subcat );
 			
 			$categories 				= $model->getCategoryList($user->id);
 			if (!empty($categories)) {
@@ -347,12 +339,11 @@ class PhocaGalleryViewUser extends JViewLegacy
 			if (strpos($search_image, '"') !== false) {
 				$search_image = str_replace(array('=', '<'), '', $search_image);
 			}
-			$search_image			= StringHelper::strtolower( $search_image );
+			$search_image			= JString::strtolower( $search_image );
 			
 			$categoriesImage 		= $model->getCategoryList($user->id);
 			if (!empty($categoriesImage)) {
-				//$javascript     = 'class="inputbox" size="1" onchange="document.phocagalleryimageform.submit();"';
-$javascript     = 'class="inputbox" size="1" onchange="document.getElementById(\'phocagalleryimageform\').submit();"';
+				$javascript 	= 'class="inputbox" size="1" onchange="document.phocagalleryimageform.submit();"';
 				$tree = array();
 				$text = '';
 				$tree = PhocaGalleryCategory::CategoryTreeOption($categoriesImage, $tree,0, $text, -1);
@@ -365,7 +356,7 @@ $javascript     = 'class="inputbox" size="1" onchange="document.getElementById(\
 			$state_image[] 		= JHtml::_('select.option',  '', '- '. JText::_( 'COM_PHOCAGALLERY_SELECT_STATE' ) .' -' );
 			$state_image[] 		= JHtml::_('select.option', 'P', JText::_( 'COM_PHOCAGALLERY_FIELD_PUBLISHED_LABEL' ) );
 			$state_image[] 		= JHtml::_('select.option', 'U', JText::_( 'COM_PHOCAGALLERY_FIELD_UNPUBLISHED_LABEL') );
-			$lists_image['state']	= JHtml::_('select.genericlist',   $state_image, 'filter_state_image', 'class="inputbox" size="1" onchange="document.getElementById(\'phocagalleryimageform\').submit();"', 'value', 'text', $filter_state_image );
+			$lists_image['state']	= JHtml::_('select.genericlist',   $state_image, 'filter_state_image', 'class="inputbox" size="1" onchange="document.phocagalleryimageform.submit();"', 'value', 'text', $filter_state_image );
 
 			// table ordering
 			$lists_image['order_Dir'] 	= $filter_order_Dir_image;
@@ -394,8 +385,7 @@ $javascript     = 'class="inputbox" size="1" onchange="document.getElementById(\
 			// USER RIGHT - ACCESS - - - - - - - - - - - 
 			$rightDisplay = 1;//default is set to 1 (all users can see the category)
 			if (!empty($catAccess)) {
-				
-				$rightDisplay = PhocaGalleryAccess::getUserRight ('accessuserid', $catAccess->accessuserid, $catAccess->access, $user->getAuthorisedViewLevels(), $user->get('id', 0), 1);
+				$rightDisplay = PhocaGalleryAccess::getUserRight ('accessuserid', $catAccess->accessuserid, 0, $user->getAuthorisedViewLevels(), $user->get('id', 0), 1);
 			}
 			if ($rightDisplay == 0) {
 				$app->redirect(JRoute::_($this->tmpl['pl'], false), JText::_('COM_PHOCAGALLERY_NOT_AUTHORISED_ACTION'));
@@ -532,8 +522,7 @@ $javascript     = 'class="inputbox" size="1" onchange="document.getElementById(\
 		$this->assignRef( 'listsimage',		$lists_image);
 		//$this->assignRef( 'tmpl', $this->tmpl);
 		//$this->assignRef( 'params', $this->params);
-		$sess = JFactory::getSession();
-		$this->assignRef( 'session', $sess);
+		$this->assignRef( 'session', JFactory::getSession());
 		$this->_prepareDocument();
 		parent::display($tpl);
 	}
@@ -543,7 +532,7 @@ $javascript     = 'class="inputbox" size="1" onchange="document.getElementById(\
 		$app		= JFactory::getApplication();
 		$menus		= $app->getMenu();
 		$pathway 	= $app->getPathway();
-		$this->params	= $app->getParams();
+		$this->params	= &$app->getParams();
 		$title 		= null;
 		
 		$this->tmpl['gallerymetakey'] 		= $this->params->get( 'gallery_metakey', '' );
@@ -557,13 +546,11 @@ $javascript     = 'class="inputbox" size="1" onchange="document.getElementById(\
 			$this->params->def('page_heading', JText::_('JGLOBAL_ARTICLES'));
 		}
 
-		$title = $this->params->get('page_title', '');		
+		$title = $this->params->get('page_title', '');
 		if (empty($title)) {
-			$title = htmlspecialchars_decode($app->get('sitename'));
-		} else if ($app->get('sitename_pagetitles', 0) == 1) {
-			$title = JText::sprintf('JPAGETITLE', htmlspecialchars_decode($app->get('sitename')), $title);
-		} else if ($app->get('sitename_pagetitles', 0) == 2) {
-			$title = JText::sprintf('JPAGETITLE', $title, htmlspecialchars_decode($app->get('sitename')));
+			$title = htmlspecialchars_decode($app->getCfg('sitename'));
+		} else if ($app->getCfg('sitename_pagetitles', 0)) {
+			$title = JText::sprintf('JPAGETITLE', htmlspecialchars_decode($app->getCfg('sitename')), $title);
 		}
 		
 		$this->document->setTitle($title);
@@ -580,11 +567,11 @@ $javascript     = 'class="inputbox" size="1" onchange="document.getElementById(\
 			$this->document->setMetadata('keywords', $this->params->get('menu-meta_keywords', ''));
 		}
 
-		if ($app->get('MetaTitle') == '1' && $this->params->get('menupage_title', '')) {
+		if ($app->getCfg('MetaTitle') == '1' && $this->params->get('menupage_title', '')) {
 			$this->document->setMetaData('title', $this->params->get('page_title', ''));
 		}
 
-		/*if ($app->get('MetaAuthor') == '1') {
+		/*if ($app->getCfg('MetaAuthor') == '1') {
 			$this->document->setMetaData('author', $this->item->author);
 		}
 
@@ -595,7 +582,7 @@ $javascript     = 'class="inputbox" size="1" onchange="document.getElementById(\
 			}
 		}*/
 		
-		// Breadcrumbs TO DO (Add the whole tree)
+		// Breadcrumbs TODO (Add the whole tree)
 		/*if (isset($this->category[0]->parentid)) {
 			if ($this->category[0]->parentid == 1) {
 			} else if ($this->category[0]->parentid > 0) {

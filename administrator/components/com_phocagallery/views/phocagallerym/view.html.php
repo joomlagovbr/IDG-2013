@@ -58,7 +58,7 @@ class PhocaGalleryCpViewPhocaGalleryM extends JViewLegacy
 		$this->tmpl['uploadmaxresheight'] 	= $params->get( 'upload_maxres_height', 2304 );
 		$this->tmpl['enablejava'] 			= $params->get( 'enable_java', -1 );
 		$this->tmpl['enablemultiple'] 		= $params->get( 'enable_multiple', 0 );
-		$this->tmpl['multipleuploadmethod'] = $params->get( 'multiple_upload_method', 4 );
+		$this->tmpl['multipleuploadmethod'] = $params->get( 'multiple_upload_method', 1 );
 		$this->tmpl['multipleresizewidth'] 	= $params->get( 'multiple_resize_width', -1 );
 		$this->tmpl['multipleresizeheight'] = $params->get( 'multiple_resize_height', -1 );
 
@@ -70,7 +70,7 @@ class PhocaGalleryCpViewPhocaGalleryM extends JViewLegacy
 		// - - - - - - - - - -
 		//TABS
 		// - - - - - - - - - - 
-		$this->tmpl['tab'] 			= JFactory::getApplication()->input->get('tab', '', '', 'string');
+		$this->tmpl['tab'] 			= JRequest::getVar('tab', '', '', 'string');
 		$this->tmpl['displaytabs']	= 0;
 		
 		// UPLOAD
@@ -110,8 +110,8 @@ class PhocaGalleryCpViewPhocaGalleryM extends JViewLegacy
 		// Multiple Upload
 		// - - - - - - - - - - -
 		// Get infos from multiple upload
-		$muFailed						= JFactory::getApplication()->input->get( 'mufailed', '0', '', 'int' );
-		$muUploaded						= JFactory::getApplication()->input->get( 'muuploaded', '0', '', 'int' );
+		$muFailed						= JRequest::getVar( 'mufailed', '0', '', 'int' );
+		$muUploaded						= JRequest::getVar( 'muuploaded', '0', '', 'int' );
 		$this->tmpl['mu_response_msg']	= $muUploadedMsg 	= '';
 		
 		if ($muUploaded > 0) {
@@ -186,20 +186,20 @@ class PhocaGalleryCpViewPhocaGalleryM extends JViewLegacy
 
 	protected function addToolbar() {
 		
-		require_once JPATH_COMPONENT.'/helpers/phocagallerym.php';
+		require_once JPATH_COMPONENT.DS.'helpers'.DS.'phocagallerym.php';
 
 		$state	= $this->get('State');
 		$canDo	= PhocaGalleryMHelper::getActions($state->get('filter.multiple'));
 		
-		JToolbarHelper ::title( JText::_( 'COM_PHOCAGALLERY_MULTIPLE_ADD' ), 'plus' );
+		JToolBarHelper::title( JText::_( 'COM_PHOCAGALLERY_MULTIPLE_ADD' ), 'plus' );
 
 		if ($canDo->get('core.create')){
-			JToolbarHelper ::save('phocagallerym.save', 'JToolbar_SAVE');
+			JToolBarHelper::save('phocagallerym.save', 'JTOOLBAR_SAVE');
 		}
 		
-		JToolbarHelper ::cancel('phocagallerym.cancel', 'JToolbar_CLOSE');
-		JToolbarHelper ::divider();
-		JToolbarHelper ::help( 'screen.phocagallery', true );
+		JToolBarHelper::cancel('phocagallerym.cancel', 'JTOOLBAR_CLOSE');
+		JToolBarHelper::divider();
+		JToolBarHelper::help( 'screen.phocagallery', true );
 	}
 }
 ?>

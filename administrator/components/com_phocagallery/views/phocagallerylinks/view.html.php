@@ -21,15 +21,15 @@ class phocaGalleryCpViewphocaGalleryLinks extends JViewLegacy
 		
 		//Frontend Changes
 		$tUri = '';
-		if (!$app->isClient('administrator')) {
+		if (!$app->isAdmin()) {
 			$tUri = JURI::base();
 		}
 		
-		$document	=JFactory::getDocument();
-		$uri		= JFactory::getURI();
+		$document	=& JFactory::getDocument();
+		$uri		=& JFactory::getURI();
 		JHTML::stylesheet( 'media/com_phocagallery/css/administrator/phocagallery.css' );
 		
-		$eName	= JFactory::getApplication()->input->get('e_name');
+		$eName	= JRequest::getVar('e_name');
 		$eName	= preg_replace( '#[^A-Z0-9\-\_\[\]]#i', '', $eName );
 		
 		$tmpl['categories']		= $tUri.'index.php?option=com_phocagallery&amp;view=phocagallerylinkcats&amp;tmpl=component&amp;e_name='.$eName;

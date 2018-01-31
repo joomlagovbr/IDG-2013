@@ -42,23 +42,23 @@ class PhocaGalleryCpViewPhocaGallerycp extends JViewLegacy
 	}
 	
 	protected function addToolbar() {
-		require_once JPATH_COMPONENT.'/helpers/phocagallerycp.php';
+		require_once JPATH_COMPONENT.DS.'helpers'.DS.'phocagallerycp.php';
 
 		$state	= $this->get('State');
 		$canDo	= PhocaGalleryCpHelper::getActions();
-		JToolbarHelper ::title( JText::_( 'COM_PHOCAGALLERY_PG_CONTROL_PANEL' ), 'home-2 cpanel' );
+		JToolBarHelper::title( JText::_( 'COM_PHOCAGALLERY_PG_CONTROL_PANEL' ), 'home-2 cpanel' );
 		
 		// This button is unnecessary but it is displayed because Joomla! design bug
-		$bar = JToolbar::getInstance( 'toolbar' );
-		$dhtml = '<a href="index.php?option=com_phocagallery" class="btn btn-small"><i class="icon-home-2" title="'.JText::_('COM_PHOCAGALLERY_CONTROL_PANEL').'"></i> '.JText::_('COM_PHOCAGALLERY_CONTROL_PANEL').'</a>';
+		$bar = & JToolBar::getInstance( 'toolbar' );
+		$dhtml = '<a href="index.php?option=com_phocagallery" class="btn btn-small"><i class="icon-home" title="'.JText::_('COM_PHOCAGALLERY_CONTROL_PANEL').'"></i> '.JText::_('COM_PHOCAGALLERY_CONTROL_PANEL').'</a>';
 		$bar->appendButton('Custom', $dhtml);
 		
 		if ($canDo->get('core.admin')) {
-			JToolbarHelper ::preferences('com_phocagallery');
-			JToolbarHelper ::divider();
+			JToolBarHelper::preferences('com_phocagallery');
+			JToolBarHelper::divider();
 		}
 		
-		JToolbarHelper ::help( 'screen.phocagallery', true );
+		JToolBarHelper::help( 'screen.phocagallery', true );
 	}
 }
 ?>

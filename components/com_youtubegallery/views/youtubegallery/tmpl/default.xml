@@ -24,13 +24,6 @@
                         />
                         
                         <field
-                                name="mobilethemeid"
-                                type="themesoptional"
-                                label="COM_YOUTUBEGALLERY_MOBILETHEMENAME_LABEL"
-                                description="COM_YOUTUBEGALLERY_MOBILETHEMENAME_DESC"
-                        />
-                        
-                        <field
                                 name="align"
                                 type="list"
                                 label="COM_YOUTUBEGALLERY_ALIGN_LABEL"

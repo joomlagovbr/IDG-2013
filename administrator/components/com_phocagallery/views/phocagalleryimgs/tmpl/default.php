@@ -28,27 +28,29 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 $canOrder	= $user->authorise('core.edit.state', $option);
 $saveOrder	= $listOrder == 'a.ordering';
 if ($saveOrder) {
-	
 	$saveOrderingUrl = 'index.php?option='.$option.'&task='.$tasks.'.saveOrderAjax&tmpl=component';
 	JHtml::_('sortablelist.sortable', 'categoryList', 'adminForm', strtolower($listDirn), $saveOrderingUrl, false, true);
 }
 $sortFields = $this->getSortFields();
 
+
 echo $r->jsJorderTable($listOrder);
 
 echo '<div class="phoca-thumb-status">' . $this->tmpl['enablethumbcreationstatus'] .'</div>';
-//echo '<div class="clearfix"></div>';
-
-echo $r->startForm($option, $tasks, 'adminForm');
-echo $r->startFilter();
-echo $r->endFilter();
-
-echo $r->startMainContainer();
+echo '<div class="clearfix"></div>';
 if (isset($this->tmpl['notapproved']->count) && (int)$this->tmpl['notapproved']->count > 0 ) {
 	echo '<div class="alert alert-error"><a class="close" data-dismiss="alert" href="#">&times;</a>'.JText::_($OPT.'_NOT_APPROVED_IMAGE_IN_GALLERY').': '
 	.(int)$this->tmpl['notapproved']->count.'</div>';
 }
 
+echo $r->startForm($option, $tasks, 'adminForm');
+echo $r->startFilter($OPT.'_FILTER');
+echo $r->selectFilterPublished('JOPTION_SELECT_PUBLISHED', $this->state->get('filter.state'));
+echo $r->selectFilterLanguage('JOPTION_SELECT_LANGUAGE', $this->state->get('filter.language'));
+echo $r->selectFilterCategory(PhocaGalleryCategory::options($option, 1), 'JOPTION_SELECT_CATEGORY', $this->state->get('filter.category_id'));
+echo $r->endFilter();
+
+echo $r->startMainContainer();
 echo $r->startFilterBar();
 echo $r->inputFilterSearch($OPT.'_FILTER_SEARCH_LABEL', $OPT.'_FILTER_SEARCH_DESC',
 							$this->escape($this->state->get('filter.search')));
@@ -56,13 +58,6 @@ echo $r->inputFilterSearchClear('JSEARCH_FILTER_SUBMIT', 'JSEARCH_FILTER_CLEAR')
 echo $r->inputFilterSearchLimit('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC', $this->pagination->getLimitBox());
 echo $r->selectFilterDirection('JFIELD_ORDERING_DESC', 'JGLOBAL_ORDER_ASCENDING', 'JGLOBAL_ORDER_DESCENDING', $listDirn);
 echo $r->selectFilterSortBy('JGLOBAL_SORT_BY', $sortFields, $listOrder);
-
-echo $r->startFilterBar(2);
-echo $r->selectFilterPublished('JOPTION_SELECT_PUBLISHED', $this->state->get('filter.state'));
-echo $r->selectFilterLanguage('JOPTION_SELECT_LANGUAGE', $this->state->get('filter.language'));
-echo $r->selectFilterCategory(PhocaGalleryCategory::options($option, 1), 'JOPTION_SELECT_CATEGORY', $this->state->get('filter.category_id'));
-echo $r->endFilterBar();
-
 echo $r->endFilterBar();		
 
 echo $r->startTable('categoryList');
@@ -118,11 +113,10 @@ $canEditCat	= $user->authorise('core.edit', $option);
 
 $iD = $i % 2;
 echo "\n\n";
-//echo '<tr class="row'.$iD.'" sortable-group-id="'.$item->category_id.'" item-id="'.$item->id.'" parents="'.$item->category_id.'" level="0">'. "\n";
-echo '<tr class="row'.$iD.'" sortable-group-id="'.$item->category_id.'" >'. "\n";
+echo '<tr class="row'.$iD.'" sortable-group-id="'.$item->category_id.'" item-id="'.$item->id.'" parents="'.$item->category_id.'" level="0">'. "\n";
 
-echo $r->tdOrder($canChange, $saveOrder, $orderkey, $item->ordering);
-echo $r->td(JHtml::_('grid.id', $i, $item->id), "small");
+echo $r->tdOrder($canChange, $saveOrder, $orderkey);
+echo $r->td(JHtml::_('grid.id', $i, $item->id), "small hidden-phone");
 echo $r->tdImage($item, $this->button, 'COM_PHOCAGALLERY_ENLARGE_IMAGE');						
 $checkO = '';
 if ($item->checked_out) {
@@ -134,7 +128,7 @@ if ($canCreate || $canEdit) {
 	$checkO .= $this->escape($item->title);
 }
 $checkO .= ' <span class="smallsub">(<span>'.JText::_($OPT.'_FIELD_ALIAS_LABEL').':</span>'. $this->escape($item->alias).')</span>';
-echo $r->td($checkO, "small");
+echo $r->td($checkO, "small hidden-phone");
 
 if (isset($item->extid) && $item->extid !='') {
 	if (isset($item->exttype) && $item->exttype == 1) {
@@ -158,29 +152,29 @@ if (isset($item->extid) && $item->extid !='') {
 	echo '</td>';
 }
 
-echo $r->td(JHtml::_('jgrid.published', $item->published, $i, $tasks.'.', $canChange), "small");
-echo $r->td(PhocaGalleryJGrid::approved( $item->approved, $i, $tasks.'.', $canChange), "small");
+echo $r->td(JHtml::_('jgrid.published', $item->published, $i, $tasks.'.', $canChange), "small hidden-phone");
+echo $r->td(PhocaGalleryJGrid::approved( $item->approved, $i, $tasks.'.', $canChange), "small hidden-phone");
 
 if ($canEditCat) {
 	$catO = '<a href="'. JRoute::_($linkCat).'">'. $this->escape($item->category_title).'</a>';
 } else {
 	$catO = $this->escape($item->category_title);
 }
-echo $r->td($catO, "small");	
-//echo $r->td($this->escape($item->access_level), "small");	
+echo $r->td($catO, "small hidden-phone");	
+//echo $r->td($this->escape($item->access_level), "small hidden-phone");	
 
 $usrO = $item->usernameno;
 if ($item->username) {$usrO = $usrO . ' ('.$item->username.')';}
-echo $r->td($usrO, "small");
+echo $r->td($usrO, "small hidden-phone");
 
 $usrU = $item->uploadname;
 if ($item->uploadusername) {$usrU = $usrU . ' ('.$item->uploadusername.')';}
-echo $r->td($usrU, "small");							
+echo $r->td($usrU, "small hidden-phone");							
 
 echo $r->tdRating($item->ratingavg);
-echo $r->td($item->hits, "small");
+echo $r->td($item->hits, "small hidden-phone");
 echo $r->tdLanguage($item->language, $item->language_title, $this->escape($item->language_title));
-echo $r->td($item->id, "small");
+echo $r->td($item->id, "small hidden-phone");
 
 echo '</tr>'. "\n";
 						
@@ -194,7 +188,7 @@ echo $r->endTable();
 
 echo $this->loadTemplate('batch');
 
-echo $r->formInputs($listOrder, $listDirn, $originalOrders);
+echo $r->formInputs($listOrder, $originalOrders);
 echo $r->endMainContainer();
 echo $r->endForm();
 ?>
