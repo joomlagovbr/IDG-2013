@@ -170,7 +170,7 @@ class SearchViewSearch extends JViewLegacy
 					$created = JHtml::_('date', $result->created, JText::_('DATE_FORMAT_LC3'));
 				}
 
-				$result->title   = $rowTitleHighLighted;
+				// $result->title   = $rowTitleHighLighted;
 				$result->text    = JHtml::_('content.prepare', $rowTextHighLighted, '', 'com_search.search');
 				$result->created = $created;
 				$result->count   = $i + 1;
@@ -208,7 +208,7 @@ class SearchViewSearch extends JViewLegacy
 	 *
 	 * @param   string  $string       text to be searched
 	 * @param   string  $needle       text to search for
-	 * @param   string  $searchWords  words to be searched  
+	 * @param   string  $searchWords  words to be searched
 	 *
 	 * @return  mixed  A string.
 	 *
