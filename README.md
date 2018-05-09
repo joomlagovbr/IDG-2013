@@ -1,9 +1,9 @@
-Portal padrão em CMS Joomla 3.6.5
+Portal padrão em CMS Joomla 3.8.4
 ================
 
 Sobre esta versão
 ---------------------
-O Joomla 3.6.5 é recomendado para versões do PHP 5.3.10+. 
+O Joomla 3.8.4 é recomendado para versões do PHP 5.3.10+. 
 
 Acompanhe as atualizações do projeto
 ---------------------
