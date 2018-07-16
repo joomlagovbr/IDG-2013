@@ -1,4 +1,7 @@
 <?php
+/**
+ * @GNU General Public License
+ **/
 
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');

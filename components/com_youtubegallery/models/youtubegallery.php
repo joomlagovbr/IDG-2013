@@ -1,8 +1,8 @@
 <?php
 /**
- * YoutubeGallery Joomla! 3.0 Native Component
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * YoutubeGallery Joomla! Native Component
+ * @version 4.4.5
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -15,33 +15,22 @@ if(!defined('DS'))
  
 // import Joomla modelitem library
 jimport('joomla.application.component.modelitem');
+jimport('joomla.application.menu' );
 
-jimport( 'joomla.application.menu' );
-
-
- 
 /**
  * YoutubeGallery Model
  */
 class YoutubeGalleryModelYoutubeGallery extends JModelItem
 {
-
         protected $youtubegallerycode;
-	/*	
-        public function getTable($type = 'YoutubeGallery', $prefix = 'YoutubeGalleryTable', $config = array()) 
-        {
-                return JTable::getInstance($type, $prefix, $config);
-        }
-	*/
+	
         /**
          * Get the message
          * @return actual youtube galley code
          */
         public function getYoutubeGalleryCode() 
         {
-		jimport('joomla.version');
-		$version = new JVersion();
-		$JoomlaVersionRelease=$version->RELEASE;
+		require_once(JPATH_SITE.DIRECTORY_SEPARATOR.'components'.DIRECTORY_SEPARATOR.'com_youtubegallery'.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.'misc.php');
 		
 		$result='';
 		
@@ -50,50 +39,63 @@ class YoutubeGalleryModelYoutubeGallery extends JModelItem
 				 
                 if (!isset($this->youtubegallerycode)) 
                 {
-						if(JRequest::getInt('listid'))
+						if(JFactory::getApplication()->input->getInt('listid'))
 						{
 								//Shadow Box
-								//alteracao projeto portal padrao
-								$listid=JRequest::getInt('listid');
-								$themeid=JRequest::getInt('themeid');
-								//fim alteracao projeto portal padrao	
+								$listid=(int)JFactory::getApplication()->input->getInt('listid');
+								
+								
+								//Get Theme
+								$m_themeid=(int)JFactory::getApplication()->input->getInt('mobilethemeid');
+								if($m_themeid!=0)
+								{
+									if(YouTubeGalleryMisc::check_user_agent('mobile'))
+										$themeid=$m_themeid;
+									else
+										$themeid=(int)JFactory::getApplication()->input->getInt('themeid');
+								}
+								else
+									$themeid=(int)JFactory::getApplication()->input->getInt('themeid');
 						}
 						else
 						{
 								$listid=(int)$params->get( 'listid' );
-								$themeid=(int)$params->get( 'themeid' );
+								//Get Theme
+								$m_themeid=(int)$params->get( 'mobilethemeid' );
+								if($m_themeid!=0)
+								{
+									if(YouTubeGalleryMisc::check_user_agent('mobile'))
+										$themeid=$m_themeid;
+									else
+										$themeid=(int)$params->get( 'themeid' );
+								}
+								else
+									$themeid=(int)$params->get( 'themeid' );
 						}
 						
                         
                         if($listid!=0 and $themeid!=0)
                         {
-								$videoid=JRequest::getVar('videoid');
+								$videoid=JFactory::getApplication()->input->getCmd('videoid');
 						
-								require_once(JPATH_SITE.DS.'components'.DS.'com_youtubegallery'.DS.'includes'.DS.'misc.php'); //alteracao projeto portal padrao
-								require_once(JPATH_SITE.DS.'templates'.DS.'padraogoverno01'.DS.'html'.DS.'mod_youtubegallery'.DS.'_render.php');
-								// require_once(JPATH_SITE.DS.'components'.DS.'com_youtubegallery'.DS.'includes'.DS.'render.php');
-								//fim alteracao projeto portal padrao
+								
+								require_once(JPATH_SITE.DIRECTORY_SEPARATOR.'components'.DIRECTORY_SEPARATOR.'com_youtubegallery'.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.'render.php');
+
 								$misc=new YouTubeGalleryMisc;
                        
-								if(!$misc->getVideoListTableRow($listid)) //alteracao projeto portal padrao								
-										return '<p>Nenhum v&iacute;deo encontrado.</p>';
-								//fim alteracao projeto portal padrao
+								if(!$misc->getVideoListTableRow($listid))
+										return '<p>No video found</p>';
 	
-								if(!$misc->getThemeTableRow($themeid)) //alteracao projeto portal padrao
-										return '<p>Nenhum v&iacute;deo encontrado.</p>';										
-								//fim alteracao projeto portal padrao
-								//alteracao projeto portal padrao
-								// $renderer= new YouTubeGalleryRenderer;
-								$renderer= new YouTubeGalleryRendererPortal;
-								//fim alteracao projeto portal padrao
+								if(!$misc->getThemeTableRow($themeid))
+										return  '<p>No video found</p>';
+
+								$renderer= new YouTubeGalleryRenderer;
+								
 								$total_number_of_rows=0;
 								
 								$misc->update_playlist();
 								
-								//if($misc->theme_row->openinnewwindow==4)
-								//		$videoid=''; //Hot Video Switch
-								//else
-								$videoid=JRequest::getVar('videoid');
+								
 								
 								if($misc->theme_row->playvideo==1 and $videoid!='')
 										$misc->theme_row->autoplay=1;
@@ -104,9 +106,8 @@ class YoutubeGalleryModelYoutubeGallery extends JModelItem
 								if($videoid=='')
 								{
 									if($videoid_new!='')
-										JRequest::setVar('videoid',$videoid_new);
-									
-									
+										JFactory::getApplication()->input->setVar('videoid',$videoid_new);
+				
 									if($misc->theme_row->playvideo==1 and $videoid_new!='')
 										$videoid=$videoid_new;
 								}
@@ -121,9 +122,8 @@ class YoutubeGalleryModelYoutubeGallery extends JModelItem
 								
                                
                                 $align=$params->get( 'align' );
-								//alteracao projeto portal padrao
-								$this->youtubegallerycode = $gallerymodule;
-								/*
+								
+								
                                 switch($align)
                                 {
                                 	case 'left' :
@@ -147,8 +147,8 @@ class YoutubeGalleryModelYoutubeGallery extends JModelItem
                                 		break;
 	
                                 }
-								*/
-                        		//fim alteracao projeto portal padrao
+
+                        
                         } //if($listid!=0 and $themeid!=0)
 						elseif($listid==0 and $themeid!=0)
 								$this->youtubegallerycode='<p>Youtube Gallery: List not selected.</p>';

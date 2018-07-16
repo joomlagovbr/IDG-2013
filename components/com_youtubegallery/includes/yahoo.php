@@ -1,8 +1,8 @@
 <?php
 /**
  * YoutubeGallery
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * @version 4.4.5
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -13,7 +13,7 @@ defined('_JEXEC') or die('Restricted access');
 if(!defined('DS'))
 	define('DS',DIRECTORY_SEPARATOR);
 
-require_once(JPATH_SITE.DS.'components'.DS.'com_youtubegallery'.DS.'includes'.DS.'misc.php');
+require_once(JPATH_SITE.DIRECTORY_SEPARATOR.'components'.DIRECTORY_SEPARATOR.'com_youtubegallery'.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.'misc.php');
 
 class VideoSource_Yahoo
 {
@@ -119,7 +119,7 @@ class VideoSource_Yahoo
 		$image=str_replace(':','%3A',$options['thumbnail']);
 		
 		$result='<object width="'.$width.'" height="'.$height.'">'
-			.'<param name="movie" value="http://d.yimg.com/static.video.yahoo.com/yep/YV_YEP.swf?ver=3.5.96" />'
+			.'<param name="movie" value="http://d.yimg.com/static.video.yahoo.com/yep/YV_YEP.swf?ver=6" />'
 			.'<param name="allowFullScreen" value="'.($options['fullscreen'] ? 'true' : 'false').'" />'
 			.'<param name="AllowScriptAccess" VALUE="always" />'
 			.'<param name="bgcolor" value="'.($options['color1']!='' ? '#'.$options['color1'] : '#000000' ).'" />'
@@ -134,7 +134,7 @@ class VideoSource_Yahoo
 				.'"'
 			.'/>'
 			
-			.'<embed src="http://d.yimg.com/static.video.yahoo.com/yep/YV_YEP.swf?ver=3.5.96" '
+			.'<embed src="http://d.yimg.com/static.video.yahoo.com/yep/YV_YEP.swf?ver=6" '
 			.'type="application/x-shockwave-flash" '
 			.'width="'.$width.'" '
 			.'height="'.$height.'" '

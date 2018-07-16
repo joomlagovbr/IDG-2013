@@ -1,8 +1,8 @@
 <?php
 /**
  * YoutubeGallery Joomla! 3.0 Native Component
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * @version 4.4.5
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -607,13 +607,11 @@ class YGPagination extends JObject
                         
                     
                     $a=explode('/',$WebsiteRoot);
-                    //print_r($a);
+
                     $b=explode('/',$URLPath);
-                    //print_r($b);
+
                     $s=-1;
                     $ca=count($a);
-                    //if($a[$ca-1]=='')
-                        //$ca=$ca-1;
                         
                         
                     for($i=0;$i<count($b) and $i<$ca-3;$i++)
@@ -623,7 +621,6 @@ class YGPagination extends JObject
                         else
                             break;
                     }
-                    //echo '$s='.$s.'<br/>';
                     
                     if($s!=-1)
                     {
@@ -632,10 +629,7 @@ class YGPagination extends JObject
                             $c[]=$b[$i];
                         
                         $URLPath=implode('/',$c);
-                        //print_r($c);
                     }
-                    
-                    //echo '$URLPath='.$URLPath.'<br/>';
                     
                 }
                 else
@@ -646,19 +640,52 @@ class YGPagination extends JObject
                     $URLPath=$_SERVER['REQUEST_URI']; // example:  /index.php'
                 }
                 
+                //good idea:
+                //$uh=parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+                
                 if($WebsiteRoot[strlen($WebsiteRoot)-1]!='/') //Root must have slash / in the end
 			$WebsiteRoot.='/';
                         
                         
-                        
+                //the path must start without "/"
 		if($URLPath!='')
 		{
 			if($URLPath[0]=='/')
 				$URLPath=substr($URLPath,1);
 		}
-
-		
-		
+                
+                //check if the path already contains video alias
+                //delete it if found.
+                if(!(strpos(JPATH_COMPONENT,'/com_youtubegallery')===false))
+                {
+                    //youtube gallery component
+                    $s=explode('/',$URLPath);
+                    $sc=count($s);
+                    if($sc>=1)
+                    {
+                        $pair=explode('?',$s[$sc-1]);
+                                                
+                        
+                        $alias=str_replace('.html','',$pair[0]);
+                        $alias=str_replace('.htm','',$alias);
+                        $alias=str_replace('.php','',$alias);
+                        
+                        if(YGPagination::CheckIfAliasExixst($alias))
+                        {
+                            if(isset($pair[1]))
+                            {
+                                $s[$sc-1]=$pair[1];
+                            }
+                            else
+                            {
+                                unset($s[$sc-1]);
+                                $URLPath=implode('/',$s);
+                            }
+                        }
+                    }
+                    
+                }
+		//---------------------
 		
 		$Translations=array();
 		if($JoomlaVersionRelease>=1.6)
@@ -669,10 +696,7 @@ class YGPagination extends JObject
 			$Translations['next']=JText::_('JNEXT');
 			$Translations['end']=JText::_('JLIB_HTML_END');
                     
-                        if(strpos($URLPath,'?')===false)
-                            $URLPath.='?'.$u->getQuery();
-                        else
-                            $URLPath.='&'.$u->getQuery();
+                        $URLPath.=YGPagination::QuestionmarkOrAnd($URLPath).$u->getQuery();
 		}
 		else
 		{
@@ -691,38 +715,19 @@ class YGPagination extends JObject
 		{
 			foreach($this->_additionalUrlParams as $key => $value)
 			{
-				if(strpos($URLPath,'?')===false)
-					$URLPath='?'.$key.'='.$value;
-				else
-					$URLPath='&'.$key.'='.$value;
+                                $URLPath.=YGPagination::QuestionmarkOrAnd($URLPath).$key.'='.$value;
 			}
 		}
                 
-                //echo '$URLPath='.$URLPath.'<br/>';
-
 		require_once('layoutrenderer.php');
 		$URLPath=YoutubeGalleryLayoutRenderer::deleteURLQueryOption($URLPath,'videoid');
 		$URLPath=YoutubeGalleryLayoutRenderer::deleteURLQueryOption($URLPath,$this->prefix.'ygstart');
-		
-		if(strpos($URLPath,'?')===false)
-			$computed_prefix='?'.$this->prefix;
-		else
-			$computed_prefix='&'.$this->prefix;
+                
+                $computed_prefix=YGPagination::QuestionmarkOrAnd($URLPath).$this->prefix;
 			
 		$URLPath=str_replace('&','&amp;',$URLPath);
 					
-		//alteracao projeto portal padrao		
-		// $FullPath=$WebsiteRoot.$URLPath;
-		 $domain = 'http';
-		 if (@$_SERVER["HTTPS"] == "on") {$pageURL .= "s";}
-		 $domain .= "://";
-		 if (@$_SERVER["SERVER_PORT"] != "80") {
-		  $domain .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"];
-		 } else {
-		  $domain .= $_SERVER["SERVER_NAME"];
-		 }
-		 $FullPath=$domain.'/'.$URLPath;
-		//fim alteracao projeto portal padrao
+		$FullPath=$WebsiteRoot.$URLPath;
 		
 
 		$data->all = new JYGPaginationObject($Translations['all'], $this->prefix);
@@ -732,8 +737,6 @@ class YGPagination extends JObject
 		}
 
 		// Set the start and previous data objects.
-                //echo '$Translations[start]='.$Translations['start'].'<br/>';
-                
                 
 		$data->start	= new JYGPaginationObject($Translations['start'], $this->prefix);
 		$data->previous	= new JYGPaginationObject($Translations['prev'], $this->prefix);
@@ -804,6 +807,42 @@ class YGPagination extends JObject
 		
 		return $data;
 	}
+        
+        static protected function CheckIfAliasExixst($alias)
+        {
+            if($alias=='')
+                return true;
+            
+            $db = JFactory::getDBO();
+		
+	    $db->setQuery('SELECT id FROM #__youtubegallery_videos WHERE alias="'.$alias.'" LIMIT 1');
+            
+	    if (!$db->query())    die ('yg pagination alias check err:'. $db->stderr());
+                //$rows = $db->loadObjectList();
+	      
+            if($db->getNumRows()==1)
+                return true;
+            
+            return false;
+        }
+        
+        static protected function QuestionmarkOrAnd($URLPath)
+        {
+            if($URLPath!='')
+            {
+                if(strpos($URLPath,'?')===false)
+                    return '?';
+            
+                $a=$URLPath[strlen($URLPath)-1];
+                if($a=='?' OR $a=='&')
+                    return '';
+                else
+                    return '&';
+            }
+	    else
+                return '?';
+            
+        }
 }
 
 /**

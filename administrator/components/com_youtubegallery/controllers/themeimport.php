@@ -1,8 +1,8 @@
 <?php
 /**
- * YoutubeGallery Joomla! 3.0 Native Component
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * YoutubeGallery Joomla! Native Component
+ * @version 4.4.5
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -21,9 +21,9 @@ jimport('joomla.application.component.controlleradmin');
 
 class YoutubeGalleryControllerThemeImport extends JControllerAdmin
 {
-	function display($cachable=false,        $urlparams=false)
+		function display($cachable = false, $urlparams = array())
 	{
-		switch(JRequest::getVar( 'task'))
+		switch(JFactory::getApplication()->input->getVar( 'task'))
 		{
 			case 'themeimport.upload':
 				$this->upload();
@@ -38,7 +38,7 @@ class YoutubeGalleryControllerThemeImport extends JControllerAdmin
 				$this->cancel();
 				break;
 			default:
-				JRequest::setVar( 'view', 'themeimport');
+				JFactory::getApplication()->input->setVar( 'view', 'themeimport');
 				parent::display();
 				break;
 			}

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         7.5.1
+ * @version         8.0.3
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -23,6 +23,10 @@ class Numbers
 	private $uneven             = true;
 	private $first              = true;
 	private $last               = true;
+	private $next               = 1;
+	private $previous           = 1;
+	private $has_next           = true;
+	private $has_previous       = false;
 
 	public function __construct($total_before_limit, $total)
 	{
@@ -32,11 +36,15 @@ class Numbers
 
 	public function setCount($count)
 	{
-		$this->count  = $count;
-		$this->even   = ($count % 2) == 0;
-		$this->uneven = ($count % 2) != 0;
-		$this->first  = $count == 1;
-		$this->last   = $count == $this->total;
+		$this->count        = $count;
+		$this->even         = ($count % 2) == 0;
+		$this->uneven       = ($count % 2) != 0;
+		$this->first        = $count == 1;
+		$this->last         = $count == $this->total;
+		$this->next         = $count == $this->total ? 1 : $count + 1;
+		$this->previous     = $count == 1 ? $this->total : $count - 1;
+		$this->has_next     = $count != $this->last;
+		$this->has_previous = $count > 1;
 
 		return $this;
 	}
@@ -59,6 +67,10 @@ class Numbers
 			'uneven'             => $this->uneven,
 			'first'              => $this->first,
 			'last'               => $this->last,
+			'next'               => $this->count == $this->last ? $this->first : $this->count + 1,
+			'previous'           => $this->count == $this->first ? $this->last : $this->count - 1,
+			'has_next'           => $this->count != $this->last,
+			'has_previous'       => $this->count != $this->first,
 		];
 	}
 
@@ -106,6 +118,12 @@ class Numbers
 
 			case 'totalcount':
 				return 'total';
+
+			case 'count_next':
+				return 'next';
+
+			case 'count_previous':
+				return 'previous';
 
 			case 'is_current':
 				return 'current';

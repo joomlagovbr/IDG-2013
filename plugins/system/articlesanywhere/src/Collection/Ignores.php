@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         7.5.1
+ * @version         8.0.3
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -42,12 +42,12 @@ class Ignores extends CollectionObject
 
 		if ($table == 'items')
 		{
-			$now      = JFactory::getDate()->toSql();
-			$nullDate = $this->db->getNullDate();
+			$nowDate  = $this->db->quote(JFactory::getDate()->toSql());
+			$nullDate = $this->db->quote($this->db->getNullDate());
 
-			$query->where('( ' . $this->db->quoteName($table . '.publish_up') . ' <= ' . $this->db->quote($now) . ' )')
-				->where('( ' . $this->db->quoteName($table . '.publish_down') . ' = ' . $this->db->quote($nullDate)
-					. ' OR ' . $this->db->quoteName($table . '.publish_down') . ' >= ' . $this->db->quote($now) . ' )');
+			$query->where('( ' . $this->db->quoteName($table . '.publish_up') . ' <= ' . $nowDate . ' )')
+				->where('( ' . $this->db->quoteName($table . '.publish_down') . ' = ' . $nullDate
+					. ' OR ' . $this->db->quoteName($table . '.publish_down') . ' > ' . $nowDate . ' )');
 		}
 	}
 
@@ -94,14 +94,20 @@ class Ignores extends CollectionObject
 
 	protected function getByType($type = 'state', $group = '')
 	{
-		$params  = Params::get();
-		$ignores = $this->config->getIgnores();
-
 		$suffix = $group ? '_' . $group : '';
+
+		if ($this->config->get('ignore_' . $type) || $this->config->get('ignore_' . $type . $suffix))
+		{
+			return true;
+		}
+
+		$params = Params::get();
 
 		$fallback = $params->{'ignore_' . $type . $suffix} != -1
 			? $params->{'ignore_' . $type . $suffix}
 			: $params->{'ignore_' . $type};
+
+		$ignores = $this->config->getIgnores();
 
 		$default = isset($ignores[$type])
 			? $ignores[$type]

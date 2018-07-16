@@ -1,8 +1,8 @@
 <?php
 /**
- * YoutubeGallery Joomla! 3.0 Native Component
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * YoutubeGallery Joomla! Native Component
+ * @version 4.4.5
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -30,7 +30,14 @@ class YoutubeGalleryTableVideolists extends JTable
 		var $catid = null;
 		var $updateperiod = null;
 		var $lastplaylistupdate = null;
-
+		var $description = null;
+		var $author = null;
+		var $watchusergroup = null;
+		
+		var $authorurl = null;
+		var $image = null;
+		var $note = null;
+  
         function __construct(&$db) 
         {
                 parent::__construct('#__youtubegallery_videolists', 'id', $db);

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         7.5.1
+ * @version         8.0.3
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -18,6 +18,7 @@ use RegularLabs\Library\Date as RL_Date;
 use RegularLabs\Library\RegEx as RL_RegEx;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Collection\Item;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Config;
+use RegularLabs\Plugin\System\ArticlesAnywhere\CurrentArticle;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Factory;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Output\Data\Numbers;
 
@@ -33,6 +34,7 @@ class Values
 		'text', 'introtext', 'fulltext',
 		'title', 'description',
 		'text', 'textarea', 'editor',
+		'category-title', 'category-description',
 	];
 
 	private $text_hit_keys = [
@@ -58,6 +60,8 @@ class Values
 			list($key, $value_type) = explode(':', $key, 2);
 			$attributes->value = $value_type;
 		}
+
+		$key = $this->replaceAliases($key);
 
 		$value = $this->getValue($key, $default, $attributes);
 
@@ -85,6 +89,25 @@ class Values
 		return $value;
 	}
 
+	public function replaceAliases($string)
+	{
+		$key_aliases = [
+			'article' => ['layout'],
+		];
+
+		foreach ($key_aliases as $key => $aliases)
+		{
+			if ( ! in_array($string, $aliases))
+			{
+				continue;
+			}
+
+			return $key;
+		}
+
+		return $string;
+	}
+
 	public function isDateValue($key, $value)
 	{
 		// Check if string could be a date
@@ -99,9 +122,9 @@ class Values
 			in_array($key, $this->text_keys)
 			|| in_array($key, [
 				'id', 'title', 'alias',
-				'category_id', 'category_title', 'category_alias', 'category_description',
-				'author_id', 'author_name', 'author_username',
-				'modifier_id', 'modifier_name', 'modifier_username',
+				'category-id', 'category-title', 'category-alias', 'category-description',
+				'author-id', 'author-name', 'author-username',
+				'modifier-id', 'modifier-name', 'modifier-username',
 			])
 		)
 		{
@@ -172,19 +195,14 @@ class Values
 				return JFactory::getDate()->toSql();
 
 			// Links & Urls
-			case 'tag':
-			case 'tags':
-				return $this->getData('Tags')->get($key, $attributes);
-
-			// Links & Urls
 			case 'link':
 			case 'url':
 			case 'nonsefurl':
 			case 'sefurl':
 				return $this->getData('Url')->get($key, $attributes);
 
-			// Layout
-			case 'layout':
+			// Full Article
+			case 'article':
 				return $this->getData('Layout')->get($key, $attributes);
 
 			// Readmore
@@ -197,22 +215,14 @@ class Values
 
 			// Closing link tag
 			case  '/link':
-			case  '/category_link':
+			case  '/edit-link':
+			case  '/category-link':
 				return '</a>';
 
 			// Closing div tag
 			case  '/div':
 				return '</div>';
 
-			// Intro / Fulltext image
-			case 'image-intro':
-			case 'image-fulltext':
-				return $this->getData('Images')->getArticleImage($key, $attributes);
-
-			// Intro / Fulltext image
-			case 'category_image':
-			case 'category-image':
-				return $this->getData('Images')->getCategoryImage($key, $attributes);
 		}
 
 		// It's a main Numbers value, like [count]
@@ -221,20 +231,14 @@ class Values
 			return $this->numbers->get($key);
 		}
 
-		// It's a a user value [user:id], [user:name]
-		if (RL_RegEx::match('^user:([a-z_\-0-9]+)$', $key, $match))
-		{
-			return JFactory::getUser()->get($match[1]);
-		}
-
-		// It's an 'every' value [every_3]
-		if (RL_RegEx::match('^every_([0-9]+)$', $key, $match))
+		// It's an 'every' value [every-3]
+		if (RL_RegEx::match('^every[-_]([0-9]+)$', $key, $match))
 		{
 			return $this->numbers->isEvery($match[1]);
 		}
 
 		// It's a column value, like [is_2_of_4] or  [col_3_of_5]
-		if (RL_RegEx::match('^(?:is|col)_([0-9]+)_?of_?([0-9]+)$', $key, $match))
+		if (RL_RegEx::match('^(?:is|col)[-_]([0-9]+)[-_]?of[-_]?([0-9]+)$', $key, $match))
 		{
 			return $this->numbers->isColumn($match[1], $match[2]);
 		}
@@ -247,6 +251,7 @@ class Values
 
 		$data_types = [
 			'Extra',
+			'Images',
 		];
 
 		foreach ($data_types as $data_type)
@@ -265,14 +270,15 @@ class Values
 
 	private function getFromAliases($key)
 	{
+		$key = RL_RegEx::replace('^(cat-|cat_|category_)', 'category-', $key);
+		$key = RL_RegEx::replace('^(author|modifier|category-image)_', '\1-', $key);
+		$key = RL_RegEx::replace('_(url|sefurl|link)$', '-\1', $key);
+
 		$aliases = [
-			'author_name'          => ['author'],
-			'created_by_alias'     => ['author_alias'],
-			'modifier_name'        => ['modifier'],
-			'category_id'          => ['catid, cat_id'],
-			'category_title'       => ['category', 'category_name', 'cat', 'cat_title', 'cat_name'],
-			'category_description' => ['cat_description'],
-			'category_params'      => ['cat_params'],
+			'author-name'        => ['author'],
+			'created_by_alias'   => ['created-by-alias', 'author-alias'],
+			'modifier-name'      => ['modifier'],
+			'category-title'     => ['category', 'cat', 'category-name'],
 		];
 
 		$prefix = substr($key, 0, 1) == '/' ? '/' : '';

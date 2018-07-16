@@ -1,8 +1,8 @@
 <?php
 /**
- * YoutubeGallery Joomla! 3.0 Native Component
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * YoutubeGallery Joomla! Native Component
+ * @version 4.4.5
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -18,15 +18,12 @@ jimport('joomla.application.component.controllerform');
  */
 class YoutubeGalleryControllerLinksForm extends JControllerForm
 {
-       /**
-         * Proxy for getModel.
-       */
        
-       	function display($cachable = false, $urlparams = Array())
+    function display($cachable = false, $urlparams = array())
 	{
-		$task=$_POST['task'];
+		$jinput = JFactory::getApplication()->input;
+		$task=$jinput->post->get('task','');
 		
-	
 		if($task=='linksform.add' or $task=='add' )
 		{
 			$this->setRedirect( 'index.php?option=com_youtubegallery&view=linksform&layout=edit');
@@ -35,7 +32,7 @@ class YoutubeGalleryControllerLinksForm extends JControllerForm
 		
 		if($task=='linksform.edit' or $task=='edit' )
 		{
-			$cid = JRequest::getVar( 'cid', array(), 'post', 'array' );
+			$cid	= $jinput->get( 'cid', array(),  'ARRAY' );
 
 			if (!count($cid))
 			{
@@ -47,10 +44,10 @@ class YoutubeGalleryControllerLinksForm extends JControllerForm
 			return true;
 		}
 	
-		JRequest::setVar( 'view', 'linksform');
-		JRequest::setVar( 'layout', 'edit');
+		JFactory::getApplication()->input->setVar( 'view', 'linksform');
+		JFactory::getApplication()->input->setVar( 'layout', 'edit');
 		
-		switch(JRequest::getVar( 'task'))
+		switch($task)
 		{
 		case 'apply':
 			$this->save();
@@ -80,7 +77,7 @@ class YoutubeGalleryControllerLinksForm extends JControllerForm
        
 	function save($key = NULL, $urlVar = NULL)
 	{
-		$task = JRequest::getVar( 'task');
+		$task = JFactory::getApplication()->input->getCmd( 'task');
 		
 		// get our model
 		$model = $this->getModel('linksform');
@@ -119,29 +116,9 @@ class YoutubeGalleryControllerLinksForm extends JControllerForm
 			
 	}
 	
-	/**
-	* Cancels an edit operation
-	*/
-	/*function cancelItem()
-	{
-		
-
-		$model = $this->getModel('item');
-		$model->checkin();
-
-		
-		
-	}*/
-
-	/**
-	* Cancels an edit operation
-	*/
 	function cancel($key = NULL)
 	{
 		$this->setRedirect( 'index.php?option=com_youtubegallery&view=linkslist');
 	}
 
-	/**
-	* Form for copying item(s) to a specific option
-	*/
 }

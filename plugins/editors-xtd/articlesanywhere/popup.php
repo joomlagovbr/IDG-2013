@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         7.5.1
+ * @version         8.0.3
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -26,7 +26,7 @@ if ($user->get('guest')
 	)
 )
 {
-	JError::raiseError(403, JText::_("ALERTNOTAUTH"));
+	throw new JAccessExceptionNotallowed(JText::_('JERROR_ALERTNOAUTHOR'), 403);
 }
 
 $params = RL_Parameters::getInstance()->getPluginParams('articlesanywhere');
@@ -35,7 +35,7 @@ if (RL_Document::isClient('site'))
 {
 	if ( ! $params->enable_frontend)
 	{
-		JError::raiseError(403, JText::_("ALERTNOTAUTH"));
+		throw new JAccessExceptionNotallowed(JText::_('JERROR_ALERTNOAUTHOR'), 403);
 	}
 }
 
@@ -60,8 +60,7 @@ class PlgButtonArticlesAnywherePopup
 
 		require_once JPATH_ADMINISTRATOR . '/components/com_content/helpers/content.php';
 
-		$content_type = 'core';
-		$k2           = 0;
+		$use_k2 = false;/* <<< [PRO] <<< */
 
 		$db     = JFactory::getDbo();
 		$query  = $db->getQuery(true);
@@ -223,15 +222,13 @@ class PlgButtonArticlesAnywherePopup
 			// If there is a database query error, throw a HTTP 500 and exit
 			if ($db->getErrorNum())
 			{
-				JError::raiseError(500, $db->stderr());
-
-				return false;
+				throw new Exception($db->stderr(), 500);
 			}
 
-		$this->outputHTML($params, $rows, $page, $lists, $k2);
+		$this->outputHTML($params, $rows, $page, $lists, $use_k2);
 	}
 
-	function outputHTML(&$params, &$rows, &$page, &$lists, $k2 = 0)
+	function outputHTML(&$params, &$rows, &$page, &$lists)
 	{
 		JHtml::_('behavior.tooltip');
 		JHtml::_('formbehavior.chosen', 'select');
@@ -239,7 +236,7 @@ class PlgButtonArticlesAnywherePopup
 		$plugin_tag = explode(',', $params->article_tag);
 		$plugin_tag = trim($plugin_tag[0]);
 
-		$content_type = 'core';
+		$content_type = 'core';/* <<< [PRO] <<< */
 
 		if ( ! empty($_POST))
 		{
@@ -293,31 +290,25 @@ class PlgButtonArticlesAnywherePopup
 					?>
 				</div>
 
-				<div class="row-fluid form-vertical">
-					<div class="span9">
-						<?php include __DIR__ . '/layouts/layout.php'; ?>
+				<div class="form-vertical">
+					<?php include __DIR__ . '/layouts/layout.php'; ?>
 
-						<div rel="data_layout_enable" class="toggle_div reverse" style="display:none;">
+					<div rel="data_layout_enable" class="toggle_div reverse" style="display:none;">
 
-							<div class="row-fluid">
-								<div class="span4">
-									<?php include __DIR__ . '/layouts/title.php'; ?>
-									<?php include __DIR__ . '/layouts/intro_image.php'; ?>
-								</div>
+						<div class="row-fluid">
+							<div class="span4">
+								<?php include __DIR__ . '/layouts/title.php'; ?>
+								<?php include __DIR__ . '/layouts/intro_image.php'; ?>
+							</div>
 
-								<div class="span4">
-									<?php include __DIR__ . '/layouts/content.php'; ?>
-								</div>
+							<div class="span4">
+								<?php include __DIR__ . '/layouts/content.php'; ?>
+							</div>
 
-								<div class="span4">
-									<?php include __DIR__ . '/layouts/readmore.php'; ?>
-								</div>
+							<div class="span4">
+								<?php include __DIR__ . '/layouts/readmore.php'; ?>
 							</div>
 						</div>
-					</div>
-
-					<div class="span3">
-						<?php include __DIR__ . '/layouts/div.php'; ?>
 					</div>
 				</div>
 
@@ -366,7 +357,7 @@ class PlgButtonArticlesAnywherePopup
 						if ($('input[name="div_class"]').val()) {
 							params[params.length] = 'class="' + $('input[name="div_class"]').val() + '"';
 						}
-						str = td_start + ('div ' + params.join(' ') ).trim() + td_end
+						str = td_start + ('div ' + params.join(' ')).trim() + td_end
 							+ str
 							+ td_start + '/div' + td_end;
 					}
@@ -387,10 +378,10 @@ class PlgButtonArticlesAnywherePopup
 						var layout = $('input[name="data_layout_layout"]').val();
 
 						if (!layout) {
-							return start + 'layout' + end;
+							return '';
 						}
 
-						return start + 'layout layout="' + layout + '"' + end;
+						return start + 'article layout="' + layout + '"' + end;
 					}
 
 					var str = '';

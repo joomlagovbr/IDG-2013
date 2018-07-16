@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         7.5.1
+ * @version         8.0.3
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -21,6 +21,7 @@ class Protect
 
 	public static function _(&$string)
 	{
+		RL_Protect::protectHtmlCommentTags($string);
 		RL_Protect::protectFields($string, Params::getTags(true));
 		// Don't protect Sourcerer blocks, as you want to be able to use Articles Anywhere data tags inside Sourcerer code
 		//RL_Protect::protectSourcerer($string);

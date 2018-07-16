@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         7.5.1
+ * @version         8.0.3
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -44,20 +44,22 @@ class Filters
 		if (isset($attributes->items))
 		{
 			$filters['items'] = $this->getIds($attributes->items);
-			unset($attributes->items);
 
-			if ( ! isset($attributes->ordering))
+			// If only a list of articles is given, don't use an ordering, but use order given in tag
+			if ( ! isset($attributes->ordering)
+				&& strpos($attributes->items, '*') === false
+			)
 			{
 				$attributes->ordering = 'none';
 			}
+
+			unset($attributes->items);
 		}
 
 			if (empty($filters['items']) && $id = CurrentArticle::get('id', $this->component))
 			{
 				$filters['items'] = [$id];
 			}
-
-			$filters = $this->groupNotIds($filters);
 
 			return $filters;
 	}
@@ -68,45 +70,37 @@ class Filters
 
 		foreach ($filters as $group => &$filter)
 		{
-			$grouped[$group] = [
-				'include' => $this->getSelectedIncludesFromFilter($filter, true),
-				'exclude' => $this->getSelectedIncludesFromFilter($filter, false),
-			];
+			$grouped[$group] = $this->getGroupedFilter($filter);
 		}
 
 		return $grouped;
 	}
 
-	protected function getSelectedIncludesFromFilter($filter, $include = true)
+	protected function getGroupedFilter($filter)
 	{
-		foreach ($filter as $key => &$value)
+		foreach ($filter as $key => $value)
 		{
-			if (is_array($value))
-			{
-				$value = $this->getSelectedIncludesFromFilter($value, $include);
-
-				if (empty($value))
-				{
-					unset($filter[$key]);
-				}
-				continue;
-			}
-
-			if (strpos($value, '!NOT!') === false && $include)
-			{
-				continue;
-			}
-
-			if (strpos($value, '!NOT!') !== false && ! $include)
-			{
-				$value = substr($value, 5);
-				continue;
-			}
-
 			unset($filter[$key]);
+
+			if (empty($value))
+			{
+				continue;
+			}
+
+			$filter[$key] = $value;
 		}
 
 		return $filter;
+	}
+
+	protected function addFilter(&$filter, $key, $value)
+	{
+//		if (is_null($value))
+//		{
+//			return;
+//		}
+
+		$filter[$key] = $value;
 	}
 
 	protected function getIds($ids)
@@ -147,7 +141,11 @@ class Filters
 
 			if (in_array($key, $fields))
 			{
-				$filters['fields'][$key] = $this->fields->getFieldValue($key, $value);
+				$this->addFilter(
+					$filters['fields'],
+					$key,
+					$this->fields->getFieldValue($key, $value)
+				);
 
 				continue;
 			}
@@ -156,7 +154,11 @@ class Filters
 			{
 				$field_id = array_search($key, $custom_fields);
 
-				$filters['custom_fields'][$field_id] = $this->custom_fields->getFieldValue($key, $value);
+				$this->addFilter(
+					$filters['custom_fields'],
+					$field_id,
+					$this->custom_fields->getFieldValue($key, $value)
+				);
 
 				continue;
 			}
@@ -196,6 +198,22 @@ class Filters
 				continue;
 			}
 
+			// It's a current article value [this:id], [this:title], etc
+			if (RL_RegEx::match('^this:([a-z_\-0-9]+)$', $tag_value, $match))
+			{
+				$this->addValues(CurrentArticle::get($match[1]), $values, $negative);
+
+				continue;
+			}
+
+			// It's a a user value [user:id], [user:name]
+			if (RL_RegEx::match('^user:([a-z_\-0-9]+)$', $tag_value, $match))
+			{
+				$this->addValues(JFactory::getUser()->get($match[1]), $values, $negative);
+
+				continue;
+			}
+
 			$this->addValues($tag_value, $values, $negative);
 
 			if ($id === 'true')
@@ -220,7 +238,7 @@ class Filters
 	{
 		if ( ! is_array($values))
 		{
-			$values = [trim($values)];
+			$values = RL_Array::toArray($values);
 		}
 
 		RL_Array::trim($values);

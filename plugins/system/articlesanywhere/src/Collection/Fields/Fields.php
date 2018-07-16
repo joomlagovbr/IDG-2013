@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         7.5.1
+ * @version         8.0.3
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -22,17 +22,23 @@ defined('_JEXEC') or die;
 
 class Fields extends CollectionObject implements FieldInterface
 {
-	var $fields;
+	static $available_fields = [];
+	static $fields           = [];
+	static $field_types      = [];
+	static $field_values     = [];
 
 	public function getAvailableFields()
 	{
-		if ( ! is_null($this->fields))
-		{
-			return $this->fields;
-		}
-		$this->fields = array_keys(JFactory::getDbo()->getTableColumns($this->config->getTableItems(false)));
+		$id = $this->config->getTableItems(false);
 
-		return $this->fields;
+		if (isset(self::$available_fields[$id]))
+		{
+			return self::$available_fields[$id];
+		}
+
+		self::$available_fields[$id] = array_keys(JFactory::getDbo()->getTableColumns($this->config->getTableItems(false)));
+
+		return self::$available_fields[$id];
 	}
 
 	public function getFieldValue($key, $value)
@@ -52,6 +58,12 @@ class Fields extends CollectionObject implements FieldInterface
 		if (is_array($current_value))
 		{
 			return $this->getArrayValue($value, $current_value);
+		}
+
+		// It's a current article value [this:id], [this:title], etc
+		if (RL_RegEx::match('^this:([a-z_\-0-9]+)$', $value, $match))
+		{
+			return CurrentArticle::get($match[1]);
 		}
 
 		// It's a a user value [user:id], [user:name]

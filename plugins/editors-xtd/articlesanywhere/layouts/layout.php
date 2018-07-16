@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         7.5.1
+ * @version         8.0.3
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -14,8 +14,8 @@ defined('_JEXEC') or die;
 <div class="well">
 	<div class="control-group">
 		<label id="data_layout_enable-lbl" for="data_layout_enable" class="control-label"
-		       rel="tooltip" title="<?php echo JText::_('AA_LAYOUT_TAG_DESC'); ?>">
-			<?php echo JText::_('AA_LAYOUT'); ?>
+		       rel="tooltip" title="<?php echo JText::_('AA_FULL_ARTICLE_TAG_DESC'); ?>">
+			<?php echo JText::_('AA_FULL_ARTICLE'); ?>
 		</label>
 
 		<div class="controls">
@@ -33,8 +33,8 @@ defined('_JEXEC') or die;
 	<div rel="data_layout_enable" class="toggle_div" style="display:none;">
 		<div class="control-group">
 			<label id="data_layout_layout-lbl" for="data_layout_layout" class="control-label" rel="tooltip"
-			       title="<?php echo JText::_('AA_LAYOUT_LAYOUT_DESC'); ?>">
-				<?php echo JText::_('AA_LAYOUT_LAYOUT'); ?>
+			       title="<?php echo JText::_('AA_FULL_ARTICLE_LAYOUT_DESC'); ?>">
+				<?php echo JText::_('AA_FULL_ARTICLE_LAYOUT'); ?>
 			</label>
 
 			<div class="controls">

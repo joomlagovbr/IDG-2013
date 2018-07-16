@@ -1,6 +1,6 @@
 <?php
 /*
- * @package Joomla 1.5
+ * @package Joomla
  * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  *
@@ -13,6 +13,7 @@
  * Method to build Route
  * @param array $query
  */ 
+defined('_JEXEC') or die;
 function PhocaGalleryBuildRoute(&$query)
 {
 	
@@ -230,7 +231,7 @@ function PhocaGalleryBuildRoute(&$query)
 function PhocaGalleryParseRoute($segments) {
 	$vars = array();
 	$menu = JFactory::getApplication()->getMenu();
-	$item =& $menu->getActive();
+	$item = $menu->getActive();
 
 	// Count route segments
 	$count = count($segments);

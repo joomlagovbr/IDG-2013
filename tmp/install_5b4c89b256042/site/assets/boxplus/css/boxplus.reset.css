@@ -1,0 +1,61 @@
+/*!
+* @file
+* @brief    boxplus reset style sheet
+* @author   Levente Hunyadi
+* @version  0.9.2
+* @remarks  Copyright (C) 2009-2010 Levente Hunyadi
+* @remarks  Licensed under GNU/GPLv3, see http://www.gnu.org/licenses/gpl-3.0.html
+* @see      http://hunyadi.info.hu/projects/boxplus
+*/
+
+#boxplus div,
+#boxplus img,
+#boxplus ul
+#boxplus li {
+/* Text */
+font:normal normal 400 16px/20px serif;
+color:#000000;
+text-transform:none;
+text-decoration:none;
+letter-spacing:normal;
+word-spacing:normal;
+text-align:start;
+vertical-align:baseline;
+direction:ltr;
+
+/* Background */
+background:transparent none repeat scroll 0 0;
+opacity:1;
+
+/* Box Model */
+top:auto;
+right:auto;
+bottom:auto;
+left:auto;
+height:auto;
+width:auto;
+min-height:0;
+max-height:none;
+min-width:0;
+max-width:none;
+margin:0;
+padding:0;
+border:0 none #000000;
+outline:invert none medium;
+
+/* Layout */
+position:static;
+display:block;
+visibility:inherit;
+z-index:auto;
+overflow:visible;
+white-space:normal;
+clip:auto;
+float:none;
+clear:none;
+
+/* Other */
+cursor:auto;
+list-style:disc outside none;
+marker-offset:auto;
+}

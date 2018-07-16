@@ -1,6 +1,6 @@
 /**
  * @package         Regular Labs Library
- * @version         18.1.20362
+ * @version         18.7.10792
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -57,7 +57,7 @@ var RegularLabsToggler = null;
 				toggler.height   = $(toggler).height();
 				toggler.elements = {};
 				toggler.nofx     = $(toggler).hasClass('rl_toggler_nofx');
-				toggler.method   = ( $(toggler).hasClass('rl_toggler_and') ) ? 'and' : 'or';
+				toggler.method   = ($(toggler).hasClass('rl_toggler_and')) ? 'and' : 'or';
 				toggler.ids      = toggler.id.split('___');
 
 				for (var i = 1; i < toggler.ids.length; i++) {
@@ -148,7 +148,7 @@ var RegularLabsToggler = null;
 		},
 
 		isShow: function(toggler) {
-			var show = ( toggler.method == 'and' );
+			var show = (toggler.method == 'and');
 			for (var el_name in toggler.elements) {
 				var vals   = toggler.elements[el_name];
 				var values = this.elements[el_name].values;

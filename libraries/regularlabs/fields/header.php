@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.1.20362
+ * @version         18.7.10792
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -61,7 +61,13 @@ class JFormFieldRL_Header extends \RegularLabs\Library\Field
 
 		if ($description)
 		{
+			// Replace inline monospace style with rl_code classname
 			$description = str_replace('span style="font-family:monospace;"', 'span class="rl_code"', $description);
+
+			// 'Break' plugin style tags
+			$description = str_replace(['{', '['], ['<span>{</span>', '<span>[</span>'], $description);
+
+			// Wrap in paragraph (if not already starting with an html tag)
 			if ($description[0] != '<')
 			{
 				$description = '<p>' . $description . '</p>';

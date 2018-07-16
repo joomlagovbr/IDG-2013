@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         7.5.1
+ * @version         8.0.3
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -95,28 +95,21 @@ class Config
 		return $this->getData('content');
 	}
 
-	public function getFilters($name = '')
+	public function getFilters($group = '')
 	{
-		if ( ! empty($name))
+		if (empty($group))
 		{
-			$filters = $this->getFilters();
-
-			return isset($filters[$name]) ? $filters[$name] : null;
+			return $this->getData('filters', []);
 		}
 
-		return $this->getData('filters', []);
+		$filters = $this->getFilters();
+
+		return isset($filters[$group]) ? $filters[$group] : null;
 	}
 
-	public function getFiltersIncludeChildren($name = '')
+	public function getFiltersIncludeChildren($group = '')
 	{
-		$filters = $this->getFilters($name);
-
-		if ( ! isset($filters['include_children']))
-		{
-			return false;
-		}
-
-		return $filters['include_children'];
+		return $this->getFilters($group . '_include_children') ?: false;
 	}
 
 	public function getIgnores()

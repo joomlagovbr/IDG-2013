@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.1.20362
+ * @version         18.7.10792
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -25,14 +25,16 @@ class Cache
 	static $cache = [];
 
 	// Is the cached object in the cache memory?
-	public static function has($hash)
+	public static function has($id)
 	{
-		return isset(self::$cache[$hash]);
+		return isset(self::$cache[md5($id)]);
 	}
 
 	// Get the cached object from the cache memory
-	public static function get($hash)
+	public static function get($id)
 	{
+		$hash = md5($id);
+
 		if ( ! isset(self::$cache[$hash]))
 		{
 			return false;
@@ -42,16 +44,18 @@ class Cache
 	}
 
 	// Save the cached object to the cache memory
-	public static function set($hash, $data)
+	public static function set($id, $data)
 	{
-		self::$cache[$hash] = $data;
+		self::$cache[md5($id)] = $data;
 
 		return $data;
 	}
 
 	// Get the cached object from the Joomla cache
-	public static function read($hash)
+	public static function read($id)
 	{
+		$hash = md5($id);
+
 		if (isset(self::$cache[$hash]))
 		{
 			return self::$cache[$hash];
@@ -63,8 +67,10 @@ class Cache
 	}
 
 	// Save the cached object to the Joomla cache
-	public static function write($hash, $data, $time_to_life_in_minutes = 0, $force_caching = true)
+	public static function write($id, $data, $time_to_life_in_minutes = 0, $force_caching = true)
 	{
+		$hash = md5($id);
+
 		self::$cache[$hash] = $data;
 
 		$cache = JFactory::getCache(self::$group, 'output');

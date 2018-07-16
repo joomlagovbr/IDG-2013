@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.1.20362
+ * @version         18.7.10792
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -52,11 +52,11 @@ class Parameters
 	 */
 	public function getParams($params, $path = '', $default = '', $use_cache = true)
 	{
-		$hash = md5('getParams_' . json_encode($params) . '_' . $path . '_' . $default);
+		$cache_id = 'getParams_' . json_encode($params) . '_' . $path . '_' . $default;
 
-		if ($use_cache && Cache::has($hash))
+		if ($use_cache && Cache::has($cache_id))
 		{
-			return Cache::get($hash);
+			return Cache::get($cache_id);
 		}
 
 		$xml = $this->loadXML($path, $default);
@@ -64,7 +64,7 @@ class Parameters
 		if (empty($params))
 		{
 			return Cache::set(
-				$hash,
+				$cache_id,
 				(object) $xml
 			);
 		}
@@ -85,7 +85,7 @@ class Parameters
 		if ( ! $params)
 		{
 			return Cache::set(
-				$hash,
+				$cache_id,
 				(object) $xml
 			);
 		}
@@ -93,7 +93,7 @@ class Parameters
 		if (empty($xml))
 		{
 			return Cache::set(
-				$hash,
+				$cache_id,
 				$params
 			);
 		}
@@ -109,7 +109,7 @@ class Parameters
 		}
 
 		return Cache::set(
-			$hash,
+			$cache_id,
 			$params
 		);
 	}
@@ -126,11 +126,11 @@ class Parameters
 	{
 		$name = 'com_' . RegEx::replace('^com_', '', $name);
 
-		$hash = md5('getComponentParams_' . $name . '_' . json_encode($params));
+		$cache_id = 'getComponentParams_' . $name . '_' . json_encode($params);
 
-		if ($use_cache && Cache::has($hash))
+		if ($use_cache && Cache::has($cache_id))
 		{
-			return Cache::get($hash);
+			return Cache::get($cache_id);
 		}
 
 		if (empty($params) && JComponentHelper::isInstalled($name))
@@ -139,7 +139,7 @@ class Parameters
 		}
 
 		return Cache::set(
-			$hash,
+			$cache_id,
 			$this->getParams($params, JPATH_ADMINISTRATOR . '/components/' . $name . '/config.xml')
 		);
 	}
@@ -157,11 +157,11 @@ class Parameters
 	{
 		$name = 'mod_' . RegEx::replace('^mod_', '', $name);
 
-		$hash = md5('getModuleParams_' . $name . '_' . json_encode($params));
+		$cache_id = 'getModuleParams_' . $name . '_' . json_encode($params);
 
-		if ($use_cache && Cache::has($hash))
+		if ($use_cache && Cache::has($cache_id))
 		{
-			return Cache::get($hash);
+			return Cache::get($cache_id);
 		}
 
 		if (empty($params))
@@ -170,7 +170,7 @@ class Parameters
 		}
 
 		return Cache::set(
-			$hash,
+			$cache_id,
 			$this->getParams($params, ($admin ? JPATH_ADMINISTRATOR : JPATH_SITE) . '/modules/' . $name . '/' . $name . '.xml')
 		);
 	}
@@ -186,11 +186,11 @@ class Parameters
 	 */
 	public function getPluginParams($name, $type = 'system', $params = '', $use_cache = true)
 	{
-		$hash = md5('getPluginParams_' . $name . '_' . $type . '_' . json_encode($params));
+		$cache_id = 'getPluginParams_' . $name . '_' . $type . '_' . json_encode($params);
 
-		if ($use_cache && Cache::has($hash))
+		if ($use_cache && Cache::has($cache_id))
 		{
-			return Cache::get($hash);
+			return Cache::get($cache_id);
 		}
 
 		if (empty($params))
@@ -200,7 +200,7 @@ class Parameters
 		}
 
 		return Cache::set(
-			$hash,
+			$cache_id,
 			$this->getParams($params, JPATH_PLUGINS . '/' . $type . '/' . $name . '/' . $name . '.xml')
 		);
 	}
@@ -214,11 +214,11 @@ class Parameters
 	 */
 	public function getObjectFromXml(&$xml, $use_cache = true)
 	{
-		$hash = md5('getObjectFromXml_' . json_encode($xml));
+		$cache_id = 'getObjectFromXml_' . json_encode($xml);
 
-		if ($use_cache && Cache::has($hash))
+		if ($use_cache && Cache::has($cache_id))
 		{
-			return Cache::get($hash);
+			return Cache::get($cache_id);
 		}
 
 		if ( ! is_array($xml))
@@ -229,7 +229,7 @@ class Parameters
 		$object = $this->getObjectFromXmlNode($xml);
 
 		return Cache::set(
-			$hash,
+			$cache_id,
 			$object
 		);
 	}
@@ -244,11 +244,11 @@ class Parameters
 	 */
 	private function loadXML($path, $default = '', $use_cache = true)
 	{
-		$hash = md5('loadXML_' . $path . '_' . $default);
+		$cache_id = 'loadXML_' . $path . '_' . $default;
 
-		if ($use_cache && Cache::has($hash))
+		if ($use_cache && Cache::has($cache_id))
 		{
-			return Cache::get($hash);
+			return Cache::get($cache_id);
 		}
 
 		if ( ! $path
@@ -257,7 +257,7 @@ class Parameters
 		)
 		{
 			return Cache::set(
-				$hash,
+				$cache_id,
 				[]
 			);
 		}
@@ -298,7 +298,7 @@ class Parameters
 		}
 
 		return Cache::set(
-			$hash,
+			$cache_id,
 			$xml
 		);
 	}

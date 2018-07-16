@@ -1,18 +1,18 @@
 <?php
 /**
- * @package		
- * @subpackage	
- * @copyright	
- * @license		
+ * @package
+ * @subpackage
+ * @copyright
+ * @license
  */
 
 // No direct access.
 defined('_JEXEC') or die;
 
 /**
- * 
  *
- * @since	
+ *
+ * @since
  */
 function modChrome_empty($module, &$params, &$attribs)
 {
@@ -27,7 +27,7 @@ function modChrome_rowfluid_section01($module, &$params, &$attribs)
 	?>
 	<div class="row-fluid">
 		<section<?php if ($params->get('tag_id', '')  != ''): ?> id="<?php echo $params->get('tag_id'); ?>"<?php endif; ?><?php if ($params->get('class_sfx', '')  != ''): ?> class="<?php echo trim($params->get('class_sfx', '')); ?>"<?php endif; ?>>
-			<?php if ($module->showtitle): ?> 
+			<?php if ($module->showtitle): ?>
 			 <h<?php echo $headerLevel; ?> class="span2"><span><?php echo $module->title; ?></span></h<?php echo $headerLevel; ?>>
 			<?php endif; ?>
 			<?php echo $module->content; ?>
@@ -47,7 +47,7 @@ function modChrome_menu_sobre($module, &$params, &$attribs)
         <?php echo $module->content; ?>
     </nav>
 	<?php
-	endif;	
+	endif;
 }
 
 function modChrome_row01($module, &$params, &$attribs)
@@ -59,7 +59,7 @@ function modChrome_row01($module, &$params, &$attribs)
     	<?php echo $module->content; ?>
     </div>
 	<?php
-	endif;	
+	endif;
 }
 
 function modChrome_hidden_titles($module, &$params, &$attribs)
@@ -84,7 +84,7 @@ function modChrome_nav_span($module, &$params, &$attribs)
 			$mobile_classes = '';
 	?>
 	<nav class="<?php echo $params->get('moduleclass_sfx'); ?> <?php echo $params->get('class_sfx', ''); ?>">
-		<h<?php echo $headerLevel; ?> <?php if($params->get('moduleclass_sfx')=='menu-de-apoio'): ?>class="hide"<?php endif; ?>><?php echo $module->title; ?> <?php if($params->get('moduleclass_sfx')!='menu-de-apoio'): ?><i class="icon-chevron-up <?php echo $mobile_classes; ?> pull-right"></i><?php endif; ?></h<?php echo $headerLevel; ?>><!-- visible-phone visible-tablet -->
+		<h<?php echo $headerLevel; ?> <?php if($params->get('moduleclass_sfx')=='menu-de-apoio'): ?>class="hide"<?php endif; ?>><?php echo $module->title; ?> <?php if($params->get('moduleclass_sfx')!='menu-de-apoio'): ?><i class="icon-chevron-down visible-phone visible-tablet pull-right"></i><?php endif; ?></h<?php echo $headerLevel; ?>>
 		<?php echo $module->content; ?>
 	</nav>
 	<?php
@@ -96,18 +96,18 @@ function modChrome_div_nav_rodape($module, &$params, &$attribs)
 	$headerLevel = isset($attribs['headerLevel']) ? (int) $attribs['headerLevel'] : 2;
 	if(! empty($module->content) ):
 	?>
-	
-		<div class="<?php echo $params->get('class_sfx', ''); ?>">		
+
+		<div class="<?php echo $params->get('class_sfx', ''); ?>">
 			<nav class="row <?php echo $params->get('moduleclass_sfx'); ?> nav">
-				<?php if ($module->showtitle): ?> 			
+				<?php if ($module->showtitle): ?>
 				<h<?php echo $headerLevel; ?>><?php echo $module->title; ?></h<?php echo $headerLevel; ?>>
 				<?php endif; ?>
 				<?php echo $module->content; ?>
-			</nav>					
+			</nav>
 		</div>
-	
+
 	<?php
-	endif;	
+	endif;
 }
 
 function modChrome_container($module, &$params, &$attribs)
@@ -122,7 +122,7 @@ function modChrome_container($module, &$params, &$attribs)
 		else
 		{
 		$class = $params->get('moduleclass_sfx');
-		
+
 		$container_class = '';
 		$container_class_pos = strpos($class, 'container-class-');
 		if($container_class_pos !== false)
@@ -141,7 +141,7 @@ function modChrome_container($module, &$params, &$attribs)
 		}
 
 		$title = ( $params->get('titulo_alternativo', '') != '' )? $params->get('titulo_alternativo') : $module->title;
-		$layout = explode(':', $params->get('layout'));				
+		$layout = explode(':', $params->get('layout'));
 		$module->showtitle = (@$layout[1]!='manchete-principal')? $module->showtitle : '';
 		?>
 		<div class="row-fluid module <?php echo $class; ?>">
@@ -151,10 +151,10 @@ function modChrome_container($module, &$params, &$attribs)
 			 	<?php if(strpos($params->get('moduleclass_sfx'), 'no-outstanding-title')===false): ?></div><?php endif; ?>
 			<?php endif; ?>
 			<?php if($container_class != ''): ?><div class="<?php echo $container_class; ?>"><?php endif; ?>
-			<?php echo $module->content; ?>	
+			<?php echo $module->content; ?>
 			<?php if($container_class != ''): ?></div><?php endif; ?>
 		</div>
 		<?php
 		}
-	endif;	
+	endif;
 }

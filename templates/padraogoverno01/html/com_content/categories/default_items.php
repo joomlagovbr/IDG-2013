@@ -21,10 +21,10 @@ if (count($this->items[$this->parent->id]) > 0 && $this->maxLevelcat != 0):
 					if(@isset($params->image)){
 						if($params->image!='') {
 							?>
-							<div class="tileImage">									
+							<div class="tileImage">
 								<a href="<?php echo JRoute::_(ContentHelperRoute::getCategoryRoute($item->id));?>">
-									<img class="tileImage" src="<?php echo htmlspecialchars($params->image); ?>" alt="imagem ilustrativa" height="225" width="300" />	
-								</a>						
+									<img class="tileImage" src="<?php echo htmlspecialchars($params->image); ?>" alt="imagem ilustrativa" height="225" width="300" />
+								</a>
 							</div>
 							<?php
 						}
@@ -42,7 +42,7 @@ if (count($this->items[$this->parent->id]) > 0 && $this->maxLevelcat != 0):
 							<?php echo JHtml::_('content.prepare', $item->description, '', 'com_content.categories'); ?>
 						<?php endif; ?>
 						</div>
-			        <?php endif; ?>						
+			        <?php endif; ?>
 					<div class="keywords">
 						<?php if (!empty($item->metakey)) { ?>
 							 <p>Tags: <?php TemplateContentCategoriesHelper::displayMetakeyLinks($item->metakey); ?></p>
@@ -56,7 +56,7 @@ if (count($this->items[$this->parent->id]) > 0 && $this->maxLevelcat != 0):
 						<?php
 						}
 						?>
-						<?php if ($item->modified_time != '0000-00-00 00:00:00') : ?>				
+						<?php if ($item->modified_time != '0000-00-00 00:00:00') : ?>
 						<p><?php echo JText::sprintf('COM_CONTENT_LAST_UPDATED', JHtml::_('date', $item->modified_time, 'd/m/Y, H\hi')); ?></p>
 						<?php endif; ?>
 					</div>
@@ -76,13 +76,13 @@ if (count($this->items[$this->parent->id]) > 0 && $this->maxLevelcat != 0):
 						<li><i class="icon-fixed-width icon-calendar"></i> <?php echo JHtml::_('date', $item->created_time, 'd/m/y'); ?></li>
 						<li><i class="icon-fixed-width icon-time"></i> <?php echo JHtml::_('date', $item->created_time, 'H\hi'); ?></li>
 						<li><i class="icon-fixed-width"><strong><?php echo $item->numitems; ?></strong></i> <?php if($item->numitems==1): ?>item<?php else: ?>itens<?php endif; ?></li>
-					</ul>							            								
+					</ul>
 				</div>
 
-				
+
 
 			</div>
-		
+
 		<?php endforeach; ?>
 
 <?php endif; ?>

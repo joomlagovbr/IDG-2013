@@ -1,0 +1,31 @@
+/*rozmery galerie*/
+.lightBox	 								{background-color: black; width: 800px; height: 547px; padding-top:10px; padding-left: 10px; padding-right: 10px;}
+.lightBox .image-browser-image				{width: 800px; height: 450px; border: 1px solid #333; overflow: hidden; padding: 0px; float: left; position: relative;}
+/*nahledovy pas*/
+.lightBox .image-browser-thumbs									{ width: 800px;height: 81px; overflow-x:scroll; clear: both;}
+.lightBox .image-browser-thumbs div.image-browser-thumb-box		{ height: 55px; width: 100px; padding: 0px; margin: 3px; border: 1px solid #333;}
+/*ramecek okolo aktivniho nahledu*/
+.lightBox .image-browser-thumbs div.image-browser-active		{border: 3px solid red;}
+/*zasednuti pod galerii*/
+.lightBox div.image-browser-root 			{ _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/bg.png', sizingMethod='scale' );}
+.lightBox div[class~="image-browser-root"] 	{ background: url(img/bg.png); }
+/*zasednuti pod galerii*/
+div.image-browser-root 					{ _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/bg.png', sizingMethod='scale' );}
+div[class~="image-browser-root"] 		{ background: url(img/bg.png); }
+
+/*ovladaci tlacitka*/
+.lightBox .image-browser-prev 				{ position: absolute; top: 20px; left: 20px; display: block; width: 42px; height: 36px; cursor: pointer; background: url(img/lb-previous-active.png); _background: none; _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/lb-previous-active.png'));}
+.lightBox .image-browser-prev:hover			{ background: url(img/lb-previous-hover.png); _background: none; _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/lb-previous-hover.png')); }
+.lightBox .image-browser-next 				{ position: absolute; top: 20px; left: 66px; display: block; width: 42px; height: 36px; cursor: pointer; background: url(img/lb-next-active.png); _background: none; _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/lb-next-active.png')); }
+.lightBox .image-browser-next:hover			{ background: url(img/lb-next-hover.png); _background: none; _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/lb-next-hover.png')); }
+.lightBox .image-browser-prev-disabled		{ position: absolute; top: 20px; left: 20px; display: block; width: 42px; height: 36px; cursor: pointer; background: url(img/lb-previous-inactive.png); _background: none;  _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/lb-previous-inactive.png')); }
+.lightBox .image-browser-next-disabled		{ position: absolute; top: 20px; left: 66px; display: block; width: 42px; height: 36px; cursor: pointer; background: url(img/lb-next-inactive.png); _background: none; _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/lb-next-inactive.png')); }
+.lightBox .image-browser-close				{ position: absolute; top: 20px; left: 760px; display: block; width: 42px; height: 36px; cursor: pointer; background: url(img/lb-close-active.png); _background:none ;_filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/lb-close-active.png'));}
+.lightBox .image-browser-close:hover		{ background: url(img/lb-close-hover.png); _background:none; _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/lb-close-hover.png'));}
+
+/*image preload pro hover obrazky navigace do poskytnutych skrytych DIVu, je mozno nacist i pro disabled */
+.lightBox div.image-browser-prev-preload	{ background: url(img/lb-previous-hover.png);}
+.lightBox div.image-browser-next-preload	{ background: url(img/lb-next-hover.png);}
+.lightBox div.image-browser-close-preload	{ background: url(img/lb-close-hover.png);}
+/*styly pro popisku*/
+.lightBox .image-browser-caption			{ display: none;}

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         7.5.1
+ * @version         8.0.3
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -18,13 +18,11 @@ defined('_JEXEC') or die;
 
 class Fields extends Filter
 {
-	public function setFilter(JDatabaseQuery $query, $names = [], $include_type = 'include')
+	public function setFilter(JDatabaseQuery $query, $filters = [])
 	{
-		$include = $include_type != 'exclude';
-
-		foreach ($names as $field => $values)
+		foreach ($filters as $key => $value)
 		{
-			$query->where($this->db->quoteName('items.' . $field) . RL_DB::in($values, $include));
+			$query->where($this->db->quoteName('items.' . $key) . RL_DB::in($value));
 		}
 	}
 }

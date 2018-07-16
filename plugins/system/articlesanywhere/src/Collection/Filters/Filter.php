@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         7.5.1
+ * @version         8.0.3
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -25,37 +25,25 @@ class Filter extends CollectionObject implements FilterInterface
 		$class = get_called_class();
 		$class = substr($class, strrpos($class, '\\') + 1);
 
-		$filter_type = StringHelper::camelToUnderscore($class);
-		$filter      = $this->config->getFilters($filter_type);
+		$group   = StringHelper::camelToUnderscore($class);
+		$filters = $this->config->getFilters($group);
 
-		if ( ! $this->config->getComponentName() || empty($filter))
+		if ( ! $this->config->getComponentName() || empty($filters))
 		{
 			return;
 		}
 
-		$this->setByIncludeType($query, $filter, 'include');
-		$this->setByIncludeType($query, $filter, 'exclude');
+		$this->setFilter($query, $filters);
 	}
 
-	protected function setByIncludeType(JDatabaseQuery &$query, $filter, $include_type = 'include')
-	{
-		if (empty($filter[$include_type]))
-		{
-			return;
-		}
-
-		$names = $filter[$include_type];
-		$this->setFilter($query, $names, $include_type);
-	}
-
-	public function setFilter(JDatabaseQuery $query, $names = [], $include_type = 'include')
+	public function setFilter(JDatabaseQuery $query, $filters = [])
 	{
 		return;
 	}
 
-	protected function setFiltersFromNames(JDatabaseQuery &$query, $table, $names = [], $include = true)
+	protected function setFiltersFromNames(JDatabaseQuery &$query, $table, $names = [])
 	{
-		$conditions = $this->getConditionsFromNames($table, $names, $include);
+		$conditions = $this->getConditionsFromNames($table, $names);
 
 		if (empty($conditions))
 		{
@@ -69,11 +57,14 @@ class Filter extends CollectionObject implements FilterInterface
 			return;
 		}
 
-		$glue = $include ? ' OR ' : ' AND ';
+		$operator = RL_DB::getOperatorFromValue($names[0]);
+
+		$glue = $operator == '!=' ? ' AND ' : ' OR ';
+
 		$query->where('(' . implode($glue, $conditions) . ')');
 	}
 
-	protected function getConditionsFromNames($table, $names = [], $include = true)
+	protected function getConditionsFromNames($table, $names = [])
 	{
 		list($ids, $titles, $likes) = $this->getIdAndNameMatches($names);
 
@@ -82,15 +73,15 @@ class Filter extends CollectionObject implements FilterInterface
 		if ( ! empty($ids))
 		{
 			$conditions[] = $this->config->getId($table)
-				. RL_DB::in($ids, $include);
+				. RL_DB::in($ids);
 		}
 
 		if ( ! empty($titles))
 		{
 			$conditions[] = $this->config->getTitle($table)
-				. RL_DB::in($titles, $include);
+				. RL_DB::in($titles);
 			$conditions[] = $this->config->getAlias($table)
-				. RL_DB::in($titles, $include);
+				. RL_DB::in($titles);
 		}
 
 		if ( ! empty($likes))
@@ -98,9 +89,9 @@ class Filter extends CollectionObject implements FilterInterface
 			foreach ($likes as $like)
 			{
 				$conditions[] = $this->config->getTitle($table)
-					. RL_DB::like($like, $include);
+					. RL_DB::like($like);
 				$conditions[] = $this->config->getAlias($table)
-					. RL_DB::like($like, $include);
+					. RL_DB::like($like);
 			}
 		}
 

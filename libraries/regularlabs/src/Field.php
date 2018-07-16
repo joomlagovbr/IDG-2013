@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.1.20362
+ * @version         18.7.10792
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -252,7 +252,7 @@ class Field
 
 		foreach ($list as $item)
 		{
-			$item->treename = Form::prepareSelectItem($item->treename, $item->published, '', 1);
+			$item->treename = Form::prepareSelectItem($item->treename, isset($item->published) ? $item->published : 1, '', 1);
 
 			$options[] = JHtml::_('select.option', $item->id, $item->treename, 'value', 'text', 0);
 		}
@@ -331,12 +331,12 @@ class Field
 		$string_parts = explode(',', $string);
 		$first_part   = array_shift($string_parts);
 
-		if ($first_part !== strtoupper($first_part))
+		if ($first_part === strtoupper($first_part))
 		{
-			return $string;
+			$first_part = JText::_($first_part);
 		}
 
-		$first_part = RegEx::replace('\[\[%([0-9]+):[^\]]*\]\]', '%\1$s', JText::_($first_part));
+		$first_part = RegEx::replace('\[\[%([0-9]+):[^\]]*\]\]', '%\1$s', $first_part);
 
 		array_walk($string_parts, '\RegularLabs\Library\Field::jText');
 

@@ -1,1 +1,1 @@
-ALTER TABLE `#__youtubegallery_videos` CHANGE `link` `link` TEXT NOT NULL;
+ALTER TABLE #__youtubegallery_videos CHANGE link link TEXT NOT NULL;

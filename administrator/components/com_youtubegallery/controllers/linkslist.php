@@ -1,8 +1,8 @@
 <?php
 /**
- * YoutubeGallery Joomla! 3.0 Native Component
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * YoutubeGallery Joomla! Native Component
+ * @version 4.4.5
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -25,9 +25,8 @@ class YoutubeGalleryControllerLinksList extends JControllerAdmin
 		
 		function display($cachable = false, $urlparams = array())
 		{
-				$task=JRequest::getVar( 'task');
-				//echo '$task='.$task.'<br/>';
-				//die;
+				$task=JFactory::getApplication()->input->getVar( 'task');
+
 				switch($task)
 				{
 						case 'delete':
@@ -54,8 +53,15 @@ class YoutubeGalleryControllerLinksList extends JControllerAdmin
 						case 'linkslist.refreshItem':
 								$this->refreshItem();
 								break;
+						case 'updateItem':
+								$this->updateItem();
+								break;
+						case 'linkslist.updateItem':
+								$this->updateItem();
+								break;
+						
 						default:
-								JRequest::setVar( 'view', 'linkslist');
+								JFactory::getApplication()->input->setVar( 'view', 'linkslist');
 								parent::display();
 								break;
 				}
@@ -69,22 +75,48 @@ class YoutubeGalleryControllerLinksList extends JControllerAdmin
 		        return $model;
 		}
  
+		public function updateItem()
+		{
+				$model = $this->getModel('linksform');
+				$cid = JFactory::getApplication()->input->getVar( 'cid', array(), 'post', 'array' );
+
+				if (count($cid)<1)
+				{
+						$this->setRedirect( 'index.php?option=com_youtubegallery&view=linkslist', JText::_('COM_YOUTUBEGALLERY_NO_ITEMS_SELECTED'),'error' );
+                				return false;
+				}
+					    	    
+				if($model->RefreshPlayist($cid,true))
+				{
+						$msg = JText::_( 'COM_YOUTUBEGALLERY_VIDEOLIST_UPDATED_SUCCESSFULLY' );
+						$link 	= 'index.php?option=com_youtubegallery&view=linkslist';
+						$this->setRedirect($link, $msg);
+				}
+				else
+				{
+						$msg = JText::_( 'COM_YOUTUBEGALLERY_VIDEOLIST_WAS_UNABLE_TO_UPDATE' );
+						$link 	= 'index.php?option=com_youtubegallery&view=linkslist';
+						$this->setRedirect($link, $msg,'error');
+				}
+
+		}
+		
 		public function refreshItem()
 		{
 				
 				$model = $this->getModel('linksform');
         	
 				
-				$cid = JRequest::getVar( 'cid', array(), 'post', 'array' );
+				$cid = JFactory::getApplication()->input->getVar( 'cid', array(), 'post', 'array' );
 	    
 				if (count($cid)<1) {
 		
-				       $this->setRedirect( 'index.php?option=com_youtubegallery&view=linkslist', JText::_('COM_YOUTUBEGALLERY_NO_ITEMS_SELECTED'),'error' );
+						$this->setRedirect( 'index.php?option=com_youtubegallery&view=linkslist', JText::_('COM_YOUTUBEGALLERY_NO_ITEMS_SELECTED'),'error' );
                 
 						return false;
 				}
 					    	    
-				if($model->RefreshPlayist($cid))
+				if($model->RefreshPlayist($cid,false))
 				{
 						$msg = JText::_( 'COM_YOUTUBEGALLERY_VIDEOLIST_REFRESHED_SUCCESSFULLY' );
 						$link 	= 'index.php?option=com_youtubegallery&view=linkslist';
@@ -92,7 +124,7 @@ class YoutubeGalleryControllerLinksList extends JControllerAdmin
 				}
 				else
 				{
-						$msg = JText::_( 'COM_YOUTUBEGALLERY_VIDEOLIST_WAS_UNABLE_TO_REFRESHED' );
+						$msg = JText::_( 'COM_YOUTUBEGALLERY_VIDEOLIST_WAS_UNABLE_TO_REFRESH' );
 						$link 	= 'index.php?option=com_youtubegallery&view=linkslist';
 						$this->setRedirect($link, $msg,'error');
 				}
@@ -104,9 +136,9 @@ class YoutubeGalleryControllerLinksList extends JControllerAdmin
 		{
                 
 				// Check for request forgeries
-				JRequest::checkToken() or jexit( 'Invalid Token' );
+				JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
         	
-				$cid = JRequest::getVar( 'cid', array(), 'post', 'array' );
+				$cid = JFactory::getApplication()->input->getVar( 'cid', array(), 'post', 'array' );
 
 				if (count($cid)<1)
 				{
@@ -124,7 +156,7 @@ class YoutubeGalleryControllerLinksList extends JControllerAdmin
 		{
 		
 				// Get some variables from the request
-				$cid	= JRequest::getVar( 'cid', array(), 'post', 'array' );
+				$cid	= JFactory::getApplication()->input->getVar( 'cid', array(), 'post', 'array' );
 
 				if (count($cid)<1)
 				{
@@ -147,7 +179,7 @@ class YoutubeGalleryControllerLinksList extends JControllerAdmin
 		public function copyItem()
 		{
 				
-				$cid = JRequest::getVar( 'cid', array(), 'post', 'array' );
+				$cid = JFactory::getApplication()->input->getVar( 'cid', array(), 'post', 'array' );
 	    
 				$model = $this->getModel('linkslist');
 	    

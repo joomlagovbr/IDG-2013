@@ -1,19 +1,19 @@
 <?php
-/*
- * @package Joomla 1.5
- * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
- *
- * @component Phoca Gallery
- * @copyright Copyright (C) Jan Pavelka www.phoca.cz
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+/**
+ * @package   Phoca Gallery
+ * @author    Jan Pavelka - https://www.phoca.cz
+ * @copyright Copyright (C) Jan Pavelka https://www.phoca.cz
+ * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 and later
+ * @cms       Joomla
+ * @copyright Copyright (C) Open Source Matters. All rights reserved.
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  */
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
 class PhocaGalleryImage
 {
 
-	function getImageSize($filename, $returnString = 0, $extLink = 0) {
+	public static function getImageSize($filename, $returnString = 0, $extLink = 0) {
 		
 		phocagalleryimport('phocagallery.image.image');
 		phocagalleryimport('phocagallery.path.path');
@@ -21,7 +21,7 @@ class PhocaGalleryImage
 		if ($extLink == 1) {
 			$fileNameAbs	= $filename;
 		} else {
-			$path			= &PhocaGalleryPath::getPath();
+			$path			= PhocaGalleryPath::getPath();
 			$fileNameAbs	= JPath::clean($path->image_abs . $filename);
 		
 			if (!JFile::exists($fileNameAbs)) {
@@ -37,7 +37,7 @@ class PhocaGalleryImage
 		}
 	}
 	
-	function getRealImageSize($filename, $size = 'large', $extLink = 0) {
+	public static function getRealImageSize($filename, $size = 'large', $extLink = 0) {
 	
 		phocagalleryimport('phocagallery.file.thumbnail');
 		
@@ -47,7 +47,7 @@ class PhocaGalleryImage
 			$thumbName			= PhocaGalleryFileThumbnail::getThumbnailName ($filename, $size);
 			list($w, $h, $type) = @getimagesize($thumbName->abs);
 		}
-		$size = '';
+		$size = array();
 		if (isset($w) && isset($h)) {
 			$size['w'] 	= $w;
 			$size['h']	= $h;
@@ -59,7 +59,7 @@ class PhocaGalleryImage
 	}
 	
 	
-	function correctSizeWithRate($width, $height, $corWidth = 100, $corHeight = 100) {
+	public static function correctSizeWithRate($width, $height, $corWidth = 100, $corHeight = 100) {
 		$image['width']		= $corWidth;
 		$image['height']	= $corHeight;
 		
@@ -87,7 +87,7 @@ class PhocaGalleryImage
 		return $image;
 	}
 	
-	function correctSize($imageSize, $size = 100, $sizeBox = 100, $sizeAdd = 0) {
+	public static function correctSize($imageSize, $size = 100, $sizeBox = 100, $sizeAdd = 0) {
 
 		$image['size']	= $imageSize;
 		if ((int)$image['size'] < (int)$size ) {
@@ -99,7 +99,7 @@ class PhocaGalleryImage
 		return $image;		
 	}
 	
-	function correctSwitchSize($switchHeight, $switchWidth) {
+	public static function correctSwitchSize($switchHeight, $switchWidth) {
 
 		$switchImage['height'] 	= $switchHeight;
 		$switchImage['centerh']	= ($switchHeight / 2) - 18;
@@ -112,7 +112,7 @@ class PhocaGalleryImage
 	/*
 	 * type ... 1 categories, 2 category view
 	 */
-	function setBoxSize($p, $type = 1) {
+	public static function setBoxSize($p, $type = 1) {
 
 	
 		$w 	= 20;
@@ -128,7 +128,7 @@ class PhocaGalleryImage
 		if (isset($p['imagewidth'])) {
 			$boxSize['width'] = $boxSize['width'] + (int)$p['imagewidth'];
 		}
-		
+	
 		if (isset($p['imageheight'])) {
 			$boxSize['height'] = $boxSize['height'] + (int)$p['imageheight'];
 		}
@@ -141,7 +141,10 @@ class PhocaGalleryImage
 			$boxSize['height'] = $boxSize['height'] + $w;
 			return $boxSize;
 		}
-		if ( (isset($p['display_rating']) && $p['display_rating'] == 1) || (isset($p['display_rating_img']) && $p['display_rating_img'] == 1)) {
+		
+		if ( (isset($p['display_rating']) && $p['display_rating'] == 1) || (isset($p['display_rating_img']) && $p['display_rating_img'] > 0)) {
+			
+			
 			if ($type == 1) {
 				$boxSize['height'] = $boxSize['height'] + $w4;
 			} else {
@@ -220,7 +223,7 @@ class PhocaGalleryImage
 		return $boxSize;
 	}
 	
-	function getJpegQuality($jpegQuality) {
+	public static function getJpegQuality($jpegQuality) {
 		if ((int)$jpegQuality < 0) {
 			$jpegQuality = 0;
 		}
@@ -238,7 +241,7 @@ class PhocaGalleryImage
 	 * @access public
 	 */
 	 
-	 function getTransformImageArray($imgSize, $rate) {
+	 public static function getTransformImageArray($imgSize, $rate) {
 		if (isset($imgSize[0]) && isset($imgSize[1])) {
 			$w = (int)$imgSize[0];
 			$h = (int)$imgSize[1];
@@ -260,7 +263,7 @@ class PhocaGalleryImage
 	 * If we ask album, first check Picasa album, second check Facebook album
 	 */
 	
-	function isExtImage($extid, $extfbcatid = '') {
+	public static function isExtImage($extid, $extfbcatid = '') {
 	
 		// EXTID (IMAGES): Picasa - yes, Facebook - yes
 		// EXTID (ALBUMS): Picasa - yes, Facebook - no
@@ -276,6 +279,22 @@ class PhocaGalleryImage
 		
 		
 		return false;
+	}
+	
+	public static function getImageByImageId($id = 0) {
+		
+		$db 	= JFactory::getDBO();
+		$query = ' SELECT a.id, a.title, c.title as category_title'
+				.' FROM #__phocagallery AS a'
+				.' LEFT JOIN #__phocagallery_categories AS c ON c.id = a.catid'
+				.' WHERE a.id = '.(int)$id
+				.' GROUP BY a.id, a.title, c.title'
+				.' ORDER BY a.id'
+				.' LIMIT 1';
+		$db->setQuery($query);
+		$image = $db->loadObject();
+		
+		return $image;
 	}
 }
 ?>

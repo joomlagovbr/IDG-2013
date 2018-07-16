@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.1.20362
+ * @version         18.7.10792
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -15,6 +15,7 @@ defined('_JEXEC') or die;
 
 use JFactory;
 use JHttpFactory;
+use Joomla\Registry\Registry;
 use RuntimeException;
 
 /**
@@ -51,15 +52,15 @@ class Http
 	 */
 	public static function getFromUrl($url, $timeout = 20)
 	{
-		$hash = md5('getUrl_' . $url);
+		$cache_id = 'getUrl_' . $url;
 
-		if (Cache::has($hash))
+		if (Cache::has($cache_id))
 		{
-			return Cache::get($hash);
+			return Cache::get($cache_id);
 		}
 
 		if (JFactory::getApplication()->input->getInt('cache', 0)
-			&& $content = Cache::read($hash)
+			&& $content = Cache::read($cache_id)
 		)
 		{
 			return $content;
@@ -74,10 +75,10 @@ class Http
 
 		if ($ttl = JFactory::getApplication()->input->getInt('cache', 0))
 		{
-			return Cache::write($hash, $content, $ttl > 1 ? $ttl : 0);
+			return Cache::write($cache_id, $content, $ttl > 1 ? $ttl : 0);
 		}
 
-		return Cache::set($hash, $content);
+		return Cache::set($cache_id, $content);
 	}
 
 	/**
@@ -90,11 +91,11 @@ class Http
 	 */
 	public static function getFromServer($url, $timeout = 20)
 	{
-		$hash = md5('getByUrl_' . $url);
+		$cache_id = 'getByUrl_' . $url;
 
-		if (Cache::has($hash))
+		if (Cache::has($cache_id))
 		{
-			return Cache::get($hash);
+			return Cache::get($cache_id);
 		}
 
 		// only allow url calls from administrator
@@ -150,10 +151,10 @@ class Http
 
 		if ($ttl = JFactory::getApplication()->input->getInt('cache', 0))
 		{
-			return Cache::write($hash, $content, $ttl > 1 ? $ttl : 0);
+			return Cache::write($cache_id, $content, $ttl > 1 ? $ttl : 0);
 		}
 
-		return Cache::set($hash, $content);
+		return Cache::set($cache_id, $content);
 	}
 
 	/**
@@ -168,7 +169,12 @@ class Http
 	{
 		try
 		{
-			$content = JHttpFactory::getHttp()->get($url, null, $timeout)->body;
+			// Adding a valid user agent string, otherwise some feed-servers returning an error
+			$options = new Registry([
+				'userAgent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:41.0) Gecko/20100101 Firefox/41.0',
+			]);
+
+			$content = JHttpFactory::getHttp($options)->get($url, null, $timeout)->body;
 		}
 		catch (RuntimeException $e)
 		{

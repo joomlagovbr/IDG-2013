@@ -1,10 +1,12 @@
 <?php
-/* @package Joomla
+/**
+ * @package   Phoca Gallery
+ * @author    Jan Pavelka - https://www.phoca.cz
+ * @copyright Copyright (C) Jan Pavelka https://www.phoca.cz
+ * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 and later
+ * @cms       Joomla
  * @copyright Copyright (C) Open Source Matters. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
- * @extension Phoca Extension
- * @copyright Copyright (C) Jan Pavelka www.phoca.cz
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  */
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
@@ -26,7 +28,7 @@ class PhocaGalleryFileUploadMultiple
 	
 		$paramsC 		= JComponentHelper::getParams('com_phocagallery');
 		$chunkMethod 	= $paramsC->get( 'multiple_upload_chunk', 0 );
-		$uploadMethod 	= $paramsC->get( 'multiple_upload_method', 1 );
+		$uploadMethod 	= $paramsC->get( 'multiple_upload_method', 4 );
 	
 		//First load mootools, then jquery and set noConflict
 		JHtml::_('behavior.framework', true);// Load it here to be sure, it is loaded before jquery
@@ -144,7 +146,11 @@ class PhocaGalleryFileUploadMultiple
 		$js.='	pgJQ("#'.$name.'").pluploadQueue({'."\n";
 		$js.='		runtimes : \''.$runtime.'\','."\n";
 		$js.='		url : \''.$this->url.'\','."\n";
-		$js.='		max_file_size : \''.$this->maxFileSize.'\','."\n";
+		//$js.='		max_file_size : \''.$this->maxFileSize.'\','."\n";
+		
+		if ($this->maxFileSize != '0b') {
+			$js.='		max_file_size : \''.$this->maxFileSize.'\','."\n";
+		}
 		
 		if ($chunkEnabled == 1) {
 			$js.='		chunk_size : \'1mb\','."\n";

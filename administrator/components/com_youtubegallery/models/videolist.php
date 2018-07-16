@@ -1,8 +1,8 @@
 <?php
 /**
- * YoutubeGallery Joomla! 3.0 Native Component
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * YoutubeGallery Joomla! Native Component
+ * @version 4.4.5
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -30,12 +30,12 @@ class YoutubeGalleryModelVideoList extends JModelList
                 $search			= $mainframe->getUserStateFromRequest($context."search",'search','',	'string' );
 				$search			=strtolower(trim(preg_replace("/[^a-zA-Z0-9 ]/", "", $search)));
 				
-				$where[]='`listid`='.JRequest::getInt( 'listid');
+				$where[]='listid='.JFactory::getApplication()->input->getInt( 'listid');
                 
-				$where[]='`isvideo`';
+				//$where[]='isvideo';
 				
 				if($search!='')
-						$where[]='( instr(`link`,"'.$search.'") OR instr(`title`,"'.$search.'") OR instr(`description`,"'.$search.'") )';
+						$where[]='( instr(link,"'.$search.'") OR instr(title,"'.$search.'") OR instr(description,"'.$search.'") )';
 				
 				
                 // Create a new query object.         

@@ -1,13 +1,11 @@
 <?php
 /**
  * YoutubeGallery
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * @version 4.4.5
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
-
-//https://developers.google.com/youtube/analytics/registering_an_application
 
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
@@ -15,7 +13,8 @@ defined('_JEXEC') or die('Restricted access');
 if(!defined('DS'))
 	define('DS',DIRECTORY_SEPARATOR);
 
-require_once(JPATH_SITE.DS.'components'.DS.'com_youtubegallery'.DS.'includes'.DS.'misc.php');
+require_once(JPATH_SITE.DIRECTORY_SEPARATOR.'components'.DIRECTORY_SEPARATOR.'com_youtubegallery'.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.'misc.php');
+require_once(JPATH_SITE.DIRECTORY_SEPARATOR.'components'.DIRECTORY_SEPARATOR.'com_youtubegallery'.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.'youtubeplaylist.php');
 
 class VideoSource_YoutubeUserUploads
 {
@@ -35,99 +34,50 @@ class VideoSource_YoutubeUserUploads
 	    return '';
 	}
 	
-	public static function getVideoIDList($youtubeURL,$optionalparameters,&$userid)
+	public static function getVideoIDList($youtubeURL,$optionalparameters,&$userid,&$datalink)
 	{
-		$optionalparameters_arr=explode(',',$optionalparameters);
 		$videolist=array();
+		$base_url='https://www.googleapis.com/youtube/v3';
+		$api_key = YouTubeGalleryMisc::getSettingValue('youtube_api_key');
 		
-		$spq=implode('&',$optionalparameters_arr);
+		if($api_key=='')
+			return $videolist;
 		
-		$userid=VideoSource_YoutubeUserUploads::extractYouTubeUserID($youtubeURL);
-		
-		//alteracoes projeto portal padrao
-		require_once JPATH_ADMINISTRATOR . '/components/com_youtubegallery/google/_videos.php';
-		$videos = new YoutubeVideos();
-		$channelID = $videos->getChannelId($userid);
-		@$channelID = $channelID[0];
-		$video_raw = $videos->getVideosFromChannel( $channelID, 30, 'date' );
-
-		if($userid=='' || empty($channelID))
-			return $videolist; //user id not found
-		
-		for ($i=0,$limit=count($video_raw); $i < $limit; $i++)
-		{ 
-			$videolist[] = 'https://www.youtube.com/watch?v='.$video_raw[$i]['id']['videoId'];
-		}
-		
-		return $videolist;
-
-	}
-	
-	public static function getUserInfo($youtubeURL,&$item)
-	{
-				
 		$userid=VideoSource_YoutubeUserUploads::extractYouTubeUserID($youtubeURL);
 		
 		if($userid=='')
-			return 'user id not found';
+			return $videolist; //user id not found
 		
-		$url = 'http://gdata.youtube.com/feeds/api/users/'.$userid;
-
+		//------------- first step:  get user playlist id
+		$part='contentDetails';
+		$url=$base_url.'/channels?forUsername='.$userid.'&key='.$api_key.'&part='.$part;
 		
-		
-		$xml=false;
 		$htmlcode=YouTubeGalleryMisc::getURLData($url);
-
-		if(strpos($htmlcode,'<?xml version')===false)
+		
+		if($htmlcode=='')
+			return $videolist;
+			
+		$j=json_decode($htmlcode);
+		if(!$j)
+			return 'Connection Error';
+		
+		$items=$j->items;
+		
+		$playlistid='';
+		if(isset($items[0]->contentDetails->relatedPlaylists->uploads))
 		{
-			if(strpos($htmlcode,'Invalid id')===false)
-				return 'Cannot load data, Invalid id';
-
-			return 'Cannot load data, no connection';
+			$playlistid=$items[0]->contentDetails->relatedPlaylists->uploads;
+			if($playlistid=='')
+				return $videolist; //user not found or no files uploaded
 		}
 		
-		echo '$htmlcode='.$htmlcode.'<br/>';
-		//die;
-	
-		$doc = new DOMDocument;
-		$doc->loadXML($htmlcode);
+		//--------------- second step: get videos
 		
+		$videolist=VideoSource_YoutubePlaylist::getPlaylistVideos($playlistid,$datalink,$api_key,$optionalparameters);
 		
-			$item['channel_username']=$doc->getElementsByTagName("username")->item(0)->nodeValue;
-			$item['channel_title']=$doc->getElementsByTagName("title")->item(0)->nodeValue;
-			$item['channel_description']=$doc->getElementsByTagName("content")->item(0)->nodeValue;
-			$item['channel_location']=$doc->getElementsByTagName("location")->item(0)->nodeValue;
-			
-			
-			$feedLink=$doc->getElementsByTagName("feedLink");
-			if($feedLink->length>0)
-			{
-				foreach($feedLink as $fe)
-				{
-					$rel=$fe->getAttribute("rel");
-					
-					
-					if(!(strpos($rel,'#user.subscriptions')===false))
-						$item['channel_subscribed']=$fe->getAttribute("countHint");
-						
-					if(!(strpos($rel,'#user.contacts')===false))
-						$item['channel_commentcount']=$fe->getAttribute("countHint");
-						
-					if(!(strpos($rel,'#user.uploads')===false))
-						$item['channel_videocount']=$fe->getAttribute("countHint");
-				}
-			}
-			
-			$statistics=$doc->getElementsByTagName("statistics");
-			$se=$statistics->item(0);
-			$item['channel_subscribers']=$se->getAttribute("subscriberCount");
-			$item['channel_viewcount']=$se->getAttribute("viewCount");
-			$item['channel_totaluploadviews']=$se->getAttribute("totalUploadViews"); 
-			
-		
-		return '';
-		
+		return $videolist;
 	}
+	
 	
 
 }

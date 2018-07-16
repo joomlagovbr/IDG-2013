@@ -1,20 +1,20 @@
 <?php
-/*
- * @package Joomla 1.5
- * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
- *
- * @component Phoca Component
- * @copyright Copyright (C) Jan Pavelka www.phoca.cz
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+/**
+ * @package   Phoca Gallery
+ * @author    Jan Pavelka - https://www.phoca.cz
+ * @copyright Copyright (C) Jan Pavelka https://www.phoca.cz
+ * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 and later
+ * @cms       Joomla
+ * @copyright Copyright (C) Open Source Matters. All rights reserved.
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  */
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
 class PhocaGalleryFileUploadFront
 {
-	function getSizeAllOriginalImages($fileSize, $userId) {		
+	public static function getSizeAllOriginalImages($fileSize, $userId) {		
 		
-		$db 			=& JFactory::getDBO();
+		$db 			=JFactory::getDBO();
 		$allFileSize	= 0;
 		$query = 'SELECT SUM(a.imgorigsize) AS sumimgorigsize'
 				.' FROM #__phocagallery AS a'

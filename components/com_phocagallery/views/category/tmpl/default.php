@@ -1,8 +1,20 @@
 <?php
+/*
+ * @package Joomla
+ * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+ *
+ * @component Phoca Gallery
+ * @copyright Copyright (C) Jan Pavelka www.phoca.cz
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ */
 defined('_JEXEC') or die('Restricted access'); 
 echo '<div id="phocagallery" class="pg-category-view'.$this->params->get( 'pageclass_sfx' ).' pg-cv">';
 // Heading
 $heading = '';
+
+
+
 if ($this->params->get( 'page_heading' ) != '') {
 	$heading .= $this->params->get( 'page_heading' );
 }
@@ -38,6 +50,7 @@ if (isset($this->category->description) && $this->category->description != '' ) 
 }
 
 $this->checkRights = 1;
+
 if ((int)$this->tagId > 0) {
 	
 	// Search by tags
@@ -51,7 +64,7 @@ if ((int)$this->tagId > 0) {
 	echo $this->loadTemplate('images');
 	echo '<div class="ph-cb"></div><div>&nbsp;</div>';
 	echo $this->loadTemplate('pagination');
-	echo '</div>'. "\n";
+	//echo '</div>'. "\n";
 	
 } else {
 	// Standard category displaying
@@ -96,19 +109,25 @@ if ((int)$this->tagId > 0) {
 		echo JHtml::_('tabs.start', 'config-tabs-com_phocagallery-category', array('useCookie'=>1, 'startOffset'=> $this->tmpl['tab']));
 		
 		if ((int)$this->tmpl['display_rating'] == 1) {
-			echo JHtml::_('tabs.panel', JHtml::_( 'image', 'media/com_phocagallery/images/icon-vote.png','') . '&nbsp;'.JText::_('COM_PHOCAGALLERY_RATING'), 'pgvotes' );
+			echo JHtml::_('tabs.panel', PhocaGalleryRenderFront::renderIcon('vote', 'media/com_phocagallery/images/icon-vote.png', ''). '&nbsp;'. JText::_('COM_PHOCAGALLERY_RATING'), 'pgvotes' );
 			
 			echo $this->loadTemplate('rating');
 		}
 
 		if ((int)$this->tmpl['display_comment'] == 1) {
-			$commentImg = ($this->tmpl['externalcommentsystem'] == 2) ? 'icon-comment-fb' : 'icon-comment';
-			echo JHtml::_('tabs.panel', JHtml::_( 'image', 'media/com_phocagallery/images/'.$commentImg.'.png','') . '&nbsp;'.JText::_('COM_PHOCAGALLERY_COMMENTS'), 'pgcomments' );
+			//$commentImg = ($this->tmpl['externalcommentsystem'] == 2) ? 'icon-comment-fb' : 'icon-comment';
+			//echo JHtml::_('tabs.panel', JHtml::_( 'image', 'media/com_phocagallery/images/'.$commentImg.'.png','') . '&nbsp;'.JText::_('COM_PHOCAGALLERY_COMMENTS'), 'pgcomments' );
+			
+			if ($this->tmpl['externalcommentsystem'] == 2) {
+				echo JHtml::_('tabs.panel', PhocaGalleryRenderFront::renderIcon('comment-fb', 'media/com_phocagallery/images/icon-comment-fb-small.png', ''). '&nbsp;'.JText::_('COM_PHOCAGALLERY_COMMENTS'), 'pgcomments' );
+			} else {
+				echo JHtml::_('tabs.panel', PhocaGalleryRenderFront::renderIcon('comment', 'media/com_phocagallery/images/icon-comment.png', ''). '&nbsp;'.JText::_('COM_PHOCAGALLERY_COMMENTS'), 'pgcomments' );
+			}
 				
 				
 			if ($this->tmpl['externalcommentsystem'] == 1) {
 				if (JComponentHelper::isEnabled('com_jcomments', true)) {
-					include_once(JPATH_BASE.DS.'components'.DS.'com_jcomments'.DS.'jcomments.php');
+					include_once(JPATH_BASE.'/components/com_jcomments/jcomments.php');
 					echo JComments::showComments($this->category->id, 'com_phocagallery', JText::_('COM_PHOCAGALLERY_CATEGORY') .' '. $this->category->title);
 				}
 			} else if($this->tmpl['externalcommentsystem'] == 2) {
@@ -119,7 +138,8 @@ if ((int)$this->tagId > 0) {
 		}
 
 		if ((int)$this->tmpl['displaycategorystatistics'] == 1) {
-			echo JHtml::_('tabs.panel', JHtml::_( 'image', 'media/com_phocagallery/images/icon-statistics.png', '') . '&nbsp;'.JText::_('COM_PHOCAGALLERY_STATISTICS'), 'pgstatistics' );
+			//echo JHtml::_('tabs.panel', JHtml::_( 'image', 'media/com_phocagallery/images/icon-statistics.png', '') . '&nbsp;'.JText::_('COM_PHOCAGALLERY_STATISTICS'), 'pgstatistics' );
+			echo JHtml::_('tabs.panel', PhocaGalleryRenderFront::renderIcon('statistics', 'media/com_phocagallery/images/icon-statistics.png', '') . '&nbsp;'.JText::_('COM_PHOCAGALLERY_STATISTICS'), 'pgstatistics' );
 			
 			echo $this->loadTemplate('statistics');
 		}
@@ -128,32 +148,34 @@ if ((int)$this->tagId > 0) {
 			if ($this->map['longitude'] == '' || $this->map['latitude'] == '') {
 				//echo '<p>' . JText::_('COM_PHOCAGALLERY_ERROR_MAP_NO_DATA') . '</p>';
 			} else {
-				echo JHtml::_('tabs.panel', JHtml::_( 'image', 'media/com_phocagallery/images/icon-geo.png','') . '&nbsp;'.JText::_('COM_PHOCAGALLERY_GEOTAGGING'), 'pggeotagging' );
+				//echo JHtml::_('tabs.panel', JHtml::_( 'image', 'media/com_phocagallery/images/icon-geo.png','') . '&nbsp;'.JText::_('COM_PHOCAGALLERY_GEOTAGGING'), 'pggeotagging' );
+				echo JHtml::_('tabs.panel', PhocaGalleryRenderFront::renderIcon('geo', 'media/com_phocagallery/images/icon-geo.png', '') . '&nbsp;'.JText::_('COM_PHOCAGALLERY_GEOTAGGING'), 'pggeotagging' );
 				echo $this->loadTemplate('geotagging');
 			}
 		}
 		if ((int)$this->tmpl['displaycreatecat'] == 1) 
 		{		
-			echo JHtml::_('tabs.panel', JHtml::_( 'image', 'media/com_phocagallery/images/icon-subcategories.png','') . '&nbsp;'.JText::_('COM_PHOCAGALLERY_CATEGORY'), 'pgnewcategory' );
+			echo JHtml::_('tabs.panel', PhocaGalleryRenderFront::renderIcon('subcategory', 'media/com_phocagallery/images/icon-subcategories.png', '') . '&nbsp;'.JText::_('COM_PHOCAGALLERY_CATEGORY'), 'pgnewcategory' );
 			echo $this->loadTemplate('newcategory');		
 		}
+		
 		if ((int)$this->tmpl['displayupload'] == 1) {
-			echo JHtml::_('tabs.panel', JHtml::_( 'image', 'media/com_phocagallery/images/icon-upload.png','') . '&nbsp;'.JText::_('COM_PHOCAGALLERY_UPLOAD'), 'pgupload' );
+			echo JHtml::_('tabs.panel', PhocaGalleryRenderFront::renderIcon('upload', 'media/com_phocagallery/images/icon-upload.png', '') . '&nbsp;'.JText::_('COM_PHOCAGALLERY_UPLOAD'), 'pgupload' );
 			echo $this->loadTemplate('upload');
 		}
 	
 		if ((int)$this->tmpl['ytbupload'] == 1 && $this->tmpl['displayupload'] == 1 ) {
-			echo JHtml::_('tabs.panel', JHtml::_( 'image', 'media/com_phocagallery/images/icon-upload-ytb.png','') . '&nbsp;'.JText::_('COM_PHOCAGALLERY_YTB_UPLOAD'), 'pgytbupload' );
+			echo JHtml::_('tabs.panel', PhocaGalleryRenderFront::renderIcon('upload-ytb', 'media/com_phocagallery/images/icon-upload-ytb.png', '') . '&nbsp;'.JText::_('COM_PHOCAGALLERY_YTB_UPLOAD'), 'pgytbupload' );
 			echo $this->loadTemplate('ytbupload');
 		}
 		
 		if((int)$this->tmpl['enablemultiple']  == 1 && (int)$this->tmpl['displayupload'] == 1) {
-			echo JHtml::_('tabs.panel', JHtml::_( 'image', 'media/com_phocagallery/images/icon-upload-multiple.png','') . '&nbsp;'.JText::_('COM_PHOCAGALLERY_MULTIPLE_UPLOAD'), 'pgmultipleupload' );
+			echo JHtml::_('tabs.panel', PhocaGalleryRenderFront::renderIcon('upload-multiple', 'media/com_phocagallery/images/icon-upload-multiple.png', '') . '&nbsp;'.JText::_('COM_PHOCAGALLERY_MULTIPLE_UPLOAD'), 'pgmultipleupload' );
 			echo $this->loadTemplate('multipleupload');
 		}
 
 		if($this->tmpl['enablejava'] == 1 && (int)$this->tmpl['displayupload'] == 1) {
-			echo JHtml::_('tabs.panel', JHtml::_( 'image', 'media/com_phocagallery/images/icon-upload-java.png','') . '&nbsp;'.JText::_('COM_PHOCAGALLERY_JAVA_UPLOAD'), 'pgjavaupload' );
+			echo JHtml::_('tabs.panel', PhocaGalleryRenderFront::renderIcon('upload-java', 'media/com_phocagallery/images/icon-upload-java.png', ''). '&nbsp;'.JText::_('COM_PHOCAGALLERY_JAVA_UPLOAD'), 'pgjavaupload' );
 			echo $this->loadTemplate('javaupload');
 		}
 
@@ -168,6 +190,10 @@ if ($this->tmpl['detail_window'] == 6) {
 	</script><?php
 }
 
+if ($this->tmpl['detail_window'] == 14) {
+	echo PhocaGalleryRenderDetailWindow::loadPhotoswipeBottom();
+}
+
+echo $this->tmpl['ebc'];
 echo '</div>';
-echo $this->tmpl['gm'];
 ?>

@@ -1,0 +1,32 @@
+#jform_videolist{
+		width:420px;
+}
+
+.LinksTable th{
+			
+				padding-left:10px;
+				padding-right:10px;
+}
+			
+.LinksTable td{
+				border:1px dotted grey;
+				padding-left:10px;
+				padding-right:10px;
+				height:30px;
+                                word-break:break-all;
+}
+			
+.YGDialogForm{
+				background-color: white;
+				top:0px;
+				left:30px;
+				position:absolute;
+}
+			
+.YGDialogFormShadow{
+				position:absolute;
+				background-color: black;
+				filter: alpha(opacity=50);    -moz-opacity: 0.5;    -khtml-opacity: 0.5;    opacity: 0.5;
+				top:10px;
+				left:40px;
+}

@@ -45,8 +45,8 @@ class PhocagalleryModelCategory extends JModelLegacy
 		
 		$this->setState('imgordering', $app->getUserStateFromRequest($context .'imgordering', 'imgordering', $image_ordering, 'int'));
 		
-		//$this->setState('filter_order', JRequest::get Cmd('filter_order', 'ordering'));
-		//$this->setState('filter_order_dir', JRequest::get Cmd('filter_order_Dir', 'ASC'));
+		//$this->setState('filter_order', J Request::get Cmd('filter_order', 'ordering'));
+		//$this->setState('filter_order_dir', J Request::get Cmd('filter_order_Dir', 'ASC'));
 		
 		$id = $app->input->get('id', 0, 'int');
 		$this->setId((int)$id);
@@ -71,7 +71,7 @@ class PhocagalleryModelCategory extends JModelLegacy
 
 	function getTotal($rightDisplayDelete = 0, $tagId) {
 		if (empty($this->_total)) {
-			$query = $this->_buildQuery($rightDisplayDelete, $tagId);
+			$query = $this->_buildQuery($rightDisplayDelete, $tagId, 1);
 			$this->_total = $this->_getListCount($query);
 		}
 		return $this->_total;
@@ -92,11 +92,11 @@ class PhocagalleryModelCategory extends JModelLegacy
 		return $this->_ordering;
 	}
 	
-	function _buildQuery($rightDisplayDelete = 0, $tagId = 0) {
+	function _buildQuery($rightDisplayDelete = 0, $tagId = 0, $count = 0) {
 		
 		$app		= JFactory::getApplication();
-		$user 		= &JFactory::getUser();
-		$params		= &$app->getParams();
+		$user 		= JFactory::getUser();
+		$params		= $app->getParams();
 		//$image_ordering		= $params->get( 'image_ordering', 1 );
 		
 		$wheres		= array();
@@ -142,7 +142,21 @@ class PhocagalleryModelCategory extends JModelLegacy
 		
 		$leftCat = ' LEFT JOIN #__phocagallery_categories AS cc ON cc.id = a.catid';
 		
-		$query = 'SELECT a.*, cc.alias AS catalias, cc.accessuserid AS cataccessuserid, cc.access AS cataccess,'
+		
+		if ($count == 1) {
+			$query = 'SELECT a.id'
+			//. $selectUser
+			.' FROM #__phocagallery AS a'
+			//.' LEFT JOIN #__phocagallery_img_votes_statistics AS r ON r.imgid = a.id'
+			. $leftCat
+			//. $leftUser
+			. $leftTag
+			. ' WHERE ' . implode( ' AND ', $wheres )
+			. $published
+			//. $imageOrdering['output'];
+			. ' ORDER BY a.id';
+		} else {
+			$query = 'SELECT a.*, cc.alias AS catalias, cc.accessuserid AS cataccessuserid, cc.access AS cataccess,'
 			. ' CASE WHEN CHAR_LENGTH(cc.alias) THEN CONCAT_WS(\':\', cc.id, cc.alias) ELSE cc.id END as catslug'
 			. $selectUser
 			.' FROM #__phocagallery AS a'
@@ -153,7 +167,8 @@ class PhocagalleryModelCategory extends JModelLegacy
 			. ' WHERE ' . implode( ' AND ', $wheres )
 			. $published
 			. $imageOrdering['output'];
-		
+		}
+
 		return $query;
 	}
 
@@ -168,15 +183,17 @@ class PhocagalleryModelCategory extends JModelLegacy
 		}
 		if ($this->_loadCategory()) {
 			
-			$user = &JFactory::getUser();
+			$user = JFactory::getUser();
 			if (!$this->_category->published) {
 				//$mainframe->redirect(JRoute::_('index.php', false), JText::_("COM_PHOCAGALLERY_CATEGORY_IS_UNPUBLISHED"));
-				JError::raiseError( 404, JText::_( "COM_PHOCAGALLERY_CATEGORY_IS_UNPUBLISHED" ) );
+				
+				throw new Exception(JText::_( "COM_PHOCAGALLERY_CATEGORY_IS_UNPUBLISHED" ), 404);
 				exit;
 			}
 			if (!$this->_category->approved) {
 				//$mainframe->redirect(JRoute::_('index.php', false), JText::_("COM_PHOCAGALLERY_CATEGORY_IS_UNAUTHORIZED"));// don't loop
-				JError::raiseError( 404, JText::_( "COM_PHOCAGALLERY_CATEGORY_IS_UNAUTHORIZED" ) );
+				
+				throw new Exception(JText::_( "COM_PHOCAGALLERY_ERROR_CATEGORY_IS_UNAUTHORIZED" ), 404);
 				exit;
 			}
 			
@@ -188,7 +205,7 @@ class PhocagalleryModelCategory extends JModelLegacy
 			
 			
 			if ($rightDisplay == 0) {
-				$uri 			= &JFactory::getURI();
+				$uri 			= JFactory::getURI();
 				$tmpl['pl']		= 'index.php?option=com_users&view=login&return='.base64_encode($uri->toString());
 				$app->redirect(JRoute::_($tmpl['pl'], false), JText::_('COM_PHOCAGALLERY_NOT_AUTHORISED_ACTION'));
 				exit;
@@ -203,7 +220,7 @@ class PhocagalleryModelCategory extends JModelLegacy
 			
 			//$query = 'SELECT c.*,' .
 			
-			$query = 'SELECT c.id, c.title, c.alias, c.description, c.published, c.approved, c.parent_id, c.deleteuserid, c.accessuserid, c.uploaduserid, c.access, c.metakey, c.metadesc, c.latitude, c.longitude, c.zoom, c.geotitle, c.userfolder,' .
+			$query = 'SELECT c.id, c.title, c.alias, c.description, c.published, c.approved, c.parent_id, c.deleteuserid, c.accessuserid, c.uploaduserid, c.owner_id, c.access, c.metakey, c.metadesc, c.latitude, c.longitude, c.zoom, c.geotitle, c.userfolder, c.image_id,' .
 				' CASE WHEN CHAR_LENGTH(c.alias) THEN CONCAT_WS(\':\', c.id, c.alias) ELSE c.id END as slug '.
 				' FROM #__phocagallery_categories AS c' .
 				' WHERE c.id = '. (int) $this->_id;
@@ -224,7 +241,7 @@ class PhocagalleryModelCategory extends JModelLegacy
 	
 		if (isset($this->_category->parent_id) && isset($this->_category->id)) {
 			$app	= JFactory::getApplication();
-			$params				= &$app->getParams();
+			$params				= $app->getParams();
 			$category_ordering	= $params->get( 'category_ordering', 1 );
 			$categoryOrdering 	= PhocaGalleryOrdering::getOrderingString($category_ordering, 2);
 
@@ -249,7 +266,7 @@ class PhocagalleryModelCategory extends JModelLegacy
 	function getSubCategory() {
 	
 		$app	= JFactory::getApplication();
-		$params				= &$app->getParams();
+		$params				= $app->getParams();
 		$category_ordering	= $params->get( 'category_ordering', 1 );
 		$categoryOrdering 	= PhocaGalleryOrdering::getOrderingString($category_ordering, 2);
 		
@@ -261,8 +278,13 @@ class PhocagalleryModelCategory extends JModelLegacy
 		
 		//$query = 'SELECT c.*, COUNT(a.id) countimage' ... Cannot be used because get error if there is no image
 		//$query = 'SELECT cc.*, a.filename, a.extm, a.exts, a.extw, a.exth'
-		$query = 'SELECT cc.id, cc.title, cc.alias, cc.published, cc.approved, cc.parent_id, cc.deleteuserid, cc.accessuserid, cc.uploaduserid, cc.access, a.filename, a.extm, a.exts, a.extw, a.exth, a.extid'
-			.' FROM #__phocagallery_categories AS cc'
+		//$query = 'SELECT cc.id, cc.title, cc.alias, cc.published, cc.approved, cc.parent_id, cc.deleteuserid, cc.accessuserid, cc.uploaduserid, cc.access, cc.image_id';
+		
+		//$query = 'SELECT DISTINCT cc.id, cc.title, cc.alias, cc.published, cc.approved, cc.parent_id, cc.deleteuserid, cc.accessuserid, cc.uploaduserid, cc.access, cc.image_id, a.filename, a.extm, a.exts, a.extw, a.exth, a.extid';
+		
+		$query = 'SELECT DISTINCT cc.id, cc.title, cc.alias, cc.published, cc.approved, cc.parent_id, cc.deleteuserid, cc.accessuserid, cc.uploaduserid, cc.access, cc.image_id, min(a.filename) as filename, min(a.extm) as extm, min(a.exts) as exts, min(a.extw) as extw, min(a.exth) as exth, min(a.extid) as extid';
+		
+		$query .= ' FROM #__phocagallery_categories AS cc'
 			.' LEFT JOIN #__phocagallery AS a ON cc.id = a.catid'
 			.' WHERE cc.parent_id = '.(int) $this->_id
 			.' AND cc.published = 1'
@@ -275,11 +297,15 @@ class PhocagalleryModelCategory extends JModelLegacy
         //	.' WHERE a.catid = c.id' 
         //	.' AND a.published = 1) > 0'
 			. $whereLang
-			.' GROUP BY cc.id'
+			//.' GROUP BY cc.id, cc.title, cc.alias, cc.published, cc.approved, cc.parent_id, cc.deleteuserid, cc.accessuserid, cc.uploaduserid, cc.access, cc.image_id, a.filename, a.extm, a.exts, a.extw, a.exth, a.extid'
+			.' GROUP BY cc.id, cc.title, cc.alias, cc.published, cc.approved, cc.parent_id, cc.deleteuserid, cc.accessuserid, cc.uploaduserid, cc.access, cc.image_id'
 			.$categoryOrdering['output'];
+			
+			
 			
 		$this->_db->setQuery($query);
 		$subCategory = $this->_db->loadObjectList();
+		
 		return $subCategory;
 	}
 	
@@ -369,7 +395,7 @@ class PhocagalleryModelCategory extends JModelLegacy
 
 	function publish($id = 0, $publish = 1) {
 		
-		$user 	=& JFactory::getUser();
+		$user 	= JFactory::getUser();
 		$query = 'UPDATE #__phocagallery'
 			. ' SET published = '.(int) $publish
 			. ' WHERE id = '.(int)$id
@@ -394,6 +420,7 @@ class PhocagalleryModelCategory extends JModelLegacy
 		}
 		
 		$data['imgorigsize'] 	= PhocaGalleryFile::getFileSize($data['filename'], 0);
+		$data['format'] 		= PhocaGalleryFile::getFileFormat($data['filename']);
 		
 		//If there is no title and no alias, use filename as title and alias
 		if (!isset($data['title']) || (isset($data['title']) && $data['title'] == '')) {
@@ -427,7 +454,7 @@ class PhocagalleryModelCategory extends JModelLegacy
 			}	
 		}
 		
-		$row =& $this->getTable('phocagallery', 'Table');
+		$row = $this->getTable('phocagallery', 'Table');
 		
 		
 		// Bind the form fields to the Phoca gallery table
@@ -469,7 +496,7 @@ class PhocagalleryModelCategory extends JModelLegacy
 	}
 	
 	function rate($data) {
-		$row =& $this->getTable('phocagalleryvotes', 'Table');
+		$row = $this->getTable('phocagalleryvotes', 'Table');
 		
 	
 		
@@ -508,7 +535,7 @@ class PhocagalleryModelCategory extends JModelLegacy
 	
 	function comment($data) {
 		
-		$row =& $this->getTable('phocagallerycomments', 'Table');
+		$row = $this->getTable('phocagallerycomments', 'Table');
 		
 		if (!$row->bind($data)) {
 			$this->setError($this->_db->getErrorMsg());
@@ -539,7 +566,7 @@ class PhocagalleryModelCategory extends JModelLegacy
 	function hit($id) {
 	
 		$app	= JFactory::getApplication();
-		$table = & JTable::getInstance('phocagalleryc', 'Table');
+		$table = JTable::getInstance('phocagalleryc', 'Table');
 		$table->hit($id);
 		return true;
 	}

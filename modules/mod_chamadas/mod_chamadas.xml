@@ -24,7 +24,7 @@
 	<languages>
 		<language tag="pt-BR">pt-BR.mod_chamadas.ini</language>
 		<language tag="pt-BR">pt-BR.mod_chamadas.sys.ini</language>
-	</languages>	
+	</languages>
 	<config>
 		<fields name="params">
 			<fieldset name="basic" addfieldpath="/modules/mod_chamadas/fields/">
@@ -55,7 +55,7 @@
 					exclude=""
 					stripext=""
 				/>
-				
+
 				<field
 					name="quantidade"
 					type="integer"
@@ -67,13 +67,26 @@
 					step="1"
 				/>
 
-				<field 
+				<field
+					name="sizeImage"
+					type="list"
+					default="Original"
+					label="Tamanho da Imagem"
+					description="Selecionar tamanho da imagem"
+				>
+					<option value="Original">Original</option>
+					<option value="l">Grande</option>
+					<option value="m">Media</option>
+					<option value="s">Pequena</option>
+				</field>
+
+				<field
 		           	name="id_article_unico"
 		           	type="modal_article"
-		           	label="MOD_CHAMADA_FIELD_ID_ARTICLE_UNICO_LABEL"		           
+		           	label="MOD_CHAMADA_FIELD_ID_ARTICLE_UNICO_LABEL"
 		           	description="MOD_CHAMADA_FIELD_ID_ARTICLE_UNICO_DESC"
 		        />
-				
+
 				<field
 					name="id_item_unico"
 					type="text"
@@ -86,7 +99,7 @@
 					type="spacer"
 					hr="true"
 				/>
-		
+
 				<field
 					name="titulo_alternativo"
 					type="text"
@@ -108,14 +121,14 @@
 					type="menuitem"
 					default=""
 					label="MOD_CHAMADA_FIELD_LINK_SAIBA_MAIS_MENU_LABEL"
-					description="MOD_CHAMADA_FIELD_LINK_SAIBA_MAIS_MENU_DESC"					
+					description="MOD_CHAMADA_FIELD_LINK_SAIBA_MAIS_MENU_DESC"
 				>
 					<option value="">JNONE</option>
 				</field>
-			    <field 
+			    <field
 		           name="link_saiba_mais_article"
 		           type="modal_article"
-		           label="MOD_CHAMADA_FIELD_LINK_SAIBA_MAIS_ARTICLE_LABEL"		           
+		           label="MOD_CHAMADA_FIELD_LINK_SAIBA_MAIS_ARTICLE_LABEL"
 		           description="MOD_CHAMADA_FIELD_LINK_SAIBA_MAIS_ARTICLE_DESC"
 		        />
 
@@ -129,10 +142,50 @@
 				<field
 					type="spacer"
 					hr="true"
-				/>				
+				/>
 
 
-				<field 
+				<!-- Acrescentando campos para opção de agenda das autoridades como link secundario do rodapé				 -->
+
+				<field
+					name="link_secundario"
+					type="text"
+					label="MOD_CHAMADA_FIELD_LINK_SECUNDARIO_LABEL"
+					description="MOD_CHAMADA_FIELD_LINK_SECUNDARIO_DESC"
+					size="50"
+				/>
+
+				<field
+					name="link_secundario_menu"
+					type="menuitem"
+					default=""
+					label="MOD_CHAMADA_FIELD_LINK_SECUNDARIO_MENU_LABEL"
+					description="MOD_CHAMADA_FIELD_LINK_SECUNDARIO_MENU_DESC"
+				>
+					<option value="">JNONE</option>
+				</field>
+			    <field
+		           name="link_secundario_article"
+		           type="modal_article"
+		           label="MOD_CHAMADA_FIELD_LINK_SECUNDARIO_ARTICLE_LABEL"
+		           description="MOD_CHAMADA_FIELD_LINK_SECUNDARIO_ARTICLE_DESC"
+		        />
+
+				<field
+					name="texto_secundario"
+					type="text"
+					label="MOD_CHAMADA_FIELD_TEXTO_SECUNDARIO_LABEL"
+					description="MOD_CHAMADA_FIELD_TEXTO_SECUNDARIO_DESC"
+					size="50"
+				/>
+				<field
+					type="spacer"
+					hr="true"
+				/>
+
+				<!-- FIM Acrescentando campos para opção de agenda das autoridades como link secundario do rodapé				 -->
+
+				<field
 					name="habilitar_mensagem_vazia"
 					class="btn-group"
 					type="radio"
@@ -143,7 +196,7 @@
 					<option value="1">JYES</option>
 					<option value="0">JNO</option>
 				</field>
-				
+
 				<field
 					name="mensagem_vazia"
 					type="textarea"
@@ -156,14 +209,28 @@
 				<field
 					type="spacer"
 					hr="true"
-				/>				
+				/>
 				<field
 					name="chapeu"
-					type="text"	
-					default="cont.xreference"				
+					type="text"
+					default="cont.xreference"
 					label="MOD_CHAMADA_FIELD_CHAPEU_LABEL"
 					description="MOD_CHAMADA_FIELD_CHAPEU_DESC"
 					size="30"
+				/>
+				<field
+					name="largura_px"
+					type="text"
+					label="Largura em pixels"
+					description="Informar a largura que o item deverá conter em pixels. Considerar responsividade para a regra. Caso não seja informado altura ou largura, o padrão será 705x150"
+					filter="integer"
+				/>
+				<field
+					name="altura_px"
+					type="text"
+					label="Altura em pixels. Ex: 150"
+					description="Informar a altura que o item deverá conter em pixels. Considerar responsividade para a regra. Caso não seja informado altura ou largura, o padrão será 705x150"
+					filter="integer"
 				/>
 			</fieldset>
 
@@ -182,7 +249,7 @@
 					<option value="2">MOD_CHAMADA_OPTION_SOMENTE_DESTAQUE_VALUE</option>
 				</field>
 
-				<field 
+				<field
 					name="somente_imagem"
 					class="btn-group"
 					type="radio"
@@ -197,7 +264,7 @@
 					type="spacer"
 					hr="true"
 				/>
-				<field 
+				<field
 					name="buscar_cat_tag"
 					class="btn-group"
 					type="radio"
@@ -209,7 +276,7 @@
 					<option value="2">MOD_CHAMADA_OPTION_SOMENTE_TAG_VALUE</option>
 					<option value="3">MOD_CHAMADA_OPTION_AMBOS_VALUE</option>
 				</field>
-				
+
 				<field
 					name="tags"
 					type="tag"
@@ -221,12 +288,12 @@
 				<field
 					name="catid"
 					type="category"
-					extension="com_content"					
+					extension="com_content"
 					size="5"
 					label="JCATEGORY_CONTENT"
 					description="MOD_CHAMADA_FIELD_CATEGORY_DESC"
 					multiple="true"
-				>					
+				>
 				</field>
 
 				<field
@@ -235,10 +302,10 @@
 					size="40"
 					label="JCATEGORY_COMPONENTS"
 					description="MOD_CHAMADA_FIELD_CATEGORY_DESC_COMPONENTS"
-				>					
+				>
 				</field>
 
-				<field 
+				<field
 					name="visualizar_filho"
 					class="btn-group"
 					type="radio"
@@ -259,7 +326,7 @@
 					first="1"
 					last="10"
 					step="1"
-				/>			
+				/>
 				<field
 					type="spacer"
 					hr="true"
@@ -275,7 +342,7 @@
 					<option value="publish_up">MOD_CHAMADA_OPTION_DATA_PUBLISH_UP_VALUE</option>
 					<option value="created">MOD_CHAMADA_OPTION_DATA_CREATED_VALUE</option>
 					<option value="modified">MOD_CHAMADA_OPTION_DATA_MODIFIED_VALUE</option>
-					<option value="ordering">MOD_CHAMADA_OPTION_ORDEM_VALUE</option>					
+					<option value="ordering">MOD_CHAMADA_OPTION_ORDEM_VALUE</option>
 					<option value="hits">MOD_CHAMADA_OPTION_HITS_VALUE</option>
 				</field>
 
@@ -293,14 +360,14 @@
 			<fieldset name="configuracoes_manuais_item1" label="MOD_CHAMADA_FIELDSET_CONF_MANUAIS_ITEM01_LABEL" addfieldpath="/modules/mod_chamadas/fields/">
 				<field
 					name="chapeu_item1"
-					type="text"					
+					type="text"
 					label="MOD_CHAMADA_FIELD_MANUAL_CHAPEU01_LABEL"
 					description="MOD_CHAMADA_FIELD_MANUAL_CHAPEU01_DESC"
 					size="40"
 				/>
 				<field
 					name="title_item1"
-					type="text"					
+					type="text"
 					label="MOD_CHAMADA_FIELD_MANUAL_TITLE01_LABEL"
 					description="MOD_CHAMADA_FIELD_MANUAL_TITLE01_DESC"
 					size="60"
@@ -322,7 +389,7 @@
 					type="spacer"
 					hr="true"
 				/>
-				<field 
+				<field
 					name="show_image_item1"
 					class="btn-group"
 					type="list"
@@ -338,25 +405,25 @@
 					name="image_item1"
 					type="media"
 					label="MOD_CHAMADA_FIELD_MANUAL_IMAGE01_LABEL"
-					description="MOD_CHAMADA_FIELD_MANUAL_IMAGE01_DESC"					
+					description="MOD_CHAMADA_FIELD_MANUAL_IMAGE01_DESC"
 				/>
 				<field
 					name="image_item1_align"
 					type="list"
 					default=""
 					label="MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN01_LABEL"
-					description="MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN01_DESC"					
+					description="MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN01_DESC"
 				>
 					<option value="">MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN_NONE</option>
 					<option value="left">MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN_LEFT</option>
-					<option value="right">MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN_RIGHT</option>			
+					<option value="right">MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN_RIGHT</option>
 				</field>
 				<field
 					name="image_item1_alt"
 					type="text"
 					size="40"
 					label="MOD_CHAMADA_FIELD_MANUAL_IMAGEALT01_LABEL"
-					description="MOD_CHAMADA_FIELD_MANUAL_IMAGEALT01_DESC"					
+					description="MOD_CHAMADA_FIELD_MANUAL_IMAGEALT01_DESC"
 				/>
 				<field
 					type="spacer"
@@ -368,36 +435,36 @@
 					default=""
 					size="50"
 					label="MOD_CHAMADA_FIELD_MANUAL_URL01_LABEL"
-					description="MOD_CHAMADA_FIELD_MANUAL_URL01_DESC"					
+					description="MOD_CHAMADA_FIELD_MANUAL_URL01_DESC"
 				/>
 				<field
 					name="url_menu_item1"
 					type="menuitem"
 					default=""
 					label="MOD_CHAMADA_FIELD_MANUAL_MENU01_LABEL"
-					description="MOD_CHAMADA_FIELD_MANUAL_MENU01_DESC"					
+					description="MOD_CHAMADA_FIELD_MANUAL_MENU01_DESC"
 				>
 					<option value="">JNONE</option>
 				</field>
-			    <field 
+			    <field
 		           name="url_article_item1"
 		           type="modal_article"
-		           label="MOD_CHAMADA_FIELD_MANUAL_ARTICLE01_LABEL"		           
+		           label="MOD_CHAMADA_FIELD_MANUAL_ARTICLE01_LABEL"
 		           description="MOD_CHAMADA_FIELD_MANUAL_ARTICLE01_DESC"
 		        />
 		        <field
 					type="spacer"
 					hr="true"
 				/>
-		        
-			    <field 
+
+			    <field
 		           	name="ordering_item1"
 		           	type="integer"
 					first="1"
 					default="1"
 					last="4"
 					step="1"
-		           	label="MOD_CHAMADA_FIELD_MANUAL_ORDERING01_LABEL"		           
+		           	label="MOD_CHAMADA_FIELD_MANUAL_ORDERING01_LABEL"
 		           	description="MOD_CHAMADA_FIELD_MANUAL_ORDERING01_DESC"
 		        />
 
@@ -410,19 +477,19 @@
 					default="0"
 					last="10"
 					step="1"
-				/>		
+				/>
 			</fieldset>
 			<fieldset name="configuracoes_manuais_item2" label="MOD_CHAMADA_FIELDSET_CONF_MANUAIS_ITEM02_LABEL" addfieldpath="/modules/mod_chamadas/fields/">
 				<field
 					name="chapeu_item2"
-					type="text"					
+					type="text"
 					label="MOD_CHAMADA_FIELD_MANUAL_CHAPEU02_LABEL"
 					description="MOD_CHAMADA_FIELD_MANUAL_CHAPEU02_DESC"
 					size="40"
 				/>
 				<field
 					name="title_item2"
-					type="text"					
+					type="text"
 					label="MOD_CHAMADA_FIELD_MANUAL_TITLE02_LABEL"
 					description="MOD_CHAMADA_FIELD_MANUAL_TITLE02_DESC"
 					size="60"
@@ -442,7 +509,7 @@
 					type="spacer"
 					hr="true"
 				/>
-				<field 
+				<field
 					name="show_image_item2"
 					class="btn-group"
 					type="list"
@@ -458,25 +525,25 @@
 					name="image_item2"
 					type="media"
 					label="MOD_CHAMADA_FIELD_MANUAL_IMAGE02_LABEL"
-					description="MOD_CHAMADA_FIELD_MANUAL_IMAGE02_DESC"					
+					description="MOD_CHAMADA_FIELD_MANUAL_IMAGE02_DESC"
 				/>
 				<field
 					name="image_item2_align"
 					type="list"
 					default=""
 					label="MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN02_LABEL"
-					description="MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN02_DESC"					
+					description="MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN02_DESC"
 				>
 					<option value="">MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN_NONE</option>
 					<option value="left">MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN_LEFT</option>
-					<option value="right">MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN_RIGHT</option>			
+					<option value="right">MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN_RIGHT</option>
 				</field>
 				<field
 					name="image_item2_alt"
 					type="text"
 					size="40"
 					label="MOD_CHAMADA_FIELD_MANUAL_IMAGEALT02_LABEL"
-					description="MOD_CHAMADA_FIELD_MANUAL_IMAGEALT02_DESC"					
+					description="MOD_CHAMADA_FIELD_MANUAL_IMAGEALT02_DESC"
 				/>
 				<field
 					type="spacer"
@@ -488,35 +555,35 @@
 					default=""
 					size="50"
 					label="MOD_CHAMADA_FIELD_MANUAL_URL02_LABEL"
-					description="MOD_CHAMADA_FIELD_MANUAL_URL02_DESC"					
+					description="MOD_CHAMADA_FIELD_MANUAL_URL02_DESC"
 				/>
 				<field
 					name="url_menu_item2"
 					type="menuitem"
 					default=""
 					label="MOD_CHAMADA_FIELD_MANUAL_MENU02_LABEL"
-					description="MOD_CHAMADA_FIELD_MANUAL_MENU02_DESC"					
+					description="MOD_CHAMADA_FIELD_MANUAL_MENU02_DESC"
 				>
 					<option value="">JNONE</option>
 				</field>
-			    <field 
+			    <field
 		           name="url_article_item2"
 		           type="modal_article"
-		           label="MOD_CHAMADA_FIELD_MANUAL_ARTICLE02_LABEL"		           
+		           label="MOD_CHAMADA_FIELD_MANUAL_ARTICLE02_LABEL"
 		           description="MOD_CHAMADA_FIELD_MANUAL_ARTICLE02_DESC"
 		        />
 		        <field
 					type="spacer"
 					hr="true"
 				/>
-			    <field 
+			    <field
 		           	name="ordering_item2"
 		           	type="integer"
 					first="1"
 					default="2"
 					last="4"
 					step="1"
-		           	label="MOD_CHAMADA_FIELD_MANUAL_ORDERING02_LABEL"		           
+		           	label="MOD_CHAMADA_FIELD_MANUAL_ORDERING02_LABEL"
 		           	description="MOD_CHAMADA_FIELD_MANUAL_ORDERING02_DESC"
 		        />
 				<field
@@ -528,19 +595,19 @@
 					default="0"
 					last="10"
 					step="1"
-				/>				
+				/>
 			</fieldset>
 			<fieldset name="configuracoes_manuais_item3" label="MOD_CHAMADA_FIELDSET_CONF_MANUAIS_ITEM03_LABEL" addfieldpath="/modules/mod_chamadas/fields/">
 				<field
 					name="chapeu_item3"
-					type="text"					
+					type="text"
 					label="MOD_CHAMADA_FIELD_MANUAL_CHAPEU03_LABEL"
 					description="MOD_CHAMADA_FIELD_MANUAL_CHAPEU03_DESC"
 					size="40"
 				/>
 				<field
 					name="title_item3"
-					type="text"					
+					type="text"
 					label="MOD_CHAMADA_FIELD_MANUAL_TITLE03_LABEL"
 					description="MOD_CHAMADA_FIELD_MANUAL_TITLE03_DESC"
 					size="60"
@@ -560,7 +627,7 @@
 					type="spacer"
 					hr="true"
 				/>
-				<field 
+				<field
 					name="show_image_item3"
 					class="btn-group"
 					type="list"
@@ -576,25 +643,25 @@
 					name="image_item3"
 					type="media"
 					label="MOD_CHAMADA_FIELD_MANUAL_IMAGE03_LABEL"
-					description="MOD_CHAMADA_FIELD_MANUAL_IMAGE03_DESC"					
+					description="MOD_CHAMADA_FIELD_MANUAL_IMAGE03_DESC"
 				/>
 				<field
 					name="image_item3_align"
 					type="list"
 					default=""
 					label="MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN03_LABEL"
-					description="MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN03_DESC"					
+					description="MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN03_DESC"
 				>
 					<option value="">MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN_NONE</option>
 					<option value="left">MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN_LEFT</option>
-					<option value="right">MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN_RIGHT</option>			
+					<option value="right">MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN_RIGHT</option>
 				</field>
 				<field
 					name="image_item3_alt"
 					type="text"
 					size="40"
 					label="MOD_CHAMADA_FIELD_MANUAL_IMAGEALT03_LABEL"
-					description="MOD_CHAMADA_FIELD_MANUAL_IMAGEALT03_DESC"					
+					description="MOD_CHAMADA_FIELD_MANUAL_IMAGEALT03_DESC"
 				/>
 				<field
 					type="spacer"
@@ -606,35 +673,35 @@
 					default=""
 					size="50"
 					label="MOD_CHAMADA_FIELD_MANUAL_URL03_LABEL"
-					description="MOD_CHAMADA_FIELD_MANUAL_URL03_DESC"					
+					description="MOD_CHAMADA_FIELD_MANUAL_URL03_DESC"
 				/>
 				<field
 					name="url_menu_item3"
 					type="menuitem"
 					default=""
 					label="MOD_CHAMADA_FIELD_MANUAL_MENU03_LABEL"
-					description="MOD_CHAMADA_FIELD_MANUAL_MENU03_DESC"					
+					description="MOD_CHAMADA_FIELD_MANUAL_MENU03_DESC"
 				>
 					<option value="">JNONE</option>
 				</field>
-			    <field 
+			    <field
 		           name="url_article_item3"
 		           type="modal_article"
-		           label="MOD_CHAMADA_FIELD_MANUAL_ARTICLE03_LABEL"		           
+		           label="MOD_CHAMADA_FIELD_MANUAL_ARTICLE03_LABEL"
 		           description="MOD_CHAMADA_FIELD_MANUAL_ARTICLE03_DESC"
 		        />
 		        <field
 					type="spacer"
 					hr="true"
 				/>
-			    <field 
+			    <field
 		           	name="ordering_item3"
 		           	type="integer"
 					first="1"
 					default="3"
 					last="4"
 					step="1"
-		           	label="MOD_CHAMADA_FIELD_MANUAL_ORDERING03_LABEL"		           
+		           	label="MOD_CHAMADA_FIELD_MANUAL_ORDERING03_LABEL"
 		           	description="MOD_CHAMADA_FIELD_MANUAL_ORDERING03_DESC"
 		        />
 		        <field
@@ -646,19 +713,19 @@
 					default="0"
 					last="10"
 					step="1"
-				/>	
+				/>
 			</fieldset>
 			<fieldset name="configuracoes_manuais_item4" label="MOD_CHAMADA_FIELDSET_CONF_MANUAIS_ITEM04_LABEL" addfieldpath="/modules/mod_chamadas/fields/">
 				<field
 					name="chapeu_item4"
-					type="text"					
+					type="text"
 					label="MOD_CHAMADA_FIELD_MANUAL_CHAPEU04_LABEL"
 					description="MOD_CHAMADA_FIELD_MANUAL_CHAPEU04_DESC"
 					size="40"
 				/>
 				<field
 					name="title_item4"
-					type="text"					
+					type="text"
 					label="MOD_CHAMADA_FIELD_MANUAL_TITLE04_LABEL"
 					description="MOD_CHAMADA_FIELD_MANUAL_TITLE04_DESC"
 					size="60"
@@ -678,7 +745,7 @@
 					type="spacer"
 					hr="true"
 				/>
-				<field 
+				<field
 					name="show_image_item4"
 					class="btn-group"
 					type="list"
@@ -694,25 +761,25 @@
 					name="image_item4"
 					type="media"
 					label="MOD_CHAMADA_FIELD_MANUAL_IMAGE04_LABEL"
-					description="MOD_CHAMADA_FIELD_MANUAL_IMAGE04_DESC"					
+					description="MOD_CHAMADA_FIELD_MANUAL_IMAGE04_DESC"
 				/>
 				<field
 					name="image_item4_align"
 					type="list"
 					default=""
 					label="MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN04_LABEL"
-					description="MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN04_DESC"					
+					description="MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN04_DESC"
 				>
 					<option value="">MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN_NONE</option>
 					<option value="left">MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN_LEFT</option>
-					<option value="right">MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN_RIGHT</option>			
+					<option value="right">MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN_RIGHT</option>
 				</field>
 				<field
 					name="image_item4_alt"
 					type="text"
 					size="40"
 					label="MOD_CHAMADA_FIELD_MANUAL_IMAGEALT04_LABEL"
-					description="MOD_CHAMADA_FIELD_MANUAL_IMAGEALT04_DESC"					
+					description="MOD_CHAMADA_FIELD_MANUAL_IMAGEALT04_DESC"
 				/>
 				<field
 					type="spacer"
@@ -724,35 +791,35 @@
 					default=""
 					size="50"
 					label="MOD_CHAMADA_FIELD_MANUAL_URL04_LABEL"
-					description="MOD_CHAMADA_FIELD_MANUAL_URL04_DESC"					
+					description="MOD_CHAMADA_FIELD_MANUAL_URL04_DESC"
 				/>
 				<field
 					name="url_menu_item4"
 					type="menuitem"
 					default=""
 					label="MOD_CHAMADA_FIELD_MANUAL_MENU04_LABEL"
-					description="MOD_CHAMADA_FIELD_MANUAL_MENU04_DESC"					
+					description="MOD_CHAMADA_FIELD_MANUAL_MENU04_DESC"
 				>
 					<option value="">JNONE</option>
 				</field>
-			    <field 
+			    <field
 		           name="url_article_item4"
 		           type="modal_article"
-		           label="MOD_CHAMADA_FIELD_MANUAL_ARTICLE04_LABEL"		           
+		           label="MOD_CHAMADA_FIELD_MANUAL_ARTICLE04_LABEL"
 		           description="MOD_CHAMADA_FIELD_MANUAL_ARTICLE04_DESC"
 		        />
 		        <field
 					type="spacer"
 					hr="true"
 				/>
-			    <field 
+			    <field
 		           	name="ordering_item4"
 		           	type="integer"
 					first="1"
 					default="4"
 					last="4"
 					step="1"
-		           	label="MOD_CHAMADA_FIELD_MANUAL_ORDERING04_LABEL"		           
+		           	label="MOD_CHAMADA_FIELD_MANUAL_ORDERING04_LABEL"
 		           	description="MOD_CHAMADA_FIELD_MANUAL_ORDERING04_DESC"
 		        />
 		        <field
@@ -764,11 +831,11 @@
 					default="0"
 					last="10"
 					step="1"
-				/>	
+				/>
 			</fieldset>
 			<fieldset name="opcoes_exibicao" label="MOD_CHAMADA_FIELDSET_EXIBICAO_LABEL">
 
-				<field 
+				<field
 					name="limitar_caractere"
 					class="btn-group"
 					type="radio"
@@ -822,10 +889,10 @@
 				>
 					<option value="1">JSHOW</option>
 					<option value="0">JHIDE</option>
-				</field>	
+				</field>
 
 				<field
-					name="subitem_class"					
+					name="subitem_class"
 					type="list"
 					default=""
 					label="MOD_CHAMADA_FIELD_SUBITEM_CLASS_LABEL"
@@ -847,7 +914,7 @@
 				</field>
 
 			</fieldset>
-			<fieldset name="advanced">			
+			<fieldset name="advanced">
 				<field
 					name="header_tag"
 					type="list"
@@ -862,7 +929,7 @@
 					<option value="h5">h5</option>
 					<option value="h6">h6</option>
 					<option value="p">p</option>
-				</field>				
+				</field>
 
 				<field name="moduleclass_sfx" type="textarea" rows="3"
 					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
@@ -883,7 +950,7 @@
 					type="hidden"
 					value="3"
 				/>
-			</fieldset>			
+			</fieldset>
 		</fields>
 	</config>
 </extension>

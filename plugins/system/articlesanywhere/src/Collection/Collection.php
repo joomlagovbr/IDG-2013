@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         7.5.1
+ * @version         8.0.3
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -12,6 +12,7 @@
 namespace RegularLabs\Plugin\System\ArticlesAnywhere\Collection;
 
 use RegularLabs\Library\DB as RL_DB;
+use RegularLabs\Plugin\System\ArticlesAnywhere\Collection\Filters;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Config;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Factory;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Output\Output;
@@ -20,10 +21,15 @@ defined('_JEXEC') or die;
 
 class Collection extends CollectionObject
 {
+	/* @var Filters\Items $items */
 	protected $items;
-	protected $categories;
-	protected $tags;
+	/* @var Filters\Fields $fields */
 	protected $fields;
+	/* @var Filters\Categories $categories */
+	protected $categories;
+	/* @var Filters\Tags $tags */
+	protected $tags;
+	/* @var Filters\CustomFields $custom_fields */
 	protected $custom_fields;
 
 	public function __construct(Config $config)
@@ -32,6 +38,28 @@ class Collection extends CollectionObject
 
 		$this->items  = Factory::getFilter('Items', $config);
 		$this->fields = Factory::getFilter('Fields', $config);
+	}
+
+	public function getOnlyIds()
+	{
+		return $this->getIds();
+	}
+
+	public function getOutputByIds($ids = [], $default = '')
+	{
+		if (empty($ids))
+		{
+			return $default;
+		}
+
+		// Now get Item data for found ids
+		$items = $this->getData($ids);
+
+		$items = array_map(function ($item) {
+			return new Item($this->config, $item);
+		}, $items);
+
+		return $this->getOutput($items, count($ids));
 	}
 
 	public function get($default = '')
@@ -69,7 +97,7 @@ class Collection extends CollectionObject
 
 		$query = $this->getIdsQuery();
 
-		return DB::getResults($query, 'loadColumn');
+		return DB::getResults($query, 'loadColumn') ?: [];
 	}
 
 	protected function getIdsQuery()
@@ -121,12 +149,12 @@ class Collection extends CollectionObject
 		if ($selects['categories'])
 		{
 			$query->select([
-				$this->config->getId('categories', 'category_id', 'categories'),
-				$this->config->getTitle('categories', 'category_title', 'categories'),
-				$this->config->getAlias('categories', 'category_alias', 'categories'),
-				$this->config->get('description', 'category_description', 'categories', 'description'),
-				$this->db->quoteName('categories.params', 'category_params'),
-				//$this->db->quoteName('categories.metadata', 'category_metadata'),
+				$this->config->getId('categories', 'category-id', 'categories'),
+				$this->config->getTitle('categories', 'category-title', 'categories'),
+				$this->config->getAlias('categories', 'category-alias', 'categories'),
+				$this->config->get('description', 'category-description', 'categories', 'description'),
+				$this->db->quoteName('categories.params', 'category-params'),
+				//$this->db->quoteName('categories.metadata', 'category-metadata'),
 			])
 				->join('LEFT', $this->config->getTableCategories('categories')
 					. ' ON ' . $this->db->quoteName('categories.id') . ' = ' . $this->db->quoteName('items.catid'));
@@ -135,9 +163,9 @@ class Collection extends CollectionObject
 		if ($selects['users'])
 		{
 			$query->select([
-				$this->db->quoteName('user.id', 'author_id'),
-				$this->db->quoteName('user.name', 'author_name'),
-				$this->db->quoteName('user.username', 'author_username'),
+				$this->db->quoteName('user.id', 'author-id'),
+				$this->db->quoteName('user.name', 'author-name'),
+				$this->db->quoteName('user.username', 'author-username'),
 			])
 				->join('LEFT', $this->db->quoteName('#__users', 'user')
 					. ' ON ' . $this->db->quoteName('user.id') . ' = ' . $this->db->quoteName('items.created_by'));
@@ -146,9 +174,9 @@ class Collection extends CollectionObject
 		if ($selects['modifiers'])
 		{
 			$query->select([
-				$this->db->quoteName('modifier.id', 'modifier_id'),
-				$this->db->quoteName('modifier.name', 'modifier_name'),
-				$this->db->quoteName('modifier.username', 'modifier_username'),
+				$this->db->quoteName('modifier.id', 'modifier-id'),
+				$this->db->quoteName('modifier.name', 'modifier-name'),
+				$this->db->quoteName('modifier.username', 'modifier-username'),
 			])
 				->join('LEFT', $this->db->quoteName('#__users', 'modifier')
 					. ' ON ' . $this->db->quoteName('modifier.id') . ' = ' . $this->db->quoteName('items.modified_by'));

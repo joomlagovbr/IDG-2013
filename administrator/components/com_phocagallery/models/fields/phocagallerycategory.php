@@ -21,7 +21,9 @@ class JFormFieldPhocaGalleryCategory extends JFormField
 
 	protected function getInput() {
 		
-		$db = &JFactory::getDBO();
+		
+	
+		$db = JFactory::getDBO();
 
        //build the list of categories
 		$query = 'SELECT a.title AS text, a.id AS value, a.parent_id as parentid'
@@ -32,8 +34,8 @@ class JFormFieldPhocaGalleryCategory extends JFormField
 		$phocagallerys = $db->loadObjectList();
 
 	
-		// TODO - check for other views than category edit
-		$view 	= JRequest::getVar( 'view' );
+		// TO DO - check for other views than category edit
+		$view 	= JFactory::getApplication()->input->get( 'view' );
 		$catId	= -1;
 		if ($view == 'phocagalleryc') {
 			$id 	= $this->form->getValue('id'); // id of current category
@@ -45,7 +47,9 @@ class JFormFieldPhocaGalleryCategory extends JFormField
 		// Initialize JavaScript field attributes.
 		$attr = '';
 		$attr .= $this->element['onchange'] ? ' onchange="'.(string) $this->element['onchange'].'"' : '';
+		$attr .= $this->required ? ' required aria-required="true"' : '';
 		$attr .= ' class="inputbox"';
+
 		
 		$document					= JFactory::getDocument();
 		$document->addCustomTag('<script type="text/javascript">

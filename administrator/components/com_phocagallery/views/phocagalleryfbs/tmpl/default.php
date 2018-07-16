@@ -37,8 +37,7 @@ $sortFields = $this->getSortFields();
 echo $r->jsJorderTable($listOrder);
 
 echo $r->startForm($option, $tasks, 'adminForm');
-echo $r->startFilter($OPT.'_FILTER');
-echo $r->selectFilterPublished('JOPTION_SELECT_PUBLISHED', $this->state->get('filter.state'));
+echo $r->startFilter();
 echo $r->endFilter();
 
 echo $r->startMainContainer();
@@ -49,6 +48,11 @@ echo $r->inputFilterSearchClear('JSEARCH_FILTER_SUBMIT', 'JSEARCH_FILTER_CLEAR')
 echo $r->inputFilterSearchLimit('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC', $this->pagination->getLimitBox());
 echo $r->selectFilterDirection('JFIELD_ORDERING_DESC', 'JGLOBAL_ORDER_ASCENDING', 'JGLOBAL_ORDER_DESCENDING', $listDirn);
 echo $r->selectFilterSortBy('JGLOBAL_SORT_BY', $sortFields, $listOrder);
+
+echo $r->startFilterBar(2);
+echo $r->selectFilterPublished('JOPTION_SELECT_PUBLISHED', $this->state->get('filter.state'));
+echo $r->endFilterBar();
+
 echo $r->endFilterBar();		
 
 echo $r->startTable('categoryList');
@@ -86,10 +90,11 @@ $canCreate		= $user->authorise('core.create',		'com_phocagallery');
 
 $iD = $i % 2;
 echo "\n\n";
-echo '<tr class="row'.$iD.'" sortable-group-id="0" item-id="'.$item->id.'" parents="0" level="0">'. "\n";
+//echo '<tr class="row'.$iD.'" sortable-group-id="0" item-id="'.$item->id.'" parents="0" level="0">'. "\n";
+echo '<tr class="row'.$iD.'" sortable-group-id="0" >'. "\n";
 
-echo $r->tdOrder($canChange, $saveOrder, $orderkey);
-echo $r->td(JHtml::_('grid.id', $i, $item->id), "small hidden-phone");
+echo $r->tdOrder($canChange, $saveOrder, $orderkey, $item->ordering);
+echo $r->td(JHtml::_('grid.id', $i, $item->id), "small");
 
 if (isset($item->uid) && $item->uid!= '') {
 	echo '<td><img src="https://graph.facebook.com/'. $item->uid .'/picture"></td>';
@@ -110,7 +115,7 @@ if ($canCreate || $canEdit) {
 } else {
 	$name = $this->escape($item->name);
 }
-echo $r->td($checkO . $name, "small hidden-phone");
+echo $r->td($checkO . $name, "small");
 
 if ($item->uid == ''){
 	$item->uid = JText::_('COM_PHOCAGALLERY_NOT_SET_YET');
@@ -120,7 +125,7 @@ if ($canCreate || $canEdit) {
 } else {
 	$uid = $this->escape($item->uid);
 }
-echo $r->td($uid, "small hidden-phone");
+echo $r->td($uid, "small");
 
 if ($canCreate || $canEdit) {
 	$appid = '<a href="'. JRoute::_($linkEdit).'">'. $this->escape($item->appid).'</a>';
@@ -128,10 +133,10 @@ if ($canCreate || $canEdit) {
 	$appid = $this->escape($item->appid);
 } 
 
-echo $r->td($appid, "small hidden-phone");
+echo $r->td($appid, "small");
 
-echo $r->td(JHtml::_('jgrid.published', $item->published, $i, $tasks.'.', $canChange), "small hidden-phone");
-echo $r->td($item->id, "small hidden-phone");
+echo $r->td(JHtml::_('jgrid.published', $item->published, $i, $tasks.'.', $canChange), "small");
+echo $r->td($item->id, "small");
 
 echo '</tr>'. "\n";
 						
@@ -144,7 +149,7 @@ echo $r->tblFoot($this->pagination->getListFooter(), 15);
 echo $r->endTable();
 
 
-echo $r->formInputs($listOrder, $originalOrders);
+echo $r->formInputs($listOrder, $listDirn, $originalOrders);
 echo $r->endMainContainer();
 echo $r->endForm();
 ?>

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         7.5.1
+ * @version         8.0.3
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -15,19 +15,21 @@ defined('_JEXEC') or die;
 
 use JDatabaseDriver;
 use JFactory;
+use RegularLabs\Plugin\System\ArticlesAnywhere\Config;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Params;
 
 class Ordering
 {
-	private $component;
+	/* @var Config */
+	protected $config;
 
 	/* @var JDatabaseDriver */
 	private $db;
 
-	public function __construct($component)
+	public function __construct(Config $config)
 	{
-		$this->component = $component;
-		$this->db        = JFactory::getDbo();
+		$this->config = $config;
+		$this->db     = JFactory::getDbo();
 	}
 
 	public function get($attributes)

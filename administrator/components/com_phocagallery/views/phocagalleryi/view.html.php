@@ -29,11 +29,11 @@ class PhocaGalleryCpViewPhocagalleryI extends JViewLegacy
 	
 	public function display($tpl = null) {
 
-		$this->field	= JRequest::getVar('field');
+		$this->field	= JFactory::getApplication()->input->get('field');
 		$this->fce 		= 'phocaSelectFileName_'.$this->field;
 		
 		JHTML::stylesheet('media/com_phocagallery/css/administrator/phocagallery.css' );
-		$document		= &JFactory::getDocument();
+		$document		= JFactory::getDocument();
 		//$document->addCustomTag(PhocaGalleryRenderAdmin::renderIeCssLink(1));
 		
 		$this->folderstate	= $this->get('FolderState');
@@ -55,7 +55,7 @@ class PhocaGalleryCpViewPhocagalleryI extends JViewLegacy
 		$this->tmpl['uploadmaxresheight'] 	= $params->get( 'upload_maxres_height', 2304 );
 		$this->tmpl['enablejava'] 			= $params->get( 'enable_java', -1 );
 		$this->tmpl['enablemultiple'] 		= $params->get( 'enable_multiple', 0 );
-		$this->tmpl['multipleuploadmethod'] = $params->get( 'multiple_upload_method', 1 );
+		$this->tmpl['multipleuploadmethod'] = $params->get( 'multiple_upload_method', 4 );
 		$this->tmpl['multipleresizewidth'] 	= $params->get( 'multiple_resize_width', -1 );
 		$this->tmpl['multipleresizeheight'] = $params->get( 'multiple_resize_height', -1 );
 
@@ -67,7 +67,7 @@ class PhocaGalleryCpViewPhocagalleryI extends JViewLegacy
 		// - - - - - - - - - -
 		//TABS
 		// - - - - - - - - - - 
-		$this->tmpl['tab'] 			= JRequest::getVar('tab', '', '', 'string');
+		$this->tmpl['tab'] 			= JFactory::getApplication()->input->get('tab', '', '', 'string');
 		$this->tmpl['displaytabs']	= 0;
 		
 		// UPLOAD
@@ -103,8 +103,8 @@ class PhocaGalleryCpViewPhocagalleryI extends JViewLegacy
 		// Multiple Upload
 		// - - - - - - - - - - -
 		// Get infos from multiple upload
-		$muFailed						= JRequest::getVar( 'mufailed', '0', '', 'int' );
-		$muUploaded						= JRequest::getVar( 'muuploaded', '0', '', 'int' );
+		$muFailed						= JFactory::getApplication()->input->get( 'mufailed', '0', '', 'int' );
+		$muUploaded						= JFactory::getApplication()->input->get( 'muuploaded', '0', '', 'int' );
 		$this->tmpl['mu_response_msg']	= $muUploadedMsg 	= '';
 		
 		if ($muUploaded > 0) {

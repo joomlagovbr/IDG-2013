@@ -1,8 +1,8 @@
 <?php
 /**
  * YoutubeGallery Joomla! 3.0 Native Component
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * @version 4.4.5
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -18,13 +18,12 @@ jimport('joomla.application.component.controllerform');
  */
 class YoutubeGalleryControllerCategoryForm extends JControllerForm
 {
-       /**
-         * Proxy for getModel.
-         */
-	   
-	function display()
+    
+	function display($cachable = false, $urlparams = array())
 	{
-		$task=$_POST['task'];
+		
+		$jinput = JFactory::getApplication()->input;
+		$task=$jinput->post->get('task','');
 	
 		if($task=='categoryform.add' or $task=='add' )
 		{
@@ -34,7 +33,7 @@ class YoutubeGalleryControllerCategoryForm extends JControllerForm
 		
 		if($task=='categoryform.edit' or $task=='edit')
 		{
-			$cid = JRequest::getVar( 'cid', array(), 'post', 'array' );
+			$cid	= $jinput->get( 'cid', array(),  'ARRAY' );
 
 			if (!count($cid)) {
 				$this->setRedirect( 'index.php?option=com_youtubegallery&view=categories', JText::_('COM_YOUTUBEGALLERY_NO_CATEGORIES_SELECTED'),'error' );
@@ -45,10 +44,10 @@ class YoutubeGalleryControllerCategoryForm extends JControllerForm
 			return true;
 		}
 	
-		JRequest::setVar( 'view', 'categoryform');
-		JRequest::setVar( 'layout', 'edit');
+		JFactory::getApplication()->input->setVar( 'view', 'categoryform');
+		JFactory::getApplication()->input->setVar( 'layout', 'edit');
 		
-		switch(JRequest::getVar( 'task'))
+		switch(JFactory::getApplication()->input->getVar( 'task'))
 		{
 		case 'apply':
 			$this->save();
@@ -75,7 +74,7 @@ class YoutubeGalleryControllerCategoryForm extends JControllerForm
     
 	function save()
 	{
-		$task = JRequest::getVar( 'task');
+		$task = JFactory::getApplication()->input->getVar( 'task');
 		
 		// get our model
 		$model = $this->getModel('categoryform');
@@ -135,7 +134,4 @@ class YoutubeGalleryControllerCategoryForm extends JControllerForm
 		$this->setRedirect( 'index.php?option=com_youtubegallery&view=categories');
 	}
 
-	/**
-	* Form for copying item(s) to a specific option
-	*/
 }

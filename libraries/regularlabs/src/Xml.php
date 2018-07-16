@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.1.20362
+ * @version         18.7.10792
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -34,11 +34,11 @@ class Xml
 	 */
 	public static function toObject($url, $root = '')
 	{
-		$hash = md5('xmlToObject_' . $url . '_' . $root);
+		$cache_id = 'xmlToObject_' . $url . '_' . $root;
 
-		if (Cache::has($hash))
+		if (Cache::has($cache_id))
 		{
-			return Cache::get($hash);
+			return Cache::get($cache_id);
 		}
 
 		if (JFile::exists($url))
@@ -53,7 +53,7 @@ class Xml
 		if ( ! @count($xml))
 		{
 			return Cache::set(
-				$hash,
+				$cache_id,
 				(object) []
 			);
 		}
@@ -63,7 +63,7 @@ class Xml
 			if ( ! isset($xml->{$root}))
 			{
 				return Cache::set(
-					$hash,
+					$cache_id,
 					(object) []
 				);
 			}
@@ -84,7 +84,7 @@ class Xml
 		}
 
 		return Cache::set(
-			$hash,
+			$cache_id,
 			$xml
 		);
 	}

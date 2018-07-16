@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         7.5.1
+ * @version         8.0.3
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -19,6 +19,9 @@ class Factory
 {
 	static $classes = [];
 
+	/**
+	 * @return mixed
+	 */
 	public static function _()
 	{
 		$arguments = func_get_args();
@@ -33,6 +36,11 @@ class Factory
 		return $reflector->newInstanceArgs($arguments);
 	}
 
+	/**
+	 * @param string $component
+	 *
+	 * @return CurrentItem
+	 */
 	public static function getCurrentItem($component = 'default')
 	{
 		$config = new Config((object) ['component' => $component]);
@@ -40,36 +48,87 @@ class Factory
 		return self::_('CurrentItem', $config);
 	}
 
+	/**
+	 * @param Config $config
+	 *
+	 * @return Collection\Collection
+	 */
 	public static function getCollection(Config $config)
 	{
 		return self::_('Collection\\Collection', $config);
 	}
 
+	/**
+	 * @param Config $config
+	 *
+	 * @return Collection\Ignores
+	 */
 	public static function getIgnores(Config $config)
 	{
 		return self::_('Collection\\Ignores', $config);
 	}
 
+	/**
+	 * @param array $data
+	 *
+	 * @return Config
+	 */
 	public static function getConfig($data)
 	{
 		return new Config($data);
 	}
 
+	/**
+	 * @param string $class
+	 * @param Config $config
+	 *
+	 * @return Collection\Filters\Filter
+	 */
 	public static function getFilter($class, Config $config)
 	{
 		return self::_('Collection\\Filters\\' . $class, $config);
 	}
 
+	/**
+	 * @param string $class
+	 * @param Config $config
+	 *
+	 * @return Collection\Fields\Fields
+	 */
 	public static function getFields($class, Config $config)
 	{
 		return self::_('Collection\\Fields\\' . $class, $config);
 	}
 
+	/**
+	 * @param Config $config
+	 *
+	 * @return PluginTags\Ordering
+	 */
+	public static function getOrdering($config)
+	{
+		return self::_('PluginTags\\Ordering', $config);
+	}
+
+	/**
+	 * @param string          $class
+	 * @param Config          $config
+	 * @param Collection\Item $item
+	 * @param Output\Values   $values
+	 *
+	 * @return Output\Data\Data
+	 */
 	public static function getOutput($class, Config $config, $item, $values)
 	{
 		return self::_('Output\\Data\\' . $class, $config, $item, $values);
 	}
 
+	/**
+	 * @param string $class
+	 * @param string $component
+	 *
+	 * @return string
+	 */
 	private static function getClassName($class, $component)
 	{
 		if ( ! $component)
@@ -101,6 +160,11 @@ class Factory
 		return $class;
 	}
 
+	/**
+	 * @param array $arguments
+	 *
+	 * @return boolean|string
+	 */
 	private static function getComponentName($arguments)
 	{
 		if ( ! isset($arguments[0]))

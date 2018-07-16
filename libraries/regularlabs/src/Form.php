@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.1.20362
+ * @version         18.7.10792
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -301,7 +301,7 @@ class Form
 		$attributes['id']    = $id;
 
 		$url = 'index.php?option=com_ajax&plugin=regularlabs&format=raw'
-			. '&attributes=' . urlencode(base64_encode(json_encode($attributes)));
+			. '&' . Uri::createCompressedAttributes(json_encode($attributes));
 
 		$remove_spinner = "$('#" . $id . "_spinner').remove();";
 		$replace_field  = "$('#" . $id . "').replaceWith(data);";
@@ -401,7 +401,11 @@ class Form
 				$string = '[[:font-weight:normal;font-style:italic;color:grey;:]]' . $string;
 				break;
 
-			case ( ! $published):
+			case ($published == -2):
+				$string = '[[:font-style:italic;color:grey;:]]' . $string . ' [' . JText::_('JTRASHED') . ']';
+				break;
+
+			case ($published == 0):
 				$string = '[[:font-style:italic;color:grey;:]]' . $string . ' [' . JText::_('JUNPUBLISHED') . ']';
 				break;
 
@@ -433,7 +437,7 @@ class Form
 		// Replace style tags right after the html tags
 		$string = RegEx::replace(
 			'>\s*\[\[\:(.*?)\:\]\]',
-			' style="\2">',
+			' style="\1">',
 			$string
 		);
 

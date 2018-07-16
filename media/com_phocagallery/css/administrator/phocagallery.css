@@ -4,8 +4,8 @@
 
 .phoca-thumb-status {
 	position:absolute;
-	top: 40px;
-	right:190px;
+	top: 45px;
+	right:220px;
 	color: #ccc;
 }
 /* Columns*/
@@ -733,4 +733,12 @@ div.editor-border /*, div.CodeMirror-wrapping */ {
 	background: #f0f0f0;
 	padding: 10px;
 	margin:5px 0px;
+}
+
+.ph-btn-toolbar-2 {
+	clear: right;
+	padding-top: 10px;
+}
+.ph-select-status {
+	padding-left: 5px;
 }

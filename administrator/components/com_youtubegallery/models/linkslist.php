@@ -1,8 +1,8 @@
 <?php
 /**
- * YoutubeGallery Joomla! 3.0 Native Component
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * YoutubeGallery Joomla! Native Component
+ * @version 4.4.5
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -32,13 +32,13 @@ class YoutubeGalleryModelLinksList extends JModelList
 				
                 
 				if($search!='')
-						$where[]='instr(`listname`,"'.$search.'")';
+						$where[]='instr(listname,"'.$search.'")';
 				
 				$filter_category = (int)$mainframe->getUserStateFromRequest($context."filter_category",'filter_category','',	'integer' );
 				
 				
 				if($filter_category!=0)
-						$where[]='`catid`='.$filter_category;
+						$where[]='catid='.$filter_category;
 				
 				
 				
@@ -64,12 +64,14 @@ class YoutubeGalleryModelLinksList extends JModelList
         
        	function ConfirmRemove()
         {
-				JRequest::setVar('hidemainmenu', true);
+				$jinput = JFactory::getApplication()->input;
+$jinput->get->set('hidemainmenu',true);
+
 				JToolBarHelper::title(JText::_( 'COM_YOUTUBEGALLERY_DELETE_VIDEOLIST_S' ));
 		
 				$cancellink='index.php?option=com_youtubegallery&view=linkslist';
 		
-				$cids = JRequest::getVar( 'cid', array(0), 'post', 'array' );
+				$cids = JFactory::getApplication()->input->getVar( 'cid', array(0), 'post', 'array' );
 				
 				echo '<h1>'.JText::_( 'COM_YOUTUBEGALLERY_DELETE_VIDEOLIST_S' ).'</h1>';
 		
@@ -119,9 +121,9 @@ class YoutubeGalleryModelLinksList extends JModelList
 		{
 				$db = JFactory::getDBO();
                 $query = $db->getQuery(true);
-                $query->select('`id`, `listname`');
+                $query->select('id, listname');
                 $query->from('#__youtubegallery_videolists');
-				$query->where('`id`='.$id);
+				$query->where('id='.$id);
                 $db->setQuery((string)$query);
                 $rows = $db->loadObjectList();
                 if (!$db->query())    die( $db->stderr());

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         7.5.1
+ * @version         8.0.3
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -11,6 +11,7 @@
 
 namespace RegularLabs\Plugin\System\ArticlesAnywhere\Collection\Fields;
 
+use RegularLabs\Library\ArrayHelper as RL_Array;
 use RegularLabs\Library\DB as RL_DB;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Collection\DB;
 use RegularLabs\Plugin\System\ArticlesAnywhere\CurrentArticle;
@@ -19,13 +20,13 @@ defined('_JEXEC') or die;
 
 class CustomFields extends Fields
 {
-	var $fields;
-
 	public function getAvailableFields()
 	{
-		if ( ! is_null($this->fields))
+		$id = $this->config->getContext();
+
+		if (isset(self::$available_fields[$id]))
 		{
-			return $this->fields;
+			return self::$available_fields[$id];
 		}
 
 		if ( ! RL_DB::tableExists($this->config->getTableFields(false)))
@@ -40,9 +41,9 @@ class CustomFields extends Fields
 			->where($this->db->quoteName('context') . ' = ' . $this->db->quote($this->config->getContext()))
 			->where($this->config->get('fields_state') . ' = 1');
 
-		$this->fields = DB::getResults($query, 'loadAssocList', ['id', 'name']);
+		self::$available_fields[$id] = DB::getResults($query, 'loadAssocList', ['id', 'name']) ?: [];
 
-		return $this->fields;
+		return self::$available_fields[$id];
 	}
 
 	public function getFieldValue($key, $value)
@@ -65,10 +66,7 @@ class CustomFields extends Fields
 		$custom_fields = $this->getAvailableFields();
 		$field_id      = array_search($key, $custom_fields);
 
-		return $this->getFieldFromDatabase(
-			$field_id,
-			$item_id
-		);
+		return $this->getFieldFromDatabase($field_id, $item_id);
 	}
 
 	protected function getFieldValueFromDatabase($field_id, $item_id)
@@ -83,26 +81,28 @@ class CustomFields extends Fields
 			return false;
 		}
 
+		return $this->getFieldValuesFromDatabase($field_id, $item_id);
+	}
+
+	protected function getFieldType($field_id)
+	{
+		if (isset(self::$field_types[$field_id]))
+		{
+			return self::$field_types[$field_id];
+		}
+
 		$query = $this->db->getQuery(true)
 			->select($this->db->quoteName('type'))
 			->from($this->config->getTableFields())
 			->where($this->db->quoteName('id') . ' = ' . (int) $field_id);
 		$this->db->setQuery($query);
 
-		$type = DB::getResults($query, 'loadResult');
+		self::$field_types[$field_id] = DB::getResults($query, 'loadResult');
 
-		$method = in_array($type, [
-			'checkboxes', 'list', 'imagelist', 'usergrouplist',
-		], $type) ? 'loadColumn' : 'loadResult';
-
-		return $this->getFieldValuesFromDatabase(
-			$field_id,
-			$item_id,
-			$method
-		);
+		return self::$field_types[$field_id] ?: '';
 	}
 
-	protected function getFieldFromDatabase($field_id, $item_id, $field_selects = [], $value_selects = [])
+	protected function getFieldFromDatabase($field_id, $item_id)
 	{
 		if ( ! RL_DB::tableExists($this->config->getTableFieldsValues(false)))
 		{
@@ -112,6 +112,36 @@ class CustomFields extends Fields
 		if (empty($field_id))
 		{
 			return false;
+		}
+
+		$field = $this->getFieldObjectFromDatabase($field_id);
+
+		$values = $this->getFieldValuesFromDatabase($field_id, $item_id);
+
+		if (empty($values))
+		{
+			$field->value = $field->default;
+
+			return [$field];
+		}
+
+		$fields = [];
+		$values = RL_Array::toArray($values);
+
+		foreach ($values as $value)
+		{
+			$field->value = $value;
+			$fields[]     = clone $field;
+		}
+
+		return $fields;
+	}
+
+	protected function getFieldObjectFromDatabase($field_id)
+	{
+		if (isset(self::$fields[$field_id]))
+		{
+			return self::$fields[$field_id];
 		}
 
 		$query = $this->db->getQuery(true)
@@ -126,32 +156,12 @@ class CustomFields extends Fields
 			->from($this->config->getTableFields('fields'))
 			->where($this->db->quoteName('id') . ' = ' . (int) $field_id);
 		$this->db->setQuery($query);
-		$field = DB::getResults($query, 'loadObject');
+		self::$fields[$field_id] = DB::getResults($query, 'loadObject');
 
-		$values = $this->getFieldValuesFromDatabase(
-			$field_id,
-			$item_id
-		);
-
-		if (empty($values))
-		{
-			$field->value = $field->default;
-
-			return [$field];
-		}
-
-		$fields = [];
-
-		foreach ($values as $value)
-		{
-			$field->value = $value;
-			$fields[]     = clone $field;
-		}
-
-		return $fields;
+		return self::$fields[$field_id];
 	}
 
-	protected function getFieldValuesFromDatabase($field_id, $item_id, $query_method = 'loadColumn')
+	protected function getFieldValuesFromDatabase($field_id, $item_id)
 	{
 		if ( ! RL_DB::tableExists($this->config->getTableFieldsValues(false)))
 		{
@@ -163,6 +173,19 @@ class CustomFields extends Fields
 			return false;
 		}
 
+		$id = $item_id . '.' . $field_id;
+
+		if (isset(self::$field_values[$id]))
+		{
+			return self::$field_values[$id];
+		}
+
+		$type = $this->getFieldType($field_id);
+
+		$query_method = in_array($type, [
+			'checkboxes', 'list', 'imagelist', 'usergrouplist',
+		], $type) ? 'loadColumn' : 'loadResult';
+
 		$item_id = $item_id ?: CurrentArticle::get('id', $this->config->getComponentName());
 
 		$query = $this->db->getQuery(true)
@@ -172,6 +195,8 @@ class CustomFields extends Fields
 			->where($this->config->get('fields_values_item_id') . ' = ' . (int) $item_id);
 		$this->db->setQuery($query);
 
-		return DB::getResults($query, $query_method);
+		self::$field_values[$id] = DB::getResults($query, $query_method);
+
+		return self::$field_values[$id];
 	}
 }

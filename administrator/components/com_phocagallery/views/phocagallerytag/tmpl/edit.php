@@ -26,10 +26,11 @@ $OPT		= strtoupper($option);
 	Joomla.submitbutton = function(task)
 	{
 		if (task == 'phocagallerytag.cancel' || document.formvalidator.isValid(document.id('adminForm'))) {
+			<?php echo $this->form->getField('description')->save(); ?>
 			Joomla.submitform(task, document.getElementById('adminForm'));
 		}
 		else {
-			alert('<?php echo $this->escape(JText::_('JGLOBAL_VALIDATION_FORM_FAILED'));?>');
+			alert('<?php echo JText::_('JGLOBAL_VALIDATION_FORM_FAILED', true);?>');
 		}
 	}
 </script><?php

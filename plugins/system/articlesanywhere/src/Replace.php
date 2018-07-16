@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         7.5.1
+ * @version         8.0.3
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -36,6 +36,11 @@ class Replace
 		if ( ! RL_String::contains($string, Params::getTags(true)))
 		{
 			return false;
+		}
+
+		if ($area == 'article')
+		{
+			CurrentArticle::set($article);
 		}
 
 		$params = Params::get();

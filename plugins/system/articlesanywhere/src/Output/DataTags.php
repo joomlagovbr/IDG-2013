@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         7.5.1
+ * @version         8.0.3
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -87,6 +87,7 @@ class DataTags extends OutputObject
 		$key_aliases = [
 			'limit'      => ['letters', 'letter_limit', 'characters', 'character_limit'],
 			'words'      => ['word', 'word_limit'],
+			'strip'      => ['trim'],
 			'paragraphs' => ['paragraph', 'paragraph_limit'],
 			'class'      => ['classes'],
 		];
@@ -103,9 +104,9 @@ class DataTags extends OutputObject
 			return (object) [];
 		}
 
-		if ($type == 'layout' && strpos($attributes, '=') === false)
+		if ($type == 'article' && strpos($attributes, '=') === false)
 		{
-			$attributes = 'layout layout="' . trim($attributes) . '"';
+			$attributes = 'article layout="' . trim($attributes) . '"';
 		}
 
 		return RL_PluginTag::getAttributesFromString($attributes);

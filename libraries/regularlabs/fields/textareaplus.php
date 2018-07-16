@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.1.20362
+ * @version         18.7.10792
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -34,17 +34,15 @@ class JFormFieldRL_TextAreaPlus extends \RegularLabs\Library\Field
 
 		$label = RL_String::html_entity_decoder(JText::_($this->get('label')));
 
-		$html = '<label id="' . $this->id . '-lbl" for="' . $this->id . '"';
+		$attribs = 'id="' . $this->id . '-lbl" for="' . $this->id . '"';
+
 		if ($this->description)
 		{
-			$html .= ' class="hasTooltip" title="<strong>' . $label . '</strong><br>' . JText::_($this->description) . '">';
-		}
-		else
-		{
-			$html .= '>';
+			$attribs .= ' class="hasPopover" title="' . $label . '"'
+				. ' data-content="' . JText::_($this->description) . '"';
 		}
 
-		$html .= $label;
+		$html = '<label ' . $attribs . '>' . $label;
 
 		if ($show_insert_date_name)
 		{

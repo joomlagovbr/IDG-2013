@@ -1,12 +1,12 @@
 <?php
-/*
- * @package Joomla 1.5
- * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
- *
- * @component Phoca Gallery
- * @copyright Copyright (C) Jan Pavelka www.phoca.cz
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+/**
+ * @package   Phoca Gallery
+ * @author    Jan Pavelka - https://www.phoca.cz
+ * @copyright Copyright (C) Jan Pavelka https://www.phoca.cz
+ * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 and later
+ * @cms       Joomla
+ * @copyright Copyright (C) Open Source Matters. All rights reserved.
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  */
 defined( '_JEXEC' ) or die( 'Restricted access' );
 jimport( 'joomla.filesystem.folder' ); 
@@ -20,7 +20,7 @@ class PhocaGalleryFileFolder
 	 * Clear Thumbs folder - if there are files in the thumbs directory but not original files e.g.:
 	 * phoca_thumbs_l_some.jpg exists in thumbs directory but some.jpg doesn't exists - delete it
 	 */
-	function cleanThumbsFolder() {
+	public static function cleanThumbsFolder() {
 		//Get folder variables from Helper
 		$path = PhocaGalleryPath::getPath();
 		
@@ -87,7 +87,7 @@ class PhocaGalleryFileFolder
 		}
 	}
 	
-	function createFolder($folder, &$errorMsg) {
+	public static function createFolder($folder, &$errorMsg) {
 		$paramsC = JComponentHelper::getParams('com_phocagallery');
 		$folder_permissions = $paramsC->get( 'folder_permissions', 0755 );
 		// Doesn't work on some servers
@@ -122,7 +122,7 @@ class PhocaGalleryFileFolder
 				if (isset($folder)) {
 					
 					$data = "<html>\n<body bgcolor=\"#FFFFFF\">\n</body>\n</html>";
-					JFile::write($folder.DS."index.html", $data);
+					JFile::write($folder. '/'. "index.html", $data);
 				}
 				// folder was not created
 				if (!JFolder::exists($folder)) {

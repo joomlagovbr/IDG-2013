@@ -1,4 +1,14 @@
-<?php defined('_JEXEC') or die('Restricted access');
+<?php 
+/*
+ * @package Joomla
+ * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+ *
+ * @component Phoca Gallery
+ * @copyright Copyright (C) Jan Pavelka www.phoca.cz
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ */
+defined('_JEXEC') or die('Restricted access');
 
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.formvalidation');
@@ -80,7 +90,7 @@ if ($this->tmpl['displaytabs'] > 0) {
 /*
 if ($this->tmpl['displaytabs'] > 0) {
 	echo '<div id="phocagallery-pane">';
-	//$pane =& JPane::getInstance('Tabs', array('startOffset'=> $this->tmpl['tab']));
+	//$pane =& J Pane::getInstance('Tabs', array('startOffset'=> $this->tmpl['tab']));
 	echo JHtml::_('tabs.start', 'config-tabs-com_phocagallery-i', array('useCookie'=>1, 'startOffset'=> $this->tmpl['tab']));
 	//echo $pane->startPane( 'pane' );
 

@@ -1,8 +1,8 @@
 <?php
 /**
  * YoutubeGallery
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * @version 4.4.5
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -13,14 +13,14 @@ defined('_JEXEC') or die('Restricted access');
 if(!defined('DS'))
 	define('DS',DIRECTORY_SEPARATOR);
 
-require_once(JPATH_SITE.DS.'components'.DS.'com_youtubegallery'.DS.'includes'.DS.'misc.php');
+require_once(JPATH_SITE.DIRECTORY_SEPARATOR.'components'.DIRECTORY_SEPARATOR.'com_youtubegallery'.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.'misc.php');
 
 
 class VideoSource_YoutubeStandard
 {
 
 	
-	public static function getVideoIDList($youtubeURL,$optionalparameters,&$playlistid)
+	public static function getVideoIDList($youtubeURL,$optionalparameters,&$playlistid,&$datalink)
 	{
 		$linkPair=explode(':',$youtubeURL);
 		
@@ -77,6 +77,7 @@ class VideoSource_YoutubeStandard
 				return array();	
 			break;
 		}
+		$datalink=$url;
 			
 		
 		$optionalparameters_arr=explode(',',$optionalparameters);
@@ -85,10 +86,14 @@ class VideoSource_YoutubeStandard
 		$spq=implode('&',$optionalparameters_arr);
 		
 		
+		$spq=str_replace('max-results','maxResults',$spq);
 		$url.= ($spq!='' ? '?'.$spq : '' );
 		
 		$xml=false;
 		$htmlcode=YouTubeGalleryMisc::getURLData($url);
+		
+		if($htmlcode=='')
+			return $videolist;
 
 		if(strpos($htmlcode,'<?xml version')===false)
 		{

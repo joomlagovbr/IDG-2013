@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.1.20362
+ * @version         18.7.10792
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -39,22 +39,7 @@ class MijoshopCategory
 			return $this->_(false);
 		}
 
-		$cats = [];
-		if ($this->request->category_id)
-		{
-			$cats = $this->request->category_id;
-		}
-		else if ($this->request->item_id)
-		{
-			$query = $this->db->getQuery(true)
-				->select('c.category_id')
-				->from('#__mijoshop_product_to_category AS c')
-				->where('c.product_id = ' . (int) $this->request->id);
-			$this->db->setQuery($query);
-			$cats = $this->db->loadColumn();
-		}
-
-		$cats = $this->makeArray($cats);
+		$cats = $this->getCats();
 
 		$pass = $this->passSimple($cats, 'include');
 
@@ -62,7 +47,8 @@ class MijoshopCategory
 		{
 			return $this->_(false);
 		}
-		else if ( ! $pass && $this->params->inc_children)
+
+		if ( ! $pass && $this->params->inc_children)
 		{
 			foreach ($cats as $cat)
 			{
@@ -71,6 +57,28 @@ class MijoshopCategory
 		}
 
 		return $this->passSimple($cats);
+	}
+
+	private function getCats()
+	{
+		if ($this->request->category_id)
+		{
+			return $this->makeArray($this->request->category_id);
+		}
+
+		if ( ! $this->request->item_id)
+		{
+			return [];
+		}
+
+		$query = $this->db->getQuery(true)
+			->select('c.category_id')
+			->from('#__mijoshop_product_to_category AS c')
+			->where('c.product_id = ' . (int) $this->request->id);
+		$this->db->setQuery($query);
+		$cats = $this->db->loadColumn();
+
+		return $this->makeArray($cats);
 	}
 
 	private function getCatParentIds($id = 0)

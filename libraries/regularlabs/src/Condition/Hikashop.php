@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.1.20362
+ * @version         18.7.10792
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -28,7 +28,7 @@ abstract class Hikashop
 
 		// Reset $this->request because HikaShop messes with the view after stuff is loaded!
 		$this->request->option = $input->get('option', $this->request->option);
-		$this->request->view   = $input->get('view', $this->request->view);
+		$this->request->view   = $input->get('view', $input->get('ctrl', $this->request->view));
 		$this->request->id     = $input->getInt('id', $this->request->id);
 		$this->request->Itemid = $input->getInt('Itemid', $this->request->Itemid);
 	}

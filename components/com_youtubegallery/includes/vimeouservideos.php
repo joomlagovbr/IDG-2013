@@ -1,8 +1,8 @@
 <?php
 /**
  * YoutubeGallery
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * @version 4.4.5
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -13,7 +13,7 @@ defined('_JEXEC') or die('Restricted access');
 if(!defined('DS'))
 	define('DS',DIRECTORY_SEPARATOR);
 
-require_once(JPATH_SITE.DS.'components'.DS.'com_youtubegallery'.DS.'includes'.DS.'misc.php');
+require_once(JPATH_SITE.DIRECTORY_SEPARATOR.'components'.DIRECTORY_SEPARATOR.'com_youtubegallery'.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.'misc.php');
 
 
 class VideoSource_VimeoUserVideos
@@ -41,7 +41,7 @@ class VideoSource_VimeoUserVideos
 	    return '';
 	}
 	
-	public static function getVideoIDList($vimeo_user_link,$optionalparameters,&$userid)
+	public static function getVideoIDList($vimeo_user_link,$optionalparameters,&$userid,&$datalink)
 	{
 		$videolist=array();
 		$optionalparameters_arr=explode(',',$optionalparameters);
@@ -50,10 +50,11 @@ class VideoSource_VimeoUserVideos
 		
 		
 		//-------------- prepare our Consumer Key and Secret
-		require_once(JPATH_SITE.DS.'components'.DS.'com_youtubegallery'.DS.'includes'.DS.'misc.php');
+		require_once(JPATH_SITE.DIRECTORY_SEPARATOR.'components'.DIRECTORY_SEPARATOR.'com_youtubegallery'.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.'misc.php');
 		
 		$consumer_key = YouTubeGalleryMisc::getSettingValue('vimeo_api_client_id');
 		$consumer_secret = YouTubeGalleryMisc::getSettingValue('vimeo_api_client_secret');
+		$oauth_access_token = YouTubeGalleryMisc::getSettingValue('vimeo_api_access_token');
 		
 		if($consumer_key=='' or $consumer_secret=='')
 		{
@@ -63,16 +64,18 @@ class VideoSource_VimeoUserVideos
 
 		require_once('vimeo_api.php');
 		
-		if(!isset($_SESSION))
+		$session = JFactory::getSession();
+		if(!isset($session))
 			session_start();
 		
-		if(isset($_SESSION['oauth_access_token']))
-			$s_oauth_access_token=$_SESSION['oauth_access_token'];
-		else
-			$s_oauth_access_token='';
-			
-		if(isset($_SESSION['oauth_access_token_secret']))
-			$s_oauth_access_token_secret=$_SESSION['oauth_access_token_secret'];
+		if($oauth_access_token=='')
+		{
+			if(isset($session->get('oauth_access_token')))
+				$s_oauth_access_token=$session->get('oauth_access_token');
+		}
+		
+		if(isset($session->get('oauth_access_token_secret')))
+			$s_oauth_access_token_secret=$session->get('oauth_access_token_secret');
 		else
 			$s_oauth_access_token_secret='';
 		

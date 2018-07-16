@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.1.20362
+ * @version         18.7.10792
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -30,8 +30,9 @@ abstract class Condition
 	public $params       = null;
 	public $include_type = null;
 	public $article      = null;
+	public $module       = null;
 
-	public function __construct($condition = [], $article = null)
+	public function __construct($condition = [], $article = null, $module = null)
 	{
 		$tz         = new DateTimeZone(JFactory::getApplication()->getCfg('offset'));
 		$this->date = JFactory::getDate()->setTimeZone($tz);
@@ -45,6 +46,7 @@ abstract class Condition
 		$this->include_type = isset($condition->include_type) ? $condition->include_type : 'none';
 
 		$this->article = $article;
+		$this->module  = $module;
 	}
 
 	public function init()
@@ -250,11 +252,11 @@ abstract class Condition
 
 	public function getMenuItemParams($id = 0)
 	{
-		$hash = md5('getMenuItemParams_' . $id);
+		$cache_id = 'getMenuItemParams_' . $id;
 
-		if (Cache::has($hash))
+		if (Cache::has($cache_id))
 		{
-			return Cache::get($hash);
+			return Cache::get($cache_id);
 		}
 
 		$query = $this->db->getQuery(true)
@@ -267,7 +269,7 @@ abstract class Condition
 		$parameters = Parameters::getInstance();
 
 		return Cache::set(
-			$hash,
+			$cache_id,
 			$parameters->getParams($params)
 		);
 	}
@@ -279,11 +281,11 @@ abstract class Condition
 			return [];
 		}
 
-		$hash = md5('getParentIds_' . $id . '_' . $table . '_' . $parent . '_' . $child);
+		$cache_id = 'getParentIds_' . $id . '_' . $table . '_' . $parent . '_' . $child;
 
-		if (Cache::has($hash))
+		if (Cache::has($cache_id))
 		{
-			return Cache::get($hash);
+			return Cache::get($cache_id);
 		}
 
 		$parent_ids = [];
@@ -307,7 +309,7 @@ abstract class Condition
 		}
 
 		return Cache::set(
-			$hash,
+			$cache_id,
 			$parent_ids
 		);
 	}
@@ -319,11 +321,11 @@ abstract class Condition
 			return [];
 		}
 
-		$hash = md5('makeArray_' . json_encode($array) . '_' . $delimiter . '_' . $trim);
+		$cache_id = 'makeArray_' . json_encode($array) . '_' . $delimiter . '_' . $trim;
 
-		if (Cache::has($hash))
+		if (Cache::has($cache_id))
 		{
-			return Cache::get($hash);
+			return Cache::get($cache_id);
 		}
 
 		$array = $this->mixedDataToArray($array, $delimiter);
@@ -349,7 +351,7 @@ abstract class Condition
 		}
 
 		return Cache::set(
-			$hash,
+			$cache_id,
 			$array
 		);
 	}

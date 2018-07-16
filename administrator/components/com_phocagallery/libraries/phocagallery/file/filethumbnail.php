@@ -1,12 +1,12 @@
 <?php
-/*
- * @package Joomla 1.5
- * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
- *
- * @component Phoca Gallery
- * @copyright Copyright (C) Jan Pavelka www.phoca.cz
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+/**
+ * @package   Phoca Gallery
+ * @author    Jan Pavelka - https://www.phoca.cz
+ * @copyright Copyright (C) Jan Pavelka https://www.phoca.cz
+ * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 and later
+ * @cms       Joomla
+ * @copyright Copyright (C) Open Source Matters. All rights reserved.
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  */
 defined( '_JEXEC' ) or die( 'Restricted access' );
 jimport( 'joomla.filesystem.folder' ); 
@@ -19,9 +19,9 @@ class PhocaGalleryFileThumbnail
 	/*
 	 *Get thumbnailname
 	 */
-	function getThumbnailName($filename, $size) {
+	public static function getThumbnailName($filename, $size) {
 	
-		$path		= &PhocaGalleryPath::getPath();		
+		$path		= PhocaGalleryPath::getPath();		
 		$title 		= PhocaGalleryFile::getTitleFromFile($filename , 1);
 
 		$thumbName	= new JObject();
@@ -29,57 +29,63 @@ class PhocaGalleryFileThumbnail
 		switch ($size) {
 			case 'large':
 			$fileNameThumb 	= 'phoca_thumb_l_'. $title;
-			$thumbName->abs	= JPath::clean(str_replace($title, 'thumbs'. DS . $fileNameThumb, $path->image_abs . $filename));
+			$thumbName->abs	= JPath::clean(str_replace($title, 'thumbs'. '/'. $fileNameThumb, $path->image_abs . $filename));
+			$thumbName->rel	= str_replace ($title, 'thumbs/' . $fileNameThumb, $path->image_rel . $filename);
+			break;
+			
+			case 'large1':
+			$fileNameThumb 	= 'phoca_thumb_l1_'. $title;
+			$thumbName->abs	= JPath::clean(str_replace($title, 'thumbs'. '/'. $fileNameThumb, $path->image_abs . $filename));
 			$thumbName->rel	= str_replace ($title, 'thumbs/' . $fileNameThumb, $path->image_rel . $filename);
 			break;
 			
 			case 'medium1':
 			$fileNameThumb 	= 'phoca_thumb_m1_'. $title;
-			$thumbName->abs	= JPath::clean(str_replace($title, 'thumbs' . DS . $fileNameThumb, $path->image_abs . $filename));
+			$thumbName->abs	= JPath::clean(str_replace($title, 'thumbs' . '/'. $fileNameThumb, $path->image_abs . $filename));
 			$thumbName->rel	= str_replace ($title, 'thumbs/' . $fileNameThumb, $path->image_rel . $filename);
 			break;	
 			
 			case 'medium2':
 			$fileNameThumb 	= 'phoca_thumb_m2_'. $title;
-			$thumbName->abs	= JPath::clean(str_replace($title, 'thumbs' . DS . $fileNameThumb, $path->image_abs . $filename));
+			$thumbName->abs	= JPath::clean(str_replace($title, 'thumbs' . '/'. $fileNameThumb, $path->image_abs . $filename));
 			$thumbName->rel	= str_replace ($title, 'thumbs/' . $fileNameThumb, $path->image_rel . $filename);
 			break;	
 			
 			case 'medium3':
 			$fileNameThumb 	= 'phoca_thumb_m3_'. $title;
-			$thumbName->abs	= JPath::clean(str_replace($title, 'thumbs' . DS . $fileNameThumb, $path->image_abs . $filename));
+			$thumbName->abs	= JPath::clean(str_replace($title, 'thumbs' . '/'. $fileNameThumb, $path->image_abs . $filename));
 			$thumbName->rel	= str_replace ($title, 'thumbs/' . $fileNameThumb, $path->image_rel . $filename);
 			break;	
 			
 			case 'medium':
 			$fileNameThumb 	= 'phoca_thumb_m_'. $title;
-			$thumbName->abs	= JPath::clean(str_replace($title, 'thumbs'. DS . $fileNameThumb, $path->image_abs . $filename));
+			$thumbName->abs	= JPath::clean(str_replace($title, 'thumbs'. '/'. $fileNameThumb, $path->image_abs . $filename));
 			$thumbName->rel	= str_replace ($title, 'thumbs/' . $fileNameThumb, $path->image_rel . $filename);
 			break;
 			
 			
 			case 'small1':
 			$fileNameThumb 	= 'phoca_thumb_s1_'. $title;
-			$thumbName->abs	= JPath::clean(str_replace($title, 'thumbs' . DS . $fileNameThumb, $path->image_abs . $filename));
+			$thumbName->abs	= JPath::clean(str_replace($title, 'thumbs' . '/'. $fileNameThumb, $path->image_abs . $filename));
 			$thumbName->rel	= str_replace ($title, 'thumbs/' . $fileNameThumb, $path->image_rel . $filename);
 			break;	
 			
 			case 'small2':
 			$fileNameThumb 	= 'phoca_thumb_s2_'. $title;
-			$thumbName->abs	= JPath::clean(str_replace($title, 'thumbs' . DS . $fileNameThumb, $path->image_abs . $filename));
+			$thumbName->abs	= JPath::clean(str_replace($title, 'thumbs' . '/'. $fileNameThumb, $path->image_abs . $filename));
 			$thumbName->rel	= str_replace ($title, 'thumbs/' . $fileNameThumb, $path->image_rel . $filename);
 			break;	
 			
 			case 'small3':
 			$fileNameThumb 	= 'phoca_thumb_s3_'. $title;
-			$thumbName->abs	= JPath::clean(str_replace($title, 'thumbs' . DS . $fileNameThumb, $path->image_abs . $filename));
+			$thumbName->abs	= JPath::clean(str_replace($title, 'thumbs' . '/'. $fileNameThumb, $path->image_abs . $filename));
 			$thumbName->rel	= str_replace ($title, 'thumbs/' . $fileNameThumb, $path->image_rel . $filename);
 			break;	
 			
-			Default:
+			default:
 			case 'small':
 			$fileNameThumb 	= 'phoca_thumb_s_'. $title;
-			$thumbName->abs	= JPath::clean(str_replace($title, 'thumbs' . DS . $fileNameThumb, $path->image_abs . $filename));
+			$thumbName->abs	= JPath::clean(str_replace($title, 'thumbs' . '/'. $fileNameThumb, $path->image_abs . $filename));
 			$thumbName->rel	= str_replace ($title, 'thumbs/' . $fileNameThumb, $path->image_rel . $filename);
 			break;	
 		}
@@ -89,7 +95,7 @@ class PhocaGalleryFileThumbnail
 		return $thumbName;
 	}
 	
-	function deleteFileThumbnail ($filename, $small=0, $medium=0, $large=0) {					
+	public static function deleteFileThumbnail ($filename, $small=0, $medium=0, $large=0) {					
 		
 		if ($small == 1) {
 			$fileNameThumbS = PhocaGalleryFileThumbnail::getThumbnailName ($filename, 'small');
@@ -135,6 +141,10 @@ class PhocaGalleryFileThumbnail
 			if (JFile::exists($fileNameThumbL->abs)) {
 				JFile::delete($fileNameThumbL->abs);
 			}
+			$fileNameThumbL = PhocaGalleryFileThumbnail::getThumbnailName ($filename, 'large1');
+			if (JFile::exists($fileNameThumbL->abs)) {
+				JFile::delete($fileNameThumbL->abs);
+			}
 		}
 		return true;
 	}
@@ -146,7 +156,8 @@ class PhocaGalleryFileThumbnail
 	 * fileNo	= folder/abc.jpg
 	 * if small, medium, large = 1, create small, medium, large thumbnail
 	 */
-	function getOrCreateThumbnail($fileNo, $refreshUrl, $small = 0, $medium = 0, $large = 0, $frontUpload = 0) {
+	public static function getOrCreateThumbnail($fileNo, $refreshUrl, $small = 0, $medium = 0, $large = 0, $frontUpload = 0) {
+	
 		
 		if ($frontUpload) {
 			$returnFrontMessage = '';
@@ -245,7 +256,7 @@ class PhocaGalleryFileThumbnail
 					//Small thumbnail
 					if ($small == 1) {
 						PhocaGalleryFileThumbnail::createFileThumbnail($file['name_original_abs'], $thumbNameS->abs, 'small', $frontUpload, $errorMsgS);
-						if ($additional_thumbnails == 2 || $additional_thumbnails == 3) {
+						if ($additional_thumbnails == 2 || $additional_thumbnails == 3 || $additional_thumbnails == 7) {
 							PhocaGalleryFileThumbnail::createFileThumbnail($file['name_original_abs'], str_replace('phoca_thumb_s_', 'phoca_thumb_s1_', $thumbNameS->abs), 'small1', $frontUpload, $errorMsgS);
 							PhocaGalleryFileThumbnail::createFileThumbnail($file['name_original_abs'], str_replace('phoca_thumb_s_', 'phoca_thumb_s2_', $thumbNameS->abs), 'small2', $frontUpload, $errorMsgS);
 							PhocaGalleryFileThumbnail::createFileThumbnail($file['name_original_abs'], str_replace('phoca_thumb_s_', 'phoca_thumb_s3_', $thumbNameS->abs), 'small3', $frontUpload, $errorMsgS);
@@ -257,10 +268,11 @@ class PhocaGalleryFileThumbnail
 					//Medium thumbnail
 					if ($medium == 1) {
 						PhocaGalleryFileThumbnail::createFileThumbnail($file['name_original_abs'], $thumbNameM->abs, 'medium', $frontUpload, $errorMsgM);
-						if ($additional_thumbnails == 1 || $additional_thumbnails == 3) {
+						if ($additional_thumbnails == 1 || $additional_thumbnails == 3 || $additional_thumbnails == 7) {
 							PhocaGalleryFileThumbnail::createFileThumbnail($file['name_original_abs'], str_replace('phoca_thumb_m_', 'phoca_thumb_m1_', $thumbNameM->abs), 'medium1', $frontUpload, $errorMsgM);
 							PhocaGalleryFileThumbnail::createFileThumbnail($file['name_original_abs'], str_replace('phoca_thumb_m_', 'phoca_thumb_m2_', $thumbNameM->abs), 'medium2', $frontUpload, $errorMsgM);
 							PhocaGalleryFileThumbnail::createFileThumbnail($file['name_original_abs'], str_replace('phoca_thumb_m_', 'phoca_thumb_m3_', $thumbNameM->abs), 'medium3', $frontUpload, $errorMsgM);
+							
 						}
 					} else {
 						$errorMsgM = 'ThumbnailExists'; // in case we only need small or large, because of if clause bellow
@@ -269,6 +281,9 @@ class PhocaGalleryFileThumbnail
 					//Large thumbnail
 					if ($large == 1) {
 						PhocaGalleryFileThumbnail::createFileThumbnail($file['name_original_abs'], $thumbNameL->abs, 'large', $frontUpload, $errorMsgL);
+						if ($additional_thumbnails == 7) {
+							PhocaGalleryFileThumbnail::createFileThumbnail($file['name_original_abs'], str_replace('phoca_thumb_l_', 'phoca_thumb_l1_', $thumbNameL->abs), 'large1', $frontUpload, $errorMsgL);
+						}
 					} else {
 						$errorMsgL = 'ThumbnailExists'; // in case we only need small or medium, because of if clause bellow
 					}
@@ -360,7 +375,7 @@ class PhocaGalleryFileThumbnail
 		return $file;
 	}
 	
-	function dontCreateThumb ($filename) {
+	public static function dontCreateThumb ($filename) {
 		$dontCreateThumb		= false;
 		$dontCreateThumbArray	= array ('watermark-large.png', 'watermark-medium.png');
 		foreach ($dontCreateThumbArray as $key => $value) {
@@ -371,7 +386,7 @@ class PhocaGalleryFileThumbnail
 		return false;
 	}
 	
-	function createThumbnailFolder($folderOriginal, $folderThumbnail, &$errorMsg) {	
+	public static function createThumbnailFolder($folderOriginal, $folderThumbnail, &$errorMsg) {	
 		
 		$paramsC = JComponentHelper::getParams('com_phocagallery');
 		$enable_thumb_creation = $paramsC->get( 'enable_thumb_creation', 1 );
@@ -407,7 +422,7 @@ class PhocaGalleryFileThumbnail
 						//JFolder::create($folderThumbnail, $folder_permissions );
 						if (isset($folderThumbnail)) {
 							$data = "<html>\n<body bgcolor=\"#FFFFFF\">\n</body>\n</html>";
-							JFile::write($folderThumbnail.DS."index.html", $data);
+							JFile::write($folderThumbnail. '/'. "index.html", $data);
 						}
 						// folder was not created
 						if (!JFolder::exists($folderThumbnail)) {
@@ -426,7 +441,7 @@ class PhocaGalleryFileThumbnail
 		}
 	}
 	
-	function createFileThumbnail($fileOriginal, $fileThumbnail, $size, $frontUpload=0, &$errorMsg) {	
+	public static function createFileThumbnail($fileOriginal, $fileThumbnail, $size, $frontUpload=0, &$errorMsg) {	
 		
 		$paramsC 					= JComponentHelper::getParams('com_phocagallery');
 		$enable_thumb_creation 		= $paramsC->get( 'enable_thumb_creation', 1);
@@ -443,6 +458,7 @@ class PhocaGalleryFileThumbnail
 			case 'medium1':
 			case 'medium2':
 			case 'medium3':
+			case 'large1':
 				$crop = 1;
 			break;
 			
@@ -459,7 +475,7 @@ class PhocaGalleryFileThumbnail
 			break;
 			
 			case 'large':
-			Default:
+			default:
 				if ($crop_thumbnail == 1 || $crop_thumbnail == 4 || $crop_thumbnail == 6 || $crop_thumbnail == 7 ) {
 					$crop = 1;
 				}
@@ -506,7 +522,7 @@ class PhocaGalleryFileThumbnail
 		}
 	}
 	
-	function getThumbnailResize($size = 'all') {	
+	public static function getThumbnailResize($size = 'all') {	
 		
 		// Get width and height from Default settings
 		$params 			= JComponentHelper::getParams('com_phocagallery') ;
@@ -516,6 +532,7 @@ class PhocaGalleryFileThumbnail
 		$medium_image_height= $params->get( 'medium_image_height', 100 );
 		$small_image_width 	= $params->get( 'small_image_width', 50 );
 		$small_image_height = $params->get( 'small_image_height', 50 );
+		$additional_thumbnail_margin = $params->get( 'additional_thumbnail_margin', 0 );
 		
 		switch ($size) {			
 			case 'large':
@@ -530,7 +547,7 @@ class PhocaGalleryFileThumbnail
 			
 			case 'medium1':
 			$fileResize['width']	=	$medium_image_width;
-			$fileResize['height']	=	(int)$medium_image_height * 2;
+			$fileResize['height']	=	((int)$medium_image_height * 2) + (int)$additional_thumbnail_margin;
 			break;
 			
 			case 'medium2':
@@ -563,8 +580,14 @@ class PhocaGalleryFileThumbnail
 				$fileResize['height']	=	(int)$small_image_height * 2;
 			break;
 			
+			case 'large1':
+				$fileResize['width']	=	$large_image_width;
+				$scale					= 	(int)$large_image_height / $medium_image_height;
+				$fileResize['height']	=	((int)$large_image_height * 2) + ((int)$additional_thumbnail_margin * $scale);
+			break;
 			
-			Default:
+			
+			default:
 			case 'all':
 			$fileResize['smallwidth']	=	$small_width;
 			$fileResize['smallheight']	=	$small_height;

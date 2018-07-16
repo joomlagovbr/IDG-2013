@@ -1,6 +1,6 @@
 /**
  * @package         Regular Labs Library
- * @version         18.1.20362
+ * @version         18.7.10792
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -416,7 +416,16 @@ var RegularLabsScripts = null;
 			$('#' + id + ' .CodeMirror').width(100);
 			setTimeout(function() {
 				$('#' + id + ' .CodeMirror').each(function() {
-					$(this).width($(this).parent().width());
+					var new_width = $(this).parent().width();
+
+					if (new_width <= 100) {
+						setTimeout(function() {
+							RegularLabsScripts.resizeCodeMirror(id);
+						}, 1000);
+						return;
+					}
+
+					$(this).width(new_width);
 				})
 			}, 100);
 		}

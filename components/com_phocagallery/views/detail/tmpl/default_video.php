@@ -1,8 +1,23 @@
 <?php
-
+/*
+ * @package Joomla
+ * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+ *
+ * @component Phoca Gallery
+ * @copyright Copyright (C) Jan Pavelka www.phoca.cz
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ */
 
 defined('_JEXEC') or die('Restricted access');
+
 if ($this->tmpl['ytb_display'] == 1) {
+	
+	$document	= JFactory::getDocument();
+	$document->addCustomTag( "<style type=\"text/css\"> \n" 
+			." body {overflow:hidden;} \n"
+			." </style> \n");
+	
 	echo '<div style="padding:0;margin:0;" class="pg-ytb-full">'.$this->item->videocode.'</div>';
 } else {
 
@@ -51,7 +66,7 @@ if ($this->tmpl['ytb_display'] == 1) {
 	echo '</table>';
 	echo $this->loadTemplate('rating');
 	if ($this->tmpl['detailwindow'] == 7) {
-		PhocaGalleryUtils::displayFooter();
+		echo '<div style="text-align:right;color:#ccc;display:block">Powered by <a href="https://www.phoca.cz/phocagallery">Phoca Gallery</a></div>';
 	}
 	echo '</div>';
 }
