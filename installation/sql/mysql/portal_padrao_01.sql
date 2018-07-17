@@ -7874,10 +7874,7 @@ CREATE TABLE `#__user_usergroup_map`  (
 -- Records of #__user_usergroup_map
 -- ----------------------------
 INSERT INTO `#__user_usergroup_map` VALUES (436, 8);
-INSERT INTO `#__user_usergroup_map` VALUES (495, 8);
-INSERT INTO `#__user_usergroup_map` VALUES (576, 8);
 INSERT INTO `#__user_usergroup_map` VALUES (578, 13);
-INSERT INTO `#__user_usergroup_map` VALUES (977, 8);
 
 -- ----------------------------
 -- Table structure for #__usergroups
@@ -7940,9 +7937,7 @@ CREATE TABLE `#__users`  (
 -- ----------------------------
 -- Records of #__users
 -- ----------------------------
-INSERT INTO `#__users` VALUES (436, 'Super User', 'tiago', 'tiagovtg@gmail.com', '$2y$10$8w9u/JrZcCctMi3R1D2uWeTm6aWOCBds7Kis1rU.87Tpf.c6DtiZO', 0, 1, '2018-07-16 11:52:32', '2018-07-16 18:20:32', '0', '', '0000-00-00 00:00:00', 0, '', '', 0);
-INSERT INTO `#__users` VALUES (495, 'Super User', 'tiago', 'tiagovtg@gmail.com', '$2y$10$lBsNcwXkO6kZNI4DFGU6dOnHhHGccErU1cjZFPuTdPMCoOQL96uCu', 0, 1, '2018-07-16 11:52:32', '2018-07-16 11:52:32', '0', '', '0000-00-00 00:00:00', 0, '', '', 0);
-INSERT INTO `#__users` VALUES (576, 'Super User Default (apague ou troque os dados - está desabilitado)', 'admin_default', 'joomlagovbr@gmail.com', '$2y$10$jN9cqIctGw2b.88ugASMcOpLAb2vZLzKXrwqqyo8H0KcPFiH7mNdS', 1, 1, '2018-07-16 11:52:32', '2018-07-16 11:52:32', '0', '{\"admin_style\":\"\",\"admin_language\":\"\",\"language\":\"\",\"editor\":\"jce\",\"helpsite\":\"\",\"timezone\":\"\"}', '0000-00-00 00:00:00', 0, '', '', 0);
+INSERT INTO `#__users` VALUES (436, 'Super User', 'admin', 'tiagovtg@gmail.com', '$2y$10$GL.Vh2gD.pLAO.VsjjGdG.OfAdqgwXqXeOkGsz9LihoEjufkvW3Ai', 0, 1, '2018-07-16 11:52:32', '2018-07-17 14:24:32', '0', '{\"admin_style\":\"\",\"admin_language\":\"\",\"language\":\"\",\"editor\":\"\",\"helpsite\":\"\",\"timezone\":\"\"}', '0000-00-00 00:00:00', 0, '', '', 0);
 INSERT INTO `#__users` VALUES (578, 'agendadirigentes', 'agendadirigentes', 'agendadirigentes@exemplo.com', '$2y$10$fLJUnrkMVps7TWO23gwhtOWlfl21DusleSBOzB2X60n9.fgdSsXpi', 1, 1, '2018-07-16 11:52:32', '2018-07-16 11:52:32', '', '{\"admin_style\":\"\",\"admin_language\":\"\",\"language\":\"\",\"editor\":\"\",\"helpsite\":\"\",\"timezone\":\"America\\/Sao_Paulo\"}', '0000-00-00 00:00:00', 0, '', '', 0);
 
 -- ----------------------------
