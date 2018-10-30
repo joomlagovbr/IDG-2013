@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         7.5.1
+ * @version         8.0.3
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -64,6 +64,11 @@ class DB
 
 	private static function getQueryId(JDatabaseQuery $query, $arguments)
 	{
+		if ( ! Params::get()->use_query_cache)
+		{
+			return false;
+		}
+
 		$query = (string) $query;
 
 		// Don't cache queries with random ordering

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/1.5/component-install.dtd">
+<install method="phocagallerytheme" type="component" version="3">
+	<name>Responsive Phoca Gallery 4</name>
+	<creationDate>14/05/2016</creationDate>
+	<author>Jan Pavelka (www.phoca.cz)</author>
+	<authorEmail></authorEmail>
+	<authorUrl>http://www.phoca.cz</authorUrl>
+	<copyright>Jan Pavelka</copyright>
+	<license>GNU/GPL</license>
+	<version>1.0.0</version>
+	<description>Phoca Gallery Theme File - Responsive</description>
+
+	<files>
+		<folder>images</folder>
+		<folder>css</folder>
+		<filename>theme.xml</filename>
+	</files>
+	
+	<params>
+	
+<param name="responsive" default="1" />
+<param name="bootstrap_icons" default="1" />
+<param name="equal_heights" default="0" />
+<param name="detail_window" default="12" />
+
+	</params>
+</install>

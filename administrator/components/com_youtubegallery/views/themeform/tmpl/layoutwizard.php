@@ -1,8 +1,8 @@
 <?php
 /**
  * YoutubeGallery Joomla! 3.0 Native Component
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * @version 4.4.5
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -34,7 +34,7 @@ defined('_JEXEC') or die('Restricted access');
                         <table style="border:none;">
                                 <tbody>
                                         <tr><td style="width:270px;"><?php echo $this->form->getLabel('showlistname'); ?></td><td>:</td><td><fieldset id="jform_attribs_link_titles" class="radio btn-group"><?php echo $this->form->getInput('showlistname'); ?></fieldset></td></tr>
-                                        <tr><td><?php echo $this->form->getLabel('listnamestyle'); ?></td><td>:</td><td>AVAILABLE IN "PRO" VERSION ONLY</td></tr>
+                                        <tr><td><?php echo $this->form->getLabel('listnamestyle'); ?></td><td>:</td><td><?php echo $this->form->getInput('listnamestyle'); ?></td></tr>
 										
 										<tr><td colspan="3" style="height:20px;"><hr style="border:none;border-bottom:1px dotted #DDDDDD;" /></td></tr>
                                         
@@ -47,13 +47,13 @@ defined('_JEXEC') or die('Restricted access');
 										<tr><td><?php echo $this->form->getLabel('activevideotitlestyle'); ?></td><td>:</td><td><?php echo $this->form->getInput('activevideotitlestyle'); ?></td></tr>
 										<tr><td colspan="3" style="height:20px;"><hr style="border:none;border-bottom:1px dotted #DDDDDD;" /></td></tr>
 										<tr><td><?php echo $this->form->getLabel('description'); ?></td><td>:</td><td><fieldset id="jform_attribs_link_titles" class="radio btn-group"><?php echo $this->form->getInput('description'); ?></fieldset></td></tr>
-										<tr><td><?php echo $this->form->getLabel('descr_style'); ?></td><td>:</td><td>AVAILABLE IN "PRO" VERSION ONLY</td></tr>
+										<tr><td><?php echo $this->form->getLabel('descr_style'); ?></td><td>:</td><td><?php echo $this->form->getInput('descr_style'); ?></td></tr>
                                         <tr><td><?php echo $this->form->getLabel('descr_position'); ?></td><td>:</td><td><?php echo $this->form->getInput('descr_position'); ?></td></tr>
 										<tr><td colspan="3" style="height:20px;"><hr style="border:none;border-bottom:1px dotted #DDDDDD;" /></td></tr>
 										
                                         
                                         
-                                        <tr><td><?php echo $this->form->getLabel('cssstyle'); ?></td><td>:</td><td>AVAILABLE IN "PRO" VERSION ONLY</td></tr>
+                                        <tr><td><?php echo $this->form->getLabel('cssstyle'); ?></td><td>:</td><td><?php echo $this->form->getInput('cssstyle'); ?></td></tr>
 										<tr><td colspan="3" style="height:20px;"><hr style="border:none;border-bottom:1px dotted #DDDDDD;" /></td></tr>
                                 </tbody>
                         </table>

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         7.5.1
+ * @version         8.0.3
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -14,6 +14,7 @@ namespace RegularLabs\Plugin\System\ArticlesAnywhere;
 defined('_JEXEC') or die;
 
 use JFactory;
+use RegularLabs\Library\ArrayHelper as RL_Array;
 use RegularLabs\Library\Parameters as RL_Parameters;
 use RegularLabs\Library\PluginTag as RL_PluginTag;
 use RegularLabs\Library\RegEx as RL_RegEx;
@@ -158,6 +159,7 @@ class Params
 		}
 
 		self::$view_levels = JFactory::getUser()->getAuthorisedViewLevels();
+		self::$view_levels = array_unique(self::$view_levels);
 
 		if (empty(self::$view_levels))
 		{

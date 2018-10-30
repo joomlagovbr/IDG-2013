@@ -1,8 +1,8 @@
 <?php
 /**
- * YoutubeGallery Joomla! 3.0 Native Component
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * YoutubeGallery Joomla! Native Component
+ * @version 4.4.5
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -22,9 +22,9 @@ class YoutubeGalleryControllerCategories extends JControllerForm
 		/**
 		 * Proxy for getModel.
 		 */
-		function display()
+		function display($cachable = false, $urlparams = array())
 		{
-				switch(JRequest::getVar( 'task'))
+				switch(JFactory::getApplication()->input->getVar( 'task'))
 				{
 						case 'delete':
 								$this->delete();
@@ -45,16 +45,15 @@ class YoutubeGalleryControllerCategories extends JControllerForm
 								$this->remove_confirmed();
 								break;
 						default:
-								JRequest::setVar( 'view', 'categories');
+								JFactory::getApplication()->input->setVar( 'view', 'categories');
 								parent::display();
 								
 								break;
 				}
 		
-				
 		}
-		
-		public function getModel($name = 'Categories', $prefix = 'YoutubeGalleryModel') 
+
+		public function getModel($name = 'Categories', $prefix = 'YoutubeGalleryModel', $config = array()) 
 		{
 		        $model = parent::getModel($name, $prefix, array('ignore_request' => true));
 		        return $model;
@@ -63,12 +62,12 @@ class YoutubeGalleryControllerCategories extends JControllerForm
  
 		public function delete()
 		{
-				JRequest::setVar( 'view', 'categories');
+				JFactory::getApplication()->input->setVar( 'view', 'categories');
 
 				// Check for request forgeries
-				JRequest::checkToken() or jexit( 'Invalid Token' );
-        	
-				$cid = JRequest::getVar( 'cid', array(), 'post', 'array' );
+				JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+				        	
+				$cid = JFactory::getApplication()->input->getVar( 'cid', array(), 'post', 'array' );
 
 				if (!count($cid)) {
 						$this->setRedirect( 'index.php?option=com_youtubegallery&view=categories', JText::_('COM_YOUTUBEGALLERY_NO_CATEGORIES_SELECTED'),'error' );
@@ -83,7 +82,7 @@ class YoutubeGalleryControllerCategories extends JControllerForm
 		{
 		
 				// Get some variables from the request
-				$cid	= JRequest::getVar( 'cid', array(), 'post', 'array' );
+				$cid	= JFactory::getApplication()->input->getVar( 'cid', array(), 'post', 'array' );
 		
 		        	if (!count($cid))
 				{
@@ -107,7 +106,7 @@ class YoutubeGalleryControllerCategories extends JControllerForm
 		public function copyItem()
 		{
 				
-				$cid = JRequest::getVar( 'cid', array(), 'post', 'array' );
+				$cid = JFactory::getApplication()->input->getVar( 'cid', array(), 'post', 'array' );
 	    
 				$model = $this->getModel('categories');
 	    
@@ -123,7 +122,6 @@ class YoutubeGalleryControllerCategories extends JControllerForm
 	    
 				$link 	= 'index.php?option=com_youtubegallery&view=categories';
 				$this->setRedirect($link, $msg);
-				
 		}
 
 }

@@ -87,3 +87,15 @@
 2018-01-31T16:59:04+00:00	INFO ::1	update	Deleting removed files and folders.
 2018-01-31T16:59:13+00:00	INFO ::1	update	Cleaning up after installation.
 2018-01-31T16:59:13+00:00	INFO ::1	update	Update to version 3.8.4 is complete.
+2018-07-16T11:53:33+00:00	INFO ::1	update	Update started by user Super User (436). Old version is 3.8.4.
+2018-07-16T11:53:55+00:00	INFO ::1	update	Downloading update file from https://downloads.joomla.org/cms/joomla3/3-8-10/Joomla_3.8.10-Stable-Update_Package.zip.
+2018-07-16T11:54:00+00:00	INFO ::1	update	File Joomla_3.8.10-Stable-Update_Package.zip downloaded.
+2018-07-16T11:54:00+00:00	INFO ::1	update	Starting installation of new version.
+2018-07-16T11:56:00+00:00	INFO ::1	update	Finalising installation.
+2018-07-16T11:56:00+00:00	INFO ::1	update	Ran query from file 3.8.6-2018-02-14. Query text: INSERT INTO `#__extensions` (`extension_id`, `package_id`, `name`, `type`, `elem.
+2018-07-16T11:56:00+00:00	INFO ::1	update	Ran query from file 3.8.6-2018-02-14. Query text: INSERT INTO `#__postinstall_messages` (`extension_id`, `title_key`, `description.
+2018-07-16T11:56:00+00:00	INFO ::1	update	Ran query from file 3.8.8-2018-05-18. Query text: INSERT INTO `#__postinstall_messages` (`extension_id`, `title_key`, `description.
+2018-07-16T11:56:00+00:00	INFO ::1	update	Ran query from file 3.8.9-2018-06-19. Query text: UPDATE `#__extensions` SET `enabled` = '1' WHERE `name` = 'mod_sampledata';.
+2018-07-16T11:56:00+00:00	INFO ::1	update	Deleting removed files and folders.
+2018-07-16T11:56:03+00:00	INFO ::1	update	Cleaning up after installation.
+2018-07-16T11:56:03+00:00	INFO ::1	update	Update to version 3.8.10 is complete.

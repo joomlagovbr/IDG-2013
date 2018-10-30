@@ -5,7 +5,7 @@
  **/
 
 // No direct access to this file
-defined('_JEXEC') or die('Restricted access');
+//defined('_JEXEC') or die('Restricted access');
 
 
 /*
@@ -78,7 +78,7 @@ class FLV {
   	var $_fh;
     var $_lastTagSize = 0;
 
-	var $_getID3 = NULL;
+	var $__getID3 = NULL;
 	var $FileInfo = NULL;
 
 	var $error = NULL;
@@ -689,135 +689,7 @@ class FLV {
 		}
 	}
 
-	/**
-	* Open a lock used when playing with playFlvLock.
-	*
-	* @param string $key			Key Name
-	* @param int $validtime			Defines how long time a key is valid
-	* @param bool $usedb			Use Database key storage?
-	*
-	* @return true/false			if sucess/failed.
-	*/
-    function openLock($key=false,$validtime=30,$usedb=false)
-    {
-		if(!$key) return false;
-		if(!session_id()) session_start();
-		if($usedb) {
-			$this->loadConfig();
-			$sid = session_id();
-			$expire = time()+$validtime;
-			$ip = $_SERVER['REMOTE_ADDR'];
-
-			$this->dbConnect();
-
-			$result = mysql_list_tables ( $this->config['db_name'] ,$this->_db_link_id);
-
-			$tableKey = $this->config['db_table_prefix']."key";
-			$tableBlock = $this->config['db_table_prefix']."block";
-
-			$maketableKey = true;
-			$maketableBlock = true;
-			while($row = mysql_fetch_row($result)) {
-			   if($row[0] == $tableKey) $maketableKey = false;
-			   elseif($row[0] == $tableBlock) $maketableBlock = false;
-			}
-
-			if($maketableKey) {
-				$query="CREATE TABLE `".$tableKey."` ( `uid` SMALLINT( 5 ) AUTO_INCREMENT , `sid` VARCHAR( 35 ) NOT NULL , `key` VARCHAR( 50 ) NOT NULL , `timeout` INT( 20 ) NOT NULL , `ip` VARCHAR( 15 ) NOT NULL , PRIMARY KEY ( `uid` ) ) TYPE = MYISAM";
-				if (!mysql_query($query)) $this->_error_die(mysql_error());
-			}
-			if($maketableBlock) {
-				$query="CREATE TABLE `".$tableBlock."` (`uid` SMALLINT( 5 ) AUTO_INCREMENT ,`ip` VARCHAR( 15 ) NOT NULL ,`count` SMALLINT( 5 ) DEFAULT '0',PRIMARY KEY ( `uid` ) ) TYPE = MYISAM";
-				if (!mysql_query($query)) $this->_error_die(mysql_error());
-			}
-
-			$query = "SELECT uid FROM ".$tableKey." WHERE `sid` LIKE '$sid' AND `key` LIKE '$key' LIMIT 1";
-			$result = mysql_query($query);
-			$rowKey = mysql_fetch_assoc($result);
-
-			if($rowKey['uid']) $query = "UPDATE ".$tableKey." SET timeout = $expire , ip = '$ip' WHERE uid = ".$rowKey['uid'];
-			else $query = "INSERT INTO ".$tableKey." VALUES ('','$sid','$key','$expire','$ip')";
-			@mysql_query($query);
-			mysql_close($this->_db_link_id);
-		} else {
-			$_SESSION[FLV_SECRET_KEY][$key] = time()+$validtime;
-		}
-		return true;
-	}
-
-	/**
-	* Close a Lock used when playing with playFlvLock.
-	*
-	* @param int $lock_id			uid in Database
-	*/
-    function closeLock($lock_id = 0)
-    {
-		if($lock_id) {
-			$this->loadConfig();
-			$this->dbConnect();
-
-			$sid = session_id();
-			$timeout = time();
-
-			$tableKey = $this->config['db_table_prefix']."key";
-			$tableBlock = $this->config['db_table_prefix']."block";
-
-			$query = "DELETE FROM `".$tableKey."` WHERE `uid` = '$lock_id' AND `sid` LIKE '$sid' AND `key` LIKE '$this->lock_key'";
-
-			if (!mysql_query($query)) $this->_error_die(mysql_error());
-			mysql_close($this->_db_link_id);
-		}
-		unset($_SESSION[FLV_SECRET_KEY][$this->lock_key]);
-	}
-
-	/**
-	* Play the flv  with lock
-	*
-	* @param bool $usedb			Check in database
-	*
-	* @return true/false			if sucess/failed.
-	*/
-    function validLock($usedb=false)
-    {
-		if(!session_id()) session_start();
-		$return = false;
-		if($usedb) {
-			$this->loadConfig();
-			$this->dbConnect();
-			$ip = $_SERVER['REMOTE_ADDR'];
-
-			$tableKey = $this->config['db_table_prefix']."key";
-			$tableBlock = $this->config['db_table_prefix']."block";
-
-			$query = "SELECT count FROM ".$tableBlock." WHERE `ip` LIKE '$ip' LIMIT 1";
-			$result = mysql_query($query);
-			$rowBlock = mysql_fetch_assoc($result);
-
-			$sid = session_id();
-			$timeout = time();
-
-			$query = "SELECT uid FROM ".$tableKey." WHERE `sid` LIKE '$sid' AND `key` LIKE '$this->lock_key' AND `timeout` >= $timeout LIMIT 1";
-			$result = mysql_query($query);
-			$rowKey = mysql_fetch_assoc($result);
-
-			if($rowKey['uid'] && ($this->config['block_counter'] > $rowBlock['count'] || !$rowBlock['count'])) $return = true;
-			elseif($this->config['block_counter']) {
-				$query = "SELECT uid FROM ".$tableBlock." WHERE `ip` LIKE '$ip' LIMIT 1";
-				$result = mysql_query($query);
-				$rowBlock = mysql_fetch_assoc($result);
-
-				if($rowBlock['uid']) $query = "UPDATE ".$tableBlock." SET count = count+1 WHERE uid = ".$rowBlock['uid'];
-				else $query = "INSERT INTO ".$tableBlock." VALUES ('','$ip','1')";
-				@mysql_query($query);
-				$this->error[] = FLV_ERROR_BLOCKED;
-			}
-			mysql_close($this->_db_link_id);
-		} elseif($_SESSION[FLV_SECRET_KEY][$this->lock_key] >= time()) {
-			$return = true;
-		}
-		$this->closeLock($rowKey['uid']);
-		return $return;
-	}
+	
 
 	/**
 	* Play the flv  with lock
@@ -882,18 +754,6 @@ class FLV {
     function getTagOffset()
     {
     	return ftell($this->_fh) - $this->_lastTagSize;
-    }
-
-	/**
-	* Connect to Database
-	*/
-    function dbConnect()
-    {
-		$this->loadConfig();
-		// connect to the mysql database server.
-		$this->_db_link_id = mysql_connect ($this->config['db_host'], $this->config['db_username'], $this->config['db_password']);
-		// sellect db
-		if (!mysql_select_db($this->config['db_name'])) $this->_error_die(mysql_error());
     }
 
 	/**

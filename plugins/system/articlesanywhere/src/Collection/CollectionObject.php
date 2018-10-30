@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         7.5.1
+ * @version         8.0.3
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -15,6 +15,7 @@ use JDatabaseDriver;
 use JDatabaseQuery;
 use JFactory;
 use RegularLabs\Library\ArrayHelper as RL_Array;
+use RegularLabs\Library\DB as RL_DB;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Config;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Factory;
 
@@ -46,7 +47,9 @@ class CollectionObject
 
 		foreach ($ids as $key => $id)
 		{
-			if (is_numeric($id))
+			$check_id = RL_DB::removeOperator($id);
+
+			if (is_numeric($check_id))
 			{
 				$numeric[] = $id;
 				continue;

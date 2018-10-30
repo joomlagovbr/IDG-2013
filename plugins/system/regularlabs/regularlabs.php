@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.1.20362
+ * @version         18.7.10792
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -26,6 +26,7 @@ if (is_file(JPATH_LIBRARIES . '/regularlabs/autoload.php'))
 use Joomla\Registry\Registry;
 use RegularLabs\Library\Document as RL_Document;
 use RegularLabs\Library\Parameters as RL_Parameters;
+use RegularLabs\Library\Uri as RL_Uri;
 use RegularLabs\Plugin\System\RegularLabs\AdminMenu as RL_AdminMenu;
 use RegularLabs\Plugin\System\RegularLabs\DownloadKey as RL_DownloadKey;
 use RegularLabs\Plugin\System\RegularLabs\QuickPage as RL_QuickPage;
@@ -39,7 +40,7 @@ class PlgSystemRegularLabs extends JPlugin
 	{
 		if ( ! is_file(JPATH_LIBRARIES . '/regularlabs/autoload.php'))
 		{
-			if (JFactory::getApplication()->isAdmin())
+			if (JFactory::getApplication()->isClient('administrator'))
 			{
 				JFactory::getApplication()->enqueueMessage('The Regular Labs Library folder is missing or incomplete: ' . JPATH_LIBRARIES . '/regularlabs', 'error');
 			}
@@ -125,10 +126,10 @@ class PlgSystemRegularLabs extends JPlugin
 	{
 		$input = JFactory::getApplication()->input;
 
-		$format     = $input->getString('format', 'json');
-		$attributes = $input->getString('attributes', '');
+		$format = $input->getString('format', 'json');
 
-		$attributes = new Registry(base64_decode($attributes));
+		$attributes = RL_Uri::getCompressedAttributes();
+		$attributes = new Registry($attributes);
 
 		$field      = $attributes->get('field');
 		$field_type = $attributes->get('fieldtype');

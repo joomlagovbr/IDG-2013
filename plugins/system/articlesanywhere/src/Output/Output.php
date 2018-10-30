@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         7.5.1
+ * @version         8.0.3
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -110,7 +110,7 @@ class Output
 		if ($content == '')
 		{
 			list($data_tag_start, $data_tag_end) = Params::getDataTagCharacters();
-			$content = $data_tag_start . 'layout' . $data_tag_end;
+			$content = $data_tag_start . 'article' . $data_tag_end;
 		}
 
 		(new IfStructures($this->config, $item, $this->numbers))->handle($content);

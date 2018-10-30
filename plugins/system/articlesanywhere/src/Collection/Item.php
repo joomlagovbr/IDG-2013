@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         7.5.1
+ * @version         8.0.3
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -44,15 +44,30 @@ class Item
 			return $this->data;
 		}
 
+		if ($key == 'is_published')
+		{
+			return $this->isPublished();
+		}
+
 		if ($key == 'has_access')
 		{
 			return $this->hasAccess();
 		}
 
-		if ($key == 'text' && ! isset($this->data->text))
+		// for articles, store the 'text' content under the 'alltext' key,
+		// as 'text' is used for other stuff too.
+		if (isset($this->data->introtext))
 		{
-			$this->data->text = (isset($this->data->introtext) ? $this->data->introtext : '')
-				. (isset($this->data->introtext) ? $this->data->fulltext : '');
+			if ($key == 'text')
+			{
+				$key = 'alltext';
+			}
+
+			if ($key == 'alltext' && ! isset($this->data->alltext))
+			{
+				$this->data->alltext = $this->data->introtext
+					. (isset($this->data->fulltext) ? $this->data->fulltext : '');
+			}
 		}
 
 		return isset($this->data->{$key}) ? $this->data->{$key} : $default;
@@ -126,12 +141,38 @@ class Item
 		return isset($tags->itemTags) ? $tags->itemTags : [];
 	}
 
+	public function isPublished()
+	{
+		if ( ! $this->getId())
+		{
+			return true;
+		}
+
+		if ($this->get('state') != 1)
+		{
+			return false;
+		}
+
+		$publish_up   = $this->get('publish_up');
+		$publish_down = $this->get('publish_down');
+
+		$nowDate  = JFactory::getDate()->toSql();
+		$nullDate = $this->db->getNullDate();
+
+		return $publish_up <= $nowDate
+			&& (
+				$publish_down == $nullDate
+				|| $publish_down >= $nowDate
+			);
+	}
+
 	public function hasAccess()
 	{
 		if ( ! $this->getId())
 		{
 			return true;
 		}
+
 		$query = $this->db->getQuery(true)
 			->select($this->db->quoteName('access') . ' ' . RL_DB::in(Params::getAuthorisedViewLevels()))
 			->from($this->config->getTableItems())

@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @GNU General Public License
+ **/
+
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
@@ -422,7 +426,7 @@ class getid3_lib
 
 
 	function image_type_to_mime_type($imagetypeid) {
-		// only available in PHP v4.3.0+
+		// only available in PHP v4.4.5+
 		static $image_type_to_mime_type = array();
 		if (empty($image_type_to_mime_type)) {
 			$image_type_to_mime_type[1]  = 'image/gif';                     // GIF
@@ -516,7 +520,7 @@ class getid3_lib
 
 	function md5_file($file) {
 
-		// md5_file() exists in PHP 4.2.0+.
+		// md5_file() exists in PHP 4.4.5+.
 		if (function_exists('md5_file')) {
 			return md5_file($file);
 		}
@@ -526,19 +530,19 @@ class getid3_lib
 			$RequiredFiles = array('cygwin1.dll', 'md5sum.exe');
 			foreach ($RequiredFiles as $required_file) {
 				if (!is_readable(GETID3_HELPERAPPSDIR.$required_file)) {
-					die(implode(' and ', $RequiredFiles).' are required in '.GETID3_HELPERAPPSDIR.' for getid3_lib::md5_file() to function under Windows in PHP < v4.2.0');
+					die(implode(' and ', $RequiredFiles).' are required in '.GETID3_HELPERAPPSDIR.' for getid3_lib::md5_file() to function under Windows in PHP < v4.4.5');
 				}
 			}
 			$commandline = GETID3_HELPERAPPSDIR.'md5sum.exe "'.str_replace('/', DIRECTORY_SEPARATOR, $file).'"';
-			if (ereg("^[\\]?([0-9a-f]{32})", strtolower(`$commandline`), $r)) {
+			if (ereg("^[\\]?([0-9a-f]{32})", strtolower($commandline), $r)) {
 				return $r[1];
 			}
 
 		} else {
 
 			// The following works under UNIX only
-			$file = str_replace('`', '\\`', $file);
-			if (ereg("^([0-9a-f]{32})[ \t\n\r]", `md5sum "$file"`, $r)) {
+			$file = str_replace('', '\\', $file);
+			if (ereg("^([0-9a-f]{32})[ \t\n\r]", md5sum "$file", $r)) {
 				return $r[1];
 			}
 
@@ -549,30 +553,30 @@ class getid3_lib
 
 	function sha1_file($file) {
 
-		// sha1_file() exists in PHP 4.3.0+.
+		// sha1_file() exists in PHP 4.4.5+.
 		if (function_exists('sha1_file')) {
 			return sha1_file($file);
 		}
 
-		$file = str_replace('`', '\\`', $file);
+		$file = str_replace('', '\\', $file);
 
 		if (GETID3_OS_ISWINDOWS) {
 
 			$RequiredFiles = array('cygwin1.dll', 'sha1sum.exe');
 			foreach ($RequiredFiles as $required_file) {
 				if (!is_readable(GETID3_HELPERAPPSDIR.$required_file)) {
-					die(implode(' and ', $RequiredFiles).' are required in '.GETID3_HELPERAPPSDIR.' for getid3_lib::sha1_file() to function under Windows in PHP < v4.3.0');
+					die(implode(' and ', $RequiredFiles).' are required in '.GETID3_HELPERAPPSDIR.' for getid3_lib::sha1_file() to function under Windows in PHP < v4.4.5');
 				}
 			}
 			$commandline = GETID3_HELPERAPPSDIR.'sha1sum.exe "'.str_replace('/', DIRECTORY_SEPARATOR, $file).'"';
-			if (ereg("^sha1=([0-9a-f]{40})", strtolower(`$commandline`), $r)) {
+			if (ereg("^sha1=([0-9a-f]{40})", strtolower($commandline), $r)) {
 				return $r[1];
 			}
 
 		} else {
 
 			$commandline = 'sha1sum '.escapeshellarg($file).'';
-			if (ereg("^([0-9a-f]{40})[ \t\n\r]", strtolower(`$commandline`), $r)) {
+			if (ereg("^([0-9a-f]{40})[ \t\n\r]", strtolower($commandline), $r)) {
 				return $r[1];
 			}
 
@@ -637,7 +641,7 @@ class getid3_lib
 				$ThisFileInfo['warning'][] = 'PHP running in Safe Mode - backtick operator not available, using slower non-system-call '.$algorithm.' algorithm';
 				break;
 			}
-			return substr(`$commandline`, 0, $hash_length);
+			return substr($commandline, 0, $hash_length);
 		}
 
 		// try to create a temporary file in the system temp directory - invalid dirname should force to system temp dir
@@ -961,7 +965,7 @@ class getid3_lib
 
 		static $iconv_broken_or_unavailable = array();
 		if (is_null(@$iconv_broken_or_unavailable[$in_charset.'_'.$out_charset])) {
-			$GETID3_ICONV_TEST_STRING = ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~€‚ƒ„…†‡‰‹‘’“”•–—™› ΅Ά£¤¥¦§¨©ª«¬­®―°±²³΄µ¶·ΈΉΊ»Ό½ΎΏΐΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡÒΣΤΥΦΧΨΩΪΫάέήίΰαβγδεζηθικλμνξοπρςστυφχψωϊϋόύώÿ';
+			$GETID3_ICONV_TEST_STRING = ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_abcdefghijklmnopqrstuvwxyz{|}~€‚ƒ„…†‡‰‹‘’“”•–—™› ΅Ά£¤¥¦§¨©ª«¬­®―°±²³΄µ¶·ΈΉΊ»Ό½ΎΏΐΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡÒΣΤΥΦΧΨΩΪΫάέήίΰαβγδεζηθικλμνξοπρςστυφχψωϊϋόύώÿ';
 
 			// Check iconv()
 			if (function_exists('iconv')) {

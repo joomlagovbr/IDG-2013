@@ -1,28 +1,35 @@
 <?php 
+/*
+ * @package Joomla
+ * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+ *
+ * @component Phoca Gallery
+ * @copyright Copyright (C) Jan Pavelka www.phoca.cz
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ */
 defined('_JEXEC') or die('Restricted access');
 echo '<div id="phocagallery-ytbupload">';
 echo '<div style="font-size:1px;height:1px;margin:0px;padding:0px;">&nbsp;</div>';
 echo '<form onsubmit="return OnUploadSubmitPG(\'loading-label-ytb\');" action="'. $this->tmpl['syu_url'] .'" id="phocaGalleryUploadFormYU" method="post">';
 //if ($this->tmpl['ftp']) { echo PhocaGalleryFileUpload::renderFTPaccess();}  
-echo '<h4>'; 
-echo JText::_('COM_PHOCAGALLERY_YTB_UPLOAD');
-echo ' </h4>';
-
+//echo '<h4>'; 
+//echo JText::_('COM_PHOCAGALLERY_YTB_UPLOAD');
+//echo ' </h4>';
+if ($this->tmpl['catidimage'] == 0 || $this->tmpl['catidimage'] == '') {
+	echo '<div class="alert alert-error">'.JText::_('COM_PHOCAGALLERY_PLEASE_SELECT_CATEGORY_TO_BE_ABLE_TO_IMPORT_YOUTUBE_VIDEO').'</div>';
+}
 echo $this->tmpl['syu_output'];
 
 $this->tmpl['upload_form_id'] = 'phocaGalleryUploadFormYU';
 ?>
 
-<table>
-	<tr>
-		<td><?php echo JText::_( 'COM_PHOCAGALLERY_YTB_LINK' ); ?>:</td>
-			<td>
-				<input type="text" id="phocagallery-ytbupload-link" name="phocagalleryytbuploadlink" value=""  maxlength="255" size="48" /></td>
+<div><?php echo JText::_( 'COM_PHOCAGALLERY_YTB_LINK' ); ?>:</div>
+<div>
+<input type="text" id="phocagallery-ytbupload-link" name="phocagalleryytbuploadlink" value=""  maxlength="255" size="48" /></br>
+<input type="submit" class="btn btn-primary" id="file-upload-submit" value="<?php echo JText::_('COM_PHOCAGALLERY_START_UPLOAD'); ?>"/>
+</div>
 
-		<td>
-		<input type="submit" id="file-upload-submit" value="<?php echo JText::_('COM_PHOCAGALLERY_START_UPLOAD'); ?>"/>
-		</td></tr>
-</table>
 
 <input type="hidden" name="controller" value="user" />
 <input type="hidden" name="viewback" value="user" />

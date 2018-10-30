@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_PHOCAGALLERY_COOLIRIS_3D_WALL_LAYOUT">
+		<message>
+			<![CDATA[COM_PHOCAGALLERY_COOLIRIS_3D_WALL_LAYOUT_DESC]]>
+		</message>
+	</layout>
+	
+<fields name="request">
+	<fieldset name="request" addfieldpath="/administrator/components/com_phocagallery/models/fields">
+		<field name="id" type="phocagallerycategory" section="com_phocagallery" default="0" label="Select Category" description="A Phoca gallery category" required="true" />
+	</fieldset>
+</fields>
+
+<fields name="params">
+	<fieldset name="basic" addfieldpath="/administrator/components/com_phocagallery/models/fields" >	
+		<field name="cooliris3d_wall_width" default="600" size="10" type="text" label="Cooliris 3D Wall Width" description="Cooliris 3D Wall Width DESC" />
+		<field name="cooliris3d_wall_height" default="370" size="10" type="text" label="Cooliris 3D Wall Height" description="Cooliris 3D Wall Height DESC" />
+		<field name="display_cat_name_title" type="list" default="1" label="Display Category Name in Page Title" description="Display Category Name in Page Title DESC">
+			<option value="0">Hide</option>
+			<option value="1">Show</option>
+		</field>
+		<field name="display_cat_name_breadcrumbs" type="list" default="0" label="Display Category Name in Breadcrumbs" description="Display Category Name in Breadcrumbs DESC">
+			<option value="0">Menu Item Title</option>
+			<option value="1">Menu Item Title - Category Title</option>
+			<option value="2">Category Title</option>
+		</field>
+	</fieldset>
+</fields>
+
+</metadata>

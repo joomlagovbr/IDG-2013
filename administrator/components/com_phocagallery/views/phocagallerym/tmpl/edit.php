@@ -69,7 +69,7 @@ $tasks		= $task . 's';
 echo '<div class="phoca-thumb-status">' . $this->tmpl['enablethumbcreationstatus'] .'</div>';
 
 echo $r->startForm($option, $task, 'adminForm', 'adminForm');
-echo '<div class="span4 form-horizontal" style="border-right: 1px solid #d3d3d3;padding-right: 5px; margin-right: 5px;">';
+echo '<div class="span4 form-horizontal" style="border-right: 1px solid #d3d3d3;padding-right: 5px;">';
 echo '<h4>'. JText::_('COM_PHOCAGALLERY_MULTIPLE_ADD'). '</h4>';
 
 echo '<div>'."\n"; 

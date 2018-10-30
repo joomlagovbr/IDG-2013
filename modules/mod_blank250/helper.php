@@ -9,12 +9,15 @@
 
 // no direct access
 defined('_JEXEC') or die;
+
 class modblank250Helper
 {
-function phpprocessbm($pcode,$modno,$fname){
-		$fcontent="<?php defined('_JEXEC') or die; ".$pcode." ?>";
-		if(file_get_contents($fname)!==$fcontent){
-		  file_put_contents($fname,$fcontent );
+    function phpprocessbm($pcode,  $fname)
+    {
+        $fcontent = "<?php defined('_JEXEC') or die; " . $pcode . " ?>";
+        if (!empty($pcode)) {
+            file_put_contents($fname, $fcontent);
         }
-    return $fname;}
+        return $fname;
+    }
 }

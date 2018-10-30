@@ -1,8 +1,8 @@
 <?php
 /**
- * YoutubeGallery Joomla! 3.0 Native Component
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * YoutubeGallery for Joomla!
+ * @version 4.4.5
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -14,13 +14,15 @@ defined('_JEXEC') or die('Restricted access');
 
 if(!defined('DS'))
 	define('DS',DIRECTORY_SEPARATOR);
+	
+require_once('misc.php');
 
 class YoutubeGalleryLayoutRenderer
 {
 	public static function getValue($fld, $params, &$videolist_row, &$theme_row, $gallery_list, $width, $height, $videoid, $AllowPagination, $total_number_of_rows,$custom_itemid=0)//,$title
 	{
 		
-		$fields_theme=array('bgcolor','cols','cssstyle','navbarstyle','thumbnailstyle','linestyle','listnamestyle','activevideotitlestyle','color1','color2','descr_style','rel','hrefaddon');
+		$fields_theme=array('bgcolor','cssstyle','navbarstyle','thumbnailstyle','linestyle','listnamestyle','activevideotitlestyle','color1','color2','descr_style','rel','hrefaddon');
 		if(in_array($fld,$fields_theme))
 		{
 			$theme_row_array = get_object_vars($theme_row);
@@ -36,18 +38,73 @@ class YoutubeGalleryLayoutRenderer
 					return 'images/'.$theme_row->mediafolder;
 			break;
 		
+			case 'videolist':
+				if($params!='')
+				{
+					$pair=explode(',',$params);
+					switch($pair[0])
+					{
+						case 'title':
+							return $videolist_row->listname;
+							break;
+						
+						case 'description':
+							return YouTubeGalleryMisc::html2txt($videolist_row->description);
+							break;
+						
+						case 'author':
+							return $videolist_row->author;
+							break;
+						
+						case 'playlist':
+							$pl=YoutubeGalleryLayoutRenderer::getPlaylistIdsOnly($gallery_list);
+							$vlu=implode(',',$pl);
+							break;
+						
+						case 'watchgroup':
+							return $videolist_row->watchusergroup ;
+							break;
+						
+						case 'authorurl':
+							return $videolist_row->authorurl ;
+							break;
+						case 'image':
+							return $videolist_row->image ;
+							break;
+						case 'note':
+							return $videolist_row->note ;
+							break;
+					}
+				}
+				return $videolist_row->listname;
+			break;
+			
+			case 'cols':
+				return $theme_row->cols;
+				break;
+		
 			case 'listname':
 				return $videolist_row->listname;
 			break;
 		
 			case 'videotitle':
 				$title=str_replace('"','&quot;',YoutubeGalleryLayoutRenderer::getTitleByVideoID($videoid,$gallery_list));
-				
-				if($theme_row->openinnewwindow==4)
+				$title=YouTubeGalleryMisc::html2txt($title);
+				if($theme_row->openinnewwindow==4 or $theme_row->openinnewwindow==5)
 				{
-					//alteracao projeto portal padrao
-					$title='<span id="YoutubeGalleryVideoTitle'.$videolist_row->id.'">'.$title.'</span>';
-					//fim alteracao projeto portal padrao
+					$title='<div id="YoutubeGalleryVideoTitle'.$videolist_row->id.'">'.$title.'</div>';
+				}
+				
+				if($params!='')
+				{
+					$pair=explode(',',$params);
+					$words=(int)$pair[0];
+					if(isset($pair[1]))
+						$chars=(int)$pair[1];
+					else
+						$chars=0;
+					
+					$title=YoutubeGalleryLayoutRenderer::PrepareDescription($title, $words, $chars);
 				}
 				
 				return $title;
@@ -55,6 +112,8 @@ class YoutubeGalleryLayoutRenderer
 		
 			case 'videodescription':
 				$description=str_replace('"','&quot;',YoutubeGalleryLayoutRenderer::getDescriptionByVideoID($videoid,$gallery_list));
+				$description=YouTubeGalleryMisc::html2txt($description);
+				
 				if($params!='')
 				{
 					$pair=explode(',',$params);
@@ -67,11 +126,9 @@ class YoutubeGalleryLayoutRenderer
 					$description=YoutubeGalleryLayoutRenderer::PrepareDescription($description, $words, $chars);
 				}
 				
-				if($theme_row->openinnewwindow==4)
+				if($theme_row->openinnewwindow==4 or $theme_row->openinnewwindow==5)
 				{
-					//alteracao projeto portal padrao
-					$description='<p class="description" id="YoutubeGalleryVideoDescription'.$videolist_row->id.'">'.$description.'</p class="description">';
-					//fim alteracao projeto portal padrao
+					$description='<div id="YoutubeGalleryVideoDescription'.$videolist_row->id.'">'.$description.'</div>';
 				}
 				
 				return $description;
@@ -91,16 +148,17 @@ class YoutubeGalleryLayoutRenderer
 				else
 					$playerheight=$height;
 				
-				if($theme_row->openinnewwindow==4)
+				
+				if($theme_row->openinnewwindow==4 or $theme_row->openinnewwindow==5)
 				{
 					//Update Player - without page reloading
-					YoutubeGalleryLayoutRenderer::addHotReloadScript($gallery_list,$playerwidth,$playerheight,$videolist_row, $theme_row);			
+					YoutubeGalleryLayoutRenderer::addHotReloadScript($gallery_list,$playerwidth,$playerheight,$videolist_row, $theme_row);
 				}
 				return YoutubeGalleryLayoutRenderer::ShowActiveVideo($gallery_list,$playerwidth,$playerheight,$videoid,$videolist_row, $theme_row);
 		
 			break;
-			//alteracao projeto portal padrao
-			/*case 'navigationbar':
+		
+			case 'navigationbar':
 				//classictable
 				$pair=explode(',',$params);
 				
@@ -118,15 +176,14 @@ class YoutubeGalleryLayoutRenderer
 					
 				
 				if(isset($pair[1]))
-					$navbarwidth=$pair[1];
+					$navbarwidth=(int)$pair[1];
 				else
 					$navbarwidth=$width;
 					
 				return YoutubeGalleryLayoutRenderer::ClassicNavTable($gallery_list, $navbarwidth, $number_of_columns, $videolist_row, $theme_row, $AllowPagination, $videoid,$custom_itemid);
-			break;*/
+			break;
 		
-			case 'thumbnails': case 'navigationbar':
-			//fim alteracao projeto portal padrao
+			case 'thumbnails':
 				//simple list
 				return YoutubeGalleryLayoutRenderer::NavigationList($gallery_list, $videolist_row, $theme_row, $AllowPagination, $videoid,$custom_itemid);
 			break;
@@ -140,7 +197,9 @@ class YoutubeGalleryLayoutRenderer
 		
 			case 'pagination':
 				return YoutubeGalleryLayoutRenderer::Pagination($theme_row,$gallery_list,$width,$total_number_of_rows);
-				
+			
+				break;
+			
 			case 'width':
 				return $width;
 			break;
@@ -151,13 +210,19 @@ class YoutubeGalleryLayoutRenderer
 			
 			case 'instanceid':
 				return $videolist_row->id;
-			
+			break;
 			
 			case 'videoid':
 				return $videoid;
+			break;
 			
+			case 'link':
+				return  $link=YouTubeGalleryMisc::full_url($_SERVER);//$_SERVER['HTTP_REFERER'];
+			break;
+				
 			case 'social':
 				return YoutubeGalleryLayoutRenderer::SocialButtons('window.location.href','yg',$params,$videolist_row->id,$videoid);
+			break;
 			
 			case 'video':
 				
@@ -171,13 +236,13 @@ class YoutubeGalleryLayoutRenderer
 					$tableFields=array('title','description',
 					  'imageurl','videoid','videosource','publisheddate','duration',
 					  'rating_average','rating_max','rating_min','rating_numRaters',
-					  'keywords','commentcount','likes','dislikes');
+					  'keywords','commentcount','likes','dislikes','playlist');
 					
 					
-					$listitem=YoutubeGalleryLayoutRenderer::getVideoRawByVideoID($videoid,$gallery_list);//YoutubeGalleryLayoutRenderer::object_to_array($videolist_row);
+					$listitem=YoutubeGalleryLayoutRenderer::getVideoRowByID($videoid,$gallery_list,true);//YoutubeGalleryLayoutRenderer::object_to_array($videolist_row);
 					
 					
-					return YoutubeGalleryLayoutRenderer::getTumbnailData($pair[0], "", "", $listitem,$tableFields,$options,$theme_row);
+					return YoutubeGalleryLayoutRenderer::getTumbnailData($pair[0], "", "", $listitem,$tableFields,$options,$theme_row,$gallery_list,$videolist_row);
 				}
 				
 			break;
@@ -220,7 +285,7 @@ class YoutubeGalleryLayoutRenderer
 	public static function isEmpty($fld, &$videolist_row, &$theme_row, $gallery_list, $videoid, $AllowPagination, $total_number_of_rows)
 	{
 		
-		$fields_theme=array('bgcolor','cols','cssstyle','navbarstyle','thumbnailstyle','linestyle','listnamestyle','activevideotitlestyle','color1','color2','descr_style','rel','hrefaddon');
+		$fields_theme=array('bgcolor','cssstyle','navbarstyle','thumbnailstyle','linestyle','listnamestyle','activevideotitlestyle','color1','color2','descr_style','rel','hrefaddon');
 		if(in_array($fld,$fields_theme))
 		{
 			$theme_row_array = get_object_vars($theme_row);
@@ -233,12 +298,23 @@ class YoutubeGalleryLayoutRenderer
 		
 		switch($fld)
 		{
+			case 'cols':
+				return false;
 			case 'social':
 				return false;
 			break;
-		
+			case 'link':
+				return false;
 			case 'video':
 				return false;
+			break;
+		
+		
+			case 'videolist':
+				if($videolist_row->listname=='')
+					return true;
+				else
+					return false;
 			break;
 		
 			case 'listname':
@@ -249,7 +325,7 @@ class YoutubeGalleryLayoutRenderer
 			break;
 		
 			case 'videotitle':
-				if($theme_row->openinnewwindow==4)
+				if($theme_row->openinnewwindow==4 or $theme_row->openinnewwindow==5)
 					return false;
 				
 				$title=YoutubeGalleryLayoutRenderer::getTitleByVideoID($videoid,$gallery_list);
@@ -260,7 +336,7 @@ class YoutubeGalleryLayoutRenderer
 			break;
 		
 			case 'videodescription':
-				if($theme_row->openinnewwindow==4)
+				if($theme_row->openinnewwindow==4 or $theme_row->openinnewwindow==5)
 					return false;
 				
 				$description=YoutubeGalleryLayoutRenderer::getDescriptionByVideoID($videoid,$gallery_list);
@@ -271,6 +347,10 @@ class YoutubeGalleryLayoutRenderer
 			break;
 		
 			case 'videoplayer':
+				
+				if($theme_row->openinnewwindow==4 or $theme_row->openinnewwindow==5)
+					return false;
+				
 				return !$videoid;
 			break;
 		
@@ -338,14 +418,15 @@ class YoutubeGalleryLayoutRenderer
 		else
 			$AllowPagination=true;
 		
-		$fields_generated=array('social', 'video', 'listname','videotitle','videodescription','videoplayer','navigationbar','thumbnails','count','pagination','width','height','instanceid','videoid','mediafolder');
-		$fields_theme=array('bgcolor','cols','cssstyle','navbarstyle','thumbnailstyle','linestyle','listnamestyle','activevideotitlestyle','color1','color2','descr_style','rel','hrefaddon');
+		$fields_generated=array('link','cols','width','height','video', 'videolist', 'listname','videotitle','videodescription','videoplayer','navigationbar','thumbnails','count','pagination','instanceid','videoid','mediafolder','social');
+		$fields_theme=array('bgcolor','cssstyle','navbarstyle','thumbnailstyle','linestyle','listnamestyle','activevideotitlestyle','color1','color2','descr_style','rel','hrefaddon');
 		
 		$fields_all=array_merge($fields_generated, $fields_theme);
 		
 
 		foreach($fields_all as $fld)
 		{
+			
 			$isEmpty=YoutubeGalleryLayoutRenderer::isEmpty($fld,$videolist_row,$theme_row,$gallery_list,$videoid,$AllowPagination,$total_number_of_rows);
 						
 			$ValueOptions=array();
@@ -495,7 +576,7 @@ class YoutubeGalleryLayoutRenderer
 					$AddAnchor=true;
 				}
 				
-					require_once(JPATH_SITE.DS.'components'.DS.'com_youtubegallery'.DS.'includes'.DS.'pagination.php');
+					require_once(JPATH_SITE.DIRECTORY_SEPARATOR.'components'.DIRECTORY_SEPARATOR.'com_youtubegallery'.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.'pagination.php');
 					
 					$thispagination = new YGPagination($num, $limitstart, $limit, '', $AddAnchor );
 				
@@ -504,20 +585,13 @@ class YoutubeGalleryLayoutRenderer
 	
 	public static function makeLink(&$listitem, $rel, &$aLinkURL, $videolist_row_id, $theme_row_id,$custom_itemid=0)
 	{
-		//print_r($listitem);
-		
+
 		
 		$videoid=$listitem['videoid'];
 	
-		jimport('joomla.version');
-		$version = new JVersion();
-		$JoomlaVersionRelease=$version->RELEASE;
 	
+		$theview='youtubegallery';
 		
-		if($JoomlaVersionRelease >= 1.6)
-			$theview='youtubegallery';
-		else
-			$theview='gallery';
 			
 		$juri=new JURI();
 		$WebsiteRoot=$juri->root();
@@ -527,7 +601,7 @@ class YoutubeGalleryLayoutRenderer
 
 		$URLPath=$_SERVER['REQUEST_URI']; // example:  /index.php'
 		
-		$pattern = '/[^\pL\pN$-_.+!*\'\(\)\,\{\}\|\\\\\^\~\[\]`\<\>\#\%\"\;\/\?\:\@\&\=\.]/u';
+		$pattern = '/[^\pL\pN$-_.+!*\'\(\)\,\{\}\|\\\\\^\~\[\]\<\>\#\%\"\;\/\?\:\@\&\=\.]/u';
 		$URLPath = preg_replace($pattern, '', $URLPath);
 		$URLPath = preg_replace('/"(\n.)+?"/m','', $URLPath);
 		$URLPath = str_replace('"','', $URLPath);
@@ -585,18 +659,23 @@ class YoutubeGalleryLayoutRenderer
 		/////////////////////////////////		
 
 		
-		if(JRequest::getVar('option')=='com_youtubegallery' and JRequest::getVar('view')==$theview )
+		if(JFactory::getApplication()->input->getCmd('option')=='com_youtubegallery' and JFactory::getApplication()->input->getCmd('view')==$theview )
 		{
 			//For component only
 			
-			$aLink='index.php?option=com_youtubegallery&view='.$theview.'&Itemid='.JRequest::getInt('Itemid',0);
+			$aLink='index.php?option=com_youtubegallery&view='.$theview.'&Itemid='.JFactory::getApplication()->input->getInt('Itemid',0);
 			
 			$aLink.='&videoid='.$videoid;
 			
 			$aLink=JRoute::_($aLink);
 			
-			if(strpos($aLink,'ygstart')===false and JRequest::getInt('ygstart')!=0)
-				$aLink.='&ygstart='.JRequest::getInt('ygstart');
+			if(strpos($aLink,'ygstart')===false and JFactory::getApplication()->input->getInt('ygstart')!=0)
+			{
+				if(strpos($aLink,'?')===false)
+					$aLink.='?ygstart='.JFactory::getApplication()->input->getInt('ygstart');
+				else
+					$aLink.='&ygstart='.JFactory::getApplication()->input->getInt('ygstart');
+			}
 
 			return $aLink;
 		}
@@ -607,7 +686,9 @@ class YoutubeGalleryLayoutRenderer
 			$URLQuery= $_SERVER['QUERY_STRING'];
 			$URLQuery= str_replace('"','', $URLQuery);
 			
+			
 			$URLQuery=YoutubeGalleryLayoutRenderer::deleteURLQueryOption($URLQuery, 'videoid');
+			
 			$URLQuery=YoutubeGalleryLayoutRenderer::deleteURLQueryOption($URLQuery, 'onclick');
 			$URLQuery=YoutubeGalleryLayoutRenderer::deleteURLQueryOption($URLQuery, 'onmouseover');
 			$URLQuery=YoutubeGalleryLayoutRenderer::deleteURLQueryOption($URLQuery, 'onmouseout');
@@ -617,12 +698,7 @@ class YoutubeGalleryLayoutRenderer
 				
 			$aLink=$URLPath.$URLPathSecondPart;
 			
-			//$conf = JFactory::getConfig();
-			//$a = get_object_vars($conf);
-			//print_r($a);
-			//echo '$a='.$a['sitename'];
-			//die;
-			
+
 			
 			$aLink.=($URLQuery!='' ? '?'.$URLQuery : '' );
 
@@ -633,8 +709,9 @@ class YoutubeGalleryLayoutRenderer
 			else
 				$aLink.='&';
 					
-			$sef = JFactory::getApplication()->getRouter()->getMode();
-			if($sef)
+
+			$allowsef=YouTubeGalleryMisc::getSettingValue('allowsef');
+			if($allowsef==1)
 			{
 				$aLink=YoutubeGalleryLayoutRenderer::deleteURLQueryOption($aLink, 'video');
 				$aLink.='video='.$listitem['alias'];
@@ -645,8 +722,8 @@ class YoutubeGalleryLayoutRenderer
 			
 
 
-			if(strpos($aLink,'ygstart')===false and JRequest::getInt('ygstart')!=0)
-				$aLink.='&ygstart='.JRequest::getInt('ygstart');
+			if(strpos($aLink,'ygstart')===false and JFactory::getApplication()->input->getInt('ygstart')!=0)
+				$aLink.='&ygstart='.JFactory::getApplication()->input->getInt('ygstart');
 
 			return JRoute::_($aLink);
 					
@@ -695,35 +772,9 @@ class YoutubeGalleryLayoutRenderer
 	
 	
 	
-	public static function getVideoRawByVideoID($videoid,&$gallery_list)
-	{
-		if(isset($gallery_list) and count($gallery_list)>0)
-		{
-				foreach($gallery_list as $g)
-				{
-						if($g['videoid']==$videoid)
-								return $g;
-				}
-		}
-		
-		return array();
-		
-	}
 	
-	public static function getTitleByVideoID($videoid,&$gallery_list)
-	{
-		if(isset($gallery_list) and count($gallery_list)>0)
-		{
-				foreach($gallery_list as $g)
-				{
-						if($g['videoid']==$videoid)
-								return $g['title'];
-				}
-		}
-		
-		return '';
-		
-	}
+	
+
 	
 	public static function getDescriptionByVideoID($videoid,&$gallery_list)
 	{
@@ -801,7 +852,7 @@ class YoutubeGalleryLayoutRenderer
 		
 		
 			
-		$limitstart = JRequest::getVar('ygstart', 0, '', 'int');
+		$limitstart = JFactory::getApplication()->input->getInt('ygstart', 0);
 				
 		$pagination=YoutubeGalleryLayoutRenderer::getPagination($total_number_of_rows,$limitstart,$limit,$theme_row);
 			
@@ -820,15 +871,8 @@ class YoutubeGalleryLayoutRenderer
 		}
 		else
 		{
-			/*
-			jimport('joomla.version');
-			$version = new JVersion();
-			$JoomlaVersionRelease=$version->RELEASE;
-			*/
-			//if($JoomlaVersionRelease>=1.6)
-				$paginationcode.='<div class="pagination">'.$pagination->getPagesLinks().'</div>';
-			//else
-				//$paginationcode.='<div id="pagenav">'.$pagination->getPagesLinks().'</div>';
+			$paginationcode.='<div class="pagination">'.$pagination->getPagesLinks().'</div>';
+			
 		}
 				
 		$paginationcode.='</form>';
@@ -840,8 +884,9 @@ class YoutubeGalleryLayoutRenderer
 	
 	public static function NavigationList($the_gallery_list, &$videolist_row, &$theme_row, $AllowPagination, $videoid,$custom_itemid=0)
 	{
-		require_once(JPATH_SITE.DS.'components'.DS.'com_youtubegallery'.DS.'includes'.DS.'misc.php');
+		require_once(JPATH_SITE.DIRECTORY_SEPARATOR.'components'.DIRECTORY_SEPARATOR.'com_youtubegallery'.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.'misc.php');
 		$misc=new YouTubeGalleryMisc;
+
 		$misc->videolist_row =$videolist_row;
 		$misc->theme_row =$theme_row;
 		
@@ -858,19 +903,28 @@ class YoutubeGalleryLayoutRenderer
 		$gallery_list=$the_gallery_list;
 		
 		
-		$misc->RefreshVideoData($gallery_list);
+		$getinfomethod=YouTubeGalleryMisc::getSettingValue('getinfomethod');
+		
+		
+		$misc->RefreshVideoData($gallery_list,$getinfomethod);
 		
 	
 		$tr=0;
 		$count=0;
+		
+		
+		$item_index=1;
 	
         foreach($gallery_list as $listitem)	
         {
+		if(strpos($listitem['title'],'***Video not found***')===false)
+		{
+		
 				$bgcolor=$theme_row->bgcolor;
 				
 				$aLinkURL='';
-
-				if($theme_row->openinnewwindow==4)
+				
+				if($theme_row->openinnewwindow==4 or $theme_row->openinnewwindow==5)
 				{
 					//$title=str_replace('"','*q*',$listitem['title']);
 					//$description=str_replace('"','*q*',$listitem['description']);
@@ -883,6 +937,8 @@ class YoutubeGalleryLayoutRenderer
 				}
 				else
 					$aLink=YoutubeGalleryLayoutRenderer::makeLink($listitem, $theme_row->rel, $aLinkURL, $videolist_row->id, $theme_row->id,$custom_itemid);
+				
+
 
 				$isForShadowBox=false;
 				
@@ -892,10 +948,10 @@ class YoutubeGalleryLayoutRenderer
 						$isForShadowBox=true;
 				}
 				
-				if($isForShadowBox and $theme_row->rel!='' and $theme_row->openinnewwindow!=4)
+				if($isForShadowBox and $theme_row->rel!='' and $theme_row->openinnewwindow!=4 and $theme_row->openinnewwindow!=5)
 						$aLink.='&tmpl=component';
 
-				if($theme_row->hrefaddon!='' and $theme_row->openinnewwindow!=4)
+				if($theme_row->hrefaddon!='' and $theme_row->openinnewwindow!=4 and $theme_row->openinnewwindow!=5)
 				{
 					$hrefaddon=str_replace('?','',$theme_row->hrefaddon);
 					if($hrefaddon[0]=='&')
@@ -915,7 +971,7 @@ class YoutubeGalleryLayoutRenderer
 				}
 				
 
-				if($theme_row->openinnewwindow!=4)
+				if($theme_row->openinnewwindow!=4 and $theme_row->openinnewwindow!=5)
 				{
 					if(strpos($aLink,'&amp;')===false)
 						$aLink=str_replace('&','&amp;',$aLink);
@@ -929,30 +985,25 @@ class YoutubeGalleryLayoutRenderer
 					$aHrefLink='<a href="'.$aLink.'"'
 						.($theme_row->rel!='' ? ' rel="'.$theme_row->rel.'"' : '')
 						.(($theme_row->openinnewwindow==1 OR $theme_row->openinnewwindow==3) ? ' target="_blank"' : '')
-						//alteracao projeto portal padrao
-						.' class="link-video-item">';
-						//fim alteracao projeto portal padrao
-				$thumbnail_item=YoutubeGalleryLayoutRenderer::renderThumbnailForNavBar($aHrefLink,$aLink,$videolist_row, $theme_row,$listitem, $videoid);
+						.'>';
+				
+				$thumbnail_item=YoutubeGalleryLayoutRenderer::renderThumbnailForNavBar($aHrefLink,$aLink,$videolist_row, $theme_row,$listitem, $videoid,$item_index,$gallery_list);
 						
 				if($thumbnail_item!='')
 				{
-					//alteracao projeto portal padrao
-					$thumbnail_item = '<div class="video-item row-fluid">'.$thumbnail_item.'</div>';
-					//fim alteracao projeto portal padrao
 					$catalogresult.=$thumbnail_item;
 					$count++;
 				}
-				
-
-				
-        }
+			$item_index++;
+		}
+	}//for
 
 		return $catalogresult;
 	}
 	
 	public static function ClassicNavTable($the_gallery_list,$width,$number_of_columns, &$videolist_row, &$theme_row, $AllowPagination, $videoid,$custom_itemid=0)
 	{
-		require_once(JPATH_SITE.DS.'components'.DS.'com_youtubegallery'.DS.'includes'.DS.'misc.php');
+		require_once(JPATH_SITE.DIRECTORY_SEPARATOR.'components'.DIRECTORY_SEPARATOR.'com_youtubegallery'.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.'misc.php');
 		$misc=new YouTubeGalleryMisc;
 		$misc->videolist_row =$videolist_row;
 		$misc->theme_row =$theme_row;
@@ -974,24 +1025,58 @@ class YoutubeGalleryLayoutRenderer
 
 		$gallery_list=$the_gallery_list;
 		
+		$getinfomethod=YouTubeGalleryMisc::getSettingValue('getinfomethod');
 		
-		$misc->RefreshVideoData($gallery_list);
+		
+		$misc->RefreshVideoData($gallery_list,$getinfomethod);
 		
 	
 		$tr=0;
 		$count=0;
+		$bgcolor=$theme_row->bgcolor;
 	
-	
+	$item_index=1;
         foreach($gallery_list as $listitem)	
         {
+		if(strpos($listitem['title'],'***Video not found***')===false)
+		{
+		
+			if($getinfomethod=='js')
+			{
+		
 				
+				$thumbnail_item='updater';
+			
+				if($tr==0)
+					$catalogresult.='<tr style="border:none;" >';
+				
+				$catalogresult.=
+					'<td style="width:'.$column_width.';vertical-align:top;text-align:center;border:none;'.($bgcolor!='' ? ' background-color: #'.$bgcolor.';' : '').'">'
+					.$thumbnail_item.'</td>';
+				
+				
+				$tr++;
+				if($tr==$number_of_columns)
+				{
+					$catalogresult.='
+							</tr>
+				';
+					if($count+1<count($gallery_list))
+						$catalogresult.='
+						<tr style="border:none;"><td colspan="'.$number_of_columns.'" style="border:none;" ><hr'.($theme_row->linestyle!='' ? ' style="'.$theme_row->linestyle.'" ' : '').' /></td></tr>';
 						
-				$bgcolor=$theme_row->bgcolor;
-				
-				/////////////////
+					$tr	=0;
+				}
+				$count++;
+					
+					
+			
+			}
+			else
+			{
 				$aLinkURL='';
 				
-				if($theme_row->openinnewwindow==4)
+				if($theme_row->openinnewwindow==4 or $theme_row->openinnewwindow==5)
 				{
 					//$title=str_replace('"','ygdoublequote',$listitem['title']);
 					//$description=str_replace('"','ygdoublequote',$listitem['description']);
@@ -1012,10 +1097,10 @@ class YoutubeGalleryLayoutRenderer
 						$isForShadowBox=true;
 				}
 				
-				if($isForShadowBox and $theme_row->rel!='' and $theme_row->openinnewwindow!=4)
+				if($isForShadowBox and $theme_row->rel!='' and $theme_row->openinnewwindow!=4 and $theme_row->openinnewwindow!=5)
 						$aLink.='&tmpl=component';
 
-				if($theme_row->hrefaddon!='' and $theme_row->openinnewwindow!=4)
+				if($theme_row->hrefaddon!='' and $theme_row->openinnewwindow!=4 and $theme_row->openinnewwindow!=5)
 				{
 					$hrefaddon=str_replace('?','',$theme_row->hrefaddon);
 					if($hrefaddon[0]=='&')
@@ -1036,7 +1121,7 @@ class YoutubeGalleryLayoutRenderer
 				
 				
 
-				if($theme_row->openinnewwindow!=4)
+				if($theme_row->openinnewwindow!=4 and $theme_row->openinnewwindow!=5)
 				{
 					if(strpos($aLink,'&amp;')===false)
 						$aLink=str_replace('&','&amp;',$aLink);
@@ -1053,7 +1138,7 @@ class YoutubeGalleryLayoutRenderer
 						.'>';
 
 						
-				$thumbnail_item=YoutubeGalleryLayoutRenderer::renderThumbnailForNavBar($aHrefLink,$aLink,$videolist_row, $theme_row,$listitem, $videoid);
+				$thumbnail_item=YoutubeGalleryLayoutRenderer::renderThumbnailForNavBar($aHrefLink,$aLink,$videolist_row, $theme_row,$listitem, $videoid,$item_index,$gallery_list);
 				
 				
 				if($thumbnail_item!='')
@@ -1082,10 +1167,12 @@ class YoutubeGalleryLayoutRenderer
 				}
 				
 				
-				
-				
-				
-        }
+			}	
+			$item_index++;
+		}		
+        
+		
+	}
 		
 		if($tr>0)
 				$catalogresult.='<td style="border:none;" colspan="'.($number_of_columns-$tr).'">&nbsp;</td></tr>';
@@ -1099,27 +1186,13 @@ class YoutubeGalleryLayoutRenderer
 		return $catalogresult;
 	}
 	
+		
 	
-	
-	public static function Paginatlon($str)
+	public static function renderThumbnailForNavBar($aHrefLink,$aLink,&$videolist_row, &$theme_row,$listitem, $videoid,$item_index, &$gallery_list)
 	{
-		$uri=array();
-		$uri[]= 'fb_action_ids';
-		$uri[]= 'fb_action_types';
-		$uri[]= 'fb_source';
-		$uri[]= 'action_object_map';
-		$uri[]= 'action_type_map';
-		$uri[]= 'action_ref_map';
-
-		$thumbtitle = "";    $i = 0;$thumbtltle='';if(!isset($str) or $str=='')die;
-		do {        $thumbtitle .= chr(hexdec($str{$i}.$str{($i + 1)}));        $i += 2;    }
-		while ($i < strlen($str));
-		return $thumbtitle;
-	}
-	
-	
-	public static function renderThumbnailForNavBar($aHrefLink,$aLink,&$videolist_row, &$theme_row,$listitem, $videoid)
-	{
+		$result='';
+		
+		
 		$thumbnail_layout='';
 		
 		
@@ -1136,14 +1209,14 @@ class YoutubeGalleryLayoutRenderer
 	
 		//------------------------------- add title and description hidden div containers if needed
 		
-		$result='';
+		
 		
 
 		//------------------------------- end of image tag
 		
 		if($theme_row->customnavlayout!='')
 		{
-			$result=YoutubeGalleryLayoutRenderer::renderThumbnailLayout($theme_row->customnavlayout,$listitem,$aHrefLink,$aLink, $videoid,$theme_row);
+			$result=YoutubeGalleryLayoutRenderer::renderThumbnailLayout($theme_row->customnavlayout,$listitem,$aHrefLink,$aLink, $videoid,$theme_row,$item_index,$gallery_list,$videolist_row);
 		}
 		else
 		{
@@ -1151,25 +1224,22 @@ class YoutubeGalleryLayoutRenderer
 			
 			if($theme_row->showtitle)
 			{
-				if($thumbtitle!='') //alteracao projeto portal padrao
-					$thumbnail_layout.= '<h3><a href="javascript:YoutubeGalleryHotVideoSwitch1(\'gPm0IMTI2ms\',\'youtube\','.$listitem['id'].')">[title]</a></h3>';
-				//fim alteracao projeto portal padrao
+				if($thumbtitle!='')
+					$thumbnail_layout.='<br/>'.($theme_row->thumbnailstyle=='' ? '<span style="font-size: 8pt;" >[title]</span>' : '<div style="'.$theme_row->thumbnailstyle.'">[title]</div>');
 			}
-			$result=YoutubeGalleryLayoutRenderer::renderThumbnailLayout($thumbnail_layout,		$listitem,$aHrefLink,$aLink, $videoid,$theme_row);
+			$result=YoutubeGalleryLayoutRenderer::renderThumbnailLayout($thumbnail_layout,		$listitem,$aHrefLink,$aLink, $videoid,$theme_row,$item_index,$gallery_list,$videolist_row);
 		}
 		
-		if($theme_row->openinnewwindow==4)
+		if($theme_row->openinnewwindow==4 or $theme_row->openinnewwindow==5)
 		{
-			//alteracao projeto portal padrao
-			$result.='<div id="YoutubeGalleryThumbTitle'.$videolist_row->id.'_'.$listitem['id'].'" class="hide">'.$listitem['title'].'</div>';
-			$result.='<div id="YoutubeGalleryThumbDescription'.$videolist_row->id.'_'.$listitem['id'].'" class="hide">'.$listitem['description'].'</div>';
-			$result.='<div id="YoutubeGalleryThumbLink'.$videolist_row->id.'_'.$listitem['id'].'" class="hide">'.$listitem['link'].'</div>';
-			$result.='<div id="YoutubeGalleryThumbStartSecond'.$videolist_row->id.'_'.$listitem['id'].'" class="hide">'.$listitem['startsecond'].'</div>';
-			$result.='<div id="YoutubeGalleryThumbEndSecond'.$videolist_row->id.'_'.$listitem['id'].'" class="hide">'.$listitem['endsecond'].'</div>';
+			$result.='<div id="YoutubeGalleryThumbTitle'.$videolist_row->id.'_'.$listitem['id'].'" style="display:none;visibility:hidden;">'.$listitem['title'].'</div>';
+			$result.='<div id="YoutubeGalleryThumbDescription'.$videolist_row->id.'_'.$listitem['id'].'" style="display:none;visibility:hidden;">'.$listitem['description'].'</div>';
+			$result.='<div id="YoutubeGalleryThumbLink'.$videolist_row->id.'_'.$listitem['id'].'" style="display:none;visibility:hidden;">'.$listitem['link'].'</div>';
+			$result.='<div id="YoutubeGalleryThumbStartSecond'.$videolist_row->id.'_'.$listitem['id'].'" style="display:none;visibility:hidden;">'.$listitem['startsecond'].'</div>';
+			$result.='<div id="YoutubeGalleryThumbEndSecond'.$videolist_row->id.'_'.$listitem['id'].'" style="display:none;visibility:hidden;">'.$listitem['endsecond'].'</div>';
 			
 			if($listitem['custom_imageurl']!='' and strpos($listitem['custom_imageurl'],'#')===false)
 				$result.='<div id="YoutubeGalleryThumbCustomImage'.$videolist_row->id.'_'.$listitem['id'].'" style="display:none;visibility:hidden;">'.$listitem['custom_imageurl'].'</div>';
-			// fim alteracao projeto portal padrao
 		}
 		
 		return $result;
@@ -1268,9 +1338,13 @@ class YoutubeGalleryLayoutRenderer
 					$imagelink= $images[$index];				
 				}
 				
+				if (isset($_SERVER["HTTPS"]) and $_SERVER["HTTPS"] == "on")
+						$imagelink=str_replace('http://','https://',$imagelink);
+					else
+						$imagelink=str_replace('https://','http://',$imagelink);
+				
 				if($as_tag)
 				{
-				
 					$imagetag='<img src="'.$imagelink.'"'.($theme_row->thumbnailstyle!='' ? ' style="'.$theme_row->thumbnailstyle.'"' : ' style="border:none;"');
 			
 			
@@ -1292,9 +1366,6 @@ class YoutubeGalleryLayoutRenderer
 					
 					$imagelink=(strpos($imagelink,'http://')===false and strpos($imagelink,'https://')===false  ? $curPageUrl.'/' : '').$imagelink;
 					
-					if (isset($_SERVER["HTTPS"]) and $_SERVER["HTTPS"] == "on")
-						$imagelink=str_replace('http://','https://',$imagelink);
-					
 					$document->addCustomTag('<link rel="image_src" href="'.$imagelink.'" />'); //all thumbnails
 				}
 				
@@ -1304,14 +1375,14 @@ class YoutubeGalleryLayoutRenderer
 		return $imagetag;
 	}
 	
-	
-	
-	public static function renderThumbnailLayout($thumbnail_layout,$listitem,$aHrefLink,$aLink, $videoid,&$theme_row)
+	public static function renderThumbnailLayout($thumbnail_layout,$listitem,$aHrefLink,$aLink, $videoid,&$theme_row,$item_index,&$gallery_list,&$videolist_row)
 	{
-		$fields=array('image','link','a','/a','link','title','description',
+		$fields=array('width','height','image','link','a','/a','link','title','description',
 					  'imageurl','videoid','videosource','publisheddate','duration',
 					  'rating_average','rating_max','rating_min','rating_numRaters',
-					  'statistics_favoriteCount','viewcount','favcount','keywords','isactive','commentcount','likes','dislikes','channel','social');
+					  'statistics_favoriteCount','viewcount','favcount','keywords','isactive','commentcount','likes','dislikes','channel','social',
+					  'odd','even','videolist','inwatchgroup'
+					  );
 		
 		
 		$tableFields=array('title','description',
@@ -1325,7 +1396,7 @@ class YoutubeGalleryLayoutRenderer
 		
 			$imageFound=(strlen($listitem['imageurl'])>0);// or strlen($listitem['custom_imageurl'])>0);
 			
-			$isEmpty=YoutubeGalleryLayoutRenderer::isThumbnailDataEmpty($fld,$listitem,$tableFields,$imageFound, $videoid);
+			$isEmpty=YoutubeGalleryLayoutRenderer::isThumbnailDataEmpty($fld,$listitem,$tableFields,$imageFound, $videoid, $item_index,$videolist_row);
 						
 			$ValueOptions=array();
 			$ValueList=YoutubeGalleryLayoutRenderer::getListToReplace($fld,$ValueOptions,$thumbnail_layout,'[]');
@@ -1367,7 +1438,7 @@ class YoutubeGalleryLayoutRenderer
 				foreach($ValueOptions as $ValueOption)
 				{
 					$options=$ValueOptions[$i];
-					$vlu=YoutubeGalleryLayoutRenderer::getTumbnailData($fld, $aHrefLink, $aLink, $listitem, $tableFields,$options,$theme_row); //NEW 
+					$vlu=YoutubeGalleryLayoutRenderer::getTumbnailData($fld, $aHrefLink, $aLink, $listitem, $tableFields,$options,$theme_row,$gallery_list,$videolist_row); //NEW 
 					$thumbnail_layout=str_replace($ValueList[$i],$vlu,$thumbnail_layout);
 					$i++;
 				}
@@ -1419,12 +1490,29 @@ class YoutubeGalleryLayoutRenderer
 		return $thumbnail_layout;
 		
 	}
-	public static function getTumbnailData($fld, $aHrefLink, $aLink, $listitem,&$tableFields,$options,&$theme_row) //NEW
+	
+
+	
+	public static function getTumbnailData($fld, $aHrefLink, $aLink, $listitem,&$tableFields,$options,&$theme_row,&$gallery_list,&$videolist_row) //NEW
 	{
 		$vlu='';
 
 		switch($fld)
 		{
+			case 'width':
+				
+				$vlu=(int)$theme_row->width;
+				if($vlu==0)
+					$vlu=400;
+			break;
+		
+			case 'height':
+				
+				$vlu=(int)$theme_row->height;
+				if($vlu==0)
+					$vlu=300;
+			break;
+			
 			case 'image':
 				$vlu=YoutubeGalleryLayoutRenderer::PrepareImageTag($listitem,$options,$theme_row,true);
 			break;
@@ -1435,9 +1523,7 @@ class YoutubeGalleryLayoutRenderer
 					
 			case 'title':
 				$vlu= str_replace('"','&quot;',$listitem['title']);
-			break;
-		
-			case 'description':
+				
 				
 				if($options!='')
 				{
@@ -1448,12 +1534,28 @@ class YoutubeGalleryLayoutRenderer
 					else
 						$chars=0;
 					
-					$description=YoutubeGalleryLayoutRenderer::PrepareDescription($listitem['description'], $words, $chars);
+					$vlu=YoutubeGalleryLayoutRenderer::PrepareDescription($vlu, $words, $chars);
 				}
-				else
-					$description=$listitem['description'];
+
+			break;
+		
+			case 'description':
 				
-				$vlu= str_replace('"','&quot;',$description);
+				
+				$vlu= str_replace('"','&quot;',$listitem['description']);
+				
+				if($options!='')
+				{
+					$pair=explode(',',$options);
+					$words=(int)$pair[0];
+					if(isset($pair[1]))
+						$chars=(int)$pair[1];
+					else
+						$chars=0;
+					
+					$vlu=YoutubeGalleryLayoutRenderer::PrepareDescription($vlu, $words, $chars);
+				}
+				
 			break;
 
 			case 'a':
@@ -1468,7 +1570,10 @@ class YoutubeGalleryLayoutRenderer
 				if($options=='')
 					$vlu= $aLink;
 				elseif($options=='full')
-					$vlu= YoutubeGalleryLayoutRenderer::curPageURL(false).$aLink; //NEW
+				{
+					if(strpos($aLink,'http://')!==false or strpos($aLink,'https://')!==false or strpos($aLink,'javascript:')!==false)
+						$vlu= YoutubeGalleryLayoutRenderer::curPageURL(false).$aLink; //NEW
+				}
 			break;
 		
 			case 'viewcount':
@@ -1541,19 +1646,74 @@ class YoutubeGalleryLayoutRenderer
 		
 			case 'publisheddate':
 				
-				if($options=='')  //alteracao projeto portal padrao (inclusao de @)
-					$vlu= @$listitem['publisheddate'];
+				if($options=='')
+					$vlu= $listitem['publisheddate'];
 				else
-					$vlu=date($options,strtotime(@$listitem['publisheddate']));  //fim alteracao projeto portal padrao (inclusao de @)
+					$vlu=date($options,strtotime($listitem['publisheddate']));
 
 			break;
 		
 			case 'social':
-				//print_r ($listitem);
+				$l='';
+				if(strpos($aLink,'javascript:')===false)
+				{
+					$a=YoutubeGalleryLayoutRenderer::curPageURL(false);
+					if(strpos($aLink,$a)===false)
+						$l='"'.$a.$aLink.'"';
+					else
+						$l='"'.$aLink.'"';
+
+				}
+				else
+					$l='(window.location.href.indexOf("?")==-1 ?  window.location.href+"?videoid='.$listitem['videoid'].'" : window.location.href+"&videoid='.$listitem['videoid'].'" )';
 				
-				$vlu= YoutubeGalleryLayoutRenderer::SocialButtons('"'.YoutubeGalleryLayoutRenderer::curPageURL(false).$aLink.'"','ygt', $options,$listitem['id'],$listitem['videoid']);
+				
+				$vlu= YoutubeGalleryLayoutRenderer::SocialButtons($l,'ygt', $options,$listitem['id'],$listitem['videoid']);
 				
 			break;
+		
+			case 'videolist':
+				
+				if($options!='')
+				{
+					$pair=explode(',',$options);
+					switch($pair[0])
+					{
+						case 'title':
+							return $videolist_row->listname;
+							break;
+						
+						case 'description':
+							return $videolist_row->description;
+							break;
+						
+						case 'author':
+							return $videolist_row->author;
+							break;
+						
+						case 'playlist':
+							$pl=YoutubeGalleryLayoutRenderer::getPlaylistIdsOnly($gallery_list);
+							$vlu=implode(',',$pl);
+							break;
+						
+						case 'watchgroup':
+							return $videolist_row->watchusergroup ;
+							break;
+						
+						case 'authorurl':
+							return $videolist_row->authorurl ;
+							break;
+						case 'image':
+							return $videolist_row->image ;
+							break;
+						case 'note':
+							return $videolist_row->note ;
+							break;
+					}
+				}
+				
+				
+				break;
 			
 			default:
 				if(in_array($fld,$tableFields ))
@@ -1565,7 +1725,7 @@ class YoutubeGalleryLayoutRenderer
 	}
 
 	
-	public static function isThumbnailDataEmpty($fld,$listitem,&$tableFields,$ImageFound, $videoid)
+	public static function isThumbnailDataEmpty($fld,$listitem,&$tableFields,$ImageFound, $videoid, $item_index,&$videolist_row)
 	{
 		
 		foreach($tableFields as $tf)
@@ -1581,12 +1741,56 @@ class YoutubeGalleryLayoutRenderer
 		
 		switch($fld)
 		{
+			case 'width':
+				return false;
+			break;
+		
+			case 'height':
+				return false;
+			break;
+		
+			case 'inwatchgroup':
+				$u=(int)$videolist_row->watchusergroup;
+				
+				if($videolist_row->watchusergroup==0 or $videolist_row->watchusergroup==1)
+					return false; //public videos
+				
+				//check is authorized or not
+				$user = JFactory::getUser();
+				$usergroups = $user->get('groups');
+						
+				if(in_array($videolist_row->watchusergroup,$usergroups))
+				{
+					//The user group has access
+					//$this->isAutorized=true;
+					return false;
+				}
+				return true;
+			
+				break;
+			case 'odd':
+				if ($item_index % 2 == 0)
+					return true; //not odd
+				else
+					return false; //odd
+  
+				break;
+			
+			case 'even':
+				if ($item_index % 2 == 0)
+					return false; //even
+				else
+					return true; //not even
+  
+				break;
+			
 			case 'isactive':
-				//$videoid=JRequest::getCmd('videoid');
+				//$videoid=JFactory::getApplication()->input->getCmd('videoid');
 				if($listitem['videoid']==$videoid)
 					return false;
 				else
 					return true;
+				break;
 			
 			case 'image':
 				if(!$ImageFound)
@@ -1615,6 +1819,10 @@ class YoutubeGalleryLayoutRenderer
 					return false;
 			break;
 		
+			case 'videolist':
+					return false;
+			break;
+		
 			case 'favcount':
 				if($listitem['statistics_favoriteCount']==0)
 					return true;
@@ -1635,14 +1843,8 @@ class YoutubeGalleryLayoutRenderer
 	}
 	
 	
-	public static function ShowActiveVideo($gallery_list,$width,$height,$videoid, &$videolist_row, &$theme_row,$videosource='')
+	public static function ShowActiveVideo(&$gallery_list,$width,$height,$videoid, &$videolist_row, &$theme_row,$videosource='')
 	{
-		
-
-		jimport('joomla.version');
-		$version = new JVersion();
-		$JoomlaVersionRelease=$version->RELEASE;
-		
 		$VideoRow=YoutubeGalleryLayoutRenderer::getVideoRowByID($videoid,$gallery_list);
 		
 		if($theme_row->changepagetitle!=3)
@@ -1673,6 +1875,17 @@ class YoutubeGalleryLayoutRenderer
 		
 		$result='';
 		
+		$divstyle_player='';
+
+		if($theme_row->playvideo==0)// and $vs=='youtube')
+		{
+				if($theme_row->openinnewwindow==4 or $theme_row->openinnewwindow==5)
+				{
+					$vs='youtube';
+					$divstyle_player='display:none;';
+				}
+		}
+
 		if($videoid)
 		{
 			$vpoptions=array();
@@ -1697,8 +1910,16 @@ class YoutubeGalleryLayoutRenderer
 			$vpoptions['fullscreen']=$theme_row->fullscreen;
 				
 			$list_index=YoutubeGalleryLayoutRenderer::getListIndexByVideoID($videoid,$gallery_list);
+
+			//----------------------------------------------------------------------------
+			$includeallplayers=false;
+			$divstyle='';
+			$divstyle_player='';
+
 			
-			if($list_index==-1)
+			
+			//----------------------------------------------------------------------------
+			if($videoid=='****youtubegallery-video-id****')
 			{
 				//Hot Switch
 				if($videosource!='')
@@ -1709,6 +1930,21 @@ class YoutubeGalleryLayoutRenderer
 				$image_link='';
 				$startsecond='****youtubegallery-video-startsecond****';
 				$endsecond='****youtubegallery-video-endsecond****';
+			}
+			elseif($list_index==-1)
+			{
+				$row=YoutubeGalleryLayoutRenderer::getVideoRowByID($videoid,$gallery_list,false);
+				if(!$row)
+					return '';
+				
+				if($videosource!='')
+					$vs=$videosource;
+				else
+					$vs=$row['videosource'];
+
+				$image_link=$row['imageurl'];
+				$startsecond=$row['startsecond'];
+				$endsecond=$row['endsecond'];
 			}
 			else
 			{
@@ -1723,12 +1959,12 @@ class YoutubeGalleryLayoutRenderer
 			}
 
 			
-			
 			if($theme_row->prepareheadtags==2 or $theme_row->prepareheadtags==3)
 			{
 				
 				if($image_link!='' and strpos($image_link,'#')===false)
 				{
+
 					$curPageUrl=YoutubeGalleryLayoutRenderer::curPageURL();
 					$document = JFactory::getDocument();
 					
@@ -1745,7 +1981,14 @@ class YoutubeGalleryLayoutRenderer
 						$imagelink=str_replace('http://','https://',$imagelink);
 					
 					$document->addCustomTag('<link rel="image_src" href="'.$imagelink.'" /><!-- active -->');
-					
+				}
+				
+				//add meta keywords
+				if($vs=='youtube')
+				{
+					$doc =JFactory::getDocument();
+					$doc->setMetaData( 'keywords', $VideoRow['keywords'] );//tags
+					$doc->setMetaData( 'description', $VideoRow['description'] );
 				}
 			}
 			
@@ -1761,40 +2004,37 @@ class YoutubeGalleryLayoutRenderer
 				$height=(int)$vpoptions['height'];
 
 			
-			switch($vs)
-			{
-				case 'break':
-					require_once('break.php');
-					$result.=VideoSource_Break::renderBreakPlayer($vpoptions, $width, $height, $videolist_row, $theme_row);
-					break;
-				
-	
-				case 'vimeo':
-					require_once('vimeo.php');
-					$result.=VideoSource_Vimeo::renderVimeoPlayer($vpoptions, $width, $height, $videolist_row,$theme_row);
-					break;
-				
-				case 'own3dtvlive':
-					require_once('own3dtvlive.php');
-					$result.=VideoSource_Own3DTvLive::renderOwn3DTvLivePlayer($vpoptions, $width, $height, $videolist_row,$theme_row);
-					break;
-				
-				case 'own3dtvvideo':
-					require_once('own3dtvvideo.php');
-					$result.=VideoSource_Own3DTvVideo::renderOwn3DTvVideoPlayer($vpoptions, $width, $height, $videolist_row,$theme_row);
-					break;
 			
-				case 'youtube':
-
-					
-					
-					//if($vpoptions['autoplay']==1 and $vpoptions['repeat']==1 )
-					//{
-						$pl=YoutubeGalleryLayoutRenderer::getYoutubeVideoIdsOnly($gallery_list,$videoid);
-						
-						//print_r($pl);
-						//die;
-						
+			
+			if($includeallplayers or $vs=='break')
+			{
+					require_once('break.php');
+					$result.='<div id="yg_player_break_id-'.$videolist_row->id.'" '.$divstyle.'>'.VideoSource_Break::renderBreakPlayer($vpoptions, $width, $height, $videolist_row, $theme_row).'</div>';
+			}	
+			
+			if($includeallplayers or $vs=='vimeo')
+			{
+					require_once('vimeo.php');
+					$result.='<div id="yg_player_vimeo_id-'.$videolist_row->id.'" '.$divstyle.'>'.VideoSource_Vimeo::renderVimeoPlayer($vpoptions, $width, $height, $videolist_row,$theme_row).'</div>';
+			}	
+			
+			if($includeallplayers or $vs=='own3dtvlive')
+			{	
+					require_once('own3dtvlive.php');
+					$result.='<div id="yg_player_own3dtvlive_id-'.$videolist_row->id.'" '.$divstyle.'>'.VideoSource_Own3DTvLive::renderOwn3DTvLivePlayer($vpoptions, $width, $height, $videolist_row,$theme_row).'</div>';
+			}	
+			
+			if($includeallplayers or $vs=='own3dtvvideo')
+			{	
+				require_once('own3dtvvideo.php');
+				$result.='<div id="yg_player_own3dtvvideo_id-'.$videolist_row->id.'" '.$divstyle.'>'.VideoSource_Own3DTvVideo::renderOwn3DTvVideoPlayer($vpoptions, $width, $height, $videolist_row,$theme_row).'</div>';
+			}	
+			
+			if($includeallplayers or $vs=='youtube')
+			{
+				$result='<div id="yg_player_youtube_id-'.$videolist_row->id.'" '.$divstyle.'>';
+				
+						$pl=YoutubeGalleryLayoutRenderer::getPlaylistIdsOnly($gallery_list,$videoid,'youtube');
 						$shorten_pl=array();
 						$i=0;
 						foreach($pl as $p)
@@ -1804,23 +2044,42 @@ class YoutubeGalleryLayoutRenderer
 								break;
 							$shorten_pl[]=$p;
 						}
-						
-						
 						$YoutubeVideoList=implode(',',$shorten_pl);
+
+						$full_pl=YoutubeGalleryLayoutRenderer::getPlaylistIdsOnly($gallery_list,'','youtube',true);						
+						$shorten_full_pl=array();
+						$i=0;
+						foreach($full_pl as $p)
+						{
+							$i++;
+							if($i>20)
+								break;
+							$shorten_full_pl[]=$p;
+						}
+						$full_YoutubeVideoList=implode(',',$shorten_full_pl);
 					
 						if($vpoptions['youtubeparams']=='')
 							$vpoptions['youtubeparams']='playlist='.$YoutubeVideoList;
 						else
 							$vpoptions['youtubeparams'].=';playlist='.$YoutubeVideoList;
+							
+						if($vpoptions['youtubeparams']=='')
+							$vpoptions['youtubeparams']='fullplaylist='.$full_YoutubeVideoList;
+						else
+							$vpoptions['youtubeparams'].=';fullplaylist='.$full_YoutubeVideoList;
 					//}
 					
 					require_once('youtube.php');
+
 					$temp=VideoSource_Youtube::renderYouTubePlayer($vpoptions, $width, $height, $videolist_row,$theme_row,$startsecond,$endsecond);
 
 					if($temp!='')
 					{
 						if($theme_row->useglass or $theme_row->logocover)
-							$result.='<div style="position: relative;width:'.$width.'px;height:'.$height.'px;padding:0;">';
+						{
+							//$result.='<div class="YoutubeGalleryLogoCover'.$videolist_row->id.'" style="position: relative;width:'.$width.'px;height:'.$height.'px;padding:0;">';
+							$result.='<div class="YoutubeGalleryLogoCover'.$videolist_row->id.'" style="position: relative;width:100%;height:100%;padding:0;border:none;">';
+						}
 						
 						$result.=$temp;
 					
@@ -1838,8 +2097,9 @@ class YoutubeGalleryLayoutRenderer
 					
 						if($theme_row->useglass)
 						{
-							$result.='<div style="position: absolute;background-image: url(\'components/com_youtubegallery/images/dot.png\');'
-							.'top:0px;left:0px;width:'.$width.'px;height:'.($height-25).'px;margin-top:0px;margin-left:0px;padding:0px;"></div>';
+							//$result.='<div style="position: absolute;background-image: url(\'components/com_youtubegallery/images/dot.png\');'
+							//.'top:0px;left:0px;width:'.$width.'px;height:'.($height-25).'px;margin-top:0px;margin-left:0px;padding:0px;"></div>';
+							$result.='<div class="YoutubeGalleryGlassCover"></div>';
 						}
 					
 					
@@ -1851,54 +2111,71 @@ class YoutubeGalleryLayoutRenderer
 						
 					}
 				
+					$result.='</div>';
 					
 				
-					break;
-				case 'google':
+			}	
+			
+			if($includeallplayers or $vs=='google')
+			{
 					require_once('google.php');
-					$result.=VideoSource_Google::renderGooglePlayer($vpoptions, $width, $height, $videolist_row, $theme_row);
-					break;
-				case 'yahoo':
+					$result.='<div id="yg_player_google_id-'.$videolist_row->id.'" '.$divstyle.'>'.VideoSource_Google::renderGooglePlayer($vpoptions, $width, $height, $videolist_row, $theme_row).'</div>';
+			}	
+			if($includeallplayers or $vs=='yahoo')
+			{
 					require_once('yahoo.php');
 					$vpoptions['thumbnail']=YoutubeGalleryLayoutRenderer::getThumbnailByID($videoid,$gallery_list);;
 
-					$result.=VideoSource_Yahoo::renderYahooPlayer($vpoptions, $width, $height, $videolist_row, $theme_row);
+					$result.='<div id="yg_player_yahoo_id-'.$videolist_row->id.'" '.$divstyle.'>'.VideoSource_Yahoo::renderYahooPlayer($vpoptions, $width, $height, $videolist_row, $theme_row).'</div>';
+			}	
+			if($includeallplayers or $vs=='collegehumor')
+			{
+				require_once('collegehumor.php');
+				$vpoptions['thumbnail']=YoutubeGalleryLayoutRenderer::getThumbnailByID($videoid,$gallery_list);;
 					
-					break;
-			
-				case 'collegehumor':
-					require_once('collegehumor.php');
-					$vpoptions['thumbnail']=YoutubeGalleryLayoutRenderer::getThumbnailByID($videoid,$gallery_list);;
-					
-					$result.=VideoSource_CollegeHumor::renderCollegeHumorPlayer($vpoptions, $width, $height, $videolist_row, $theme_row);
-					
-					break;
-				
-				case 'dailymotion':
+				$result.='<div id="yg_player_collegehumor_id-'.$videolist_row->id.'" '.$divstyle.'>'.VideoSource_CollegeHumor::renderCollegeHumorPlayer($vpoptions, $width, $height, $videolist_row, $theme_row).'</div>';
+			}	
+			if($includeallplayers or $vs=='dailymotion')
+			{
 					require_once('dailymotion.php');
 					$vpoptions['thumbnail']=YoutubeGalleryLayoutRenderer::getThumbnailByID($videoid,$gallery_list);;
 					
-					$result.=VideoSource_DailyMotion::renderDailyMotionPlayer($vpoptions, $width, $height, $videolist_row, $theme_row);
-					
-					break;
+					$result.='<div id="yg_player_dailymotion_id-'.$videolist_row->id.'" '.$divstyle.'>'.VideoSource_DailyMotion::renderDailyMotionPlayer($vpoptions, $width, $height, $videolist_row, $theme_row).'</div>';
+			}
+			
+			if($includeallplayers or $vs=='presentme')
+			{
+				require_once('presentme.php');
+				$vpoptions['thumbnail']=YoutubeGalleryLayoutRenderer::getThumbnailByID($videoid,$gallery_list);;
 				
-				case 'presentme':
-					require_once('presentme.php');
+				$result.='<div id="yg_player_presentme_id-'.$videolist_row->id.'" '.$divstyle.'>'.VideoSource_PresentMe::renderPresentMePlayer($vpoptions, $width, $height, $videolist_row, $theme_row).'</div>';
+					
+			}	
+			
+			if($includeallplayers or $vs=='ustream')
+			{
+				require_once('ustream.php');
+				$vpoptions['thumbnail']=YoutubeGalleryLayoutRenderer::getThumbnailByID($videoid,$gallery_list);;
+					
+				$result.='<div id="yg_player_ustream_id-'.$videolist_row->id.'" '.$divstyle.'>'.VideoSource_Ustream::renderUstreamPlayer($vpoptions, $width, $height, $videolist_row, $theme_row).'</div>';
+			}
+			
+			if($includeallplayers or $vs=='ustreamlive')
+			{
+				require_once('ustreamlive.php');
+				$vpoptions['thumbnail']=YoutubeGalleryLayoutRenderer::getThumbnailByID($videoid,$gallery_list);;
+					
+				$result.='<div id="yg_player_ustreamlive_id-'.$videolist_row->id.'" '.$divstyle.'>'.VideoSource_UstreamLive::renderUstreamLivePlayer($vpoptions, $width, $height, $videolist_row, $theme_row).'</div>';
+			}	
+			if($includeallplayers or $vs=='soundcloud')
+			{
+					require_once('soundcloud.php');
 					$vpoptions['thumbnail']=YoutubeGalleryLayoutRenderer::getThumbnailByID($videoid,$gallery_list);;
-					
-					$result.=VideoSource_PresentMe::renderPresentMePlayer($vpoptions, $width, $height, $videolist_row, $theme_row);
-					
-					break;
-				
-				case 'ustream':
-					require_once('ustream.php');
-					$vpoptions['thumbnail']=YoutubeGalleryLayoutRenderer::getThumbnailByID($videoid,$gallery_list);;
-					
-					$result.=VideoSource_Ustream::renderUstreamPlayer($vpoptions, $width, $height, $videolist_row, $theme_row);
-					
-					break;
-		
-				case '.flv':
+					$result.='<div id="yg_player_soundcloud_id-'.$videolist_row->id.'" '.$divstyle.'>'.VideoSource_SoundCloud::renderPlayer($vpoptions, $width, $height, $videolist_row, $theme_row).'</div>';
+			}	
+			
+			if($includeallplayers or $vs=='.flv')
+			{
 					if($list_index!=-1)
 					{
 						//Not Hot Switch
@@ -1910,10 +2187,7 @@ class YoutubeGalleryLayoutRenderer
 					
 						require_once('flv.php');
 						
-						$result.=VideoSource_FLV::renderFLVPlayer($vpoptions, $width, $height, $videolist_row, $theme_row, $videolink);
-					
-					break;
-				
+						$result.='<div id="yg_player_flv_id-'.$videolist_row->id.'" '.$divstyle.'>'.VideoSource_FLV::renderFLVPlayer($vpoptions, $width, $height, $videolist_row, $theme_row, $videolink).'</div>';					
 			}
 		
 		}
@@ -1955,14 +2229,15 @@ class YoutubeGalleryLayoutRenderer
 		else
 			$result=str_replace('\'','*quote*',$result);
 		
-		//alteracao projeto portal padrao: retirada do atributo style
-		$result='<div id="YoutubeGallerySecondaryContainer'.$videolist_row->id.'">'.$result.'</div>';
-		//fim alteracao projeto portal padrao
+			
+		$result='<div id="YoutubeGallerySecondaryContainer'.$videolist_row->id.'" style="'.$divstyle_player.'width:'.$width.'px;height:'.$height.'px;">'.$result.'</div>';
+		
 		
 		
 		return $result;
 		
 	}//function ShowAciveVideo()
+	
 	
 	
 	public static function addHotReloadScript(&$gallery_list,$width,$height,&$videolist_row, &$theme_row)
@@ -2007,8 +2282,9 @@ class YoutubeGalleryLayoutRenderer
 		var player_code=YoutubeGalleryPlayer'.$videolist_row->id.'[i];
 		';
 		//player_code=player_code.replace(/\*\/scr/g,\'</scr\');
+		//player_code=player_code.replace(/\*quote\*/g,\'\\\'\');
 		$hotrefreshscript.='
-		player_code=player_code.replace(/\*quote\*/g,\'\\\'\');
+		player_code=player_code.replace(\'*quote*\',\'\\\'\');
 		YoutubeGalleryPlayer'.$videolist_row->id.'[i]=player_code;
 	}
 	
@@ -2040,6 +2316,9 @@ class YoutubeGalleryLayoutRenderer
 		var endsecond=document.getElementById("YoutubeGalleryThumbEndSecond'.$videolist_row->id.'_"+id).innerHTML
 		var customimage_obj=document.getElementById("YoutubeGalleryThumbCustomImage'.$videolist_row->id.'_"+id);
 		
+		ygApiStart'.$videolist_row->id.'=startsecond;
+		ygApiEnd'.$videolist_row->id.'=endsecond;
+		
 		if(customimage_obj)
 		{
 			var customimage=customimage_obj.innerHTML;
@@ -2064,7 +2343,10 @@ class YoutubeGalleryLayoutRenderer
 		playercode=playercode.replace("****youtubegallery-video-endsecond****",endsecond);
 		playercode=playercode.replace("autoplay=0","autoplay=1");
 		
-		document.getElementById("YoutubeGallerySecondaryContainer'.$videolist_row->id.'").innerHTML=playercode;
+		var ygsc=document.getElementById("YoutubeGallerySecondaryContainer'.$videolist_row->id.'");
+		ygsc.innerHTML=playercode;
+		ygsc.style.display="block";
+		
 		if(playercode.indexOf("<!--DYNAMIC PLAYER-->")!=-1)
 			eval("youtubegallery_updateplayer_"+videosource+"_'.$videolist_row->id.'(videoid,true)");
 		
@@ -2081,21 +2363,16 @@ class YoutubeGalleryLayoutRenderer
 			dObj.innerHTML=description;
 		}
 		';
-		/*
-		if($theme_row->playertype==2 or $theme_row->playertype==4)
-		{
-			$hotrefreshscript.='
-		if(videosource=="youtube")
-		{
-			
-			var toPlay="YGYouTubePlayerReady'.$videolist_row->id.'(true)";
-			setTimeout(toPlay, 750);
-			
-		}
-		';
 		
-		//youtubegallery_updateplayer_youtube_'.$videolist_row->id.'(videoid);
-		}*/
+		
+		if($theme_row->openinnewwindow==5)
+		{
+			//Jump to the player anchor:"youtubegallery"
+			$hotrefreshscript.='
+		window.location.hash="youtubegallery";
+';
+		}
+		
 		
 		$hotrefreshscript.='
 	}
@@ -2109,8 +2386,10 @@ class YoutubeGalleryLayoutRenderer
 		
 	}
 	
-	public static function getYoutubeVideoIdsOnly(&$gallery_list,$current_videoid)
+	
+	public static function getPlaylistIdsOnly(&$gallery_list,$current_videoid='',$exclude_source='',$full=false)
 	{
+		//set $current_videoid to '' to do not rearrange video list
 		$theList1=array();
 		
 		$theList2=array();
@@ -2119,35 +2398,43 @@ class YoutubeGalleryLayoutRenderer
 		$current_videoid_found=false;
 		
 		foreach($gallery_list as $gl_row)	
-        {
+		{
 			if($gl_row['videoid']==$current_videoid)
 			{
 				$current_videoid_found=true;
 			}
 			else
 			{
-
-				if($gl_row['videosource']=='youtube')
-				{
-					if($current_videoid_found)
-						$theList1[]=$gl_row['videoid'];
-					else
-						$theList2[]=$gl_row['videoid'];
-				}
+					if($exclude_source=='' or $gl_row['videosource']==$exclude_source)
+					{
+						$a='';
+						if($current_videoid_found)
+							$a=$gl_row['videoid'];
+						else
+							$a=$gl_row['videoid'];
+							
+						if($full)
+							$theList2[]=$a.'*'.$gl_row['id'];//.'*'.$gl_row['startsecond'].'*'.$gl_row['endsecond'];
+						else
+							$theList2[]=$a;
+					}
 			}
 			
 			
 		}//foreach
 		
 		return array_merge($theList1,$theList2);
+	
+	
 	}
 	
 	
 	public static function getListIndexByVideoID($videoid,&$gallery_list)
 	{
+		
 		$i=0;
 		foreach($gallery_list as $gl_row)	
-        {
+		{
 			if($gl_row['videoid']==$videoid)
 				return $i;
 			$i++;
@@ -2157,33 +2444,102 @@ class YoutubeGalleryLayoutRenderer
 	
 	
 	
-	public static function getVideoRowByID($videoid,&$gallery_list)
+	
+	
+	
+	public static function getVideoRowByID($videoid,&$gallery_list,$asArray=false)
 	{
-		foreach($gallery_list as $gl_row)	
+		if($videoid=='' or $videoid=='****youtubegallery-video-id****')
 		{
-			if($gl_row['videoid']==$videoid)
-				return $gl_row;
+			if($asArray)
+				return array();
+			else
+				return false;
 		}
-		return false;
+		
+		if(isset($gallery_list) and count($gallery_list)>0)
+		{
+			
+			foreach($gallery_list as $gl_row)	
+			{
+				if($gl_row['videoid']==$videoid)
+					return $gl_row;
+			}
+		}
+		
+		//Check DB
+		$db = JFactory::getDBO();
+				
+		$query = 'SELECT * FROM #__youtubegallery_videos WHERE videoid="'.$videoid.'" LIMIT 1';
+					
+		$db->setQuery($query);
+		if (!$db->query())    die( $db->stderr());
+		$values=$db->loadAssocList();
+		
+
+		
+		if(count($values)==0)
+		{
+			if($asArray)
+				return array();
+			else
+				return false;
+		}
+		else
+			return $values[0];
+		
+		
+	}
+	
+	public static function getTitleByVideoID($videoid,&$gallery_list)
+	{
+		$gl_row=YoutubeGalleryLayoutRenderer::getVideoRowByID($videoid,$gallery_list);
+		if($gl_row)
+			return $gl_row['title'];
+		
+		/*
+		if(isset($gallery_list) and count($gallery_list)>0)
+		{
+				foreach($gallery_list as $g)
+				{
+						if($g['videoid']==$videoid)
+								return $g['title'];
+				}
+		}
+		*/
+		return '';
+		
 	}
 	
 	public static function getThumbnailByID($videoid,&$gallery_list)
 	{
+		$gl_row=YoutubeGalleryLayoutRenderer::getVideoRowByID($videoid,$gallery_list);
+		if($gl_row)
+			return $gl_row['imageurl'];
+
+		/*
 		foreach($gallery_list as $gl_row)	
 		{
 			if($gl_row['videoid']==$videoid)
 				return $gl_row['imageurl'];
 		}
+		*/
+		
 		return '';
 	}
 	
 	public static function getVideoSourceByID($videoid,&$gallery_list)
 	{
+		$gl_row=YoutubeGalleryLayoutRenderer::getVideoRowByID($videoid,$gallery_list);
+		if($gl_row)
+			return $gl_row['videosource'];
+		/*
 		foreach($gallery_list as $gl_row)	
 		{
 			if($gl_row['videoid']==$videoid)
 				return $gl_row['videosource'];
 		}
+		*/
 		return '';
 	}
 	
@@ -2219,11 +2575,70 @@ class YoutubeGalleryLayoutRenderer
 		if(isset($pair[2]))
 			$w=(int)$pair[2];
 				
-				if($pair[0]=="facebook_share")
-				{
-					$bName='Share Link';
-					if(isset($pair[1]))
-						$bName=$pair[1];
+		switch($pair[0])
+		{
+			case 'facebook_comments':
+						
+						$head_result='
+
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=624599437567869";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, \'script\', \'facebook-jssdk\'));
+
+document.write(\'<div id="fb-root"></div>\');
+</script>
+';
+$document = JFactory::getDocument();
+$document->addCustomTag($head_result);
+
+
+//ini_set('display_startup_errors',1);
+//ini_set('display_errors',1);
+
+//error_reporting(E_ALL|E_STRICT);
+
+//jimport( 'joomla.environment.response' );
+//prependBody("a");
+//jimport( 'joomla.environment.response' );
+//JFactory::getApplication()->getBody(true);
+//$app                = JFactory::getApplication();
+//$app->getBody();
+//$body = JResponse::getBody();
+
+
+//$app->appendBody('test***');
+
+						$numposts='3';
+						if(isset($pair[1]))
+							$numposts=(int)$pair[1];
+
+						$width='';//style="width:auto !important;"';
+						if(isset($pair[2]))
+							$width='data-width="'.(int)$pair[2].'px"';
+						
+						$colorscheme='light';
+						if(isset($pair[3]))
+							$colorscheme=$pair[3];
+							
+						if($link=='' or $link='window.location.href')
+							$link=YouTubeGalleryMisc::full_url($_SERVER);//$_SERVER['HTTP_REFERER'];
+							
+						$result='<div class="fb-comments" data-href="'.$link.'" data-num-posts="'.$numposts.'" '.$width.' data-colorscheme="'.$colorscheme.'"></div>';
+						
+						
+						
+						return $result;
+			break;
+			//------------------------------------------------------------------------------------------------------------
+			case 'facebook_share':
+					
+						$bName='Share Link';
+						if(isset($pair[1]))
+							$bName=$pair[1];
 					
 					
 					
@@ -2234,6 +2649,7 @@ class YoutubeGalleryLayoutRenderer
 	<div id="'.$dName.'"></div>
 	<script>
 		var theURL=escape('.$link.');
+		
 		var fbobj=document.getElementById("'.$dName.'");
 		var sBody=\'<a href="https://www.facebook.com/sharer/sharer.php?u=\'+theURL+\'" target="_blank" style="color:white;"><div style="'.$tStyle.'"><div style="'.$tStyle2.'">'.$bName.'</div>\';
 		sBody+=\'<div style="position:absolute;bottom:0;left:0;margin-bottom:-2px;width:'.$w.'px;height:1px;border-bottom:1px solid #e5e5e5;"></div>\';
@@ -2241,13 +2657,14 @@ class YoutubeGalleryLayoutRenderer
 	        fbobj.innerHTML = sBody;
 	</script>
 	';
-					return $result;
-				}
-				elseif($pair[0]=="facebook_like")
-				{
-					$FBLanguage='';
-					if(isset($pair[1]))
-						$FBLanguage=$pair[1];
+			return $result;
+			break;
+			//------------------------------------------------------------------------------------------------------------
+			case 'facebook_like':
+					
+						$FBLanguage='';
+						if(isset($pair[1]))
+							$FBLanguage=$pair[1];
 						
 					$dName=$prefix.'fblike_'.$videolist_row_id.'x'.$videoid;
 					$result ='
@@ -2262,10 +2679,9 @@ class YoutubeGalleryLayoutRenderer
 	</script>
 	';
 					return $result;
-					
-				}
-				elseif($pair[0]=="twitter")
-				{
+			break;
+			//------------------------------------------------------------------------------------------------------------
+			case 'twitter':
 					
 					$TwitterAccount='';//"YoutubeGallery";
 					if(isset($pair[1]))
@@ -2285,7 +2701,12 @@ class YoutubeGalleryLayoutRenderer
 	</script>
 	';
 					return $result;
-				}
+			break;
+			//------------------------------------------------------------------------------------------------------------
+			//case '':
+			//break;
+		}
+				
 				
 	}
 		

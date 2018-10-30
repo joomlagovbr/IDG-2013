@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.1.20362
+ * @version         18.7.10792
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -26,20 +26,21 @@ class Conditions
 	static $installed_extensions = null;
 	static $params               = null;
 
-	public static function pass($conditions, $matching_method = 'all', $article = null)
+	public static function pass($conditions, $matching_method = 'all', $article = null, $module = null)
 	{
 		if (empty($conditions))
 		{
 			return true;
 		}
 
+		$article_id      = isset($article->id) ? $article->id : '';
+		$module_id       = isset($module->id) ? $module->id : '';
 		$matching_method = in_array($matching_method, ['any', 'or']) ? 'any' : 'all';
-		$aid             = ($article && isset($article->id)) ? '[' . $article->id . ']' : '';
-		$hash            = md5('pass_' . $aid . '_' . $matching_method . '_' . json_encode($conditions));
+		$cache_id        = 'pass_' . $article_id . '_' . $module_id . '_' . $matching_method . '_' . json_encode($conditions);
 
-		if (Cache::has($hash))
+		if (Cache::has($cache_id))
 		{
-			return Cache::get($hash);
+			return Cache::get($cache_id);
 		}
 
 		$pass = (bool) ($matching_method == 'all');
@@ -61,11 +62,11 @@ class Conditions
 				continue;
 			}
 
-			$pass = self::passByType($conditions[$type], $type, $article);
+			$pass = self::passByType($conditions[$type], $type, $article, $module);
 		}
 
 		return Cache::set(
-			$hash,
+			$cache_id,
 			$pass
 		);
 	}
@@ -90,11 +91,11 @@ class Conditions
 
 	public static function getConditionsFromParams(&$params)
 	{
-		$hash = md5('getConditionsFromParams_' . json_encode($params));
+		$cache_id = 'getConditionsFromParams_' . json_encode($params);
 
-		if (Cache::has($hash))
+		if (Cache::has($cache_id))
 		{
-			return Cache::get($hash);
+			return Cache::get($cache_id);
 		}
 
 		self::renameParamKeys($params);
@@ -123,7 +124,7 @@ class Conditions
 		}
 
 		return Cache::set(
-			$hash,
+			$cache_id,
 			$types
 		);
 	}
@@ -174,30 +175,32 @@ class Conditions
 		return $conditions;
 	}
 
-	private static function initParametersByType($params, $type = '')
+	private static function initParametersByType(&$params, $type = '')
 	{
 		$params->class_name = str_replace('.', '', $type);
 
 		$params->include_type = self::getConditionState($params->include_type);
 	}
 
-	private static function passByType($condition, $type, $article = null)
+	private static function passByType($condition, $type, $article = null, $module = null)
 	{
-		$aid  = ($article && isset($article->id)) ? '[' . $article->id . ']' : '';
-		$hash = md5('passByType_' . $type . '_' . $aid . '_' . json_encode($condition) . '_' . json_encode($article));
+		$article_id   = isset($article->id) ? $article->id : '';
+		$module_id    = isset($module->id) ? $module->id : '';
+		$cache_prefix = 'passByType_' . $type . '_' . $article_id . '_' . $module_id;
+		$cache_id     = $cache_prefix . '_' . json_encode($condition);
 
-		if (Cache::has($hash))
+		if (Cache::has($cache_id))
 		{
-			return Cache::get($hash);
+			return Cache::get($cache_id);
 		}
 
 		self::initParametersByType($condition, $type);
 
-		$hash = md5('passByType_' . $type . '_' . $aid . '_' . json_encode($condition) . '_' . json_encode($article));
+		$cache_id = $cache_prefix . '_' . json_encode($condition);
 
-		if (Cache::has($hash))
+		if (Cache::has($cache_id))
 		{
-			return Cache::get($hash);
+			return Cache::get($cache_id);
 		}
 
 		$pass = false;
@@ -220,7 +223,7 @@ class Conditions
 
 				$className = '\\RegularLabs\\Library\\Condition\\' . $condition->class_name;
 
-				$class = new $className($condition, $article);
+				$class = new $className($condition, $article, $module);
 
 				$class->beforePass();
 
@@ -230,7 +233,7 @@ class Conditions
 		}
 
 		return Cache::set(
-			$hash,
+			$cache_id,
 			$pass
 		);
 	}
@@ -264,11 +267,11 @@ class Conditions
 			return [];
 		}
 
-		$hash = md5('makeArray_' . json_encode($array) . '_' . $delimiter . '_' . $trim);
+		$cache_id = 'makeArray_' . json_encode($array) . '_' . $delimiter . '_' . $trim;
 
-		if (Cache::has($hash))
+		if (Cache::has($cache_id))
 		{
-			return Cache::get($hash);
+			return Cache::get($cache_id);
 		}
 
 		$array = self::mixedDataToArray($array, $delimiter);
@@ -294,7 +297,7 @@ class Conditions
 		}
 
 		return Cache::set(
-			$hash,
+			$cache_id,
 			$array
 		);
 	}

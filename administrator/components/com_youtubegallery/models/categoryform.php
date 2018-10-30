@@ -1,8 +1,8 @@
 <?php
 /**
- * YoutubeGallery Joomla! 3.0 Native Component
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * YoutubeGallery Joomla!  Native Component
+ * @version 4.4.5
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -84,17 +84,14 @@ class YoutubeGalleryModelCategoryForm extends JModelAdmin
         
 
         function store()
-        	{
+        {
                 
                 
         	$category_row = $this->getTable('categories');
             
-
-            
-        	// consume the post data with allow_html
-        	$data_ = JRequest::get( 'post',JREQUEST_ALLOWRAW);
-            $data=$data_['jform'];
-            
+		$jinput = JFactory::getApplication()->input;
+                $data = $jinput->get( 'jform',array(),'ARRAY');
+		
         	$post = array();
             
             $categoryname=trim(preg_replace("/[^a-zA-Z0-9_]/", "", $data['jform']['categoryname']));

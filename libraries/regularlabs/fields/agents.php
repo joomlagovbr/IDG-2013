@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.1.20362
+ * @version         18.7.10792
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -44,10 +44,10 @@ class JFormFieldRL_Agents extends \RegularLabs\Library\Field
 
 	function getAjaxRaw(Registry $attributes)
 	{
-		$name     = $attributes->get('name', $this->type);
-		$id       = $attributes->get('id', strtolower($name));
-		$value    = $attributes->get('value', []);
-		$size     = $attributes->get('size');
+		$name  = $attributes->get('name', $this->type);
+		$id    = $attributes->get('id', strtolower($name));
+		$value = $attributes->get('value', []);
+		$size  = $attributes->get('size');
 
 		$options = $this->getAgents(
 			$attributes->get('group')

@@ -1,0 +1,4 @@
+/*slideshow*/
+.image-browser-slideshow-pause			{ position: absolute; top: 414px; left: 20px; display: block; width: 42px; height: 36px; cursor: pointer; background: url(img/lb-slideshow-pause.png); _background:none ;_filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/lb-slideshow-pause.png'));}
+.image-browser-slideshow-play			{ position: absolute; top: 414px; left: 20px; display: block; width: 42px; height: 36px; cursor: pointer; background: url(img/lb-slideshow-active.png); _background:none ;_filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/lb-slideshow-active.png'));}
+.image-browser-slideshow-play:hover		{ background: url(img/lb-slideshow-hover.png); _background:none; _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/lb-slideshow-hover.png'));}

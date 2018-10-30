@@ -1,8 +1,8 @@
 <?php
 /**
  * YoutubeGallery
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * @version 4.4.5
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -13,7 +13,7 @@ defined('_JEXEC') or die('Restricted access');
 if(!defined('DS'))
 	define('DS',DIRECTORY_SEPARATOR);
 
-require_once(JPATH_SITE.DS.'components'.DS.'com_youtubegallery'.DS.'includes'.DS.'misc.php');
+require_once(JPATH_SITE.DIRECTORY_SEPARATOR.'components'.DIRECTORY_SEPARATOR.'com_youtubegallery'.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.'misc.php');
 //not finished
 class VideoSource_FLV
 {
@@ -36,7 +36,7 @@ class VideoSource_FLV
 		else
 			$FileName="FLV File";
 		
-		$theLink=JPATH_SITE.DS.$theLink_;
+		$theLink=JPATH_SITE.DIRECTORY_SEPARATOR.$theLink_;
 
 		$theTitle='';
 		$Description='';
@@ -163,13 +163,11 @@ $result.='<object type="application/x-shockwave-flash" data="'.$player.'" width=
 		$size=array(120,90);
 		$s=explode(';',$cssstyle);
 		$c=0;
-		//echo '<br/>s=';
-		//print_r($s);
+
 		foreach($s as $a)
 		{
 			$p=explode(':',$a);
-			//echo '<br/>p=';
-			//print_r($p);
+
 			if(count($p)>0)
 			{
 				$o=strtolower($p[0]);
@@ -189,8 +187,7 @@ $result.='<object type="application/x-shockwave-flash" data="'.$player.'" width=
 			if($c==2)
 				break;
 		}
-		//echo '<br/>size=';
-		//print_r($size);
+
 		
 		return $size;
 	}
@@ -255,8 +252,9 @@ $result.='<object type="application/x-shockwave-flash" data="'.$player.'" width=
 		$result='';
 		//http://flv-player.net/players/maxi/license/
 		$result.='<div style=""><object type="application/x-shockwave-flash" id="'.$playerid.'" alt="'.$title.'" data="'.$player.'" width="'.$width.'" height="'.$height.'" '
-			.'style="margin:0 !important;padding: 0 !important;border:none !important;">'
+			.'style="margin:0 !important;padding: 0 !important;border:none !important;"'
 			.($theme_row->responsive==1 ? ' onLoad="YoutubeGalleryAutoResizePlayer'.$videolist_row->id.'();"' : '')
+			.'>'
 			.'<param name="movie" value="'.$player.'" />';
 
 			$p='';

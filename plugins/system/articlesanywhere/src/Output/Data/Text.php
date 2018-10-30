@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         7.5.1
+ * @version         8.0.3
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -13,8 +13,8 @@ namespace RegularLabs\Plugin\System\ArticlesAnywhere\Output\Data;
 
 defined('_JEXEC') or die;
 
-use RegularLabs\Library\StringHelper as RL_String;
 use RegularLabs\Library\RegEx as RL_RegEx;
+use RegularLabs\Library\StringHelper as RL_String;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Params;
 
 class Text extends Data

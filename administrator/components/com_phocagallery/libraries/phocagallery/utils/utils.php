@@ -1,19 +1,19 @@
 <?php
-/*
- * @package Joomla 1.5
- * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
- *
- * @component Phoca Gallery
- * @copyright Copyright (C) Jan Pavelka www.phoca.cz
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+/**
+ * @package   Phoca Gallery
+ * @author    Jan Pavelka - https://www.phoca.cz
+ * @copyright Copyright (C) Jan Pavelka https://www.phoca.cz
+ * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 and later
+ * @cms       Joomla
+ * @copyright Copyright (C) Open Source Matters. All rights reserved.
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  */
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
 class PhocaGalleryUtils
 {
 	
-	function htmlToRgb($clr) {
+	public static function htmlToRgb($clr) {
 		if ($clr[0] == '#') {
 			$clr = substr($clr, 1);
 		}
@@ -36,7 +36,7 @@ class PhocaGalleryUtils
 	/*
 	 * Source: http://php.net/manual/en/function.ini-get.php
 	 */
-	function iniGetBool($a) {
+	public static function iniGetBool($a) {
 		$b = ini_get($a);
 		switch (strtolower($b)) {
 			case 'on':
@@ -53,7 +53,7 @@ class PhocaGalleryUtils
 		}
 	}
 	
-	function setQuestionmarkOrAmp($url) {
+	public static function setQuestionmarkOrAmp($url) {
 		$isThereQMR = false;
 		$isThereQMR = preg_match("/\?/i", $url);
 		if ($isThereQMR) {
@@ -63,7 +63,7 @@ class PhocaGalleryUtils
 		}
 	}
 	
-	public function toArray($value = FALSE) {
+	public static function toArray($value = FALSE) {
 		if ($value == FALSE) {
 			return array(0 => 0);
 		} else if (empty($value)) {
@@ -76,7 +76,7 @@ class PhocaGalleryUtils
 	
 	}
 	
-	public function setMessage($new = '', $current = '') {
+	public static function setMessage($new = '', $current = '') {
 		
 		$message = $current;
 		if($new != '') {
@@ -88,28 +88,21 @@ class PhocaGalleryUtils
 		return $message;
 	}
 	
-	public function displayFooter($return = 0) {
-		$f = '<div style="text-align: center; color: rgb(21'.'1, 2'.'11, 21'.'1);">Powe'.'red by <a href="http://www.pho'.'ca.cz/pho'.'caga'.'llery" style="text-decoration: none;" target="_blank" title="Pho'.'ca Gal' .'lery">Pho'.'ca Gall'.'ery</a></div>';
-		if ($return == 1) {
-			return $f;
-		} else {
-			echo $f;
-		}
-	}
 	
 	
-	function filterInput($string) {
+	
+	public static function filterInput($string) {
 		if (strpos($string, '"') !== false) {
 			$string = str_replace(array('=', '<'), '', $string);
 		}
 		return $string;
 	}
 	
-	function isURLAddress($url) {
+	public static function isURLAddress($url) {
 		return preg_match('|^http(s)?://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i', $url);
 	}
 	
-	public function isEnabledMultiboxFeature($feature) {
+	public static function isEnabledMultiboxFeature($feature) {
 	
 		$app		= JFactory::getApplication();	
 		$params		= $app->getParams();
@@ -123,7 +116,7 @@ class PhocaGalleryUtils
 		return false;
 	}
 	
-	public function setVars( $task = '') {
+	public static function setVars( $task = '') {
 	
 		$a			= array();
 		$app		= JFactory::getApplication();
@@ -138,6 +131,19 @@ class PhocaGalleryUtils
 		$a['task']	= $a['c'] . htmlspecialchars(strip_tags($task));
 		$a['tasks'] = $a['task']. 's';
 		return $a;
+	}
+	
+	public static function getIntFromString($string) {
+		
+		if (empty($string)) {
+			return 0;
+		}
+		$int	= '';//$int = 0
+		$parts 	= explode(':', $string);
+		if (isset($parts[0])) {
+			$int = (int)$parts[0];
+		}
+		return $int;
 	}
 }
 ?>

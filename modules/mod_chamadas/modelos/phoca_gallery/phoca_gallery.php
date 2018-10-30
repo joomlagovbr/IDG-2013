@@ -87,7 +87,11 @@ class ModeloPhoca_gallery
 						$subQuery->where('pai.approved = 1');
 						
 						$db->setQuery($subQuery);
-						$result = $db->loadResultArray();
+						$result = $db->loadResultArray();						
+						
+						if (!$result) {
+							break;							
+						}
 
 						if(count($result)==0)
 							break;

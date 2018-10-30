@@ -1,4 +1,14 @@
-<?php defined('_JEXEC') or die('Restricted access'); 
+<?php
+/*
+ * @package Joomla
+ * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+ *
+ * @component Phoca Gallery
+ * @copyright Copyright (C) Jan Pavelka www.phoca.cz
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ */
+defined('_JEXEC') or die('Restricted access'); 
 if ($this->params->get('show_ordering_images') || $this->params->get('show_pagination_limit_category') || $this->params->get('show_pagination_category')) {
 	echo '<form action="'.htmlspecialchars($this->tmpl['action']).'" method="post" name="adminForm">'. "\n";
 

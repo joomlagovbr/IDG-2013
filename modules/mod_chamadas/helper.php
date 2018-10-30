@@ -22,6 +22,10 @@ class ModChamadasHelper
 	{
 		//Carrega Modelo
 		$modelo = $params->get('modelo');
+		
+		if (!$modelo) {
+			$modelo = "article_content";			
+		}
 
 		//Chama modelo que deverá ser executado
 		require_once __DIR__ . '/modelos/'.$modelo.'/'.$modelo.'.php';
@@ -92,11 +96,16 @@ class ModChamadasHelper
 			$application = JFactory::getApplication();
 			$cms_menu = $application->getMenu();
 			$menu_item = $cms_menu->getItem( $params->get($menu) );
-			$link = JRoute::_($menu_item->link.'&Itemid='.$menu_item->id);
+
+			if ($menu_item) {
+				$link = JRoute::_($menu_item->link.'&Itemid='.$menu_item->id);
+			}else{
+				$link = "";
+			}
 		}
 		elseif( $params->get($article, '' ) != ''  )
 		{
-			if(ModChamadasHelper::getjVersion() > 2)
+			if(ModChamadasHelper::getjVersion() < 2)
 			{
 				$link = JRoute::_(  'index.php?option=com_content&view=article&id='. $params->get($article, '') );
 			}
@@ -107,7 +116,7 @@ class ModChamadasHelper
 		}
 		elseif($content_item && $isJoomlaArticle )
 		{
-			if(ModChamadasHelper::getjVersion() > 2)
+			if(ModChamadasHelper::getjVersion() < 2)
 			{
 				$link = JRoute::_(  'index.php?option=com_content&view=article&id='.$content_item->id );
 			}

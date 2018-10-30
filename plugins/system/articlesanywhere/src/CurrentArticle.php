@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         7.5.1
+ * @version         8.0.3
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -17,6 +17,8 @@ defined('_JEXEC') or die;
 
 class CurrentArticle
 {
+	static $article = null;
+
 	public static function get($key = null, $component = 'default')
 	{
 		$article = self::getCurrentArticle($component);
@@ -26,11 +28,31 @@ class CurrentArticle
 			return $article ?: (object) [];
 		}
 
+//		if ($key == 'id' && ! isset($article->id))
+//		{
+//			return 0;
+//		}
+
 		return isset($article->{$key}) ? $article->{$key} : null;
+	}
+
+	public static function set($article)
+	{
+		if ( ! isset($article->id))
+		{
+			return;
+		}
+
+		self::$article = $article;
 	}
 
 	private static function getCurrentArticle($component = 'default')
 	{
+		if ( ! is_null(self::$article))
+		{
+			return self::$article;
+		}
+
 		return Factory::getCurrentItem($component)->get();
 	}
 

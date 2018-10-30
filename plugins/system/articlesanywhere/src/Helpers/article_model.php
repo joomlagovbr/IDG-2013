@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         7.5.1
+ * @version         8.0.3
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -13,7 +13,7 @@
  * @package     Joomla.Site
  * @subpackage  com_content
  *
- * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -137,13 +137,12 @@ class  ArticlesAnywhereArticleModel extends JModelItem
 				if (( ! $user->authorise('core.edit.state', 'com_content')) && ( ! $user->authorise('core.edit', 'com_content')))
 				{
 					// Filter by start and end dates.
+					$nowDate  = $db->quote(JFactory::getDate()->toSql());
 					$nullDate = $db->quote($db->getNullDate());
-					$date     = JFactory::getDate();
-
-					$nowDate = $db->quote($date->toSql());
 
 					$query->where('(a.publish_up = ' . $nullDate . ' OR a.publish_up <= ' . $nowDate . ')')
-						->where('(a.publish_down = ' . $nullDate . ' OR a.publish_down >= ' . $nowDate . ')');
+						->where('( ' . $db->quoteName('a.publish_down') . ' = ' . $nullDate
+							. ' OR ' . $db->quoteName('a.publish_down') . ' > ' . $nowDate . ' )');
 				}
 
 				// Join to check for category published state in parent categories up the tree
@@ -169,13 +168,13 @@ class  ArticlesAnywhereArticleModel extends JModelItem
 
 				if (empty($data))
 				{
-					return JError::raiseError(404, JText::_('COM_CONTENT_ERROR_ARTICLE_NOT_FOUND'));
+					throw new Exception(JText::_('COM_CONTENT_ERROR_ARTICLE_NOT_FOUND'), 404);
 				}
 
 				// Check for published state if filter set.
 				if (((is_numeric($published)) || (is_numeric($archived))) && (($data->state != $published) && ($data->state != $archived)))
 				{
-					return JError::raiseError(404, JText::_('COM_CONTENT_ERROR_ARTICLE_NOT_FOUND'));
+					throw new Exception(JText::_('COM_CONTENT_ERROR_ARTICLE_NOT_FOUND'), 404);
 				}
 
 				// Convert parameter fields to objects.
@@ -241,13 +240,11 @@ class  ArticlesAnywhereArticleModel extends JModelItem
 				if ($e->getCode() == 404)
 				{
 					// Need to go thru the error handler to allow Redirect to work.
-					JError::raiseError(404, $e->getMessage());
+					throw new Exception($e->getMessage(), 404);
 				}
-				else
-				{
-					$this->setError($e);
-					$this->_item[$pk] = false;
-				}
+
+				$this->setError($e);
+				$this->_item[$pk] = false;
 			}
 		}
 
@@ -311,9 +308,7 @@ class  ArticlesAnywhereArticleModel extends JModelItem
 			}
 			catch (RuntimeException $e)
 			{
-				JError::raiseWarning(500, $e->getMessage());
-
-				return false;
+				throw new Exception($e->getMessage(), 500);
 			}
 
 			// There are no ratings yet, so lets insert our rating
@@ -335,9 +330,7 @@ class  ArticlesAnywhereArticleModel extends JModelItem
 				}
 				catch (RuntimeException $e)
 				{
-					JError::raiseWarning(500, $e->getMessage());
-
-					return false;
+					throw new Exception($e->getMessage(), 500);
 				}
 			}
 			else
@@ -362,9 +355,7 @@ class  ArticlesAnywhereArticleModel extends JModelItem
 					}
 					catch (RuntimeException $e)
 					{
-						JError::raiseWarning(500, $e->getMessage());
-
-						return false;
+						throw new Exception($e->getMessage(), 500);
 					}
 				}
 				else

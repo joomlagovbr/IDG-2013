@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.1.20362
+ * @version         18.7.10792
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -75,9 +75,7 @@ class JFormFieldRL_MenuItems extends \RegularLabs\Library\Field
 		}
 		catch (RuntimeException $e)
 		{
-			JError::raiseWarning(500, $e->getMessage());
-
-			return false;
+			throw new Exception($e->getMessage(), 500);
 		}
 
 		// Group the items by menutype.
@@ -94,9 +92,7 @@ class JFormFieldRL_MenuItems extends \RegularLabs\Library\Field
 		}
 		catch (RuntimeException $e)
 		{
-			JError::raiseWarning(500, $e->getMessage());
-
-			return false;
+			throw new Exception($e->getMessage(), 500);
 		}
 
 		RL_Language::load('com_menus', JPATH_ADMINISTRATOR);

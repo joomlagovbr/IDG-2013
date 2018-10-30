@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.1.20362
+ * @version         18.7.10792
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -31,16 +31,16 @@ class Document
 	 */
 	public static function isAdmin($exclude_login = false)
 	{
-		$hash = __FUNCTION__ . '_' . $exclude_login;
+		$cache_id = __FUNCTION__ . '_' . $exclude_login;
 
-		if (Cache::has($hash))
+		if (Cache::has($cache_id))
 		{
-			return Cache::get($hash);
+			return Cache::get($cache_id);
 		}
 
 		$app = JFactory::getApplication();
 
-		return Cache::set($hash,
+		return Cache::set($cache_id,
 			(
 				self::isClient('administrator')
 				&& ( ! $exclude_login || ! JFactory::getUser()->get('guest'))
@@ -62,19 +62,19 @@ class Document
 	{
 		$identifier = $identifier == 'admin' ? 'administrator' : $identifier;
 
-		$hash = __FUNCTION__ . '_' . $identifier;
+		$cache_id = __FUNCTION__ . '_' . $identifier;
 
-		if (Cache::has($hash))
+		if (Cache::has($cache_id))
 		{
-			return Cache::get($hash);
+			return Cache::get($cache_id);
 		}
 
 		if (JVERSION < 3.7)
 		{
-			return Cache::set($hash, $identifier == 'administrator' ? JFactory::getApplication()->isAdmin() : JFactory::getApplication()->isSite());
+			return Cache::set($cache_id, $identifier == 'administrator' ? JFactory::getApplication()->isClient('administrator') : JFactory::getApplication()->isClient('site'));
 		}
 
-		return Cache::set($hash, JFactory::getApplication()->isClient($identifier));
+		return Cache::set($cache_id, JFactory::getApplication()->isClient($identifier));
 	}
 
 	/**
@@ -84,11 +84,11 @@ class Document
 	 */
 	public static function isEditPage()
 	{
-		$hash = __FUNCTION__;
+		$cache_id = __FUNCTION__;
 
-		if (Cache::has($hash))
+		if (Cache::has($cache_id))
 		{
-			return Cache::get($hash);
+			return Cache::get($cache_id);
 		}
 
 		$app = JFactory::getApplication();
@@ -98,7 +98,7 @@ class Document
 		// always return false for these components
 		if (in_array($option, ['com_rsevents', 'com_rseventspro']))
 		{
-			return Cache::set($hash, false);
+			return Cache::set($cache_id, false);
 		}
 
 		$task = $app->input->get('task');
@@ -117,7 +117,7 @@ class Document
 			$view = array_pop($view);
 		}
 
-		return Cache::set($hash,
+		return Cache::set($cache_id,
 			(
 				in_array($option, ['com_contentsubmit', 'com_cckjseblod'])
 				|| ($option == 'com_comprofiler' && in_array($task, ['', 'userdetails']))
@@ -137,14 +137,14 @@ class Document
 	 */
 	public static function isHtml()
 	{
-		$hash = __FUNCTION__;
+		$cache_id = __FUNCTION__;
 
-		if (Cache::has($hash))
+		if (Cache::has($cache_id))
 		{
-			return Cache::get($hash);
+			return Cache::get($cache_id);
 		}
 
-		return Cache::set($hash,
+		return Cache::set($cache_id,
 			(JFactory::getDocument()->getType() == 'html')
 		);
 	}
@@ -156,14 +156,14 @@ class Document
 	 */
 	public static function isFeed()
 	{
-		$hash = __FUNCTION__;
+		$cache_id = __FUNCTION__;
 
-		if (Cache::has($hash))
+		if (Cache::has($cache_id))
 		{
-			return Cache::get($hash);
+			return Cache::get($cache_id);
 		}
 
-		return Cache::set($hash,
+		return Cache::set($cache_id,
 			(
 				JFactory::getDocument()->getType() == 'feed'
 				|| JFactory::getApplication()->input->getWord('format') == 'feed'
@@ -181,14 +181,14 @@ class Document
 	 */
 	public static function isPDF()
 	{
-		$hash = __FUNCTION__;
+		$cache_id = __FUNCTION__;
 
-		if (Cache::has($hash))
+		if (Cache::has($cache_id))
 		{
-			return Cache::get($hash);
+			return Cache::get($cache_id);
 		}
 
-		return Cache::set($hash,
+		return Cache::set($cache_id,
 			(
 				JFactory::getDocument()->getType() == 'pdf'
 				|| JFactory::getApplication()->input->getWord('format') == 'pdf'
@@ -204,14 +204,14 @@ class Document
 	 */
 	public static function isHttps()
 	{
-		$hash = __FUNCTION__;
+		$cache_id = __FUNCTION__;
 
-		if (Cache::has($hash))
+		if (Cache::has($cache_id))
 		{
-			return Cache::get($hash);
+			return Cache::get($cache_id);
 		}
 
-		return Cache::set($hash,
+		return Cache::set($cache_id,
 			(
 				( ! empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) != 'off')
 				|| (isset($_SERVER['SSL_PROTOCOL']))
@@ -230,27 +230,27 @@ class Document
 	 */
 	public static function isCategoryList($context)
 	{
-		$hash = __FUNCTION__ . '_' . $context;
+		$cache_id = __FUNCTION__ . '_' . $context;
 
-		if (Cache::has($hash))
+		if (Cache::has($cache_id))
 		{
-			return Cache::get($hash);
+			return Cache::get($cache_id);
 		}
 
 		// Return false if it is not a category page
 		if ($context != 'com_content.category' || JFactory::getApplication()->input->get('view') != 'category')
 		{
-			return Cache::set($hash, false);
+			return Cache::set($cache_id, false);
 		}
 
 		// Return false if it is not a list layout
 		if (JFactory::getApplication()->input->get('layout') && JFactory::getApplication()->input->get('layout') != 'list')
 		{
-			return Cache::set($hash, false);
+			return Cache::set($cache_id, false);
 		}
 
 		// Return true if it IS a list layout
-		return Cache::set($hash, true);
+		return Cache::set($cache_id, true);
 	}
 
 	/**
@@ -268,7 +268,7 @@ class Document
 
 		if (strpos($file, 'regularlabs/') === 0)
 		{
-			$version = '18.1.20362';
+			$version = '18.7.10792';
 		}
 
 		if ( ! $file = File::getMediaFile('js', $file))
@@ -294,7 +294,7 @@ class Document
 	{
 		if (strpos($file, 'regularlabs/') === 0)
 		{
-			$version = '18.1.20362';
+			$version = '18.7.10792';
 		}
 
 		if ( ! $file = File::getMediaFile('css', $file))

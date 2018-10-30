@@ -2,8 +2,8 @@
 <extension version="3.4" type="plugin" group="system" method="upgrade">
 	<name>plg_system_articlesanywhere</name>
 	<description>PLG_SYSTEM_ARTICLESANYWHERE_DESC</description>
-	<version>7.5.1</version>
-	<creationDate>January 2018</creationDate>
+	<version>8.0.3</version>
+	<creationDate>July 2018</creationDate>
 	<author>Regular Labs (Peter van Westen)</author>
 	<authorEmail>info@regularlabs.com</authorEmail>
 	<authorUrl>https://www.regularlabs.com</authorUrl>
@@ -125,7 +125,7 @@
 					   description="AA_OTHER_AREAS_DESC" />
 				<field name="@notice_otherareas" type="rl_plaintext"
 					   label="RL_ENABLE_OTHER_AREAS"
-					   description="RL_ENABLE_OTHER_AREAS_DESC"
+					   description="AA_ENABLE_OTHER_AREAS_DESC"
 					   default="RL_ONLY_AVAILABLE_IN_PRO" />
 				<field name="@block_otherareas_b" type="rl_block" end="1" />
 			</fieldset>
@@ -146,11 +146,11 @@
 					   description="AA_DEFAULT_DATA_TAG_SETTINGS_DESC" />
 
 				<field name="@block_data_layout_a" type="rl_block" start="1"
-					   label="AA_LAYOUT" />
+					   label="%s,AA_FULL_ARTICLE" />
 
 				<field name="data_layout_enable" type="radio" class="btn-group" default="0"
-					   label="AA_ENABLE_LAYOUT_TAG"
-					   description="AA_ENABLE_LAYOUT_TAG_DESC">
+					   label="AA_ENABLE_FULL_ARTICLE_TAG"
+					   description="AA_ENABLE_FULL_ARTICLE_TAG_DESC">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
@@ -158,8 +158,8 @@
 				<field name="@toggler_data_layout_1_a" type="rl_toggler" param="data_layout_enable" value="1" />
 
 				<field name="data_layout_layout" type="text" default=""
-					   label="AA_ENABLE_LAYOUT_LAYOUT"
-					   description="AA_LAYOUT_LAYOUT_DESC" />
+					   label="AA_ENABLE_FULL_ARTICLE_LAYOUT"
+					   description="AA_FULL_ARTICLE_LAYOUT_DESC" />
 
 				<field name="@toggler_data_layout_1_b" type="rl_toggler" />
 
@@ -214,7 +214,7 @@
 					<option value="1">JYES</option>
 				</field>
 				<field name="@toggler_data_text_a" type="rl_toggler" param="data_text_enable" value="1" />
-				<field name="data_text_type" type="radio" default="text"
+				<field name="data_text_type" type="list" default="text"
 					   label="AA_TEXT_TYPE"
 					   description="AA_TEXT_TYPE_DESC">
 					<option value="text">AA_ALL_TEXT</option>
@@ -257,37 +257,9 @@
 
 				<field name="@toggler_data_layout_2_b" type="rl_toggler" />
 
-				<field name="@block_div_a" type="rl_block" start="1"
-					   label="AA_DIV" />
-
-				<field name="div_enable" type="radio" class="btn-group" default="0"
-					   label="AA_EMBED_IN_A_DIV"
-					   description="AA_EMBED_IN_A_DIV_DESC">
-					<option value="0">JNO</option>
-					<option value="1">JYES</option>
-				</field>
-				<field name="div_width" type="text" default=""
-					   label="RL_WIDTH"
-					   description="AA_WIDTH_DESC" />
-				<field name="div_height" type="text" default=""
-					   label="RL_HEIGHT"
-					   description="AA_HEIGHT_DESC" />
-				<field name="div_float" type="radio" default=""
-					   label="AA_ALIGNMENT"
-					   description="AA_ALIGNMENT_DESC">
-					<option value="">JNONE</option>
-					<option value="left">JGLOBAL_LEFT</option>
-					<option value="right">JGLOBAL_RIGHT</option>
-				</field>
-				<field name="div_class" type="text" default=""
-					   label="AA_DIV_CLASSNAME"
-					   description="AA_DIV_CLASSNAME_DESC" />
-
-				<field name="@block_div_b" type="rl_block" end="1" />
-
-				<field name="@notice_content_type" type="rl_plaintext"
-					   label="AA_CONTENT_TYPE"
-					   description="AA_CONTENT_TYPE_DESC"
+				<field name="@notice_use_k2" type="rl_plaintext"
+					   label="AA_USE_K2"
+					   description="AA_USE_K2_DESC"
 					   default="RL_ONLY_AVAILABLE_IN_PRO" />
 
 				<field name="@block_tag_b" type="rl_block" end="1" />

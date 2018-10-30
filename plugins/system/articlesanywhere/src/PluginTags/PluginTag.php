@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         7.5.1
+ * @version         8.0.3
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -56,27 +56,38 @@ class PluginTag
 
 		if (empty($sets))
 		{
-			return [];
+			return '';
 		}
 
-		$html = [];
+		$ids = [];
 
 		foreach ($sets as $set)
 		{
-			$html[] = $this->getOutputBySet($set);
+			$ids = array_merge($ids, $this->getIdsBySet($set));
 		}
 
-		return implode('', $html);
-	}
-
-	private function getOutputBySet($set)
-	{
 		$config = Factory::getConfig($set);
 
 		$default = ! empty($set->attributes->empty) ? $set->attributes->empty : '';
 
-		return Factory::getCollection($config)->get($default);
+		return Factory::getCollection($config)->getOutputByIds($ids, $default);
 	}
+
+	private function getIdsBySet($set)
+	{
+		$config = Factory::getConfig($set);
+
+		return Factory::getCollection($config)->getOnlyIds();
+	}
+
+//	private function getOutputBySet($set)
+//	{
+//		$config = Factory::getConfig($set);
+//
+//		$default = ! empty($set->attributes->empty) ? $set->attributes->empty : '';
+//
+//		return Factory::getCollection($config)->get($default);
+//	}
 
 	private function getTagString()
 	{
@@ -144,7 +155,7 @@ class PluginTag
 			->get($attributes);
 		$set->filters  = (new Filters($set->component, $this, $fields, $custom_fields))
 			->get($attributes);
-		$set->ordering = (new Ordering($set->component))
+		$set->ordering = (new Ordering($config))
 			->get($attributes);
 		$set->selects  = (new Selects($set->component, $fields, $custom_fields))
 			->get($this->getInnerContent(), $set->ordering);

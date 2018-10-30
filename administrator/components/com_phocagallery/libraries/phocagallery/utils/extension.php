@@ -1,14 +1,14 @@
 <?php
-/*
- * @package		Joomla.Framework
- * @copyright	Copyright (C) 2005 - 2010 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
- *
- * @component Phoca Component
- * @copyright Copyright (C) Jan Pavelka www.phoca.cz
- * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License version 2 or later;
+/**
+ * @package   Phoca Gallery
+ * @author    Jan Pavelka - https://www.phoca.cz
+ * @copyright Copyright (C) Jan Pavelka https://www.phoca.cz
+ * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 and later
+ * @cms       Joomla
+ * @copyright Copyright (C) Open Source Matters. All rights reserved.
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  */
-
+defined('_JEXEC') or die;
 class PhocaGalleryExtension
 {
 	private static $extension = array();
@@ -29,7 +29,7 @@ class PhocaGalleryExtension
 
 	public static function getExtensionInfo( $element = null, $type = 'component', $folder = '' ) {
 		if( is_null( $element ) ) {
-			JError::raiseWarning(500, 'Function Error: No element added');// No JText - for developers only
+			throw new Exception('Function Error: No element added', 500);
 			return false;
 		}
 		if( !array_key_exists( $element, self::$extension ) ) {
@@ -65,7 +65,7 @@ class PhocaGalleryExtension
 		
 	}
 	public final function __clone() {
-		JError::raiseWarning(500, 'Function Error: Cannot clone instance of Singleton pattern');// No JText - for developers only
+		throw new Exception('Function Error: Cannot clone instance of Singleton pattern', 500);
 		return false;
 	}
 }

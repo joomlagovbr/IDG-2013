@@ -1,8 +1,8 @@
 <?php
 /**
- * YoutubeGallery Joomla! 3.0 Native Component
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * YoutubeGallery Joomla! Native Component
+ * @version 4.4.5
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -21,12 +21,11 @@ jimport('joomla.application.component.controllerform');
 
 class YoutubeGalleryControllerThemeForm extends JControllerForm
 {
-       /**
-         * Proxy for getModel.
-         */
-        function display()
+       
+	function display($cachable = false, $urlparams = array())
 	{
-		$task=$_POST['task'];
+		$jinput = JFactory::getApplication()->input;
+		$task=$jinput->post->get('task','');
 	
 		if($task=='themeform.add' or $task=='add' )
 		{
@@ -36,7 +35,7 @@ class YoutubeGalleryControllerThemeForm extends JControllerForm
 		
 		if($task=='themeform.edit' or $task=='edit')
 		{
-			$cid = JRequest::getVar( 'cid', array(), 'post', 'array' );
+			$cid = JFactory::getApplication()->input->getVar( 'cid', array(), 'post', 'array' );
 
 			if (!count($cid))
 			{
@@ -48,10 +47,10 @@ class YoutubeGalleryControllerThemeForm extends JControllerForm
 			return true;
 		}
 		
-		
-		JRequest::setVar('hidemainmenu', true);
-		JRequest::setVar('view', 'themeform');
-		JRequest::setVar('layout', 'edit');
+		$jinput->set('hidemainmenu',true);
+
+		JFactory::getApplication()->input->setVar('view', 'themeform');
+		JFactory::getApplication()->input->setVar('layout', 'edit');
 		
 		switch($task)
 		{
@@ -80,7 +79,7 @@ class YoutubeGalleryControllerThemeForm extends JControllerForm
     
 	function save()
 	{
-		$task = JRequest::getVar( 'task');
+		$task = JFactory::getApplication()->input->getVar( 'task');
 		
 		// get our model
 		$model = $this->getModel('themeform');

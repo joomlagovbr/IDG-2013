@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.1.20362
+ * @version         18.7.10792
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -115,7 +115,7 @@ class HtmlTag
 	 *
 	 * @return string
 	 */
-	public static function combineAttributes($string1, $string2)
+	public static function combineAttributes($string1, $string2, $flatten = true)
 	{
 		$attribsutes1 = is_array($string1) ? $string1 : self::getAttributes($string1);
 		$attribsutes2 = is_array($string2) ? $string2 : self::getAttributes($string2);
@@ -146,7 +146,7 @@ class HtmlTag
 			$attributes[$key] = implode($glue, array_merge(explode($glue, $attribsutes1[$key]), explode($glue, $attribsutes2[$key])));
 		}
 
-		return self::flattenAttributes($attributes);
+		return $flatten ? self::flattenAttributes($attributes) : $attributes;
 	}
 
 	/**

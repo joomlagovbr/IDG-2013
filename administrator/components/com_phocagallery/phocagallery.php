@@ -11,13 +11,13 @@
 defined('_JEXEC') or die;
 if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
 if (!JFactory::getUser()->authorise('core.manage', 'com_phocagallery')) {
-	return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+	throw new Exception(JText::_('JERROR_ALERTNOAUTHOR'), 404);
 }
 if (! class_exists('PhocaGalleryLoader')) {
-    require_once( JPATH_ADMINISTRATOR.DS.'components'.DS.'com_phocagallery'.DS.'libraries'.DS.'loader.php');
+    require_once( JPATH_ADMINISTRATOR.'/components/com_phocagallery/libraries/loader.php');
 }
 
-require_once( JPATH_COMPONENT.DS.'controller.php' );
+require_once( JPATH_COMPONENT.'/controller.php' );
 phocagalleryimport('phocagallery.utils.settings');
 phocagalleryimport('phocagallery.utils.utils');
 phocagalleryimport('phocagallery.utils.exception');
@@ -34,6 +34,8 @@ phocagalleryimport('phocagallery.render.renderprocess');
 phocagalleryimport('phocagallery.html.jgrid');
 phocagalleryimport('phocagallery.html.category');
 phocagalleryimport('phocagallery.html.batch');
+phocagalleryimport('phocagallery.image.image');
+phocagalleryimport('phocagallery.access.access');
 
 jimport('joomla.application.component.controller');
 

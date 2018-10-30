@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.1.20362
+ * @version         18.7.10792
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -24,28 +24,28 @@ class RLCache
 {
 	static $cache = [];
 
-	public static function has($hash)
+	public static function has($id)
 	{
-		return RL_Cache::has($hash);
+		return RL_Cache::has($id);
 	}
 
-	public static function get($hash)
+	public static function get($id)
 	{
-		return RL_Cache::get($hash);
+		return RL_Cache::get($id);
 	}
 
-	public static function set($hash, $data)
+	public static function set($id, $data)
 	{
-		return RL_Cache::set($hash, $data);
+		return RL_Cache::set($id, $data);
 	}
 
-	public static function read($hash)
+	public static function read($id)
 	{
-		return RL_Cache::read($hash);
+		return RL_Cache::read($id);
 	}
 
-	public static function write($hash, $data, $ttl = 0)
+	public static function write($id, $data, $ttl = 0)
 	{
-		return RL_Cache::write($hash, $data, $ttl);
+		return RL_Cache::write($id, $data, $ttl);
 	}
 }

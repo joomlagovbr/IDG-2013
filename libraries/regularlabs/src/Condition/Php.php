@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.1.20362
+ * @version         18.7.10792
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -47,7 +47,7 @@ class Php
 			}
 
 			ob_start();
-			$pass = (bool) $this->execute($php, $this->article);
+			$pass = (bool) $this->execute($php, $this->article, $this->module);
 			ob_end_clean();
 
 			if ($pass)
@@ -81,46 +81,69 @@ class Php
 		return $model->getItem($this->request->id);
 	}
 
-	public function execute($string = '', $article = null)
+	public function execute($string = '', $article = null, $module = null)
 	{
-		$function_name = 'regularlabs_php_' . md5($string);
-
-		if (function_exists($function_name))
-		{
-			return $function_name();
-		}
-
-		$contents = $this->generateFileContents($function_name, $string);
-
-		$folder    = JFactory::getConfig()->get('tmp_path', JPATH_ROOT . '/tmp');
-		$temp_file = $folder . '/' . $function_name;
-
-		JFile::write($temp_file, $contents);
-
-		include_once $temp_file;
-
-		if ( ! defined('JDEBUG') || ! JDEBUG)
-		{
-			@chmod($temp_file, 0777);
-			@unlink($temp_file);
-		}
-
-		if ( ! function_exists($function_name))
+		if ( ! $function_name = $this->getFunctionName($string))
 		{
 			// Something went wrong!
 			return true;
 		}
 
+		return $this->runFunction($function_name, $string, $article, $module);
+	}
+
+	private function runFunction($function_name = 'rl_function', $string = '', $article = null, $module = null)
+	{
 		if ( ! $article && strpos($string, '$article') !== false)
 		{
-			$article = null;
 			if ($this->request->option == 'com_content' && $this->request->view == 'article')
 			{
 				$article = $this->getArticleById($this->request->id);
 			}
 		}
 
-		return $function_name($article);
+		return $function_name($article, $module);
+	}
+
+	private function getFunctionName($string = '')
+	{
+		$function_name = 'regularlabs_php_' . md5($string);
+
+		if (function_exists($function_name))
+		{
+			return $function_name;
+		}
+
+		$this->createFunctionInMemory($function_name, $string);
+
+		if ( ! function_exists($function_name))
+		{
+			// Something went wrong!
+			return false;
+		}
+
+		return $function_name;
+	}
+
+	private function createFunctionInMemory($function_name = 'rl_function', $string = '')
+	{
+		$contents = $this->generateFileContents($function_name, $string);
+
+		$folder    = JFactory::getConfig()->get('tmp_path', JPATH_ROOT . '/tmp');
+		$temp_file = $folder . '/' . $function_name;
+
+		// Write file
+		JFile::write($temp_file, $contents);
+
+		// Include file
+		include_once $temp_file;
+
+		// Delete file
+		if ( ! defined('JDEBUG') || ! JDEBUG)
+		{
+			@chmod($temp_file, 0777);
+			@unlink($temp_file);
+		}
 	}
 
 	private function generateFileContents($function_name = 'rl_function', $string = '')
@@ -130,7 +153,7 @@ class Php
 		$contents = [
 			'<?php',
 			'defined(\'_JEXEC\') or die;',
-			'function ' . $function_name . '($article){',
+			'function ' . $function_name . '($article, $module){',
 			implode("\n", $init_variables),
 			$string,
 			';return true;',

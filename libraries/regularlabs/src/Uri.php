@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.1.20362
+ * @version         18.7.10792
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -13,6 +13,7 @@ namespace RegularLabs\Library;
 
 defined('_JEXEC') or die;
 
+use JFactory;
 use JUri;
 
 /**
@@ -74,5 +75,45 @@ class Uri
 		$hostname = ($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : $_SERVER['HTTP_HOST'];
 
 		return ! (strpos(RegEx::replace('^.*?://', '', $url), $hostname) === 0);
+	}
+
+	public static function encode($string)
+	{
+		return urlencode(base64_encode(gzdeflate($string)));
+	}
+
+	public static function decode($string)
+	{
+		return gzinflate(base64_decode(urldecode($string)));
+	}
+
+	public static function createCompressedAttributes($string)
+	{
+		$parameters = [];
+
+		$compressed   = base64_encode(gzdeflate($string));
+		$chunk_length = ceil(strlen($compressed) / 10);
+		$chunks       = str_split($compressed, $chunk_length);
+
+		foreach ($chunks as $i => $chunk)
+		{
+			$parameters[] = 'rlatt_' . $i . '=' . urlencode($chunk);
+		}
+
+		return implode('&', $parameters);
+	}
+
+	public static function getCompressedAttributes()
+	{
+		$input = JFactory::getApplication()->input;
+
+		$compressed = '';
+
+		for ($i = 0; $i < 10; $i++)
+		{
+			$compressed .= $input->getString('rlatt_' . $i, '');
+		}
+
+		return gzinflate(base64_decode($compressed));
 	}
 }

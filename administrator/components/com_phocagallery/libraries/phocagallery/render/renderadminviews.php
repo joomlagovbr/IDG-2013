@@ -1,11 +1,12 @@
 <?php
-/*
- * @package Joomla
+/**
+ * @package   Phoca Gallery
+ * @author    Jan Pavelka - https://www.phoca.cz
+ * @copyright Copyright (C) Jan Pavelka https://www.phoca.cz
+ * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 and later
+ * @cms       Joomla
  * @copyright Copyright (C) Open Source Matters. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
- * @component Phoca Gallery
- * @copyright Copyright (C) Jan Pavelka www.phoca.cz
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  */
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
@@ -14,7 +15,7 @@ class PhocaGalleryRenderAdminViews
 	public function __construct(){}
 	
 	public function jsJorderTable($listOrder) {
-		return '<script type="text/javascript">' . "\n"
+		/*return '<script type="text/javascript">' . "\n"
 		.'Joomla.orderTable = function() {' . "\n"
 		.'  table = document.getElementById("sortTable");' . "\n"
 		.'  direction = document.getElementById("directionTable");' . "\n"
@@ -26,7 +27,8 @@ class PhocaGalleryRenderAdminViews
 		.'  }' . "\n"
 		.'  Joomla.tableOrdering(order, dirn, \'\');' . "\n"
 		.'}' . "\n"
-		.'</script>' . "\n";
+		.'</script>' . "\n";*/
+		return "";
 	}
 	
 	public function startForm($option, $view, $id = 'adminForm', $name = 'adminForm') {
@@ -37,16 +39,20 @@ class PhocaGalleryRenderAdminViews
 		return '</form>'."\n".'</div>'."\n";
 	}
 	
-	public function startFilter($txtFilter, $filter = 1){
-		$o = '<div id="j-sidebar-container" class="span2">'."\n"
-		. JHtmlSidebar::render()."\n"
-		. '<hr />'."\n";
-		if ($filter == 0) {
-			$o .= '<div class="filter-select hidden-phone">'."\n";
+	public function startFilter($txtFilter = ''){
+		$o = '<div id="j-sidebar-container" class="span2">'."\n". JHtmlSidebar::render()."\n";
+		
+		if ($txtFilter != '') {
+
+
+
+			$o .= '<hr />'."\n" . '<div class="filter-select ">'."\n"
+			. '<h4 class="page-header">'. JText::_($txtFilter).'</h4>'."\n";
 		} else {
-			$o .= '<div class="filter-select hidden-phone">'."\n"
-		. '<h4 class="page-header">'. JText::_($txtFilter).'</h4>'."\n";
+			$o .= '<div>';
+
 		}
+		
 		return $o;
 	}
 
@@ -55,31 +61,45 @@ class PhocaGalleryRenderAdminViews
 	}
 	
 	public function selectFilterPublished($txtSp, $state) {
-		return'<select name="filter_published" class="inputbox" onchange="this.form.submit()">'."\n"
+		return '<div class="btn-group pull-right ph-select-status">'. "\n"
+		.'<select name="filter_published" class="inputbox" onchange="this.form.submit()">'."\n"
 		. '<option value="">'.JText::_($txtSp).'</option>'
 		. JHtml::_('select.options', JHtml::_('jgrid.publishedOptions', array('archived' => 0, 'trash' => 0)), 'value', 'text', $state, true)
-		.'</select>'. "\n";
+		.'</select></div>'. "\n";
 	}
 	
 	public function selectFilterType($txtSp, $type, $typeList) {
-		return'<select name="filter_type" class="inputbox" onchange="this.form.submit()">'."\n"
+		return '<div class="btn-group pull-right">'. "\n"
+		.'<select name="filter_type" class="inputbox" onchange="this.form.submit()">'."\n"
 		. '<option value="">'.JText::_($txtSp).'</option>'
 		. JHtml::_('select.options', $typeList, 'value', 'text', $type, true)
-		.'</select>'. "\n";
+		.'</select></div>'. "\n";
 	}
 	
 	public function selectFilterLanguage($txtLng, $state) {
-		return'<select name="filter_language" class="inputbox" onchange="this.form.submit()">'."\n"
+		return '<div class="btn-group pull-right">'. "\n"
+		.'<select name="filter_language" class="inputbox" onchange="this.form.submit()">'."\n"
 		. '<option value="">'.JText::_($txtLng).'</option>'
 		. JHtml::_('select.options', JHtml::_('contentlanguage.existing', true, true), 'value', 'text', $state)
-		.'</select>'. "\n";
+		.'</select></div>'. "\n";
 	}
 	
 	public function selectFilterCategory($categoryList, $txtLng, $state) {
-		return '<select name="filter_category_id" class="inputbox" onchange="this.form.submit()">'."\n"
+		return '<div class="btn-group pull-right ">'. "\n"
+		.'<select name="filter_category_id" class="inputbox" onchange="this.form.submit()">'."\n"
 		. '<option value="">'.JText::_($txtLng).'</option>'
 		. JHtml::_('select.options', $categoryList, 'value', 'text', $state)
-		. '</select>'. "\n";
+		. '</select></div>'. "\n";
+	}
+	
+	public function selectFilterLevels($txtLng, $state) {
+		$levelList = array(1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5);
+		return 
+		'<div class="btn-group pull-right">'. "\n"
+		.'<select name="filter_level" class="inputbox" onchange="this.form.submit()">'."\n"
+		. '<option value="">'.JText::_($txtLng).'</option>'
+		. JHtml::_('select.options', $levelList, 'value', 'text', $state)
+		. '</select></div>'. "\n";
 	}
 	
 	public function startMainContainer() {
@@ -90,8 +110,13 @@ class PhocaGalleryRenderAdminViews
 		return '</div>'. "\n";
 	}
 	
-	public function startFilterBar() {
-		return '<div id="filter-bar" class="btn-toolbar">'. "\n";
+	public function startFilterBar($id = 0) {
+		if ((int)$id > 0) {
+			return '<div id="filter-bar'.$id.'" class="btn-toolbar ph-btn-toolbar-'.$id.'">'. "\n";
+		} else {
+			return '<div id="filter-bar'.$id.'" class="btn-toolbar">'. "\n";
+		}
+		
 	}
 	
 	public function endFilterBar() {
@@ -107,24 +132,26 @@ class PhocaGalleryRenderAdminViews
 	}
 	
 	public function inputFilterSearchClear($txtFs, $txtFc) {
-		return '<div class="btn-group pull-left hidden-phone">'. "\n"
+		return '<div class="btn-group pull-left">'. "\n"
 		.'<button class="btn tip hasTooltip" type="submit" title="'.JText::_($txtFs).'"><i class="icon-search"></i></button>'. "\n"
-		.'<button class="btn tip hasTooltip" type="button" onclick="document.id(\'filter_search\').value=\'\';this.form.submit();"'
+		.'<button class="btn tip hasTooltip" type="button" onclick="document.getElementById(\'filter_search\').value=\'\';this.form.submit();"'
 		.' title="'.JText::_($txtFc).'"><i class="icon-remove"></i></button>'. "\n"
 		.'</div>'. "\n";
 	}
 	
 	public function inputFilterSearchLimit($txtSl, $paginationLimitBox) {			
-		return '<div class="btn-group pull-right hidden-phone">'. "\n"
+		
+		return '<div class="btn-group pull-right">'. "\n"
 		.'<label for="limit" class="element-invisible">'.JText::_($txtSl).'</label>'. "\n"
 		.$paginationLimitBox ."\n" . '</div>'. "\n";
+		
 	}
 	
 	public function selectFilterDirection($txtOd, $txtOasc, $txtOdesc, $listDirn) {
 		$ascDir = $descDir = '';
 		if ($listDirn == 'asc') {$ascDir = 'selected="selected"';}
 		if ($listDirn == 'desc') {$descDir = 'selected="selected"';}
-		return '<div class="btn-group pull-right hidden-phone">'. "\n"
+		return '<div class="btn-group pull-right">'. "\n"
 		.'<label for="directionTable" class="element-invisible">' .JText::_('JFIELD_ORDERING_DESC').'</label>'. "\n"
 		.'<select name="directionTable" id="directionTable" class="input-medium" onchange="Joomla.orderTable()">'. "\n"
 		.'<option value="">' .JText::_('JFIELD_ORDERING_DESC').'</option>'. "\n"
@@ -164,7 +191,7 @@ class PhocaGalleryRenderAdminViews
 	}
 	
 	public function thOrdering($txtHo, $listDirn, $listOrder ) {
-		return '<th class="nowrap center hidden-phone ph-ordering">'. "\n"
+		return '<th class="nowrap center ph-ordering">'. "\n"
 		. JHtml::_('grid.sort', '<i class="icon-menu-2"></i>', 'a.ordering', $listDirn, $listOrder, null, 'asc', $txtHo). "\n"
 		. '</th>';
 	}
@@ -175,9 +202,9 @@ class PhocaGalleryRenderAdminViews
 		.'</th>'. "\n";
 	}
 	
-	public function tdOrder($canChange, $saveOrder, $orderkey){
+	public function tdOrder($canChange, $saveOrder, $orderkey, $ordering = 0){
 	
-		$o = '<td class="order nowrap center hidden-phone">'. "\n";
+		$o = '<td class="order nowrap center">'. "\n";
 		if ($canChange) {
 			$disableClassName = '';
 			$disabledLabel    = '';
@@ -189,14 +216,14 @@ class PhocaGalleryRenderAdminViews
 		} else {
 			$o .= '<span class="sortable-handler inactive"><i class="icon-menu"></i></span>'."\n";
 		}
-		$orderkeyPlus = $orderkey + 1;
+		$orderkeyPlus = $ordering;//$orderkey + 1;
 		$o .= '<input type="text" style="display:none" name="order[]" size="5" value="'.$orderkeyPlus.'" />'. "\n"
 		.'</td>'. "\n"; 
 		return $o;
 	}
 	
 	public function tdRating($ratingAvg) {
-		$o = '<td class="small hidden-phone">';
+		$o = '<td class="small">';
 		$voteAvg 		= round(((float)$ratingAvg / 0.5)) * 0.5;
 		$voteAvgWidth	= 16 * $voteAvg;
 		$o .= '<ul class="star-rating-small">'
@@ -213,7 +240,7 @@ class PhocaGalleryRenderAdminViews
 	
 	public function tdLanguage($lang, $langTitle, $langTitleE ) {
 	
-		$o = '<td class="small nowrap hidden-phone">';
+		$o = '<td class="small nowrap">';
 		if ($lang == '*') {
 			$o .= JText::_('JALL');
 		} else {
@@ -227,12 +254,12 @@ class PhocaGalleryRenderAdminViews
 		return $o;
 	}
 	
-	public function formInputs($listOrder, $originalOrders) {
+	public function formInputs($listOrder, $listDirn, $originalOrders) {
 	
 		return '<input type="hidden" name="task" value="" />'. "\n"
 		.'<input type="hidden" name="boxchecked" value="0" />'. "\n"
 		.'<input type="hidden" name="filter_order" value="'.$listOrder.'" />'. "\n"
-		.'<input type="hidden" name="filter_order_Dir" value="" />'. "\n"
+		.'<input type="hidden" name="filter_order_Dir" value="'.$listDirn.'" />'. "\n"
 		. JHtml::_('form.token'). "\n"
 		.'<input type="hidden" name="original_order_values" value="'. implode($originalOrders, ',').'" />'. "\n";
 	}
@@ -248,7 +275,7 @@ class PhocaGalleryRenderAdminViews
 	
 	public function tdImage($item, $button, $txtE, $class = '', $avatarAbs = '', $avatarRel = '') {
 		$o = '<td class="'.$class.'">'. "\n";
-		$o .= '<div class="phocagallery-box-file">'. "\n"
+		$o .= '<div class="pg-msnr-container"><div class="phocagallery-box-file">'. "\n"
 			.' <center>'. "\n"
 			.'  <div class="phocagallery-box-file-first">'. "\n"
 			.'   <div class="phocagallery-box-file-second">'. "\n"
@@ -258,10 +285,11 @@ class PhocaGalleryRenderAdminViews
 		if ($avatarAbs != '' && $avatarRel != '') {
 			// AVATAR
 			if (JFile::exists($avatarAbs.$item->avatar)){
-				$o .= '<a class="'. $button->modalname.'"'
-				.' title="'. $button->text.'"'
+				$o .= '<a class="'. $button->methodname.'"'
+				//.' title="'. $button->text.'"'
 				.' href="'.JURI::root().$avatarRel.$item->avatar.'" '
-				.' rel="'. $button->options.'" >'
+				//.' rel="'. $button->options.'"'
+				. ' >'
 				.'<img src="'.JURI::root().$avatarRel.$item->avatar.'?imagesid='.md5(uniqid(time())).'" alt="'.JText::_($txtE).'" />'
 				.'</a>';
 			} else {
@@ -276,7 +304,8 @@ class PhocaGalleryRenderAdminViews
 				$correctImageRes 	= PhocaGalleryImage::correctSizeWithRate($resW[2], $resH[2], 50, 50);
 				$imgLink			= $item->extl;
 				
-				$o .= '<a class="'. $button->modalname.'" title="'.$button->text.'" href="'. $imgLink .'" rel="'. $button->options.'" >'
+				//$o .= '<a class="'. $button->modalname.'" title="'.$button->text.'" href="'. $imgLink .'" rel="'. $button->options.'" >'
+				$o .= '<a class="'. $button->methodname.'"  href="'. $imgLink .'" >'
 				. '<img src="'.$item->exts.'?imagesid='.md5(uniqid(time())).'" width="'.$correctImageRes['width'].'" height="'.$correctImageRes['height'].'" alt="'.JText::_($txtE).'" />'
 				.'</a>'. "\n";
 			} else if (isset ($item->fileoriginalexist) && $item->fileoriginalexist == 1) {
@@ -285,8 +314,9 @@ class PhocaGalleryRenderAdminViews
 				$correctImageRes 	= PhocaGalleryImage::correctSizeWithRate($imageRes['w'], $imageRes['h'], 50, 50);
 				$imgLink			= PhocaGalleryFileThumbnail::getThumbnailName($item->filename, 'large');
 				
-				$o .= '<a class="'. $button->modalname.'" title="'. $button->text.'" href="'. JURI::root(). $imgLink->rel.'" rel="'. $button->options.'" >'
-				. '<img src="'.JURI::root().$item->linkthumbnailpath.'?imagesid='.md5(uniqid(time())).'" width="'.$correctImageRes['width'].'" height="'.$correctImageRes['height'].'" alt="'.JText::_($txtE).'" />'
+				//$o .= '<a class="'. $button->modalname.'" title="'. $button->text.'" href="'. JURI::root(). $imgLink->rel.'" rel="'. $button->options.'" >'
+				$o .= '<a class="'. $button->methodname.'"  href="'. JURI::root(). $imgLink->rel.'"  >'
+				. '<img src="'.JURI::root().$item->linkthumbnailpath.'?imagesid='.md5(uniqid(time())).'" width="'.$correctImageRes['width'].'" height="'.$correctImageRes['height'].'" alt="'.JText::_($txtE).'" itemprop="thumbnail" />'
 				.'</a>'. "\n";
 			} else {
 				$o .= JHTML::_( 'image', 'media/com_phocagallery/images/administrator/phoca_thumb_s_no_image.gif', '');
@@ -297,7 +327,7 @@ class PhocaGalleryRenderAdminViews
 			.'   </div>'. "\n"
 			.'  </div>'. "\n"
 			.' </center>'. "\n"
-			.'</div>'. "\n";
+			.'</div></div>'. "\n";
 		$o .=  '</td>'. "\n";
 		return $o;
 	}

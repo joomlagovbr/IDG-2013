@@ -27,17 +27,18 @@ else
 	} ?>
 	<?php if ($params->get('exibir_imagem') && !empty($lista->image_url)): ?>	
 		<?php if(strpos($lista->image_url, 'www.youtube')!==false): ?>
-			<object width="230" height="176"><param value="<?php echo 'http://'.$lista->image_url; ?>" name="movie"><param value="true" name="allowFullScreen"><param value="always" name="allowscriptaccess"><embed width="230" height="176" allowfullscreen="true" allowscriptaccess="always" type="application/x-shockwave-flash" src="<?php echo 'http://'.$lista->image_url; ?>"></object>
+             <iframe width="230" height="135" src="<?php echo $lista->image_url; ?>" frameborder="0" allowfullscreen></iframe>
+			
 		<?php else: ?>				
 			<a href="<?php echo $lista->link ?>" class="img-rounded">
-				<img src="<?php echo $lista->image_url ?>" width="230" height="136" alt="<?php echo $lista->image_alt ?>" />
+				<img src="<?php echo $lista->image_url ?>" alt="<?php echo $lista->image_alt ?>" />
 			</a>
 		<?php endif; ?>				
 	<?php endif; ?>
 	
 	<?php if (@$lista->chapeu): ?>
 	<p class="subtitle">
-		<?php echo $lista->chapeu ?>
+      <?php echo $lista->chapeu ?>
 	</p>
 	<?php endif; ?>
 

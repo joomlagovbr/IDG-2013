@@ -1,8 +1,8 @@
 <?php
 /**
- * Youtube Gallery Joomla! 3.0 Native Component
- * @version 3.5.9
- * @author DesignCompass corp <support@joomlaboat.com>
+ * Youtube Gallery Joomla! Native Component
+ * @version 4.4.5
+ * @author Ivan Komlev <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -14,24 +14,20 @@ defined('_JEXEC') or die('Restricted access');
 // import joomla controller library
 jimport('joomla.application.component.controller');
  
-if(!defined('DS'))
-	define('DS',DIRECTORY_SEPARATOR);
 
-if(isset($_POST['task']))
-	$task=$_POST['task'];
-else
-	$task='';
-
-$view=JRequest::getCmd( 'view');
+$jinput=JFactory::getApplication()->input;
+ 
+$task=$jinput->getVar( 'task');
+$view=$jinput->getCmd( 'view');
 $t='categories.delete';
 
 if($view=='' and $task==$t)
 {
 	$controllerName = 'categories';
-	JRequest::setVar('view', 'categories');
+	$jinput->set('view', 'categories');
 }
 else
-	$controllerName = JRequest::getCmd( 'view', 'linkslist' );
+	$controllerName = $jinput->getCmd( 'view', 'linkslist' );
  
 
 
@@ -71,11 +67,10 @@ switch($controllerName)
 
 }
  
-
-$controller = JControllerLegacy::getInstance('youtubeGallery');
-
+$controller = JControllerLegacy::getInstance('YoutubeGallery');
+	
 // Perform the Request task
-$controller->execute( JRequest::getCmd('task'));
+$controller->execute($jinput->getCmd('task'));
 $controller->redirect();
 
 ?>

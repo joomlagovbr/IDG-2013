@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         7.5.1
+ * @version         8.0.3
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -105,8 +105,7 @@ class Selects
 			return;
 		}
 
-		if (strpos($key, 'user') === 0
-			|| strpos($key, 'author') === 0)
+		if (strpos($key, 'author') === 0)
 		{
 			$selects['users'] = true;
 
@@ -116,6 +115,13 @@ class Selects
 		if (strpos($key, 'modifier') === 0)
 		{
 			$selects['modifiers'] = true;
+
+			return;
+		}
+
+		if (strpos($key, 'category') !== false)
+		{
+			$selects['categories'] = true;
 
 			return;
 		}

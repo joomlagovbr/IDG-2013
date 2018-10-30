@@ -1,8 +1,8 @@
 <?php
 /**
- * YoutubeGallery Joomla! 3.0 Native Component
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * YoutubeGallery Joomla! Native Component
+ * @version 4.4.5
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -87,14 +87,14 @@ class YoutubeGalleryModelLinksForm extends JModelAdmin
         }
 		
 
-	function RefreshPlayist($cids)
+	function RefreshPlayist($cids,$update_videolist=true)
 	{
 		$where=array();
 				
 		foreach($cids as $cid)
 			$where[]= 'id='.$cid;
 				
-		require_once(JPATH_SITE.DS.'components'.DS.'com_youtubegallery'.DS.'includes'.DS.'misc.php');
+		require_once(JPATH_SITE.DIRECTORY_SEPARATOR.'components'.DIRECTORY_SEPARATOR.'com_youtubegallery'.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.'misc.php');
 				
 		// Create a new query object.         
                 
@@ -117,25 +117,32 @@ class YoutubeGalleryModelLinksForm extends JModelAdmin
 				
 		$misc=new YouTubeGalleryMisc;
 		
+		$getinfomethod=YouTubeGalleryMisc::getSettingValue('getinfomethod');
 		
 		foreach($linksform_rows as $linksform_row)
 		{
 			
 			$misc->videolist_row = $linksform_row;
-			$misc->update_cache_table($linksform_row); 
+			$misc->update_cache_table($linksform_row,$update_videolist); //false - refresh
 				
-			$query='UPDATE #__youtubegallery_videolists SET `lastplaylistupdate`="'.date( 'Y-m-d H:i:s').'" WHERE `id`='.$linksform_row->id;
-			$db->setQuery($query);
-			if (!$db->query())    die( $db->stderr());
+			if(!$update_videolist)
+			{
+				$query='UPDATE #__youtubegallery_videolists SET lastplaylistupdate="'.date( 'Y-m-d H:i:s').'" WHERE id='.$linksform_row->id;
+				$db->setQuery($query);
+				if (!$db->query())    die( $db->stderr());
 						
-			//Clear Update Info for each video in this gallery
-			$query='UPDATE #__youtubegallery_videos SET `lastupdate`="0000-00-00 00:00:00" WHERE `isvideo` AND `listid`='.$linksform_row->id;
-			$db->setQuery($query);
-			if (!$db->query())    die( $db->stderr());
-	
+
+				if($getinfomethod=='js' or $getinfomethod=='jsmanual')
+					$query='UPDATE #__youtubegallery_videos SET lastupdate="0000-00-00 00:00:00", rawdata="*youtubegallery_request*" WHERE isvideo AND listid='.$linksform_row->id;
+				else
+					$query='UPDATE #__youtubegallery_videos SET lastupdate="0000-00-00 00:00:00", rawdata="" WHERE isvideo AND listid='.$linksform_row->id;
+			
+				$db->setQuery($query);
+				if (!$db->query())    die( $db->stderr());
+			}	
 		}
 				
-				return true;
+		return true;
 	}
         
 
@@ -145,11 +152,8 @@ class YoutubeGalleryModelLinksForm extends JModelAdmin
                 
         	$linksform_row = $this->getTable('videolists');
             
-
-            
-        	// consume the post data with allow_html
-        	$data_ = JRequest::get( 'post',JREQUEST_ALLOWRAW);
-            $data=$data_['jform'];
+			$jinput = JFactory::getApplication()->input;
+            $data = $jinput->get( 'jform',array(),'ARRAY');
             
         	$post = array();
             
@@ -171,19 +175,7 @@ class YoutubeGalleryModelLinksForm extends JModelAdmin
                 echo 'Cannot check.';
         		return false;
         	}
-				
-				
-				if($linksform_row->id!=0)
-				{
-						require_once(JPATH_SITE.DS.'components'.DS.'com_youtubegallery'.DS.'includes'.DS.'misc.php');
-						$misc=new YouTubeGalleryMisc;
-						$misc->videolist_row = $linksform_row;
-						$misc->update_cache_table($linksform_row); 
-						$linksform_row->lastplaylistupdate =date( 'Y-m-d H:i:s');
-				}
-				
-						
-						
+
         	// Store
         	if (!$linksform_row->store())
         	{
@@ -193,30 +185,37 @@ class YoutubeGalleryModelLinksForm extends JModelAdmin
 				';
         		return false;
         	}
-				
+	
+		require_once(JPATH_SITE.DIRECTORY_SEPARATOR.'components'.DIRECTORY_SEPARATOR.'com_youtubegallery'.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.'misc.php');
+		$misc=new YouTubeGalleryMisc;
+		$misc->videolist_row = $linksform_row;
+		$misc->update_cache_table($linksform_row,false); 
+		$linksform_row->lastplaylistupdate =date( 'Y-m-d H:i:s');
+		
         	$this->id=$linksform_row->id;
 			
         	return true;
         }
         
     		
-		function deleteVideoList($cids)
+	function deleteVideoList($cids)
         {
 
         	$linksform_row = $this->getTable('videolists');
 
-            $db = JFactory::getDBO();
+		$db = JFactory::getDBO();
             
         	if (count( $cids ))
         	{
         		foreach($cids as $cid)
         		{
-						
+				$query='DELETE FROM #__youtubegallery_videos WHERE listid='.(int)$cid;
+			
+				$db->setQuery($query);
+				if (!$db->query())    die( $db->stderr());
 				
 				if (!$linksform_row->delete( $cid ))
-				{
 					return false;
-				}
 			}
         	}
 		

@@ -78,7 +78,7 @@ class JFormFieldModal_Article extends JFormField
 		$html[] = '	 <a class="modal" title="'.JText::_('COM_CONTENT_CHANGE_ARTICLE').'"  href="'.$link.'&amp;'.JSession::getFormToken().'=1" rel="{handler: \'iframe\', size: {x: 800, y: 450}}">'.JText::_('COM_CONTENT_CHANGE_ARTICLE_BUTTON').'</a>';
 		$html[] = '  </div>';
 		$html[] = '</div>';
-		$html[] = '<div class="button2-left">';		
+		$html[] = '<div class="button2-left">';
 		$html[] = '  <div class="blank">';
 		$html[] = '  <a onClick="document.getElementById(\''.$this->id.'_name\').value=\'\';document.getElementById(\''.$this->id.'_id\').value=\'\';" title="'.JText::_('MOD_CHAMADA_FIELD_CHANGE_ARTICLE_CLEAR').'">'.JText::_('MOD_CHAMADA_FIELD_CHANGE_ARTICLE_CLEAR').'</a>';
 		$html[] = '  </div>';

@@ -1,4 +1,14 @@
-<?php defined('_JEXEC') or die('Restricted access');
+<?php 
+/*
+ * @package Joomla
+ * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+ *
+ * @component Phoca Gallery
+ * @copyright Copyright (C) Jan Pavelka www.phoca.cz
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ */
+defined('_JEXEC') or die('Restricted access');
 
 echo '<div id="phocagallery-category-creating">'.$this->tmpl['iepx'];
 
@@ -20,11 +30,14 @@ if ($this->tmpl['categorytitle'] != '') {
 		<tr>
 			<td><strong><?php echo JText::_('COM_PHOCAGALLERY_APPROVED');?>:</strong></td>
 			<td><?php
+
+			
 			if ($this->tmpl['categoryapproved'] == 1) {
-				echo JHtml::_('image', $this->tmpl['pi'].'icon-publish.png', JText::_('COM_PHOCAGALLERY_APPROVED'));
+				echo PhocaGalleryRenderFront::renderIcon('publish', $this->tmpl['pi'].'icon-publish.png', JText::_('COM_PHOCAGALLERY_APPROVED'));
 			} else {	
-				echo JHtml::_('image', $this->tmpl['pi'].'icon-unpublish.png', JText::_('COM_PHOCAGALLERY_NOT_APPROVED'));	
+				echo PhocaGalleryRenderFront::renderIcon('unpublish', $this->tmpl['pi'].'icon-unpublish.png', JText::_('COM_PHOCAGALLERY_NOT_APPROVED'));		
 			}
+			
 		?></td>
 		</tr>
 	</table><?php

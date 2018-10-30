@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         7.5.1
+ * @version         8.0.3
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -16,6 +16,7 @@ use JFactory;
 use JRoute;
 use JText;
 use JUri;
+use RegularLabs\Library\HtmlTag as RL_HtmlTag;
 
 defined('_JEXEC') or die;
 
@@ -27,26 +28,36 @@ class Url extends Data
 		{
 
 			case 'link':
-				return $this->getLink();
+				return $this->getArticleLink($attributes);
 
 			case 'sefurl':
-				return JRoute::_($this->getUrl());
+				return JRoute::_($this->getArticleUrl());
 
 			default:
 			case 'url':
 			case 'nonsefurl':
-				return $this->getUrl();
+				return $this->getArticleUrl();
 		}
 	}
 
-	public function getLink()
+	public function getLink($url, $attributes = [])
 	{
-		$link = $this->getUrl() ?: '#';
+		$url = $url ?: '#';
 
-		return '<a href="' . $link . '">';
+		$attributes = array_merge(
+			['href' => $url],
+			(array) $attributes
+		);
+
+		return '<a ' . RL_HtmlTag::flattenAttributes($attributes) . '">';
 	}
 
-	public function getUrl()
+	public function getArticleLink($attributes)
+	{
+		return $this->getLink($this->getArticleUrl(), $attributes);
+	}
+
+	public function getArticleUrl()
 	{
 		$url = $this->item->get('url');
 
@@ -81,7 +92,7 @@ class Url extends Data
 	{
 		$menu   = JFactory::getApplication()->getMenu();
 		$active = $menu->getActive();
-		$itemId = $active->id;
+		$itemId = $active ? $active->id : 0;
 		$link   = new JUri(JRoute::_('index.php?option=com_users&view=login&Itemid=' . $itemId, false));
 
 		$link->setVar('return', base64_encode(JRoute::_($url, false)));

@@ -1,8 +1,8 @@
 <?php
 /**
- * YoutubeGallery Joomla! 3.0 Native Component
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * YoutubeGallery Joomla! Native Component
+ * @version 4.4.5
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -22,9 +22,9 @@ class YoutubeGalleryControllerThemeList extends JControllerAdmin
 		 * Proxy for getModel.
 		 */
 		
-		function display()
+		function display($cachable = false, $urlparams = array())
 		{
-				switch(JRequest::getVar( 'task'))
+				switch(JFactory::getApplication()->input->getVar( 'task'))
 				{
 						case 'delete':
 								$this->delete();
@@ -51,7 +51,7 @@ class YoutubeGalleryControllerThemeList extends JControllerAdmin
 								$this->uploadItem();
 								break;
 						default:
-								JRequest::setVar( 'view', 'themelist');
+								JFactory::getApplication()->input->setVar( 'view', 'themelist');
 								parent::display();
 								break;
 				}
@@ -59,7 +59,7 @@ class YoutubeGalleryControllerThemeList extends JControllerAdmin
 				
 		}
 	
-		public function getModel($name = 'ThemeList', $prefix = 'YoutubeGalleryModel') 
+		public function getModel($name = 'ThemeList', $prefix = 'YoutubeGalleryModel', $config = array()) 
 		{
 		        $model = parent::getModel($name, $prefix, array('ignore_request' => true));
 		        return $model;
@@ -69,9 +69,9 @@ class YoutubeGalleryControllerThemeList extends JControllerAdmin
 		{
                 
 				// Check for request forgeries
-				JRequest::checkToken() or jexit( 'Invalid Token' );
+				JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
         	
-				$cid = JRequest::getVar( 'cid', array(), 'post', 'array' );
+				$cid = JFactory::getApplication()->input->getVar( 'cid', array(), 'post', 'array' );
 				
 				if (count($cid)<1)
 				{
@@ -89,7 +89,7 @@ class YoutubeGalleryControllerThemeList extends JControllerAdmin
 		{
 		
 				// Get some variables from the request
-				$cid	= JRequest::getVar( 'cid', array(), 'post', 'array' );
+				$cid	= JFactory::getApplication()->input->getVar( 'cid', array(), 'post', 'array' );
 
 				if (count($cid)<1)
 				{
@@ -114,7 +114,7 @@ class YoutubeGalleryControllerThemeList extends JControllerAdmin
 		public function copyItem()
 		{
 				
-				$cid = JRequest::getVar( 'cid', array(), 'post', 'array' );
+				$cid = JFactory::getApplication()->input->getVar( 'cid', array(), 'post', 'array' );
 	    
 				$model = $this->getModel('themelist');
 	    

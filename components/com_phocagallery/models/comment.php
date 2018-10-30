@@ -1,6 +1,6 @@
 <?php
 /*
- * @package Joomla 1.5
+ * @package Joomla
  * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  *
@@ -38,7 +38,7 @@ class PhocagalleryModelComment extends JModelLegacy
 		
 		if (empty($this->_data)) {
 			$app	= JFactory::getApplication();
-			$params				= &$app->getParams();
+			$params				= $app->getParams();
 			$image_ordering		= $params->get( 'image_ordering', 1 );
 			$imageOrdering 		= PhocaGalleryOrdering::getOrderingString($image_ordering);
 
@@ -66,7 +66,7 @@ class PhocagalleryModelComment extends JModelLegacy
 	
 	function comment($data) {
 		
-		$row =& $this->getTable('phocagallerycommentimgs', 'Table');
+		$row = $this->getTable('phocagallerycommentimgs', 'Table');
 		
 		
 		if (!$row->bind($data)) {

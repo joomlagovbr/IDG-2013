@@ -1,4 +1,8 @@
 <?php
+/**
+ * @GNU General Public License
+ **/
+
 
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
@@ -58,9 +62,9 @@ class getID3
 		$this->startup_error   = '';
 		$this->startup_warning = '';
 
-		// Check for PHP version >= 4.1.0
-		if (phpversion() < '4.1.0') {
-		    $this->startup_error .= 'getID3() requires PHP v4.1.0 or higher - you are running v'.phpversion();
+		// Check for PHP version >= 4.4.5
+		if (phpversion() < '4.4.5') {
+		    $this->startup_error .= 'getID3() requires PHP v4.4.5 or higher - you are running v'.phpversion();
 		}
 
 		// Check memory
@@ -1100,7 +1104,7 @@ class getID3
 					if (file_exists(GETID3_HELPERAPPSDIR.'vorbiscomment.exe')) {
 
 						$commandline = '"'.GETID3_HELPERAPPSDIR.'vorbiscomment.exe" -w -c "'.$empty.'" "'.$file.'" "'.$temp.'"';
-						$VorbisCommentError = `$commandline`;
+						$VorbisCommentError = $commandline;
 
 					} else {
 
@@ -1112,7 +1116,7 @@ class getID3
 
 					$commandline = 'vorbiscomment -w -c "'.$empty.'" "'.$file.'" "'.$temp.'" 2>&1';
 					$commandline = 'vorbiscomment -w -c '.escapeshellarg($empty).' '.escapeshellarg($file).' '.escapeshellarg($temp).' 2>&1';
-					$VorbisCommentError = `$commandline`;
+					$VorbisCommentError = $commandline;
 
 				}
 

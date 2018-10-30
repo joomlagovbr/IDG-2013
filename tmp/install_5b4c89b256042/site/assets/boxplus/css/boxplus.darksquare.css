@@ -1,0 +1,35 @@
+/*!
+* @file
+* @brief    boxplus: a lightweight pop-up window engine shipped with sigplus
+* @author   Levente Hunyadi
+* @version  0.9.2
+* @remarks  Copyright (C) 2009-2010 Levente Hunyadi
+* @remarks  Licensed under GNU/GPLv3, see http://www.gnu.org/licenses/gpl-3.0.html
+* @see      http://hunyadi.info.hu/projects/boxplus
+*/
+
+#boxplus .boxplus-dialog {
+background-color:black;
+background-color:rgba(0,0,0,0.8);
+color:white;
+}
+
+#boxplus .boxplus-thumbs > ul {
+/*background-color:rgba(0,0,0,0.3);*/
+}
+
+#boxplus .boxplus-dialog a:link {
+color:red
+}
+
+#boxplus .boxplus-dialog a:visited {
+color:red
+}
+
+#boxplus .boxplus-dialog a:hover {
+color:red
+}
+
+#boxplus .boxplus-dialog a:active {
+color:red
+}

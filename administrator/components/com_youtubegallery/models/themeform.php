@@ -1,8 +1,8 @@
 <?php
 /**
  * YoutubeGallery Joomla! 3.0 Native Component
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * @version 4.4.5
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -90,11 +90,8 @@ class YoutubeGalleryModelthemeForm extends JModelAdmin
                 
         	$themeform_row = $this->getTable('themes');
             
-
-            
-        	// consume the post data with allow_html
-        	$data_ = JRequest::get( 'post',JREQUEST_ALLOWRAW);
-            $data=$data_['jform'];
+		$jinput = JFactory::getApplication()->input;
+                $data = $jinput->get( 'jform',array(),'ARRAY');
             
         	$post = array();
             

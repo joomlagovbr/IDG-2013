@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         7.5.1
+ * @version         8.0.3
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -17,5 +17,5 @@ defined('_JEXEC') or die;
 
 interface FilterInterface
 {
-	public function setFilter(JDatabaseQuery $query, $names = [], $include_type = 'include');
+	public function setFilter(JDatabaseQuery $query, $filters = []);
 }

@@ -1,6 +1,6 @@
 <?php
 /*
- * @package Joomla 1.5
+ * @package Joomla
  * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  *
@@ -18,13 +18,13 @@ class PhocaGalleryViewCooliris3DWall extends JViewLegacy
 	function display($tpl = null) {
 		
 		$app				= JFactory::getApplication();
-		$document			= &JFactory::getDocument();
-		$uri 				= &JFactory::getURI();
+		$document			= JFactory::getDocument();
+		$uri 				= JFactory::getURI();
 		$menus				= $app->getMenu();
 		$menu				= $menus->getActive();
-		$this->params		= &$app->getParams();
-		$this->tmpl['path']	= &PhocaGalleryPath::getPath();
-		$model				= &$this->getModel();
+		$this->params		= $app->getParams();
+		$this->tmpl['path']	= PhocaGalleryPath::getPath();
+		$model				= $this->getModel();
 
 		// PARAMS
 		$this->tmpl['displaycatnametitle'] 			= $this->params->get( 'display_cat_name_title', 1 );
@@ -32,7 +32,6 @@ class PhocaGalleryViewCooliris3DWall extends JViewLegacy
 		$this->tmpl['showpageheading'] 				= $this->params->get( 'show_page_heading', 1 );
 		$this->tmpl['cooliris3d_wall_width']		= $this->params->get( 'cooliris3d_wall_width', 600 );
 		$this->tmpl['cooliris3d_wall_height']		= $this->params->get( 'cooliris3d_wall_height', 370 );
-		$this->tmpl['pmt'] 							= PhocaGalleryRenderInfo::getPhocaIc((int)$this->params->get( 'display_phoca_info', 1 ));
 		$this->tmpl['gallerymetakey'] 				= $this->params->get( 'gallery_metakey', '' );
 		$this->tmpl['gallerymetadesc'] 				= $this->params->get( 'gallery_metadesc', '' );
 		$this->tmpl['enablecustomcss']				= $this->params->get( 'enable_custom_css', 0);
@@ -76,12 +75,12 @@ class PhocaGalleryViewCooliris3DWall extends JViewLegacy
 		$app		= JFactory::getApplication();
 		$menus		= $app->getMenu();
 		$pathway 	= $app->getPathway();
-		//$this->params		= &$app->getParams();
+		//$this->params		= $app->getParams();
 		$title 		= null;
 		
 		$this->tmpl['gallerymetakey'] 		= $this->params->get( 'gallery_metakey', '' );
 		$this->tmpl['gallerymetadesc'] 		= $this->params->get( 'gallery_metadesc', '' );
-		
+		$this->tmpl['displaycatnametitle'] 			= $this->params->get( 'display_cat_name_title', 1 );
 
 		$menu = $menus->getActive();
 		if ($menu) {
@@ -90,15 +89,23 @@ class PhocaGalleryViewCooliris3DWall extends JViewLegacy
 			$this->params->def('page_heading', JText::_('JGLOBAL_ARTICLES'));
 		}
 
-		$title = $this->params->get('page_title', '');
+		$title = $this->params->get('page_title', '');		
 		if (empty($title)) {
-			$title = htmlspecialchars_decode($app->getCfg('sitename'));
-		} else if ($app->getCfg('sitename_pagetitles', 0)) {
-			$title = JText::sprintf('JPAGETITLE', htmlspecialchars_decode($app->getCfg('sitename')), $title);
-		}
-
-		if (isset($category->title) && $category->title != '') {
-			$title = $title .' - ' .  $category->title;
+			$title = htmlspecialchars_decode($app->get('sitename'));
+		} else if ($app->get('sitename_pagetitles', 0) == 1) {
+			$title = JText::sprintf('JPAGETITLE', htmlspecialchars_decode($app->get('sitename')), $title);
+			
+			if ($this->tmpl['display_cat_name_title'] == 1 && isset($this->category->title) && $this->category->title != '') {
+				$title = $title .' - ' .  $this->category->title;
+			}
+			
+		} else if ($app->get('sitename_pagetitles', 0) == 2) {
+			
+			if ($this->tmpl['display_cat_name_title'] == 1 && isset($this->category->title) && $this->category->title != '') {
+				$title = $title .' - ' .  $this->category->title;
+			}
+		
+			$title = JText::sprintf('JPAGETITLE', $title, htmlspecialchars_decode($app->get('sitename')));
 		}
 		
 		$this->document->setTitle($title);
@@ -119,11 +126,11 @@ class PhocaGalleryViewCooliris3DWall extends JViewLegacy
 			$this->document->setMetadata('keywords', $this->params->get('menu-meta_keywords', ''));
 		}
 
-		if ($app->getCfg('MetaTitle') == '1' && $this->params->get('menupage_title', '')) {
+		if ($app->get('MetaTitle') == '1' && $this->params->get('menupage_title', '')) {
 			$this->document->setMetaData('title', $this->params->get('page_title', ''));
 		}
 
-		/*if ($app->getCfg('MetaAuthor') == '1') {
+		/*if ($app->get('MetaAuthor') == '1') {
 			$this->document->setMetaData('author', $this->item->author);
 		}
 
@@ -146,7 +153,7 @@ class PhocaGalleryViewCooliris3DWall extends JViewLegacy
 	function _addBreadCrumbs($category, $rootId, $displayStyle) {
 	    $app	= JFactory::getApplication();
 	
-	    $pathway 		=& $app->getPathway();
+	    $pathway 		= $app->getPathway();
 		$pathWayItems 	= $pathway->getPathWay();
 		$lastItemIndex 	= count($pathWayItems) - 1;
 		switch ($displayStyle)  {

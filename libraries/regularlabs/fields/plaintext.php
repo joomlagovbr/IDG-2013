@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.1.20362
+ * @version         18.7.10792
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -48,7 +48,7 @@ class JFormFieldRL_PlainText extends \RegularLabs\Library\Field
 			return '<div>' . $label . '</div>';
 		}
 
-		return '<label class="hasTooltip" title="<strong>' . $label . '</strong><br>' . htmlentities($tooltip) . '">'
+		return '<label class="hasPopover" title="' . $label . '" data-content="' . htmlentities($tooltip) . '">'
 			. $label . '</label>';
 	}
 

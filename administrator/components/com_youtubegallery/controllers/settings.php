@@ -1,8 +1,8 @@
 <?php
 /**
- * YoutubeGallery Joomla! 3.0 Native Component
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * YoutubeGallery Joomla! Native Component
+ * @version 4.4.5
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -18,13 +18,10 @@ jimport('joomla.application.component.controllerform');
  */
 class YoutubeGalleryControllerSettings extends JControllerForm
 {
-       /**
-         * Proxy for getModel.
-       */
-       
-       	function display($cachable = false, $urlparams = array())
+    function display($cachable = false, $urlparams = array())
 	{
-		$task=$_POST['task'];
+		$jinput = JFactory::getApplication()->input;
+		$task=$jinput->post->get('task','');
 		
 	
 		if($task=='linksform.add' or $task=='add' or $task=='linksform.edit' or $task=='edit' )
@@ -33,10 +30,10 @@ class YoutubeGalleryControllerSettings extends JControllerForm
 			return true;
 		}
 	
-		JRequest::setVar( 'view', 'settings');
-		JRequest::setVar( 'layout', 'edit');
+		JFactory::getApplication()->input->setVar( 'view', 'settings');
+		JFactory::getApplication()->input->setVar( 'layout', 'edit');
 		
-		switch(JRequest::getVar( 'task'))
+		switch($task)
 		{
 		case 'apply':
 			$this->save();
@@ -67,7 +64,7 @@ class YoutubeGalleryControllerSettings extends JControllerForm
 	function save($key = NULL, $urlVar = NULL)
 	{
 
-		$task = JRequest::getVar( 'task');
+		$task = JFactory::getApplication()->input->getVar( 'task');
 		
 		// get our model
 		$model = $this->getModel('settings');
@@ -106,29 +103,9 @@ class YoutubeGalleryControllerSettings extends JControllerForm
 			
 	}
 	
-	/**
-	* Cancels an edit operation
-	*/
-	/*function cancelItem()
-	{
-		
-
-		$model = $this->getModel('item');
-		$model->checkin();
-
-		
-		
-	}*/
-
-	/**
-	* Cancels an edit operation
-	*/
 	function cancel($key = NULL)
 	{
 		$this->setRedirect( 'index.php?option=com_youtubegallery&view=linkslist');
 	}
 
-	/**
-	* Form for copying item(s) to a specific option
-	*/
 }

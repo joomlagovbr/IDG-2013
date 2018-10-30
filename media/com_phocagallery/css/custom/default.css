@@ -1,16 +1,20 @@
 /* Phoca Gallery Categories View */
+
+.phocagallery-box-file,
 .pg-csv-box {
-	float:		left;
-	padding: 	10px;
-	margin: 	5px;
-	background: #fff;
-	-webkit-box-shadow:1px 1px 2px 1px rgba(120, 120, 120, 0.5), inset 0px 0px 7px 7px rgba(240, 240, 240, 0.2);
-	box-shadow:1px 1px 2px 1px rgba(120, 120, 120, 0.5), inset 0px 0px 7px 7px rgba(240, 240, 240, 0.2);
-	-webkit-border-radius: 2px;
-	border-radius: 2px;
+   float:      left;
+   padding:    10px;
+   margin:    5px;
+   background: #fff;
+   -webkit-box-shadow:1px 1px 2px 1px rgba(120, 120, 120, 0.5), inset 0px 0px 7px 7px rgba(240, 240, 240, 0.2);
+   box-shadow:1px 1px 2px 1px rgba(120, 120, 120, 0.5), inset 0px 0px 7px 7px rgba(240, 240, 240, 0.2);
+   -webkit-border-radius: 2px;
+   border-radius: 2px;
 }
+
+.phocagallery-box-file:hover,
 .pg-csv-box:hover {
-	background: #fafafa;
+   background: #fafafa;
 }
 .pg-csv-box-img {}
 .pg-csv-name {
@@ -123,6 +127,7 @@
 	background: url(../../images/icon-folder-small.png) 0 1px no-repeat;
 }
 
+.pg-box-parentfolder-cv,
 .pg-cvcsv-back {
 	text-align: left;
 	margin-top: 5px;
@@ -224,5 +229,50 @@ dt h3 {
 	color:#000;
 	font-weight:bold;
 	z-index:1001;
+}
+
+/* Obsolete Parameters */
+
+.pg-cats-box-float2 {
+	float:		left;
+	padding: 	10px;
+	margin: 	5px;
+	background: #fff;
+	-webkit-box-shadow:1px 1px 2px 1px rgba(120, 120, 120, 0.5), inset 0px 0px 7px 7px rgba(240, 240, 240, 0.2);
+	box-shadow:1px 1px 2px 1px rgba(120, 120, 120, 0.5), inset 0px 0px 7px 7px rgba(240, 240, 240, 0.2);
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+}
+.pg-cats-box {
+	padding: 	10px;
+	margin: 	5px;
+	background: #fff;
+	-webkit-box-shadow:1px 1px 2px 1px rgba(120, 120, 120, 0.5), inset 0px 0px 7px 7px rgba(240, 240, 240, 0.2);
+	box-shadow:1px 1px 2px 1px rgba(120, 120, 120, 0.5), inset 0px 0px 7px 7px rgba(240, 240, 240, 0.2);
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+}
+
+.pg-field-desc2,
+.pg-field-table2 {
+	margin-left: 10px;
+	margin-top: 5px;
+}
+.pg-field-desc,
+.pg-field-table {
+	margin-left: 10px;
+}
+.pg-field {
+	margin: 10px;
+	padding: 10px;
+	background: #fff;
+	-webkit-box-shadow:1px 1px 2px 1px rgba(120, 120, 120, 0.5), inset 0px 0px 7px 7px rgba(240, 240, 240, 0.2);
+	box-shadow:1px 1px 2px 1px rgba(120, 120, 120, 0.5), inset 0px 0px 7px 7px rgba(240, 240, 240, 0.2);
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+}
+.pg-legend {
+	font-weight: bold;
+	font-size: large;
 }
 

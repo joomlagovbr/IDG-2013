@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.1.20362
+ * @version         18.7.10792
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -575,7 +575,7 @@ class Html
 			return $string;
 		}
 
-		return str_replace($matches, $replacements, $string);
+		return str_replace($searches, $replacements, $string);
 	}
 
 	/**
@@ -593,7 +593,7 @@ class Html
 		}
 
 		$p_start_tag   = '<p(?: [^>]*)?>';
-		$optional_tags = '\s*(?:<\!-- [^>]*-->|&nbsp;|&\#160;)*\s*';
+		$optional_tags = '\s*(?:<\!--.*?-->|&nbsp;|&\#160;)*\s*';
 		RegEx::matchAll('(' . $p_start_tag . ')(' . $optional_tags . ')(' . $p_start_tag . ')', $string, $tags);
 
 		if (empty($tags))

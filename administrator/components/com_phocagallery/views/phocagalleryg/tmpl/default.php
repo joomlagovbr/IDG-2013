@@ -1,7 +1,19 @@
 <?php
+/*
+ * @package Joomla
+ * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+ *
+ * @component Phoca Gallery
+ * @copyright Copyright (C) Jan Pavelka www.phoca.cz
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ */
 defined('_JEXEC') or die('Restricted access');
 phocagalleryimport('phocagallery.render.rendermap');
-echo '<script src="http://www.google.com/jsapi" type="text/javascript"></script>';
+
+
+$map	= new PhocaGalleryRenderMap();
+echo $map->loadApi();
 echo '<noscript>'.JText::_('COM_PHOCAGALLERY_GOOGLE_MAPS_ENABLE_JS').'</noscript>';
 echo '<div align="center" style="margin:0;padding:0;text-align: center;">';
 echo '<div id="phocaMap" style="margin:0 auto;padding:0;width:520px;height:460px;"></div></div>';
@@ -13,9 +25,11 @@ $document->addCustomTag( "<style type=\"text/css\"> \n"
 				}'
 			." </style> \n");
 
+
+//echo $map->loadApi();
 ?><script type='text/javascript'>//<![CDATA[
-google.load("maps", "3.x", {"other_params":"sensor=false"}); <?php 
-$map	= new PhocaGalleryRenderMap();
+<?php 
+
 echo $map->createMap('phocaMap', 'mapPhocaMap', 'phocaLatLng', 'phocaOptions','tstPhocaMap', 'tstIntPhocaMap');
 echo $map->cancelEventF();
 echo $map->checkMapF();
@@ -40,3 +54,4 @@ echo $map->startMapF();
 echo $map->endMapF();
 echo $map->setInitializeF();
 ?>//]]></script>
+<?php echo $map->loadApi(); ?>

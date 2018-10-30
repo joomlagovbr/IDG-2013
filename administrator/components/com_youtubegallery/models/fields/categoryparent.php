@@ -1,8 +1,8 @@
 <?php
 /**
- * YoutubeGallery Joomla! 3.0 Native Component
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * YoutubeGallery Joomla! Native Component
+ * @version 4.4.5
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -33,11 +33,11 @@ class JFormFieldCategoryParent extends JFormFieldList
          */
         protected function getOptions() 
         {
-                $current_category_id = JRequest::getInt('id', '0');
+                $current_category_id = JFactory::getApplication()->input->getInt('id', '0');
                 
                 $db = JFactory::getDBO();
                 $query = $db->getQuery(true);
-                $query->select('`id`, `categoryname`, `parentid`');
+                $query->select('id, categoryname, parentid');
                 $query->from('#__youtubegallery_categories');
                 $db->setQuery((string)$query);
                 $messages = $db->loadObjectList();
@@ -75,9 +75,9 @@ class JFormFieldCategoryParent extends JFormFieldList
                 
                 $db = JFactory::getDBO();
                 $query = $db->getQuery(true);
-                $query->select('`id`, `parentid`');
+                $query->select('id, parentid');
                 $query->from('#__youtubegallery_categories');
-                $query->where('`parentid`='.$parentid);
+                $query->where('parentid='.$parentid);
                 $db->setQuery((string)$query);
                 if (!$db->query())    die( $db->stderr());
                 

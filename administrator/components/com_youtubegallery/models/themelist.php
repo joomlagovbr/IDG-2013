@@ -1,8 +1,8 @@
 <?php
 /**
- * YoutubeGallery Joomla! 3.0 Native Component
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * YoutubeGallery Joomla! Native Component
+ * @version 4.4.5
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -32,7 +32,7 @@ class YoutubeGalleryModelThemeList extends JModelList
 				
                 
 				if($search!='')
-						$where[]='instr(`themename`,"'.$search.'")';
+						$where[]='instr(themename,"'.$search.'")';
 				
                 // Create a new query object.         
                 $db = JFactory::getDBO();
@@ -55,12 +55,14 @@ class YoutubeGalleryModelThemeList extends JModelList
         
        	function ConfirmRemove()
         {
-				JRequest::setVar('hidemainmenu', true);
+				$jinput = JFactory::getApplication()->input;
+$jinput->get->set('hidemainmenu',true);
+
 				JToolBarHelper::title(JText::_( 'COM_YOUTUBEGALLERY_DELETE_THEMES_S' ));
 		
 				$cancellink='index.php?option=com_youtubegallery&view=themelist';
 		
-				$cids = JRequest::getVar( 'cid', array(0), 'post', 'array' );
+				$cids = JFactory::getApplication()->input->getVar( 'cid', array(0), 'post', 'array' );
 		
 				echo '<h1>'.JText::_( 'COM_YOUTUBEGALLERY_DELETE_THEMES_S' ).'</h1>';
 		
@@ -111,9 +113,9 @@ class YoutubeGalleryModelThemeList extends JModelList
 		{
 				$db = JFactory::getDBO();
                 $query = $db->getQuery(true);
-                $query->select('`id`, `themename`');
+                $query->select('id, themename');
                 $query->from('#__youtubegallery_themes');
-				$query->where('`id`='.$id);
+				$query->where('id='.$id);
                 $db->setQuery((string)$query);
                 $rows = $db->loadObjectList();
                 if (!$db->query())    die( $db->stderr());
@@ -141,11 +143,11 @@ class YoutubeGalleryModelThemeList extends JModelList
 			
 		
 						$item->load( $id );
-						if($item->readonly)
-						{
-								$msg='To copy imported Themes upgrade to PRO version';
-								return false;
-						}
+						//if($item->readonly)
+						//{
+						//		$msg='To copy imported Themes upgrade to PRO version';
+						//		return false;
+						//}
 						
 						$item->id 	= NULL;
 		

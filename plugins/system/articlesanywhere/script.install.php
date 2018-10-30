@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         7.5.1
+ * @version         8.0.3
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -30,7 +30,7 @@ class PlgSystemArticlesAnywhereInstallerScript extends PlgSystemArticlesAnywhere
 	{
 		if ($this->install_type == 'install')
 		{
-			$this->setOldTagCharacters();
+			$this->setUseK2ForOldSetups();
 		}
 
 		$this->showCompatMessage();
@@ -56,24 +56,29 @@ class PlgSystemArticlesAnywhereInstallerScript extends PlgSystemArticlesAnywhere
 		}
 	}
 
-	private function setOldTagCharacters()
+	private function setUseK2ForOldSetups()
 	{
-		$plugin = $this->getPluginParams();
+		$params = $this->getPluginParams();
 
-		if (empty($plugin))
+		if (empty($params))
 		{
 			return;
 		}
 
-		$params = json_decode($plugin->params);
+		// Already set
+		if (isset($params->use_k2))
+		{
+			return;
+		}
 
-		if (isset($params->tag_characters_data))
+		// No need to set the use_k2 to yes
+		if ( ! isset($params->content_type) || $params->content_type != 'k2')
 		{
 			return;
 		}
 
 		// Set tag_characters_data to old (pre v4.2.0) value
-		$params->tag_characters_data = '{.}';
+		$params->use_k2 = true;
 
 		$this->savePluginParams($plugin->extension_id, $params);
 	}
@@ -81,24 +86,33 @@ class PlgSystemArticlesAnywhereInstallerScript extends PlgSystemArticlesAnywhere
 	private function getPluginParams()
 	{
 		$query = $this->db->getQuery(true)
-			->select(['extension_id', 'params'])
+			->select('params')
 			->from($this->db->quoteName('#__extensions'))
 			->where($this->db->quoteName('element') . ' = ' . $this->db->quote('articlesanywhere'))
 			->where($this->db->quoteName('type') . ' = ' . $this->db->quote('plugin'))
 			->where($this->db->quoteName('folder') . ' = ' . $this->db->quote('system'));
 		$this->db->setQuery($query, 0, 1);
 
-		return $this->db->loadObject();
+		$params = $this->db->loadResult();
+
+		if (empty($params))
+		{
+			return false;
+		}
+
+		return json_decode($params);
 	}
 
-	private function savePluginParams($id, $params)
+	private function savePluginParams($params)
 	{
 		$params = json_encode($params);
 
 		$query = $this->db->getQuery(true)
 			->update('#__extensions')
 			->set($this->db->quoteName('params') . ' = ' . $this->db->quote($params))
-			->where($this->db->quoteName('extension_id') . ' = ' . (int) $id);
+			->where($this->db->quoteName('element') . ' = ' . $this->db->quote('articlesanywhere'))
+			->where($this->db->quoteName('type') . ' = ' . $this->db->quote('plugin'))
+			->where($this->db->quoteName('folder') . ' = ' . $this->db->quote('system'));
 		$this->db->setQuery($query);
 		$this->db->execute();
 

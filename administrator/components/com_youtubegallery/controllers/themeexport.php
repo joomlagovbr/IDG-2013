@@ -1,8 +1,8 @@
 <?php
 /**
- * YoutubeGallery Joomla! 3.0 Native Component
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * YoutubeGallery Joomla! Native Component
+ * @version 4.4.5
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
@@ -22,15 +22,15 @@ jimport('joomla.application.component.controllerform');
 class YoutubeGalleryControllerThemeExport extends JControllerForm
 {
 
-	function display()
+	function display($cachable = false, $urlparams = array())
 	{
-		switch(JRequest::getVar( 'task'))
+		switch(JFactory::getApplication()->input->getVar( 'task'))
 		{
 			case 'cancel':
 				$this->cancel();
 				break;
 			default:
-				JRequest::setVar( 'view', 'themeexport');
+				JFactory::getApplication()->input->setVar( 'view', 'themeexport');
 				parent::display();
 				break;
 			}

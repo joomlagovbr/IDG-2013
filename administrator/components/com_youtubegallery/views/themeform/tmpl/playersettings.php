@@ -1,14 +1,15 @@
 <?php
 /**
  * YoutubeGallery Joomla! 3.0 Native Component
- * @version 3.5.9
- * @author DesignCompass corp< <support@joomlaboat.com>
+ * @version 4.4.5
+ * @author Ivan Komlev< <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @GNU General Public License
  **/
 
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
+
 
 
 ?>
@@ -25,7 +26,7 @@ defined('_JEXEC') or die('Restricted access');
                                         <tr><td><?php echo $this->form->getLabel('related'); ?></td><td>:</td><td><fieldset id="jform_attribs_link_titles" class="radio btn-group"><?php echo $this->form->getInput('related'); ?></fieldset></td></tr>
                                         <tr><td><?php echo $this->form->getLabel('showinfo'); ?></td><td>:</td><td><fieldset id="jform_attribs_link_titles" class="radio btn-group"><?php echo $this->form->getInput('showinfo'); ?></fieldset></td></tr>
                                         <tr><td><?php echo $this->form->getLabel('controls'); ?></td><td>:</td><td><fieldset id="jform_attribs_link_titles" class="radio btn-group"><?php echo $this->form->getInput('controls'); ?></fieldset></td></tr>
-					<tr><td><?php echo $this->form->getLabel('muteonplay'); ?></td><td>:</td><td>AVAILABLE IN "PRO" VERSION ONLY</td></tr>
+					<tr><td><?php echo $this->form->getLabel('muteonplay'); ?></td><td>:</td><td><fieldset id="jform_attribs_link_titles" class="radio btn-group"><?php echo $this->form->getInput('muteonplay'); ?></fieldset></td></tr>
 					<tr><td><?php echo $this->form->getLabel('volume'); ?></td><td>:</td><td><?php echo $this->form->getInput('volume'); ?></td></tr>
                                         <tr><td><?php echo $this->form->getLabel('playertype'); ?></td><td>:</td><td><?php echo $this->form->getInput('playertype'); ?></td></tr>
                                         <tr><td><?php echo $this->form->getLabel('youtubeparams'); ?></td><td>:</td><td><?php echo $this->form->getInput('youtubeparams'); ?></td></tr>

@@ -1,5 +1,5 @@
 <?php
-defined('_JEXEC') or die('Restricted access'); 
+defined('_JEXEC') or die('Restricted access');
 require JPATH_SITE .'/templates/padraogoverno01/html/com_phocagallery/_helper.php';
 //removendo css,js e custom html do componente:
 TmplPhocagalleryHelper::removeCss(array('phocagallery.css','modal.css'));
@@ -26,9 +26,7 @@ $this->category = TmplPhocagalleryHelper::getExtrafields($this->category, array(
 			<li class="documentCreated">
 				<?php echo 'Criado em: ' . JHtml::_('date', $this->category->date, JText::_('DATE_FORMAT_LC2')); ?>
 			</li>
-			<li>
-				<a href="javascript:history.back()">&lt; voltar</a>
-			</li>
+
 		</ul>
 	</div>
 	<?php $modules = JModuleHelper::getModules( 'com_content-article-btns-social' );
@@ -39,11 +37,11 @@ $this->category = TmplPhocagalleryHelper::getExtrafields($this->category, array(
 				<?php $html = str_replace('{SITE}', JURI::root(), $html); ?>
 				<?php echo $html; ?>
 			<?php endforeach; ?>
-		</div>		
-	<?php	
+		</div>
+	<?php
 		endif;
-	 ?>		
-</div>		
+	 ?>
+</div>
 <?php
 
 $this->checkRights = 1;
@@ -52,14 +50,14 @@ $this->checkRights = 1;
 if ((int)$this->tagId > 0) {
 	// Search by tags
 	$this->checkRights = 1;
-	
+
 	// Categories View in Category View
 	// if ($this->tmpl['displaycategoriescv']) {
 	// 	echo $this->loadTemplate('categories');
 	// }
-	
+
 	echo $this->loadTemplate('images');
-	
+	echo "<a href=\"javascript:history.back()\">&lt; voltar</a>";
 	echo $this->loadTemplate('pagination');
 	echo '</div>'. "\n";
 
@@ -75,7 +73,7 @@ if ((int)$this->tagId > 0) {
 
 	// Rendering images
 	echo $this->loadTemplate('images');
-	
+	echo "<a href=\"javascript:history.back()\" title=\"Voltar à página anterior\">&lt; voltar</a>";
 	echo $this->loadTemplate('pagination');
 
 }

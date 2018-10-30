@@ -21,28 +21,30 @@ defined('_JEXEC') or die;
 			<?php else: ?>
 				<?php echo JText::_('COM_CONTENT_FEED_READMORE'); ?>
 			<?php endif;?>
-		</a>	
+		</a>
 	</div>
 <?php endif; ?>
 
 	<?php foreach ($lista_chamadas as $lista): ?>
-		<?php 
+		<?php
 			//Define link do artigo
-			$link = JRoute::_(ContentHelperRoute::getArticleRoute($lista->id, $lista->catid));			
+			$link = JRoute::_(ContentHelperRoute::getArticleRoute($lista->id, $lista->catid));
 		?>
 
 		<?php if ($params->get('exibir_imagem')): ?>
-			<?php $imagem = json_decode($lista->images); ?>		
+			<?php
+			$imagem = json_decode($lista->images);
+			?>
 			<?php if (!empty($imagem->image_intro)): ?>
 				<div>
 					<a href="<?php echo $link ?>">
 						<img src="<?php echo $imagem->image_intro ?>" />
-					</a>	
+					</a>
 				</div>
 			<?php endif; ?>
 		<?php endif; ?>
 
-		<?php if ($params->get('exibir_title')): ?>			
+		<?php if ($params->get('exibir_title')): ?>
 				<<?php echo $params->get('header_tag')?> <?php if ($params->get('header_class')): echo 'class="'.$params->get('header_class').'"'; endif; ?>>
 					<a href="<?php echo $link ?>" <?php if ($params->get('header_class')): echo 'class="'.$params->get('header_class').'"'; endif; ?>>
 						<?php echo $lista->title ?>
@@ -54,8 +56,8 @@ defined('_JEXEC') or die;
 				<div>
 					<a href="<?php echo $link ?>">
 						<?php echo $lista->chapeu ?>
-					</a>	
-				</div>	
+					</a>
+				</div>
 			</div>
 		<?php endif; ?>
 		<?php if ($params->get('exibir_introtext') && $lista->introtext): ?>
@@ -69,7 +71,7 @@ defined('_JEXEC') or die;
 					}
 				?>
 					<p><?php echo $texto; ?></p>
-			<?php else: ?>					
+			<?php else: ?>
 					<p><?php echo strip_tags($lista->introtext, '<b><i><strong><u><b>') ?></p>
 			<?php endif; ?>
 		<?php endif; ?>

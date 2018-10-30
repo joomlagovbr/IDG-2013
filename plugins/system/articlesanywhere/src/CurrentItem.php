@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         7.5.1
+ * @version         8.0.3
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -26,7 +26,34 @@ class CurrentItem
 		$this->config = $config;
 	}
 
-	public function get()
+	public static function get($key = null)
+	{
+		$item = self::getCurrentItem();
+
+		if (is_null($key))
+		{
+			return $item ?: (object) [];
+		}
+
+		return isset($item->{$key}) ? $item->{$key} : null;
+	}
+
+	public static function set($item)
+	{
+		if ( ! isset($item->id))
+		{
+			return;
+		}
+
+		self::$item = $item;
+	}
+
+	public static function exists()
+	{
+		return ! is_null(self::$item);
+	}
+
+	private static function getCurrentItem()
 	{
 		if ( ! is_null(self::$item))
 		{

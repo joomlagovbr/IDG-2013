@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         7.5.1
+ * @version         8.0.3
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -18,24 +18,22 @@ defined('_JEXEC') or die;
 
 class Items extends Filter
 {
-	public function setFilter(JDatabaseQuery $query, $names = [], $include_type = 'include')
+	public function setFilter(JDatabaseQuery $query, $filters = [])
 	{
-		$include = $include_type != 'exclude';
-
-		$this->setFiltersFromNames($query, 'items', $names, $include);
+		$this->setFiltersFromNames($query, 'items', $filters);
 	}
 
 	public function getOrdering()
 	{
 		$filter = $this->config->getFilters('items');
 
-		if (empty($filter['include']))
+		if (empty($filter))
 		{
 			return false;
 		}
 
-		$names_unquoted = implode(',', $filter['include']);
-		$names          = implode(',', $this->db->quote($filter['include']));
+		$names_unquoted = implode(',', $filter);
+		$names          = implode(',', $this->db->quote($filter));
 
 		// $names are numeric (so assume ids)
 		if (RL_RegEx::match('^[0-9,]+$', $names_unquoted))

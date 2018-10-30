@@ -31,4 +31,11 @@ defined('_JEXEC') or die;
 		</div>
 	</div>
 <?php endforeach; ?>
+<?php if (! empty($link_saiba_mais) ): ?>
+	<div class="footer">
+		<a href="<?php echo $link_saiba_mais; ?>" class="link">
+			<?php echo $params->get('texto_saiba_mais', 'saiba mais')?>			
+		</a>	
+	</div>
+<?php endif; ?>
 </div>

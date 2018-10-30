@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.1.20362
+ * @version         18.7.10792
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
@@ -47,7 +47,7 @@ class Template
 		// Find template style id based on params, as the template style id is not always stored in the getTemplate
 		$query = $this->db->getQuery(true)
 			->select('id')
-			->from('#__template_styles as s')
+			->from('#__template_styles AS s')
 			->where('s.client_id = 0')
 			->where('s.template = ' . $this->db->quote($template->template))
 			->where('s.params = ' . $this->db->quote($params));

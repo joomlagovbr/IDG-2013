@@ -20,15 +20,20 @@ class JFormFieldPhocaUsers extends JFormField
 
 	protected function getInput() {
 		
-		$userId	= (string) $this->form->getValue($this->element['name']);	
-		
+		$userId	= $this->form->getValue($this->element['name']);	
+	
 		$owner	= ( (string)$this->element['typeowner'] ? $this->element['typeowner'] : 0 );
 		if ($owner == 1) {
 			return PhocaGalleryAccess::usersListOwner($this->name, $this->id, $userId, 1, NULL, 'name', 0 );
 		} else {
 			// Joomla! 3.1.5: $this->name.'[]'
 			// Joomla! 3.2.0: $this->name
-			return PhocaGalleryAccess::usersList($this->name, $this->id, $userId, 1, NULL,'name', 0 );
+			$userIdString = $userId;
+			if (is_array($userId)) {
+				$userIdString = implode(',', $userId);
+				
+			}
+			return PhocaGalleryAccess::usersList($this->name, $this->id, $userIdString, 1, NULL,'name', 0 );
 		
 		}
 	}

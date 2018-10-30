@@ -1,4 +1,14 @@
 <?php
+/*
+ * @package Joomla
+ * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+ *
+ * @component Phoca Gallery
+ * @copyright Copyright (C) Jan Pavelka www.phoca.cz
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ */
+ 
 defined('_JEXEC') or die('Restricted access'); 
 if ($this->tmpl['display_category']	== 0) {
 	echo JText::_('COM_PHOCAGALLERY_CATEGORY was not selected in parameters');
@@ -57,6 +67,6 @@ if ( $this->category->description != '' ) {
 <?php
 }
 echo '<div>&nbsp;</div>';
-PhocaGalleryUtils::displayFooter();
+echo '<div style="text-align:right;color:#ccc;display:block">Powered by <a href="https://www.phoca.cz/phocagallery">Phoca Gallery</a></div>';
 echo '</div>';
 ?>
