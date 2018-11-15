@@ -154,7 +154,9 @@ class InstallationModelDatabase extends JModelBase
 			JFactory::getApplication()->enqueueMessage(JText::_('INSTL_DATABASE_NAME_TOO_LONG'), 'warning');
 
 			return false;
-		}
+                }
+
+                $shouldCheckLocalhost = getenv('JOOMLA_INSTALLATION_DISABLE_LOCALHOST_CHECK') !== '1';
 
 		// Workaround for UPPERCASE table prefix for postgresql
 		if ($options->db_type === 'postgresql' && strtolower($options->db_prefix) !== $options->db_prefix)
@@ -172,7 +174,7 @@ class InstallationModelDatabase extends JModelBase
 		);
 
 		// Check the security file if the db_host is not localhost / 127.0.0.1 / ::1
-		if (!in_array($options->db_host, $localhost))
+		if ( $shouldCheckLocalhost && !in_array($options->db_host, $localhost))
 		{
 			// Add the general message
 			JFactory::getApplication()->enqueueMessage(
