@@ -287,7 +287,7 @@ class TmplPadraoGoverno01Helper
 			return;
 
 		foreach ($modules as $k => $mod):
-			if(count($attribs) > 0)
+			if($attribs && count($attribs) > 0)
 			{
 				//correcoes utilizadas para menu de redes sociais, no rodape, por exemplo
 				if(@$attribs['replaceHTMLentities']=='1')
