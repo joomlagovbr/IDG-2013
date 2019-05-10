@@ -31,7 +31,8 @@ class ModeloArticle_content
 		$query->where('cat.access IN ('.$groups.')');
 		$query->where('(cont.publish_up = '.$db->Quote($nullDate).' OR cont.publish_up <= '.$db->Quote($atual).')');
 		$query->where('(cont.publish_down = '.$db->Quote($nullDate).' OR cont.publish_down >= '.$db->Quote($atual).')');
-
+		$query->where('cont.language IN ('.$db->quote(JFactory::getLanguage()->getTag()).','.$db->quote('*').')');
+		
 		//Valor 1 = todos que não são destaque
 		if($params->get('destaque') == 1){
 			$query->where('cont.featured = 0');
