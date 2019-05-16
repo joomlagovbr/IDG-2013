@@ -2,7 +2,7 @@
 /**
  * @package	Joomla.Installation
  *
- * @copyright  Copyright (C) 2005 - 2017 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2019 Open Source Matters, Inc. All rights reserved.
  * @license	GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -55,29 +55,9 @@ $this->addScriptOptions('system.installation', array('url' => JRoute::_('index.p
 <html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
 	<head>
 		<jdoc:include type="head" />
-		<link rel="stylesheet" href="<?php echo JURI::root(); ?>templates/padraogoverno01/css/template-verde.css" type='text/css'/>
-    	<link rel="stylesheet" href="<?php echo JURI::root(); ?>templates/padraogoverno01/css/fontes.css" type='text/css'/>
 		<!--[if lt IE 9]><script src="<?php echo JUri::root(true); ?>/media/jui/js/html5.js"></script><![endif]-->
 	</head>
 	<body data-basepath="<?php echo JUri::root(true); ?>">
-				<!-- portalpadrao: adicao de cabecalho especifico -->
-		<header>
-            <div class="container">
-                <div class="row-fluid">
-                    <div class="span12 small" id="logo" align="center">
-                        <a title="Nome principal" href="http://github.com/joomlagovbr" target="_blank">
-                            <h1 class="portal-title corto">Portal Institucional Padr&atilde;o do Governo Federal</h1>
-                            <span class="portal-description">instalador para o CMS Joomla!</span>
-                        </a>
-                    </div>
-                    <!-- fim .span8 -->
-
-                </div>
-                <!-- fim .row-fluid -->
-            </div>
-            <!-- fim div.container -->
-        </header>
-		<!-- portalpadrao: fim adicao de cabecalho especifico -->
 		<!-- Header -->
 		<div class="header">
 			<img src="<?php echo $this->baseurl; ?>/template/images/joomla.png" alt="Joomla" />

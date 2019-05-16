@@ -28,14 +28,12 @@
 		</field>
 
 		<field name="db_type" type="hidden" />
-		<!-- portalpadrao: modificacao para deixar somente um arquivo de dados disponivel e ja selecionado -->
-		<!-- <field name="sample_file" type="sample" class="inputbox"
+
+		<field
+			name="sample_file"
+			type="installation.sample"
 			label="INSTL_SITE_INSTALL_SAMPLE_LABEL"
-		/> -->
-		<field name="sample_file" type="radio" class="inputbox" default="portal_padrao_01.sql" label="INSTL_SITE_INSTALL_SAMPLE_LABEL">
-			<option value="portal_padrao_01.sql">Dados de exemplo do portal padrão</option>
-			<option value="">INSTL_SITE_INSTALL_SAMPLE_NONE</option>
-		</field>
-		<!-- portalpadrao: modificacao para deixar somente um arquivo de dados disponivel e ja selecionado -->
+			class="inputbox"
+		/>
 	</fieldset>
 </form>
