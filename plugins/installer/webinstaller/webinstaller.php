@@ -3,272 +3,282 @@
  * @package     Joomla.Plugin
  * @subpackage  Installer.webinstaller
  *
- * @copyright   Copyright (C) 2013-2016 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2013 - 2019 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Form\Rule\UrlRule;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Installer\Installer;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Version;
+
 /**
  * Support for the "Install from Web" tab
  *
- * @package     Joomla.Plugin
- * @subpackage  System.webinstaller
- * @since       3.2
+ * @since  1.0
  */
-class PlgInstallerWebinstaller extends JPlugin
+class PlgInstallerWebinstaller extends CMSPlugin
 {
-	public $appsBaseUrl = 'https://appscdn.joomla.org/webapps/';
+	/**
+	 * The URL for the remote server.
+	 *
+	 * @var    string
+	 * @since  2.0
+	 */
+	const REMOTE_URL = 'https://appscdn.joomla.org/webapps/';
 
+	/**
+	 * The application object.
+	 *
+	 * @var    CMSApplication
+	 * @since  2.0
+	 */
+	protected $app;
+
+	/**
+	 * Affects constructor behavior. If true, language files will be loaded automatically.
+	 *
+	 * @var    boolean
+	 * @since  2.0
+	 */
+	protected $autoloadLanguage = true;
+
+	/**
+	 * Flag tracking whether the Hathor admin template is in use
+	 *
+	 * @var    boolean|null
+	 * @since  1.0
+	 * @deprecated  Removed when the plugin is merged to 4.0
+	 */
 	private $_hathor = null;
-	private $_installfrom = null;
-	private $_rtl = null;
 
+	/**
+	 * The URL to install from
+	 *
+	 * @var    string|null
+	 * @since  1.0
+	 */
+	private $installfrom = null;
+
+	/**
+	 * Flag if the document is in a RTL direction
+	 *
+	 * @var    integer|null
+	 * @since  1.0
+	 */
+	private $rtl = null;
+
+	/**
+	 * Event listener for the `onInstallerBeforeDisplay` event.
+	 *
+	 * @param   boolean  $showJedAndWebInstaller  Flag indicating the install from web prompt should be displayed
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
+	 * @deprecated  Removed when the plugin is merged to 4.0
+	 */
 	public function onInstallerBeforeDisplay(&$showJedAndWebInstaller)
 	{
 		$showJedAndWebInstaller = false;
 	}
-	
-	public function onInstallerViewBeforeFirstTab()
+
+	/**
+	 * Event listener for the `onInstallerAddInstallationTab` event.
+	 *
+	 * @return  array  Returns an array with the tab information
+	 *
+	 * @since   2.0
+	 */
+	public function onInstallerAddInstallationTab()
 	{
-		$app = JFactory::getApplication();
- 
-		$lang = JFactory::getLanguage();
-		$lang->load('plg_installer_webinstaller', JPATH_ADMINISTRATOR);
-		if (!$this->params->get('tab_position', 0)) {
-			$this->getChanges();
-		}
+		$tab = array(
+			'name'  => 'web',
+			'label' => Text::_('COM_INSTALLER_INSTALL_FROM_WEB'),
+		);
+
+		// Render the input
+		ob_start();
+		include PluginHelper::getLayoutPath('installer', 'webinstaller', $this->isHathor() ? 'hathor' : 'default');
+		$tab['content'] = ob_get_clean();
+
+		return $tab;
 	}
-	
-	public function onInstallerViewAfterLastTab()
+
+	/**
+	 * Event listener for the `onBeforeCompileHead` event.
+	 *
+	 * @return  void
+	 *
+	 * @since   2.0
+	 * @deprecated  Removed when the plugin is merged to 4.0
+	 * @note        This is required to ensure the plugin JS is appended after the tabs are initialized,
+	 *              logic would otherwise be in the `onInstallerAddInstallationTab` listener
+	 */
+	public function onBeforeCompileHead()
 	{
-		if ($this->params->get('tab_position', 0)) {
-			$this->getChanges();
-		}
-		$ishathor = $this->isHathor() ? 1 : 0;
 		$installfrom = $this->getInstallFrom();
-		$installfromon = $installfrom ? 1 : 0;
 
-		$document = JFactory::getDocument();
-		$ver = new JVersion;
-		$min = JFactory::getConfig()->get('debug') ? '' : '.min';
+		// Push language strings to the JavaScript store
+		Text::script('COM_INSTALLER_MSG_INSTALL_ENTER_A_URL');
+		Text::script('COM_INSTALLER_WEBINSTALLER_INSTALL_OBSOLETE');
+		Text::script('COM_INSTALLER_WEBINSTALLER_INSTALL_UPDATE_AVAILABLE');
+		Text::script('JLIB_INSTALLER_UPDATE');
+		Text::script('PLG_INSTALLER_WEBINSTALLER_CANNOT_INSTALL_EXTENSION_IN_PLUGIN');
+		Text::script('PLG_INSTALLER_WEBINSTALLER_REDIRECT_TO_EXTERNAL_SITE_TO_INSTALL');
 
-		$document->addScript(JURI::root() . 'plugins/installer/webinstaller/js/client' . $min . '.js?jversion=' . JVERSION);
-		$document->addStyleSheet(JURI::root() . 'plugins/installer/webinstaller/css/client' . $min . '.css?jversion=' . JVERSION);
+		HTMLHelper::_('bootstrap.framework');
+		HTMLHelper::_('script', 'plg_installer_webinstaller/client.min.js', array('version' => 'auto', 'relative' => true));
+		HTMLHelper::_('stylesheet', 'plg_installer_webinstaller/client.min.css', array('version' => 'auto', 'relative' => true));
 
-		$installer = new JInstaller();
-		$manifest = $installer->isManifest(JPATH_PLUGINS . DIRECTORY_SEPARATOR . 'installer' . DIRECTORY_SEPARATOR . 'webinstaller' . DIRECTORY_SEPARATOR . 'webinstaller.xml');
+		$devLevel = Version::PATCH_VERSION;
+		$extraVer = Version::EXTRA_VERSION;
 
-		$apps_base_url = addslashes($this->appsBaseUrl);
-		$apps_installat_url = base64_encode(JURI::current(true) . '?option=com_installer&view=install');
-		$apps_installfrom_url = addslashes($installfrom);
-		$apps_product = base64_encode($ver->PRODUCT);
-		$apps_release = base64_encode($ver->RELEASE);
-		$apps_dev_level = base64_encode($ver->DEV_LEVEL);
-		$btntxt = JText::_('COM_INSTALLER_MSG_INSTALL_ENTER_A_URL', true);
-		$pv = base64_encode($manifest->version);
-		$updatestr1 = JText::_('COM_INSTALLER_WEBINSTALLER_INSTALL_UPDATE_AVAILABLE', true);
-		$obsoletestr = JText::_('COM_INSTALLER_WEBINSTALLER_INSTALL_OBSOLETE', true);
-		$updatestr2 = JText::_('JLIB_INSTALLER_UPDATE', true);
+		if (!empty($extraVer))
+		{
+			$devLevel .= '-' . $extraVer;
+		}
 
-		$javascript = <<<END
-var apps_base_url = '$apps_base_url',
-apps_installat_url = '$apps_installat_url',
-apps_installfrom_url = '$apps_installfrom_url',
-apps_product = '$apps_product',
-apps_release = '$apps_release',
-apps_dev_level = '$apps_dev_level',
-apps_is_hathor = $ishathor,
-apps_installfromon = $installfromon,
-apps_btntxt = '$btntxt',
-apps_pv = '$pv',
-apps_updateavail1 = '$updatestr1',
-apps_updateavail2 = '$updatestr2',
-apps_obsolete = '$obsoletestr';
+		$installer = new Installer;
+		$manifest  = $installer->isManifest(__DIR__ . '/webinstaller.xml');
 
-jQuery(document).ready(function() {
-	if (apps_installfromon)
-	{
-		jQuery('#myTabTabs a[href="#web"]').click();
-	}
-	var link = jQuery('#myTabTabs a[href="#web"]').get(0);
-	var eventpoint = jQuery(link).closest('li');
-	if (apps_is_hathor)
-	{
+		$doc = Factory::getDocument();
+
+		$doc->addScriptOptions(
+			'plg_installer_webinstaller',
+			array(
+				'base_url'        => addslashes(self::REMOTE_URL),
+				'installat_url'   => base64_encode(Uri::current() . '?option=com_installer&view=install'),
+				'installfrom_url' => addslashes($installfrom),
+				'product'         => base64_encode(Version::PRODUCT),
+				'release'         => base64_encode(Version::MAJOR_VERSION . '.' . Version::MINOR_VERSION),
+				'dev_level'       => base64_encode($devLevel),
+				'installfromon'   => $installfrom ? 1 : 0,
+				'language'        => base64_encode(Factory::getLanguage()->getTag()),
+				// The below options are deprecated and removed when the plugin is merged to 4.0
+				'is_hathor'       => $this->isHathor() ? 1 : 0,
+				'pv'              => base64_encode($manifest->version),
+			)
+		);
+
+		$javascript = <<<JS
+jQuery(document).ready(function () {
+    var ifwOptions = Joomla.getOptions('plg_installer_webinstaller', {});
+    var ifwLink = jQuery('#myTabTabs').find('li a[href="#web"]');
+    var ifwRelativeSelector = 'li';
+
+	if (ifwOptions.is_hathor) {
 		jQuery('#mywebinstaller').show();
-		link = jQuery('#mywebinstaller a');
-		eventpoint = link;
+		ifwLink = jQuery('#mywebinstaller').find('a');
+		ifwRelativeSelector = 'a';
 	}
 
-	jQuery(eventpoint).click(function (event){
+	if (ifwOptions.installfromon) {
+		ifwLink.click();
+	}
+
+	if (!ifwOptions.is_hathor && ifwLink.closest('li').hasClass('active')) {
+		if (!Joomla.apps.loaded) {
+			Joomla.apps.initialize();
+		}
+	}
+
+	ifwLink.closest(ifwRelativeSelector).click(function (event) {
 		if (!Joomla.apps.loaded) {
 			Joomla.apps.initialize();
 		}
 	});
-	
-	if (apps_installfrom_url != '') {
-		var tag = 'li';
-		if (apps_is_hathor)
-		{
-			tag = 'a';
-		}
-		jQuery(link).closest(tag).click();
+
+	if (ifwOptions.installfrom_url !== '') {
+	    ifwLink.closest(ifwRelativeSelector).click();
 	}
 
-	if (!apps_is_hathor)
-	{
-		if(typeof jQuery('#myTabTabs a[href="'+localStorage.getItem('tab-href')+'"]').prop('tagName') == 'undefined' ||
-			localStorage.getItem('tab-href') == null ||
-			localStorage.getItem('tab-href') == 'undefined' ||
-			!localStorage.getItem('tab-href')) {
-			window.localStorage.setItem('tab-href', jQuery('#myTabTabs a').get(0).href.replace(/^.+?#/, '#'));
+	ifwLink.on('shown', function (e) {
+		if (!Joomla.apps.loaded) {
+			Joomla.apps.initialize();
 		}
-	
-		if (apps_installfrom_url == '' && localStorage.getItem('tab-href') == '#web')
-		{
-			jQuery('#myTabTabs li').each(function(index, value){
-				value.removeClass('active');
-			});
-			jQuery(eventpoint).addClass('active');
-			window.localStorage.setItem('tab-href', jQuery(eventpoint).children('a').attr('href'));
-			if (jQuery(eventpoint).children('a').attr('href') == '#web')
-			{
-				jQuery(eventpoint).click();
-			}
-		}
-	}
-	
-	jQuery('#myTabTabs a[href="#web"]').on('shown.bs.tab', function (e) {
-        	if (!Joomla.apps.loaded){
-           		Joomla.apps.initialize();
-        	}
-    	});
+	});
 });
 
 		
-END;
-		$document->addScriptDeclaration($javascript);
+JS;
+		$doc->addScriptDeclaration($javascript);
 	}
 
+	/**
+	 * Internal check to determine if the Hathor admin template is in use
+	 *
+	 * @return  boolean
+	 *
+	 * @since   1.0
+	 * @deprecated  Removed when the plugin is merged to 4.0
+	 */
 	private function isHathor()
 	{
 		if (is_null($this->_hathor))
 		{
-			$app = JFactory::getApplication();
-			$templateName = strtolower($app->getTemplate());
-			if ($templateName == 'hathor')
-			{
-				$this->_hathor = true;
-			}
-			else
-			{
-				$this->_hathor = false;
-			}
+			$this->_hathor = strtolower($this->app->getTemplate()) === 'hathor';
 		}
+
 		return $this->_hathor;
 	}
 
-	private function isRTL() {
-		if (is_null($this->_rtl)) {
-			$document = JFactory::getDocument();
-			$this->_rtl = strtolower($document->direction) == 'rtl' ? 1 : 0;
+	/**
+	 * Internal check to determine if the output is in a RTL direction
+	 *
+	 * @return  integer
+	 *
+	 * @since   1.0
+	 */
+	private function isRTL()
+	{
+		if (is_null($this->rtl))
+		{
+			$this->rtl = strtolower(Factory::getDocument()->getDirection()) === 'rtl' ? 1 : 0;
 		}
-		return $this->_rtl;
+
+		return $this->rtl;
 	}
-	
+
+	/**
+	 * Get the install from URL
+	 *
+	 * @return  string
+	 *
+	 * @since   1.0
+	 */
 	private function getInstallFrom()
 	{
-		if (is_null($this->_installfrom))
+		if ($this->installfrom === null)
 		{
-			$app = JFactory::getApplication();
-			$installfrom = base64_decode($app->input->get('installfrom', '', 'base64'));
+			$installfrom = base64_decode($this->app->input->getBase64('installfrom', ''));
 
 			$field = new SimpleXMLElement('<field></field>');
-			$rule = new JFormRuleUrl;
-			if ($rule->test($field, $installfrom) && preg_match('/\.xml\s*$/', $installfrom)) {
-				jimport('joomla.updater.update');
-				$update = new JUpdate;
+			$rule  = new UrlRule;
+
+			if ($rule->test($field, $installfrom) && preg_match('/\.xml\s*$/', $installfrom))
+			{
+				$update = new Update;
 				$update->loadFromXML($installfrom);
 				$package_url = trim($update->get('downloadurl', false)->_data);
-				if ($package_url) {
+
+				if ($package_url)
+				{
 					$installfrom = $package_url;
 				}
 			}
-			$this->_installfrom = $installfrom;
-		}
-		return $this->_installfrom;
-	}
-	
-	private function getChanges()
-	{
-		$ishathor = $this->isHathor() ? 1 : 0;
-		$installfrom = $this->getInstallFrom();
-		$installfromon = $installfrom ? 1 : 0;
-		$dir = '';
-		if ($this->isRTL()) {
-			$dir = ' dir="ltr"';
+
+			$this->installfrom = $installfrom;
 		}
 
-		if ($ishathor)
-		{
-			JHtml::_('jquery.framework');
-			echo '<div class="clr"></div>';
-?>
-			<fieldset class="uploadform">
-				<legend><?php echo JText::_('COM_INSTALLER_INSTALL_FROM_WEB', true); ?></legend>
-				<div id="jed-container"<?php echo $dir; ?>>
-					<div id="mywebinstaller" style="display:none">
-						<a href="#"><?php echo JText::_('COM_INSTALLER_WEBINSTALLER_LOAD_APPS'); ?></a>
-					</div>
-					<div class="well" id="web-loader" style="display:none">
-						<h2><?php echo JText::_('COM_INSTALLER_WEBINSTALLER_INSTALL_WEB_LOADING'); ?></h2>
-					</div>
-					<div class="alert alert-error" id="web-loader-error" style="display:none">
-						<a class="close" data-dismiss="alert">×</a><?php echo JText::_('COM_INSTALLER_WEBINSTALLER_INSTALL_WEB_LOADING_ERROR'); ?>
-					</div>
-				</div>
-				<fieldset class="uploadform" id="uploadform-web" style="display:none"<?php echo $dir; ?>>
-					<div class="control-group">
-						<strong><?php echo JText::_('COM_INSTALLER_WEBINSTALLER_INSTALL_WEB_CONFIRM'); ?></strong><br />
-						<span id="uploadform-web-name-label"><?php echo JText::_('COM_INSTALLER_WEBINSTALLER_INSTALL_WEB_CONFIRM_NAME'); ?>:</span> <span id="uploadform-web-name"></span><br />
-						<?php echo JText::_('COM_INSTALLER_WEBINSTALLER_INSTALL_WEB_CONFIRM_URL'); ?>: <span id="uploadform-web-url"></span>
-					</div>
-					<div class="form-actions">
-						<input type="button" class="btn btn-primary" value="<?php echo JText::_('COM_INSTALLER_INSTALL_BUTTON'); ?>" onclick="Joomla.submitbutton<?php echo $installfrom != '' ? 4 : 5; ?>()" />
-						<input type="button" class="btn btn-secondary" value="<?php echo JText::_('JCANCEL'); ?>" onclick="Joomla.installfromwebcancel()" />
-					</div>
-				</fieldset>
-			</fieldset>
-<?php
-		}
-		else
-		{
-			echo JHtml::_('bootstrap.addTab', 'myTab', 'web', JText::_('COM_INSTALLER_INSTALL_FROM_WEB', true));
-?>
-				<div id="jed-container" class="tab-pane">
-					<div class="well" id="web-loader">
-						<h2><?php echo JText::_('COM_INSTALLER_WEBINSTALLER_INSTALL_WEB_LOADING'); ?></h2>
-					</div>
-					<div class="alert alert-error" id="web-loader-error" style="display:none">
-						<a class="close" data-dismiss="alert">×</a><?php echo JText::_('COM_INSTALLER_WEBINSTALLER_INSTALL_WEB_LOADING_ERROR'); ?>
-					</div>
-				</div>
-	
-				<fieldset class="uploadform" id="uploadform-web" style="display:none"<?php echo $dir; ?>>
-					<div class="control-group">
-						<strong><?php echo JText::_('COM_INSTALLER_WEBINSTALLER_INSTALL_WEB_CONFIRM'); ?></strong><br />
-						<span id="uploadform-web-name-label"><?php echo JText::_('COM_INSTALLER_WEBINSTALLER_INSTALL_WEB_CONFIRM_NAME'); ?>:</span> <span id="uploadform-web-name"></span><br />
-						<?php echo JText::_('COM_INSTALLER_WEBINSTALLER_INSTALL_WEB_CONFIRM_URL'); ?>: <span id="uploadform-web-url"></span>
-					</div>
-					<div class="form-actions">
-						<input type="button" class="btn btn-primary" value="<?php echo JText::_('COM_INSTALLER_INSTALL_BUTTON'); ?>" onclick="Joomla.submitbutton<?php echo $installfrom != '' ? 4 : 5; ?>()" />
-						<input type="button" class="btn btn-secondary" value="<?php echo JText::_('JCANCEL'); ?>" onclick="Joomla.installfromwebcancel()" />
-					</div>
-				</fieldset>
-
-<?php
-			echo JHtml::_('bootstrap.endTab');
-		}
-
+		return $this->installfrom;
 	}
 }
