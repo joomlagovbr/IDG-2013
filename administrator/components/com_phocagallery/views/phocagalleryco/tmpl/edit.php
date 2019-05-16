@@ -24,7 +24,7 @@ $OPT		= strtoupper($option);
 <script type="text/javascript">
 	Joomla.submitbutton = function(task)
 	{
-		if (task == '<?php echo $task ?>.cancel' || document.formvalidator.isValid(document.id('adminForm'))) {
+		if (task == '<?php echo $task ?>.cancel' || document.formvalidator.isValid(document.getElementById('adminForm'))) {
 			<?php echo $this->form->getField('comment')->save(); ?>
 			Joomla.submitform(task, document.getElementById('adminForm'));
 		}
@@ -43,14 +43,14 @@ echo $r->navigation($tabs);
 
 echo '<div class="tab-content">'. "\n";
 
-echo '<div class="tab-pane active" id="general">'."\n"; 
+echo '<div class="tab-pane active" id="general">'."\n";
 $formArray = array ('title', 'usertitle', 'cattitle', 'ordering');
 echo $r->group($this->form, $formArray);
 $formArray = array('comment');
 echo $r->group($this->form, $formArray, 1);
 echo '</div>'. "\n";
 
-echo '<div class="tab-pane" id="publishing">'."\n"; 
+echo '<div class="tab-pane" id="publishing">'."\n";
 foreach($this->form->getFieldset('publish') as $field) {
 	echo '<div class="control-group">';
 	if (!$field->hidden) {
@@ -67,4 +67,4 @@ echo '<div class="span2"></div>';//end span2
 echo $r->formInputs();
 echo $r->endForm();
 ?>
-	
+

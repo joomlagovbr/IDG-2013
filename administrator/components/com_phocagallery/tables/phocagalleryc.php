@@ -16,7 +16,7 @@ class TablePhocaGalleryc extends JTable {
 	public function __construct(& $db) {
 		parent::__construct('#__phocagallery_categories', 'id', $db);
 	}
-	
+
 	public function bind($array, $ignore = '')
 	{
 		if (isset($array['params']) && is_array($array['params'])) {
@@ -32,7 +32,7 @@ class TablePhocaGalleryc extends JTable {
 		}
 		return parent::bind($array, $ignore);
 	}
-	
+
 	function check()
 	{
 		if (empty($this->title)) {
@@ -49,7 +49,7 @@ class TablePhocaGalleryc extends JTable {
 		if (empty($this->alias)) {
 			$this->alias = $this->title;
 		}
-		$this->alias = JApplication::stringURLSafe($this->alias);
+		$this->alias = \JApplicationHelper::stringURLSafe($this->alias);
 		if (trim(str_replace('-','',$this->alias)) == '') {
 			$this->alias = JFactory::getDate()->format("Y-m-d-H-i-s");
 		}
@@ -87,14 +87,14 @@ class TablePhocaGalleryc extends JTable {
 
 		return true;
 	}
-	
+
 	public function approve($pks = null, $state = 1, $userId = 0)
 	{
 		// Initialise variables.
 		$k = $this->_tbl_key;
 
 		// Sanitize input.
-		JArrayHelper::toInteger($pks);
+		\Joomla\Utilities\ArrayHelper::toInteger($pks);
 		$userId = (int) $userId;
 		$state  = (int) $state;
 
@@ -155,7 +155,7 @@ class TablePhocaGalleryc extends JTable {
 		$this->setError('');
 		return true;
 	}
-	
-	
+
+
 }
 ?>

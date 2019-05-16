@@ -1,11 +1,11 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         8.0.3
+ * @version         9.2.0
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -24,11 +24,11 @@ if (is_file(JPATH_LIBRARIES . '/regularlabs/autoload.php'))
 	require_once JPATH_LIBRARIES . '/regularlabs/autoload.php';
 }
 
-use JFactory;
-use JInstaller;
-use JPlugin;
-use JPluginHelper;
-use JText;
+use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\Installer\Installer as JInstaller;
+use Joomla\CMS\Language\Text as JText;
+use Joomla\CMS\Plugin\CMSPlugin as JPlugin;
+use Joomla\CMS\Plugin\PluginHelper as JPluginHelper;
 use ReflectionMethod;
 use RegularLabs\Library\Document as RL_Document;
 use RegularLabs\Library\Language as RL_Language;
@@ -92,6 +92,14 @@ class Plugin extends JPlugin
 				continue;
 			}
 			$arguments[] = $caller['args'][$count];
+		}
+
+		if ($event == 'onContentPrepare'
+			&& empty($arguments[1]->id)
+			&& in_array($arguments[0], ['com_k2.item', 'com_k2.itemlist'])
+		)
+		{
+			return false;
 		}
 
 		return call_user_func_array([$this->_helper, $event], $arguments);
@@ -332,8 +340,8 @@ class Plugin extends JPlugin
 			return;
 		}
 
-		if (version_compare($plugin['version'], '18.7.10792', '<')
-			|| version_compare($library['version'], '18.7.10792', '<'))
+		if (version_compare($plugin['version'], '19.5.762', '<')
+			|| version_compare($library['version'], '19.5.762', '<'))
 		{
 			define('REGULAR_LABS_LIBRARY_INSTALLED', 'outdated');
 

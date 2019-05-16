@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*
  * @package Joomla
  * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
@@ -14,7 +14,7 @@ JHTML::_('behavior.tooltip'); ?>
 <script type="text/javascript">
 	Joomla.submitbutton = function(task)
 	{
-		if (task == 'phocagalleryt.cancel' || document.formvalidator.isValid(document.id('phocagalleryt-form'))) {
+		if (task == 'phocagalleryt.cancel' || document.formvalidator.isValid(document.getElementById('phocagalleryt-form'))) {
 			Joomla.submitform(task, document.getElementById('phocagalleryt-form'));
 		}
 		else {
@@ -25,10 +25,10 @@ JHTML::_('behavior.tooltip'); ?>
 
 <form enctype="multipart/form-data" action="index.php" method="post" name="adminForm" id="phocagalleryt-form" class="form-validate">
 
-<?php 
+<?php
 if ($this->require_ftp) {
 	echo PhocaGalleryFileUpload::renderFTPaccess();
-} 
+}
 ?>
 <table class="adminform" border="0">
 <?php if ($this->theme_name != '') { ?>
@@ -46,7 +46,7 @@ if ($this->require_ftp) {
 		<td width="5"><input type="checkbox" name="theme_component" value=""  /></td>
 		<td colspan="2"><?php echo JText::_( 'COM_PHOCAGALLERY_APPLY_COMPONENT' ); ?></td>
 	</tr>
-	
+
 	<tr>
 		<td width="5"><input type="checkbox" name="theme_categories" value="" /></td>
 		<td colspan="2"><?php echo JText::_( 'COM_PHOCAGALLERY_APPLY_CATEGORIES' ); ?></td>
@@ -69,10 +69,10 @@ if ($this->require_ftp) {
 			<label for="install_package"><?php echo JText::_( 'COM_PHOCAGALLERY_UPLOAD_FILE' ); ?>:</label>
 		</td>
 		<td>
-			
+
 			<input type="file" id="sfile-upload" class="input" name="Filedata" size="57" />
 			<?php /* <input class="button" type="button" value="<?php echo JText::_( 'COM_PHOCAGALLERY_UPLOAD_FILE' ); ?> &amp; <?php echo JText::_( 'COM_PHOCAGALLERY_INSTALL' ); ?>" onclick="submitbutton()" /> */ ?>
-			
+
 			<button onclick="submitbutton()" class="btn btn-primary" id="upload-submit"><i class="icon-upload icon-white"></i> <?php echo JText::_( 'COM_PHOCAGALLERY_UPLOAD_FILE' ); ?> &amp; <?php echo JText::_( 'COM_PHOCAGALLERY_INSTALL' ); ?></button>
 
 		</td>
@@ -82,7 +82,7 @@ if ($this->require_ftp) {
 	</tr>
 	</table>
 
-	
+
 <input type="hidden" name="type" value="" />
 <input type="hidden" name="option" value="com_phocagallery" />
 <input type="hidden" name="task" value="phocagalleryt.themeinstall" />

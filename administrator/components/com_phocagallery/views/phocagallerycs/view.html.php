@@ -20,19 +20,19 @@ class PhocaGalleryCpViewPhocaGalleryCs extends JViewLegacy
 	//protected $_context 	= 'com_phocagallery.phocagalleryc';
 
 	function display($tpl = null) {
-	
-	
+
+
 		$model 				= $this->getModel();
 		$this->items		= $model->getItems();
 		$this->pagination	= $model->getPagination();
 		$this->state		= $model->getState();
-		
-		
+
+
 		// Preprocess the list of items to find ordering divisions.
 		foreach ($this->items as &$item) {
 			$this->ordering[$item->parent_id][] = $item->id;
 		}
-		
+
 		// if search, don't do a tree, only display the searched items
 		$this->t['search'] = $this->state->get('filter.search');
 		/*
@@ -41,28 +41,28 @@ class PhocaGalleryCpViewPhocaGalleryCs extends JViewLegacy
 		 * and will set displaying of categories for current pagination
 		 * E.g. pagination is limitstart 5, limit 5 - so only categories from 5 to 10 will be displayed
 		 */
-		 
+
 		 // the same for max levels
 		$this->t['level'] = $this->state->get('filter.level');
-		
+
 		if (!empty($this->items) && !$this->t['search']) {
 			$text = ''; // text is tree name e.g. Category >> Subcategory
 			$tree = array();
-			
+
 			// Filter max levels
 			if (isset($this->t['level']) && $this->t['level'] > 0) {
 				$maxLevel = (int)$this->t['level'] + 1;
 			} else {
 				$maxLevel = false;
 			}
-			
+
 			$this->items = $this->processTree($this->items, $tree, 0, $text, -1, 0, '', $maxLevel);
-			
+
 			// Re count the pagination
 			$countTotal 		= count($this->items);
 			$model->setTotal($countTotal);
 			$this->pagination	= $model->getPagination();
-			
+
 			/*
 			// PHOCAEDIT
 			// Because of search, we load more items - e.g. if the searched string is in category which is on level 3
@@ -70,37 +70,37 @@ class PhocaGalleryCpViewPhocaGalleryCs extends JViewLegacy
 			// Now we need to limit if, it is a paradox:
 			// a) wee need to get parent categories - but only for creating tree
 			// b) but we don't want to display them - so in model we load it moreover but now we need to remove again + we need to limit pagination
-			
+
 			$app = JFactory::getApplication('administrator');
 			$search = $app->getUserStateFromRequest('com_phocagallery.phocagalleryimgs.filter.search', 'filter_search');
-			
+
 			if ($search != '') {
 				foreach ($this->items as $k => $v) {
 
 					$pos = strpos(strtolower($v->title_self), strtolower($search));
 					if ($pos !== false) {
-						
+
 					} else {
 						unset($this->items[$k]);
 					}
 				}
 			}
-			
+
 			// Correct the pagination
 			$c = count($this->items);
 			$this->pagination = new JPagination($c, $this->pagination->limitstart, $this->pagination->limit);
 			// END PHOCAEDIT */
 		}
-		
-		
+
+
 		//$mainframe	= JFactory::getApplication();
 		//$document	= JFactory::getDocument();
-		//$uri		= JFactory::getURI();
+		//$uri		= \Joomla\CMS\Uri\Uri::getInstance();
 
-		
-		
+
+
 		$this->tmpl['notapproved'] 	= $this->get( 'NotApprovedCategory' );
-	
+
 
 		JHTML::stylesheet('media/com_phocagallery/css/administrator/phocagallery.css' );
 		$document	= JFactory::getDocument();
@@ -115,16 +115,16 @@ class PhocaGalleryCpViewPhocaGalleryCs extends JViewLegacy
 		$this->addToolbar();
 		parent::display($tpl);
 	}
-	
+
 	protected function addToolbar() {
-		
+
 		require_once JPATH_COMPONENT.'/helpers/phocagallerycs.php';
 
 		$state	= $this->get('State');
 		$canDo	= PhocaGalleryCsHelper::getActions($state->get('filter.category_id'));
 		$user  = JFactory::getUser();
 		$bar = JToolbar::getInstance('toolbar');
-		
+
 		JToolbarHelper ::title( JText::_( 'COM_PHOCAGALLERY_CATEGORIES' ), 'folder' );
 		if ($canDo->get('core.create')) {
 			JToolbarHelper ::addNew('phocagalleryc.add','JToolbar_NEW');
@@ -148,7 +148,7 @@ class PhocaGalleryCpViewPhocaGalleryCs extends JViewLegacy
 		// Add a batch button
 		if ($user->authorise('core.edit'))
 		{
-			JHtml::_('bootstrap.modal', 'collapseModal');
+			JHtml::_('bootstrap.renderModal', 'collapseModal');
 			$title = JText::_('JToolbar_BATCH');
 			$dhtml = "<button data-toggle=\"modal\" data-target=\"#collapseModal\" class=\"btn btn-small\">
 						<i class=\"icon-checkbox-partial\" title=\"$title\"></i>
@@ -158,45 +158,45 @@ class PhocaGalleryCpViewPhocaGalleryCs extends JViewLegacy
 		JToolbarHelper ::divider();
 		JToolbarHelper ::help( 'screen.phocagallery', true );
 	}
-	
-	
+
+
 	protected function processTree( $data, $tree, $id = 0, $text='', $currentId, $level, $parentsTreeString = '', $maxLevel = false) {
-	
+
 
 		$countItemsInCat 	= 0;// Ordering
 		$level 				= $level + 1;
 		$parentsTreeString	= $id . ' '. $parentsTreeString;
-		
-		// Limit the level of tree		
-		if (!$maxLevel || ($maxLevel && $level < $maxLevel)) {
-			foreach ($data as $key) {	
-				$show_text 	= $text . $key->title;
-				
-				static $iCT = 0;// All displayed items
-				
-				if ($key->parent_id == $id && $currentId != $id && $currentId != $key->id ) {	
 
-					
+		// Limit the level of tree
+		if (!$maxLevel || ($maxLevel && $level < $maxLevel)) {
+			foreach ($data as $key) {
+				$show_text 	= $text . $key->title;
+
+				static $iCT = 0;// All displayed items
+
+				if ($key->parent_id == $id && $currentId != $id && $currentId != $key->id ) {
+
+
 					$tree[$iCT] 					= new JObject();
-					
-								
-					
+
+
+
 					// Ordering MUST be solved here
 					if ($countItemsInCat > 0) {
 						$tree[$iCT]->orderup				= 1;
 					} else {
 						$tree[$iCT]->orderup 				= 0;
 					}
-					
+
 					if ($countItemsInCat < ($key->countid - 1)) {
 						$tree[$iCT]->orderdown 				= 1;
 					} else {
 						$tree[$iCT]->orderdown 				= 0;
 					}
-					
-					$tree[$iCT]->level				= $level;		
+
+					$tree[$iCT]->level				= $level;
 					$tree[$iCT]->parentstree		= $parentsTreeString;
-					
+
 					$tree[$iCT]->id 				= $key->id;
 					$tree[$iCT]->title 				= $show_text;
 					$tree[$iCT]->title_self 		= $key->title;
@@ -241,17 +241,17 @@ class PhocaGalleryCpViewPhocaGalleryCs extends JViewLegacy
 
 
 					$iCT++;
-					
+
 					$tree = $this->processTree($data, $tree, $key->id, $show_text . " - ", $currentId, $level, $parentsTreeString, $maxLevel);
-					
+
 					$countItemsInCat++;
 				}
-				
+
 			}
 		}
 		return($tree);
 	}
-	
+
 	protected function getSortFields() {
 		return array(
 			'a.ordering'	=> JText::_('JGRID_HEADING_ORDERING'),

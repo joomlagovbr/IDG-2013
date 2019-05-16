@@ -1,9 +1,9 @@
 <?php
 /**
- * @version    2.8.x
+ * @version    2.9.x
  * @package    K2
- * @author     JoomlaWorks http://www.joomlaworks.net
- * @copyright  Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @author     JoomlaWorks https://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2018 JoomlaWorks Ltd. All rights reserved.
  * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -136,9 +136,9 @@ K2HelperUtilities::setDefaultImage($this->item, 'itemlist', $this->params);
 	  <div class="catItemExtraFields">
 	  	<h4><?php echo JText::_('K2_ADDITIONAL_INFO'); ?></h4>
 	  	<ul>
-			<?php foreach ($this->item->extra_fields as $key=>$extraField): ?>
+			<?php foreach ($this->item->extra_fields as $key => $extraField): ?>
 			<?php if($extraField->value != ''): ?>
-			<li class="<?php echo ($key%2) ? "odd" : "even"; ?> type<?php echo ucfirst($extraField->type); ?> group<?php echo $extraField->group; ?>">
+			<li class="<?php echo ($key%2) ? "odd" : "even"; ?> type<?php echo ucfirst($extraField->type); ?> group<?php echo $extraField->group; ?> alias<?php echo ucfirst($extraField->alias); ?>">
 				<?php if($extraField->type == 'header'): ?>
 				<h4 class="catItemExtraFieldsHeader"><?php echo $extraField->name; ?></h4>
 				<?php else: ?>

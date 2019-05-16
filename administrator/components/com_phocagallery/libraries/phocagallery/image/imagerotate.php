@@ -108,6 +108,20 @@ class PhocaGalleryImageRotate
 						return false;
 					}
 					break;
+					
+				case IMAGETYPE_WEBP :
+					if (!function_exists('ImageCreateFromWEBP')) {
+						$errorMsg = 'ErrorNoWEBPFunction';
+						return false;
+					}
+					//$image1 = ImageCreateFromGIF($fileIn);
+					try {
+						$image1 = ImageCreateFromWEBP($fileIn);
+					} catch(\Exception $exception) {
+						$errorMsg = 'ErrorWEBPFunction';
+						return false;
+					}
+					break;
 	            case IMAGETYPE_WBMP:
 					if (!function_exists('ImageCreateFromWBMP')) {
 						$errorMsg = 'ErrorNoWBMPFunction';
@@ -141,6 +155,7 @@ class PhocaGalleryImageRotate
 				switch($type)
 				{
 					case IMAGETYPE_PNG:
+					case IMAGETYPE_WEBP:
 					//	imagealphablending($image1, false);
 					//	imagesavealpha($image1, true);
 						if(!function_exists("imagecolorallocate")) {
@@ -161,9 +176,15 @@ class PhocaGalleryImageRotate
 						} else {
 							$image2 	= imagerotate($image1, $angle, $colBlack);
 						}
-						imagefill($image2, 0, 0, $colBlack);
-						imagecolortransparent($image2, $colBlack);
+						//imagefill($image2, 0, 0, $colBlack);
+						//imagecolortransparent($image2, $colBlack);
+						
+						imagealphablending($image2, false);
+						imagesavealpha($image2, true);
 					break;
+					
+					
+					
 					Default:
 						if(!function_exists("imagerotate")) {
 							$image2 	= PhocaGalleryImageRotate::imageRotate($image1, $angle, 0);
@@ -197,6 +218,7 @@ class PhocaGalleryImageRotate
 					switch($type)
 					{
 						case IMAGETYPE_PNG:
+						case IMAGETYPE_WEBP:
 						//	imagealphablending($image2, true);
 						//	imagesavealpha($image2, true);
 							if(!function_exists("imagecolorallocate")) {
@@ -305,7 +327,35 @@ class PhocaGalleryImageRotate
 								return false;
 							}
 						}
-					break;		
+					break;
+
+					case IMAGETYPE_WEBP :
+						if (!function_exists('ImageWEBP')) {
+							$errorMsg = 'ErrorNoWEBPFunction';
+							return false;
+						}
+						
+						if ($jfile_thumbs == 1) {
+							ob_start();
+							if (!@imagewebp($image3, NULL)) {
+								ob_end_clean();
+								$errorMsg = 'ErrorWriteFile';
+								return false;
+							}
+							$imgWEBPToWrite = ob_get_contents();
+							ob_end_clean();
+							
+							if(!JFile::write( $fileOut, $imgWEBPToWrite)) {
+								$errorMsg = 'ErrorWriteFile';
+								return false;
+							}
+						} else {
+							if (!@imagewebp($image3, $fileOut)) {
+								$errorMsg = 'ErrorWriteFile';
+								return false;
+							}
+						}
+					break;					
 						
 						
 		            Default:
@@ -315,9 +365,10 @@ class PhocaGalleryImageRotate
 				}
 				
 				// free memory
-				ImageDestroy($image1);// Original
-	            ImageDestroy($image2);// Rotated
-				ImageDestroy($image3);// Resized
+				if (isset($image1)) {ImageDestroy($image1);}// Original
+				if (isset($image2)) {ImageDestroy($image2);}// Original
+				if (isset($image3)) {@ImageDestroy($image3);}// Resized
+				
 	            
 				if ($memoryLimitChanged == 1) {
 					$memoryString = $memory . 'M';

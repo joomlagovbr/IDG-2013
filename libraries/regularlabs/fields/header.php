@@ -1,15 +1,20 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.7.10792
+ * @version         19.5.762
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
 defined('_JEXEC') or die;
+
+use Joomla\CMS\Application\ApplicationHelper as JApplicationHelper;
+use Joomla\CMS\Language\Text as JText;
+use RegularLabs\Library\RegEx as RL_RegEx;
+use RegularLabs\Library\StringHelper as RL_String;
 
 if ( ! is_file(JPATH_LIBRARIES . '/regularlabs/autoload.php'))
 {
@@ -17,10 +22,6 @@ if ( ! is_file(JPATH_LIBRARIES . '/regularlabs/autoload.php'))
 }
 
 require_once JPATH_LIBRARIES . '/regularlabs/autoload.php';
-
-use RegularLabs\Library\Document as RL_Document;
-use RegularLabs\Library\RegEx as RL_RegEx;
-use RegularLabs\Library\StringHelper as RL_String;
 
 class JFormFieldRL_Header extends \RegularLabs\Library\Field
 {
@@ -33,10 +34,6 @@ class JFormFieldRL_Header extends \RegularLabs\Library\Field
 
 	protected function getInput()
 	{
-		$this->params = $this->element->attributes();
-
-		RL_Document::stylesheet('regularlabs/style.min.css');
-
 		$title       = $this->get('label');
 		$description = $this->get('description');
 		$xml         = $this->get('xml');
@@ -44,14 +41,7 @@ class JFormFieldRL_Header extends \RegularLabs\Library\Field
 
 		if ($description)
 		{
-			// variables
-			$v1 = $this->get('var1');
-			$v2 = $this->get('var2');
-			$v3 = $this->get('var3');
-			$v4 = $this->get('var4');
-			$v5 = $this->get('var5');
-
-			$description = RL_String::html_entity_decoder(trim(JText::sprintf($description, $v1, $v2, $v3, $v4, $v5)));
+			$description = RL_String::html_entity_decoder(trim(JText::_($description)));
 		}
 
 		if ($title)
@@ -128,13 +118,15 @@ class JFormFieldRL_Header extends \RegularLabs\Library\Field
 			}
 			$html[] = '<h4>' . RL_String::html_entity_decoder($title) . '</h4>';
 		}
+
 		if ($description)
 		{
 			$html[] = $description;
 		}
+
 		if ($url)
 		{
-			$html[] = '<p><a href="' . $url . '" target="_blank" title="' . JText::_('RL_MORE_INFO') . '">' . JText::_('RL_MORE_INFO') . '...</a></p>';
+			$html[] = '<p><a href="' . $url . '" class="btn btn-default" target="_blank" title="' . JText::_('RL_MORE_INFO') . '">' . JText::_('RL_MORE_INFO') . ' >></a></p>';
 		}
 
 		return '</div><div>' . implode('', $html);

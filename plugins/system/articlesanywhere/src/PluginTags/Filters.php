@@ -1,11 +1,11 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         8.0.3
+ * @version         9.2.0
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -13,7 +13,7 @@ namespace RegularLabs\Plugin\System\ArticlesAnywhere\PluginTags;
 
 defined('_JEXEC') or die;
 
-use JFactory;
+use Joomla\CMS\Factory as JFactory;
 use RegularLabs\Library\ArrayHelper as RL_Array;
 use RegularLabs\Library\PluginTag as RL_PluginTag;
 use RegularLabs\Library\RegEx as RL_RegEx;
@@ -39,6 +39,8 @@ class Filters
 
 	public function get(&$attributes)
 	{
+		$params = Params::get();
+
 		$filters = [];
 
 		if (isset($attributes->items))
@@ -56,12 +58,15 @@ class Filters
 			unset($attributes->items);
 		}
 
-			if (empty($filters['items']) && $id = CurrentArticle::get('id', $this->component))
-			{
-				$filters['items'] = [$id];
-			}
+		if (empty($filters['items'])
+			&& $this->plugin_tag->getTagType() != Params::get()->articles_tag
+			&& $id = CurrentArticle::get('id', $this->component))
+		{
+			$filters['items'] = [$id];
+		}
 
-			return $filters;
+
+		return $filters;
 	}
 
 	protected function groupNotIds($filters)
@@ -129,8 +134,8 @@ class Filters
 			'empty',
 		];
 
-		$filters['fields']        = [];
-		$filters['custom_fields'] = [];
+		$filter_fields        = [];
+		$filter_custom_fields = [];
 
 		foreach ($attributes as $key => $value)
 		{
@@ -142,7 +147,7 @@ class Filters
 			if (in_array($key, $fields))
 			{
 				$this->addFilter(
-					$filters['fields'],
+					$filter_fields,
 					$key,
 					$this->fields->getFieldValue($key, $value)
 				);
@@ -150,18 +155,25 @@ class Filters
 				continue;
 			}
 
-			if (in_array($key, $custom_fields))
+			if ($field = CustomFields::getByName($custom_fields, $key))
 			{
-				$field_id = array_search($key, $custom_fields);
-
 				$this->addFilter(
-					$filters['custom_fields'],
-					$field_id,
+					$filter_custom_fields,
+					$field->id,
 					$this->custom_fields->getFieldValue($key, $value)
 				);
 
 				continue;
 			}
+		}
+
+		if ( ! empty($filter_fields))
+		{
+			$filters['fields'] = $filter_fields;
+		}
+		if ( ! empty($filter_custom_fields))
+		{
+			$filters['custom_fields'] = $filter_custom_fields;
 		}
 	}
 
@@ -190,8 +202,13 @@ class Filters
 
 			$tag_value = RL_RegEx::replace('^!NOT!', '', $tag_value);
 
-			if ($tag_value === 'current'
-				|| ($tag_value != $id && in_array($tag_value, $values_equaling_current, true)))
+			if (
+				! empty($value_if_is_current)
+				&& (
+					$tag_value === 'current'
+					|| ($tag_value != $id && in_array($tag_value, $values_equaling_current, true))
+				)
+			)
 			{
 				$this->addValues($value_if_is_current, $values, $negative);
 
@@ -199,17 +216,27 @@ class Filters
 			}
 
 			// It's a current article value [this:id], [this:title], etc
-			if (RL_RegEx::match('^this:([a-z_\-0-9]+)$', $tag_value, $match))
+			if (RL_RegEx::match('^this:([a-z0-9_\-]+)$', $tag_value, $match))
 			{
 				$this->addValues(CurrentArticle::get($match[1]), $values, $negative);
 
 				continue;
 			}
 
-			// It's a a user value [user:id], [user:name]
-			if (RL_RegEx::match('^user:([a-z_\-0-9]+)$', $tag_value, $match))
+			// It's a user value [user:id], [user:name], etc
+			if (RL_RegEx::match('^user:([a-z0-9_\-]+)$', $tag_value, $match))
 			{
 				$this->addValues(JFactory::getUser()->get($match[1]), $values, $negative);
+
+				continue;
+			}
+
+			// It's an input value [input:id], [input:name:default], etc
+			if (RL_RegEx::match('^input:([^"]+)$', $tag_value, $match))
+			{
+				list($value, $default) = explode(':', $match[1] . ':none');
+
+				$this->addValues(JFactory::getApplication()->input->get($value, $default), $values, $negative);
 
 				continue;
 			}
@@ -238,10 +265,10 @@ class Filters
 	{
 		if ( ! is_array($values))
 		{
-			$values = RL_Array::toArray($values);
+			$values = [$values];
 		}
 
-		RL_Array::trim($values);
+		$values = RL_Array::trim($values);
 
 		foreach ($values as $value)
 		{

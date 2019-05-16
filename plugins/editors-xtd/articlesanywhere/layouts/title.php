@@ -1,15 +1,18 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         8.0.3
+ * @version         9.2.0
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
 defined('_JEXEC') or die;
+
+use Joomla\CMS\Language\Text as JText;
+
 ?>
 <div class="well">
 	<div class="control-group">
@@ -48,6 +51,24 @@ defined('_JEXEC') or die;
 						</option>
 					<?php endfor; ?>
 				</select>
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label id="data_title_enable-lbl" for="data_title_enable" class="control-label"
+			       rel="tooltip" title="<?php echo JText::_('AA_TITLE_ADD_LINK_TAG_DESC'); ?>">
+				<?php echo JText::_('AA_TITLE_ADD_LINK_TAG'); ?>
+			</label>
+
+			<div class="controls">
+				<fieldset id="data_title_add_link" class="radio btn-group">
+					<input type="radio" id="data_title_add_link0" name="data_title_add_link"
+					       value="0" <?php echo ! $params->data_title_add_link ? 'checked="checked"' : ''; ?>>
+					<label for="data_title_add_link0"><?php echo JText::_('JNO'); ?></label>
+					<input type="radio" id="data_title_add_link1" name="data_title_add_link"
+					       value="1" <?php echo $params->data_title_add_link ? 'checked="checked"' : ''; ?>>
+					<label for="data_title_add_link1"><?php echo JText::_('JYES'); ?></label>
+				</fieldset>
 			</div>
 		</div>
 	</div>

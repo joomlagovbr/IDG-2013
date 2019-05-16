@@ -63,6 +63,15 @@ class JFormFieldPhocaSelectMap extends JFormField
 		//$script[] = '		SqueezeBox.close();';
 		//$script[] = '		jQuery(\'#'.$idA.'\').modal(\'toggle\');';
 		$script[] = '	}';
+		
+		// Hide Info box on start
+		if ($this->id == 'jform_latitude') {
+			$script[] = ' jQuery(document).ready(function() {';
+			$script[] = '    jQuery(\'#'.$idA.'\').on(\'shown.bs.modal\', function () {';
+			$script[] = '	    jQuery(\'#phmPopupInfo\').html(\'\');';
+			$script[] = '	  })';
+			$script[] = ' })';
+		}
 
 		// Add the script to the document head.
 		JFactory::getDocument()->addScriptDeclaration(implode("\n", $script));
@@ -98,7 +107,7 @@ class JFormFieldPhocaSelectMap extends JFormField
 					'height' => '470px',
 					'modalWidth' => '50',
 					'bodyHeight' => '70',
-					'footer' => '<button type="button" class="btn" data-dismiss="modal" aria-hidden="true">'
+					'footer' => '<div id="phmPopupInfo" class="ph-info-modal"></div><button type="button" class="btn" data-dismiss="modal" aria-hidden="true">'
 						. JText::_('COM_PHOCAGALLERY_CLOSE') . '</button>'
 				)
 			);

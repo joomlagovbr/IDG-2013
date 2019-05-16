@@ -1,24 +1,24 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         8.0.3
+ * @version         9.2.0
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
 namespace RegularLabs\Plugin\System\ArticlesAnywhere\Collection\Fields;
 
-use JFactory;
+defined('_JEXEC') or die;
+
+use Joomla\CMS\Factory as JFactory;
 use RegularLabs\Library\ArrayHelper as RL_Array;
 use RegularLabs\Library\RegEx as RL_RegEx;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Collection\CollectionObject;
 use RegularLabs\Plugin\System\ArticlesAnywhere\CurrentArticle;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Params;
-
-defined('_JEXEC') or die;
 
 class Fields extends CollectionObject implements FieldInterface
 {
@@ -61,15 +61,24 @@ class Fields extends CollectionObject implements FieldInterface
 		}
 
 		// It's a current article value [this:id], [this:title], etc
-		if (RL_RegEx::match('^this:([a-z_\-0-9]+)$', $value, $match))
+		if (RL_RegEx::match('^this:([a-z0-9_\-]+)$', $value, $match))
 		{
 			return CurrentArticle::get($match[1]);
 		}
 
-		// It's a a user value [user:id], [user:name]
-		if (RL_RegEx::match('^user:([a-z_\-0-9]+)$', $value, $match))
+		// It's a a user value [user:id], [user:name], etc
+		if (RL_RegEx::match('^user:([a-z0-9_\-]+)$', $value, $match))
 		{
+
 			return JFactory::getUser()->get($match[1]);
+		}
+
+		// It's an input value [input:id], [input:name:default], etc
+		if (RL_RegEx::match('^input:([^"]+)$', $value, $match))
+		{
+			list($value, $default) = explode(':', $match[1] . ':none');
+
+			return JFactory::getApplication()->input->get($value, $default);
 		}
 
 		return $this->getSimpleValue($value, $current_value);

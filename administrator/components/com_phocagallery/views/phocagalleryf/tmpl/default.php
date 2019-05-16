@@ -11,14 +11,14 @@
 defined('_JEXEC') or die('Restricted access');
 
 $currentFolder = '';
-if (isset($this->state->folder) && $this->state->folder != '') {
- $currentFolder = $this->state->folder;
+if (isset($this->t['state']->folder) && $this->t['state']->folder != '') {
+ $currentFolder = $this->t['state']->folder;
 }
 
 echo $this->loadTemplate('up');
-if (count($this->folders) > 0) { ?>
+if (count($this->t['folders']) > 0) { ?>
 <div>
-		<?php for ($i=0,$n=count($this->folders); $i<$n; $i++) :
+		<?php for ($i=0,$n=count($this->t['folders']); $i<$n; $i++) :
 			$this->setFolder($i);
 			echo $this->loadTemplate('folder');
 		endfor; ?>
@@ -34,7 +34,7 @@ if (count($this->folders) > 0) { ?>
 <?php
 }
 echo '<div style="clear:both"></div>';
-echo PhocaGalleryFileUpload::renderCreateFolder($this->session->getName(), $this->session->getId(), $currentFolder, 'phocagalleryf', 'field='.$this->field);
+echo PhocaGalleryFileUpload::renderCreateFolder($this->t['session']->getName(), $this->t['session']->getId(), $currentFolder, 'phocagalleryf', 'field='.$this->field);
 ?>
 
 

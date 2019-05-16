@@ -12,17 +12,17 @@ phocagalleryimport('phocagallery.comment.comment');
 phocagalleryimport('phocagallery.comment.commentimage');
 class PhocaGalleryControllerComment extends PhocaGalleryController
 {
-	
+
 	function display($cachable = false, $urlparams = false) {
-	
+
 		if ( ! JFactory::getApplication()->input->get('view') )  {
 			JFactory::getApplication()->input->set('view', 'comment' );
 		}
 		parent::display($cachable, $urlparams);
     }
-	
+
 	function comment() {
-	
+
 		JSession::checkToken() or jexit( 'Invalid Token' );
 		phocagalleryimport('phocagallery.comment.comment');
 		phocagalleryimport('phocagallery.comment.commentimage');
@@ -44,33 +44,33 @@ class PhocaGalleryControllerComment extends PhocaGalleryController
 		$displayCommentNoPopup	= $params->get( 'display_comment_nopup', 0);
 		// Maximum of character, they will be saved in database
 		$post['comment']	= substr($post['comment'], 0, (int)$maxCommentChar);
-		
+
 		if ($detailWindow == 7 || $displayCommentNoPopup == 1) {
 			$tmplCom = '';
 		} else {
 			$tmplCom = '&tmpl=component';
 		}
-		
+
 		// Close Tags
 		$post['comment'] = PhocaGalleryComment::closeTags($post['comment'], '[u]', '[/u]');
 		$post['comment'] = PhocaGalleryComment::closeTags($post['comment'], '[i]', '[/i]');
 		$post['comment'] = PhocaGalleryComment::closeTags($post['comment'], '[b]', '[/b]');
-		
-		
-		
+
+
+
 		$post['imgid'] 	= (int)$id;
 		$post['userid']	= $user->id;
-		
+
 		$catidAlias 	= $catid;
 		$imgidAlias 	= $id;
 		if ($view != 'comment') {
 			$this->setRedirect( JRoute::_('index.php?option=com_phocagallery', false) );
 		}
-		
+
 		$model = $this->getModel('comment');
-		
+
 		$checkUserComment	= PhocaGalleryCommentImage::checkUserComment( $post['imgid'], $post['userid'] );
-		
+
 		// User has already submitted a comment
 		if ($checkUserComment) {
 			$msg = JText::_('COM_PHOCAGALLERY_COMMENT_ALREADY_SUBMITTED');
@@ -94,10 +94,10 @@ class PhocaGalleryControllerComment extends PhocaGalleryController
 					$msg = JText::_('COM_PHOCAGALLERY_SUCCESS_COMMENT_SUBMIT');
 					// Features by Bernard Gilly - alphaplug.com
 					// load external plugins
-					$dispatcher = JDispatcher::getInstance();
+					//$dispatcher = JDispatcher::getInstance();
 					JPluginHelper::importPlugin('phocagallery');
-					$results = $dispatcher->trigger( 'onCommentImage', array($id, $catid, $post['title'], $post['comment'], $user->id ) );					
-					} 
+					$results = \JFactory::getApplication()->triggerEvent('onCommentImage', array($id, $catid, $post['title'], $post['comment'], $user->id ) );
+					}
 				} else {
 					$app->enqueueMessage(JText::_('COM_PHOCAGALLERY_NOT_AUTHORISED_ACTION'));
 					$app->redirect(JRoute::_('index.php?option=com_users&view=login', false));

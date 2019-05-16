@@ -1,15 +1,20 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.7.10792
+ * @version         19.5.762
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
 defined('_JEXEC') or die;
+
+use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\Form\FormField as JFormField;
+use RegularLabs\Library\Document as RL_Document;
+use RegularLabs\Library\RegEx as RL_RegEx;
 
 if ( ! is_file(JPATH_LIBRARIES . '/regularlabs/autoload.php'))
 {
@@ -18,8 +23,9 @@ if ( ! is_file(JPATH_LIBRARIES . '/regularlabs/autoload.php'))
 
 require_once JPATH_LIBRARIES . '/regularlabs/autoload.php';
 
-use RegularLabs\Library\Document as RL_Document;
-use RegularLabs\Library\RegEx as RL_RegEx;
+/**
+ * @deprecated  2018-10-30  Use ShowOn instead
+ */
 
 /**
  * To use this, make a start xml param tag with the param and value set
@@ -72,60 +78,55 @@ class RLFieldToggler
 		$method = $this->get('method');
 		$div    = $this->get('div', 0);
 
-		JHtml::_('jquery.framework');
-
-		RL_Document::script('regularlabs/script.min.js');
 		RL_Document::script('regularlabs/toggler.min.js');
 
 		$param = RL_RegEx::replace('^\s*(.*?)\s*$', '\1', $param);
 		$param = RL_RegEx::replace('\s*\|\s*', '|', $param);
 
 		$html = [];
-		if ($param != '')
+		if ( ! $param)
 		{
-			$param      = RL_RegEx::replace('[^a-z0-9-\.\|\@]', '_', $param);
-			$param      = str_replace('@', '_', $param);
-			$set_groups = explode('|', $param);
-			$set_values = explode('|', $value);
-			$ids        = [];
-			foreach ($set_groups as $i => $group)
-			{
-				$count = $i;
-				if ($count >= count($set_values))
-				{
-					$count = 0;
-				}
-				$value = explode(',', $set_values[$count]);
-				foreach ($value as $val)
-				{
-					$ids[] = $group . '.' . $val;
-				}
-			}
+			return '</div>';
+		}
 
-			if ( ! $div)
+		$param      = RL_RegEx::replace('[^a-z0-9-\.\|\@]', '_', $param);
+		$param      = str_replace('@', '_', $param);
+		$set_groups = explode('|', $param);
+		$set_values = explode('|', $value);
+		$ids        = [];
+		foreach ($set_groups as $i => $group)
+		{
+			$count = $i;
+			if ($count >= count($set_values))
 			{
-				$html[] = '</div></div>';
+				$count = 0;
 			}
-
-			$html[] = '<div id="' . rand(1000000, 9999999) . '___' . implode('___', $ids) . '" class="rl_toggler';
-			if ($nofx)
+			$value = explode(',', $set_values[$count]);
+			foreach ($value as $val)
 			{
-				$html[] = ' rl_toggler_nofx';
-			}
-			if ($method == 'and')
-			{
-				$html[] = ' rl_toggler_and';
-			}
-			$html[] = '">';
-
-			if ( ! $div)
-			{
-				$html[] = '<div><div>';
+				$ids[] = $group . '.' . $val;
 			}
 		}
-		else
+
+		if ( ! $div)
 		{
-			$html[] = '</div>';
+			$html[] = '</div></div>';
+		}
+
+		$html[] = '<div id="' . rand(1000000, 9999999) . '___' . implode('___', $ids) . '" class="rl_toggler';
+		if ($nofx)
+		{
+			$html[] = ' rl_toggler_nofx';
+		}
+		if ($method == 'and')
+		{
+			$html[] = ' rl_toggler_and';
+		}
+		$html[] = '">';
+
+		if ( ! $div)
+		{
+			$html[] = '<div><div>';
 		}
 
 		return implode('', $html);

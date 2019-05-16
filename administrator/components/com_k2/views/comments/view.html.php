@@ -1,9 +1,9 @@
 <?php
 /**
- * @version    2.8.x
+ * @version    2.9.x
  * @package    K2
- * @author     JoomlaWorks http://www.joomlaworks.net
- * @copyright  Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @author     JoomlaWorks https://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2018 JoomlaWorks Ltd. All rights reserved.
  * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -23,6 +23,7 @@ class K2ViewComments extends K2View
 		$view = JRequest::getCmd('view');
 
 		$params = JComponentHelper::getParams('com_k2');
+		$this->assignRef('params', $params);
 
 		$limit = $application->getUserStateFromRequest('global.list.limit', 'limit', $application->getCfg('list_limit'), 'int');
 		$limitstart = $application->getUserStateFromRequest($option.$view.'.limitstart', 'limitstart', 0, 'int');
@@ -235,25 +236,6 @@ class K2ViewComments extends K2View
         {
 	        // Enforce the "system" template in the frontend
 	        JRequest::setVar('template', 'system');
-
-	        // JS
-	        $document->addScriptDeclaration("
-	        	/* K2 - Fix pagination in comment editing in the frontend */
-		        (function(\$){
-			        \$(document).ready(function(){
-						var currentPageUrl = window.location.href;
-						if (currentPageUrl.indexOf('?') > 0) {
-							var concatenator = '&limitstart=';
-						} else {
-							var concatenator = '?limitstart=';
-						}
-					    \$('.pagenav').each(function(){
-						    var counter = \$(this).attr('href').split('start=');
-						    \$(this).attr('href', currentPageUrl+''+concatenator+''+counter[1]);
-						});
-					});
-				})(jQuery);
-	        ");
 
 			// CSS
 			$document->addStyleSheet(JURI::root(true).'/templates/system/css/general.css');

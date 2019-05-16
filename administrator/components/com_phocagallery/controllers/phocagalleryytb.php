@@ -8,7 +8,7 @@
  * @copyright Copyright (C) Jan Pavelka www.phoca.cz
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License version 2 or later;
  */
- 
+
 defined('_JEXEC') or die();
 jimport('joomla.application.component.controllerform');
 jimport('joomla.client.helper');
@@ -18,10 +18,10 @@ class PhocaGalleryCpControllerPhocaGalleryYtb extends JControllerForm
 {
 	//protected	$option 		= 'com_phocagallery';
 	protected $context 	= 'com_phocagallery.phocagalleryytjjb';
-	
+
 	function __construct() {
 		parent::__construct();
-		$this->registerTask( 'import'  , 	'import' );	
+		$this->registerTask( 'import'  , 	'import' );
 	}
 
 	function import() {
@@ -34,8 +34,9 @@ class PhocaGalleryCpControllerPhocaGalleryYtb extends JControllerForm
 		$ytb_link	= JFactory::getApplication()->input->get( 'ytb_link', '',  'string' );
 		$field		= JFactory::getApplication()->input->get( 'field', '',  'string' );
 		$catid		= JFactory::getApplication()->input->get( 'catid', 0,  'int' );
-		
-		
+
+		$errorYtbMsg = '';
+
 		$folder = '';
 		if ((int)$catid > 0) {
 			$db =JFactory::getDBO();
@@ -45,24 +46,24 @@ class PhocaGalleryCpControllerPhocaGalleryYtb extends JControllerForm
 
 			$db->setQuery($query, 0, 1);
 			$folderObj = $db->loadObject();
-			
-			if (!$db->query()) {
+
+			if (!$db->execute()) {
 				$this->setError($db->getErrorMsg());
 				return false;
 			}
-			
+
 			if (isset($folderObj->userfolder) && $folderObj->userfolder != '') {
 				$folder = $folderObj->userfolder . '/';// Save to category folder
 			} else {
 				$folder = '';// No category folder - save to root
 			}
 		} else {
-			$errorMsg .= JText::_('COM_PHOCAGALLERY_YTB_ERROR_NO_CATEGORY');
+			$errorYtbMsg .= JText::_('COM_PHOCAGALLERY_YTB_ERROR_NO_CATEGORY');
 		}
-		
+
 		$ytb	= PhocaGalleryYoutube::importYtb($ytb_link, $folder, $errorYtbMsg);
 
-/*		
+/*
 		$ytb_code 	= str_replace("&feature=related","",PhocaGalleryYoutube::getCode(strip_tags($ytb_link)));
 
 		$msg = $errorMsg = '';
@@ -71,13 +72,13 @@ class PhocaGalleryCpControllerPhocaGalleryYtb extends JControllerForm
 		$ytb['desc']		= '';
 		$ytb['filename']	= '';
 		$ytb['link']		= strip_tags($ytb_link);
-			
+
 		if(!function_exists("curl_init")){
 			$errorMsg .= JText::_('COM_PHOCAGALLERY_YTB_NOT_LOADED_CURL');
 		} else if ($ytb_code == '') {
 			$errorMsg .= JText::_('COM_PHOCAGALLERY_YTB_URL_NOT_CORRECT');
 		} else {
-			
+
 			$folder = '';
 			if ((int)$catid > 0) {
 				$db =JFactory::getDBO();
@@ -87,12 +88,12 @@ class PhocaGalleryCpControllerPhocaGalleryYtb extends JControllerForm
 
 				$db->setQuery($query, 0, 1);
 				$folderObj = $db->loadObject();
-				
+
 				if (!$db->query()) {
 					$this->setError($db->getErrorMsg());
 					return false;
 				}
-				
+
 				if (isset($folderObj->userfolder) && $folderObj->userfolder != '') {
 					$folder = $folderObj->userfolder . '/';// Save to category folder
 				} else {
@@ -101,31 +102,31 @@ class PhocaGalleryCpControllerPhocaGalleryYtb extends JControllerForm
 			} else {
 				$errorMsg .= JText::_('COM_PHOCAGALLERY_YTB_ERROR_NO_CATEGORY');
 			}
-			
+
 			// Data
 			$cUrl		= curl_init("http://gdata.youtube.com/feeds/api/videos/".strip_tags($ytb_code));
             curl_setopt($cUrl,CURLOPT_RETURNTRANSFER,1);
             $xml		= curl_exec($cUrl);
             curl_close($cUrl);
-			
+
 			$xml 	= str_replace('<media:', '<phcmedia', $xml);
 			$xml 	= str_replace('</media:', '</phcmedia', $xml);
-			
+
 			$data = simplexml_load_file($file);
 
-			//Title			
+			//Title
 			if (isset($data->title)) {
 				$ytb['title'] = (string)$data->title;
 			}
-			
+
 			if ($ytb['title'] == '' && isset($data->phcmediagroup->phcmediatitle)) {
 				$ytb['title'] = (string)$data->phcmediagroup->phcmediatitle;
 			}
-			
+
 			if (isset($data->phcmediagroup->phcmediadescription)) {
 				$ytb['desc'] = (string)$data->phcmediagroup->phcmediadescription;
 			}
-			
+
 			// Thumbnail
 			if (isset($data->phcmediagroup->phcmediathumbnail[0]['url'])) {
 				$cUrl		= curl_init(strip_tags((string)$data->phcmediagroup->phcmediathumbnail[0]['url']));
@@ -133,26 +134,26 @@ class PhocaGalleryCpControllerPhocaGalleryYtb extends JControllerForm
 				$img		= curl_exec($cUrl);
 				curl_close($cUrl);
 			}
-            	
+
 			if ($img != '') {
 				$cUrl		= curl_init("http://img.youtube.com/vi/".strip_tags($ytb_code)."/0.jpg");
 				curl_setopt($cUrl,CURLOPT_RETURNTRANSFER,1);
 				$img		= curl_exec($cUrl);
 				curl_close($cUrl);
 			}
-	
+
 			$ytb['filename']	= $folder.strip_tags($ytb_code).'.jpg';
-			
+
             if (!JFile::write(JPATH_ROOT . '/' .'images' . '/' . 'phocagallery' . '/'. $ytb['filename'], $img)) {
 				$errorMsg .= JText::_('COM_PHOCAGALLERY_YTB_ERROR_WRITE_IMAGE');
 			}
 		}*/
-		
+
 		JFactory::getApplication()->input->set('ytb_title', $ytb['title']);
 		JFactory::getApplication()->input->set('ytb_desc', $ytb['desc']);
 		JFactory::getApplication()->input->set('ytb_filename', $ytb['filename']);
 		JFactory::getApplication()->input->set('ytb_link', $ytb['link']);
-		
+
 		if ($errorYtbMsg != '') {
 			$msg 	= $errorYtbMsg;
 			$import	= '';
@@ -171,8 +172,8 @@ class PhocaGalleryCpControllerPhocaGalleryYtb extends JControllerForm
 			$app->enqueueMessage($msg, 'message');
 			$this->setRedirect( $redirect );
 		}
-		
-	}	
+
+	}
 
 	function cancel($key = NULL) {
 		$this->setRedirect( 'index.php?option=com_phocagallery' );

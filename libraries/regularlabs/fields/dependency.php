@@ -1,15 +1,19 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.7.10792
+ * @version         19.5.762
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
 defined('_JEXEC') or die;
+
+use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\Language\Text as JText;
+use RegularLabs\Library\RegEx as RL_RegEx;
 
 jimport('joomla.form.formfield');
 
@@ -19,9 +23,6 @@ if ( ! is_file(JPATH_LIBRARIES . '/regularlabs/autoload.php'))
 }
 
 require_once JPATH_LIBRARIES . '/regularlabs/autoload.php';
-
-use RegularLabs\Library\Document as RL_Document;
-use RegularLabs\Library\RegEx as RL_RegEx;
 
 class JFormFieldRL_Dependency extends \RegularLabs\Library\Field
 {
@@ -34,11 +35,6 @@ class JFormFieldRL_Dependency extends \RegularLabs\Library\Field
 
 	protected function getInput()
 	{
-		$this->params = $this->element->attributes();
-
-		JHtml::_('jquery.framework');
-		RL_Document::script('regularlabs/script.min.js');
-
 		if ($file = $this->get('file'))
 		{
 			$label = $this->get('label', 'the main extension');
@@ -56,10 +52,10 @@ class JFormFieldRL_Dependency extends \RegularLabs\Library\Field
 
 		switch ($extension)
 		{
-			case 'com';
+			case 'com':
 				$file = $path . '/components/com_' . $file . '/com_' . $file . '.xml';
 				break;
-			case 'mod';
+			case 'mod':
 				$file = $path . '/modules/mod_' . $file . '/mod_' . $file . '.xml';
 				break;
 			default:

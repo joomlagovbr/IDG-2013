@@ -1,23 +1,24 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         8.0.3
+ * @version         9.2.0
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
 namespace RegularLabs\Plugin\System\ArticlesAnywhere\PluginTags;
 
+defined('_JEXEC') or die;
+
 use RegularLabs\Library\ArrayHelper as RL_Array;
 use RegularLabs\Library\RegEx as RL_RegEx;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Collection\Fields\CustomFields;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Collection\Fields\Fields;
+use RegularLabs\Plugin\System\ArticlesAnywhere\Output\Values;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Params;
-
-defined('_JEXEC') or die;
 
 class Selects
 {
@@ -39,6 +40,7 @@ class Selects
 			'users'         => false,
 			'modifiers'     => false,
 			'categories'    => false,
+			'frontpage'     => false,
 			'custom_fields' => [],
 		];
 
@@ -49,7 +51,7 @@ class Selects
 
 		if ($ordering)
 		{
-			$this->addSelectFromString($ordering, $selects);
+			$this->addSelectFromOrdering($ordering, $selects);
 		}
 
 		$string = str_replace('&nbsp;', ' ', $string);
@@ -94,7 +96,21 @@ class Selects
 
 		foreach ($parts as $string)
 		{
+			$string = Values::translateKey($string);
 			$this->addSelect($string, $selects);
+		}
+	}
+
+	protected function addSelectFromOrdering($ordering, &$selects)
+	{
+		if (empty($ordering->joins))
+		{
+			return;
+		}
+
+		foreach ($ordering->joins as $join)
+		{
+			$this->addSelect($join, $selects);
 		}
 	}
 
@@ -105,21 +121,28 @@ class Selects
 			return;
 		}
 
-		if (strpos($key, 'author') === 0)
+		if ($key == 'frontpage')
+		{
+			$selects['frontpage'] = true;
+
+			return;
+		}
+
+		if (RL_RegEx::match('^(user|users|author|authors)(-|$)', $key))
 		{
 			$selects['users'] = true;
 
 			return;
 		}
 
-		if (strpos($key, 'modifier') === 0)
+		if (RL_RegEx::match('^(modifier|modifiers)(-|$)', $key))
 		{
 			$selects['modifiers'] = true;
 
 			return;
 		}
 
-		if (strpos($key, 'category') !== false)
+		if (RL_RegEx::match('(^|-)(category|categories)(-|$)', $key))
 		{
 			$selects['categories'] = true;
 

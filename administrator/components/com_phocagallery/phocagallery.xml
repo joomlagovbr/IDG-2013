@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension method="upgrade" type="component" version="3">
+<extension type="component" method="upgrade" version="3">
 	<name>com_phocagallery</name>
 	<author>Jan Pavelka (www.phoca.cz)</author>
-	<creationDate>15/01/2018</creationDate>
+	<creationDate>27/04/2019</creationDate>
 	<authorEmail></authorEmail>
-	<authorUrl>www.phoca.cz</authorUrl>
+	<authorUrl>https://www.phoca.cz</authorUrl>
 	<copyright>Jan Pavelka</copyright>
 	<license>GNU/GPL</license>
-	<version>4.3.10</version>
-	<description>Phoca Gallery</description>
-	<scriptfile>install/script.php</scriptfile>
+	<version>4.3.18</version>
+	<description>COM_PHOCAGALLERY_XML_DESCRIPTION</description>
+	<scriptfile>script.php</scriptfile>
+	<projectName>PhocaGallery</projectName>
 
 	<install>
 		<sql>
@@ -30,53 +31,48 @@
 	</update>
 
 	<files folder="site">
-		<filename>controller.php</filename>
-		<filename>index.html</filename>
-		<filename>phocagallery.php</filename>
-		<filename>router.php</filename>
 		<folder>assets</folder>
 		<folder>controllers</folder>
 		<folder>models</folder>
 		<folder>views</folder>
+		<filename>controller.php</filename>
+		<filename>index.html</filename>
+		<filename>phocagallery.php</filename>
+		<filename>router.php</filename>
 	</files>
 
 	<media destination="com_phocagallery" folder="media">
-		<filename>index.html</filename>
 		<folder>css</folder>
 		<folder>images</folder>
 		<folder>js</folder>
+		<filename>index.html</filename>
 	</media>
 
-	<languages>
-		<language tag="en-GB" client="site">language/en-GB/en-GB.com_phocagallery.ini</language>
-		<language tag="en-GB" client="site">language/en-GB/en-GB.com_phocagallery.sys.ini</language>
+	<languages folder="admin/language">
+		<language tag="en-GB" client="site">en-GB/en-GB.com_phocagallery.ini</language>
+		<language tag="en-GB" client="site">en-GB/en-GB.com_phocagallery.sys.ini</language>
 	</languages>
 
 	<administration>
-		<menu img="media/com_phocagallery/images/administrator/icon-16-pg-menu.png" link="option=com_phocagallery">COM_PHOCAGALLERY</menu>
-		<submenu>
-			<menu img="media/com_phocagallery/images/administrator/icon-16-pg-control-panel.png" alt="COM_PHOCAGALLERY_CONTROLPANEL" view="phocagallerycp" link="option=com_phocagallery">COM_PHOCAGALLERY_CONTROLPANEL</menu>
-			<menu img="media/com_phocagallery/images/administrator/icon-16-pg-menu-gal.png" alt="COM_PHOCAGALLERY_IMAGES" view="phocagalleryimgs" link="option=com_phocagallery&amp;view=phocagalleryimgs">COM_PHOCAGALLERY_IMAGES</menu>
-			<menu img="media/com_phocagallery/images/administrator/icon-16-pg-menu-cat.png" alt="COM_PHOCAGALLERY_CATEGORIES" view="phocagallerycs" link="option=com_phocagallery&amp;view=phocagallerycs">COM_PHOCAGALLERY_CATEGORIES</menu>
-			<menu img="media/com_phocagallery/images/administrator/icon-16-pg-menu-theme.png" alt="COM_PHOCAGALLERY_THEMES" view="phocagalleryt" link="option=com_phocagallery&amp;view=phocagalleryt">COM_PHOCAGALLERY_THEMES</menu>
-			<menu img="media/com_phocagallery/images/administrator/icon-16-pg-menu-vote.png" alt="COM_PHOCAGALLERY_CATEGORYRATING" view="phocagalleryra" link="option=com_phocagallery&amp;view=phocagalleryra">COM_PHOCAGALLERY_CATEGORYRATING</menu>
-			<menu img="media/com_phocagallery/images/administrator/icon-16-pg-menu-vote-img.png" alt="COM_PHOCAGALLERY_IMAGERATING" view="phocagalleryraimg" link="option=com_phocagallery&amp;view=phocagalleryraimg">COM_PHOCAGALLERY_IMAGERATING</menu>
-			<menu img="media/com_phocagallery/images/administrator/icon-16-pg-menu-comment.png" alt="COM_PHOCAGALLERY_CATEGORYCOMMENTS" view="phocagallerycos" link="option=com_phocagallery&amp;view=phocagallerycos">COM_PHOCAGALLERY_CATEGORYCOMMENTS</menu>
-			<menu img="media/com_phocagallery/images/administrator/icon-16-pg-menu-comment-img.png" alt="COM_PHOCAGALLERY_IMAGECOMMENTS" view="phocagallerycoimgs" link="option=com_phocagallery&amp;view=phocagallerycoimgs">COM_PHOCAGALLERY_IMAGECOMMENTS</menu>
-			<menu img="media/com_phocagallery/images/administrator/icon-16-pg-menu-users.png" alt="COM_PHOCAGALLERY_USERS" view="phocagalleryusers" link="option=com_phocagallery&amp;view=phocagalleryusers">COM_PHOCAGALLERY_USERS</menu>
-			<menu img="media/com_phocagallery/images/administrator/icon-16-pg-menu-fb.png" alt="COM_PHOCAGALLERY_FB" view="phocagalleryfbs" link="option=com_phocagallery&amp;view=phocagalleryfbs">COM_PHOCAGALLERY_FB</menu>
-			<menu img="media/com_phocagallery/images/administrator/icon-16-pg-menu-tags.png" alt="COM_PHOCAGALLERY_TAGS" view="phocagallerytags" link="option=com_phocagallery&amp;view=phocagallerytags">COM_PHOCAGALLERY_TAGS</menu>
-			<menu img="media/com_phocagallery/images/administrator/icon-16-pg-menu-styles.png" alt="COM_PHOCAGALLERY_STYLES" view="phocagalleryefs" link="option=com_phocagallery&amp;view=phocagalleryefs">COM_PHOCAGALLERY_STYLES</menu>
-			<menu img="media/com_phocagallery/images/administrator/icon-16-pg-menu-info.png" alt="COM_PHOCAGALLERY_INFO" view="phocagalleryin" link="option=com_phocagallery&amp;view=phocagalleryin">COM_PHOCAGALLERY_INFO</menu>
-		</submenu>
+
+		<menu img="media/com_phocagallery/images/administrator/icon-16-pg-menu.png" alt="COM_PHOCAGALLERY" link="option=com_phocagallery">COM_PHOCAGALLERY</menu>
+
+			<submenu>
+				<menu img="media/com_phocagallery/images/administrator/icon-16-pg-control-panel.png" alt="COM_PHOCAGALLERY_CONTROLPANEL" view="phocagallerycp" link="option=com_phocagallery">COM_PHOCAGALLERY_CONTROLPANEL</menu>
+				<menu img="media/com_phocagallery/images/administrator/icon-16-pg-menu-gal.png" alt="COM_PHOCAGALLERY_IMAGES" view="phocagalleryimgs" link="option=com_phocagallery&amp;view=phocagalleryimgs">COM_PHOCAGALLERY_IMAGES</menu>
+				<menu img="media/com_phocagallery/images/administrator/icon-16-pg-menu-cat.png" alt="COM_PHOCAGALLERY_CATEGORIES" view="phocagallerycs" link="option=com_phocagallery&amp;view=phocagallerycs">COM_PHOCAGALLERY_CATEGORIES</menu>
+				<menu img="media/com_phocagallery/images/administrator/icon-16-pg-menu-theme.png" alt="COM_PHOCAGALLERY_THEMES" view="phocagalleryt" link="option=com_phocagallery&amp;view=phocagalleryt">COM_PHOCAGALLERY_THEMES</menu>
+				<menu img="media/com_phocagallery/images/administrator/icon-16-pg-menu-vote.png" alt="COM_PHOCAGALLERY_CATEGORYRATING" view="phocagalleryra" link="option=com_phocagallery&amp;view=phocagalleryra">COM_PHOCAGALLERY_CATEGORYRATING</menu>
+				<menu img="media/com_phocagallery/images/administrator/icon-16-pg-menu-vote-img.png" alt="COM_PHOCAGALLERY_IMAGERATING" view="phocagalleryraimg" link="option=com_phocagallery&amp;view=phocagalleryraimg">COM_PHOCAGALLERY_IMAGERATING</menu>
+				<menu img="media/com_phocagallery/images/administrator/icon-16-pg-menu-comment.png" alt="COM_PHOCAGALLERY_CATEGORYCOMMENTS" view="phocagallerycos" link="option=com_phocagallery&amp;view=phocagallerycos">COM_PHOCAGALLERY_CATEGORYCOMMENTS</menu>
+				<menu img="media/com_phocagallery/images/administrator/icon-16-pg-menu-comment-img.png" alt="COM_PHOCAGALLERY_IMAGECOMMENTS" view="phocagallerycoimgs" link="option=com_phocagallery&amp;view=phocagallerycoimgs">COM_PHOCAGALLERY_IMAGECOMMENTS</menu>
+				<menu img="media/com_phocagallery/images/administrator/icon-16-pg-menu-users.png" alt="COM_PHOCAGALLERY_USERS" view="phocagalleryusers" link="option=com_phocagallery&amp;view=phocagalleryusers">COM_PHOCAGALLERY_USERS</menu>
+				<menu img="media/com_phocagallery/images/administrator/icon-16-pg-menu-tags.png" alt="COM_PHOCAGALLERY_TAGS" view="phocagallerytags" link="option=com_phocagallery&amp;view=phocagallerytags">COM_PHOCAGALLERY_TAGS</menu>
+				<menu img="media/com_phocagallery/images/administrator/icon-16-pg-menu-styles.png" alt="COM_PHOCAGALLERY_STYLES" view="phocagalleryefs" link="option=com_phocagallery&amp;view=phocagalleryefs">COM_PHOCAGALLERY_STYLES</menu>
+				<menu img="media/com_phocagallery/images/administrator/icon-16-pg-menu-info.png" alt="COM_PHOCAGALLERY_INFO" view="phocagalleryin" link="option=com_phocagallery&amp;view=phocagalleryin">COM_PHOCAGALLERY_INFO</menu>
+			</submenu>
 
 		<files folder="admin">
-			<filename>access.xml</filename>
-			<filename>config.xml</filename>
-			<filename>controller.php</filename>
-			<filename>index.html</filename>
-			<filename>phocagallery.php</filename>
-			<filename>phocagallery.xml</filename>
 			<folder>controllers</folder>
 			<folder>help</folder>
 			<folder>helpers</folder>
@@ -86,16 +82,22 @@
 			<folder>tables</folder>
 			<folder>update</folder>
 			<folder>views</folder>
+			<filename>access.xml</filename>
+			<filename>config.xml</filename>
+			<filename>controller.php</filename>
+			<filename>index.html</filename>
+			<filename>phocagallery.php</filename>
 		</files>
 
-		<languages>
-			<language tag="en-GB">language/en-GB/en-GB.com_phocagallery.ini</language>
-			<language tag="en-GB">language/en-GB/en-GB.com_phocagallery.sys.ini</language>
+		<languages folder="admin/language">
+			<language tag="en-GB">en-GB/en-GB.com_phocagallery.ini</language>
+			<language tag="en-GB">en-GB/en-GB.com_phocagallery.sys.ini</language>
 		</languages>
-
 	</administration>
-	<updateservers>
-		<server type="extension" name="com_phocagallery">https://raw.githubusercontent.com/PhocaCz/PhocaGallery/master/manifest.xml</server>
-	</updateservers>
+	
+	
 
+	<updateservers>
+		<server type="extension" name="COM_PHOCAGALLERY" priority="1"><![CDATA[https://raw.githubusercontent.com/PhocaCz/PhocaGallery/master/manifest.xml]]></server>
+	</updateservers>
 </extension>

@@ -1,9 +1,9 @@
 <?php
 /**
- * @version     2.8.x
+ * @version     2.9.x
  * @package     K2
- * @author      JoomlaWorks http://www.joomlaworks.net
- * @copyright   Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @author      JoomlaWorks https://www.joomlaworks.net
+ * @copyright   Copyright (c) 2006 - 2018 JoomlaWorks Ltd. All rights reserved.
  * @license     GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -13,7 +13,7 @@ require_once(JPATH_ADMINISTRATOR.'/components/com_k2/elements/base.php');
 
 class K2ElementHeader extends K2Element
 {
-    public function fetchElementValue($name, $value, &$node, $control_name)
+    public function fetchElement($name, $value, &$node, $control_name)
     {
 		if (version_compare(JVERSION, '2.5.0', 'ge'))
 		{
@@ -25,7 +25,7 @@ class K2ElementHeader extends K2Element
 		}
     }
 
-    public function fetchElementName($label, $description, &$node, $control_name, $name)
+    public function fetchTooltip($label, $description, &$node, $control_name, $name)
     {
         return NULL;
     }

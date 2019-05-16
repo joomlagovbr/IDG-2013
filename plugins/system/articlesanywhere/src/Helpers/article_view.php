@@ -1,15 +1,22 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         8.0.3
+ * @version         9.2.0
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
 defined('_JEXEC') or die;
+
+use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\Helper\TagsHelper as JTagsHelper;
+use Joomla\CMS\HTML\HTMLHelper as JHtml;
+use Joomla\CMS\Layout\FileLayout as JLayoutFile;
+use Joomla\CMS\Plugin\PluginHelper as JPluginHelper;
+use Joomla\CMS\Router\Route as JRoute;
 
 if ( ! class_exists('ContentViewArticle'))
 {
@@ -90,7 +97,7 @@ class ArticlesAnywhereArticleView extends ContentViewArticle
 
 		$item->text .= '<!-- AA:CT -->';
 
-		$item->tags = new JHelperTags;
+		$item->tags = new JTagsHelper;
 		$item->tags->getItemTags('com_content.article', $this->item->id);
 
 		$item->event                       = (object) [];

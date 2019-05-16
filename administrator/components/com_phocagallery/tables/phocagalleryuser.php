@@ -16,14 +16,14 @@ class TablePhocaGalleryUser extends JTable
 	function __construct(& $db) {
 		parent::__construct('#__phocagallery_user', 'id', $db);
 	}
-	
+
 	public function approve($pks = null, $state = 1, $userId = 0)
 	{
 		// Initialise variables.
 		$k = $this->_tbl_key;
 
 		// Sanitize input.
-		JArrayHelper::toInteger($pks);
+		\Joomla\Utilities\ArrayHelper::toInteger($pks);
 		$userId = (int) $userId;
 		$state  = (int) $state;
 

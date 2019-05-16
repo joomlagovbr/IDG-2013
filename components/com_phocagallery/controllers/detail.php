@@ -11,12 +11,12 @@ phocagalleryimport('phocagallery.access.access');
 phocagalleryimport('phocagallery.rate.rateimage');
 class PhocaGalleryControllerDetail extends PhocaGalleryController
 {
-	
+
 	function display($cachable = false, $urlparams = false) {
 		if ( ! JFactory::getApplication()->input->get('view') ) {
 			JFactory::getApplication()->input->set('view', 'detail' );
 		}
-		
+
 		parent::display($cachable, $urlparams);
     }
 
@@ -24,23 +24,23 @@ class PhocaGalleryControllerDetail extends PhocaGalleryController
 		$app	= JFactory::getApplication();
 		$params			= $app->getParams();
 		$detailWindow	= $params->get( 'detail_window', 0 );
-		
+
 		$user 		= JFactory::getUser();
 		$view 		= $this->input->get( 'view', '', 'string'  );
 		$imgid 		= $this->input->get( 'id', '', 'string'  );
 		$catid 		= $this->input->get( 'catid', '', 'string'  );
 		$rating		= $this->input->get( 'rating', '', 'string' );
 		$Itemid		= $this->input->get( 'Itemid', 0, 'int');
-	
+
 		$neededAccessLevels	= PhocaGalleryAccess::getNeededAccessLevels();
 		$access				= PhocaGalleryAccess::isAccess($user->getAuthorisedViewLevels(), $neededAccessLevels);
-	
+
 		if ($detailWindow == 7) {
 			$tmplCom = '';
 		} else {
 			$tmplCom = '&tmpl=component';
 		}
-		
+
 		$post['imgid'] 		= (int)$imgid;
 		$post['userid']		= $user->id;
 		$post['rating']		= (int)$rating;
@@ -50,22 +50,22 @@ class PhocaGalleryControllerDetail extends PhocaGalleryController
 		if ($view != 'detail') {
 			$this->setRedirect( JRoute::_('index.php?option=com_phocagallery', false) );
 		}
-		
+
 		$model = $this->getModel('detail');
-		
+
 		$checkUserVote	= PhocaGalleryRateImage::checkUserVote( $post['imgid'], $post['userid'] );
-		
+
 		// User has already rated this category
-	
+
 		if ($checkUserVote) {
 			$msg = JText::_('COM_PHOCAGALLERY_RATING_IMAGE_ALREADY_RATED');
 		} else {
 			if ((int)$post['rating']  < 1 || (int)$post['rating'] > 5) {
-				
+
 				$app->redirect( JRoute::_('index.php?option=com_phocagallery', false)  );
 				exit;
 			}
-			
+
 			if ($access > 0 && $user->id > 0) {
 				if(!$model->rate($post)) {
 				$msg = JText::_('COM_PHOCAGALLERY_ERROR_RATING_IMAGE');
@@ -73,10 +73,10 @@ class PhocaGalleryControllerDetail extends PhocaGalleryController
 				$msg = JText::_('COM_PHOCAGALLERY_SUCCESS_RATING_IMAGE');
 				// Features added by Bernard Gilly - alphaplug.com
 				// load external plugins
-				$dispatcher = JDispatcher::getInstance();
+				//$dispatcher = JDispatcher::getInstance();
 				JPluginHelper::importPlugin('phocagallery');
-				$results = $dispatcher->trigger( 'onVoteImage', array($imgid, $rating, $user->id ) );				
-				} 
+				$results = \JFactory::getApplication()->triggerEvent('onVoteImage', array($imgid, $rating, $user->id ) );
+				}
 			} else {
 				$app->redirect(JRoute::_('index.php?option=com_users&view=login', false), JText::_('COM_PHOCAGALLERY_NOT_AUTHORISED_ACTION'));
 				exit;
@@ -85,7 +85,7 @@ class PhocaGalleryControllerDetail extends PhocaGalleryController
 		// Do not display System Message in Detail Window as there are no scrollbars, so other items will be not displayed
 		// we send infor about already rated via get and this get will be worked in view (detail - default.php) - vote=1
 		$msg = '';
-		
+
 		//$this->setRedirect( JRoute::_('index.php?option=com_phocagallery&view=detail&catid='.$catIdAlias.'&id='.$imgIdAlias.$tmplCom.'&vote=1&Itemid='. $Itemid, false), $msg );
 		$this->setRedirect( JRoute::_('index.php?option=com_phocagallery&view=detail&catid='.$catIdAlias.'&id='.$imgIdAlias.$tmplCom.'&vote=1&Itemid='. $Itemid, false) );
 	}

@@ -1,11 +1,11 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         8.0.3
+ * @version         9.2.0
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -19,6 +19,10 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\Language\Text as JText;
+use Joomla\CMS\MVC\Model\ItemModel as JModelItem;
+use Joomla\CMS\Table\Table as JTable;
 use Joomla\Registry\Registry;
 
 /**
@@ -40,9 +44,9 @@ class  ArticlesAnywhereArticleModel extends JModelItem
 	 *
 	 * Note. Calling getState in this method will result in recursion.
 	 *
+	 * @return void
 	 * @since   1.6
 	 *
-	 * @return void
 	 */
 	protected function populateState()
 	{
@@ -52,29 +56,18 @@ class  ArticlesAnywhereArticleModel extends JModelItem
 		$pk = $app->input->getInt('id');
 		$this->setState('article.id', $pk);
 
-		$offset = $app->input->getUInt('limitstart');
+		$offset = $app->input->getUInt('a_limitstart');
 		$this->setState('list.offset', $offset);
 
 		// Load the parameters.
 		$params = $app->getParams();
 		$this->setState('params', $params);
-
-		// TODO: Tune these values based on other permissions.
-		$user = JFactory::getUser();
-
-		if (( ! $user->authorise('core.edit.state', 'com_content')) && ( ! $user->authorise('core.edit', 'com_content')))
-		{
-			$this->setState('filter.published', 1);
-			$this->setState('filter.archived', 2);
-		}
-
-		$this->setState('filter.language', JLanguageMultilang::isEnabled());
 	}
 
 	/**
 	 * Method to get article data.
 	 *
-	 * @param   integer $pk The id of the article.
+	 * @param integer $pk The id of the article.
 	 *
 	 * @return  object|boolean|JException  Menu item data object on success, boolean false or JException instance on error
 	 */
@@ -119,12 +112,6 @@ class  ArticlesAnywhereArticleModel extends JModelItem
 				$query->select('u.name AS author')
 					->join('LEFT', '#__users AS u on u.id = a.created_by');
 
-				// Filter by language
-				if ($this->getState('filter.language'))
-				{
-					$query->where('a.language in (' . $db->quote(JFactory::getLanguage()->getTag()) . ',' . $db->quote('*') . ')');
-				}
-
 				// Join over the categories to get parent category titles
 				$query->select('parent.title as parent_title, parent.id as parent_id, parent.path as parent_route, parent.alias as parent_alias')
 					->join('LEFT', '#__categories as parent ON parent.id = c.parent_id');
@@ -134,17 +121,6 @@ class  ArticlesAnywhereArticleModel extends JModelItem
 					->join('LEFT', '#__content_rating AS v ON a.id = v.content_id')
 					->where('a.id = ' . (int) $pk);
 
-				if (( ! $user->authorise('core.edit.state', 'com_content')) && ( ! $user->authorise('core.edit', 'com_content')))
-				{
-					// Filter by start and end dates.
-					$nowDate  = $db->quote(JFactory::getDate()->toSql());
-					$nullDate = $db->quote($db->getNullDate());
-
-					$query->where('(a.publish_up = ' . $nullDate . ' OR a.publish_up <= ' . $nowDate . ')')
-						->where('( ' . $db->quoteName('a.publish_down') . ' = ' . $nullDate
-							. ' OR ' . $db->quoteName('a.publish_down') . ' > ' . $nowDate . ' )');
-				}
-
 				// Join to check for category published state in parent categories up the tree
 				// If all categories are published, badcats.id will be null, and we just use the article state
 				$subquery = ' (SELECT cat.id as id FROM #__categories AS cat JOIN #__categories AS parent ';
@@ -153,26 +129,11 @@ class  ArticlesAnywhereArticleModel extends JModelItem
 				$subquery .= ' AND parent.published <= 0 GROUP BY cat.id)';
 				$query->join('LEFT OUTER', $subquery . ' AS badcats ON badcats.id = c.id');
 
-				// Filter by published state.
-				$published = $this->getState('filter.published');
-				$archived  = $this->getState('filter.archived');
-
-				if (is_numeric($published))
-				{
-					$query->where('(a.state = ' . (int) $published . ' OR a.state =' . (int) $archived . ')');
-				}
-
 				$db->setQuery($query);
 
 				$data = $db->loadObject();
 
 				if (empty($data))
-				{
-					throw new Exception(JText::_('COM_CONTENT_ERROR_ARTICLE_NOT_FOUND'), 404);
-				}
-
-				// Check for published state if filter set.
-				if (((is_numeric($published)) || (is_numeric($archived))) && (($data->state != $published) && ($data->state != $archived)))
 				{
 					throw new Exception(JText::_('COM_CONTENT_ERROR_ARTICLE_NOT_FOUND'), 404);
 				}
@@ -254,7 +215,7 @@ class  ArticlesAnywhereArticleModel extends JModelItem
 	/**
 	 * Increment the hit counter for the article.
 	 *
-	 * @param   integer $pk Optional primary key of the article to increment.
+	 * @param integer $pk Optional primary key of the article to increment.
 	 *
 	 * @return  boolean  True if successful; false otherwise and internal error set.
 	 */
@@ -278,8 +239,8 @@ class  ArticlesAnywhereArticleModel extends JModelItem
 	/**
 	 * Save user vote on article
 	 *
-	 * @param   integer $pk   Joomla Article Id
-	 * @param   integer $rate Voting rate
+	 * @param integer $pk   Joomla Article Id
+	 * @param integer $rate Voting rate
 	 *
 	 * @return  boolean          Return true on success
 	 */

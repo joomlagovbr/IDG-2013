@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset>
+		<field name="name" type="text" required="true"
+			   label="RL_URL_PARAM_NAME"
+			   description="RL_URL_PARAM_NAME_DESC" />
+		<field name="type" type="list" required="true" default="INT"
+			   label="RL_INPUT_TYPE"
+			   description="%s&lt;br&gt;&lt;br&gt;&lt;strong&gt;INT&lt;/strong&gt;: %s&lt;br&gt;&lt;strong&gt;UINT&lt;/strong&gt;: %s&lt;br&gt;&lt;strong&gt;FLOAT&lt;/strong&gt;: %s&lt;br&gt;&lt;strong&gt;BOOLEAN&lt;/strong&gt;: %s&lt;br&gt;&lt;strong&gt;WORD&lt;/strong&gt;: %s&lt;br&gt;&lt;strong&gt;ALNUM&lt;/strong&gt;: %s&lt;br&gt;&lt;strong&gt;CMD&lt;/strong&gt;: %s&lt;br&gt;&lt;strong&gt;STRING&lt;/strong&gt;: %s&lt;br&gt;&lt;strong&gt;ARRAY&lt;/strong&gt;: %s&lt;br&gt;,RL_INPUT_TYPE_DESC,RL_INPUT_TYPE_INT,RL_INPUT_TYPE_UINT,RL_INPUT_TYPE_FLOAT,RL_INPUT_TYPE_BOOLEAN,RL_INPUT_TYPE_WORD,RL_INPUT_TYPE_ALNUM,RL_INPUT_TYPE_CMD,RL_INPUT_TYPE_STRING,RL_INPUT_TYPE_ARRAY">
+			<option value="INT">INT</option>
+			<option value="UINT">UINT</option>
+			<option value="FLOAT">FLOAT</option>
+			<option value="BOOLEAN">BOOLEAN</option>
+			<option value="WORD">WORD</option>
+			<option value="ALNUM">ALNUM</option>
+			<option value="CMD">CMD</option>
+			<option value="STRING">STRING</option>
+			<option value="ARRAY">ARRAY</option>
+		</field>
+	</fieldset>
+</form>

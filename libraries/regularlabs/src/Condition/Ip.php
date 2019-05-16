@@ -1,11 +1,11 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.7.10792
+ * @version         19.5.762
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -71,7 +71,7 @@ class Ip
 
 	private function checkIPRange($range)
 	{
-		$ip = $_SERVER['REMOTE_ADDR'];
+		$ip = $this->getIP();
 
 		// Return if no IP address can be found (shouldn't happen, but who knows)
 		if (empty($ip))
@@ -121,7 +121,7 @@ class Ip
 
 	private function checkIPPart($range)
 	{
-		$ip = $_SERVER['REMOTE_ADDR'];
+		$ip = $this->getIP();
 
 		// Return if no IP address can be found (shouldn't happen, but who knows)
 		if (empty($ip))
@@ -142,5 +142,25 @@ class Ip
 		}
 
 		return true;
+	}
+
+	private function getIP()
+	{
+		if ( ! empty($_SERVER['HTTP_X_REAL_IP']) && $this->isValidIp($_SERVER['HTTP_X_REAL_IP']))
+		{
+			return $_SERVER['HTTP_X_REAL_IP'];
+		}
+
+		if ( ! empty($_SERVER['HTTP_CLIENT_IP']) && $this->isValidIp($_SERVER['HTTP_CLIENT_IP']))
+		{
+			$_SERVER['HTTP_CLIENT_IP'];
+		}
+
+		return $_SERVER['REMOTE_ADDR'];
+	}
+
+	private function isValidIp($string)
+	{
+		return preg_match('#^([0-9]{1,3}\.){3}[0-9]{1,3}$#', $string);
 	}
 }

@@ -1,11 +1,11 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.7.10792
+ * @version         19.5.762
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -13,15 +13,16 @@ namespace RegularLabs\Library;
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Filesystem\Folder as JFolder;
+use Joomla\CMS\Component\ComponentHelper as JComponentHelper;
+use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\Helper\ModuleHelper as JModuleHelper;
+use Joomla\CMS\Installer\Installer as JInstaller;
+use Joomla\CMS\Language\Text as JText;
+use Joomla\CMS\Plugin\PluginHelper as JPluginHelper;
+
 jimport('joomla.filesystem.file');
 jimport('joomla.filesystem.folder');
-
-use JFactory;
-use JFile;
-use JFolder;
-use JInstaller;
-use JPluginHelper;
-use JText;
 
 /**
  * Class Extension
@@ -130,12 +131,12 @@ class Extension
 		switch ($type)
 		{
 			case 'component':
-				if (JFile::exists(JPATH_ADMINISTRATOR . '/components/com_' . $extension . '/' . $extension . '.php')
-					|| JFile::exists(JPATH_ADMINISTRATOR . '/components/com_' . $extension . '/admin.' . $extension . '.php')
-					|| JFile::exists(JPATH_SITE . '/components/com_' . $extension . '/' . $extension . '.php')
+				if (file_exists(JPATH_ADMINISTRATOR . '/components/com_' . $extension . '/' . $extension . '.php')
+					|| file_exists(JPATH_ADMINISTRATOR . '/components/com_' . $extension . '/admin.' . $extension . '.php')
+					|| file_exists(JPATH_SITE . '/components/com_' . $extension . '/' . $extension . '.php')
 				)
 				{
-					if ($extension == 'cookieconfirm' && JFile::exists(JPATH_ADMINISTRATOR . '/components/com_cookieconfirm/version.php'))
+					if ($extension == 'cookieconfirm' && file_exists(JPATH_ADMINISTRATOR . '/components/com_cookieconfirm/version.php'))
 					{
 						// Only Cookie Confirm 2.0.0.rc1 and above is supported, because
 						// previous versions don't have isCookiesAllowed()
@@ -152,13 +153,13 @@ class Extension
 				break;
 
 			case 'plugin':
-				return JFile::exists(JPATH_PLUGINS . '/' . $folder . '/' . $extension . '/' . $extension . '.php');
+				return file_exists(JPATH_PLUGINS . '/' . $folder . '/' . $extension . '/' . $extension . '.php');
 
 			case 'module':
-				return (JFile::exists(JPATH_ADMINISTRATOR . '/modules/mod_' . $extension . '/' . $extension . '.php')
-					|| JFile::exists(JPATH_ADMINISTRATOR . '/modules/mod_' . $extension . '/mod_' . $extension . '.php')
-					|| JFile::exists(JPATH_SITE . '/modules/mod_' . $extension . '/' . $extension . '.php')
-					|| JFile::exists(JPATH_SITE . '/modules/mod_' . $extension . '/mod_' . $extension . '.php')
+				return (file_exists(JPATH_ADMINISTRATOR . '/modules/mod_' . $extension . '/' . $extension . '.php')
+					|| file_exists(JPATH_ADMINISTRATOR . '/modules/mod_' . $extension . '/mod_' . $extension . '.php')
+					|| file_exists(JPATH_SITE . '/modules/mod_' . $extension . '/' . $extension . '.php')
+					|| file_exists(JPATH_SITE . '/modules/mod_' . $extension . '/mod_' . $extension . '.php')
 				);
 
 			case 'library':
@@ -166,6 +167,45 @@ class Extension
 		}
 
 		return false;
+	}
+
+	/**
+	 * Check if the Regular Labs Library is enabled
+	 *
+	 * @return bool
+	 */
+	public static function isEnabled($extension, $type = 'component', $folder = 'system')
+	{
+		$extension = strtolower($extension);
+
+		if ( ! self::isInstalled($extension, $type, $folder))
+		{
+			return false;
+		}
+
+		switch ($type)
+		{
+			case 'component':
+				return JComponentHelper::isEnabled($extension);
+
+			case 'plugin':
+				return JPluginHelper::isEnabled($folder, $extension);
+
+			case 'module':
+				return JModuleHelper::isEnabled($extension);
+		}
+
+		return false;
+	}
+
+	/**
+	 * Check if the Regular Labs Library is enabled
+	 *
+	 * @return bool
+	 */
+	public static function isFrameworkEnabled()
+	{
+		return JPluginHelper::isEnabled('system', 'regularlabs');
 	}
 
 	/**
@@ -273,7 +313,7 @@ class Extension
 	 *
 	 * @return string
 	 */
-	public static function getXMLValue($key, $alias, $type = 'component', $folder = 'system')
+	public static function getXMLValue($key, $alias, $type = '', $folder = '')
 	{
 		if ( ! $xml = self::getXML($alias, $type, $folder))
 		{
@@ -297,7 +337,7 @@ class Extension
 	 *
 	 * @return array|bool
 	 */
-	public static function getXML($alias, $type = 'component', $folder = 'system')
+	public static function getXML($alias, $type = '', $folder = '')
 	{
 		if ( ! $file = self::getXMLFile($alias, $type, $folder))
 		{
@@ -316,7 +356,7 @@ class Extension
 	 *
 	 * @return string
 	 */
-	public static function getXMLFile($alias, $type = 'component', $folder = 'system')
+	public static function getXMLFile($alias, $type = '', $folder = '')
 	{
 		$element = self::getElementByAlias($alias);
 
@@ -360,7 +400,7 @@ class Extension
 
 		foreach ($files as $file)
 		{
-			if ( ! JFile::exists($file))
+			if ( ! file_exists($file))
 			{
 				continue;
 			}
@@ -369,16 +409,6 @@ class Extension
 		}
 
 		return '';
-	}
-
-	/**
-	 * Check if the Regular Labs Library is enabled
-	 *
-	 * @return bool
-	 */
-	public static function isFrameworkEnabled()
-	{
-		return JPluginHelper::isEnabled('system', 'regularlabs');
 	}
 
 	public static function isAuthorised($require_core_auth = true)
@@ -437,5 +467,18 @@ class Extension
 		}
 
 		return ! Protect::isRestrictedComponent($params->disabled_components);
+	}
+
+	public static function getById($id)
+	{
+		$db = JFactory::getDbo();
+
+		$query = $db->getQuery(true)
+			->select($db->quoteName(['extension_id', 'manifest_cache']))
+			->from($db->quoteName('#__extensions'))
+			->where($db->quoteName('extension_id') . ' = ' . (int) $id);
+		$db->setQuery($query);
+
+		return $db->loadObject();
 	}
 }

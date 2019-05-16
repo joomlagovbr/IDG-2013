@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*
  * @package Joomla
  * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
@@ -45,27 +45,27 @@ JHtml::_('formbehavior.chosen', 'select');
 if ($this->tmpl['displaytabs'] > 0) {
 
 	echo '<ul class="nav nav-tabs" id="configTabs">';
-	
+
 	$label = JHTML::_( 'image', 'media/com_phocagallery/images/administrator/icon-16-upload.png','') . '&nbsp;'.JText::_('COM_PHOCAGALLERY_UPLOAD');
 	echo '<li><a href="#upload" data-toggle="tab">'.$label.'</a></li>';
-	
+
 	if((int)$this->tmpl['enablemultiple']  >= 0) {
 		$label = JHtml::_( 'image', 'media/com_phocagallery/images/administrator/icon-16-upload-multiple.png','') . '&nbsp;'.JText::_('COM_PHOCAGALLERY_MULTIPLE_UPLOAD');
 		echo '<li><a href="#multipleupload" data-toggle="tab">'.$label.'</a></li>';
 	}
-	
+
 	if($this->tmpl['enablejava'] >= 0) {
-	
+
 		$label = JHtml::_( 'image', 'media/com_phocagallery/images/administrator/icon-16-upload-java.png','') . '&nbsp;'.JText::_('COM_PHOCAGALLERY_JAVA_UPLOAD');
 		echo '<li><a href="#javaupload" data-toggle="tab">'.$label.'</a></li>';
 	}
 	$label = JHtml::_( 'image', 'media/com_phocagallery/images/administrator/icon-16-folder.png','') . '&nbsp;'.JText::_('COM_PHOCAGALLERY_CREATE_FOLDER');
 	echo '<li><a href="#createfolder" data-toggle="tab">'.$label.'</a></li>';
-	
+
 	echo '</ul>';
-	
+
 	echo '<div class="tab-content">'. "\n";
-	
+
 	echo '<div class="tab-pane" id="upload">'. "\n";
 	echo $this->loadTemplate('upload');
 	echo '</div>'. "\n";
@@ -75,11 +75,11 @@ if ($this->tmpl['displaytabs'] > 0) {
 	echo '<div class="tab-pane" id="javaupload">'. "\n";
 	echo $this->loadTemplate('javaupload');
 	echo '</div>'. "\n";
-	
+
 	echo '<div class="tab-pane" id="createfolder">'. "\n";
-	echo PhocaGalleryFileUpload::renderCreateFolder($this->session->getName(), $this->session->getId(), $this->currentFolder, 'phocagalleryi', 'tab=createfolder&amp;field='.$this->field );
+	echo PhocaGalleryFileUpload::renderCreateFolder($this->session->getName(), $this->session->getId(), $this->currentFolder, 'phocagalleryi', 'tab=createfolder&amp;field='.PhocaGalleryText::filterValue($this->field, 'alphanumeric2'));
 	echo '</div>'. "\n";
-	
+
 	echo '</div>'. "\n";
 }
 ?>
@@ -98,7 +98,7 @@ if ($this->tmpl['displaytabs'] > 0) {
 	echo JHtml::_('tabs.panel', JHtml::_( 'image', 'media/com_phocagallery/images/administrator/icon-16-upload.png','') . '&nbsp;'.JText::_('COM_PHOCAGALLERY_UPLOAD'), 'upload' );
 	echo $this->loadTemplate('upload');
 	//echo $pane->endPanel();
-	
+
 	if((int)$this->tmpl['enablemultiple']  >= 0) {
 		//echo $pane->startPanel( JHTML::_( 'image', 'media/com_phocagallery/images/administrator/icon-16-upload-multiple.png','') . '&nbsp;'.JText::_('COM_PHOCAGALLERY_MULTIPLE_UPLOAD'), 'multipleupload' );
 		echo JHtml::_('tabs.panel', JHtml::_( 'image', 'media/com_phocagallery/images/administrator/icon-16-upload-multiple.png','') . '&nbsp;'.JText::_('COM_PHOCAGALLERY_MULTIPLE_UPLOAD'), 'multipleupload' );
@@ -121,7 +121,7 @@ if ($this->tmpl['displaytabs'] > 0) {
 
 //TEMP
 //$this->tmpl['tab'] = 'multipleupload';
-if ($this->tmpl['tab'] != '') {$jsCt = 'a[href=#'.$this->tmpl['tab'] .']';} else {$jsCt = 'a:first';}
+if ($this->tmpl['tab'] != '') {$jsCt = 'a[href=#'.PhocaGalleryText::filterValue($this->tmpl['tab'], 'alphanumeric2') .']';} else {$jsCt = 'a:first';}
 echo '<script type="text/javascript">';
 echo '   jQuery(\'#configTabs '.$jsCt.'\').tab(\'show\');'; // Select first tab
 echo '</script>';

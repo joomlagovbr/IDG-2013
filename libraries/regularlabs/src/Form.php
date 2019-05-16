@@ -1,11 +1,11 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.7.10792
+ * @version         19.5.762
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -13,8 +13,9 @@ namespace RegularLabs\Library;
 
 defined('_JEXEC') or die;
 
-use JHtml;
-use JText;
+use Joomla\CMS\HTML\HTMLHelper as JHtml;
+use Joomla\CMS\Language\Text as JText;
+use Joomla\CMS\Plugin\PluginHelper as JPluginHelper;
 
 class Form
 {
@@ -88,7 +89,29 @@ class Form
 				$input = '<input type="text" name="' . $name . '" id="' . $id . '" value="' . $value . '" size="60">';
 			}
 
-			return '<fieldset class="radio"><label for="' . $id . '">' . JText::_('RL_ITEM_IDS') . ':</label>' . $input . '</fieldset>';
+			$plugin = JPluginHelper::getPlugin('system', 'regularlabs');
+
+			$url = ! empty($plugin->id)
+				? 'index.php?option=com_plugins&task=plugin.edit&extension_id=' . $plugin->id
+				: 'index.php?option=com_plugins&filter_folder=&filter_search=Regular%20Labs%20Library';
+
+			$label   = JText::_('RL_ITEM_IDS');
+			$text    = JText::_('RL_MAX_LIST_COUNT_INCREASE');
+			$tooltip = JText::_('RL_MAX_LIST_COUNT_INCREASE_DESC,' . $params->max_list_count . ',RL_MAX_LIST_COUNT');
+			$link    = '<a href="' . $url . '" target="_blank" id="' . $id . '_msg"'
+				. ' class="hasPopover" title="' . $text . '" data-content="' . htmlentities($tooltip) . '">'
+				. '<span class="icon icon-cog"></span>'
+				. $text
+				. '</a>';
+
+			$script = 'jQuery("#' . $id . '_msg").popover({"html": true,"trigger": "hover focus","container": "body"})';
+
+			return '<fieldset class="radio">'
+				. '<label for="' . $id . '">' . $label . ':</label>'
+				. $input
+				. '<br><small>' . $link . '</small>'
+				. '</fieldset>'
+				. '<script>' . $script . '</script>';
 		}
 
 		if ($simple)
@@ -116,8 +139,12 @@ class Form
 
 		if ($simple)
 		{
-			$attr = 'style="width: ' . $size . 'px"';
-			$attr .= $multiple ? ' multiple="multiple"' : '';
+			$attr = 'style="width: ' . $size . 'px" multiple="multiple"';
+
+			if (substr($name, -2) !== '[]')
+			{
+				$name .= '[]';
+			}
 
 			$html = JHtml::_('select.genericlist', $options, $name, trim($attr), 'value', 'text', $value, $id);
 
@@ -217,7 +244,7 @@ class Form
 			else
 			{
 				$selected = in_array($option->value, $value) ? ' checked="checked"' : '';
-				$disabled = (isset($option->disable) && $option->disable) ? ' readonly="readonly" style="visibility:hidden"' : '';
+				$disabled = (isset($option->disable) && $option->disable) ? ' disabled="disabled"' : '';
 
 				$item .= '<input type="checkbox" class="pull-left" name="' . $name . '" id="' . $id . $option->value . '" value="' . $option->value . '"' . $selected . $disabled . '>
 					<label for="' . $id . $option->value . '" class="' . $labelclass . '">' . $option->text . '</label>';
@@ -295,6 +322,24 @@ class Form
 	{
 		JHtml::_('jquery.framework');
 
+		$script = self::getAddToLoadAjaxListScript($field, $name, $value, $id, $attributes, $simple);
+
+		if (is_array($value))
+		{
+			$value = implode(',', $value);
+		}
+
+		Document::script('regularlabs/script.min.js');
+		Document::stylesheet('regularlabs/style.min.css');
+
+		$input = '<textarea name="' . $name . '" id="' . $id . '" cols="40" rows="5">' . $value . '</textarea>'
+			. '<div id="' . $id . '_spinner" class="rl_spinner"></div>';
+
+		return $input . $script;
+	}
+
+	public static function getAddToLoadAjaxListScript($field, $name, $value, $id, $attributes = [], $simple = false)
+	{
 		$attributes['field'] = $field;
 		$attributes['name']  = $name;
 		$attributes['value'] = $value;
@@ -309,7 +354,8 @@ class Form
 		$error   = $remove_spinner;
 		$success = "if(data)\{" . $replace_field . "\}" . $remove_spinner;
 
-		//	$success .= "console.log('#" . $id . "');";
+//			$success .= "console.log('#" . $id . "');";
+//			$success .= "console.log(data);";
 
 		if ($simple)
 		{
@@ -323,24 +369,15 @@ class Form
 			$success .= "if(data.indexOf('rl_multiselect') > -1)\{RegularLabsMultiSelect.init($('#" . $id . "'));\}";
 		}
 
-		$script = "jQuery(document).ready(function() {RegularLabsScripts.addToLoadAjaxList("
+		$script = "jQuery(document).ready(function() {"
+			. "RegularLabsScripts.addToLoadAjaxList("
 			. "'" . addslashes($url) . "',"
 			. "'" . addslashes($success) . "',"
 			. "'" . addslashes($error) . "'"
-			. ")});";
+			. ")"
+			. "});";
 
-		if (is_array($value))
-		{
-			$value = implode(',', $value);
-		}
-
-		Document::script('regularlabs/script.min.js');
-		Document::stylesheet('regularlabs/style.min.css');
-
-		$input = '<textarea name="' . $name . '" id="' . $id . '" cols="40" rows="5">' . $value . '</textarea>'
-			. '<div id="' . $id . '_spinner" class="rl_spinner"></div>';
-
-		return $input . '<script>' . $script . '</script>';
+		return '<script>' . $script . '</script>';
 	}
 
 	/**

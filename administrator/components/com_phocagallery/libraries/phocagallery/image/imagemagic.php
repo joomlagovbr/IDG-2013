@@ -289,6 +289,19 @@ class PhocaGalleryImageMagic
 						return false;
 					}
 				break;
+				 case IMAGETYPE_WEBP:
+					if (!function_exists('ImageCreateFromWEBP')) {
+						$errorMsg = 'ErrorNoWEBPFunction';
+						return false;
+					}
+					//$image1 = ImageCreateFromGIF($fileIn);
+					try {
+						$image1 = ImageCreateFromWEBP($fileIn);
+					} catch(\Exception $exception) {
+						$errorMsg = 'ErrorWEBPFunction';
+						return false;
+					}
+				break;
 	            case IMAGETYPE_WBMP:
 					if (!function_exists('ImageCreateFromWBMP')) {
 						$errorMsg = 'ErrorNoWBMPFunction';
@@ -318,6 +331,7 @@ class PhocaGalleryImageMagic
 				
 				switch($type) {
 					case IMAGETYPE_PNG:
+					case IMAGETYPE_WEBP:
 						//imagealphablending($image1, false);
 						@imagealphablending($image2, false);
 						//imagesavealpha($image1, true);
@@ -332,12 +346,18 @@ class PhocaGalleryImageMagic
 						switch($exif['Orientation']) {
 						   case 8:
 								 $image1 = imagerotate($image1,90,0);
+								// @imagealphablending($image1, false);
+								// @imagesavealpha($image1, true);
 								 break;
 						   case 3:
 								 $image1 = imagerotate($image1,180,0);
+								// @imagealphablending($image1, false);
+								// @imagesavealpha($image1, true);
 								 break;
 						   case 6:
 								 $image1 = imagerotate($image1,-90,0);
+								// @imagealphablending($image1, false);
+								// @imagesavealpha($image1, true);
 								 break;
 						}
 					}   
@@ -441,6 +461,34 @@ class PhocaGalleryImageMagic
 							}
 						} else {
 							if (!@ImageGIF($image2, $fileOut)) {
+								$errorMsg = 'ErrorWriteFile';
+								return false;
+							}
+						}
+					break;
+					
+					case IMAGETYPE_WEBP :
+						if (!function_exists('ImageWEBP')) {
+							$errorMsg = 'ErrorNoWEBPFunction';
+							return false;
+						}
+						
+						if ($jfile_thumbs == 1) {
+							ob_start();
+							if (!@imagewebp($image2, NULL)) {
+								ob_end_clean();
+								$errorMsg = 'ErrorWriteFile';
+								return false;
+							}
+							$imgWEBPToWrite = ob_get_contents();
+							ob_end_clean();
+							
+							if(!JFile::write( $fileOut, $imgWEBPToWrite)) {
+								$errorMsg = 'ErrorWriteFile';
+								return false;
+							}
+						} else {
+							if (!@imagewebp($image2, $fileOut)) {
 								$errorMsg = 'ErrorWriteFile';
 								return false;
 							}

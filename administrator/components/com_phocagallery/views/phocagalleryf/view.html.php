@@ -15,6 +15,7 @@ class PhocaGalleryCpViewPhocagalleryF extends JViewLegacy
 {
 	protected $field;
 	protected $fce;
+	protected $t;
 	
 	public function display($tpl = null) {
 
@@ -36,17 +37,17 @@ class PhocaGalleryCpViewPhocagalleryF extends JViewLegacy
 		$this->assignRef('folders', $this->get('folders'));
 		$this->assignRef('state', $this->get('state'));*/
 		
-		$this->assign('session', JFactory::getSession());
-		$this->assign('path_orig_rel', $path->image_rel);
-		$this->assign('folders', $this->get('folders'));
-		$this->assign('state', $this->get('state'));
+		$this->t['session'] = JFactory::getSession();
+		$this->t['path_orig_rel'] = $path->image_rel;
+		$this->t['folders'] = $this->get('folders');
+		$this->t['state'] = $this->get('state');
 
 		parent::display($tpl);
 	}
 
 	protected function setFolder($index = 0) {
-		if (isset($this->folders[$index])) {
-			$this->_tmp_folder = $this->folders[$index];
+		if (isset($this->t['folders'][$index])) {
+			$this->_tmp_folder = $this->t['folders'][$index];
 		} else {
 			$this->_tmp_folder = new JObject;
 		}

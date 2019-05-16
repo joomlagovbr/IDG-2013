@@ -1,15 +1,19 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.7.10792
+ * @version         19.5.762
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
 defined('_JEXEC') or die;
+
+use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\Language\Text as JText;
+use RegularLabs\Library\StringHelper as RL_String;
 
 if ( ! is_file(JPATH_LIBRARIES . '/regularlabs/autoload.php'))
 {
@@ -18,9 +22,9 @@ if ( ! is_file(JPATH_LIBRARIES . '/regularlabs/autoload.php'))
 
 require_once JPATH_LIBRARIES . '/regularlabs/autoload.php';
 
-use RegularLabs\Library\Document as RL_Document;
-use RegularLabs\Library\StringHelper as RL_String;
-
+/**
+ * @deprecated  2018-10-30  Use ConditionSelection instead
+ */
 class JFormFieldRL_AssignmentSelection extends \RegularLabs\Library\Field
 {
 	public $type = 'AssignmentSelection';
@@ -32,10 +36,6 @@ class JFormFieldRL_AssignmentSelection extends \RegularLabs\Library\Field
 
 	protected function getInput()
 	{
-		$this->params = $this->element->attributes();
-
-		RL_Document::stylesheet('regularlabs/style.min.css');
-
 		require_once __DIR__ . '/toggler.php';
 		$toggler = new RLFieldToggler;
 
@@ -91,16 +91,16 @@ class JFormFieldRL_AssignmentSelection extends \RegularLabs\Library\Field
 		$html[] = '<div class="controls">';
 		$html[] = '<fieldset id="' . $this->id . '"  class="radio btn-group">';
 
-		$onclick = ' onclick="RegularLabsScripts.setToggleTitleClass(this, 0)"';
+		$onclick = ' onclick="RegularLabsForm.setToggleTitleClass(this, 0)"';
 		$html[]  = '<input type="radio" id="' . $this->id . '0" name="' . $this->name . '" value="0"' . (( ! $this->value) ? ' checked="checked"' : '') . $onclick . '>';
 		$html[]  = '<label class="rl_btn-ignore" for="' . $this->id . '0">' . JText::_('RL_IGNORE') . '</label>';
 
-		$onclick = ' onclick="RegularLabsScripts.setToggleTitleClass(this, 1)"';
+		$onclick = ' onclick="RegularLabsForm.setToggleTitleClass(this, 1)"';
 		$html[]  = '<input type="radio" id="' . $this->id . '1" name="' . $this->name . '" value="1"' . (($this->value === 1) ? ' checked="checked"' : '') . $onclick . '>';
 		$html[]  = '<label class="rl_btn-include" for="' . $this->id . '1">' . JText::_('RL_INCLUDE') . '</label>';
 
-		$onclick = ' onclick="RegularLabsScripts.setToggleTitleClass(this, 2)"';
-		$onclick .= ' onload="RegularLabsScripts.setToggleTitleClass(this, ' . $this->value . ', 7)"';
+		$onclick = ' onclick="RegularLabsForm.setToggleTitleClass(this, 2)"';
+		$onclick .= ' onload="RegularLabsForm.setToggleTitleClass(this, ' . $this->value . ', 7)"';
 		$html[]  = '<input type="radio" id="' . $this->id . '2" name="' . $this->name . '" value="2"' . (($this->value === 2) ? ' checked="checked"' : '') . $onclick . '>';
 		$html[]  = '<label class="rl_btn-exclude" for="' . $this->id . '2">' . JText::_('RL_EXCLUDE') . '</label>';
 

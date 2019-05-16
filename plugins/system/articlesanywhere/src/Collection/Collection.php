@@ -1,23 +1,24 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         8.0.3
+ * @version         9.2.0
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
 namespace RegularLabs\Plugin\System\ArticlesAnywhere\Collection;
+
+defined('_JEXEC') or die;
 
 use RegularLabs\Library\DB as RL_DB;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Collection\Filters;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Config;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Factory;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Output\Output;
-
-defined('_JEXEC') or die;
+use RegularLabs\Plugin\System\ArticlesAnywhere\Params;
 
 class Collection extends CollectionObject
 {
@@ -36,8 +37,10 @@ class Collection extends CollectionObject
 	{
 		parent::__construct($config);
 
-		$this->items  = Factory::getFilter('Items', $config);
-		$this->fields = Factory::getFilter('Fields', $config);
+		$this->items      = Factory::getFilter('Items', $config);
+		$this->fields     = Factory::getFilter('Fields', $config);
+		$this->pagination = Factory::getPagination($config);
+
 	}
 
 	public function getOnlyIds()
@@ -45,59 +48,39 @@ class Collection extends CollectionObject
 		return $this->getIds();
 	}
 
-	public function getOutputByIds($ids = [], $default = '')
+	public function getOutputByIds($total_ids = [], $default = '')
 	{
-		if (empty($ids))
+		if (empty($total_ids))
 		{
 			return $default;
 		}
+
+		$ids = [$total_ids[0]];
 
 		// Now get Item data for found ids
 		$items = $this->getData($ids);
 
 		$items = array_map(function ($item) {
-			return new Item($this->config, $item);
+			return Factory::getItem($this->config, $item);
 		}, $items);
 
-		return $this->getOutput($items, count($ids));
+		return $this->getOutput(
+			$items,
+			count($total_ids),
+			count($ids)
+		);
 	}
 
-	public function get($default = '')
+	protected function getOutput($items, $total_no_limit, $total_no_pagination)
 	{
-		$ids = $this->getIds();
-
-		if (empty($ids))
-		{
-			return $default;
-		}
-
-		// Now get Item data for found ids
-		$items = $this->getData($ids);
-
-		$items = array_map(function ($item) {
-			return new Item($this->config, $item);
-		}, $items);
-
-		return $this->getOutput($items, count($ids));
-	}
-
-	protected function getOutput($items, $total_before_limit)
-	{
-		return (new Output($this->config))->get($items, $total_before_limit);
+		return (new Output($this->config))->get($items, $total_no_limit, $total_no_pagination);
 	}
 
 	protected function getIds()
 	{
-		$filters = $this->config->getFilters();
-
-		if (empty($filters))
-		{
-			return [];
-		}
-
 		$query = $this->getIdsQuery();
 
-		return DB::getResults($query, 'loadColumn') ?: [];
+		return DB::getResults($query) ?: [];
 	}
 
 	protected function getIdsQuery()
@@ -112,8 +95,13 @@ class Collection extends CollectionObject
 
 		$this->setIgnores($query);
 
+//		echo "\n\n<pre>==========getIdsQuery================\n";
+//		print_r($query->dump());
+//		echo "\n==========================</pre>\n\n";
+
 		return $query;
 	}
+
 
 	protected function getData($ids)
 	{
@@ -124,11 +112,13 @@ class Collection extends CollectionObject
 			return [];
 		}
 
+		$query->select('items.*');
+
 		return DB::getResults($query,
 			'loadObjectList',
 			[],
-			$this->config->getData('limit'),
-			$this->config->getData('offset')
+			$this->pagination->params->limit,
+			$this->pagination->params->offset - $this->pagination->params->offset_start
 		);
 	}
 
@@ -142,9 +132,19 @@ class Collection extends CollectionObject
 		$selects = $this->config->getSelects();
 
 		$query = $this->db->getQuery(true)
-			->select('items.*')
+			->select('items.id')
 			->from($this->config->getTableItems('items'))
-			->where($this->db->quoteName('items.id') . RL_DB::in($ids));
+			->where($this->db->quoteName('items.id') . RL_DB::in($ids))
+			->group($this->db->quoteName('items.id'));
+
+		if ($selects['frontpage'])
+		{
+			$query->select([
+				$this->db->quoteName('frontpage.ordering', 'featured-ordering'),
+			])
+				->join('LEFT', $this->config->getTableFeatured('frontpage')
+					. ' ON ' . $this->db->quoteName('frontpage.content_id') . ' = ' . $this->db->quoteName('items.id'));
+		}
 
 		if ($selects['categories'])
 		{
@@ -182,7 +182,25 @@ class Collection extends CollectionObject
 					. ' ON ' . $this->db->quoteName('modifier.id') . ' = ' . $this->db->quoteName('items.modified_by'));
 		}
 
+		if ($selects['custom_fields'])
+		{
+			foreach ($selects['custom_fields'] as $custom_field)
+			{
+				$table_as = 'custom_field_' . $custom_field->id;
+
+				$query->select($this->db->quoteName($table_as . '.value', 'custom_field_' . $custom_field->name))
+					->join('LEFT', $this->config->getTableFieldsValues($table_as)
+						. "\n" . ' ON ' . $this->db->quoteName($table_as . '.item_id') . ' = ' . $this->db->quoteName('items.id')
+						. "\n" . ' AND ' . $this->db->quoteName($table_as . '.field_id') . ' = ' . $this->db->quote($custom_field->id));
+			}
+		}
+
+
+//		echo "\n\n<pre>=========getDataQuery=================\n";
+//		print_r($query->dump());
+//		echo "\n==========================</pre>\n\n";
 
 		return $query;
 	}
+
 }

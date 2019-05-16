@@ -88,6 +88,8 @@ CREATE TABLE IF NOT EXISTS `#__phocagallery_categories` (
   `exta` varchar(255) NOT NULL DEFAULT '',
   `extu` varchar(255) NOT NULL DEFAULT '',
   `extauth` varchar(255) NOT NULL DEFAULT '',
+  `imgurclient` varchar(255) NOT NULL DEFAULT '',
+  `imguralbum` varchar(255) NOT NULL DEFAULT '',
   `extfbuid` int(11) NOT NULL DEFAULT '0',
   `extfbcatid` varchar(255) NOT NULL DEFAULT '',
   `params` text,

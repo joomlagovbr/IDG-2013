@@ -12,12 +12,12 @@
 defined('_JEXEC') or die('Restricted access');
 
 if ($this->tmpl['ytb_display'] == 1) {
-	
+
 	$document	= JFactory::getDocument();
-	$document->addCustomTag( "<style type=\"text/css\"> \n" 
+	$document->addCustomTag( "<style type=\"text/css\"> \n"
 			." body {overflow:hidden;} \n"
 			." </style> \n");
-	
+
 	echo '<div style="padding:0;margin:0;" class="pg-ytb-full">'.$this->item->videocode.'</div>';
 } else {
 
@@ -32,7 +32,7 @@ if ($this->tmpl['ytb_display'] == 1) {
 		.$this->item->videocode
 		.'</td>'
 		.'</tr>';
-		
+
 	$titleDesc = '';
 	if ($this->tmpl['display_title_description'] == 1) {
 		$titleDesc .= $this->item->title;
@@ -40,7 +40,7 @@ if ($this->tmpl['ytb_display'] == 1) {
 			$titleDesc .= ' - ';
 		}
 	}
-		
+
 	// Standard Description
 	if ($this->tmpl['displaydescriptiondetail'] == 1) {
 		echo '<tr>'
@@ -57,16 +57,16 @@ if ($this->tmpl['ytb_display'] == 1) {
 		.'<td align="center"></td>'
 		.'<td align="center">'.str_replace("%onclickreload%", $this->tmpl['detailwindowreload'], $this->item->reloadbutton).'</td>';
 		if ($this->tmpl['detailwindow'] == 4 || $this->tmpl['detailwindow'] == 5 || $this->tmpl['detailwindow'] == 7) {
-		} else {	
+		} else {
 			echo '<td align="center">' . str_replace("%onclickclose%", $this->tmpl['detailwindowclose'], $this->item->closebutton). '</td>';
 		}
 		echo '<td align="right" width="30%" style="padding-right:48px">'.$this->item->nextbutton.'</td>'
 		.'</tr>';
-	}	
+	}
 	echo '</table>';
 	echo $this->loadTemplate('rating');
 	if ($this->tmpl['detailwindow'] == 7) {
-		echo '<div style="text-align:right;color:#ccc;display:block">Powered by <a href="https://www.phoca.cz/phocagallery">Phoca Gallery</a></div>';
+        echo PhocaGalleryUtils::getInfo();
 	}
 	echo '</div>';
 }

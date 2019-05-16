@@ -16,10 +16,10 @@ class PhocaGalleryViewCooliris3DWall extends JViewLegacy
 	protected $params;
 
 	function display($tpl = null) {
-		
+
 		$app				= JFactory::getApplication();
 		$document			= JFactory::getDocument();
-		$uri 				= JFactory::getURI();
+		$uri 				= \Joomla\CMS\Uri\Uri::getInstance();
 		$menus				= $app->getMenu();
 		$menu				= $menus->getActive();
 		$this->params		= $app->getParams();
@@ -36,16 +36,16 @@ class PhocaGalleryViewCooliris3DWall extends JViewLegacy
 		$this->tmpl['gallerymetadesc'] 				= $this->params->get( 'gallery_metadesc', '' );
 		$this->tmpl['enablecustomcss']				= $this->params->get( 'enable_custom_css', 0);
 		$this->tmpl['customcss']					= $this->params->get( 'custom_css', '');
-		
+
 		$idCategory									= $app->input->get('id', 0, 'int');
-		
+
 		// CSS
 		JHtml::stylesheet('media/com_phocagallery/css/phocagallery.css' );
 		if ($this->tmpl['enablecustomcss'] == 1) {
 			JHtml::stylesheet('media/com_phocagallery/css/phocagallerycustom.css' );
 			PhocaGalleryRenderFront::displayCustomCSS($this->tmpl['customcss']);
 		}
-		
+
 		if ((int)$idCategory > 0) {
 			$category	= $model->getCategory($idCategory);
 			$this->_prepareDocument($category);
@@ -55,7 +55,7 @@ class PhocaGalleryViewCooliris3DWall extends JViewLegacy
 				$attribs['hspace'] = '"6"';
 				$this->tmpl['image'] = JHtml::_('image', 'images/stories/'.$category->image, '', $attribs);
 			}*/
-			
+
 			$this->_addBreadCrumbs($category, isset($menu->query['id']) ? $menu->query['id'] : 0, $display_cat_name_breadcrumbs);
 
 			// ASIGN
@@ -69,15 +69,15 @@ class PhocaGalleryViewCooliris3DWall extends JViewLegacy
 		}
 			parent::display($tpl);
 	}
-	
+
 	protected function _prepareDocument($category) {
-		
+
 		$app		= JFactory::getApplication();
 		$menus		= $app->getMenu();
 		$pathway 	= $app->getPathway();
 		//$this->params		= $app->getParams();
 		$title 		= null;
-		
+
 		$this->tmpl['gallerymetakey'] 		= $this->params->get( 'gallery_metakey', '' );
 		$this->tmpl['gallerymetadesc'] 		= $this->params->get( 'gallery_metadesc', '' );
 		$this->tmpl['displaycatnametitle'] 			= $this->params->get( 'display_cat_name_title', 1 );
@@ -89,34 +89,34 @@ class PhocaGalleryViewCooliris3DWall extends JViewLegacy
 			$this->params->def('page_heading', JText::_('JGLOBAL_ARTICLES'));
 		}
 
-		$title = $this->params->get('page_title', '');		
+		$title = $this->params->get('page_title', '');
 		if (empty($title)) {
 			$title = htmlspecialchars_decode($app->get('sitename'));
 		} else if ($app->get('sitename_pagetitles', 0) == 1) {
 			$title = JText::sprintf('JPAGETITLE', htmlspecialchars_decode($app->get('sitename')), $title);
-			
+
 			if ($this->tmpl['display_cat_name_title'] == 1 && isset($this->category->title) && $this->category->title != '') {
 				$title = $title .' - ' .  $this->category->title;
 			}
-			
+
 		} else if ($app->get('sitename_pagetitles', 0) == 2) {
-			
+
 			if ($this->tmpl['display_cat_name_title'] == 1 && isset($this->category->title) && $this->category->title != '') {
 				$title = $title .' - ' .  $this->category->title;
 			}
-		
+
 			$title = JText::sprintf('JPAGETITLE', $title, htmlspecialchars_decode($app->get('sitename')));
 		}
-		
+
 		$this->document->setTitle($title);
-		
+
 		if ($category->metadesc != '') {
 			$this->document->setDescription($category->metadesc);
 		} else if ($this->tmpl['gallerymetadesc'] != '') {
 			$this->document->setDescription($this->tmpl['gallerymetadesc']);
 		} else if ($this->params->get('menu-meta_description', '')) {
 			$this->document->setDescription($this->params->get('menu-meta_description', ''));
-		} 
+		}
 
 		if ($category->metakey != '') {
 			$this->document->setMetadata('keywords', $category->metakey);
@@ -140,9 +140,9 @@ class PhocaGalleryViewCooliris3DWall extends JViewLegacy
 				$this->document->setMetadata($k, $v);
 			}
 		}*/
-		
+
 	}
-	
+
 	/**
 	 * Method to add Breadcrubms in Phoca Gallery
 	 * @param array $category Object array of Category
@@ -152,7 +152,7 @@ class PhocaGalleryViewCooliris3DWall extends JViewLegacy
 	 */
 	function _addBreadCrumbs($category, $rootId, $displayStyle) {
 	    $app	= JFactory::getApplication();
-	
+
 	    $pathway 		= $app->getPathway();
 		$pathWayItems 	= $pathway->getPathWay();
 		$lastItemIndex 	= count($pathWayItems) - 1;
@@ -169,6 +169,6 @@ class PhocaGalleryViewCooliris3DWall extends JViewLegacy
 				$pathway->setItemName($lastItemIndex, $category->title);
 				break;
 		}
-	}	
+	}
 }
 ?>

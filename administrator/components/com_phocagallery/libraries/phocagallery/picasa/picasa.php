@@ -128,8 +128,8 @@ class PhocaGalleryPicasa
 			if ($width > $height) {
 				if ($width > $corWidth) {
 					$image['width']		= $corWidth;
-					$rate 				= $width / $corWidth;
-					$image['height']	= $height / $rate;
+					$rate 				= (int)$width / (int)$corWidth;
+					$image['height']	= (int)$height / $rate;
 				} else {
 					$image['width']		= $width;
 					$image['height']	= $height;
@@ -137,8 +137,8 @@ class PhocaGalleryPicasa
 			} else {
 				if ($height > $corHeight) {
 					$image['height']	= $corHeight;
-					$rate 				= $height / $corHeight;
-					$image['width'] 	= $width / $rate;
+					$rate 				= (int)$height / (int)$corHeight;
+					$image['width'] 	= (int)$width / $rate;
 				} else {
 					$image['width']		= $width;
 					$image['height']	= $height;

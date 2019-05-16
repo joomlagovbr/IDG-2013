@@ -16,26 +16,26 @@ class PhocaGalleryCpModelPhocaGalleryEf extends JModelAdmin
 	protected	$option 		= 'com_phocagallery';
 	protected 	$text_prefix	= 'com_phocagallery';
 	public 		$typeAlias 		= 'com_phocagallery.phocagalleryef';
-	
+
 	protected function canDelete($record)
 	{
 		//$user = JFactory::getUser();
 		return parent::canDelete($record);
 	}
-	
+
 	protected function canEditState($record)
 	{
 		//$user = JFactory::getUser();
 		return parent::canEditState($record);
 	}
-	
+
 	public function getTable($type = 'PhocaGalleryEf', $prefix = 'Table', $config = array())
 	{
 		return JTable::getInstance($type, $prefix, $config);
 	}
-	
+
 	public function getForm($data = array(), $loadData = true) {
-		
+
 		$app	= JFactory::getApplication();
 		$form 	= $this->loadForm('com_phocagallery.phocagallerystyles', 'phocagalleryef', array('control' => 'jform', 'load_data' => $loadData));
 		if (empty($form)) {
@@ -43,7 +43,7 @@ class PhocaGalleryCpModelPhocaGalleryEf extends JModelAdmin
 		}
 		return $form;
 	}
-	
+
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
@@ -55,7 +55,7 @@ class PhocaGalleryCpModelPhocaGalleryEf extends JModelAdmin
 
 		return $data;
 	}
-	
+
 	protected function prepareTable($table)
 	{
 		jimport('joomla.filter.output');
@@ -63,10 +63,10 @@ class PhocaGalleryCpModelPhocaGalleryEf extends JModelAdmin
 		$user = JFactory::getUser();
 
 		$table->title		= htmlspecialchars_decode($table->title, ENT_QUOTES);
-		$table->alias		= JApplication::stringURLSafe($table->alias);
+		$table->alias		= \JApplicationHelper::stringURLSafe($table->alias);
 
 		if (empty($table->alias)) {
-			$table->alias = JApplication::stringURLSafe($table->title);
+			$table->alias = \JApplicationHelper::stringURLSafe($table->title);
 		}
 
 		if (empty($table->id)) {
@@ -88,7 +88,7 @@ class PhocaGalleryCpModelPhocaGalleryEf extends JModelAdmin
 			//$table->modified_by	= $user->get('id');
 		}
 	}
-	
+
 	protected function getReorderConditions($table = null)
 	{
 		$condition = array();
@@ -96,19 +96,19 @@ class PhocaGalleryCpModelPhocaGalleryEf extends JModelAdmin
 		//$condition[] = 'state >= 0';
 		return $condition;
 	}
-	
+
 	public function increaseOrdering($categoryId) {
-		
+
 		$ordering = 1;
 		$this->_db->setQuery('SELECT MAX(ordering) FROM #__phocagallery_styles WHERE type='.(int)$categoryId);
 		$max = $this->_db->loadResult();
 		$ordering = $max + 1;
 		return $ordering;
 	}
-	
+
 	public function &getSource($id, $filename, $type) {
 		$item = new stdClass;
-		
+
 		$filePath = PhocaGalleryFile::existsCSS($filename, $type);
 		if ($filePath) {
 			//$item->id			= $id;
@@ -120,16 +120,16 @@ class PhocaGalleryCpModelPhocaGalleryEf extends JModelAdmin
 		}
 		return $item;
 	}
-	
+
 	public function save($data) {
 		jimport('joomla.filesystem.file');
-		
+
 		// New
 		if ($data['id'] < 1) {
 			$data['type'] = 2;// Custom in every case
 			if ($data['title'] != '') {
-				$filename = JApplication::stringURLSafe($data['title']);
-				
+				$filename = \JApplicationHelper::stringURLSafe($data['title']);
+
 				if (trim(str_replace('-','',$filename)) == '') {
 					$filename = JFactory::getDate()->format("Y-m-d-H-i-s");
 				}
@@ -149,8 +149,8 @@ class PhocaGalleryCpModelPhocaGalleryEf extends JModelAdmin
 			$filename = PhocaGalleryFile::getCSSFile($data['id']);
 			$filePath = PhocaGalleryFile::existsCSS($filename, $data['type']);
 		}
-		
-		//$dispatcher = JEventDispatcher::getInstance();
+
+		//$dispatcher = J EventDispatcher::getInstance();
 		$fileName	= $filename;
 
 
@@ -181,7 +181,7 @@ class PhocaGalleryCpModelPhocaGalleryEf extends JModelAdmin
 			$this->setError(JText::_('COM_PHOCAGALLERY_ERROR_SOURCE_FILE_NOT_UNWRITABLE'));
 			return false;
 		} else*/
-			
+
 		if (!$return) {
 			$this->setError(JText::sprintf('COM_PHOCAGALLERY_ERROR_FAILED_TO_SAVE_FILENAME', $fileName));
 			return false;
@@ -193,10 +193,10 @@ class PhocaGalleryCpModelPhocaGalleryEf extends JModelAdmin
 		//return true;
 		return parent::save($data);
 	}
-	
+
 	public function delete(&$pks)
 	{
-		$dispatcher = JEventDispatcher::getInstance();
+		//$dispatcher = J EventDispatcher::getInstance();
 		$pks = (array) $pks;
 		$table = $this->getTable();
 
@@ -216,17 +216,17 @@ class PhocaGalleryCpModelPhocaGalleryEf extends JModelAdmin
 					$context = $this->option . '.' . $this->name;
 
 					// Trigger the onContentBeforeDelete event.
-					$result = $dispatcher->trigger($this->event_before_delete, array($context, $table));
+					$result = \JFactory::getApplication()->triggerEvent($this->event_before_delete, array($context, $table));
 					if (in_array(false, $result, true))
 					{
 						$this->setError($table->getError());
 						return false;
 					}
-					
+
 					//PHOCAEDIT
 					$filePath = PhocaGalleryFile::getCSSFile($pk, true);
 					//END PHOCAEDIT
-					
+
 					if (!$table->delete($pk))
 					{
 						$this->setError($table->getError());
@@ -238,9 +238,9 @@ class PhocaGalleryCpModelPhocaGalleryEf extends JModelAdmin
 						JFile::delete($filePath);
 					}
 					//END PHOCAEDIT
-					
+
 					// Trigger the onContentAfterDelete event.
-					$dispatcher->trigger($this->event_after_delete, array($context, $table));
+                    \JFactory::getApplication()->triggerEvent($this->event_after_delete, array($context, $table));
 
 				}
 				else

@@ -1,11 +1,11 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         8.0.3
+ * @version         9.2.0
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -13,6 +13,7 @@ namespace RegularLabs\Plugin\System\ArticlesAnywhere\Output\Data;
 
 defined('_JEXEC') or die;
 
+use RegularLabs\Library\Html as RL_Html;
 use RegularLabs\Library\RegEx as RL_RegEx;
 use RegularLabs\Library\StringHelper as RL_String;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Params;
@@ -51,6 +52,11 @@ class Text extends Data
 			);
 		}
 
+		if (isset($attributes->offset_headings))
+		{
+			return self::offsetHeadings($string, $attributes->offset_headings);
+		}
+
 		if (empty($attributes->limit) && empty($attributes->words) && empty($attributes->paragraphs))
 		{
 			return $string;
@@ -72,40 +78,56 @@ class Text extends Data
 			return $string;
 		}
 
+		$add_ellipsis = isset($data->add_ellipsis) ? $data->add_ellipsis : Params::get()->use_ellipsis;
+
 		if ( ! empty($data->paragraphs))
 		{
-			return self::limitHtmlParagraphs($string, (int) $data->paragraphs);
+			return self::limitHtmlParagraphs($string, (int) $data->paragraphs, $add_ellipsis);
 		}
 
 		if ( ! empty($data->words))
 		{
-			return self::limitHtmlWords($string, (int) $data->words);
+			return self::limitHtmlWords($string, (int) $data->words, $add_ellipsis);
 		}
 
-		return self::limitHtmlLetters($string, (int) $data->limit);
+		return self::limitHtmlLetters($string, (int) $data->limit, $add_ellipsis);
 	}
 
-	private static function limitHtmlParagraphs($string, $limit)
+	private static function limitHtmlParagraphs($string, $limit, $add_ellipsis = true)
 	{
 		if ( ! RL_RegEx::match('^' . str_repeat('.*?</p>', $limit), $string, $match))
 		{
 			return $string;
 		}
 
-		return $match[0];
+		if ($string == $match[0])
+		{
+			return $string;
+		}
+
+		$string = $match[0];
+
+		if ($add_ellipsis)
+		{
+			RL_RegEx::match('(.*?)(</p>)$', $string, $match);
+			self::addEllipsis($match[1]);
+			$string = $match[1] . $match[2];
+		}
+
+		return RL_Html::fix($string);
 	}
 
-	private static function limitHtmlWords($string, $limit)
+	private static function limitHtmlWords($string, $limit, $add_ellipsis = true)
 	{
-		return self::limitHtmlByType($string, $limit, 'words');
+		return self::limitHtmlByType($string, $limit, 'words', $add_ellipsis);
 	}
 
-	private static function limitHtmlLetters($string, $limit)
+	private static function limitHtmlLetters($string, $limit, $add_ellipsis = true)
 	{
-		return self::limitHtmlByType($string, $limit);
+		return self::limitHtmlByType($string, $limit, 'letters', $add_ellipsis);
 	}
 
-	private static function limitHtmlByType($string, $limit, $type = 'letters')
+	private static function limitHtmlByType($string, $limit, $type = 'letters', $add_ellipsis = true)
 	{
 		if (strlen($string) < $limit)
 		{
@@ -221,7 +243,12 @@ class Text extends Data
 
 						$string_part = rtrim(implode(' ', $words_part));
 
-						$string[] = self::addEllipsis($string_part);
+						if ($add_ellipsis)
+						{
+							self::addEllipsis($string_part);
+						}
+
+						$string[] = $string_part;
 						break;
 					}
 
@@ -247,12 +274,17 @@ class Text extends Data
 						$string_part .= ' ';
 					}
 
-					$string[] = self::addEllipsis($string_part);
+					if ($add_ellipsis)
+					{
+						self::addEllipsis($string_part);
+					}
+
+					$string[] = $string_part;
 
 					break;
 				}
 
-				$string[] = self::shorten($str_part, $limit);
+				$string[] = self::shorten($str_part, $limit, $add_ellipsis);
 
 				break;
 			}
@@ -359,6 +391,39 @@ class Text extends Data
 		return isset($pages[$title_pos + 1]) ? $pages[$title_pos + 1] : '';
 	}
 
+	private static function offsetHeadings($string, $offset = 0)
+	{
+		$offset = (int) $offset;
+
+		if ($offset == 0)
+		{
+			return $string;
+		}
+
+		if (strpos($string, '<h') === false && strpos($string, '<H') === false)
+		{
+			return $string;
+		}
+
+		if ( ! RL_RegEx::matchAll('<h(?<nr>[1-6])(?<content>[\s>].*?)</h\1>', $string, $headings))
+		{
+			return $string;
+		}
+
+		foreach ($headings as $heading)
+		{
+			$new_nr = min(max($heading['nr'] + $offset, 1), 6);
+
+			$string = str_replace(
+				$heading[0],
+				'<h' . $new_nr . $heading['content'] . '</h' . $new_nr . '>',
+				$string
+			);
+		}
+
+		return $string;
+	}
+
 	private static function strip($string, $data)
 	{
 		$string = RL_String::removeHtml($string);
@@ -373,15 +438,17 @@ class Text extends Data
 			return $string;
 		}
 
+		$add_ellipsis = isset($data->add_ellipsis) ? $data->add_ellipsis : Params::get()->use_ellipsis;
+
 		if ( ! empty($data->words))
 		{
-			return self::limitWords($string, (int) $data->words);
+			return self::limitWords($string, (int) $data->words, $add_ellipsis);
 		}
 
-		return self::limitLetters($string, (int) $data->limit);
+		return self::limitLetters($string, (int) $data->limit, $add_ellipsis);
 	}
 
-	private static function limitWords($string, $limit)
+	private static function limitWords($string, $limit, $add_ellipsis = true)
 	{
 		$orig_len = strlen($string);
 
@@ -394,15 +461,15 @@ class Text extends Data
 			)
 		);
 
-		if (strlen($string) < $orig_len)
+		if (strlen($string) < $orig_len && $add_ellipsis)
 		{
-			$string = self::addEllipsis($string);
+			self::addEllipsis($string);
 		}
 
 		return $string;
 	}
 
-	private static function limitLetters($string, $limit)
+	private static function limitLetters($string, $limit, $add_ellipsis)
 	{
 		$orig_len = strlen($string);
 
@@ -412,10 +479,10 @@ class Text extends Data
 			return $string;
 		}
 
-		return self::shorten($string, $limit);
+		return self::shorten($string, $limit, $add_ellipsis);
 	}
 
-	private static function shorten($string, $limit)
+	private static function shorten($string, $limit, $add_ellipsis)
 	{
 		if (strlen($string) <= $limit)
 		{
@@ -424,7 +491,12 @@ class Text extends Data
 
 		$string = self::rtrim($string, $limit);
 
-		return self::addEllipsis($string);
+		if ($add_ellipsis)
+		{
+			self::addEllipsis($string);
+		}
+
+		return $string;
 	}
 
 	private static function rtrim($string, $limit)
@@ -437,11 +509,15 @@ class Text extends Data
 		return rtrim(substr($string, 0, ($limit - 3)));
 	}
 
-	private static function addEllipsis($string)
+	private static function addEllipsis(&$string)
 	{
-		if ( ! Params::get()->use_ellipsis)
+		$string = trim($string);
+
+		if (RL_RegEx::match('\.$', $string))
 		{
-			return $string;
+			$string .= '..';
+
+			return;
 		}
 
 		if (RL_RegEx::match('[^a-z0-9]$', $string))
@@ -449,6 +525,6 @@ class Text extends Data
 			$string .= ' ';
 		}
 
-		return $string . '...';
+		$string .= '...';
 	}
 }

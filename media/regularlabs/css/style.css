@@ -1,10 +1,10 @@
 /**
  * @package         Regular Labs Library
- * @version         18.7.10792
+ * @version         19.5.762
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 @font-face {
@@ -27,7 +27,7 @@
   display: inline-block;
   width: 14px;
   height: 14px;
-  *margin-right: .3em;
+  *margin-right: 0.3em;
   line-height: 16px;
   font-size: 16px;
   speak: none;
@@ -118,6 +118,9 @@ h2 .icon-reglab:before {
 }
 .icon-iplogin:before {
   content: "\e016";
+}
+.icon-keyboardshortcuts:before {
+  content: "\e01e";
 }
 .icon-modals:before {
   content: "\e00c";
@@ -288,140 +291,12 @@ h2 .icon-reglab:before {
 .icon-expired:before {
   content: "\6e";
 }
-/**
- * @package         Regular Labs Library
- * @version         18.7.10792
- * 
- * @author          Peter van Westen <info@regularlabs.com>
- * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
- * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
- */
-.chzn-small {
-  width: 120px;
-}
-div.chzn-container[id^="color_"][id$="_chzn"],
-div.chzn-container#advancedparams_color_chzn {
-  display: none;
-}
-.input-full {
-  width: 100%;
-  box-sizing: border-box;
-}
-input[type="text"].input-full {
-  height: 28px;
-}
-.input-maximize:hover,
-.input-maximize:focus,
-.input-maximize .chzn-container:hover,
-.input-maximize .chzn-with-drop {
-  min-width: 100%;
-}
-.btn-group-yesno-reverse .active.btn-success {
-  color: #fff;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  background-color: #ad312b;
-  background-image: -moz-linear-gradient(top, #bd362f, #942a25);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#bd362f), to(#942a25));
-  background-image: -webkit-linear-gradient(top, #bd362f, #942a25);
-  background-image: -o-linear-gradient(top, #bd362f, #942a25);
-  background-image: linear-gradient(to bottom, #bd362f, #942a25);
-  background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffbd362f', endColorstr='#ff942a25', GradientType=0);
-  border-color: #942a25 #942a25 #571916;
-  *background-color: #942a25;
-  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
-  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
-}
-.btn-group-yesno-reverse .active.btn-success:hover,
-.btn-group-yesno-reverse .active.btn-success:focus,
-.btn-group-yesno-reverse .active.btn-success:active,
-.btn-group-yesno-reverse .active.btn-success.active,
-.btn-group-yesno-reverse .active.btn-success.disabled,
-.btn-group-yesno-reverse .active.btn-success[disabled] {
-  color: #fff;
-  background-color: #942a25;
-  *background-color: #802420;
-}
-.btn-group-yesno-reverse .active.btn-success:active,
-.btn-group-yesno-reverse .active.btn-success.active {
-  background-color: #6b1f1b \9;
-}
-.btn-group-yesno-reverse .active.btn-danger {
-  color: #fff;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  background-color: #409740;
-  background-image: -moz-linear-gradient(top, #46a546, #378137);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#46a546), to(#378137));
-  background-image: -webkit-linear-gradient(top, #46a546, #378137);
-  background-image: -o-linear-gradient(top, #46a546, #378137);
-  background-image: linear-gradient(to bottom, #46a546, #378137);
-  background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff46a546', endColorstr='#ff378137', GradientType=0);
-  border-color: #378137 #378137 #204b20;
-  *background-color: #378137;
-  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
-  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
-}
-.btn-group-yesno-reverse .active.btn-danger:hover,
-.btn-group-yesno-reverse .active.btn-danger:focus,
-.btn-group-yesno-reverse .active.btn-danger:active,
-.btn-group-yesno-reverse .active.btn-danger.active,
-.btn-group-yesno-reverse .active.btn-danger.disabled,
-.btn-group-yesno-reverse .active.btn-danger[disabled] {
-  color: #fff;
-  background-color: #378137;
-  *background-color: #2f6f2f;
-}
-.btn-group-yesno-reverse .active.btn-danger:active,
-.btn-group-yesno-reverse .active.btn-danger.active {
-  background-color: #285d28 \9;
-}
-input.rl_codefield,
-input.rl_keyfield,
-div.rl_keycode {
-  font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
-  font-size: 1.4em !important;
-}
-input.rl_codefield,
-input.rl_keyfield {
-  font-size: 14px !important;
-}
-.rl_keycode {
-  color: #999;
-  padding: 2px 0;
-}
-.rl_spinner {
-  display: inline-block;
-  box-sizing: border-box;
-  vertical-align: top;
-  margin: 0 4px;
-  border-top: 5px solid #7ac143;
-  border-right: 5px solid #f9a541;
-  border-bottom: 5px solid #f44321;
-  border-left: 5px solid #5091cd;
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  animation: rl_spinner 1s linear infinite;
-}
-@keyframes rl_spinner {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
 .rl_tablelist td {
   height: 22px;
   color: #555;
 }
 .rl_tablelist td.has-context {
   height: 23px;
-}
-fieldset.rl_plaintext {
-  margin-top: 5px;
 }
 .rl_code {
   font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
@@ -440,11 +315,17 @@ div.rl_well.alert-success,
 div.rl_well.alert-error {
   color: #333;
 }
+div.rl_well .controls .btn-group > .btn {
+  min-width: auto;
+}
 .well-striped:nth-child(even) {
   background-color: #f8f8f8;
 }
-.alert-inline {
+.alert.alert-inline {
   margin: 14px 0 0;
+}
+.alert.alert-noclose {
+  padding: 8px 14px;
 }
 .rl_btn-ignore.btn-danger.active {
   background-color: #999;
@@ -462,23 +343,12 @@ div.rl_well.alert-error {
 .rl_btn-exclude.btn-success.active:focus {
   background-color: #802420;
 }
-.rl_textarea {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-.header .icon-nonumber:before {
-  font-size: 20px !important;
-}
-.header .status .icon-nonumber:before {
-  font-size: 16px !important;
-}
 .icon-back:before {
   content: "\e008";
 }
 .icon-spin {
-  -webkit-animation: spin .5s infinite linear;
-  animation: spin .5s infinite linear;
+  -webkit-animation: spin 0.5s infinite linear;
+  animation: spin 0.5s infinite linear;
 }
 @-webkit-keyframes spin {
   0% {
@@ -519,9 +389,6 @@ div.rl_well.alert-error {
   100% {
     transform: rotate(359deg);
   }
-}
-.inlist .simplecolors-swatch span {
-  position: relative;
 }
 /* Dropdown and dropup fixes */
 .btn-toolbar .modal,
@@ -625,102 +492,102 @@ div.rl_well.alert-error {
 @media (min-width: 768px) and (max-width: 1200px) {
   .row-fluid [class*="span"].span-md-12 {
     width: 100%;
-    *width: 99.94680851063829%;
+    *width: 99.94680851%;
     margin-left: 0;
   }
   .row-fluid [class*="span"].span-md-11 {
-    width: 91.48936170212765%;
-    *width: 91.43617021276594%;
+    width: 91.4893617%;
+    *width: 91.43617021%;
   }
   .row-fluid [class*="span"].span-md-10 {
-    width: 82.97872340425532%;
-    *width: 82.92553191489361%;
+    width: 82.9787234%;
+    *width: 82.92553191%;
   }
   .row-fluid [class*="span"].span-md-9 {
-    width: 74.46808510638297%;
-    *width: 74.41489361702126%;
+    width: 74.46808511%;
+    *width: 74.41489362%;
   }
   .row-fluid [class*="span"].span-md-8 {
-    width: 65.95744680851064%;
-    *width: 65.90425531914893%;
+    width: 65.95744681%;
+    *width: 65.90425532%;
   }
   .row-fluid [class*="span"].span-md-7 {
-    width: 57.44680851063829%;
-    *width: 57.39361702127659%;
+    width: 57.44680851%;
+    *width: 57.39361702%;
   }
   .row-fluid [class*="span"].span-md-6 {
-    width: 48.93617021276595%;
-    *width: 48.88297872340425%;
+    width: 48.93617021%;
+    *width: 48.88297872%;
   }
   .row-fluid [class*="span"].span-md-5 {
-    width: 40.42553191489362%;
-    *width: 40.37234042553192%;
+    width: 40.42553191%;
+    *width: 40.37234043%;
   }
   .row-fluid [class*="span"].span-md-4 {
-    width: 31.914893617021278%;
-    *width: 31.861702127659576%;
+    width: 31.91489362%;
+    *width: 31.86170213%;
   }
   .row-fluid [class*="span"].span-md-3 {
-    width: 23.404255319148934%;
-    *width: 23.351063829787233%;
+    width: 23.40425532%;
+    *width: 23.35106383%;
   }
   .row-fluid [class*="span"].span-md-2 {
-    width: 14.893617021276595%;
-    *width: 14.840425531914894%;
+    width: 14.89361702%;
+    *width: 14.84042553%;
   }
   .row-fluid [class*="span"].span-md-1 {
-    width: 6.382978723404255%;
-    *width: 6.329787234042553%;
+    width: 6.38297872%;
+    *width: 6.32978723%;
   }
 }
 @media (min-width: 1200px) and (max-width: 1400px) {
   .row-fluid [class*="span"].span-lg-12 {
     width: 100%;
-    *width: 99.94680851063829%;
+    *width: 99.94680851%;
     margin-left: 0;
   }
   .row-fluid [class*="span"].span-lg-11 {
-    width: 91.48936170212765%;
-    *width: 91.43617021276594%;
+    width: 91.4893617%;
+    *width: 91.43617021%;
   }
   .row-fluid [class*="span"].span-lg-10 {
-    width: 82.97872340425532%;
-    *width: 82.92553191489361%;
+    width: 82.9787234%;
+    *width: 82.92553191%;
   }
   .row-fluid [class*="span"].span-lg-9 {
-    width: 74.46808510638297%;
-    *width: 74.41489361702126%;
+    width: 74.46808511%;
+    *width: 74.41489362%;
   }
   .row-fluid [class*="span"].span-lg-8 {
-    width: 65.95744680851064%;
-    *width: 65.90425531914893%;
+    width: 65.95744681%;
+    *width: 65.90425532%;
   }
   .row-fluid [class*="span"].span-lg-7 {
-    width: 57.44680851063829%;
-    *width: 57.39361702127659%;
+    width: 57.44680851%;
+    *width: 57.39361702%;
   }
   .row-fluid [class*="span"].span-lg-6 {
-    width: 48.93617021276595%;
-    *width: 48.88297872340425%;
+    width: 48.93617021%;
+    *width: 48.88297872%;
   }
   .row-fluid [class*="span"].span-lg-5 {
-    width: 40.42553191489362%;
-    *width: 40.37234042553192%;
+    width: 40.42553191%;
+    *width: 40.37234043%;
   }
   .row-fluid [class*="span"].span-lg-4 {
-    width: 31.914893617021278%;
-    *width: 31.861702127659576%;
+    width: 31.91489362%;
+    *width: 31.86170213%;
   }
   .row-fluid [class*="span"].span-lg-3 {
-    width: 23.404255319148934%;
-    *width: 23.351063829787233%;
+    width: 23.40425532%;
+    *width: 23.35106383%;
   }
   .row-fluid [class*="span"].span-lg-2 {
-    width: 14.893617021276595%;
-    *width: 14.840425531914894%;
+    width: 14.89361702%;
+    *width: 14.84042553%;
   }
   .row-fluid [class*="span"].span-lg-1 {
-    width: 6.382978723404255%;
-    *width: 6.329787234042553%;
+    width: 6.38297872%;
+    *width: 6.32978723%;
   }
 }

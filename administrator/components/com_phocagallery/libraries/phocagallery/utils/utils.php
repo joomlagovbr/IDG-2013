@@ -12,12 +12,12 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 class PhocaGalleryUtils
 {
-	
+
 	public static function htmlToRgb($clr) {
 		if ($clr[0] == '#') {
 			$clr = substr($clr, 1);
 		}
-		
+
 		if (strlen($clr) == 6) {
 			list($r, $g, $b) = array($clr[0].$clr[1],$clr[2].$clr[3],$clr[4].$clr[5]);
 		} else if (strlen($clr) == 3) {
@@ -32,7 +32,7 @@ class PhocaGalleryUtils
 
 		return $color;
 	}
-	
+
 	/*
 	 * Source: http://php.net/manual/en/function.ini-get.php
 	 */
@@ -52,7 +52,7 @@ class PhocaGalleryUtils
 			return (bool) (int) $b;
 		}
 	}
-	
+
 	public static function setQuestionmarkOrAmp($url) {
 		$isThereQMR = false;
 		$isThereQMR = preg_match("/\?/i", $url);
@@ -62,7 +62,7 @@ class PhocaGalleryUtils
 			return '?';
 		}
 	}
-	
+
 	public static function toArray($value = FALSE) {
 		if ($value == FALSE) {
 			return array(0 => 0);
@@ -73,11 +73,11 @@ class PhocaGalleryUtils
 		} else {
 			return array(0 => $value);
 		}
-	
+
 	}
-	
+
 	public static function setMessage($new = '', $current = '') {
-		
+
 		$message = $current;
 		if($new != '') {
 			if ($current != '') {
@@ -87,37 +87,37 @@ class PhocaGalleryUtils
 		}
 		return $message;
 	}
-	
-	
-	
-	
+
+
+
+
 	public static function filterInput($string) {
 		if (strpos($string, '"') !== false) {
 			$string = str_replace(array('=', '<'), '', $string);
 		}
 		return $string;
 	}
-	
+
 	public static function isURLAddress($url) {
 		return preg_match('|^http(s)?://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i', $url);
 	}
-	
+
 	public static function isEnabledMultiboxFeature($feature) {
-	
-		$app		= JFactory::getApplication();	
+
+		$app		= JFactory::getApplication();
 		$params		= $app->getParams();
-		
+
 		$enable_multibox				= $params->get( 'enable_multibox', 0);
 		$display_multibox				= $params->get( 'display_multibox', array(1,2));
-		
+
 		if ($enable_multibox == 1 && in_array($feature,$display_multibox)) {
 			return true;
 		}
 		return false;
 	}
-	
+
 	public static function setVars( $task = '') {
-	
+
 		$a			= array();
 		$app		= JFactory::getApplication();
 		$a['o'] 	= htmlspecialchars(strip_tags($app->input->get('option')));
@@ -132,9 +132,9 @@ class PhocaGalleryUtils
 		$a['tasks'] = $a['task']. 's';
 		return $a;
 	}
-	
+
 	public static function getIntFromString($string) {
-		
+
 		if (empty($string)) {
 			return 0;
 		}
@@ -145,5 +145,15 @@ class PhocaGalleryUtils
 		}
 		return $int;
 	}
+
+	public static function getInfo() {
+
+        JPluginHelper::importPlugin('phocatools');
+        $results = \JFactory::getApplication()->triggerEvent('PhocatoolsOnDisplayInfo', array('NzI5NzY5NTcxMTc='));
+        if (isset($results[0]) && $results[0] === true) {
+            return '';
+        }
+	    return '<div style="text-align:right;color:#ccc;display:block">Powered by <a href="https://www.phoca.cz/phocagallery">Phoca Gallery</a></div>';
+    }
 }
 ?>

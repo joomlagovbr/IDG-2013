@@ -5,7 +5,7 @@
 	<creationDate>14/05/2016</creationDate>
 	<author>Jan Pavelka (www.phoca.cz)</author>
 	<authorEmail></authorEmail>
-	<authorUrl>http://www.phoca.cz</authorUrl>
+	<authorUrl>https://www.phoca.cz</authorUrl>
 	<copyright>Jan Pavelka</copyright>
 	<license>GNU/GPL</license>
 	<version>1.0.0</version>
@@ -16,9 +16,9 @@
 		<folder>css</folder>
 		<filename>theme.xml</filename>
 	</files>
-	
+
 	<params>
-	
+
 <param name="responsive" default="1" />
 <param name="bootstrap_icons" default="1" />
 <param name="equal_heights" default="0" />

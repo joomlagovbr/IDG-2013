@@ -1,9 +1,9 @@
 <?php
 /**
- * @version    2.8.x
+ * @version    2.9.x
  * @package    K2
- * @author     JoomlaWorks http://www.joomlaworks.net
- * @copyright  Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @author     JoomlaWorks https://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2018 JoomlaWorks Ltd. All rights reserved.
  * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -24,8 +24,9 @@ if (K2_JVERSION != '15')
 }
 
 JLoader::register('K2Controller', JPATH_COMPONENT.'/controllers/controller.php');
-JLoader::register('K2Model', JPATH_COMPONENT_ADMINISTRATOR.'/models/model.php');
 JLoader::register('K2View', JPATH_COMPONENT_ADMINISTRATOR.'/views/view.php');
+JLoader::register('K2Model', JPATH_COMPONENT_ADMINISTRATOR.'/models/model.php');
+
 JLoader::register('K2HelperRoute', JPATH_COMPONENT.'/helpers/route.php');
 JLoader::register('K2HelperPermissions', JPATH_COMPONENT.'/helpers/permissions.php');
 JLoader::register('K2HelperUtilities', JPATH_COMPONENT.'/helpers/utilities.php');

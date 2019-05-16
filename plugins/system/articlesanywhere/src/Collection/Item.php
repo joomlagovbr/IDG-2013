@@ -1,25 +1,25 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         8.0.3
+ * @version         9.2.0
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
 namespace RegularLabs\Plugin\System\ArticlesAnywhere\Collection;
 
+defined('_JEXEC') or die;
+
 use ArticlesAnywhereArticleModel;
 use JDatabaseDriver;
-use JFactory;
-use JHelperTags;
+use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\Helper\TagsHelper as JTagsHelper;
 use RegularLabs\Library\DB as RL_DB;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Config;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Params;
-
-defined('_JEXEC') or die;
 
 class Item
 {
@@ -135,7 +135,7 @@ class Item
 
 	public function getTags()
 	{
-		$tags = new JHelperTags;
+		$tags = new JTagsHelper;
 		$tags->getItemTags('com_content.article', $this->getId());
 
 		return isset($tags->itemTags) ? $tags->itemTags : [];
@@ -193,5 +193,14 @@ class Item
 		$model = new ArticlesAnywhereArticleModel;
 
 		$model->hit($this->getId());
+	}
+
+	public function getArticle()
+	{
+		require_once dirname(__DIR__) . '/Helpers/article_model.php';
+
+		$model = new ArticlesAnywhereArticleModel;
+
+		return $model->getItem($this->getId());
 	}
 }

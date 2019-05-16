@@ -40,7 +40,7 @@ class PhocaGalleryCpModelPhocaGalleryRa extends JModelList
 
 		parent::__construct($config);
 	}
-	
+
 	protected function populateState($ordering = null, $direction = null)
 	{
 		// Initialise variables.
@@ -69,7 +69,7 @@ class PhocaGalleryCpModelPhocaGalleryRa extends JModelList
 		// List state information.
 		parent::populateState('ua.username', 'asc');
 	}
-	
+
 	protected function getStoreId($id = '')
 	{
 		// Compile the store id.
@@ -80,7 +80,7 @@ class PhocaGalleryCpModelPhocaGalleryRa extends JModelList
 
 		return parent::getStoreId($id);
 	}
-	
+
 	protected function getListQuery()
 	{
 		/*
@@ -94,7 +94,7 @@ class PhocaGalleryCpModelPhocaGalleryRa extends JModelList
 			. $orderby
 		;
 		*/
-		
+
 		// Create a new query object.
 		$db		= $this->getDbo();
 		$query	= $db->getQuery(true);
@@ -115,7 +115,7 @@ class PhocaGalleryCpModelPhocaGalleryRa extends JModelList
 		// Join over the users for the checked out user.
 		$query->select('ua.id AS ratinguserid, ua.username AS ratingusername, ua.name AS ratingname');
 		$query->join('LEFT', '#__users AS ua ON ua.id=a.userid');
-		
+
 		$query->select('uc.name AS editor');
 		$query->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
 
@@ -160,7 +160,7 @@ class PhocaGalleryCpModelPhocaGalleryRa extends JModelList
 				$query->where('( ua.name LIKE '.$search.' OR ua.username LIKE '.$search.')');
 			}
 		}
-		
+
 		//$query->group('a.id');
 
 		// Add the list ordering clause.
@@ -176,18 +176,18 @@ class PhocaGalleryCpModelPhocaGalleryRa extends JModelList
 	}
 
 	function delete($cid = array()) {
-		
-		
+
+
 		if (count( $cid )) {
-			JArrayHelper::toInteger($cid);
+			\Joomla\Utilities\ArrayHelper::toInteger($cid);
 			$cids = implode( ',', $cid );
-			
+
 			//Select affected catids
 			$query = 'SELECT v.catid AS catid'
 				. ' FROM #__phocagallery_votes AS v'
 				. ' WHERE v.id IN ( '.$cids.' )';
 			$catids = $this->_getList($query);
-			
+
 			//Delete it from DB
 			$query = 'DELETE FROM #__phocagallery_votes'
 				. ' WHERE id IN ( '.$cids.' )';
@@ -201,12 +201,12 @@ class PhocaGalleryCpModelPhocaGalleryRa extends JModelList
 				$updated = PhocaGalleryRateCategory::updateVoteStatistics( $valueCatid->catid );
 				if(!$updated) {
 					return false;
-				}				
+				}
 			}
 		}
 		return true;
 	}
-	
+
 	protected function prepareTable($table)
 	{
 		jimport('joomla.filter.output');
@@ -214,10 +214,10 @@ class PhocaGalleryCpModelPhocaGalleryRa extends JModelList
 		$user = JFactory::getUser();
 
 		$table->title		= htmlspecialchars_decode($table->title, ENT_QUOTES);
-		$table->alias		= JApplication::stringURLSafe($table->alias);
+		$table->alias		= \JApplicationHelper::stringURLSafe($table->alias);
 
 		if (empty($table->alias)) {
-			$table->alias = JApplication::stringURLSafe($table->title);
+			$table->alias = \JApplicationHelper::stringURLSafe($table->title);
 		}
 
 		if (empty($table->id)) {
@@ -239,6 +239,6 @@ class PhocaGalleryCpModelPhocaGalleryRa extends JModelList
 			//$table->modified_by	= $user->get('id');
 		}
 	}
-	
+
 }
 ?>

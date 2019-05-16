@@ -11,10 +11,10 @@
 defined('_JEXEC') or die('Restricted access');
 phocagalleryimport('phocagallery.render.rendermap');
 
- 
+
 echo '<div id="phocagallery" class="pg-categories-view'.$this->params->get( 'pageclass_sfx' ).'">';
 
-if ( $this->params->get( 'show_page_heading' ) ) { 
+if ( $this->params->get( 'show_page_heading' ) ) {
 	echo '<h1>'. $this->escape($this->params->get('page_heading')) . '</h1>';
 }
 
@@ -28,21 +28,21 @@ if ($this->tmplGeo['categorieslng'] == '' || $this->tmplGeo['categorieslat'] == 
 	//echo '<script src="http://www.google.com/js api" type="text/javascript"></script>';
 	$map	= new PhocaGalleryRenderMap();
 	//echo $map->loadApi();
-	
+
 	echo '<noscript>'.JText::_('COM_PHOCAGALLERY_ERROR_MAP_ENABLE_JAVASCRIPT').'</noscript>';
 	echo '<div style="font-size:1px;height:1px;margin:0px;padding:0px;">&nbsp;</div>';
 	echo '<div align="center" style="margin:0;padding:0;margin-top:10px;">';
-	
+
 	$cmw = '';
 	if ((int)$this->tmplGeo['categoriesmapwidth'] > 0) {
 		$cmw = 'width:'.$this->tmplGeo['categoriesmapwidth'].'px;';
 	}
 	echo '<div id="phocaMap" style="margin:0;padding:0;'. $cmw. 'height:'.$this->tmplGeo['categoriesmapheight'].'px">';
 	echo '</div></div>';
-	
+
 	?><script type='text/javascript'>//<![CDATA[
 	<?php
-	
+
 	echo $map->createMap('phocaMap', 'mapPhocaMap', 'phocaLatLng', 'phocaOptions','tstPhocaMap', 'tstIntPhocaMap');
 	echo $map->cancelEventF();
 	echo $map->checkMapF();
@@ -64,7 +64,7 @@ if ($this->tmplGeo['categorieslng'] == '' || $this->tmplGeo['categorieslat'] == 
 
 			if ((isset($category->longitude) && $category->longitude != '' && $category->longitude != 0)
 				&& (isset($category->latitude) && $category->latitude != '' && $category->latitude != 0)) {
-				
+
 				if ($category->geotitle == '') {
 					$category->geotitle = $category->title;
 				}
@@ -84,16 +84,16 @@ if ($this->tmplGeo['categorieslng'] == '' || $this->tmplGeo['categorieslat'] == 
 				.'<td valign="top" align="left"><a href="'.$category->link.'">'. $imgLink . '</a></td>'
 				.'<td valign="top" align="left">'. PhocaGalleryText::strTrimAll(addslashes($category->description)).'</td>'
 				.'</tr></table></div>';
-				
+
 				// Markers
 				$iconOutput = $map->setMarkerIcon(0);
 				echo $iconOutput['js'];
 				echo $map->setMarker($category->id, $category->geotitle, $category->description,$category->latitude, $category->longitude, $iconOutput['icon'], $text );
-					
+
 				echo $map->setListener();
 			}
 		}
-		
+
 	echo $map->endMapF();
 	echo $map->setInitializeF();
 	?>//]]></script><?php
@@ -101,5 +101,8 @@ if ($this->tmplGeo['categorieslng'] == '' || $this->tmplGeo['categorieslat'] == 
 }
 
 
-echo '<div>&nbsp;</div><div style="text-align:right;color:#ccc;display:block">Powered by <a href="https://www.phoca.cz/phocagallery">Phoca Gallery</a></div></div>';
+echo '<div>&nbsp;</div>';
+echo PhocaGalleryUtils::getInfo();
+
+echo '</div>';
 ?>

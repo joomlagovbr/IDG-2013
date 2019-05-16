@@ -1,9 +1,9 @@
 <?php
 /**
- * @version    2.8.x
+ * @version    2.9.x
  * @package    K2
- * @author     JoomlaWorks http://www.joomlaworks.net
- * @copyright  Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @author     JoomlaWorks https://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2018 JoomlaWorks Ltd. All rights reserved.
  * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -52,7 +52,7 @@ $context = JRequest::getCmd('context');
 	</div>
 <?php endif; ?>
 
-<form action="<?php echo JRoute::_('index.php'); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo ($app->isSite()) ? JRoute::_('index.php?option=com_k2&view=comments&tmpl=component&context=modalselector') : JRoute::_('index.php'); ?>" method="post" name="adminForm" id="adminForm">
 	<table class="k2AdminTableFilters table">
 		<tr>
 			<td class="k2AdminTableFiltersSearch">
@@ -80,7 +80,7 @@ $context = JRequest::getCmd('context');
 					#
 				</th>
 				<th class="center">
-					<input id="jToggler" type="checkbox" name="toggle" value="" />
+					<input id="k2<?php echo $this->params->get('backendListToggler', 'TogglerStandard'); ?>" type="checkbox" name="toggle" value="" />
 				</th>
 				<th>
 					<?php echo JHTML::_('grid.sort', 'K2_COMMENT', 'c.commentText', @$this->lists['order_Dir'], @$this->lists['order'] ); ?>

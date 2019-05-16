@@ -1,9 +1,9 @@
 <?php
 /**
- * @version    2.8.x
+ * @version    2.9.x
  * @package    K2
- * @author     JoomlaWorks http://www.joomlaworks.net
- * @copyright  Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @author     JoomlaWorks https://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2018 JoomlaWorks Ltd. All rights reserved.
  * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -14,11 +14,11 @@ require_once(JPATH_ADMINISTRATOR.'/components/com_k2/elements/base.php');
 
 class K2ElementItemForm extends K2Element
 {
-    function fetchElementValue($name, $value, &$node, $control_name)
+    function fetchElement($name, $value, &$node, $control_name)
     {
-      if(version_compare(JVERSION, '3.5', 'ge')) {
-        JHtml::_('behavior.framework');
-      }
+		if(version_compare(JVERSION, '3.5', 'ge')) {
+			JHtml::_('behavior.framework');
+		}
         $document = JFactory::getDocument();
         $document->addScriptDeclaration("
         	/* Mootools Snippet */
@@ -42,7 +42,7 @@ class K2ElementItemForm extends K2Element
         return '';
     }
 
-    function fetchElementName($label, $description, &$node, $control_name, $name)
+    function fetchTooltip($label, $description, &$node, $control_name, $name)
     {
         return '';
     }

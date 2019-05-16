@@ -1,9 +1,9 @@
 <?php
 /**
- * @version    2.8.x
+ * @version    2.9.x
  * @package    K2
- * @author     JoomlaWorks http://www.joomlaworks.net
- * @copyright  Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @author     JoomlaWorks https://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2018 JoomlaWorks Ltd. All rights reserved.
  * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -72,7 +72,8 @@ class K2ViewItem extends K2View
 		JFilterOutput::objectHTMLSafe($item, ENT_QUOTES, array(
 			'video',
 			'params',
-			'plugins'
+			'plugins',
+			'metadata'
 		));
 
 		// Permissions check for frontend editing
@@ -487,6 +488,8 @@ class K2ViewItem extends K2View
 
 		// Metadata
 		$lists['metadata'] = class_exists('JParameter') ? new JParameter($item->metadata) : new JRegistry($item->metadata);
+		/*
+		// J3.x compatible only
 		$metaRobotsOptions = array(
 			'' => JText::_('K2_USE_GLOBAL'),
 			'index, follow' => JText::_('K2_METADATA_ROBOTS_INDEX_FOLLOW'),
@@ -494,7 +497,14 @@ class K2ViewItem extends K2View
 			'noindex, follow' => JText::_('K2_METADATA_ROBOTS_NOINDEX_FOLLOW'),
 			'noindex, nofollow' => JText::_('K2_METADATA_ROBOTS_NOINDEX_NOFOLLOW')
 		);
-		$lists['metarobots'] = JHTML::_('select.genericlist', $metaRobotsOptions, 'meta[robots]', 'class="inputbox" ', 'value', 'text', $lists['metadata']->get('robots'));
+		*/
+		$metaRobotsOptions = array();
+		$metaRobotsOptions[] = JHTML::_('select.option', '', JText::_('K2_USE_GLOBAL'));
+		$metaRobotsOptions[] = JHTML::_('select.option', 'index, follow', JText::_('K2_METADATA_ROBOTS_INDEX_FOLLOW'));
+		$metaRobotsOptions[] = JHTML::_('select.option', 'index, nofollow', JText::_('K2_METADATA_ROBOTS_INDEX_NOFOLLOW'));
+		$metaRobotsOptions[] = JHTML::_('select.option', 'noindex, follow', JText::_('K2_METADATA_ROBOTS_NOINDEX_FOLLOW'));
+		$metaRobotsOptions[] = JHTML::_('select.option', 'noindex, nofollow', JText::_('K2_METADATA_ROBOTS_NOINDEX_NOFOLLOW'));
+		$lists['metarobots'] = JHTML::_('select.genericlist', $metaRobotsOptions, 'meta[robots]', 'class="inputbox"', 'value', 'text', $lists['metadata']->get('robots'));
 
 		// Image
 		$date = JFactory::getDate($item->modified);
@@ -625,6 +635,37 @@ class K2ViewItem extends K2View
 			$sigPro = false;
 		}
 		$this->assignRef('sigPro', $sigPro);
+
+		// For frontend editing
+		if ($application->isSite()) {
+	        // Lookup template folders
+	        $this->_addPath('template', JPATH_COMPONENT.'/templates');
+	        $this->_addPath('template', JPATH_COMPONENT.'/templates/default');
+
+	        $this->_addPath('template', JPATH_SITE.'/templates/'.$application->getTemplate().'/html/com_k2/templates');
+	        $this->_addPath('template', JPATH_SITE.'/templates/'.$application->getTemplate().'/html/com_k2/templates/default');
+
+	        $this->_addPath('template', JPATH_SITE.'/templates/'.$application->getTemplate().'/html/com_k2');
+	        $this->_addPath('template', JPATH_SITE.'/templates/'.$application->getTemplate().'/html/com_k2/default');
+
+	        $theme = $params->get('theme');
+	        if ($theme) {
+	            $this->_addPath('template', JPATH_COMPONENT.'/templates/'.$theme);
+	            $this->_addPath('template', JPATH_SITE.'/templates/'.$application->getTemplate().'/html/com_k2/templates/'.$theme);
+	            $this->_addPath('template', JPATH_SITE.'/templates/'.$application->getTemplate().'/html/com_k2/'.$theme);
+	        }
+
+	        // Allow temporary template loading with ?template=
+	        $template = JRequest::getCmd('template');
+	        if (isset($template)) {
+	            // Look for overrides in template folder (new K2 template structure)
+	            $this->_addPath('template', JPATH_SITE.'/templates/'.$template.'/html/com_k2');
+	            $this->_addPath('template', JPATH_SITE.'/templates/'.$template.'/html/com_k2/default');
+	            if ($theme) {
+	                $this->_addPath('template', JPATH_SITE.'/templates/'.$template.'/html/com_k2/'.$theme);
+	            }
+	        }
+		}
 
 		parent::display($tpl);
 	}

@@ -8,7 +8,7 @@
  * @copyright Copyright (C) Jan Pavelka www.phoca.cz
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
- 
+
 defined('_JEXEC') or die;
 
 jimport('joomla.application.component.controller');
@@ -22,7 +22,7 @@ $l['ir']	= array('COM_PHOCAGALLERY_IMAGE_RATING', 'phocagalleryraimg');
 $l['cc']	= array('COM_PHOCAGALLERY_CATEGORY_COMMENTS', 'phocagallerycos');
 $l['ic']	= array('COM_PHOCAGALLERY_IMAGE_COMMENTS', 'phocagallerycoimgs');
 $l['u']		= array('COM_PHOCAGALLERY_USERS', 'phocagalleryusers');
-$l['fb']	= array('COM_PHOCAGALLERY_FB', 'phocagalleryfbs');
+///$l['fb']	= array('COM_PHOCAGALLERY_FB', 'phocagalleryfbs');
 $l['tg']	= array('COM_PHOCAGALLERY_TAGS', 'phocagallerytags');
 $l['ef']	= array('COM_PHOCAGALLERY_STYLES', 'phocagalleryefs');
 $l['in']	= array('COM_PHOCAGALLERY_INFO', 'phocagalleryin');
@@ -34,11 +34,11 @@ $view	= JFactory::getApplication()->input->get('view');
 $layout	= JFactory::getApplication()->input->get('layout');
 
 if ($layout == 'edit') {
-	
+
 } else {
 
 	foreach ($l as $k => $v) {
-		
+
 		if ($v[1] == '') {
 			$link = 'index.php?option=com_phocagallery';
 		} else {

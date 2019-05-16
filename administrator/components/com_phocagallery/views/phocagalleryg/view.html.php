@@ -10,20 +10,41 @@
  */
 defined('_JEXEC') or die();
 jimport( 'joomla.application.component.view');
+phocagalleryimport('phocagallery.render.rendermaposm');
 
 class PhocaGalleryCpViewPhocagalleryG extends JViewLegacy
 {
 	protected $latitude;
 	protected $longitude;
 	protected $zoom;
+	protected $map_type;
+	protected $type;
 	
 	public function display($tpl = null) {
+		
+		$app = JFactory::getApplication();
 
 		$params	 			= JComponentHelper::getParams( 'com_phocagallery' );
-		$this->latitude		= JFactory::getApplication()->input->get( 'lat', '50.079623358200884', 'get', 'string' );
-		$this->longitude	= JFactory::getApplication()->input->get( 'lng', '14.429919719696045', 'get', 'string' );
-		$this->zoom			= JFactory::getApplication()->input->get( 'zoom', '2', 'get', 'string' );
-		parent::display($tpl);
+		$this->latitude		= $app->input->get( 'lat', '50.079623358200884', 'get', 'string' );
+		$this->longitude	= $app->input->get( 'lng', '14.429919719696045', 'get', 'string' );
+		$this->zoom			= $app->input->get( 'zoom', '2', 'get', 'string' );
+		$this->map_type		= $params->get( 'map_type', 2 );
+
+		$this->type 		= 'map';
+	
+		$document	= JFactory::getDocument();
+		$document->addCustomTag( "<style type=\"text/css\"> \n" 
+			." html,body, .contentpane{overflow:hidden;background:#ffffff;} \n" 
+			." </style> \n");
+		
+		
+		
+		
+		if ($this->map_type == 2) {
+			parent::display('osm');
+		} else {
+			parent::display($tpl);
+		}
 	}
 }
 ?>

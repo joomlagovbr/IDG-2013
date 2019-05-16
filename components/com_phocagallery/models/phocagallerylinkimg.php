@@ -19,8 +19,8 @@ class PhocaGalleryModelPhocaGalleryLinkImgPagination extends JPagination
 	protected function _buildDataObject()
 	{
 		$data = new stdClass;
-		
-		$uri 					= JFactory::getURI(); 
+
+		$uri 					= \Joomla\CMS\Uri\Uri::getInstance();
 		$uriS					= $uri->toString();
 
 		// Build the additional URL parameters string.
@@ -53,15 +53,15 @@ class PhocaGalleryModelPhocaGalleryLinkImgPagination extends JPagination
 			// Set the empty for removal from route
 			// @to do remove code: $page = $page == 0 ? '' : $page;
 
-			
-			
+
+
 			$data->start->base = '0';
 			$data->start->link = $uriS . '' . $params . '&' . $this->prefix . 'limitstart=0';
 			$data->previous->base = $page;
 			$data->previous->link = $uriS . '' .$params . '&' . $this->prefix . 'limitstart=' . $page;
-			
-			
-			
+
+
+
 		}
 
 		// Set the next and end data objects.
@@ -115,7 +115,7 @@ class PhocaGalleryModelPhocaGalleryLinkImg extends JModelLegacy
 		parent::__construct();
 
 		$app	= JFactory::getApplication();
-		
+
 		// Get the pagination request variables
 		$limit	= $app->getUserStateFromRequest( $this->_context.'.list.limit', 'limit', $app->get('list_limit'), 'int' );
 		$limitstart	= $app->getUserStateFromRequest( $this->_context.'.limitstart', 'limitstart',	0, 'int' );
@@ -126,17 +126,17 @@ class PhocaGalleryModelPhocaGalleryLinkImg extends JModelLegacy
 	}
 
 	function getData() {
-		
+
 		if (empty($this->_data)) {
 			$query = $this->_buildQuery();
 			$this->_data = $this->_getList($query, $this->getState('limitstart'), $this->getState('limit'));
 		}
-		
+
 		if (!empty($this->_data)) {
-			foreach ($this->_data as $key => $value) {	
+			foreach ($this->_data as $key => $value) {
 				$fileOriginal = PhocaGalleryFile::getFileOriginal($value->filename);
 				//Let the user know that the file doesn't exists
-				
+
 				if (!JFile::exists($fileOriginal)) {
 					$this->_data[$key]->filename = JText::_( 'COM_PHOCAGALLERY_IMG_FILE_NOT_EXISTS' );
 					$this->_data[$key]->fileoriginalexist = 0;
@@ -144,13 +144,13 @@ class PhocaGalleryModelPhocaGalleryLinkImg extends JModelLegacy
 					//Create thumbnails small, medium, large
 					$refresh_url 	= 'index.php?option=com_phocagallery&view=phocagalleryimgs';
 					$fileThumb 		= PhocaGalleryFileThumbnail::getOrCreateThumbnail($value->filename, $refresh_url, 1, 1, 1);
-					
+
 					$this->_data[$key]->linkthumbnailpath 	= $fileThumb['thumb_name_s_no_rel'];
-					$this->_data[$key]->fileoriginalexist = 1;	
+					$this->_data[$key]->fileoriginalexist = 1;
 				}
 			}
 		}
-		
+
 		return $this->_data;
 	}
 
@@ -169,7 +169,7 @@ class PhocaGalleryModelPhocaGalleryLinkImg extends JModelLegacy
 		}
 		return $this->_pagination;
 	}
-	
+
 
 	function _buildQuery() {
 		$where		= $this->_buildContentWhere();
@@ -184,7 +184,7 @@ class PhocaGalleryModelPhocaGalleryLinkImg extends JModelLegacy
 			. $orderby;
 		return $query;
 	}
-	
+
 
 
 	function _buildContentOrderBy() {
@@ -215,7 +215,7 @@ class PhocaGalleryModelPhocaGalleryLinkImg extends JModelLegacy
 		$where[] = 'a.approved = 1';
 		$where[] = 'cc.published = 1';
 		$where[] = 'cc.approved = 1';
-		
+
 		if ($filter_catid > 0) {
 			$where[] = 'a.catid = '.(int) $filter_catid;
 		}

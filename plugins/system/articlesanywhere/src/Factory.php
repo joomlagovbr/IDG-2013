@@ -1,19 +1,19 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         8.0.3
+ * @version         9.2.0
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
 namespace RegularLabs\Plugin\System\ArticlesAnywhere;
 
-use ReflectionClass;
-
 defined('_JEXEC') or die;
+
+use ReflectionClass;
 
 class Factory
 {
@@ -75,7 +75,20 @@ class Factory
 	 */
 	public static function getConfig($data)
 	{
-		return new Config($data);
+		$config = new Config($data);
+
+		return $config;
+	}
+
+	/**
+	 * @param Config $config
+	 * @param object $data
+	 *
+	 * @return Collection\Item
+	 */
+	public static function getItem(Config $config, $data)
+	{
+		return self::_('Collection\\Item', $config, $data);
 	}
 
 	/**
@@ -108,6 +121,16 @@ class Factory
 	public static function getOrdering($config)
 	{
 		return self::_('PluginTags\\Ordering', $config);
+	}
+
+	/**
+	 * @param Config $config
+	 *
+	 * @return Output\Pagination
+	 */
+	public static function getPagination($config)
+	{
+		return self::_('Output\\Pagination', $config);
 	}
 
 	/**

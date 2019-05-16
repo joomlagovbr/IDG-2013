@@ -143,7 +143,9 @@
 .icon-approve:before {
 	content: url('../../images/administrator/icon-12-approve.png');
 }
-
+.icon-loadexti:before {
+	content: url('../../images/administrator/icon-12-loadexti.png');
+}
 
 
 .phocagallery-box-file {
@@ -610,13 +612,14 @@ div.current dd {
 	margin-bottom:5px;
 }
 
-
+#loading-ext-imgi,
 #loading-ext-imgf,
 #uploading-ext-imgf,
 #loading-ext-imgp{
 	text-align:center;
 	display:none;
 }
+#loading-ext-imgi .loading,
 #loading-ext-imgf .loading,
 #uploading-ext-imgf .loading,
 #loading-ext-imgp .loading {
@@ -741,4 +744,18 @@ div.editor-border /*, div.CodeMirror-wrapping */ {
 }
 .ph-select-status {
 	padding-left: 5px;
+}
+
+.ph-cpanel-logo img {
+	transform: scale(0.6);
+	transform-origin: 0 50%;
+}
+
+.ph-msg-success {
+    color: #fff;
+    background-color: #28A745;
+    padding: 5px;
+}
+.ph-info-modal {
+    float: left;
 }

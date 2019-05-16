@@ -24,7 +24,7 @@ $OPT		= strtoupper($option);
 <script type="text/javascript">
 Joomla.submitbutton = function(task)
 {
-	if (task == 'phocagalleryfb.cancel' || document.formvalidator.isValid(document.id('adminForm'))) {
+	if (task == 'phocagalleryfb.cancel' || document.formvalidator.isValid(document.getElementById('adminForm'))) {
 		Joomla.submitform(task, document.getElementById('adminForm'));
 	}
 	else {
@@ -43,7 +43,7 @@ echo $r->navigation($tabs);
 
 echo '<div class="tab-content">'. "\n";
 
-echo '<div class="tab-pane active" id="application">'."\n"; 
+echo '<div class="tab-pane active" id="application">'."\n";
 
 echo '<h4>'. JText::_($OPT.'_FB_APPLICATION').'</h4>';
 
@@ -93,14 +93,14 @@ echo '<div class="clearfix"></div>'
 
 
 if (isset($this->item->appid) && $this->item->appid != ''
-	&& isset($this->item->appsid) && $this->item->appsid != '') { 
-	
+	&& isset($this->item->appsid) && $this->item->appsid != '') {
+
 	echo '<h4>'.JText::_('COM_PHOCAGALLERY_FB_USER_SETTINGS'). '</h4>';
-	
+
 	$status	= PhocaGalleryFb::getFbStatus($this->item->appid, $this->item->appsid);
-	
+
 	echo $status['html'];
-	
+
 	if ($status['session']['uid'] != ''
 	/*&& $status['session']['base_domain'] != ''*/
 	&& $status['session']['secret'] != ''
@@ -118,11 +118,11 @@ if (isset($this->item->appid) && $this->item->appid != ''
 			$this->form->setValue('name', '', $status['u']['name']);
 		}
 		*/
-		
+
 		$div	= array();
 		$script = array();
 		$fields = array( 'uid', 'secret', 'access_token');
-		
+
 		$script[] = 'function pasteFbFields() {';
 		foreach ($fields as $field) {
 			if (!isset($status['session'][$field])) {
@@ -130,12 +130,12 @@ if (isset($this->item->appid) && $this->item->appid != ''
 			}
 			$script[] = ' document.getElementById(\'jform_'.$field.'\').value = document.getElementById(\'div_'.$field.'\').value;';
 			$div[]	  = '<input type="hidden" id="div_'.$field.'" value="'.$status['session'][$field].'" />';
-		
+
 		}
 		$script[] 	= ' document.getElementById(\'jform_name\').value = document.getElementById(\'div_name\').value;';
 		$div[]		= '<input type="hidden" id="div_name" value="'.$status['u']['name'].'" />';
 		$script[] = '}';
-		
+
 		echo '<div style="display:none">';
 		$n = "\n";
 		echo implode($n, $div);
@@ -143,17 +143,17 @@ if (isset($this->item->appid) && $this->item->appid != ''
 
 		// Add the script to the document head.
 		JFactory::getDocument()->addScriptDeclaration(implode("\n", $script));
-		
+
 		echo '<div style="float:right;"><a href="javascript:void(0)" onclick="pasteFbFields()"><div class="btn btn-primary">'.JText::_('COM_PHOCAGALLERY_FB_PASTE_LOADED_DATA').'</div></a></div>';
 	}
-	
+
 	echo '<div class="clearfix"></div>';
 	//$formArray = array ('name', 'uid', 'base_domain', 'secret', 'session_key', 'access_token', 'sig', 'fanpageid');
 	$formArray = array ('name', 'uid', 'secret', 'access_token', 'fanpageid');
-	echo $r->group($this->form, $formArray);	
+	echo $r->group($this->form, $formArray);
 	echo '<input name="jform[expires]" id="jform_expires" value="0" readonly="readonly" type="hidden" />'. "\n";
 	echo '<div class="clearfix"></div>';
-		
+
 	echo '<h4>'. JText::_('COM_PHOCAGALLERY_FB_COMMENTS_SETTINGS') .'</h4>';
 	foreach($this->form->getFieldset('comments') as $field) {
 		echo '<div class="control-group">';
@@ -168,7 +168,7 @@ if (isset($this->item->appid) && $this->item->appid != ''
 }
 echo '</div>';
 
-echo '<div class="tab-pane" id="publishing">'."\n"; 
+echo '<div class="tab-pane" id="publishing">'."\n";
 foreach($this->form->getFieldset('publish') as $field) {
 	echo '<div class="control-group">';
 	if (!$field->hidden) {
@@ -186,4 +186,4 @@ echo '<div class="span2"></div>';//end span2
 echo $r->formInputs();
 echo $r->endForm();
 
-	
+

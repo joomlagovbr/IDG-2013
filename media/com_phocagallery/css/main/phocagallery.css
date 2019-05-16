@@ -1,4 +1,4 @@
-/* Phoca Gallery http://www.phoca.cz */
+/* Phoca Gallery https://www.phoca.cz */
 
 
 #phocagallery-pane .pg-box1,
@@ -87,7 +87,7 @@
 #phocagallery-pane .phocagallery-box-file-first,
 #phocagallery .phocagallery-box-file-first,
 .phocagallery-box-file-first {
-  
+
   /*overflow: hidden;*/
   display: table;
   vertical-align:middle;
@@ -117,12 +117,12 @@
 #phocagallery a:hover, #phocagallery a:active, #phocagallery a:focus,
 #phocagallery-statistics a:hover, #phocagallery-statistics a:active, #phocagallery-statistics a:focus {
  /* background: none;*/
-  
+
   text-decoration:none;
 }
 
 #phocagallery .pg-name,
-#phocagallery-statistics .pg-name{ 
+#phocagallery-statistics .pg-name{
   margin:0px;
   padding:0px;
   margin-top:2px;
@@ -140,7 +140,7 @@
 #phocagallery .phocagallery-box-file.hover,
 #phocagallery-pane .phocagallery-box-file:hover,
 #phocagallery-pane .phocagallery-box-file.hover,
-.phocagallery-box-file:hover, 
+.phocagallery-box-file:hover,
 .phocagallery-box-file.hover  {
   /*border:1px solid #135cae;
   background:#f5f5f5;*/
@@ -219,22 +219,22 @@
   -moz-opacity:0.8;
   z-index:1000;
 }
-  
-/*download message text*/ 
-#download-msg div table{ 
-  padding: 10px; 
-  filter:alpha(opacity=100); 
-  opacity: 0.8; 
-  -moz-opacity:0.8; 
-  position: relative; 
-  z-index:1000; 
-  background-color:#ebecff; 
-} 
-#download-msg div table tr td, 
-#download-msg div table tr td small, 
-#download-msg a { 
-  color:#000000; 
-  font-weight: bold; 
+
+/*download message text*/
+#download-msg div table{
+  padding: 10px;
+  filter:alpha(opacity=100);
+  opacity: 0.8;
+  -moz-opacity:0.8;
+  position: relative;
+  z-index:1000;
+  background-color:#ebecff;
+}
+#download-msg div table tr td,
+#download-msg div table tr td small,
+#download-msg a {
+  color:#000000;
+  font-weight: bold;
 }
 
 #phocagallery .main-switch-image {
@@ -275,11 +275,11 @@
 #description-text{
   color:#fff;
   padding:10px;
-/*  filter:alpha(opacity=100); 
-  opacity: 0.8; 
+/*  filter:alpha(opacity=100);
+  opacity: 0.8;
   -moz-opacity:0.8; */
-  position: relative; 
-  z-index:1000; 
+  position: relative;
+  z-index:1000;
   background-color:#000;
 }
 
@@ -316,7 +316,7 @@ clear: both;
 #phocagallery-statistics a img{
   border: 0px;
 }
-#phocagallery-categories-detail fieldset, 
+#phocagallery-categories-detail fieldset,
 #phocagallery-votes fieldset,
 #phocagallery-comments fieldset,
 #phocagallery-upload fieldset,
@@ -331,7 +331,7 @@ clear: both;
   padding:10px;
   margin:5px;
 }
-#phocagallery-categories-detail legend, 
+#phocagallery-categories-detail legend,
 #phocagallery-votes legend,
 #phocagallery-comments legend,
 #phocagallery-upload legend,
@@ -339,22 +339,22 @@ clear: both;
 #phocagallery-javaupload legend,
 #phocagallery-multipleupload legend,
 #phocagallery-category-creating legend,
-#phocagallery-subcategory-creating legend, 
+#phocagallery-subcategory-creating legend,
 #phocagallery-user legend,
 #phocagallery-statistics legend {
   font-weight:bold;
   color:#aa0000;
   padding:10px;
 }
-#phocagallery-votes small, 
-#phocagallery-comments small, 
+#phocagallery-votes small,
+#phocagallery-comments small,
 #phocagallery-upload small ,
 #phocagallery-ytbupload small,
 #phocagallery-javaupload small,
 #phocagallery-multipleupload  small,
 #phocagallery-statistics small,
 #phocagallery-category-creating small,
-#phocagallery-subcategory-creating small, 
+#phocagallery-subcategory-creating small,
 #phocagallery-user small {
   color:#ccc;
 }
@@ -409,7 +409,7 @@ dl.tabs {
   float: left;
   margin: 10px 0 -1px 2px;
   z-index: 50;
-  
+
 }
 
 dl.tabs dt {
@@ -421,7 +421,7 @@ dl.tabs dt {
   margin-left: 3px;
   background: #f0f0f0;
   color: #666;
-  
+
 }
 
 dl.tabs dt.open {
@@ -429,7 +429,7 @@ dl.tabs dt.open {
   border-bottom: 1px solid #ffffff;
   z-index: 100;
   color: #000;
-  
+
 }
 
 dl.tabs a {
@@ -445,7 +445,7 @@ div.current {
   border: 1px solid #ccc;
   padding: 10px 10px;
   background: #ffffff;
-  
+
 }
 
 div.current dd {
@@ -470,7 +470,7 @@ div.current dd {
 
 #phoca-exif h2.phocaexif {
   font-size:130%;
-  background: url(../../images/icon-info.gif) left center no-repeat;
+  background: url(../../images/icon-info.png) left center no-repeat;
   padding-left: 20px;
 }
 
@@ -523,7 +523,7 @@ div.current dd {
 #phocagallery-subcategory-creating  table.adminlist td,
 #phocagallery-subcategory-creating  table.adminlist th,
 #phocagallery-upload  table.adminlist td,
-#phocagallery-upload  table.adminlist th { 
+#phocagallery-upload  table.adminlist th {
   padding: 4px;
 }
 
@@ -563,7 +563,7 @@ div.current dd {
 
 #phocagallery-subcategory-creating  table.adminlist tfoot tr,
 #phocagallery-upload  table.adminlist tfoot tr { text-align: center;  color: #333; }
- 
+
 #phocagallery-subcategory-creating  table.adminlist tfoot td,
 #phocagallery-subcategory-creating  table.adminlist tfoot th,
 #phocagallery-upload  table.adminlist tfoot td,
@@ -594,7 +594,7 @@ div.current dd {
   /*border:1px solid #d2d2d2;*/
 }
 
-/* 1.6*/ 
+/* 1.6*/
 
 #phocagallery table,
 #phocagallery tr,
@@ -633,7 +633,7 @@ div.current dd {
 #phocagallery-pane table tr,
 #phocagallery-pane table tr td{
   border-style: none !important;
-  
+
 }
 
 #phocagallery-pane table tr td {
@@ -921,7 +921,7 @@ div.window-container table tr td {
 }
 #phocagallery .pg-multi-img img{
 	float:left;
-}  
+}
 #pg-msnr-container {
 	padding: 0;
 	margin: 0;
@@ -1046,7 +1046,7 @@ img.youtube:hover {
 	background: url(../../images/ytb_play_active.png);
 }
 
-/* Photoswipe YouTube */ 
+/* Photoswipe YouTube */
 .pswp__zoom-wrap {
   text-align: center;
 }
@@ -1090,4 +1090,12 @@ img.youtube:hover {
 video {
   width: 100% !important;
   height: auto !important;
+}
+
+#phocagallery .pg-mapbox-description {
+	padding: 0 5px;
+}
+#phocagallery .pg-mapbox-description p {
+	margin: 0;
+	padding: 0;
 }

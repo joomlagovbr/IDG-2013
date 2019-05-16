@@ -9,7 +9,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License version 2 or later;
  */
 defined('_JEXEC') or die;
-if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
+
 if (!JFactory::getUser()->authorise('core.manage', 'com_phocagallery')) {
 	throw new Exception(JText::_('JERROR_ALERTNOAUTHOR'), 404);
 }

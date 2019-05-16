@@ -17,18 +17,18 @@ jimport('joomla.application.component.controlleradmin');
 class PhocaGalleryCpControllerPhocaGalleryRa extends JControllerAdmin
 {
 	protected	$option 		= 'com_phocagallery';
-	
+
 	public function &getModel($name = 'PhocaGalleryRa', $prefix = 'PhocaGalleryCpModel')
 	{
 		$model = parent::getModel($name, $prefix, array('ignore_request' => true));
 		return $model;
 	}
-	
+
 	public function saveOrderAjax() {
 		$pks = $this->input->post->get('cid', array(), 'array');
 		$order = $this->input->post->get('order', array(), 'array');
-		JArrayHelper::toInteger($pks);
-		JArrayHelper::toInteger($order);
+		\Joomla\Utilities\ArrayHelper::toInteger($pks);
+		\Joomla\Utilities\ArrayHelper::toInteger($order);
 		$model = $this->getModel();
 		$return = $model->saveorder($pks, $order);
 		if ($return) { echo "1";}

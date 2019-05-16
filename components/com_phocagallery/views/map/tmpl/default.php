@@ -8,7 +8,7 @@
  * @copyright Copyright (C) Jan Pavelka www.phoca.cz
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
- 
+
 defined('_JEXEC') or die('Restricted access');
 phocagalleryimport('phocagallery.render.rendermap');
 phocagalleryimport('phocagallery.text.text');
@@ -25,26 +25,26 @@ if (empty($this->map) || $this->map->longitude == '' || $this->map->latitude == 
 	$text .='<td valign="top" align="left">'.JHtml::_( 'image', $this->map->thumbnail, addslashes($this->map->geotitle)) . '</td>';
 	$text .='<td valign="top" align="left">'. PhocaGalleryText::strTrimAll(addslashes($this->map->description)).'</td>';
 	$text .='</tr></table></div>';
-	
+
 	$map	= new PhocaGalleryRenderMap();
 
 
 	echo '<noscript>'.JText::_('COM_PHOCAGALLERY_ERROR_MAP_ENABLE_JAVASCRIPT').'</noscript>';
-	
+
 	$cmw = '';
 	if ((int)$this->tmpl['largemapwidth'] > 0) {
 		$cmw = 'width:'.$this->tmpl['largemapwidth'].'px;';
 	}
-	
+
 	echo '<div align="center" style="margin:0;padding:0;margin-top:10px;text-align: center">';
 	echo '<div id="phocaMap" style="margin:0 auto;padding:0;'. $cmw. 'height:'.$this->tmpl['largemapheight'].'px">';
 	echo '</div></div>';
 
-	
+
 	//echo $map->loadApi();
 	?><script type='text/javascript'>//<![CDATA[
-	<?php 
-	
+	<?php
+
 	echo $map->createMap('phocaMap', 'mapPhocaMap', 'phocaLatLng', 'phocaOptions','tstPhocaMap', 'tstIntPhocaMap', $text);
 	echo $map->cancelEventF();
 	echo $map->checkMapF();
@@ -69,11 +69,11 @@ if (empty($this->map) || $this->map->longitude == '' || $this->map->latitude == 
 	echo $map->endMapF();
 	echo $map->setInitializeF();
 	?>//]]></script><?php
-	
+
 	echo $map->loadApi();
 }
 if ($this->tmpl['detailwindow'] == 7) {
 	echo '<div>&nbsp;</div>';
-	echo '<div style="text-align:right;color:#ccc;display:block">Powered by <a href="https://www.phoca.cz/phocagallery">Phoca Gallery</a></div>';
+    echo PhocaGalleryUtils::getInfo();
 }
 ?>
