@@ -99,3 +99,17 @@
 2018-07-16T11:56:00+00:00	INFO ::1	update	Deleting removed files and folders.
 2018-07-16T11:56:03+00:00	INFO ::1	update	Cleaning up after installation.
 2018-07-16T11:56:03+00:00	INFO ::1	update	Update to version 3.8.10 is complete.
+2019-05-16T16:50:24+00:00	INFO ::1	update	Update started by user Super User (790). Old version is 3.8.10.
+2019-05-16T16:51:25+00:00	INFO ::1	update	Downloading update file from https://downloads.joomla.org/cms/joomla3/3-9-6/Joomla_3.9.6-Stable-Update_Package.zip.
+2019-05-16T16:52:00+00:00	INFO ::1	update	File Joomla_3.9.6-Stable-Update_Package.zip downloaded.
+2019-05-16T16:52:00+00:00	INFO ::1	update	Starting installation of new version.
+2019-05-16T16:52:08+00:00	INFO ::1	update	Starting installation of new version.
+2019-05-16T16:52:11+00:00	INFO ::1	update	Starting installation of new version.
+2019-05-16T16:52:31+00:00	INFO ::1	update	Update started by user Super User (790). Old version is 3.8.10.
+2019-05-16T16:53:32+00:00	INFO ::1	update	Downloading update file from https://downloads.joomla.org/cms/joomla3/3-9-6/Joomla_3.9.6-Stable-Update_Package.zip.
+2019-05-16T16:54:05+00:00	INFO ::1	update	File Joomla_3.9.6-Stable-Update_Package.zip downloaded.
+2019-05-16T16:54:05+00:00	INFO ::1	update	Starting installation of new version.
+2019-05-16T16:55:51+00:00	INFO 127.0.0.1	update	Update started by user Super User (790). Old version is 3.8.10.
+2019-05-16T16:56:52+00:00	INFO 127.0.0.1	update	Downloading update file from https://downloads.joomla.org/cms/joomla3/3-9-6/Joomla_3.9.6-Stable-Update_Package.zip.
+2019-05-16T16:57:38+00:00	INFO 127.0.0.1	update	File Joomla_3.9.6-Stable-Update_Package.zip downloaded.
+2019-05-16T16:57:38+00:00	INFO 127.0.0.1	update	Starting installation of new version.
