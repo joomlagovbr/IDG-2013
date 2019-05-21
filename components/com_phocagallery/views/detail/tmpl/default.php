@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*
  * @package Joomla
  * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
@@ -32,7 +32,7 @@ switch ($this->tmpl['detailwindow']) {
 		$closeButton 	= '';
 	break;
 
-	
+
 	default:
 		$closeButton 	= '<td align="center">' . str_replace("%onclickclose%", $this->tmpl['detailwindowclose'], $this->item->closebutton). '</td>';
 		$closeImage 	= '<a href="#" onclick="'.$this->tmpl['detailwindowclose'].'" style="margin:auto;padding:0">'.$this->item->linkimage.'</a>';
@@ -47,7 +47,7 @@ echo '<div class="ph-mc" style="padding-top:10px">'
 	.' style="'.$iH.'vertical-align: middle;" >'
 	.'<div id="phocaGalleryImageBox" style="'.$iW.'margin: auto;padding: 0;">'
 	.$closeImage;
-			
+
 $titleDesc = '';
 if ($this->tmpl['display_title_description'] == 1) {
 	$titleDesc .= $this->item->title;
@@ -55,7 +55,7 @@ if ($this->tmpl['display_title_description'] == 1) {
 		$titleDesc .= ' - ';
 	}
 }
-			
+
 // Lightbox Description
 if ($this->tmpl['displaydescriptiondetail'] == 2 && (!empty($this->item->description) || !empty($titleDesc))){
 
@@ -68,7 +68,7 @@ if ($this->tmpl['displaydescriptiondetail'] == 2 && (!empty($this->item->descrip
 echo '</div>'
 	 .'</td>'
 	 .'</tr>';
-	
+
 echo '<tr><td colspan="6"><div style="padding:0;margin:0;height:3px;font-size:0px;">&nbsp;</div></td></tr>';
 // Standard Description
 if ($this->tmpl['displaydescriptiondetail'] == 1) {
@@ -98,18 +98,18 @@ if ($this->tmpl['displaying_tags_output'] != '') {
 	echo '<div class="pg-detail-tags">'.$this->tmpl['displaying_tags_output'].'</div>';
 }
 if ($this->tmpl['detailwindow'] == 7) {
-	
-	
-	
+
+
+
 	if ($this->tmpl['externalcommentsystem'] == 1) {
 		if (JComponentHelper::isEnabled('com_jcomments', true)) {
 			include_once(JPATH_BASE.'/components/com_jcomments/jcomments.php');
 			echo JComments::showComments($this->item->id, 'com_phocagallery_images', JText::_('COM_PHOCAGALLERY_IMAGE') .' '. $this->item->title);
 		}
 	} else if ($this->tmpl['externalcommentsystem'] == 2) {
-		echo $this->loadTemplate('comments-fb');	
+		echo $this->loadTemplate('comments-fb');
 	}
-	echo '<div style="text-align:right;color:#ccc;display:block">Powered by <a href="https://www.phoca.cz/phocagallery">Phoca Gallery</a></div>';
+    echo PhocaGalleryUtils::getInfo();
 }
 echo '</div>';
 echo '<div id="phocaGallerySlideshowC" style="display:none"></div>';

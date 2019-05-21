@@ -16,7 +16,7 @@ jimport('joomla.application.component.controllerform');
 class PhocaGalleryCpControllerPhocaGalleryImg extends JControllerForm
 {
 	protected	$option 		= 'com_phocagallery';
-	
+
 	function __construct($config=array()) {
 		parent::__construct($config);
 	}
@@ -42,20 +42,20 @@ class PhocaGalleryCpControllerPhocaGalleryImg extends JControllerForm
 			return $allow;
 		}
 	}
-	
+
 	/*
 	function deletethumbs()
 	{
 		$cid	= JFactory::getApplication()->input->get( 'cid', array(0), 'get', 'array' );
-		
+
 		$model	= &$this->getModel( 'phocagallery' );
 		if ($model->deletethumbs($cid[0])) {
 			$msg = JText::_( 'COM_PHOCAGALLERY_SUCCESS_THUMBNAIL_DELETE' );
 		} else {
 			$msg = JText::_( 'COM_PHOCAGALLERY_ERROR_THUMBNAIL_DELETE' );
 		}
-		
-		
+
+
 		$link = 'index.php?option=com_phocagallery&view=phocagalleryimgs';
 		$this->setRedirect($link, $msg);
 	}
@@ -64,36 +64,36 @@ class PhocaGalleryCpControllerPhocaGalleryImg extends JControllerForm
 		$id		= JFactory::getApplication()->input->get( 'id', 0, 'get', 'int' );
 		$angle	= JFactory::getApplication()->input->get( 'angle', 90, 'get', 'int' );
 		$model	= $this->getModel( 'phocagalleryimg' );
-		
+
 		$message 		= '';
 		$rotateReturn 	= $model->rotate($id, $angle, $message);
-		
+
 		if (!$rotateReturn) {
 			$message = PhocaGalleryUtils::setMessage($message, JText::_( 'COM_PHOCAGALLERY_ERROR_IMAGE_ROTATE' ));
 		} else {
 			$message = JText::_( 'COM_PHOCAGALLERY_SUCCESS_IMAGE_ROTATE' );
 		}
-		
+
 		$link = 'index.php?option=com_phocagallery&view=phocagalleryimgs';
 		$this->setRedirect($link, $message);
 	}
 
-	
+
 	/*
 	 *if thumbnails are created - show message after creating thumbnails - show that files was saved in database
 	 */
 	function thumbs() {
 		$msg = JText::_( 'COM_PHOCAGALLERY_SUCCESS_SAVE_MULTIPLE' );
-		
+
 		$countcat		= JFactory::getApplication()->input->get( 'countcat', 0, 'get', 'int' );
 		$countimg		= JFactory::getApplication()->input->get( 'countimg', 0, 'get', 'int' );
 		//$imagesid		= JFactory::getApplication()->input->get( 'imagesid', 0, 'get', 'int' );
-		
-		$link = 'index.php?option=com_phocagallery&view=phocagalleryimgs&countcat='.$countcat.'&countimg='.$countimg.'&imagesid='.md5(time());	
+
+		$link = 'index.php?option=com_phocagallery&view=phocagalleryimgs&countcat='.$countcat.'&countimg='.$countimg.'&imagesid='.md5(time());
 		//$link = 'index.php?option=com_phocagallery&view=phocagalleryimgs';
 		$this->setRedirect($link, $msg);
 	}
-	
+
 	function disablethumbs() {
 		$model	= $this->getModel( 'phocagalleryimg' );
 		if ($model->disableThumbs()) {
@@ -104,12 +104,12 @@ class PhocaGalleryCpControllerPhocaGalleryImg extends JControllerForm
 		$link = 'index.php?option=com_phocagallery&view=phocagalleryimgs';
 		$this->setRedirect($link, $msg);
 	}
-	
-	
+
+
 
 	function recreate() {
 		$cid = JFactory::getApplication()->input->get( 'cid', array(), '', 'array' );
-		JArrayHelper::toInteger($cid);
+		\Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		if (count( $cid ) < 1) {
 			throw new Exception(JText::_( 'COM_PHOCAGALLERY_SELECT_ITEM_RECREATE' ), 500);
@@ -125,7 +125,7 @@ class PhocaGalleryCpControllerPhocaGalleryImg extends JControllerForm
 
 		$this->setRedirect( 'index.php?option=com_phocagallery&view=phocagalleryimgs', $message );
 	}
-	
+
 	public function batch($model = null) {
 		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 

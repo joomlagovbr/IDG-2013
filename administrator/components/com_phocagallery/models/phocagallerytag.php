@@ -17,26 +17,26 @@ class PhocaGalleryCpModelPhocaGalleryTag extends JModelAdmin
 	protected	$option 		= 'com_phocagallery';
 	protected 	$text_prefix	= 'com_phocagallery';
 	public 		$typeAlias 		= 'com_phocagallery.phocagallerytag';
-	
+
 	protected function canDelete($record)
 	{
 		//$user = JFactory::getUser();
 		return parent::canDelete($record);
 	}
-	
+
 	protected function canEditState($record)
 	{
 		//$user = JFactory::getUser();
 		return parent::canEditState($record);
 	}
-	
+
 	public function getTable($type = 'PhocaGalleryTag', $prefix = 'Table', $config = array())
 	{
 		return JTable::getInstance($type, $prefix, $config);
 	}
-	
+
 	public function getForm($data = array(), $loadData = true) {
-		
+
 		$app	= JFactory::getApplication();
 		$form 	= $this->loadForm('com_phocagallery.phocagallerytag', 'phocagallerytag', array('control' => 'jform', 'load_data' => $loadData));
 		if (empty($form)) {
@@ -44,7 +44,7 @@ class PhocaGalleryCpModelPhocaGalleryTag extends JModelAdmin
 		}
 		return $form;
 	}
-	
+
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
@@ -56,7 +56,7 @@ class PhocaGalleryCpModelPhocaGalleryTag extends JModelAdmin
 
 		return $data;
 	}
-	
+
 	protected function prepareTable($table)
 	{
 		jimport('joomla.filter.output');
@@ -64,10 +64,10 @@ class PhocaGalleryCpModelPhocaGalleryTag extends JModelAdmin
 		$user = JFactory::getUser();
 
 		$table->title		= htmlspecialchars_decode($table->title, ENT_QUOTES);
-		$table->alias		= JApplication::stringURLSafe($table->alias);
+		$table->alias		= \JApplicationHelper::stringURLSafe($table->alias);
 
 		if (empty($table->alias)) {
-			$table->alias = JApplication::stringURLSafe($table->title);
+			$table->alias = \JApplicationHelper::stringURLSafe($table->title);
 		}
 
 		if (empty($table->id)) {

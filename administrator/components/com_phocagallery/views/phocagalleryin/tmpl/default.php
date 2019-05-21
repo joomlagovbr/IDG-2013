@@ -4,16 +4,19 @@ JHTML::_('behavior.tooltip');
 
 echo '<form action="index.php" method="post" name="adminForm" id="phocagalleryin-form">';
 echo '<div id="j-sidebar-container" class="span2">'.$this->sidebar.'</div>';
-echo '<div id="j-main-container" class="span9">'
-	
+echo '<div id="j-main-container" class="span10">'
+
 	.'<div style="float:right;margin:10px;">'
 	. JHTML::_('image', 'media/com_phocagallery/images/administrator/logo-phoca.png', 'Phoca.cz' )
-	.'</div>'
-	. JHTML::_('image', 'media/com_phocagallery/images/administrator/logo.png', 'Phoca.cz')
-	.'<h3>'.JText::_('COM_PHOCAGALLERY_PHOCA_GALLERY').' - '. JText::_('COM_PHOCAGALLERY_INFORMATION').'</h3>'
+	.'</div>';
+
+
+echo '<div class="ph-cpanel-logo">'.JHtml::_('image', 'media/com_phocagallery/images/administrator/logo-phoca-gallery.png', 'Phoca.cz') . '</div>';
+//echo '<div style="clear:both;"></div>';
+echo '<h3>'.JText::_('COM_PHOCAGALLERY_PHOCA_GALLERY').' - '. JText::_('COM_PHOCAGALLERY_INFORMATION').'</h3>'
 	.'<p>'. JText::_('COM_PHOCAGALLERY_RECOMMENDED_SETTINGS').'</p>'
 	.'<div style="clear:both;"></div>';
-	
+
 echo '<table cellpadding="5" cellspacing="1">'
 	.'<tr><td></td>'
 	.'<td align="center">'.JText::_('COM_PHOCAGALLERY_RECOMMENDED').'</td>'
@@ -56,7 +59,7 @@ if ($this->tmpl['cleanthumbnails'] == 0) {
 	$bgStyle = 'class="alert alert-success"';
 	$icon		= 'false';
 	$iconText	= JText::_('COM_PHOCAGALLERY_DISABLED');
-	
+
 
 } else {
 	$bgStyle = 'class="alert alert-error"';
@@ -99,7 +102,7 @@ echo '<input type="hidden" name="task" value="" />'
 .'<input type="hidden" name="option" value="com_phocagallery" />'
 .'<input type="hidden" name="controller" value="phocagalleryin" />';
 
-
+echo  JHTML::_('image', 'media/com_phocagallery/images/administrator/logo.png', 'Phoca.cz');
 echo '<p>&nbsp;</p>';
 
 echo '<div style="border-top:1px solid #eee"></div><p>&nbsp;</p>'
@@ -111,5 +114,5 @@ echo '<div style="margin-top:30px;height:39px;background: url(\''.JURI::root(tru
 
 
 echo '</div>';
-echo '<div class="span1"></div>';
+//echo '<div class="span1"></div>';
 echo '</form>';

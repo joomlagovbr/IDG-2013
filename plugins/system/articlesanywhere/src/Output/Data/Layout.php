@@ -1,23 +1,23 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         8.0.3
+ * @version         9.2.0
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
 namespace RegularLabs\Plugin\System\ArticlesAnywhere\Output\Data;
 
+defined('_JEXEC') or die;
+
 use ArticlesAnywhereArticleView;
-use JFactory;
 use JFolder;
+use Joomla\CMS\Factory as JFactory;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Factory;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Params;
-
-defined('_JEXEC') or die;
 
 class Layout extends Data
 {
@@ -37,6 +37,11 @@ class Layout extends Data
 		}
 
 		$params = Params::get();
+		if (isset($attributes->force_content_triggers))
+		{
+			$params->force_content_triggers = $attributes->force_content_triggers;
+			unset($attributes->force_content_triggers);
+		}
 
 		list($template, $layout) = $this->getTemplateAndLayout($attributes);
 

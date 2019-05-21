@@ -1,11 +1,11 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.7.10792
+ * @version         19.5.762
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -13,16 +13,15 @@ namespace RegularLabs\Library;
 
 defined('_JEXEC') or die;
 
-jimport('joomla.filesystem.file');
+use Joomla\CMS\Component\ComponentHelper as JComponentHelper;
+use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\HTML\HTMLHelper as JHtml;
+use Joomla\CMS\Language\Text as JText;
+use Joomla\CMS\Router\Route as JRoute;
+use Joomla\CMS\Session\Session as JSession;
+use Joomla\CMS\Uri\Uri as JUri;
 
-use JComponentHelper;
-use JFactory;
-use JFile;
-use JHtml;
-use JRoute;
-use JSession;
-use JText;
-use JUri;
+jimport('joomla.filesystem.file');
 
 /**
  * Class Version
@@ -103,9 +102,8 @@ class Version
 			return '';
 		}
 
-		JHtml::_('jquery.framework');
+		Document::loadMainDependencies();
 
-		Document::script('regularlabs/script.min.js');
 		$url    = 'download.regularlabs.com/extensions.xml?j=3&e=' . $alias;
 		$script = "
 			jQuery(document).ready(function() {
@@ -132,6 +130,8 @@ class Version
 	 */
 	public static function getFooter($name, $copyright = true)
 	{
+		Document::loadMainDependencies();
+
 		$html = [];
 
 		$html[] = '<div class="rl_footer_extension">' . self::getFooterName($name) . '</div>';
@@ -185,7 +185,7 @@ class Version
 
 		$msg .= '<br>'
 			. '<span class="ghosted">'
-			. '[ <a href="https://www.regularlabs.com/' . $alias . '#changelog" target="_blank">'
+			. '[ <a href="https://www.regularlabs.com/' . $alias . '/changelog" target="_blank">'
 			. JText::_('RL_CHANGELOG')
 			. '</a> ]'
 			. '<br>'
@@ -209,13 +209,13 @@ class Version
 		$is_pro = strpos($version, 'PRO') !== false;
 
 		if (
-			! JFile::exists(JPATH_ADMINISTRATOR . '/components/com_regularlabsmanager/regularlabsmanager.xml')
+			! file_exists(JPATH_ADMINISTRATOR . '/components/com_regularlabsmanager/regularlabsmanager.xml')
 			|| ! JComponentHelper::isInstalled('com_regularlabsmanager')
 			|| ! JComponentHelper::isEnabled('com_regularlabsmanager')
 		)
 		{
 			$url = $is_pro
-				? 'https://www.regularlabs.com/' . $alias . '#download'
+				? 'https://www.regularlabs.com/' . $alias . '/features'
 				: JRoute::_('index.php?option=com_installer&view=update');
 
 			return [$url, ''];
@@ -230,20 +230,18 @@ class Version
 			return ['index.php?option=com_regularlabsmanager', ''];
 		}
 
-		JHtml::_('bootstrap.framework');
-		JHtml::_('behavior.modal');
 		jimport('joomla.filesystem.file');
 
-		JHtml::_('jquery.framework');
+		Document::loadMainDependencies();
+		JHtml::_('behavior.modal');
 
-		Document::script('regularlabs/script.min.js');
 		JFactory::getDocument()->addScriptDeclaration(
 			"
 			var RLEM_TIMEOUT = " . (int) $config->get('timeout', 5) . ";
 			var RLEM_TOKEN = '" . JSession::getFormToken() . "';
 		"
 		);
-		Document::script('regularlabsmanager/script.min.js', '18.7.10792');
+		Document::script('regularlabsmanager/script.min.js', '19.5.762');
 
 		$url = 'https://download.regularlabs.com?ext=' . $alias . '&j=3';
 
@@ -297,17 +295,16 @@ class Version
 
 		$jed_url = 'http://regl.io/jed-' . $alias . '#reviews';
 
-		return
-			StringHelper::html_entity_decoder(
-				JText::sprintf(
-					'RL_JED_REVIEW',
-					'<a href="' . $jed_url . '" target="_blank">',
-					'</a>'
-					. ' <a href="' . $jed_url . '" target="_blank" class="stars">'
-					. str_repeat('<span class="icon-star"></span>', 5)
-					. '</a>'
-				)
-			);
+		return StringHelper::html_entity_decoder(
+			JText::sprintf(
+				'RL_JED_REVIEW',
+				'<a href="' . $jed_url . '" target="_blank">',
+				'</a>'
+				. ' <a href="' . $jed_url . '" target="_blank" class="stars">'
+				. str_repeat('<span class="icon-star"></span>', 5)
+				. '</a>'
+			)
+		);
 	}
 
 	/**
@@ -317,13 +314,12 @@ class Version
 	 */
 	private static function getFooterLogo()
 	{
-		return
-			JText::sprintf(
-				'RL_POWERED_BY',
-				'<a href="https://www.regularlabs.com" target="_blank">'
-				. '<img src="' . JUri::root() . 'media/regularlabs/images/logo.png" width="135" height="24" alt="Regular Labs">'
-				. '</a>'
-			);
+		return JText::sprintf(
+			'RL_POWERED_BY',
+			'<a href="https://www.regularlabs.com" target="_blank">'
+			. '<img src="' . JUri::root() . 'media/regularlabs/images/logo.png" width="135" height="24" alt="Regular Labs">'
+			. '</a>'
+		);
 	}
 
 	/**

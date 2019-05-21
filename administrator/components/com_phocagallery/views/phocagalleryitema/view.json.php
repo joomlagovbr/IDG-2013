@@ -12,7 +12,7 @@ jimport( 'joomla.application.component.view');
 class PhocaGalleryCpViewPhocaGalleryItemA extends JViewLegacy
 {
 	function display($tpl = null){
-			
+
 		if (!JSession::checkToken('request')) {
 			$response = array(
 				'status' => '0',
@@ -20,46 +20,58 @@ class PhocaGalleryCpViewPhocaGalleryItemA extends JViewLegacy
 			echo json_encode($response);
 			return;
 		}
-		
+
 		$app		= JFactory::getApplication();
 		$q			= $app->input->get( 'q', '', 'string'  );
 		$id			= $app->input->get( 'item_id', '', 'int'  );
-		
+
 		if (isset($q) && $q != '') {
 			$db		= JFactory::getDbo();
 			$query	= $db->getQuery(true);
-			
-			
+
+
 			$query->select('a.id as id, a.title as title, a.filename as filename, a.exts as exts');
 			$query->from('`#__phocagallery` AS a');
 			$query->select('c.title AS category_title, c.id AS category_id');
 			$query->join('LEFT', '#__phocagallery_categories AS c ON c.id = a.catid');
 
-			
+
 			$search = $db->Quote('%'.$db->escape($q, true).'%');
 			if ((int)$id > 0) {
 				$query->where('( a.id <> '.(int)$id.')');
 			}
 			$query->where('( a.title LIKE '.$search.')');
-			$query->group($db->escape('a.id'));
+			//$query->group($db->escape('a.id'));
+            $query->group($db->escape('a.id, a.title, a.filename, a.exts, c.id, c.title'));
 			$query->order($db->escape('a.ordering'));
-			
+
 			$db->setQuery($query);
-			
-			if (!$db->query()) {
+
+
+			/*if (!$db->query()) {
 				$response = array(
 				'status' => '0',
 				'error' => '<span class="ph-result-txt ph-error-txt">Database Error - Getting Selected Images</span>');
 				echo json_encode($response);
 				return;
+			}*/
+
+			try {
+				$items 	= $db->loadObjectList();
+			} catch (\RuntimeException $e) {
+				$response = array(
+					'status' => '0',
+					'error' => '<span class="ph-result-txt ph-error-txt">Database Error - Getting Selected Images</span>');
+				echo json_encode($response);
+				return;
 			}
-			$items 	= $db->loadObjectList();
+
 			$itemsA	= array();
 			if (!empty($items)) {
 				foreach ($items as $k => $v) {
 					$itemsA[$k]['id'] 		= $v->id;
 					$itemsA[$k]['title'] 	= $v->title . ' ('.$v->category_title.')';
-					
+
 					if ($v->exts != '') {
 						$itemsA[$k]['exts']= $v->exts;
 					} else if ($v->filename != '') {
@@ -70,17 +82,17 @@ class PhocaGalleryCpViewPhocaGalleryItemA extends JViewLegacy
 					}
 				}
 			}
-		
+
 			$response = array(
 			'status'	=> '1',
-			'items'		=> $itemsA);	
+			'items'		=> $itemsA);
 			echo json_encode($response);
 			return;
 		}
-		
+
 		$response = array(
 		'status'	=> '1',
-		'items'		=> array());	
+		'items'		=> array());
 		echo json_encode($response);
 		return;
 	}

@@ -9,21 +9,21 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  */
 defined( '_JEXEC' ) or die( 'Restricted access' );
-jimport( 'joomla.filesystem.folder' ); 
+jimport( 'joomla.filesystem.folder' );
 jimport( 'joomla.filesystem.file' );
 phocagalleryimport( 'phocagallery.image.image');
 phocagalleryimport( 'phocagallery.file.fileuploadfront' );
 class PhocaGalleryFileUpload
 {
 	public static function realMultipleUpload( $frontEnd = 0) {
-		
+
 		$paramsC 		= JComponentHelper::getParams('com_phocagallery');
 		$chunkMethod 	= $paramsC->get( 'multiple_upload_chunk', 0 );
 		$uploadMethod 	= $paramsC->get( 'multiple_upload_method', 4 );
-		
+
 		$app 	= JFactory::getApplication();
 		$app->allowCache(false);
-		
+
 		// Chunk Files
 		header('Content-type: text/plain; charset=UTF-8');
 		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
@@ -31,7 +31,7 @@ class PhocaGalleryFileUpload
 		header("Cache-Control: no-store, no-cache, must-revalidate");
 		header("Cache-Control: post-check=0, pre-check=0", false);
 		header("Pragma: no-cache");
-		
+
 		// Invalid Token
 		JSession::checkToken( 'request' ) or jexit(json_encode(array( 'jsonrpc' => '2.0', 'result' => 'error', 'code' => 100,
 				'message' => JText::_('COM_PHOCAGALLERY_ERROR').': ',
@@ -39,13 +39,13 @@ class PhocaGalleryFileUpload
 
 		// Set FTP credentials, if given
 		$ftp = JClientHelper::setCredentialsFromRequest('ftp');
-		
+
 		$path			= PhocaGalleryPath::getPath();
 		$file 			= JFactory::getApplication()->input->files->get( 'file', null );
 		$chunk 			= JFactory::getApplication()->input->get( 'chunk', 0, '', 'int' );
 		$chunks 		= JFactory::getApplication()->input->get( 'chunks', 0, '', 'int' );
 		$folder			= JFactory::getApplication()->input->get( 'folder', '', '', 'path' );
-		
+
 		// Make the filename safe
 		if (isset($file['name'])) {
 			$file['name']	= JFile::makeSafe($file['name']);
@@ -53,26 +53,26 @@ class PhocaGalleryFileUpload
 		if (isset($folder) && $folder != '') {
 			$folder	= $folder . '/';
 		}
-		
+
 		$chunkEnabled = 0;
 		// Chunk only if is enabled and only if flash is enabled
 		if (($chunkMethod == 1 && $uploadMethod == 1) || ($frontEnd == 0 && $chunkMethod == 0 && $uploadMethod == 1)) {
 			$chunkEnabled = 1;
 		}
-		
-		
-				
-		
+
+
+
+
 		if (isset($file['name'])) {
-			
-			
+
+
 			// - - - - - - - - - -
 			// Chunk Method
 			// - - - - - - - - - -
 			// $chunkMethod = 1, for frontend and backend
 			// $chunkMethod = 0, only for backend
 			if ($chunkEnabled == 1) {
-			
+
 				// If chunk files are used, we need to upload parts to temp directory
 				// and then we can run e.g. the condition to recognize if the file already exists
 				// We must upload the parts to temp, in other case we get everytime the info
@@ -96,7 +96,7 @@ class PhocaGalleryFileUpload
 				$maxFileAge 			= 60 * 60; // Temp file age in seconds
 				$lastChunk				= $chunk + 1;
 				$realSize				= 0;
-			
+
 				// Get the real size - if chunk is uploaded, it is only a part size, so we must compute all size
 				// If there is last chunk we can computhe the whole size
 				if ($lastChunk == $chunks) {
@@ -107,7 +107,7 @@ class PhocaGalleryFileUpload
 
 				// 5 minutes execution time
 				@set_time_limit(5 * 60);// usleep(5000);
-				
+
 				// If the file already exists on the server:
 				// - don't copy the temp file to final
 				// - remove all parts in temp file
@@ -117,23 +117,23 @@ class PhocaGalleryFileUpload
 					if($lastChunk == $chunks){
 					@JFolder::delete($filepathFolderTemp);
 				}
-			
+
 				jexit(json_encode(array( 'jsonrpc' => '2.0', 'result' => 'error', 'code' => 108,
 							'message' => JText::_('COM_PHOCAGALLERY_ERROR').': ',
 							'details' => JText::_('COM_PHOCAGALLERY_FILE_ALREADY_EXISTS'))));
 				}
-			
+
 				if (!PhocaGalleryFileUpload::canUpload( $file, $errUploadMsg, $frontEnd, $chunkEnabled, $realSize )) {
-				
-					// If there is some error, remove the temp folder with temp files 
+
+					// If there is some error, remove the temp folder with temp files
 					if($lastChunk == $chunks){
 						@JFolder::delete($filepathFolderTemp);
 					}
 					jexit(json_encode(array( 'jsonrpc' => '2.0', 'result' => 'error', 'code' => 104,
 								'message' => JText::_('COM_PHOCAGALLERY_ERROR').': ',
-								'details' => JText::_($errUploadMsg))));			
+								'details' => JText::_($errUploadMsg))));
 				}
-			
+
 				// Ok create temp folder and add chunks
 				if (!JFolder::exists($filepathFolderTemp)) {
 					@JFolder::create($filepathFolderTemp);
@@ -156,7 +156,7 @@ class PhocaGalleryFileUpload
 							'message' => JText::_('COM_PHOCAGALLERY_ERROR').': ',
 							'details' => JText::_('COM_PHOCAGALLERY_ERROR_FOLDER_UPLOAD_NOT_EXISTS'))));
 				}
-			
+
 				// Look for the content type header
 				if (isset($_SERVER["HTTP_CONTENT_TYPE"]))
 					$contentType = $_SERVER["HTTP_CONTENT_TYPE"];
@@ -166,7 +166,7 @@ class PhocaGalleryFileUpload
 
 				if (strpos($contentType, "multipart") !== false) {
 					if (isset($file['tmp_name']) && is_uploaded_file($file['tmp_name'])) {
-						
+
 						// Open temp file
 						$out = $stream->open($filepathImgTemp, $chunk == 0 ? "wb" : "ab");
 						//$out = fopen($filepathImgTemp, $chunk == 0 ? "wb" : "ab");
@@ -221,102 +221,102 @@ class PhocaGalleryFileUpload
 						'details' => JText::_('COM_PHOCAGALLERY_ERROR_OPEN_OUTPUT_STREAM'))));
 					}
 				}
-			
-			
+
+
 				// Rename the Temp File to Final File
 				if($lastChunk == $chunks){
-				
+
 					if(($imginfo = getimagesize($filepathImgTemp)) === FALSE) {
 						JFolder::delete($filepathFolderTemp);
 						jexit(json_encode(array( 'jsonrpc' => '2.0', 'result' => 'error', 'code' => 110,
 						'message' => JText::_('COM_PHOCAGALLERY_ERROR').': ',
 						'details' => JText::_('COM_PHOCAGALLERY_WARNING_INVALIDIMG'))));
 					}
-					
-					
+
+
 					if(!JFile::move($filepathImgTemp, $filepathImgFinal)) {
-						
+
 						JFolder::delete($filepathFolderTemp);
-						
+
 						jexit(json_encode(array( 'jsonrpc' => '2.0', 'result' => 'error', 'code' => 109,
 						'message' => JText::_('COM_PHOCAGALLERY_ERROR').': ',
 						'details' => JText::_('COM_PHOCAGALLERY_ERROR_UNABLE_TO_MOVE_FILE') .'<br />'
 						. JText::_('COM_PHOCAGALLERY_CHECK_PERMISSIONS_OWNERSHIP'))));
 					}
-					
-					
+
+
 					JFolder::delete($filepathFolderTemp);
 				}
 
 				if ((int)$frontEnd > 0) {
 					return $file['name'];
 				}
-				
+
 				jexit(json_encode(array( 'jsonrpc' => '2.0', 'result' => 'OK', 'code' => 200,
 				'message' => JText::_('COM_PHOCAGALLERY_SUCCESS').': ',
 				'details' => JText::_('COM_PHOCAGALLERY_IMAGES_UPLOADED'))));
-						
-						
+
+
 			} else {
 				// No Chunk Method
-				
+
 				$filepathImgFinal 		= JPath::clean($path->image_abs.$folder.strtolower($file['name']));
 				$filepathFolderFinal 	= JPath::clean($path->image_abs.$folder);
-				
-				
-				
+
+
+
 				if (!PhocaGalleryFileUpload::canUpload( $file, $errUploadMsg, $frontEnd, $chunkMethod, 0 )) {
 					jexit(json_encode(array( 'jsonrpc' => '2.0', 'result' => 'error', 'code' => 104,
 					'message' => JText::_('COM_PHOCAGALLERY_ERROR').': ',
-					'details' => JText::_($errUploadMsg))));			
+					'details' => JText::_($errUploadMsg))));
 				}
-				
+
 				if (JFile::exists($filepathImgFinal)) {
 					jexit(json_encode(array( 'jsonrpc' => '2.0', 'result' => 'error', 'code' => 108,
 					'message' => JText::_('COM_PHOCAGALLERY_ERROR').': ',
 					'details' => JText::_('COM_PHOCAGALLERY_FILE_ALREADY_EXISTS'))));
 				}
-				
-				
+
+
 				if(!JFile::upload($file['tmp_name'], $filepathImgFinal, false, true)) {
 					jexit(json_encode(array( 'jsonrpc' => '2.0', 'result' => 'error', 'code' => 109,
 					'message' => JText::_('COM_PHOCAGALLERY_ERROR').': ',
 					'details' => JText::_('COM_PHOCAGALLERY_ERROR_UNABLE_TO_UPLOAD_FILE') .'<br />'
 					. JText::_('COM_PHOCAGALLERY_CHECK_PERMISSIONS_OWNERSHIP'))));
 				}
-				
+
 				if ((int)$frontEnd > 0) {
 					return $file['name'];
 				}
-				
+
 				jexit(json_encode(array( 'jsonrpc' => '2.0', 'result' => 'OK', 'code' => 200,
 				'message' => JText::_('COM_PHOCAGALLERY_SUCCESS').': ',
 				'details' => JText::_('COM_PHOCAGALLERY_IMAGES_UPLOADED'))));
 
-			
+
 			}
 		} else {
 			// No isset $file['name']
-			
+
 			jexit(json_encode(array( 'jsonrpc' => '2.0', 'result' => 'error', 'code' => 104,
 			'message' => JText::_('COM_PHOCAGALLERY_ERROR').': ',
 			'details' => JText::_('COM_PHOCAGALLERY_ERROR_UNABLE_TO_UPLOAD_FILE'))));
 		}
-		
+
 	}
-	
-	
+
+
 	public static function realSingleUpload( $frontEnd = 0 ) {
-		
+
 	//	$paramsC 		= JComponentHelper::getParams('com_phocagallery');
 	//	$chunkMethod 	= $paramsC->get( 'multiple_upload_chunk', 0 );
 	//	$uploadMethod 	= $paramsC->get( 'multiple_upload_method', 4 );
-		
+
 		$app			= JFactory::getApplication();
 		JSession::checkToken( 'request' ) or jexit( 'ERROR: '. JText::_('COM_PHOCAGALLERY_INVALID_TOKEN'));
-		
+
 		$app->allowCache(false);
-		
+
 		$path			= PhocaGalleryPath::getPath();
 		$file 			= JFactory::getApplication()->input->files->get( 'Filedata', null );
 		$folder			= JFactory::getApplication()->input->get( 'folder', '', '', 'path' );
@@ -329,7 +329,7 @@ class PhocaGalleryFileUpload
 		$folderUrl 		= $folder;
 		$tabUrl			= '';
 		$component		= JFactory::getApplication()->input->get( 'option', '', '', 'string' );
-		
+
 		// In case no return value will be sent (should not happen)
 		if ($component != '' && $frontEnd == 0) {
 			$componentUrl 	= 'index.php?option='.$component;
@@ -339,26 +339,26 @@ class PhocaGalleryFileUpload
 		if ($tab != '') {
 			$tabUrl = '&tab='.(string)$tab;
 		}
-		
+
 		$ftp = JClientHelper::setCredentialsFromRequest('ftp');
-		
+
 		// Make the filename safe
 		if (isset($file['name'])) {
 			$file['name']	= JFile::makeSafe($file['name']);
 		}
-		
-		
+
+
 		if (isset($folder) && $folder != '') {
 			$folder	= $folder . '/';
 		}
-		
-		
+
+
 		// All HTTP header will be overwritten with js message
 		if (isset($file['name'])) {
 			$filepath = JPath::clean($path->image_abs.$folder.strtolower($file['name']));
 
 			if (!PhocaGalleryFileUpload::canUpload( $file, $errUploadMsg, $frontEnd )) {
-				
+
 				if ($errUploadMsg == 'COM_PHOCAGALLERY_WARNING_FILE_TOOLARGE') {
 					$errUploadMsg 	= JText::_($errUploadMsg) . ' ('.PhocaGalleryFile::getFileSizeReadable($file['size']).')';
 				} else if ($errUploadMsg == 'COM_PHOCAGALLERY_WARNING_FILE_TOOLARGE_RESOLUTION') {
@@ -367,8 +367,8 @@ class PhocaGalleryFileUpload
 				} else {
 					$errUploadMsg 	= JText::_($errUploadMsg);
 				}
-			
-			
+
+
 				/*if ($return) {
 					$app->enqueueMessage( $errUploadMsg, 'error');
 					$app->redirect(base64_decode($return).'&folder='.$folderUrl);
@@ -378,12 +378,12 @@ class PhocaGalleryFileUpload
 					$app->redirect($componentUrl, $errUploadMsg, 'error');
 					exit;
 				}*/
-				
-				
+
+
 				if ($return) {
 					$app->enqueueMessage( $errUploadMsg, 'error');
 					if ($frontEnd > 0) {
-					
+
 						$app->redirect(base64_decode($return));
 					} else {
 						$app->redirect(base64_decode($return).'&folder='.$folderUrl);
@@ -419,11 +419,11 @@ class PhocaGalleryFileUpload
 					exit;
 				}
 			} else {
-			
+
 				if ((int)$frontEnd > 0) {
 					return $file['name'];
 				}
-			
+
 				if ($return) {
 					$app->enqueueMessage( JText::_('COM_PHOCAGALLERY_SUCCESS_FILE_UPLOAD'));
 					$app->redirect(base64_decode($return).'&folder='.$folderUrl);
@@ -447,57 +447,57 @@ class PhocaGalleryFileUpload
 						$app->redirect('index.php?option=com_phocagallery&view=phocagalleryi&tmpl=component'.$tabUrl.'&folder='.$folder.'&field='.$field);
 						exit;
 					break;
-				
+
 					case 'phocagallerym':
 						$app->enqueueMessage( $msg, 'error');
 						$app->redirect('index.php?option=com_phocagallery&view=phocagallerym&layout=form&hidemainmenu=1'.$tabUrl.'&folder='.$folder);
 						exit;
 					break;
-					
+
 					default:
 						$app->enqueueMessage( $msg, 'error');
 						$app->redirect('index.php?option=com_phocagallery');
 						exit;
 					break;
-				
+
 				}
 			}
 		}
-		
+
 	}
-	
-	public static function realJavaUpload( $frontEnd = 0 ) {		
-		
+
+	public static function realJavaUpload( $frontEnd = 0 ) {
+
 		$app	= JFactory::getApplication();
 
 		JSession::checkToken( 'request' ) or exit( 'ERROR: '. JText::_('COM_PHOCAGALLERY_INVALID_TOKEN'));
-		
+
 	//	$files 	= JFactory::getApplication()->input->get( 'Filedata', '', 'files', 'array' );
-		
+
 		$path		= PhocaGalleryPath::getPath();
 		$folder		= JFactory::getApplication()->input->get( 'folder', '', '', 'path' );
-		
+
 		if (isset($folder) && $folder != '') {
 			$folder	= $folder . '/';
 		}
 		$errUploadMsg	= '';
 		$ftp 			= JClientHelper::setCredentialsFromRequest('ftp');
-		
+
 		foreach ($_FILES as $fileValue => $file) {
 			echo('File key: '. $fileValue . "\n");
 			foreach ($file as $item => $val) {
 				echo(' Data received: ' . $item.'=>'.$val . "\n");
 			}
-			
+
 
 			// Make the filename safe
 			if (isset($file['name'])) {
 				$file['name'] = JFile::makeSafe($file['name']);
 			}
-	
+
 			if (isset($file['name'])) {
 				$filepath = JPath::clean($path->image_abs.$folder.strtolower($file['name']));
-				
+
 				if (!PhocaGalleryFileUpload::canUpload( $file, $errUploadMsg, $frontEnd  )) {
 					exit( 'ERROR: '.JText::_($errUploadMsg));
 				}
@@ -512,7 +512,7 @@ class PhocaGalleryFileUpload
 				if ((int)$frontEnd > 0) {
 					return $file['name'];
 				}
-				
+
 				exit( 'SUCCESS');
 			} else {
 				exit( 'ERROR: '.JText::_('COM_PHOCAGALLERY_ERROR_UNABLE_TO_UPLOAD_FILE'));
@@ -521,7 +521,7 @@ class PhocaGalleryFileUpload
 		return true;
 	}
 
-	
+
 	/**
 	 * can Upload
 	 *
@@ -534,16 +534,16 @@ class PhocaGalleryFileUpload
 	 * @since 1.5
 	 */
 
-	
+
 	public static function canUpload( $file, &$errUploadMsg, $frontEnd = 0, $chunkEnabled = 0, $realSize = 0 ) {
-		
+
 		$params 	= JComponentHelper::getParams( 'com_phocagallery' );
 		$paramsL 	= array();
-		$paramsL['upload_extensions'] 	= 'gif,jpg,png,jpeg';
-		$paramsL['image_extensions'] 	= 'gif,jpg,png,jpeg';
-		$paramsL['upload_mime']			= 'image/jpeg,image/gif,image/png';
+		$paramsL['upload_extensions'] 	= 'gif,jpg,png,jpeg,webp';
+		$paramsL['image_extensions'] 	= 'gif,jpg,png,jpeg,webp';
+		$paramsL['upload_mime']			= 'image/jpeg,image/gif,image/png,image/webp';
 		$paramsL['upload_mime_illegal']	='application/x-shockwave-flash,application/msword,application/excel,application/pdf,application/powerpoint,text/plain,application/x-zip,text/html';
-		
+
 		// The file doesn't exist
 		if(empty($file['name'])) {
 			$errUploadMsg = 'COM_PHOCAGALLERY_ERROR_UNABLE_TO_UPLOAD_FILE';
@@ -566,22 +566,22 @@ class PhocaGalleryFileUpload
 			$errUploadMsg = 'COM_PHOCAGALLERY_WARNING_FILETYPE';
 			return false;
 		}
-		
+
 		// 'COM_PHOCAGALLERY_MAX_RESOLUTION'
 		$imgSize		= PhocaGalleryImage::getImageSize($file['tmp_name']);
 		$maxResWidth 	= $params->get( 'upload_maxres_width', 3072 );
 		$maxResHeight 	= $params->get( 'upload_maxres_height', 2304 );
-		if (((int)$maxResWidth > 0 && (int)$maxResHeight > 0) 
+		if (((int)$maxResWidth > 0 && (int)$maxResHeight > 0)
 		&& ((int)$imgSize[0] > (int)$maxResWidth || (int)$imgSize[1] > (int)$maxResHeight)) {
 			$errUploadMsg = 'COM_PHOCAGALLERY_WARNING_FILE_TOOLARGE_RESOLUTION';
 			return false;
 		}
-		
+
 		// User (only in ucp) - Check the size of all images by users
 		if ($frontEnd == 2) {
 			$user 				= JFactory::getUser();
 			$maxUserImageSize 	= (int)$params->get( 'user_images_max_size', 20971520 );
-			
+
 			if ($chunkEnabled == 1) {
 				$fileSize = $realSize;
 			} else {
@@ -590,11 +590,11 @@ class PhocaGalleryFileUpload
 			$allFileSize = PhocaGalleryFileUploadFront::getSizeAllOriginalImages($fileSize, $user->id);
 
 			if ((int)$maxUserImageSize > 0 && (int) $allFileSize > $maxUserImageSize) {
-				$errUploadMsg = JText::_('COM_PHOCAGALLERY_WARNING_USERIMAGES_TOOLARGE');	
+				$errUploadMsg = JText::_('COM_PHOCAGALLERY_WARNING_USERIMAGES_TOOLARGE');
 				return false;
 			}
 		}
-		
+
 		// Max size of image
 		// If chunk method is used, we need to get computed size
 		$maxSize = $params->get( 'upload_maxsize', 3145728 );
@@ -612,8 +612,8 @@ class PhocaGalleryFileUpload
 
 		$user = JFactory::getUser();
 		$imginfo = null;
-		
-		
+
+
 		// Image check
 		$images = explode( ',', $paramsL['image_extensions']);
 		if(in_array($format, $images)) { // if its an image run it through getimagesize
@@ -648,7 +648,7 @@ class PhocaGalleryFileUpload
 				return false;
 			}*/
 		}
-		
+
 		// XSS Check
 		$xss_check =  JFile::read($file['tmp_name'],false,256);
 		$html_tags = array('abbr','acronym','address','applet','area','audioscope','base','basefont','bdo','bgsound','big','blackface','blink','blockquote','body','bq','br','button','caption','center','cite','code','col','colgroup','comment','custom','dd','del','dfn','dir','div','dl','dt','em','embed','fieldset','fn','font','form','frame','frameset','h1','h2','h3','h4','h5','h6','head','hr','html','iframe','ilayer','img','input','ins','isindex','keygen','kbd','label','layer','legend','li','limittext','link','listing','map','marquee','menu','meta','multicol','nobr','noembed','noframes','noscript','nosmartquotes','object','ol','optgroup','option','param','plaintext','pre','rt','ruby','s','samp','script','select','server','shadow','sidebar','small','spacer','span','strike','strong','style','sub','sup','table','tbody','td','textarea','tfoot','th','thead','title','tr','tt','ul','var','wbr','xml','xmp','!DOCTYPE', '!--');
@@ -663,7 +663,7 @@ class PhocaGalleryFileUpload
 	}
 	/*
 	function uploader($id='file-upload', $params = array()) {
-		
+
 		$path = 'administrator/components/com_phocagallery/assets/upload/';
 		JHTML::script('swf.js', $path, false ); // mootools are loaded yet
 		JHTML::script('uploader.js', $path, false );// mootools are loaded yet
@@ -715,7 +715,7 @@ class PhocaGalleryFileUpload
 		$uploaders[$id] = true;
 		return;
 	}
-	
+
 	protected static function getJSObject($array=array())
 	{
 		// Initialise variables.
@@ -744,9 +744,9 @@ class PhocaGalleryFileUpload
 
 		return $object;
 	}*/
-	
+
 	public static function renderFTPaccess() {
-	
+
 		$ftpOutput = '<fieldset title="'.JText::_('COM_PHOCAGALLERY_FTP_LOGIN_LABEL'). '">'
 		.'<legend>'. JText::_('COM_PHOCAGALLERY_FTP_LOGIN_LABEL').'</legend>'
 		.JText::_('COM_PHOCAGALLERY_FTP_LOGIN_DESC')
@@ -761,23 +761,23 @@ class PhocaGalleryFileUpload
 		.'</tr></table></fieldset>';
 		return $ftpOutput;
 	}
-	
+
 	public static function renderCreateFolder($sessName, $sessId, $currentFolder, $viewBack, $attribs = '') {
-	
+
 		if ($attribs != '') {
 			$attribs = '&amp;'.$attribs;
 		}
-	
+
 		$folderOutput = '<form action="'. JURI::base()
 		.'index.php?option=com_phocagallery&task=phocagalleryu.createfolder&amp;'. $sessName.'='.$sessId.'&amp;'
 		.JSession::getFormToken().'=1&amp;viewback='.$viewBack.'&amp;'
-		.'folder='.$currentFolder.$attribs .'" name="folderForm" id="folderForm" method="post">'
+		.'folder='.PhocaGalleryText::filterValue($currentFolder, 'folderpath').$attribs .'" name="folderForm" id="folderForm" method="post">'
 		//.'<fieldset id="folderview">'
 		//.'<legend>'.JText::_('COM_PHOCAGALLERY_FOLDER').'</legend>'
 		.'<div class="ph-in"><div class="ph-head-form">'.JText::_('COM_PHOCAGALLERY_CREATE_FOLDER').'</div>'
 		.'<dl class="dl-horizontal ph-input">'
 		.'<dt><input class="inputbox" type="text" id="foldername" name="foldername"  /></dt>'
-		.'<input class="update-folder" type="hidden" name="folderbase" id="folderbase" value="'.$currentFolder.'" />'
+		.'<input class="update-folder" type="hidden" name="folderbase" id="folderbase" value="'.PhocaGalleryText::filterValue($currentFolder, 'folderpath').'" />'
 		.'<dd><button class="btn btn-success" type="submit">'. JText::_( 'COM_PHOCAGALLERY_CREATE_FOLDER' ).'</button></dd>'
 		.'</dl></div>'
 	    //.'</fieldset>'

@@ -79,12 +79,12 @@ class PhocaGalleryCpModelPhocaGalleryCoImg extends JModelAdmin
 
 	protected function getReorderConditions($table = null)
 	{
-		
+
 		$condition = array();
 		$condition[] = 'image_id = '.(int) $table->image_id;
 		return $condition;
 	}
-	
+
 	protected function prepareTable($table)
 	{
 		jimport('joomla.filter.output');
@@ -92,9 +92,9 @@ class PhocaGalleryCpModelPhocaGalleryCoImg extends JModelAdmin
 		$user = JFactory::getUser();
 
 		$table->title		= htmlspecialchars_decode($table->title, ENT_QUOTES);
-		$table->alias		= JApplication::stringURLSafe($table->alias);
+		$table->alias		= \JApplicationHelper::stringURLSafe($table->alias);
 		if (empty($table->alias)) {
-			$table->alias = JApplication::stringURLSafe($table->title);
+			$table->alias = \JApplicationHelper::stringURLSafe($table->title);
 		}
 		if(intval($table->date) == 0) {
 			$table->date = JFactory::getDate()->toSql();

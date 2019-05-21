@@ -82,7 +82,7 @@ class PhocaGalleryCpModelPhocaGalleryFb extends JModelAdmin
 		//$condition[] = 'catid = '.(int) $table->catid;
 		return $condition;
 	}*/
-	
+
 	protected function prepareTable($table)
 	{
 		jimport('joomla.filter.output');
@@ -90,10 +90,10 @@ class PhocaGalleryCpModelPhocaGalleryFb extends JModelAdmin
 		$user = JFactory::getUser();
 
 		/*$table->title		= htmlspecialchars_decode($table->title, ENT_QUOTES);
-		$table->alias		= JApplication::stringURLSafe($table->alias);
+		$table->alias		= \JApplicationHelper::stringURLSafe($table->alias);
 
 		if (empty($table->alias)) {
-			$table->alias = JApplication::stringURLSafe($table->title);
+			$table->alias = \JApplicationHelper::stringURLSafe($table->title);
 		}*/
 
 		if (empty($table->id)) {
@@ -115,20 +115,20 @@ class PhocaGalleryCpModelPhocaGalleryFb extends JModelAdmin
 			//$table->modified_by	= $user->get('id');
 		}
 	}
-	
+
 	public function getItem($pk = null)
 	{
 		if ($item = parent::getItem($pk)) {
 			// Convert the params field to an array.
-			
+
 			$registry = new JRegistry;
 			$registry->loadString($item->comments);
 			$item->comments = $registry->toArray();
 		}
 
 		return $item;
-		
+
 	}
-	
+
 }
 ?>

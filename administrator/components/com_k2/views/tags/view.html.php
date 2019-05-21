@@ -1,9 +1,9 @@
 <?php
 /**
- * @version    2.8.x
+ * @version    2.9.x
  * @package    K2
- * @author     JoomlaWorks http://www.joomlaworks.net
- * @copyright  Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @author     JoomlaWorks https://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2018 JoomlaWorks Ltd. All rights reserved.
  * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -23,6 +23,9 @@ class K2ViewTags extends K2View
 		$option = JRequest::getCmd('option');
 		$view = JRequest::getCmd('view');
 		$task = JRequest::getCmd('task');
+
+		$params = JComponentHelper::getParams('com_k2');
+		$this->assignRef('params', $params);
 
 		$limit = $application->getUserStateFromRequest('global.list.limit', 'limit', $application->getCfg('list_limit'), 'int');
 		$limitstart = $application->getUserStateFromRequest($option.$view.'.limitstart', 'limitstart', 0, 'int');

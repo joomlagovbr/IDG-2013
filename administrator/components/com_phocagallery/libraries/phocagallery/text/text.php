@@ -20,7 +20,7 @@ class PhocaGalleryText
 			return StringHelper::substr($string, 0, $length) . $end;
 		}
 	}
-	
+
 	public static function wordDeleteWhole($string,$length,$end = '...') {
 		if (StringHelper::strlen($string) < $length || StringHelper::strlen($string) == $length) {
 			return $string;
@@ -30,7 +30,7 @@ class PhocaGalleryText
 		}
 	}
 
-	
+
 	public static function strTrimAll($input) {
 		$output	= '';
 	    $input	= trim($input);
@@ -43,12 +43,12 @@ class PhocaGalleryText
 	    }
 	    return $output;
 	}
-	
+
 	public static function getAliasName($name) {
-		
+
 		$paramsC		= JComponentHelper::getParams( 'com_phocagallery' );
 		$alias_iconv	= $paramsC->get( 'alias_iconv', 0 );
-		
+
 		$iconv = 0;
 		if ($alias_iconv == 1) {
 			if (function_exists('iconv')) {
@@ -62,15 +62,69 @@ class PhocaGalleryText
 				$iconv = 0;
 			}
 		}
-		
+
 		if ($iconv == 0) {
 			$name = JFilterOutput::stringURLSafe($name);
 		}
-		
+
 		if(trim(str_replace('-','',$name)) == '') {
 			JFactory::getDate()->format("Y-m-d-H-i-s");
 		}
 		return $name;
 	}
+
+	public static function filterValue($string, $type = 'html') {
+
+		switch ($type) {
+
+			case 'url':
+				return rawurlencode($string);
+			break;
+
+			case 'number':
+				return preg_replace( '/[^.0-9]/', '', $string );
+			break;
+
+			case 'number2':
+				//return preg_replace( '/[^0-9\.,+-]/', '', $string );
+				return preg_replace( '/[^0-9\.,-]/', '', $string );
+			break;
+
+			case 'alphanumeric':
+				return preg_replace("/[^a-zA-Z0-9]+/", '', $string);
+			break;
+
+			case 'alphanumeric2':
+				return preg_replace("/[^\\w-]/", '', $string);// Alphanumeric plus _  -
+			break;
+
+			case 'alphanumeric3':
+				return preg_replace("/[^\\w.-]/", '', $string);// Alphanumeric plus _ . -
+			break;
+
+			case 'folder':
+			case 'file':
+				$string =  preg_replace('/[\"\*\/\\\:\<\>\?\'\|]+/', '', $string);
+				return htmlspecialchars($string, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+			break;
+
+			case 'folderpath':
+			case 'filepath':
+				$string = preg_replace('/[\"\*\:\<\>\?\'\|]+/', '', $string);
+				return htmlspecialchars($string, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+			break;
+
+			case 'text':
+				return htmlspecialchars(strip_tags($string), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+			break;
+
+			case 'html':
+			default:
+				return htmlspecialchars($string, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+			break;
+
+		}
+
+    }
 }
 ?>

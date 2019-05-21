@@ -1,0 +1,51 @@
+/**
+ * @package         Regular Labs Library
+ * @version         19.5.762
+ * 
+ * @author          Peter van Westen <info@regularlabs.com>
+ * @link            http://www.regularlabs.com
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
+ * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ */
+/**
+ * LOOSELY BASED ON:
+ * Very simple jQuery Color Picker
+ * Copyright (C) 2012 Tanguy Krotoff
+ * Licensed under the MIT license
+ */
+@import "init.less";
+
+.rl_codemirror .CodeMirror {
+	height:         100px;
+	min-height:     100px;
+	max-height:     none;
+	padding-bottom: 15px;
+}
+
+.rl_codemirror .cm-resize-handle {
+	position:      relative;
+	background:    #f7f7f7;
+	height:        15px;
+	user-select:   none;
+	cursor:        ns-resize;
+	border-top:    1px solid #cccccc;
+	border-bottom: 1px solid #cccccc;
+	z-index:       2;
+
+	&:before {
+		position:    absolute;
+		left:        50%;
+		content:     '\2261'; /* https://en.wikipedia.org/wiki/Triple_bar */
+		color:       #999999;
+		line-height: 13px;
+		font-size:   15px;
+	}
+
+	&:hover {
+		background: #f0f0f0;
+	}
+
+	&:hover:before {
+		color: black;
+	}
+}

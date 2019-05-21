@@ -106,6 +106,10 @@ class PhocaGalleryRenderProcess
 				$errorMessage = JText::_('COM_PHOCAGALLERY_ERROR_NOGIFFUNCTION');
 				break;
 				
+				case 'ErrorNoWEBPFunction':
+				$errorMessage = JText::_('COM_PHOCAGALLERY_ERROR_NOWEBPFUNCTION');
+				break;
+				
 				case 'ErrorNoWBMPFunction':
 				$errorMessage = JText::_('COM_PHOCAGALLERY_ERROR_NOWBMPFUNCTION');
 				break;

@@ -1,9 +1,9 @@
 <?php
 /**
- * @version    2.8.x
+ * @version    2.9.x
  * @package    K2
- * @author     JoomlaWorks http://www.joomlaworks.net
- * @copyright  Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @author     JoomlaWorks https://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2018 JoomlaWorks Ltd. All rights reserved.
  * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -54,7 +54,7 @@ $context = JRequest::getCmd('context');
 	    <thead>
 			<tr>
 				<th class="hidden-phone">#</th>
-				<th<?php if($context == "modalselector") echo ' class="k2VisuallyHidden"'; ?>><input id="jToggler" type="checkbox" name="toggle" value="" /></th>
+				<th<?php if($context == "modalselector") echo ' class="k2VisuallyHidden"'; ?>><input id="k2<?php echo $this->params->get('backendListToggler', 'TogglerStandard'); ?>" type="checkbox" name="toggle" value="" /></th>
 				<th><?php echo JHTML::_('grid.sort', 'K2_NAME', 'juser.name', @$this->lists['order_Dir'], @$this->lists['order'] ); ?></th>
 				<th class="hidden-phone"><?php echo JHTML::_('grid.sort', 'K2_USERNAME', 'juser.username', @$this->lists['order_Dir'], @$this->lists['order'] ); ?></th>
 				<th class="center"><?php echo JText::_('K2_LOGGED_IN'); ?></th>

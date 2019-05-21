@@ -1,25 +1,25 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         8.0.3
+ * @version         9.2.0
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
 namespace RegularLabs\Plugin\System\ArticlesAnywhere\Collection;
 
+defined('_JEXEC') or die;
+
 use JDatabaseDriver;
 use JDatabaseQuery;
-use JFactory;
+use Joomla\CMS\Factory as JFactory;
 use RegularLabs\Library\ArrayHelper as RL_Array;
 use RegularLabs\Library\DB as RL_DB;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Config;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Factory;
-
-defined('_JEXEC') or die;
 
 class CollectionObject
 {

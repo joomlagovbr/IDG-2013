@@ -1,11 +1,11 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.7.10792
+ * @version         19.5.762
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -139,20 +139,17 @@ class PluginTag
 		}
 
 		// Convert boolean values to actual booleans
-		switch ($value)
+		if ($value === 'true' || $value === true)
 		{
-			case 'true':
-				return $match['not'] ? false : true;
-				break;
-
-			case 'false':
-				return $match['not'] ? true : false;
-				break;
-
-			default:
-				return $match['not'] ? '!NOT!' . $value : $value;
-				break;
+			return $match['not'] ? false : true;
 		}
+
+		if ($value === 'false' || $value === false)
+		{
+			return $match['not'] ? true : false;
+		}
+
+		return $match['not'] ? '!NOT!' . $value : $value;
 	}
 
 	/**
@@ -461,9 +458,12 @@ class PluginTag
 	 *
 	 * @return string
 	 */
-	public static function getRegexInsideTag()
+	public static function getRegexInsideTag($start_character = '{', $end_character = '}')
 	{
-		return '(?:[^\{\}]*\{[^\}]*\})*.*?';
+		$s = RegEx::quote($start_character);
+		$e = RegEx::quote($end_character);
+
+		return '(?:[^' . $s . $e . ']*' . $s . '[^' . $e . ']*' . $s . ')*.*?';
 	}
 
 	/**
@@ -476,8 +476,14 @@ class PluginTag
 	 */
 	public static function getRegexLeadingHtml($group_id = '')
 	{
-		$group          = 'leading_block_element_' . $group_id;
-		$html_tag_group = 'html_tag_' . $group_id;
+		$group          = 'leading_block_element';
+		$html_tag_group = 'html_tag';
+
+		if ($group_id)
+		{
+			$group          .= '_' . $group_id;
+			$html_tag_group .= '_' . $group_id;
+		}
 
 		$block_elements = Html::getBlockElements(['div']);
 		$block_element  = '(?<' . $group . '>' . implode('|', $block_elements) . ')';
@@ -501,7 +507,12 @@ class PluginTag
 	 */
 	public static function getRegexTrailingHtml($group_id = '')
 	{
-		$group = 'leading_block_element_' . $group_id;
+		$group = 'leading_block_element';
+
+		if ($group_id)
+		{
+			$group .= '_' . $group_id;
+		}
 
 		// If the grouped name is found, then grab all content till ending html tag is found. Otherwise grab nothing.
 		return '(?(<' . $group . '>)'

@@ -1,11 +1,11 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.7.10792
+ * @version         19.5.762
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -13,8 +13,9 @@ namespace RegularLabs\Library;
 
 defined('_JEXEC') or die;
 
-use JFactory;
-use JUri;
+use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\Router\Route as JRoute;
+use Joomla\CMS\Uri\Uri as JUri;
 
 /**
  * Class Uri
@@ -75,6 +76,11 @@ class Uri
 		$hostname = ($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : $_SERVER['HTTP_HOST'];
 
 		return ! (strpos(RegEx::replace('^.*?://', '', $url), $hostname) === 0);
+	}
+
+	public static function route($url)
+	{
+		return JRoute::_(JUri::root(true) . '/' . $url);
 	}
 
 	public static function encode($string)

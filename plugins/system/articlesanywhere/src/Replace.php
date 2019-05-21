@@ -1,11 +1,11 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         8.0.3
+ * @version         9.2.0
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -13,7 +13,7 @@ namespace RegularLabs\Plugin\System\ArticlesAnywhere;
 
 defined('_JEXEC') or die;
 
-use JText;
+use Joomla\CMS\Language\Text as JText;
 use RegularLabs\Library\Document as RL_Document;
 use RegularLabs\Library\Html as RL_Html;
 use RegularLabs\Library\Protect as RL_Protect;
@@ -63,14 +63,16 @@ class Replace
 		{
 			case 'article':
 				$replace = self::prepareStringForArticles($string, $context);
-				continue;
+				break;
+
 			case 'component':
 				$replace = self::prepareStringForComponent($string);
-				continue;
+				break;
+
 			default:
 			case 'body':
 				$replace = self::prepareStringForBody($string);
-				continue;
+				break;
 		}
 
 		if ($replace)
@@ -181,7 +183,9 @@ class Replace
 		/** @var PluginTag $tag */
 		foreach ($tags as $tag)
 		{
-			$string = RL_String::replaceOnce($tag->getOriginalString(), $tag->getOutput(), $string);
+			$output = self::$message ? Protect::getMessageCommentTag(self::$message) : $tag->getOutput();
+
+			$string = RL_String::replaceOnce($tag->getOriginalString(), $output, $string);
 		}
 	}
 }

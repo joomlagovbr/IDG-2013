@@ -1,22 +1,21 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         8.0.3
+ * @version         9.2.0
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
 namespace RegularLabs\Plugin\System\ArticlesAnywhere\Collection\Fields;
 
-use RegularLabs\Library\ArrayHelper as RL_Array;
+defined('_JEXEC') or die;
+
 use RegularLabs\Library\DB as RL_DB;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Collection\DB;
 use RegularLabs\Plugin\System\ArticlesAnywhere\CurrentArticle;
-
-defined('_JEXEC') or die;
 
 class CustomFields extends Fields
 {
@@ -37,13 +36,27 @@ class CustomFields extends Fields
 		$query = $this->db->getQuery(true)
 			->select($this->config->get('fields_id'))
 			->select($this->config->get('fields_name'))
+			->select($this->config->get('fields_type'))
 			->from($this->config->getTableFields())
 			->where($this->db->quoteName('context') . ' = ' . $this->db->quote($this->config->getContext()))
 			->where($this->config->get('fields_state') . ' = 1');
 
-		self::$available_fields[$id] = DB::getResults($query, 'loadAssocList', ['id', 'name']) ?: [];
+		self::$available_fields[$id] = DB::getResults($query, 'loadObjectList', ['id']) ?: [];
 
 		return self::$available_fields[$id];
+	}
+
+	public static function getByName($fields, $name)
+	{
+		foreach ($fields as $field)
+		{
+			if ($field->name == $name)
+			{
+				return $field;
+			}
+		}
+
+		return false;
 	}
 
 	public function getFieldValue($key, $value)
@@ -56,17 +69,25 @@ class CustomFields extends Fields
 	public function getFieldValueByKey($key, $item_id = 0)
 	{
 		$custom_fields = $this->getAvailableFields();
-		$field_id      = array_search($key, $custom_fields);
 
-		return $this->getFieldValueFromDatabase($field_id, $item_id);
+		if ( ! $field = self::getByName($custom_fields, $key))
+		{
+			return false;
+		}
+
+		return $this->getFieldValueFromDatabase($field->id, $item_id);
 	}
 
 	public function getFieldByKey($key, $item_id = 0)
 	{
 		$custom_fields = $this->getAvailableFields();
-		$field_id      = array_search($key, $custom_fields);
 
-		return $this->getFieldFromDatabase($field_id, $item_id);
+		if ( ! $field = self::getByName($custom_fields, $key))
+		{
+			return false;
+		}
+
+		return $this->getFieldFromDatabase($field->id, $item_id);
 	}
 
 	protected function getFieldValueFromDatabase($field_id, $item_id)
@@ -126,7 +147,11 @@ class CustomFields extends Fields
 		}
 
 		$fields = [];
-		$values = RL_Array::toArray($values);
+
+		if ( ! is_array($values))
+		{
+			$values = [$values];
+		}
 
 		foreach ($values as $value)
 		{
@@ -151,6 +176,7 @@ class CustomFields extends Fields
 					$this->config->get('fields_label', 'label'),
 					$this->config->get('fields_type', 'type'),
 					$this->config->get('fields_params', 'params'),
+					$this->config->get('fields_field_params', 'fieldparams'),
 					$this->config->get('fields_default', 'default'),
 				])
 			->from($this->config->getTableFields('fields'))
@@ -180,12 +206,6 @@ class CustomFields extends Fields
 			return self::$field_values[$id];
 		}
 
-		$type = $this->getFieldType($field_id);
-
-		$query_method = in_array($type, [
-			'checkboxes', 'list', 'imagelist', 'usergrouplist',
-		], $type) ? 'loadColumn' : 'loadResult';
-
 		$item_id = $item_id ?: CurrentArticle::get('id', $this->config->getComponentName());
 
 		$query = $this->db->getQuery(true)
@@ -195,8 +215,25 @@ class CustomFields extends Fields
 			->where($this->config->get('fields_values_item_id') . ' = ' . (int) $item_id);
 		$this->db->setQuery($query);
 
-		self::$field_values[$id] = DB::getResults($query, $query_method);
+		$result = DB::getResults($query);
+
+		self::$field_values[$id] = $this->normalizeFieldValue($result);
 
 		return self::$field_values[$id];
+	}
+
+	protected function normalizeFieldValue($value)
+	{
+		if (empty($value))
+		{
+			return '';
+		}
+
+		if (is_array($value) && count($value) == 1)
+		{
+			return $value[0];
+		}
+
+		return $value;
 	}
 }

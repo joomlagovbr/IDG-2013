@@ -24,19 +24,19 @@ $OPT		= strtoupper($option);
 ?>
 <script type="text/javascript">
 Joomla.submitbutton = function(task){
-	if (task != 'phocagalleryimg.cancel' && document.id('jform_catid').value == '') {
+	if (task != 'phocagalleryimg.cancel' && document.getElementById('jform_catid').value == '') {
 		alert('<?php echo $this->escape(JText::_('JGLOBAL_VALIDATION_FORM_FAILED')) . ' - '. $this->escape(JText::_('COM_PHOCAGALLERY_CATEGORY_NOT_SELECTED'));?>');
-	} else if (task == 'phocagalleryimg.cancel' || document.formvalidator.isValid(document.id('adminForm'))) {
+	} else if (task == 'phocagalleryimg.cancel' || document.formvalidator.isValid(document.getElementById('adminForm'))) {
 		<?php echo $this->form->getField('description')->save(); ?>
 		Joomla.submitform(task, document.getElementById('adminForm'));
 	}
 	else {
 		<?php /* Joomla.renderMessages({"error": ["<?php echo JText::_('JGLOBAL_VALIDATION_FORM_FAILED', true);?>"]});
 		 alert('<?php echo JText::_('JGLOBAL_VALIDATION_FORM_FAILED', true);?>'); */ ?>
-		
+
 		// special case for modal popups validation response
 		jQuery('#adminForm .modal-value.invalid').each(function(){
-			
+
 			var field = jQuery(this),
 				idReversed = field.attr('id').split('').reverse().join(''),
 				separatorLocation = idReversed.indexOf('_'),
@@ -44,7 +44,7 @@ Joomla.submitbutton = function(task){
 			alert(nameId);
 			jQuery(nameId).addClass('invalid');
 		});
-		
+
 	}
 }
 </script><?php
@@ -61,7 +61,7 @@ echo $r->navigation($tabs);
 
 echo '<div class="tab-content">'. "\n";
 
-echo '<div class="tab-pane active" id="general">'."\n"; 
+echo '<div class="tab-pane active" id="general">'."\n";
 $formArray = array ('title', 'alias', 'catid', 'ordering', 'filename', 'videocode', 'pcproductid', 'vmproductid');
 echo $r->group($this->form, $formArray);
 
@@ -71,7 +71,7 @@ $formArray = array('description');
 echo $r->group($this->form, $formArray, 1);
 echo '</div>'. "\n";
 
-echo '<div class="tab-pane" id="publishing">'."\n"; 
+echo '<div class="tab-pane" id="publishing">'."\n";
 foreach($this->form->getFieldset('publish') as $field) {
 	echo '<div class="control-group">';
 	if (!$field->hidden) {
@@ -108,7 +108,7 @@ echo '</div>';//end tab content
 echo '</div>';//end span10
 // Second Column
 echo '<div class="span2">';
-				
+
 // - - - - - - - - - -
 // Image
 
@@ -118,22 +118,22 @@ if (!JFile::exists($fileOriginal)) {
 } else {
 	$fileThumb 		= PhocaGalleryFileThumbnail::getOrCreateThumbnail($this->item->filename, '', 0, 0, 0);
 	$this->item->linkthumbnailpath 	= $fileThumb['thumb_name_m_no_rel'];
-	$this->item->fileoriginalexist = 1;	
+	$this->item->fileoriginalexist = 1;
 }
 
 echo '<div style="float:right;margin:5px;">';
 // PICASA
-if (isset($this->item->extid) && $this->item->extid !='') {									
-	
+if (isset($this->item->extid) && $this->item->extid !='') {
+
 	$resW				= explode(',', $this->item->extw);
 	$resH				= explode(',', $this->item->exth);
 	$correctImageRes 	= PhocaGalleryImage::correctSizeWithRate($resW[2], $resH[2], 100, 100);
 	$imgLink			= $this->item->extl;
-	
+
 	echo '<img class="img-polaroid" src="'.$this->item->exts.'" width="'.$correctImageRes['width'].'" height="'.$correctImageRes['height'].'" alt="" />';
-	
+
 } else if (isset ($this->item->fileoriginalexist) && $this->item->fileoriginalexist == 1) {
-	
+
 	$imageRes			= PhocaGalleryImage::getRealImageSize($this->item->filename, 'medium');
 	//$correctImageRes 	= PhocaGalleryImage::correctSizeWithRate($imageRes['w'], $imageRes['h'], 100, 100);
 	$imgLink			= PhocaGalleryFileThumbnail::getThumbnailName($this->item->filename, 'large');
@@ -142,7 +142,7 @@ if (isset($this->item->extid) && $this->item->extid !='') {
 	echo '<img class="img-polaroid" style="max-width:100px;" src="'.JURI::root().$this->item->linkthumbnailpath.'?imagesid='.md5(uniqid(time())).'" alt="" />'
 	.'</a>';
 } else {
-	
+
 }
 echo '</div>';
 
@@ -150,4 +150,4 @@ echo '</div>';
 echo '</div>';//end span2
 echo $r->formInputs();
 echo $r->endForm();
-?>		
+?>

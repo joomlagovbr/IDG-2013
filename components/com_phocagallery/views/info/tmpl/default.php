@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*
  * @package Joomla
  * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
@@ -20,5 +20,5 @@ echo '<div id="phoca-exif" class="pg-info-view'.$this->params->get( 'pageclass_s
 .'</table>'
 .'</div>';
 if ($this->tmpl['detailwindow'] == 7) {
-	echo '<div style="text-align:right;color:#ccc;display:block">Powered by <a href="https://www.phoca.cz/phocagallery">Phoca Gallery</a></div>';
+    echo PhocaGalleryUtils::getInfo();
 }

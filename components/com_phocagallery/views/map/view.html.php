@@ -36,6 +36,7 @@ class PhocaGalleryViewMap extends JViewLegacy
 		
 		$this->tmpl['enablecustomcss']				= $this->params->get( 'enable_custom_css', 0);
 		$this->tmpl['customcss']					= $this->params->get( 'custom_css', '');
+		$this->tmpl['map_type']						= $this->params->get( 'map_type', 2 );
 		
 		// CSS
 		PhocaGalleryRenderFront::renderAllCSS();
@@ -161,7 +162,13 @@ class PhocaGalleryViewMap extends JViewLegacy
 		$this->assignRef( 'tmpl', $this->tmpl );
 		$this->assignRef( 'map', $map );
 		$this->_prepareDocument($map);
-		parent::display($tpl);
+		
+		if($this->tmpl['map_type'] == 2){
+			parent::display('osm');
+		} else {
+			parent::display($tpl);
+		}
+		
 	}
 	
 	protected function _prepareDocument($item) {
@@ -171,6 +178,8 @@ class PhocaGalleryViewMap extends JViewLegacy
 		$pathway 		= $app->getPathway();
 		$this->params	= $app->getParams();
 		$title 			= null;
+		
+		JHtml::_('jquery.framework', false);
 		
 		$this->tmpl['gallerymetakey'] 		= $this->params->get( 'gallery_metakey', '' );
 		$this->tmpl['gallerymetadesc'] 		= $this->params->get( 'gallery_metadesc', '' );

@@ -80,6 +80,7 @@ class PhocaGalleryImageBgImage
 						$completeImageBackground = '#ffffff';
 					break;
 					case 'png':
+					case 'webp':
 						@imagealphablending($img,false);
 						imagefilledrectangle($img,0,0,$completeImageWidth,$completeImageHeight,imagecolorallocatealpha($img,255,255,255,127));
 						@imagealphablending($img,true);
@@ -243,7 +244,35 @@ class PhocaGalleryImageBgImage
 							return false;
 						}
 					}
-				break;		
+				break;
+
+				case 'webp' :
+					if (!function_exists('ImageWebp')) {
+						$errorMsg = 'ErrorNoWEBPFunction';
+						return false;
+					}
+					@imagesavealpha($img, true);
+					if ($jfile_thumbs == 1) {
+						ob_start();
+						if (!@imagewebp($img, NULL)) {
+							ob_end_clean();
+							$errorMsg = 'ErrorWriteFile';
+							return false;
+						}
+						$imgWEBPToWrite = ob_get_contents();
+						ob_end_clean();
+						
+						if(!JFile::write( $fileOut, $imgWEBPToWrite)) {
+							$errorMsg = 'ErrorWriteFile';
+							return false;
+						}
+					} else {
+						if (!@imagewebp($img, $fileOut)) {
+							$errorMsg = 'ErrorWriteFile';
+							return false;
+						}
+					}
+				break;				
 				
 				Default:
 					$errorMsg =  'ErrorNotSupportedImage';

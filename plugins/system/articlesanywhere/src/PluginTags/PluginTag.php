@@ -1,11 +1,11 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         8.0.3
+ * @version         9.2.0
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -19,6 +19,7 @@ use RegularLabs\Library\Protect as RL_Protect;
 use RegularLabs\Library\RegEx as RL_RegEx;
 use RegularLabs\Library\StringHelper as RL_String;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Factory;
+use RegularLabs\Plugin\System\ArticlesAnywhere\Output\Values;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Params;
 
 class PluginTag
@@ -95,8 +96,15 @@ class PluginTag
 
 		if ( ! empty($string) && strpos($string, '="') == false)
 		{
-			$string = $this->convertOldToNewSyntax($string, $this->match_data['tag']);
+			return $this->convertOldToNewSyntax($string, $this->match_data['tag']);
 		}
+
+		// protect comma's inside date() functions
+		$string = RL_RegEx::replace(
+			'(date\(\s*\'.*?\'),(\s*\'.*?\'\s*\))',
+			'\1\\,\2',
+			$string
+		);
 
 		return $string;
 	}
@@ -126,8 +134,8 @@ class PluginTag
 			$attributes = RL_PluginTag::getAttributesFromString($string, 'id', $known_boolean_keys);
 
 			$key_aliases = [
-				'items'              => ['id', 'ids', 'article', 'articles', 'item', 'title', 'alias'],
-				'fixhtml'            => ['fix_html', 'html_fix', 'htmlfix'],
+				'items'                    => ['id', 'ids', 'article', 'articles', 'item', 'title', 'alias'],
+				'fixhtml'                  => ['fix_html', 'html_fix', 'htmlfix'],
 			];
 
 			RL_PluginTag::replaceKeyAliases($attributes, $key_aliases);
@@ -155,7 +163,7 @@ class PluginTag
 			->get($attributes);
 		$set->filters  = (new Filters($set->component, $this, $fields, $custom_fields))
 			->get($attributes);
-		$set->ordering = (new Ordering($config))
+		$set->ordering = (new Ordering($config, $custom_fields))
 			->get($attributes);
 		$set->selects  = (new Selects($set->component, $fields, $custom_fields))
 			->get($this->getInnerContent(), $set->ordering);
@@ -195,6 +203,18 @@ class PluginTag
 
 	private function setLimits(&$set, &$attributes)
 	{
+		if ( ! empty($attributes->limit))
+		{
+			$attributes->limit = Values::getValueFromInput($attributes->limit);
+		}
+		if ( ! empty($attributes->offset))
+		{
+			$attributes->offset = Values::getValueFromInput($attributes->offset);
+		}
+
+		$set->offset = isset($attributes->offset) ? (int) $attributes->offset : 0;
+		unset($attributes->offset);
+
 			unset($attributes->limit);
 
 	}

@@ -7,11 +7,11 @@
  * @component Phoca Component
  * @copyright Copyright (C) Jan Pavelka www.phoca.cz
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- */ 
+ */
 defined('_JEXEC') or die();
 jimport( 'joomla.application.component.view' );
 use Joomla\String\StringHelper;
- 
+
 class phocaGalleryViewphocaGalleryLinkImg extends JViewLegacy
 {
 	var $_context 	= 'com_phocagallery.phocagallerylinkimg';
@@ -22,7 +22,7 @@ class phocaGalleryViewphocaGalleryLinkImg extends JViewLegacy
 		JHtml::_('behavior.formvalidation');
 		JHtml::_('behavior.keepalive');
 		JHtml::_('formbehavior.chosen', 'select');
-		
+
 		//Frontend Changes
 		$tUri = '';
 		$jsLink = JURI::base(true);
@@ -33,25 +33,25 @@ class phocaGalleryViewphocaGalleryLinkImg extends JViewLegacy
 			$jsLink = JURI::base(true).'/administrator';
 		}
 		$document	= JFactory::getDocument();
-		$uri		= JFactory::getURI();
+		$uri		= \Joomla\CMS\Uri\Uri::getInstance();
 		$db		    = JFactory::getDBO();
 		JHTML::stylesheet( 'media/com_phocagallery/css/administrator/phocagallery.css' );
 		JHTML::stylesheet( 'components/com_phocagallery/assets/jcp/picker.css' );
 		$document->addScript(JURI::root(true) .'/components/com_phocagallery/assets/jcp/picker.js');
-		
+
 		$eName				= $app->input->get('e_name', '', 'cmd');
 		$tmpl['ename']		= preg_replace( '#[^A-Z0-9\-\_\[\]]#i', '', $eName );
 		$tmpl['type']		= $app->input->get( 'type', 1, 'int' );
 		$tmpl['backlink']	= $tUri.'index.php?option=com_phocagallery&amp;view=phocagallerylinks&amp;tmpl=component&amp;e_name='.$tmpl['ename'];
-		
-		
-		
+
+
+
 		$document->addCustomTag("<!--[if lt IE 8]>\n<link rel=\"stylesheet\" href=\"../media/com_phocagallery/css/administrator/phocagalleryieall.css\" type=\"text/css\" />\n<![endif]-->");
-		
+
 		$params = JComponentHelper::getParams('com_phocagallery') ;
 
 		//Filter
-		
+
 		$filter_state		= $app->getUserStateFromRequest( $this->_context.'.filter_state',	'filter_state', '',	'word' );
 		$filter_catid		= $app->getUserStateFromRequest( $this->_context.'.filter_catid',	'filter_catid',	0, 'int' );
 		$filter_order		= $app->getUserStateFromRequest( $this->_context.'.filter_order',	'filter_order',	'a.ordering', 'cmd' );
@@ -63,16 +63,16 @@ class phocaGalleryViewphocaGalleryLinkImg extends JViewLegacy
 		$items					=  $this->get( 'Data');
 		$total					=  $this->get( 'Total');
 		$tmpl['pagination'] 	=  $this->get( 'Pagination' );
-		
+
 		// build list of categories
 		$javascript 	= 'class="inputbox" size="1" onchange="submitform( );"';
-		
-		// get list of categories for dropdown filter	
+
+		// get list of categories for dropdown filter
 		$filter = '';
-		
+
 		// build list of categories
 		$javascript 	= 'class="inputbox" size="1" onchange="submitform( );"';
-		
+
 		$query = 'SELECT a.title AS text, a.id AS value, a.parent_id as parentid'
 		. ' FROM #__phocagallery_categories AS a'
 		. ' WHERE a.published = 1'
@@ -87,7 +87,7 @@ class phocaGalleryViewphocaGalleryLinkImg extends JViewLegacy
 		array_unshift($tree, JHtml::_('select.option', '0', '- '.JText::_('COM_PHOCAGALLERY_SELECT_CATEGORY').' -', 'value', 'text'));
 		$lists['catid'] = JHtml::_( 'select.genericlist', $tree, 'filter_catid',  $javascript , 'value', 'text', $filter_catid );
 		//-----------------------------------------------------------------------
-	
+
 		// state filter
 		$lists['state']		= JHtml::_('grid.state',  $filter_state );
 
@@ -97,7 +97,7 @@ class phocaGalleryViewphocaGalleryLinkImg extends JViewLegacy
 
 		// search filter
 		$lists['search']	= $search;
-		
+
 		$user = JFactory::getUser();
 		$uriS = $uri->toString();
 		$this->assignRef('tmpl',		$tmpl);
@@ -105,15 +105,15 @@ class phocaGalleryViewphocaGalleryLinkImg extends JViewLegacy
 		$this->assignRef('user',		$user);
 		$this->assignRef('items',		$items);
 		$this->assignRef('request_url',	$uriS);
-		
+
 		switch($tmpl['type']) {
-			
+
 			case 2:
-			
+
 				$i = 0;
 				$itemsCount = $itemsStart = array();
 				foreach($items as $key => $value) {
-				
+
 					$itemsCount[$i] = new StdClass();
 					$itemsCount[$i]->value 	= $key;
 					$itemsCount[$i]->text	= $key;
@@ -122,7 +122,7 @@ class phocaGalleryViewphocaGalleryLinkImg extends JViewLegacy
 					$itemsStart[$i]->text	= $key;
 					$i++;
 				}
-				
+
 				// Don't display it if no category is selected
 				if($i > 0) {
 					$itemsCount[$i] = new StdClass();
@@ -131,33 +131,33 @@ class phocaGalleryViewphocaGalleryLinkImg extends JViewLegacy
 				}
 				$categoryId		= $app->input->get( 'filter_catid', 0, 'int' );
 				$categoryIdList	= $app->getUserStateFromRequest( $this->_context.'.filter_catid',	'filter_catid',	0, 'int' );
-				
+
 				if ((int)$categoryId == 0 && $categoryIdList == 0) {
 					$itemsCount = $itemsStart = array();
 				}
-				
+
 				$lists['limitstartparam'] = JHtml::_( 'select.genericlist', $itemsStart, 'limitstartparam',  '' , 'value', 'text', '' );
 				$lists['limitcountparam'] = JHtml::_( 'select.genericlist', $itemsCount, 'limitcountparam',  '' , 'value', 'text', '' );
 				$this->assignRef('lists',		$lists);
 				parent::display('images');
 			break;
-		
+
 			case 3:
 				$this->assignRef('lists',		$lists);
 				parent::display('switchimage');
 			break;
-			
+
 			case 4:
 				$this->assignRef('lists',		$lists);
 				parent::display('slideshow');
 			break;
-		
+
 			case 1:
 			Default:
 				$this->assignRef('lists',		$lists);
 				parent::display($tpl);
 			break;
-		
+
 		}
 	}
 }

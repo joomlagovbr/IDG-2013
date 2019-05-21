@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*
  * @package Joomla
  * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
@@ -8,23 +8,23 @@
  * @copyright Copyright (C) Jan Pavelka www.phoca.cz
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
-defined('_JEXEC') or die('Restricted access'); 
+defined('_JEXEC') or die('Restricted access');
 
 ?><div id="phocagallery-comments"><?php
-	echo '<div style="font-size:1px;height:1px;margin:0px;padding:0px;">&nbsp;</div>';//because of IE bug 
-	
-	$uri 		= JFactory::getURI();
+	echo '<div style="font-size:1px;height:1px;margin:0px;padding:0px;">&nbsp;</div>';//because of IE bug
+
+	$uri 		= \Joomla\CMS\Uri\Uri::getInstance();
 	$getParamsArray = explode(',', 'start,limitstart,template,fb_comment_id');
 	if (!empty($getParamsArray) ) {
 		foreach($getParamsArray as $key => $value) {
 			$uri->delVar($value);
 		}
 	}
-	
+
 	if ($this->tmpl['fb_comment_app_id'] == '') {
 		echo JText::_('COM_PHOCAGALLERY_ERROR_FB_APP_ID_EMPTY');
 	} else {
-	
+
 		$cCount = '';
 		if ((int)$this->tmpl['fb_comment_count'] > 0) {
 			$cCount = 'numposts="'.$this->tmpl['fb_comment_count'].'"';
@@ -40,7 +40,7 @@ defined('_JEXEC') or die('Restricted access');
 	 cookie: true,
      xfbml: true
    });
- }; 
+ };
   (function() {
     var e = document.createElement('script');
     e.type = 'text/javascript';

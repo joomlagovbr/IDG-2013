@@ -17,25 +17,25 @@ class JFormFieldPhocaSelectItem extends JFormField
 	protected function getInput() {
 		$html 	= array();
 		$url 	= 'index.php?option=com_phocagallery&view=phocagalleryitema&format=json&tmpl=component&'. JSession::getFormToken().'=1';
-		
+
 		// Possible problem with modal
 		//$attr 	= $this->element['class'] ? ' class="'.(string) $this->element['class'].' typeahead"' : ' class="typeahead"';
 		$attr 	= $this->element['class'] ? ' class="'.(string) $this->element['class'].' "' : ' class=""';
-		
+
 		$attr  .= $this->element['size'] ? ' size="'.(int) $this->element['size'].'"' : '';
 		$attr  .= $this->element['required'] ? ' required aria-required="true"' : '';
-		
-		
+
+
 		$clearId = 'phClearId'.$this->id;
-		
-		
+
+
 		if ($this->multiple) {
 			$multiple = 'true';
 		} else {
 			$multiple = 'false';
 		}
-		
-		
+
+
 		$onchange 	= (string) $this->element['onchange'];
 		$value = '';
 
@@ -44,9 +44,9 @@ class JFormFieldPhocaSelectItem extends JFormField
 			$value .= (int)$image->id . ':'. $image->title .' ('.$image->category_title.')';
 		}
 		$id = (int)$this->value;
-		
-	
-		
+
+
+
 		$document = JFactory::getDocument();
 		JHtml::stylesheet('media/com_phocagallery/js/administrator/select2/select2.css' );
 		$document->addScript(JURI::root(true).'/media/com_phocagallery/js/administrator/select2/select2.js');
@@ -126,7 +126,7 @@ $s[] = ' };';
 $s[] = ' ';
 $s[] = ' phSearchItemsMultiple("#'.$this->id.'", "'.$url.'");';
 $s[] = ' ';
-$s[] = ' jQuery("#'.$clearId.'").on("click", function() { jQuery("#'.$this->id.'").select2("val", ""); console.log("#'.$this->id.'") });';
+$s[] = ' jQuery("#'.$clearId.'").on("click", function() { jQuery("#'.$this->id.'").select2("val", ""); });';
 $s[] = ' ';
 //$s[] = ' ';
 //$s[] = ' jQuery(\'#save\').click(function() {';
@@ -137,13 +137,13 @@ $s[] = '});';
 
     $document->addScriptDeclaration(implode("\n", $s));
 
-	
-		
+
+
 		$html[] = '<div>';
 		$html[] = '<input type="hidden" style="width: 220px;" id="'.$this->id.'" name="'.$this->name.'" value="'. $value.'"' .' '.$attr.' />';
 		$html[] = '<input type="button" id="'.$clearId.'" name="'.$clearId.'" value="'.JText::_('COM_PHOCAGALLERY_CLEAR').'"' .' />';
 		$html[] = '</div>'. "\n";
-		
+
 		return implode("\n", $html);
 	}
 }

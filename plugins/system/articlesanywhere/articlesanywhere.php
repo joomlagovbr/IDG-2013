@@ -1,22 +1,22 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         8.0.3
+ * @version         9.2.0
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
 defined('_JEXEC') or die;
 
+use RegularLabs\Plugin\System\ArticlesAnywhere\Plugin;
+
 // Do not instantiate plugin on install pages
 // to prevent installation/update breaking because of potential breaking changes
-if (
-	in_array(JFactory::getApplication()->input->get('option'), ['com_installer', 'com_regularlabsmanager'])
-	&& JFactory::getApplication()->input->get('action') != ''
-)
+$input = \Joomla\CMS\Factory::getApplication()->input;
+if ($input->get('action') != '' && in_array($input->get('option'), ['com_installer', 'com_regularlabsmanager']))
 {
 	return;
 }
@@ -27,8 +27,6 @@ if ( ! is_file(__DIR__ . '/vendor/autoload.php'))
 }
 
 require_once __DIR__ . '/vendor/autoload.php';
-
-use RegularLabs\Plugin\System\ArticlesAnywhere\Plugin;
 
 /**
  * Plugin that loads articles
@@ -46,6 +44,7 @@ class PlgSystemArticlesAnywhere extends Plugin
 	 * Below are the events that this plugin uses
 	 * All handling is passed along to the parent run method
 	 */
+
 	public function onContentPrepare()
 	{
 		$this->run();

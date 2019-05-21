@@ -1,15 +1,27 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.7.10792
+ * @version         19.5.762
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
 defined('_JEXEC') or die;
+
+use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\Plugin\CMSPlugin as JPlugin;
+use Joomla\CMS\Uri\Uri as JUri;
+use Joomla\Registry\Registry;
+use RegularLabs\Library\Document as RL_Document;
+use RegularLabs\Library\Parameters as RL_Parameters;
+use RegularLabs\Library\Uri as RL_Uri;
+use RegularLabs\Plugin\System\RegularLabs\AdminMenu as RL_AdminMenu;
+use RegularLabs\Plugin\System\RegularLabs\DownloadKey as RL_DownloadKey;
+use RegularLabs\Plugin\System\RegularLabs\QuickPage as RL_QuickPage;
+use RegularLabs\Plugin\System\RegularLabs\SearchHelper as RL_SearchHelper;
 
 if ( ! is_file(__DIR__ . '/vendor/autoload.php'))
 {
@@ -22,15 +34,6 @@ if (is_file(JPATH_LIBRARIES . '/regularlabs/autoload.php'))
 {
 	require_once JPATH_LIBRARIES . '/regularlabs/autoload.php';
 }
-
-use Joomla\Registry\Registry;
-use RegularLabs\Library\Document as RL_Document;
-use RegularLabs\Library\Parameters as RL_Parameters;
-use RegularLabs\Library\Uri as RL_Uri;
-use RegularLabs\Plugin\System\RegularLabs\AdminMenu as RL_AdminMenu;
-use RegularLabs\Plugin\System\RegularLabs\DownloadKey as RL_DownloadKey;
-use RegularLabs\Plugin\System\RegularLabs\QuickPage as RL_QuickPage;
-use RegularLabs\Plugin\System\RegularLabs\SearchHelper as RL_SearchHelper;
 
 JFactory::getLanguage()->load('plg_system_regularlabs', __DIR__);
 
@@ -62,15 +65,13 @@ class PlgSystemRegularLabs extends JPlugin
 			return;
 		}
 
-		if ( ! RL_Document::isAdmin() || ! RL_Document::isHtml()
+		if ( ! RL_Document::isAdmin(true) || ! RL_Document::isHtml()
 		)
 		{
 			return;
 		}
 
-		JHtml::_('jquery.framework');
-
-		RL_Document::script('regularlabs/script.min.js');
+		RL_Document::loadMainDependencies();
 	}
 
 	public function onAfterRender()
@@ -80,15 +81,36 @@ class PlgSystemRegularLabs extends JPlugin
 			return;
 		}
 
-		if ( ! RL_Document::isAdmin() || ! RL_Document::isHtml()
+		if ( ! RL_Document::isAdmin(true) || ! RL_Document::isHtml()
 		)
 		{
 			return;
 		}
 
+		$this->fixQuotesInTooltips();
+
 		RL_AdminMenu::combine();
 
 		RL_AdminMenu::addHelpItem();
+	}
+
+	private function fixQuotesInTooltips()
+	{
+		$html = JFactory::getApplication()->getBody();
+
+		if ($html == '')
+		{
+			return;
+		}
+
+		if (strpos($html, '&amp;quot;rl_code&amp;quot;') === false)
+		{
+			return;
+		}
+
+		$html = str_replace('&amp;quot;rl_code&amp;quot;', '&quot;rl_code&quot;', $html);
+
+		JFactory::getApplication()->setBody($html);
 	}
 
 	public function onInstallerBeforePackageDownload(&$url, &$headers)

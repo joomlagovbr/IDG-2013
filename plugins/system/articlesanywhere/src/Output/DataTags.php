@@ -1,26 +1,32 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         8.0.3
+ * @version         9.2.0
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
 namespace RegularLabs\Plugin\System\ArticlesAnywhere\Output;
 
-use JText;
+defined('_JEXEC') or die;
+
+use Joomla\CMS\Language\Text as JText;
 use RegularLabs\Library\PluginTag as RL_PluginTag;
 use RegularLabs\Library\Protect as RL_Protect;
 use RegularLabs\Library\RegEx as RL_RegEx;
+use RegularLabs\Library\StringHelper as RL_String;
+use RegularLabs\Plugin\System\ArticlesAnywhere\CurrentArticle;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Params;
-
-defined('_JEXEC') or die;
+use RegularLabs\Plugin\System\ArticlesAnywhere\Protect;
+use RegularLabs\Plugin\System\ArticlesAnywhere\Replace;
 
 class DataTags extends OutputObject
 {
+	private $replaced = [];
+
 	public function handle(&$content)
 	{
 		list($data_tag_start, $data_tag_end) = Params::getDataTagCharacters();
@@ -28,7 +34,7 @@ class DataTags extends OutputObject
 		$spaces = RL_PluginTag::getRegexSpaces();
 
 		$regex_datatags = RL_RegEx::quote($data_tag_start)
-			. '(?<type>/?[a-z][a-z0-9-_\:]*)(?:' . $spaces . '(?<attributes>.*?))?'
+			. '(?<type>/?[a-z][a-z0-9-_\:\+\/\*]*)(?:' . $spaces . '(?<attributes>.*?))?'
 			. RL_RegEx::quote($data_tag_end);
 		RL_RegEx::matchAll($regex_datatags, $content, $matches);
 
@@ -46,6 +52,11 @@ class DataTags extends OutputObject
 
 		foreach ($matches as $match)
 		{
+			if (in_array($match[0], $this->replaced))
+			{
+				continue;
+			}
+
 			$value = $this->getValueFromTag($match);
 
 			if (is_null($value))
@@ -53,9 +64,31 @@ class DataTags extends OutputObject
 				continue;
 			}
 
-			$content = str_replace($match[0], $value, $content);
+			$content = $this->replaceMatch($match, $value, $content);
 
-			// Protect Articles Anywhere tags to prevent nested stuff getting replaced
+			if (RL_RegEx::match($regex_plugintags, $content))
+			{
+				$current_article = CurrentArticle::get();
+				$this_article    = $this->item->getArticle();
+
+				// Remove Articles Anywhere tags when looping occurs
+				if (isset($current_article->id) && isset($this_article->id)
+					&& $current_article->id == $this_article->id)
+				{
+					$content = RL_RegEx::replace(
+						Params::getRegex(),
+						Protect::getMessageCommentTag('Content removed because of looping'),
+						$content
+					);
+				}
+
+				Replace::replaceTags($content, 'article', '', $this_article);
+
+				// Set current article back to previous
+				CurrentArticle::set($current_article);
+			}
+
+			// Protect any left over Articles Anywhere tags to prevent nested stuff getting replaced
 			RL_Protect::protectByRegex(
 				$content,
 				$regex_plugintags
@@ -63,15 +96,36 @@ class DataTags extends OutputObject
 		}
 	}
 
+	private function replaceMatch($match, $value, $content)
+	{
+		// Replace random-type data tags only once
+		if (strpos($match['type'], 'random') !== false)
+		{
+			return RL_String::replaceOnce($match[0], $value, $content);
+		}
+
+		$this->replaced[] = $match[0];
+
+		return str_replace($match[0], $value, $content);
+	}
+
 	private function getValueFromTag($tag)
 	{
 		$tag = $this->getTagValues($tag);
+
+		$encode = ! empty($tag->attributes->htmlentities);
+		unset($tag->attributes->htmlentities);
 
 		$value = $this->values->get($tag->type, null, $tag->attributes);
 
 		if (is_bool($value))
 		{
 			$value = $value ? JText::_('JYES') : JText::_('JNO');
+		}
+
+		if ($encode)
+		{
+			$value = htmlentities($value);
 		}
 
 		return $value;
@@ -85,11 +139,12 @@ class DataTags extends OutputObject
 		$attributes = $this->getTagValuesFromString($type, $attributes);
 
 		$key_aliases = [
-			'limit'      => ['letters', 'letter_limit', 'characters', 'character_limit'],
-			'words'      => ['word', 'word_limit'],
-			'strip'      => ['trim'],
-			'paragraphs' => ['paragraph', 'paragraph_limit'],
-			'class'      => ['classes'],
+			'limit'                  => ['letters', 'letter_limit', 'characters', 'character_limit'],
+			'words'                  => ['word', 'word_limit'],
+			'strip'                  => ['trim'],
+			'paragraphs'             => ['paragraph', 'paragraph_limit'],
+			'class'                  => ['classes'],
+			'force_content_triggers' => ['content_triggers', 'content_plugins', 'force_content_plugins'],
 		];
 
 		RL_PluginTag::replaceKeyAliases($attributes, $key_aliases);

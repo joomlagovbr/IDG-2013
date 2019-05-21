@@ -2,76 +2,89 @@
 /**
  * @package    Joomla.Language
  *
- * @copyright  Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
-*/
+ * @copyright  Copyright (C) 2005 - 2019 Open Source Matters, Inc. Todos os direitos reservados.
+ * @license  Pública Geral GNU - versão 2 ou posterior; ver ficheiro LICENSE.txt
+ */
 
 defined('_JEXEC') or die;
 
 /**
- * pt-BR localise class
+ * pt-BR localise class.
  *
- * @package		Joomla.Language
- * @since		1.6
+ * @since  1.6
  */
-abstract class pt_BRLocalise {
+abstract class Pt_BRLocalise
+{
 	/**
 	 * Returns the potential suffixes for a specific number of items
 	 *
-	 * @param	int $count  The number of items.
-	 * @return	array  An array of potential suffixes.
-	 * @since	1.6
+	 * @param   integer  $count  The number of items.
+	 *
+	 * @return  array  An array of potential suffixes.
+	 *
+	 * @since   1.6
 	 */
-	public static function getPluralSuffixes($count) {
-		if ($count == 0) {
-			$return =  array('0');
+	public static function getPluralSuffixes($count)
+	{
+		if ($count == 0)
+		{
+			return array('0');
 		}
-		elseif($count == 1) {
-			$return =  array('1');
+		elseif ($count == 1)
+		{
+			return array('1');
 		}
-		else {
-			$return = array('MORE');
+		else
+		{
+			return array('MORE');
 		}
-		return $return;
 	}
+
 	/**
 	 * Returns the ignored search words
 	 *
-	 * @return	array  An array of ignored search words.
-	 * @since	1.6
+	 * @return  array  An array of ignored search words.
+	 *
+	 * @since   1.6
 	 */
-	public static function getIgnoredSearchWords() {
-		$search_ignore = array();
-		$search_ignore[] = "e";
-		$search_ignore[] = "em";
-		$search_ignore[] = "ou";
-		return $search_ignore;
+	public static function getIgnoredSearchWords()
+	{
+		return array('and', 'in', 'on');
 	}
+
 	/**
 	 * Returns the lower length limit of search words
 	 *
-	 * @return	integer  The lower length limit of search words.
-	 * @since	1.6
+	 * @return  integer  The lower length limit of search words.
+	 *
+	 * @since   1.6
 	 */
-	public static function getLowerLimitSearchWord() {
+	public static function getLowerLimitSearchWord()
+	{
 		return 3;
 	}
+
 	/**
 	 * Returns the upper length limit of search words
 	 *
-	 * @return	integer  The upper length limit of search words.
-	 * @since	1.6
+	 * @return  integer  The upper length limit of search words.
+	 *
+	 * @since   1.6
 	 */
-	public static function getUpperLimitSearchWord() {
+	public static function getUpperLimitSearchWord()
+	{
 		return 20;
 	}
+
 	/**
 	 * Returns the number of chars to display when searching
 	 *
-	 * @return	integer  The number of chars to display when searching.
-	 * @since	1.6
+	 * @return  integer  The number of chars to display when searching.
+	 *
+	 * @since   1.6
 	 */
-	public static function getSearchDisplayedCharactersNumber() {
+	public static function getSearchDisplayedCharactersNumber()
+	{
 		return 200;
 	}
 }

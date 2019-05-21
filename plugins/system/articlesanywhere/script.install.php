@@ -1,15 +1,18 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         8.0.3
+ * @version         9.2.0
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
 defined('_JEXEC') or die;
+
+use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\Language\Text as JText;
 
 require_once __DIR__ . '/script.install.helper.php';
 
@@ -28,11 +31,6 @@ class PlgSystemArticlesAnywhereInstallerScript extends PlgSystemArticlesAnywhere
 
 	public function onBeforeInstall($route)
 	{
-		if ($this->install_type == 'install')
-		{
-			$this->setUseK2ForOldSetups();
-		}
-
 		$this->showCompatMessage();
 	}
 
@@ -45,7 +43,7 @@ class PlgSystemArticlesAnywhereInstallerScript extends PlgSystemArticlesAnywhere
 	{
 		$installed_version = $this->getVersion($this->getInstalledXMLFile());
 
-		if (version_compare($installed_version, 7, '<'))
+		if ($installed_version && version_compare($installed_version, 7, '<'))
 		{
 			JFactory::getApplication()->enqueueMessage(
 				'Articles Anywhere no longer supports the old data tag attribute syntax, like: <code>{text:limit=100:strip}</code><br>'
@@ -54,69 +52,6 @@ class PlgSystemArticlesAnywhereInstallerScript extends PlgSystemArticlesAnywhere
 				, 'warning'
 			);
 		}
-	}
-
-	private function setUseK2ForOldSetups()
-	{
-		$params = $this->getPluginParams();
-
-		if (empty($params))
-		{
-			return;
-		}
-
-		// Already set
-		if (isset($params->use_k2))
-		{
-			return;
-		}
-
-		// No need to set the use_k2 to yes
-		if ( ! isset($params->content_type) || $params->content_type != 'k2')
-		{
-			return;
-		}
-
-		// Set tag_characters_data to old (pre v4.2.0) value
-		$params->use_k2 = true;
-
-		$this->savePluginParams($plugin->extension_id, $params);
-	}
-
-	private function getPluginParams()
-	{
-		$query = $this->db->getQuery(true)
-			->select('params')
-			->from($this->db->quoteName('#__extensions'))
-			->where($this->db->quoteName('element') . ' = ' . $this->db->quote('articlesanywhere'))
-			->where($this->db->quoteName('type') . ' = ' . $this->db->quote('plugin'))
-			->where($this->db->quoteName('folder') . ' = ' . $this->db->quote('system'));
-		$this->db->setQuery($query, 0, 1);
-
-		$params = $this->db->loadResult();
-
-		if (empty($params))
-		{
-			return false;
-		}
-
-		return json_decode($params);
-	}
-
-	private function savePluginParams($params)
-	{
-		$params = json_encode($params);
-
-		$query = $this->db->getQuery(true)
-			->update('#__extensions')
-			->set($this->db->quoteName('params') . ' = ' . $this->db->quote($params))
-			->where($this->db->quoteName('element') . ' = ' . $this->db->quote('articlesanywhere'))
-			->where($this->db->quoteName('type') . ' = ' . $this->db->quote('plugin'))
-			->where($this->db->quoteName('folder') . ' = ' . $this->db->quote('system'));
-		$this->db->setQuery($query);
-		$this->db->execute();
-
-		JFactory::getCache()->clean('_system');
 	}
 
 	private function disableCoreEditorPlugin()

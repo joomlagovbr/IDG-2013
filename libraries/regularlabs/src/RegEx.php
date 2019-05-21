@@ -1,11 +1,11 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.7.10792
+ * @version         19.5.762
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -115,15 +115,24 @@ class RegEx
 	 *
 	 * @return string
 	 */
-	public static function quote($data, $name = '', $delimiter = '#')
+	public static function quote($data, $name = '', $delimiter = '#', $capture = true)
 	{
 		if (is_array($data))
 		{
 			$array = self::quoteArray($data, $delimiter);
 
-			$name = $name ? '?<' . $name . '>' : '';
+			$prefix = '?!';
+			if ($capture)
+			{
+				$prefix = $name ? '?<' . $name . '>' : '';
+			}
 
-			return '(' . $name . implode('|', $array) . ')';
+			return '(' . $prefix . implode('|', $array) . ')';
+		}
+
+		if ( ! empty($name))
+		{
+			return '(?<' . $name . '>' . preg_quote($data, $delimiter) . ')';
 		}
 
 		return preg_quote($data, $delimiter);
@@ -175,7 +184,7 @@ class RegEx
 	public static function quoteArray($array = [], $delimiter = '#')
 	{
 		array_walk($array, function (&$part, $key, $delimiter) {
-			$part = self::quote($part, $delimiter);
+			$part = self::quote($part, '', $delimiter);
 		}, $delimiter);
 
 		return $array;

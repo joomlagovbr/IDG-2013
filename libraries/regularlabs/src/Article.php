@@ -1,20 +1,20 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.7.10792
+ * @version         19.5.762
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
 namespace RegularLabs\Library;
 
-use JFactory;
-use Joomla\Registry\Registry;
-
 defined('_JEXEC') or die;
+
+use Joomla\CMS\Factory as JFactory;
+use Joomla\Registry\Registry;
 
 jimport('joomla.filesystem.file');
 
@@ -29,7 +29,7 @@ class Article
 	/**
 	 * Method to get article data.
 	 *
-	 * @param   integer $id The id of the article.
+	 * @param   integer|string $id The id, alias or title of the article.
 	 *
 	 * @return  object|boolean Menu item data object on success, boolean false
 	 */
@@ -57,8 +57,20 @@ class Article
 					'a.metakey', 'a.metadesc', 'a.access', 'a.hits', 'a.metadata', 'a.featured', 'a.language', 'a.xreference',
 				]
 			)
-			->from($db->quoteName('#__content', 'a'))
-			->where($db->quoteName('a.id') . ' = ' . (int) $id);
+			->from($db->quoteName('#__content', 'a'));
+
+		if ( ! is_numeric($id))
+		{
+			$query->where('(' .
+				$db->quoteName('a.title') . ' = ' . $db->quote($id)
+				. ' OR ' .
+				$db->quoteName('a.alias') . ' = ' . $db->quote($id)
+				. ')');
+		}
+		else
+		{
+			$query->where($db->quoteName('a.id') . ' = ' . (int) $id);
+		}
 
 		// Join on category table.
 		$query->select([
@@ -130,8 +142,11 @@ class Article
 	{
 		$input = JFactory::getApplication()->input;
 
-		if ( ! $id = $input->getInt('id')
-			|| ! (($input->get('option') == 'com_content' && $input->get('view') == 'article')
+		$id = $input->getInt('id');
+
+		if ( ! $id
+			|| ! (
+				($input->get('option') == 'com_content' && $input->get('view') == 'article')
 				|| ($input->get('option') == 'com_flexicontent' && $input->get('view') == 'item')
 			)
 		)
@@ -156,21 +171,63 @@ class Article
 	{
 		self::processText('title', $article, $helper, $method, $params, $ignore);
 		self::processText('created_by_alias', $article, $helper, $method, $params, $ignore);
+		self::processText('description', $article, $helper, $method, $params, $ignore);
 
+		// Don't replace in text fields in the category list view, as they won't get used anyway
 		if (Document::isCategoryList($context))
 		{
-			self::processText('description', $article, $helper, $method, $params, $ignore);
+			return;
+		}
+
+		// prevent fulltext from being messed with, when it is a json encoded string (Yootheme Pro templates do this for some weird f-ing reason)
+		if ( ! empty($article->fulltext) && substr($article->fulltext, 0, 6) == '<!-- {')
+		{
+			self::processText('text', $article, $helper, $method, $params, $ignore);
+
+			return;
+		}
+
+		$has_text                  = isset($article->text);
+		$has_article_texts         = isset($article->introtext) && isset($article->fulltext);
+		$text_same_as_article_text = false;
+
+		if ($has_text && $has_article_texts)
+		{
+			$check_text               = RegEx::replace('\s', '', $article->text);
+			$check_introtext_fulltext = RegEx::replace('\s', '', $article->introtext . ' ' . $article->fulltext);
+
+			$text_same_as_article_text = $check_text == $check_introtext_fulltext;
+		}
+
+		if ($has_article_texts && ! $has_text)
+		{
+			self::processText('introtext', $article, $helper, $method, $params, $ignore);
+			self::processText('fulltext', $article, $helper, $method, $params, $ignore);
+
+			return;
+		}
+
+		if ($has_article_texts && $text_same_as_article_text)
+		{
+			$splitter = '͞';
+			if (strpos($article->introtext, $splitter) !== false
+				|| strpos($article->fulltext, $splitter) !== false)
+			{
+				$splitter = 'Ͽ';
+			}
+
+			$article->text = $article->introtext . $splitter . $article->fulltext;
+
+			self::processText('text', $article, $helper, $method, $params, $ignore);
+
+			list($article->introtext, $article->fulltext) = explode($splitter, $article->text, 2);
+
+			$article->text = str_replace($splitter, ' ', $article->text);
 
 			return;
 		}
 
 		self::processText('text', $article, $helper, $method, $params, $ignore);
-
-		if ( ! empty($article->text))
-		{
-			return;
-		}
-
 		self::processText('introtext', $article, $helper, $method, $params, $ignore);
 		self::processText('fulltext', $article, $helper, $method, $params, $ignore);
 	}

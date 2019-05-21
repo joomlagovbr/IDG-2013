@@ -1,11 +1,11 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         8.0.3
+ * @version         9.2.0
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -13,17 +13,18 @@ defined('_JEXEC') or die;
 
 class PlgEditorsXtdArticlesAnywhereInstallerScriptHelper
 {
-	public $name            = '';
-	public $alias           = '';
-	public $extname         = '';
-	public $extension_type  = '';
-	public $plugin_folder   = 'system';
-	public $module_position = 'status';
-	public $client_id       = 1;
-	public $install_type    = 'install';
-	public $show_message    = true;
-	public $db              = null;
-	public $softbreak       = null;
+	public $name              = '';
+	public $alias             = '';
+	public $extname           = '';
+	public $extension_type    = '';
+	public $plugin_folder     = 'system';
+	public $module_position   = 'status';
+	public $client_id         = 1;
+	public $install_type      = 'install';
+	public $show_message      = true;
+	public $db                = null;
+	public $softbreak         = null;
+	public $installed_version = '';
 
 	public function __construct(&$params)
 	{
@@ -39,6 +40,8 @@ class PlgEditorsXtdArticlesAnywhereInstallerScriptHelper
 		}
 
 		JFactory::getLanguage()->load('plg_system_regularlabsinstaller', JPATH_PLUGINS . '/system/regularlabsinstaller');
+
+		$this->installed_version = $this->getVersion($this->getInstalledXMLFile());
 
 		if ($this->show_message && $this->isInstalled())
 		{
@@ -159,7 +162,7 @@ class PlgEditorsXtdArticlesAnywhereInstallerScriptHelper
 
 		switch ($type)
 		{
-			case 'plugin';
+			case 'plugin':
 				$folders[] = JPATH_PLUGINS . '/' . $folder . '/' . $extname;
 				break;
 
@@ -197,6 +200,7 @@ class PlgEditorsXtdArticlesAnywhereInstallerScriptHelper
 		{
 			foreach ($folders as $folder)
 			{
+				JFactory::getApplication()->enqueueMessage('2. Deleting: ' . $folder, 'notice');
 				JFolder::delete($folder);
 			}
 
@@ -366,7 +370,7 @@ class PlgEditorsXtdArticlesAnywhereInstallerScriptHelper
 	{
 		switch ($this->extension_type)
 		{
-			case 'plugin';
+			case 'plugin':
 				return JText::_('plg_' . strtolower($this->plugin_folder));
 
 			case 'component':
@@ -428,26 +432,26 @@ class PlgEditorsXtdArticlesAnywhereInstallerScriptHelper
 
 	public function isNewer()
 	{
-		if ( ! $installed_version = $this->getVersion($this->getInstalledXMLFile()))
+		if ( ! $this->installed_version)
 		{
 			return true;
 		}
 
 		$package_version = $this->getVersion();
 
-		return version_compare($installed_version, $package_version, '<=');
+		return version_compare($this->installed_version, $package_version, '<=');
 	}
 
 	public function canInstall()
 	{
 		// The extension is not installed yet
-		if ( ! $installed_version = $this->getVersion($this->getInstalledXMLFile()))
+		if ( ! $this->installed_version)
 		{
 			return true;
 		}
 
 		// The free version is installed. So any version is ok to install
-		if (strpos($installed_version, 'PRO') === false)
+		if (strpos($this->installed_version, 'PRO') === false)
 		{
 			return true;
 		}
@@ -547,14 +551,36 @@ class PlgEditorsXtdArticlesAnywhereInstallerScriptHelper
 		}
 	}
 
-	public function fixAssetsRules($rules = '{"core.admin":[],"core.manage":[]}')
+	public function fixAssetsRules()
 	{
-		// replace default rules value {} with the correct initial value
+		$query = $this->db->getQuery(true)
+			->select($this->db->quoteName('rules'))
+			->from('#__assets')
+			->where($this->db->quoteName('title') . ' = ' . $this->db->quote('com_' . $this->extname));
+		$this->db->setQuery($query, 0, 1);
+		$rules = $this->db->loadResult();
+
+		$rules = json_decode($rules);
+
+		if(empty($rules)) {
+			return;
+		}
+
+		foreach($rules as $key => $value) {
+			if(!empty($value)) {
+				continue;
+			}
+
+			unset($rules->$key);
+		}
+
+		$rules = json_encode($rules);
+
+
 		$query = $this->db->getQuery(true)
 			->update($this->db->quoteName('#__assets'))
 			->set($this->db->quoteName('rules') . ' = ' . $this->db->quote($rules))
-			->where($this->db->quoteName('title') . ' = ' . $this->db->quote('com_' . $this->extname))
-			->where($this->db->quoteName('rules') . ' = ' . $this->db->quote('{}'));
+			->where($this->db->quoteName('title') . ' = ' . $this->db->quote('com_' . $this->extname));
 		$this->db->setQuery($query);
 		$this->db->execute();
 	}

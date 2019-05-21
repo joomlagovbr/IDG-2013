@@ -1,10 +1,10 @@
 /**
  * @package         Regular Labs Library
- * @version         18.7.10792
+ * @version         19.5.762
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -12,43 +12,6 @@ var RegularLabsScripts = null;
 
 (function($) {
 	"use strict";
-
-	$(document).ready(function() {
-		// remove all empty control groups
-		$('div.control-group > div').each(function(i, el) {
-			if (
-				$(el).html().trim() == ''
-				&& (
-					$(el).attr('class') == 'control-label'
-					|| $(el).attr('class') == 'controls'
-				)
-			) {
-				$(el).remove();
-			}
-		});
-		$('div.control-group').each(function(i, el) {
-			if ($(el).html().trim() == '') {
-				$(el).remove();
-			}
-		});
-		$('div.control-group > div.hide').each(function(i, el) {
-			$(el).parent().css('margin', 0);
-		});
-
-		$('.rl_resize_textarea').click(function() {
-			var $el    = $(this);
-			var $field = $('#' + $el.attr('data-id'));
-
-			if ($el.hasClass('rl_minimize')) {
-				$el.removeClass('rl_minimize').addClass('rl_maximize');
-				$field.css({'height': $el.attr('data-min')});
-				return;
-			}
-
-			$el.removeClass('rl_maximize').addClass('rl_minimize');
-			$field.css({'height': $el.attr('data-max')});
-		});
-	});
 
 	RegularLabsScripts = {
 		ajax_list        : [],
@@ -58,7 +21,7 @@ var RegularLabsScripts = null;
 		loadajax: function(url, success, fail, query, timeout, dataType, cache) {
 			// console.log(url);
 
-			if (url.substr(0, 9) != 'index.php') {
+			if (url.indexOf('index.php') !== 0 && url.indexOf('administrator/index.php') !== 0) {
 				url = url.replace('http://', '');
 				url = 'index.php?rl_qp=1&url=' + encodeURIComponent(url);
 				if (timeout) {
@@ -82,6 +45,7 @@ var RegularLabsScripts = null;
 			}
 
 			// console.log(url);
+			// console.log(base + '/' + url);
 
 			$.ajax({
 				type    : 'post',
@@ -105,7 +69,7 @@ var RegularLabsScripts = null;
 				return;
 			}
 
-			var xml = RegularLabsScripts.getObjectFromXML(data);
+			var xml = this.getObjectFromXML(data);
 
 			if (!xml) {
 				return;
@@ -117,23 +81,23 @@ var RegularLabsScripts = null;
 
 			var dat = xml[extension];
 
-			if (!dat || typeof dat['version'] === 'undefined' || !dat['version']) {
+			if (!dat || typeof dat.version === 'undefined' || !dat.version) {
 				return;
 			}
 
-			var new_version = dat['version'];
-			var compare     = RegularLabsScripts.compareVersions(version, new_version);
+			var new_version = dat.version;
+			var compare     = this.compareVersions(version, new_version);
 
 			if (compare != '<') {
 				return;
 			}
 
-			var el = $('#nonumber_newversionnumber_' + extension);
+			var el = $('#regularlabs_newversionnumber_' + extension);
 			if (el) {
 				el.text(new_version);
 			}
 
-			el = $('#nonumber_version_' + extension);
+			el = $('#regularlabs_version_' + extension);
 			if (el) {
 				el.css('display', 'block');
 				el.parent().removeClass('hide');
@@ -187,50 +151,6 @@ var RegularLabsScripts = null;
 				},
 				5000
 			);
-		},
-
-		toggleSelectListSelection: function(id) {
-			var el = document.getElement('#' + id);
-			if (el && el.options) {
-				for (var i = 0; i < el.options.length; i++) {
-					if (!el.options[i].disabled) {
-						el.options[i].selected = !el.options[i].selected;
-					}
-				}
-			}
-		},
-
-		toggleSelectListSize: function(id) {
-			var link = document.getElement('#toggle_' + id);
-			var el   = document.getElement('#' + id);
-			if (link && el) {
-				if (!el.getAttribute('rel')) {
-					el.setAttribute('rel', el.getAttribute('size'));
-				}
-				if (el.getAttribute('size') == el.getAttribute('rel')) {
-					el.setAttribute('size', (el.length > 100) ? 100 : el.length);
-					link.getElement('span.show').setStyle('display', 'none');
-					link.getElement('span.hide').setStyle('display', 'inline');
-					if (typeof RegularLabsToggler !== 'undefined') {
-						RegularLabsToggler.autoHeightDivs();
-					}
-				} else {
-					el.setAttribute('size', el.getAttribute('rel'));
-					link.getElement('span.hide').setStyle('display', 'none');
-					link.getElement('span.show').setStyle('display', 'inline');
-				}
-			}
-		},
-
-		prependTextarea: function(id, content, separator) {
-			var textarea     = jQuery('#' + id);
-			var orig_content = textarea.val().trim();
-
-			if (orig_content && separator) {
-				orig_content = "\n\n" + separator + "\n\n" + orig_content;
-			}
-
-			textarea.val(content + orig_content);
 		},
 
 		in_array: function(needle, haystack, casesensitive) {
@@ -321,41 +241,6 @@ var RegularLabsScripts = null;
 			return '=';
 		},
 
-		setRadio: function(id, value) {
-			value = value ? 1 : 0;
-			document.getElements('input#jform_' + id + value + ',input#jform_params_' + id + value + ',input#advancedparams_' + id + value).each(function(el) {
-				el.click();
-			});
-		},
-
-		setToggleTitleClass: function(input, value) {
-			var el = $(input).parent().parent().parent().parent();
-
-			el.removeClass('alert-success').removeClass('alert-error');
-			if (value === 2) {
-				el.addClass('alert-error');
-			} else if (value) {
-				el.addClass('alert-success');
-			}
-		},
-
-		initCheckAlls: function(id, classname) {
-			$('#' + id).attr('checked', RegularLabsScripts.allChecked(classname));
-			$('input.' + classname).click(function() {
-				$('#' + id).attr('checked', RegularLabsScripts.allChecked(classname));
-			});
-		},
-
-		allChecked: function(classname) {
-			return $('input.' + classname + ':checkbox:not(:checked)').length < 1;
-		},
-
-		checkAll: function(checkbox, classname) {
-			var allchecked = RegularLabsScripts.allChecked(classname);
-			$(checkbox).attr('checked', !allchecked);
-			$('input.' + classname).attr('checked', !allchecked);
-		},
-
 		getEditorSelection: function(editorname) {
 			var editor_textarea = document.getElementById(editorname);
 
@@ -397,68 +282,21 @@ var RegularLabsScripts = null;
 			return '';
 		},
 
-		initResizeCodeMirror: function(id) {
-			if (!$('#' + id + ' .CodeMirror').length) {
-				setTimeout(function() {
-					RegularLabsScripts.initResizeCodeMirror(id);
-				}, 1000);
-				return;
-			}
-
-			RegularLabsScripts.resizeCodeMirror(id);
-
-			$(window).resize(function() {
-				RegularLabsScripts.resizeCodeMirror(id);
-			});
+		/* 2018-11-01: These methods have moved to RegularLabsForm. Keeping them here for backwards compatibility. */
+		setRadio                 : function(id, value) {
 		},
-
-		resizeCodeMirror: function(id) {
-			$('#' + id + ' .CodeMirror').width(100);
-			setTimeout(function() {
-				$('#' + id + ' .CodeMirror').each(function() {
-					var new_width = $(this).parent().width();
-
-					if (new_width <= 100) {
-						setTimeout(function() {
-							RegularLabsScripts.resizeCodeMirror(id);
-						}, 1000);
-						return;
-					}
-
-					$(this).width(new_width);
-				})
-			}, 100);
+		initCheckAlls            : function(id, classname) {
+		},
+		allChecked               : function(classname) {
+			return false;
+		},
+		checkAll                 : function(checkbox, classname) {
+		},
+		toggleSelectListSelection: function(id) {
+		},
+		prependTextarea          : function(id, content, separator) {
+		},
+		setToggleTitleClass      : function(input, value) {
 		}
 	};
-
-	$(document).ready().delay(1000, function() {
-		$('.btn-group.rl_btn-group label').click(function() {
-			var label = $(this);
-			var input = $('#' + label.attr('for'));
-
-			label.closest('.btn-group').find('label').removeClass('active btn-success btn-danger btn-primary');
-			if (input.val() == '' || input.val() == -2) {
-				label.addClass('active btn-primary');
-			} else if (input.val() == -1) {
-				label.addClass('active');
-			} else if (input.val() == 0) {
-				label.addClass('active btn-danger');
-			} else {
-				label.addClass('active btn-success');
-			}
-			input.prop('checked', true);
-		});
-		$('.btn-group.rl_btn-group input[checked=checked]').each(function() {
-			$('label[for=' + $(this).attr('id') + ']').removeClass('active btn-success btn-danger btn-primary');
-			if ($(this).val() == '' || $(this).val() == -2) {
-				$('label[for=' + $(this).attr('id') + ']').addClass('active btn-primary');
-			} else if ($(this).val() == -1) {
-				$('label[for=' + $(this).attr('id') + ']').addClass('active');
-			} else if ($(this).val() == 0) {
-				$('label[for=' + $(this).attr('id') + ']').addClass('active btn-danger');
-			} else {
-				$('label[for=' + $(this).attr('id') + ']').addClass('active btn-success');
-			}
-		});
-	});
 })(jQuery);

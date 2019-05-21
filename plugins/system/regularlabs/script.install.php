@@ -1,11 +1,11 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.7.10792
+ * @version         19.5.762
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -44,32 +44,6 @@ if ( ! class_exists('PlgSystemRegularLabsInstallerScript'))
 			$this->delete(
 				[
 					JPATH_LIBRARIES . '/regularlabs',
-				]
-			);
-		}
-
-		private function deleteOldLibraryFiles()
-		{
-			$this->delete(
-				[
-					JPATH_LIBRARIES . '/regularlabs/helpers/assignments',
-					JPATH_LIBRARIES . '/regularlabs/helpers/assignment.php',
-					JPATH_LIBRARIES . '/regularlabs/helpers/assignments.php',
-					JPATH_LIBRARIES . '/regularlabs/helpers/cache.php',
-					JPATH_LIBRARIES . '/regularlabs/helpers/field.php',
-					JPATH_LIBRARIES . '/regularlabs/helpers/functions.php',
-					JPATH_LIBRARIES . '/regularlabs/helpers/groupfield.php',
-					JPATH_LIBRARIES . '/regularlabs/helpers/helper.php',
-					JPATH_LIBRARIES . '/regularlabs/helpers/html.php',
-					JPATH_LIBRARIES . '/regularlabs/helpers/htmlfix.php',
-					JPATH_LIBRARIES . '/regularlabs/helpers/licenses.php',
-					JPATH_LIBRARIES . '/regularlabs/helpers/mobile_detect.php',
-					JPATH_LIBRARIES . '/regularlabs/helpers/parameters.php',
-					JPATH_LIBRARIES . '/regularlabs/helpers/protect.php',
-					JPATH_LIBRARIES . '/regularlabs/helpers/string.php',
-					JPATH_LIBRARIES . '/regularlabs/helpers/tags.php',
-					JPATH_LIBRARIES . '/regularlabs/helpers/text.php',
-					JPATH_LIBRARIES . '/regularlabs/helpers/version.php',
 				]
 			);
 		}

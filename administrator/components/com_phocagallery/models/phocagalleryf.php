@@ -39,8 +39,8 @@ class PhocaGalleryCpModelPhocaGalleryF extends JModelLegacy
 	}
 
 	function getList() {
-		static $list;		
-		
+		static $list;
+
 		// Only process the list once per request
 		if (is_array($list)) {
 			return $list;
@@ -53,31 +53,31 @@ class PhocaGalleryCpModelPhocaGalleryF extends JModelLegacy
 		if ($current == 'undefined') {
 			$current = '';
 		}
-		
+
 		//Get folder variables from Helper
 		$path = PhocaGalleryPath::getPath();
-		
+
 		// Initialize variables
 		if (strlen($current) > 0) {
 			$orig_path = JPath::clean($path->image_abs.$current);
 		} else {
 			$orig_path = $path->image_abs;
 		}
-		$orig_path_server 	= str_replace(DS, '/', $path->image_abs);
-		
+		$orig_path_server 	= str_replace('\\', '/', $path->image_abs);
+
 		$folders 	= array ();
 
 		// Get the list of files and folders from the given folder
 		$folder_list 	= JFolder::folders($orig_path, '', false, false, array(0 => 'thumbs'));
-		
+
 		// Iterate over the folders if they exist
 		if ($folder_list !== false) {
 			foreach ($folder_list as $folder) {
 				$tmp 							= new JObject();
 				$tmp->name 						= basename($folder);
-				$tmp->path_with_name 			= str_replace(DS, '/', JPath::clean($orig_path . '/'. $folder));
+				$tmp->path_with_name 			= str_replace('\\', '/', JPath::clean($orig_path . '/'. $folder));
 				$tmp->path_without_name_relative= $path->image_rel . str_replace($orig_path_server, '', $tmp->path_with_name);
-				$tmp->path_with_name_relative_no= str_replace($orig_path_server, '', $tmp->path_with_name);	
+				$tmp->path_with_name_relative_no= str_replace($orig_path_server, '', $tmp->path_with_name);
 				$folders[] = $tmp;
 			}
 		}

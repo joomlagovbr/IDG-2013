@@ -1,11 +1,11 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.7.10792
+ * @version         19.5.762
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -13,8 +13,9 @@ namespace RegularLabs\Library;
 
 defined('_JEXEC') or die;
 
-use JFactory;
-use JHtml;
+use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\HTML\HTMLHelper as JHtml;
+use Joomla\CMS\Language\Text as JText;
 
 /**
  * Class Document
@@ -38,16 +39,16 @@ class Document
 			return Cache::get($cache_id);
 		}
 
-		$app = JFactory::getApplication();
+		$input = JFactory::getApplication()->input;
 
 		return Cache::set($cache_id,
 			(
 				self::isClient('administrator')
 				&& ( ! $exclude_login || ! JFactory::getUser()->get('guest'))
-				&& $app->input->get('task') != 'preview'
+				&& $input->get('task') != 'preview'
 				&& ! (
-					$app->input->get('option') == 'com_finder'
-					&& $app->input->get('format') == 'json'
+					$input->get('option') == 'com_finder'
+					&& $input->get('format') == 'json'
 				)
 			)
 		);
@@ -69,11 +70,6 @@ class Document
 			return Cache::get($cache_id);
 		}
 
-		if (JVERSION < 3.7)
-		{
-			return Cache::set($cache_id, $identifier == 'administrator' ? JFactory::getApplication()->isClient('administrator') : JFactory::getApplication()->isClient('site'));
-		}
-
 		return Cache::set($cache_id, JFactory::getApplication()->isClient($identifier));
 	}
 
@@ -91,9 +87,9 @@ class Document
 			return Cache::get($cache_id);
 		}
 
-		$app = JFactory::getApplication();
+		$input = JFactory::getApplication()->input;
 
-		$option = $app->input->get('option');
+		$option = $input->get('option');
 
 		// always return false for these components
 		if (in_array($option, ['com_rsevents', 'com_rseventspro']))
@@ -101,7 +97,7 @@ class Document
 			return Cache::set($cache_id, false);
 		}
 
-		$task = $app->input->get('task');
+		$task = $input->get('task');
 
 		if (strpos($task, '.') !== false)
 		{
@@ -109,7 +105,7 @@ class Document
 			$task = array_pop($task);
 		}
 
-		$view = $app->input->get('view');
+		$view = $input->get('view');
 
 		if (strpos($view, '.') !== false)
 		{
@@ -123,8 +119,8 @@ class Document
 				|| ($option == 'com_comprofiler' && in_array($task, ['', 'userdetails']))
 				|| in_array($task, ['edit', 'form', 'submission'])
 				|| in_array($view, ['edit', 'form'])
-				|| in_array($app->input->get('do'), ['edit', 'form'])
-				|| in_array($app->input->get('layout'), ['edit', 'form', 'write'])
+				|| in_array($input->get('do'), ['edit', 'form'])
+				|| in_array($input->get('layout'), ['edit', 'form', 'write'])
 				|| self::isAdmin()
 			)
 		);
@@ -163,13 +159,15 @@ class Document
 			return Cache::get($cache_id);
 		}
 
+		$input = JFactory::getApplication()->input;
+
 		return Cache::set($cache_id,
 			(
 				JFactory::getDocument()->getType() == 'feed'
-				|| JFactory::getApplication()->input->getWord('format') == 'feed'
-				|| JFactory::getApplication()->input->getWord('format') == 'xml'
-				|| JFactory::getApplication()->input->getWord('type') == 'rss'
-				|| JFactory::getApplication()->input->getWord('type') == 'atom'
+				|| $input->getWord('format') == 'feed'
+				|| $input->getWord('format') == 'xml'
+				|| $input->getWord('type') == 'rss'
+				|| $input->getWord('type') == 'atom'
 			)
 		);
 	}
@@ -188,11 +186,13 @@ class Document
 			return Cache::get($cache_id);
 		}
 
+		$input = JFactory::getApplication()->input;
+
 		return Cache::set($cache_id,
 			(
 				JFactory::getDocument()->getType() == 'pdf'
-				|| JFactory::getApplication()->input->getWord('format') == 'pdf'
-				|| JFactory::getApplication()->input->getWord('cAction') == 'pdf'
+				|| $input->getWord('format') == 'pdf'
+				|| $input->getWord('cAction') == 'pdf'
 			)
 		);
 	}
@@ -237,14 +237,23 @@ class Document
 			return Cache::get($cache_id);
 		}
 
+		$app   = JFactory::getApplication();
+		$input = $app->input;
+
 		// Return false if it is not a category page
-		if ($context != 'com_content.category' || JFactory::getApplication()->input->get('view') != 'category')
+		if ($context != 'com_content.category' || $input->get('view') != 'category')
 		{
 			return Cache::set($cache_id, false);
 		}
 
-		// Return false if it is not a list layout
-		if (JFactory::getApplication()->input->get('layout') && JFactory::getApplication()->input->get('layout') != 'list')
+		// Return false if layout is set and it is not a list layout
+		if ($input->get('layout') && $input->get('layout') != 'list')
+		{
+			return Cache::set($cache_id, false);
+		}
+
+		// Return false if default layout is set to blog
+		if ($app->getParams()->get('category_layout') == '_:blog')
 		{
 			return Cache::set($cache_id, false);
 		}
@@ -261,27 +270,26 @@ class Document
 	 */
 	public static function script($file, $version = '')
 	{
-		if (strpos($file, 'regularlabs/script.') === 0)
-		{
-			JHtml::_('behavior.core');
-		}
-
-		if (strpos($file, 'regularlabs/') === 0)
-		{
-			$version = '18.7.10792';
-		}
-
-		if ( ! $file = File::getMediaFile('js', $file))
+		if ( ! $url = File::getMediaFile('js', $file))
 		{
 			return;
 		}
 
-		if ( ! empty($version))
+		JHtml::_('jquery.framework');
+
+		if (strpos($file, 'regularlabs/') !== false)
 		{
-			$file .= '?v=' . $version;
+			JHtml::_('behavior.core');
+			JHtml::_('script', 'jui/cms.js', ['version' => 'auto', 'relative' => true]);
+			$version = '19.5.762';
 		}
 
-		JFactory::getDocument()->addScript($file);
+		if ( ! empty($version))
+		{
+			$url .= '?v=' . $version;
+		}
+
+		JFactory::getDocument()->addScript($url);
 	}
 
 	/**
@@ -294,7 +302,7 @@ class Document
 	{
 		if (strpos($file, 'regularlabs/') === 0)
 		{
-			$version = '18.7.10792';
+			$version = '19.5.762';
 		}
 
 		if ( ! $file = File::getMediaFile('css', $file))
@@ -329,13 +337,6 @@ class Document
 	 */
 	public static function scriptOptions($options = [], $name = '')
 	{
-		if (JVERSION < 3.7)
-		{
-			self::scriptOptionsLegacy($options, $name);
-
-			return;
-		}
-
 		$key = 'rl_' . Extension::getAliasByName($name);
 		JHtml::_('behavior.core');
 
@@ -343,18 +344,53 @@ class Document
 	}
 
 	/**
-	 * Adds extension options to the page for Joomla 3.6.5 and lower
-	 *
-	 * @param array  $options
-	 * @param string $name
+	 * Loads the required scripts and styles used in forms
 	 */
-	private static function scriptOptionsLegacy($options = [], $name = '')
+	public static function loadMainDependencies()
 	{
-		$key = 'rl_' . Extension::getAliasByName($name);
+		JHtml::_('jquery.framework');
 
-		$script = 'var ' . $key . '_options = ' . json_encode($options) . ';';
+		self::script('regularlabs/script.min.js');
+		self::style('regularlabs/style.min.css');
+	}
 
-		self::scriptDeclaration($script, $name, true);
+	/**
+	 * Loads the required scripts and styles used in forms
+	 */
+	public static function loadFormDependencies()
+	{
+		JHtml::_('jquery.framework');
+		JHtml::_('behavior.tooltip');
+		JHtml::_('behavior.formvalidator');
+		JHtml::_('behavior.combobox');
+		JHtml::_('behavior.keepalive');
+		JHtml::_('behavior.tabstate');
+
+		JHtml::_('formbehavior.chosen', '#jform_position', null, ['disable_search_threshold' => 0]);
+		JHtml::_('formbehavior.chosen', '.multipleCategories', null, ['placeholder_text_multiple' => JText::_('JOPTION_SELECT_CATEGORY')]);
+		JHtml::_('formbehavior.chosen', '.multipleTags', null, ['placeholder_text_multiple' => JText::_('JOPTION_SELECT_TAG')]);
+		JHtml::_('formbehavior.chosen', 'select');
+
+		self::script('regularlabs/form.min.js');
+		self::style('regularlabs/form.min.css');
+	}
+
+	/**
+	 * Loads the required scripts and styles used in forms
+	 */
+	public static function loadEditorButtonDependencies()
+	{
+		self::loadMainDependencies();
+
+		JHtml::_('bootstrap.popover');
+	}
+
+	public static function loadPopupDependencies()
+	{
+		self::loadMainDependencies();
+		self::loadFormDependencies();
+
+		self::style('regularlabs/popup.min.css');
 	}
 
 	/**

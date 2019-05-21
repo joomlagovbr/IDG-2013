@@ -17,7 +17,7 @@ class PhocaGalleryCpModelPhocaGalleryImg extends JModelAdmin
 	protected	$option 		= 'com_phocagallery';
 	protected 	$text_prefix	= 'com_phocagallery';
 	public 		$typeAlias 		= 'com_phocagallery.phocagalleryimg';
-	
+
 	protected function canDelete($record)
 	{
 		$user = JFactory::getUser();
@@ -28,7 +28,7 @@ class PhocaGalleryCpModelPhocaGalleryImg extends JModelAdmin
 			return parent::canDelete($record);
 		}
 	}
-	
+
 	protected function canEditState($record)
 	{
 		$user = JFactory::getUser();
@@ -39,14 +39,14 @@ class PhocaGalleryCpModelPhocaGalleryImg extends JModelAdmin
 			return parent::canEditState($record);
 		}
 	}
-	
+
 	public function getTable($type = 'PhocaGallery', $prefix = 'Table', $config = array())
 	{
 		return JTable::getInstance($type, $prefix, $config);
 	}
-	
+
 	public function getForm($data = array(), $loadData = true) {
-		
+
 		$app	= JFactory::getApplication();
 		$form 	= $this->loadForm('com_phocagallery.phocagalleryimg', 'phocagalleryimg', array('control' => 'jform', 'load_data' => $loadData));
 		if (empty($form)) {
@@ -54,11 +54,11 @@ class PhocaGalleryCpModelPhocaGalleryImg extends JModelAdmin
 		}
 		return $form;
 	}
-	
+
 	protected function loadFormData()
 	{
-		
-		
+
+
 		// Check the session for previously entered form data.
 		$app = JFactory::getApplication('administrator');
 		$data = $app->getUserState('com_phocagallery.edit.phocagallery.data', array());
@@ -78,19 +78,21 @@ class PhocaGalleryCpModelPhocaGalleryImg extends JModelAdmin
 
 		return $data;
 	}
-	
+
 		public function getItem($pk = null)
 	{
 		if ($item = parent::getItem($pk)) {
 			// Convert the params field to an array.
-			$registry = new JRegistry;
-			$registry->loadString($item->metadata);
-			$item->metadata = $registry->toArray();
+			if (isset($item->metadata)) {
+				$registry = new JRegistry;
+				$registry->loadString($item->metadata);
+				$item->metadata = $registry->toArray();
+			}
 		}
 
 		return $item;
 	}
-	
+
 	protected function prepareTable($table)
 	{
 		jimport('joomla.filter.output');
@@ -98,14 +100,14 @@ class PhocaGalleryCpModelPhocaGalleryImg extends JModelAdmin
 		$user = JFactory::getUser();
 
 		$table->title		= htmlspecialchars_decode($table->title, ENT_QUOTES);
-		$table->alias		= JApplication::stringURLSafe($table->alias);
+		$table->alias		= \JApplicationHelper::stringURLSafe($table->alias);
 		$table->hits 		= PhocaGalleryUtils::getIntFromString($table->hits);
 		$table->zoom 		= PhocaGalleryUtils::getIntFromString($table->zoom);
 		$table->pcproductid = PhocaGalleryUtils::getIntFromString($table->pcproductid);
 		$table->vmproductid = PhocaGalleryUtils::getIntFromString($table->vmproductid);
 
 		if (empty($table->alias)) {
-			$table->alias = JApplication::stringURLSafe($table->title);
+			$table->alias = \JApplicationHelper::stringURLSafe($table->title);
 		}
 
 		if (empty($table->id)) {
@@ -126,9 +128,9 @@ class PhocaGalleryCpModelPhocaGalleryImg extends JModelAdmin
 			//$table->modified_by	= $user->get('id');
 		}
 	}
-	
 
-	
+
+
 	protected function getReorderConditions($table = null)
 	{
 		$condition = array();
@@ -138,7 +140,7 @@ class PhocaGalleryCpModelPhocaGalleryImg extends JModelAdmin
 	}
 
 	function approve(&$pks, $value = 1)
-	{ 
+	{
 		// Initialise variables.
 		$dispatcher	= JDispatcher::getInstance();
 		$user		= JFactory::getUser();
@@ -176,14 +178,14 @@ class PhocaGalleryCpModelPhocaGalleryImg extends JModelAdmin
 
 		return true;
 	}
-	
+
 	function save($data) {
-		
+
 		$params						= JComponentHelper::getParams( 'com_phocagallery' );
 		$clean_thumbnails 			= $params->get( 'clean_thumbnails', 0 );
 		$fileOriginalNotExist		= 0;
-		
-		
+
+
 		if ((int)$data['extid'] > 0) {
 			$data['imgorigsize'] 	= 0;
 			if ($data['title'] == '') {
@@ -197,67 +199,67 @@ class PhocaGalleryCpModelPhocaGalleryImg extends JModelAdmin
 				$fileOriginalNotExist = 1;
 				$errorMsg = JText::_('COM_PHOCAGALLERY_ORIGINAL_IMAGE_NOT_EXIST');
 			}
-		
+
 			$data['imgorigsize'] 	= PhocaGalleryFile::getFileSize($data['filename'], 0);
 			$data['format'] 		= PhocaGalleryFile::getFileFormat($data['filename']);
-			
+
 			//If there is no title and no alias, use filename as title and alias
 			if ($data['title'] == '') {
 				$data['title'] = PhocaGalleryFile::getTitleFromFile($data['filename']);
 			}
 		}
-		
+
 		if ($data['extlink1link'] != '') {
 			$extlink1			= str_replace('http://','', $data['extlink1link']);
 			$data['extlink1'] 	= $extlink1 . '|'.$data['extlink1title'].'|'.$data['extlink1target'].'|'.$data['extlink1icon'];
 		} else {
 			$data['extlink1'] 	= $data['extlink1link'] . '|'.$data['extlink1title'].'|'.$data['extlink1target'].'|'.$data['extlink1icon'];
 		}
-		
+
 		if ($data['extlink2link'] != '') {
 			$extlink2			= str_replace('http://','', $data['extlink2link']);
 			$data['extlink2'] 	= $extlink2 . '|'.$data['extlink2title'].'|'.$data['extlink2target'].'|'.$data['extlink2icon'];
 		} else {
 			$data['extlink2'] 	= $data['extlink2link'] . '|'.$data['extlink2title'].'|'.$data['extlink2target'].'|'.$data['extlink2icon'];
 		}
-		
+
 		// Geo
 		if($data['longitude'] == '' || $data['latitude'] == '') {
 			phocagalleryimport('phocagallery.geo.geo');
 			$coords = PhocaGalleryGeo::getGeoCoords($data['filename']);
-		
+
 			if ($data['longitude'] == '' ){
 				$data['longitude'] = $coords['longitude'];
 			}
-      
+
 			if ($data['latitude'] == '' ){
 				$data['latitude'] = $coords['latitude'];
 			}
-			
+
 			if ($data['latitude'] != '' && $data['longitude'] != '' && $data['zoom'] == ''){
 				$data['zoom'] = PhocaGallerySettings::getAdvancedSettings('geozoom');
 			}
 		}
 
-		
+
 
 		if ($data['alias'] == '') {
 			$data['alias'] = $data['title'];
 		}
-		
+
 		//clean alias name (no bad characters)
 		//$data['alias'] = PhocaGalleryText::getAliasName($data['alias']);
-		
+
 
 		// if new item, order last in appropriate group
 		//if (!$row->id) {
 		//	$where = 'catid = ' . (int) $row->catid ;
 		//	$row->ordering = $row->getNextOrder( $where );
 		//}
-		
-		// = = = = = = = = = = 
-		
-		
+
+		// = = = = = = = = = =
+
+
 		// Initialise variables;
 		$dispatcher = JDispatcher::getInstance();
 		$table		= $this->getTable();
@@ -278,7 +280,7 @@ class PhocaGalleryCpModelPhocaGalleryImg extends JModelAdmin
 			$this->setError($table->getError());
 			return false;
 		}
-		
+
 		if(intval($table->date) == 0) {
 			$table->date = JFactory::getDate()->toSql();
 		}
@@ -304,7 +306,7 @@ class PhocaGalleryCpModelPhocaGalleryImg extends JModelAdmin
 			$this->setError($table->getError());
 			return false;
 		}
-		
+
 		// Store to ref table
 		if (!isset($data['tags'])) {
 			$data['tags'] = array();
@@ -325,20 +327,20 @@ class PhocaGalleryCpModelPhocaGalleryImg extends JModelAdmin
 			$this->setState($this->getName().'.id', $table->$pkName);
 		}
 		$this->setState($this->getName().'.new', $isNew);
-		
-		// = = = = = = 
-		
-		
+
+		// = = = = = =
+
+
 		$task = JFactory::getApplication()->input->get('task');
 		if (isset($table->$pkName)) {
 			$id = $table->$pkName;
 		}
-		
+
 		if ((int)$data['extid'] > 0 || $fileOriginalNotExist == 1) {
-		
+
 		} else {
 			// - - - - - - - - - - - - - - - - - -
-			//Create thumbnail small, medium, large		
+			//Create thumbnail small, medium, large
 			//file - abc.img, file_no - folder/abc.img
 			//Get folder variables from Helper
 			//Create thumbnails small, medium, large
@@ -360,28 +362,28 @@ class PhocaGalleryCpModelPhocaGalleryImg extends JModelAdmin
 			}
 			// - - - - - - - - - - - - - - - - - - - - -
 		}
-		
+
 		return true;
 	}
-		
-		
+
+
 
 	function delete(&$cid = array()) {
 		$params				= JComponentHelper::getParams( 'com_phocagallery' );
 		$clean_thumbnails 	= $params->get( 'clean_thumbnails', 0 );
 		$result 			= false;
 
-		
+
 		if (count( $cid )) {
-			JArrayHelper::toInteger($cid);
+			\Joomla\Utilities\ArrayHelper::toInteger($cid);
 			$cids = implode( ',', $cid );
-			
-			// - - - - - - - - - - - - - 
+
+			// - - - - - - - - - - - - -
 			// Get all filenames we want to delete from database, we delete all thumbnails from server of this file
 			$queryd = 'SELECT filename as filename FROM #__phocagallery WHERE id IN ( '.$cids.' )';
 			$this->_db->setQuery($queryd);
 			$fileObject = $this->_db->loadObjectList();
-			// - - - - - - - - - - - - - 
+			// - - - - - - - - - - - - -
 
 			//Delete it from DB
 			$query = 'DELETE FROM #__phocagallery'
@@ -392,7 +394,7 @@ class PhocaGalleryCpModelPhocaGalleryImg extends JModelAdmin
 				return false;
 			}
 
-			// - - - - - - - - - - - - - - 
+			// - - - - - - - - - - - - - -
 			// Delete thumbnails - medium and large, small from server
 			// All id we want to delete - gel all filenames
 			foreach ($fileObject as $key => $value) {
@@ -410,15 +412,15 @@ class PhocaGalleryCpModelPhocaGalleryImg extends JModelAdmin
 				phocagalleryimport('phocagallery.file.filefolder');
 				PhocaGalleryFileFolder::cleanThumbsFolder();
 			}
-			// - - - - - - - - - - - - - - 
+			// - - - - - - - - - - - - - -
 		}
 		return true;
 	}
-	
+
 	function recreate($cid = array(), &$message) {
 
 		if (count( $cid )) {
-			JArrayHelper::toInteger($cid);
+			\Joomla\Utilities\ArrayHelper::toInteger($cid);
 			$cids = implode( ',', $cid );
 			$query = 'SELECT a.filename, a.extid'.
 					' FROM #__phocagallery AS a' .
@@ -427,15 +429,15 @@ class PhocaGalleryCpModelPhocaGalleryImg extends JModelAdmin
 			$files = $this->_db->loadObjectList();
 			if (isset($files) && count($files)) {
 				foreach($files as $key => $value) {
-				
-					
-				
+
+
+
 					if (isset($value->extid) && ((int)$value->extid > 0)) {
 						// Picasa cannot be recreated
 						$message = JText::_('COM_PHOCAGALLERY_ERROR_EXT_IMG_NOT_RECREATE');
 						return false;
 					} else if (isset($value->filename) && $value->filename != '') {
-						
+
 						$original	= PhocaGalleryFile::existsFileOriginal($value->filename);
 						if (!$original) {
 							// Original does not exist - cannot generate new thumbnail
@@ -466,7 +468,7 @@ class PhocaGalleryCpModelPhocaGalleryImg extends JModelAdmin
 	}
 	/*
 	function deletethumbs($id) {
-		
+
 		if ($id > 0) {
 			$query = 'SELECT a.filename as filename'.
 					' FROM #__phocagallery AS a' .
@@ -474,9 +476,9 @@ class PhocaGalleryCpModelPhocaGalleryImg extends JModelAdmin
 			$this->_db->setQuery($query);
 			$file = $this->_db->loadObject();
 			if (isset($file->filename) && $file->filename != '') {
-				
+
 				$deleteThubms = PhocaGalleryFileThumbnail::deleteFileThumbnail($file->filename, 1, 1, 1);
-				
+
 				if ($deleteThubms) {
 					return true;
 				} else {
@@ -487,7 +489,7 @@ class PhocaGalleryCpModelPhocaGalleryImg extends JModelAdmin
 	}*/
 
 	public function disableThumbs() {
-		
+
 		$component			=	'com_phocagallery';
 		$paramsC			= JComponentHelper::getParams($component) ;
 		$paramsC->set('enable_thumb_creation', 0);
@@ -500,7 +502,7 @@ class PhocaGalleryCpModelPhocaGalleryImg extends JModelAdmin
 			throw new Exception($db->getErrorMsg());
 			return false;
 		}
-			
+
 		// pre-save checks
 		if (!$table->check()) {
 			throw new Exception($table->getError());
@@ -514,24 +516,24 @@ class PhocaGalleryCpModelPhocaGalleryImg extends JModelAdmin
 		}
 		return true;
 	}
-	
+
 	function rotate($id, $angle, &$errorMsg) {
 		phocagalleryimport('phocagallery.image.imagerotate');
-		
+
 		if ($id > 0 && $angle !='') {
 			$query = 'SELECT a.filename as filename'.
 					' FROM #__phocagallery AS a' .
 					' WHERE a.id = '.(int) $id;
 			$this->_db->setQuery($query);
 			$file = $this->_db->loadObject();
-			
+
 			if (isset($file->filename) && $file->filename != '') {
-				
+
 				$thumbNameL	= PhocaGalleryFileThumbnail::getThumbnailName ($file->filename, 'large');
 				$thumbNameM	= PhocaGalleryFileThumbnail::getThumbnailName ($file->filename, 'medium');
 				$thumbNameS	= PhocaGalleryFileThumbnail::getThumbnailName ($file->filename, 'small');
-				
-				$errorMsg = $errorMsgS = $errorMsgM = $errorMsgL ='';				
+
+				$errorMsg = $errorMsgS = $errorMsgM = $errorMsgL ='';
 				PhocaGalleryImageRotate::rotateImage($thumbNameL, 'large', $angle, $errorMsgL);
 				if ($errorMsgL != '') {
 					$errorMsg = $errorMsgL;
@@ -541,12 +543,12 @@ class PhocaGalleryCpModelPhocaGalleryImg extends JModelAdmin
 				if ($errorMsgM != '') {
 					$errorMsg = $errorMsgM;
 					return false;
-				} 
+				}
 				PhocaGalleryImageRotate::rotateImage($thumbNameS, 'small', $angle, $errorMsgS);
 				if ($errorMsgS != '') {
 					$errorMsg = $errorMsgS;
 					return false;
-				} 
+				}
 
 				if ($errorMsgL == '' && $errorMsgM == '' && $errorMsgS == '' ) {
 					return true;
@@ -561,9 +563,9 @@ class PhocaGalleryCpModelPhocaGalleryImg extends JModelAdmin
 		$errorMsg = JText::_('COM_PHOCAGALLERY_ERROR_ITEM_NOT_SELECTED');
 		return false;
 	}
-	
+
 	function deletethumbs($id) {
-		
+
 		if ($id > 0) {
 			$query = 'SELECT a.filename as filename'.
 					' FROM #__phocagallery AS a' .
@@ -571,9 +573,9 @@ class PhocaGalleryCpModelPhocaGalleryImg extends JModelAdmin
 			$this->_db->setQuery($query);
 			$file = $this->_db->loadObject();
 			if (isset($file->filename) && $file->filename != '') {
-				
+
 				$deleteThubms = PhocaGalleryFileThumbnail::deleteFileThumbnail($file->filename, 1, 1, 1);
-				
+
 				if ($deleteThubms) {
 					return true;
 				} else {
@@ -582,7 +584,7 @@ class PhocaGalleryCpModelPhocaGalleryImg extends JModelAdmin
 			} return false;
 		} return false;
 	}
-	
+
 	protected function batchCopy($value, $pks, $contexts)
 	{
 		$categoryId	= (int) $value;
@@ -593,7 +595,7 @@ class PhocaGalleryCpModelPhocaGalleryImg extends JModelAdmin
 		// Check that the category exists
 		if ($categoryId) {
 			$categoryTable = JTable::getInstance('PhocaGalleryC', 'Table');
-			
+
 			if (!$categoryTable->load($categoryId)) {
 				if ($error = $categoryTable->getError()) {
 					// Fatal error
@@ -619,7 +621,7 @@ class PhocaGalleryCpModelPhocaGalleryImg extends JModelAdmin
 			$this->setError(JText::_('JLIB_APPLICATION_ERROR_BATCH_CANNOT_CREATE'));
 			return false;
 		}
-		
+
 		//NEW
 		//$i		= 0;
 		//ENDNEW
@@ -656,7 +658,7 @@ class PhocaGalleryCpModelPhocaGalleryImg extends JModelAdmin
 
 			// New category ID
 			$table->catid	= $categoryId;
-			
+
 			// Ordering
 			$table->ordering = $this->increaseOrdering($categoryId);
 
@@ -673,14 +675,14 @@ class PhocaGalleryCpModelPhocaGalleryImg extends JModelAdmin
 				$this->setError($table->getError());
 				return false;
 			}
-			
+
 			//NEW
 			// Get the new item ID
 			$newId = $table->get('id');
 
 			// Add the new ID to the array
 			$newIds[$pk]	= $newId;
-			
+
 			if ($newId > 0) {
 				$tags = PhocaGalleryTag::getTags($pk, 1);
 				PhocaGalleryTag::storeTags($tags, $newId);
@@ -786,10 +788,10 @@ class PhocaGalleryCpModelPhocaGalleryImg extends JModelAdmin
 
 		return true;
 	}
-	
-	
+
+
 	public function increaseOrdering($categoryId) {
-		
+
 		$ordering = 1;
 		$this->_db->setQuery('SELECT MAX(ordering) FROM #__phocagallery WHERE catid='.(int)$categoryId);
 		$max = $this->_db->loadResult();
@@ -799,7 +801,7 @@ class PhocaGalleryCpModelPhocaGalleryImg extends JModelAdmin
 	/*
 	public function publish(&$pks, $value = 1)
 	{
-		$dispatcher = JEventDispatcher::getInstance();
+		$dispatcher = J EventDispatcher::getInstance();
 		$user = JFactory::getUser();
 		$table = $this->getTable();
 		$pks = (array) $pks;

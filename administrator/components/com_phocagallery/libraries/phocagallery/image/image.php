@@ -14,16 +14,16 @@ class PhocaGalleryImage
 {
 
 	public static function getImageSize($filename, $returnString = 0, $extLink = 0) {
-		
+
 		phocagalleryimport('phocagallery.image.image');
 		phocagalleryimport('phocagallery.path.path');
-		
+
 		if ($extLink == 1) {
 			$fileNameAbs	= $filename;
 		} else {
 			$path			= PhocaGalleryPath::getPath();
 			$fileNameAbs	= JPath::clean($path->image_abs . $filename);
-		
+
 			if (!JFile::exists($fileNameAbs)) {
 				$fileNameAbs	= $path->image_abs_front . 'phoca_thumb_l_no_image.png';
 			}
@@ -36,35 +36,35 @@ class PhocaGalleryImage
 			return @getimagesize($fileNameAbs);
 		}
 	}
-	
+
 	public static function getRealImageSize($filename, $size = 'large', $extLink = 0) {
-	
+
 		phocagalleryimport('phocagallery.file.thumbnail');
-		
+
 		if ($extLink == 1) {
 			list($w, $h, $type) = @getimagesize($filename);
 		} else {
 			$thumbName			= PhocaGalleryFileThumbnail::getThumbnailName ($filename, $size);
 			list($w, $h, $type) = @getimagesize($thumbName->abs);
 		}
-		$size = array();
+		$sizeA = array();
 		if (isset($w) && isset($h)) {
-			$size['w'] 	= $w;
-			$size['h']	= $h;
+			$sizeA['w'] = $w;
+			$sizeA['h']	= $h;
 		} else {
-			$size['w'] 	= 0;
-			$size['h']	= 0;
+			$sizeA['w'] = 0;
+			$sizeA['h']	= 0;
 		}
-		return $size;
+		return $sizeA;
 	}
-	
-	
+
+
 	public static function correctSizeWithRate($width, $height, $corWidth = 100, $corHeight = 100) {
 		$image['width']		= $corWidth;
 		$image['height']	= $corHeight;
-		
 
-		
+
+
 		if ($width > $height) {
 			if ($width > $corWidth) {
 				$image['width']		= $corWidth;
@@ -86,7 +86,7 @@ class PhocaGalleryImage
 		}
 		return $image;
 	}
-	
+
 	public static function correctSize($imageSize, $size = 100, $sizeBox = 100, $sizeAdd = 0) {
 
 		$image['size']	= $imageSize;
@@ -96,9 +96,9 @@ class PhocaGalleryImage
 		} else {
 			$image['boxsize'] 	= (int)$image['size'] + (int)$sizeAdd;
 		}
-		return $image;		
+		return $image;
 	}
-	
+
 	public static function correctSwitchSize($switchHeight, $switchWidth) {
 
 		$switchImage['height'] 	= $switchHeight;
@@ -106,59 +106,59 @@ class PhocaGalleryImage
 		$switchImage['width'] 	= $switchWidth;
 		$switchImage['centerw']	= ($switchWidth / 2) - 18;
 		$switchImage['height']	= $switchImage['height'] + 5;
-		return $switchImage;		
+		return $switchImage;
 	}
-	
+
 	/*
 	 * type ... 1 categories, 2 category view
 	 */
 	public static function setBoxSize($p, $type = 1) {
 
-	
+
 		$w 	= 20;
 		$w2 = 25;
 		$w3 = 18;
 		$w4 = 40;
-		
+
 		$boxWidth	= 0;
 		$boxSize['width'] 	= 0;
 		$boxSize['height']	= 0;
-		
-		
+
+
 		if (isset($p['imagewidth'])) {
 			$boxSize['width'] = $boxSize['width'] + (int)$p['imagewidth'];
 		}
-	
+
 		if (isset($p['imageheight'])) {
 			$boxSize['height'] = $boxSize['height'] + (int)$p['imageheight'];
 		}
-		
+
 		if (isset($p['display_name']) && ($p['display_name'] == 1 || $p['display_name'] == 2)) {
 			$boxSize['height'] = $boxSize['height'] + $w;
 		}
-			
+
 		if ($type == 3) {
 			$boxSize['height'] = $boxSize['height'] + $w;
 			return $boxSize;
 		}
-		
+
 		if ( (isset($p['display_rating']) && $p['display_rating'] == 1) || (isset($p['display_rating_img']) && $p['display_rating_img'] > 0)) {
-			
-			
+
+
 			if ($type == 1) {
 				$boxSize['height'] = $boxSize['height'] + $w4;
 			} else {
 				$boxSize['height'] = $boxSize['height'] + $w;
 			}
 		}
-		
+
 
 		if (isset($p['displaying_tags_true']) && $p['displaying_tags_true'] == 1) {
 			$boxSize['height'] = $boxSize['height'] + (int) + $w3;
 		}
-		
-		
-		
+
+
+
 
 		if (isset($p['display_icon_detail']) && $p['display_icon_detail'] == 1) {
 			$boxWidth = $boxWidth + $w;
@@ -169,15 +169,15 @@ class PhocaGalleryImage
 		if (isset($p['display_icon_vm']) && $p['display_icon_vm'] == 1) {
 			$boxWidth = $boxWidth + $w;
 		}
-	
+
 		if (isset($p['start_cooliris']) && $p['start_cooliris'] == 1) {
 			$boxWidth = $boxWidth + $w;
 		}
-		
+
 		if (isset($p['trash']) && $p['trash'] == 1) {
 			$boxWidth = $boxWidth + $w;
 		}
-		
+
 		if (isset($p['publish_unpublish']) && $p['publish_unpublish'] == 1) {
 			$boxWidth = $boxWidth + $w;
 		}
@@ -185,11 +185,11 @@ class PhocaGalleryImage
 		if (isset($p['display_icon_geo_box']) && $p['display_icon_geo_box'] == 1) {
 			$boxWidth = $boxWidth + $w;
 		}
-		
+
 		if (isset($p['display_camera_info']) && $p['display_camera_info'] == 1) {
 			$boxWidth = $boxWidth + $w;
 		}
-		
+
 		if (isset($p['display_icon_extlink1_box']) && $p['display_icon_extlink1_box'] == 1) {
 			$boxWidth = $boxWidth + $w;
 		}
@@ -197,11 +197,11 @@ class PhocaGalleryImage
 		if (isset($p['display_icon_extlink2_box']) && $p['display_icon_extlink2_box'] == 1) {
 			$boxWidth = $boxWidth + $w;
 		}
-		
+
 		if (isset($p['approved_not_approved']) && $p['approved_not_approved'] == 1) {
 			$boxWidth = $boxWidth + $w;
 		}
-		
+
 		if (isset($p['display_icon_commentimg_box']) && $p['display_icon_commentimg_box'] == 1) {
 			$boxWidth = $boxWidth + $w;
 		}
@@ -219,10 +219,10 @@ class PhocaGalleryImage
 				$boxSize['height'] = $boxSize['height'] + (int)$p['category_box_space'];
 			}
 		}
-		
+
 		return $boxSize;
 	}
-	
+
 	public static function getJpegQuality($jpegQuality) {
 		if ((int)$jpegQuality < 0) {
 			$jpegQuality = 0;
@@ -232,7 +232,7 @@ class PhocaGalleryImage
 		}
 		return $jpegQuality;
 	}
-	
+
 	/*
 	 * Transform image (only with html method) for overlib effect e.g.
 	 *
@@ -240,12 +240,12 @@ class PhocaGalleryImage
 	 * @param int Rate
 	 * @access public
 	 */
-	 
+
 	 public static function getTransformImageArray($imgSize, $rate) {
 		if (isset($imgSize[0]) && isset($imgSize[1])) {
 			$w = (int)$imgSize[0];
 			$h = (int)$imgSize[1];
-		
+
 			if ($w != 0) {$w = $w/$rate;} // plus or minus should be divided, not null
 			if ($h != 0) {$h = $h/$rate;}
 			$wHOutput = array('width' => $w, 'height' => $h, 'style' => 'background: #fff url('.JURI::base(true).'/media/com_phocagallery/images/icon-loading2.gif) 50% 50% no-repeat;');
@@ -255,34 +255,34 @@ class PhocaGalleryImage
 		}
 		return $wHOutput;
 	}
-	
+
 	/*
 	 * Used for albums or specific images
 	 * Check if it is Picasa or Facebook category or image
 	 * If we ask only on image, the second parameter will be empty and will be ignnored
 	 * If we ask album, first check Picasa album, second check Facebook album
 	 */
-	
+
 	public static function isExtImage($extid, $extfbcatid = '') {
-	
+
 		// EXTID (IMAGES): Picasa - yes, Facebook - yes
 		// EXTID (ALBUMS): Picasa - yes, Facebook - no
 		if (isset($extid) && $extid != '') {
 			return true;
 		}
-		
+
 		// EXTFBCATID (IMAGES): Picasa - no, Facebook - no
 		// EXTFBCATID (ALBUMS): Picasa - no, Facebook - yes
 		if (isset($extfbcatid) && $extfbcatid != '') {
 			return true;
 		}
-		
-		
+
+
 		return false;
 	}
-	
+
 	public static function getImageByImageId($id = 0) {
-		
+
 		$db 	= JFactory::getDBO();
 		$query = ' SELECT a.id, a.title, c.title as category_title'
 				.' FROM #__phocagallery AS a'
@@ -293,8 +293,44 @@ class PhocaGalleryImage
 				.' LIMIT 1';
 		$db->setQuery($query);
 		$image = $db->loadObject();
-		
+
 		return $image;
+	}
+
+	public static function updateRealThumbnailSizes($image, $sizes) {
+
+		if ($image == '') {
+			return false;
+		}
+		if (empty($sizes)) {
+			return false;
+		}
+
+		$path = PhocaGalleryPath::getPath();
+        $file = str_replace($path->image_rel, '', $image);
+
+        $extW = '';
+        if (isset($sizes['l']['w']) && isset($sizes['m']['w']) && isset($sizes['s']['w'])) {
+            $extW = (int)$sizes['l']['w'].','.(int)$sizes['m']['w'].','.(int)$sizes['s']['w'];
+        }
+        $extH = '';
+        if (isset($sizes['l']['h']) && isset($sizes['m']['h']) && isset($sizes['s']['h'])) {
+            $extH = (int)$sizes['l']['h'].','.(int)$sizes['m']['h'].','.(int)$sizes['s']['h'];
+        }
+
+        if ($file != '' && $extW != '' && $extH != '') {
+
+            $db 	= JFactory::getDBO();
+            $query = 'UPDATE #__phocagallery'
+                .' SET extw = '.$db->quote($extW).','
+                .' exth = '.$db->quote($extH)
+                .' WHERE filename = '.$db->quote($file);
+
+            $db->setQuery($query);
+            $db->execute();
+            return true;
+        }
+        return false;
 	}
 }
 ?>

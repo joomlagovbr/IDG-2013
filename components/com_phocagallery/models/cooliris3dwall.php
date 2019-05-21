@@ -16,29 +16,29 @@ class PhocagalleryModelCooliris3DWall extends JModelLegacy
 
 	function __construct() {
 		parent::__construct();
-	}	
-	
+	}
+
 	function getCategory($id) {
-		
+
 		$app	= JFactory::getApplication();
 		if ($id > 0) {
-			
+
 			$query = 'SELECT c.*,' .
 				' CASE WHEN CHAR_LENGTH(c.alias) THEN CONCAT_WS(\':\', c.id, c.alias) ELSE c.id END as slug '.
 				' FROM #__phocagallery_categories AS c' .
 				' WHERE c.id = '. (int) $id;
 			$this->_db->setQuery($query, 0, 1);
 			$category = $this->_db->loadObject();
-			
+
 			$user = JFactory::getUser();
 			// USER RIGHT - ACCESS - - - - - -
 			$rightDisplay	= 1;//default is set to 1 (all users can see the category)
 			if (!empty($category)) {
 				$rightDisplay = PhocaGalleryAccess::getUserRight('accessuserid', $category->accessuserid, $category->access, $user->getAuthorisedViewLevels(), $user->get('id', 0), 0);
 			}
-			
+
 			if ($rightDisplay == 0) {
-				$uri 			= JFactory::getURI();
+				$uri 			= \Joomla\CMS\Uri\Uri::getInstance();
 				$tmpl['pl']		= 'index.php?option=com_users&view=login&return='.base64_encode($uri->toString());
 				$app->redirect(JRoute::_($tmpl['pl'], false), JText::_('COM_PHOCAGALLERY_NOT_AUTHORISED_ACTION'));
 				exit;

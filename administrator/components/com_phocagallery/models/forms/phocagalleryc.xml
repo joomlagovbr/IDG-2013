@@ -33,8 +33,8 @@
 <field name="longitude" type="phocaselectmap"  label="COM_PHOCAGALLERY_FIELD_LONGITUDE_LABEL" description="COM_PHOCAGALLERY_FIELD_LONGITUDE_DESC" class="inputbox" size="40" />
 <field name="zoom" type="phocaselectmap"  label="COM_PHOCAGALLERY_FIELD_ZOOM_LABEL" description="COM_PHOCAGALLERY_FIELD_ZOOM_DESC" class="inputbox" size="40" />
 <field name="geotitle" type="Text" class="inputbox" size="40" label="COM_PHOCAGALLERY_FIELD_GEOTITLE_LABEL" description="COM_PHOCAGALLERY_FIELD_GEOTITLE_DESC"  />
-	
-<field name="description" type="editor" buttons="true" hide="pagebreak,readmore" class="inputbox" label="COM_PHOCAGALLERY_FIELD_DESCRIPTION_LABEL" filter="JComponentHelper::filterText" description="COM_PHOCAGALLERY_FIELD_DESCRIPTION_DESC" /> 
+
+<field name="description" type="editor" buttons="true" hide="pagebreak,readmore" class="inputbox" label="COM_PHOCAGALLERY_FIELD_DESCRIPTION_LABEL" filter="JComponentHelper::filterText" description="COM_PHOCAGALLERY_FIELD_DESCRIPTION_DESC" />
 
 <field name="extu" type="Text" class="inputbox" size="40" label="COM_PHOCAGALLERY_FIELD_PICASA_USER_LABEL" description="COM_PHOCAGALLERY_FIELD_PICASA_USER_DESC"  />
 <field name="exta" type="Text" class="inputbox" size="40" label="COM_PHOCAGALLERY_FIELD_PICASA_ALBUM_LABEL" description="COM_PHOCAGALLERY_FIELD_PICASA_ALBUM_DESC"  />
@@ -45,6 +45,10 @@
 <field name="extfbcatid" type="PhocaSelectFbAlbum" class="inputbox" size="40" label="COM_PHOCAGALLERY_FIELD_FB_ALBUM_LABEL" description="COM_PHOCAGALLERY_FIELD_FB_ALBUM_DESC"  />
 
 
+		<field name="imgurclient" type="Text" class="inputbox" size="40" label="COM_PHOCAGALLERY_FIELD_IMGUR_CLIENT_ID_LABEL" description="COM_PHOCAGALLERY_FIELD_IMGUR_CLIENT_ID_DESC"  />
+		<field name="imguralbum" type="Text" class="inputbox" size="40" label="COM_PHOCAGALLERY_FIELD_IMGUR_ALBUM_ID_LABEL" description="COM_PHOCAGALLERY_FIELD_IMGUR_ALBUM_ID_DESC"  />
+
+
 <field name="metakey" type="textarea"
 			label="JField_Meta_Keywords_Label" description="JField_Meta_Keywords_Desc"
 			class="inputbox" rows="3" cols="30" />
@@ -52,10 +56,10 @@
 <field name="metadesc" type="textarea"
 	label="JField_Meta_Description_Label" description="JField_Meta_Description_Desc"
 	class="inputbox" rows="3" cols="30" />
-			
+
 
 	</fieldset>
-	
+
 	<fieldset name="publish" label="COM_PHOCAGALLERY_GROUP_LABEL_PUBLISHING_DETAILS" >
 
 <field name="published" type="list" label="COM_PHOCAGALLERY_FIELD_PUBLISHED_LABEL" description="COM_PHOCAGALLERY_FIELD_PUBLISHED_DESC" class="inputbox" size="1" default="1">
@@ -75,9 +79,9 @@
 <field name="language" type="contentlanguage" label="JFIELD_LANGUAGE_LABEL" description="COM_PHOCAGALLERY_FIELD_LANGUAGE_CATEGORY_DESC" class="inputbox">
 	<option value="*">JALL</option>
 </field>
-	
+
 	</fieldset>
-	
+
 <fields name="metadata">
 <fieldset name="metadata" label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
 <!--
@@ -101,5 +105,5 @@
 </fieldset>
 </fields>
 
-	
+
 </form>

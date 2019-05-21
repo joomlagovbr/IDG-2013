@@ -1,15 +1,20 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.7.10792
+ * @version         19.5.762
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
 defined('_JEXEC') or die;
+
+use Joomla\CMS\HTML\HTMLHelper as JHtml;
+use Joomla\Registry\Registry;
+use RegularLabs\Library\Form as RL_Form;
+use RegularLabs\Library\RegEx as RL_RegEx;
 
 if ( ! is_file(JPATH_LIBRARIES . '/regularlabs/autoload.php'))
 {
@@ -18,18 +23,12 @@ if ( ! is_file(JPATH_LIBRARIES . '/regularlabs/autoload.php'))
 
 require_once JPATH_LIBRARIES . '/regularlabs/autoload.php';
 
-use Joomla\Registry\Registry;
-use RegularLabs\Library\Form as RL_Form;
-use RegularLabs\Library\RegEx as RL_RegEx;
-
 class JFormFieldRL_Geo extends \RegularLabs\Library\Field
 {
 	public $type = 'Geo';
 
 	protected function getInput()
 	{
-
-		$this->params = $this->element->attributes();
 
 		if ( ! is_array($this->value))
 		{

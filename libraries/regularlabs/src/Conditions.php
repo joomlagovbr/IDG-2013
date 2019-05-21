@@ -1,11 +1,11 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.7.10792
+ * @version         19.5.762
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -14,8 +14,6 @@ namespace RegularLabs\Library;
 defined('_JEXEC') or die;
 
 jimport('joomla.filesystem.file');
-
-use JFile;
 
 /**
  * Class Conditions
@@ -141,6 +139,28 @@ class Conditions
 			return $conditions;
 		}
 
+		$type_params = [];
+
+		foreach ($attributes as $type_param => $value)
+		{
+			if (strpos($type_param, '_') === false)
+			{
+				continue;
+			}
+
+			list($type, $param) = explode('_', $type_param, 2);
+
+			$condition_type = self::getType($type, $only_types);
+
+			if ( ! $condition_type)
+			{
+				continue;
+			}
+
+			$type_params[$type_param] = $value;
+			unset($attributes->{$type_param});
+		}
+
 		foreach ($attributes as $type => $value)
 		{
 			if (empty($value))
@@ -155,8 +175,11 @@ class Conditions
 				continue;
 			}
 
-			$value   = html_entity_decode($value);
-			$params  = self::getDefaultParamsByType($condition_type, $type);
+			$value = html_entity_decode($value);
+
+			$params             = self::getDefaultParamsByType($condition_type, $type);
+			$params->conditions = $type_params;
+
 			$reverse = false;
 
 			$selection = self::getSelectionFromTagAttribute($condition_type, $value, $params, $reverse);
@@ -216,7 +239,7 @@ class Conditions
 				break;
 
 			default:
-				if ( ! JFile::exists(__DIR__ . '/Condition/' . $condition->class_name . '.php'))
+				if ( ! file_exists(__DIR__ . '/Condition/' . $condition->class_name . '.php'))
 				{
 					break;
 				}

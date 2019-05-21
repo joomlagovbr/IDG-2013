@@ -1,28 +1,27 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         8.0.3
+ * @version         9.2.0
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
 namespace RegularLabs\Plugin\System\ArticlesAnywhere\Output;
 
-use JFactory;
-use JHtml;
-use JText;
-use RegularLabs\Library\Date as RL_Date;
+defined('_JEXEC') or die;
+
+use Joomla\CMS\Factory as JFactory;
+use RegularLabs\Library\ArrayHelper as RL_Array;
 use RegularLabs\Library\RegEx as RL_RegEx;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Collection\Item;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Config;
 use RegularLabs\Plugin\System\ArticlesAnywhere\CurrentArticle;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Factory;
+use RegularLabs\Plugin\System\ArticlesAnywhere\Helpers\ValueHelper;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Output\Data\Numbers;
-
-defined('_JEXEC') or die;
 
 class Values
 {
@@ -35,6 +34,7 @@ class Values
 		'title', 'description',
 		'text', 'textarea', 'editor',
 		'category-title', 'category-description',
+		'metakey', 'metadesc',
 	];
 
 	private $text_hit_keys = [
@@ -61,13 +61,23 @@ class Values
 			$attributes->value = $value_type;
 		}
 
-		$key = $this->replaceAliases($key);
-
+		$key   = $this->replaceAliases($key);
 		$value = $this->getValue($key, $default, $attributes);
+
+		if (is_null($value))
+		{
+			return null;
+		}
 
 		if (empty($attributes))
 		{
 			return $value;
+		}
+
+		if (isset($attributes->output)
+			&& in_array($attributes->output, ['value', 'values', 'raw']))
+		{
+			return RL_Array::implode($value, ',');
 		}
 
 		if (in_array($key, $this->text_keys))
@@ -78,7 +88,7 @@ class Values
 		if ($this->isDateValue($key, $value))
 		{
 			// Convert string if it is a date
-			$value = $this->convertDateToString($value, $attributes);
+			$value = ValueHelper::dateToString($value, $attributes);
 		}
 
 		if (in_array($key, $this->text_hit_keys))
@@ -86,7 +96,7 @@ class Values
 			$this->item->hit();
 		}
 
-		return $value;
+		return RL_Array::implode($value);
 	}
 
 	public function replaceAliases($string)
@@ -110,16 +120,10 @@ class Values
 
 	public function isDateValue($key, $value)
 	{
-		// Check if string could be a date
-
-		if (is_array($value))
-		{
-			return false;
-		}
-
 		if (
+			is_array($value)
 			// These keys are never dates
-			in_array($key, $this->text_keys)
+			|| in_array($key, $this->text_keys)
 			|| in_array($key, [
 				'id', 'title', 'alias',
 				'category-id', 'category-title', 'category-alias', 'category-description',
@@ -131,42 +135,7 @@ class Values
 			return false;
 		}
 
-		if (
-			// Dates must contain a '-' and not letters
-			(strpos($value, '-') == false)
-			|| RL_RegEx::match('[a-z]', $value)
-			// Check string it passes a simple strtotime
-			|| ! strtotime($value)
-		)
-		{
-			return false;
-		}
-
-		return true;
-	}
-
-	public function convertDateToString($value, $attributes)
-	{
-		$format          = isset($attributes->format) ? $attributes->format : '';
-		$is_custom_field = isset($attributes->is_custom_field) ? $attributes->is_custom_field : false;
-
-		if (empty($format))
-		{
-			$format = JText::_('DATE_FORMAT_LC2');
-		}
-
-		if (strpos($format, '%') !== false)
-		{
-			$format = RL_Date::strftimeToDateFormat($format);
-		}
-
-		// Don't pass custom fields through JHtml, as it will double the offset
-		if ($is_custom_field)
-		{
-			return date($format, strtotime($value));
-		}
-
-		return JHtml::_('date', $value, $format);
+		return ValueHelper::isDateValue($value);
 	}
 
 	public function getValue($key, $default = null, $attributes = null)
@@ -185,15 +154,13 @@ class Values
 
 		$key = $this->getFromAliases($key);
 
+		if ($date = ValueHelper::placeholderToDate($key))
+		{
+			return $date;
+		}
+
 		switch ($key)
 		{
-			// Date
-			case 'NOW':
-			case 'now()':
-			case 'date()':
-			case 'JFactory::getDate()':
-				return JFactory::getDate()->toSql();
-
 			// Links & Urls
 			case 'link':
 			case 'url':
@@ -268,7 +235,7 @@ class Values
 		return $default;
 	}
 
-	private function getFromAliases($key)
+	static public function translateKey($key)
 	{
 		$key = RL_RegEx::replace('^(cat-|cat_|category_)', 'category-', $key);
 		$key = RL_RegEx::replace('^(author|modifier|category-image)_', '\1-', $key);
@@ -281,16 +248,24 @@ class Values
 			'category-title'     => ['category', 'cat', 'category-name'],
 		];
 
-		$prefix = substr($key, 0, 1) == '/' ? '/' : '';
-		$key    = ltrim($key, '/');
-
 		foreach ($aliases as $to_key => $alias_list)
 		{
 			if (in_array($key, $alias_list))
 			{
-				return $prefix . $to_key;
+				return $to_key;
 			}
 		}
+
+		return $key;
+	}
+
+	public function getFromAliases($key)
+	{
+		$prefix = substr($key, 0, 1) == '/' ? '/' : '';
+
+		$key = ltrim($key, '/');
+
+		$key = self::translateKey($key);
 
 		return $prefix . $key;
 	}
@@ -298,5 +273,17 @@ class Values
 	private function getData($name)
 	{
 		return Factory::getOutput($name, $this->config, $this->item, $this);
+	}
+
+	public static function getValueFromInput($value)
+	{
+		if (strpos($value, 'input:') !== 0)
+		{
+			return $value;
+		}
+
+		list($key, $value, $default) = explode(':', $value . ':none');
+
+		return JFactory::getApplication()->input->get($value, $default);
 	}
 }

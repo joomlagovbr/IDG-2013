@@ -16,7 +16,7 @@ phocagalleryimport( 'phocagallery.file.filefolder' );
 class PhocaGalleryCpModelPhocaGalleryEfs extends JModelList
 {
 	protected	$option 		= 'com_phocagallery';
-	
+
 	public function __construct($config = array())
 	{
 		if (empty($config['filter_fields'])) {
@@ -35,8 +35,8 @@ class PhocaGalleryCpModelPhocaGalleryEfs extends JModelList
 
 		parent::__construct($config);
 	}
-	
-	
+
+
 	protected function populateState($ordering = null, $direction = null)
 	{
 		// Initialise variables.
@@ -65,7 +65,7 @@ class PhocaGalleryCpModelPhocaGalleryEfs extends JModelList
 		// List state information.
 		parent::populateState('a.ordering', 'asc');
 	}
-	
+
 	protected function getStoreId($id = '')
 	{
 		// Compile the store id.
@@ -75,8 +75,8 @@ class PhocaGalleryCpModelPhocaGalleryEfs extends JModelList
 
 		return parent::getStoreId($id);
 	}
-	
-	
+
+
 	protected function getListQuery()
 	{
 		// Create a new query object.
@@ -128,7 +128,7 @@ class PhocaGalleryCpModelPhocaGalleryEfs extends JModelList
 				$query->where('( a.title LIKE '.$search.' OR a.filename LIKE '.$search.')');
 			}
 		}
-		
+
 	//	$query->group('a.id');
 
 		// Add the list ordering clause.
@@ -139,10 +139,10 @@ class PhocaGalleryCpModelPhocaGalleryEfs extends JModelList
 		}
 		$query->order($db->escape($orderCol.' '.$orderDirn));
 
-		
+
 		return $query;
 	}
-	
+
 	protected function getItemsCheck() {
 		$db = JFactory::getDBO();
 		$query = 'SELECT a.id, a.filename, a.type'
@@ -151,9 +151,9 @@ class PhocaGalleryCpModelPhocaGalleryEfs extends JModelList
 		$items = $db->loadObjectList();
 		return $items;
 	}
-	
+
 	public function checkItems() {
-	
+
 		$db = JFactory::getDBO();
 		$files = $this->getFiles();
 		$items = $this->getItemsCheck();
@@ -168,7 +168,7 @@ class PhocaGalleryCpModelPhocaGalleryEfs extends JModelList
 						}
 					}
 					if ($exists == 0) {
-						
+
 						$query = 'SELECT a.ordering'
 								.' FROM #__phocagallery_styles AS a'
 								.' WHERE a.type = '.(int) $fv->type;
@@ -179,7 +179,7 @@ class PhocaGalleryCpModelPhocaGalleryEfs extends JModelList
 						} else {
 							$ordering = (int)$ordO->ordering + 1;
 						}
-						
+
 						$title 		= ucfirst(str_replace('.css', '', htmlspecialchars($fv->filename)));
 						$published	= 1;
 						$query = 'INSERT into #__phocagallery_styles'
@@ -192,22 +192,22 @@ class PhocaGalleryCpModelPhocaGalleryEfs extends JModelList
 							.' , '.$db->quote('*')
 							.')';
 						$db->setQuery($query);
-						
-						if (!$db->query()) {
+
+						if (!$db->execute()) {
 							$this->setError('Database Error - Inserting CSS Style');
 							return false;
 						}
 					}
-				
+
 				}
-			
+
 			}
-		
+
 		}
 		return true;
-	
+
 	}
-	
+
 	public function getFiles()
 	{
 		$result	= array();
@@ -215,10 +215,10 @@ class PhocaGalleryCpModelPhocaGalleryEfs extends JModelList
 
 		$paths		= PhocaGalleryPath::getPath();
 		$path		= JPath::clean($paths->media_css_abs . '/main/');
-		
+
 		if (is_dir($path)) {
 			$files = JFolder::files($path, '\.css$', false, false);
-		
+
 			foreach ($files as $file) {
 				$fileO 	= new stdClass;
 				$fileO->filename 	= $file;
@@ -230,11 +230,11 @@ class PhocaGalleryCpModelPhocaGalleryEfs extends JModelList
 			$this->setError(JText::_('COM_PHOCAGALLERY_ERROR_CSS_FOLDER_NOT_FOUND') . ' (1)');
 			return false;
 		}
-		
+
 		$path	= JPath::clean($paths->media_css_abs . '/custom/');
 		if (is_dir($path)) {
 			$files = JFolder::files($path, '\.css$', false, false);
-		
+
 			foreach ($files as $file) {
 				$fileO 	= new stdClass;
 				$fileO->filename 	= $file;

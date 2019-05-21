@@ -1,9 +1,9 @@
 <?php
 /**
- * @version    2.8.x
+ * @version    2.9.x
  * @package    K2
- * @author     JoomlaWorks http://www.joomlaworks.net
- * @copyright  Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @author     JoomlaWorks https://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2018 JoomlaWorks Ltd. All rights reserved.
  * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -35,7 +35,7 @@ defined('_JEXEC') or die;
 	<?php if($this->item->params->get('itemDateCreated')): ?>
 	<!-- Date created -->
 	<span class="itemDateCreated">
-		<?php echo JHTML::_('date', $this->item->created , JText::_('K2_DATE_FORMAT_LC2')); ?>
+		<?php echo JHTML::_('date', $this->item->created, JText::_('K2_DATE_FORMAT_LC2')); ?>
 	</span>
 	<?php endif; ?>
 
@@ -250,9 +250,9 @@ defined('_JEXEC') or die;
 		<div class="itemExtraFields">
 			<h3><?php echo JText::_('K2_ADDITIONAL_INFO'); ?></h3>
 			<ul>
-				<?php foreach ($this->item->extra_fields as $key=>$extraField): ?>
+				<?php foreach ($this->item->extra_fields as $key => $extraField): ?>
 				<?php if($extraField->value != ''): ?>
-				<li class="<?php echo ($key%2) ? "odd" : "even"; ?> type<?php echo ucfirst($extraField->type); ?> group<?php echo $extraField->group; ?>">
+				<li class="<?php echo ($key%2) ? "odd" : "even"; ?> type<?php echo ucfirst($extraField->type); ?> group<?php echo $extraField->group; ?> alias<?php echo ucfirst($extraField->alias); ?>">
 					<?php if($extraField->type == 'header'): ?>
 					<h4 class="itemExtraFieldsHeader"><?php echo $extraField->name; ?></h4>
 					<?php else: ?>

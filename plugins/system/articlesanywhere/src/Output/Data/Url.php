@@ -1,24 +1,24 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         8.0.3
+ * @version         9.2.0
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
 namespace RegularLabs\Plugin\System\ArticlesAnywhere\Output\Data;
 
-use ContentHelperRoute;
-use JFactory;
-use JRoute;
-use JText;
-use JUri;
-use RegularLabs\Library\HtmlTag as RL_HtmlTag;
-
 defined('_JEXEC') or die;
+
+use ContentHelperRoute;
+use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\Language\Text as JText;
+use Joomla\CMS\Router\Route as JRoute;
+use Joomla\CMS\Uri\Uri as JUri;
+use RegularLabs\Library\HtmlTag as RL_HtmlTag;
 
 class Url extends Data
 {
@@ -49,7 +49,7 @@ class Url extends Data
 			(array) $attributes
 		);
 
-		return '<a ' . RL_HtmlTag::flattenAttributes($attributes) . '">';
+		return '<a ' . RL_HtmlTag::flattenAttributes($attributes) . '>';
 	}
 
 	public function getArticleLink($attributes)

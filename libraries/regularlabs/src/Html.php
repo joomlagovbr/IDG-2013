@@ -1,11 +1,11 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.7.10792
+ * @version         19.5.762
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -61,7 +61,7 @@ class Html
 	 *
 	 * @return array
 	 */
-	public static function getBody($html)
+	public static function getBody($html, $include_body_tag = true)
 	{
 		if (strpos($html, '<body') === false || strpos($html, '</body>') === false)
 		{
@@ -77,6 +77,15 @@ class Html
 		$body_split = explode('</body>', $body);
 		$post       = array_pop($body_split);
 		$body       = implode('</body>', $body_split) . '</body>';
+
+		if ( ! $include_body_tag)
+		{
+			RegEx::match('^(<body[^>]*>\s*)(.*?)(\s*</body>)$', $body, $match);
+
+			$pre  = $pre . $match[1];
+			$body = $match[2];
+			$post = $match[3] . $post;
+		}
 
 		return [$pre, $body, $post];
 	}
@@ -263,15 +272,19 @@ class Html
 	public static function removeEmptyTags($array)
 	{
 		$splitter = ':|:';
-		$comments = '(?:\s*<\!--.*?-->\s*)*';
+		$comments = '(?:\s*<\!--[^>]*-->\s*)*';
 
 		$string = implode($splitter, $array);
+
+		Protect::protectHtmlCommentTags($string);
 
 		$string = RegEx::replace(
 			'<([a-z][a-z0-9]*)(?: [^>]*)?>\s*(' . $comments . RegEx::quote($splitter) . $comments . ')\s*</\1>',
 			'\2',
 			$string
 		);
+
+		Protect::unprotect($string);
 
 		return explode($splitter, $string);
 	}
@@ -289,25 +302,27 @@ class Html
 
 		$doc->substituteEntities = false;
 
-		// Add temporary surrounding div
-		$string = '<div>' . $string . '</div>';
+		list($pre, $body, $post) = Html::getBody($string, false);
 
-		@$doc->loadHTML($string);
-		$string = $doc->saveHTML();
+		// Add temporary surrounding div
+		$body = '<div>' . $body . '</div>';
+
+		@$doc->loadHTML($body);
+		$body = $doc->saveHTML();
 
 		// Remove html document structures
-		$string = RegEx::replace('^<[^>]*>(.*?)<html>.*?(?:<head>(.*)</head>.*?)?<body>(.*)</body>.*?$', '\1\2\3', $string);
+		$body = RegEx::replace('^<[^>]*>(.*?)<html>.*?(?:<head>(.*)</head>.*?)?<body>(.*)</body>.*?$', '\1\2\3', $body);
 
 		// Remove temporary surrounding div
-		$string = RegEx::replace('^\s*<div>(.*)</div>\s*$', '\1', $string);
+		$body = RegEx::replace('^\s*<div>(.*)</div>\s*$', '\1', $body);
 
 		// Remove leading/trailing empty paragraph
-		$string = RegEx::replace('(^\s*<div>\s*</div>|<div>\s*</div>\s*$)', '', $string);
+		$body = RegEx::replace('(^\s*<div>\s*</div>|<div>\s*</div>\s*$)', '', $body);
 
 		// Remove leading/trailing empty paragraph
-		$string = RegEx::replace('(^\s*<p(?: [^>]*)?>\s*</p>|<p(?: [^>]*)?>\s*</p>\s*$)', '', $string);
+		$body = RegEx::replace('(^\s*<p(?: [^>]*)?>\s*</p>|<p(?: [^>]*)?>\s*</p>\s*$)', '', $body);
 
-		return $string;
+		return $pre . $body . $post;
 	}
 
 	/**
@@ -361,10 +376,11 @@ class Html
 	 */
 	public static function cleanSurroundingTags($parts, $elements = ['p', 'span'])
 	{
-		$breaks = '(?:(?:<br ?/?>|<\!--.*?-->|:\|:)\s*)*';
+		$breaks = '(?:(?:<br ?/?>|<\!--[^>]*-->|:\|:)\s*)*';
 		$keys   = array_keys($parts);
 
 		$string = implode(':|:', $parts);
+		Protect::protectHtmlCommentTags($string);
 
 		// Remove empty tags
 		$regex = '<(' . implode('|', $elements) . ')(?: [^>]*)?>\s*(' . $breaks . ')<\/\1>\s*';
@@ -402,6 +418,7 @@ class Html
 			$string = str_replace($match[0], $match[1], $string);
 		}
 
+		Protect::unprotect($string);
 		$parts = explode(':|:', $string);
 
 		$new_tags = [];
@@ -429,19 +446,23 @@ class Html
 			return $string;
 		}
 
+		Protect::protectHtmlCommentTags($string);
+
 		$string = RegEx::replace(
 			'<p(?: [^>]*)?>\s*'
-			. '((?:<\!--.*?-->\s*)*</?(?:' . implode('|', self::getBlockElements()) . ')' . '(?: [^>]*)?>)',
+			. '((?:<\!--[^>]*-->\s*)*</?(?:' . implode('|', self::getBlockElements()) . ')' . '(?: [^>]*)?>)',
 			'\1',
 			$string
 		);
 
 		$string = RegEx::replace(
-			'(</?(?:' . implode('|', self::getBlockElements()) . ')' . '(?: [^>]*)?>(?:\s*<\!--.*?-->)*)'
+			'(</?(?:' . implode('|', self::getBlockElements()) . ')' . '(?: [^>]*)?>(?:\s*<\!--[^>]*-->)*)'
 			. '(?:\s*</p>)',
 			'\1',
 			$string
 		);
+
+		Protect::unprotect($string);
 
 		return $string;
 	}
@@ -460,13 +481,17 @@ class Html
 			return $string;
 		}
 
+		Protect::protectHtmlCommentTags($string);
+
 		$string = RegEx::replace(
 			'(?:<p(?: [^>]*)?>\s*)'
-			. '(<\!--.*?-->)'
+			. '(<\!--[^>]*-->)'
 			. '(?:\s*</p>)',
 			'\1',
 			$string
 		);
+
+		Protect::unprotect($string);
 
 		return $string;
 	}
@@ -516,14 +541,17 @@ class Html
 	 */
 	public static function removeEmptyTagPairs($string, $elements = ['p', 'span'])
 	{
-		$breaks = '(?:(?:<br ?/?>|<\!--.*?-->)\s*)*';
+		$breaks = '(?:(?:<br ?/?>|<\!--[^>]*-->)\s*)*';
 
 		$regex = '<(' . implode('|', $elements) . ')(?: [^>]*)?>\s*(' . $breaks . ')<\/\1>\s*';
 
+		Protect::protectHtmlCommentTags($string);
 		while (RegEx::match($regex, $string, $match))
 		{
 			$string = str_replace($match[0], $match[2], $string);
 		}
+
+		Protect::unprotect($string);
 
 		return $string;
 	}
@@ -593,11 +621,17 @@ class Html
 		}
 
 		$p_start_tag   = '<p(?: [^>]*)?>';
-		$optional_tags = '\s*(?:<\!--.*?-->|&nbsp;|&\#160;)*\s*';
+		$optional_tags = '\s*(?:<\!--[^>]*-->|&nbsp;|&\#160;)*\s*';
+
+		Protect::protectHtmlCommentTags($string);
+
 		RegEx::matchAll('(' . $p_start_tag . ')(' . $optional_tags . ')(' . $p_start_tag . ')', $string, $tags);
 
 		if (empty($tags))
 		{
+
+			Protect::unprotect($string);
+
 			return;
 		}
 
@@ -605,6 +639,8 @@ class Html
 		{
 			$string = str_replace($tag[0], $tag[2] . HtmlTag::combine($tag[1], $tag[3]), $string);
 		}
+
+		Protect::unprotect($string);
 	}
 
 	/**
@@ -678,6 +714,7 @@ class Html
 		$elements = [
 			'span', 'code', 'a',
 			'strong', 'b', 'em', 'i', 'u', 'big', 'small', 'font',
+			'sup', 'sub',
 		];
 
 		return array_diff($elements, $exclude);
@@ -802,16 +839,22 @@ class Html
 	public static function removeHtmlTags($string)
 	{
 		// remove pagenavcounter
-		$string = RegEx::replace('(<div class="pagenavcounter">.*?</div>)', ' ', $string);
+		$string = RegEx::replace('<div class="pagenavcounter">.*?</div>', ' ', $string);
 		// remove pagenavbar
-		$string = RegEx::replace('(<div class="pagenavbar">(<div>.*?</div>)*</div>)', ' ', $string);
+		$string = RegEx::replace('<div class="pagenavbar">(<div>.*?</div>)*</div>', ' ', $string);
 		// remove inline scripts
-		$string = RegEx::replace('(<script[^a-z0-9].*?</script>)', ' ', $string);
-		$string = RegEx::replace('(<noscript[^a-z0-9].*?</noscript>)', ' ', $string);
+		$string = RegEx::replace('<script[^a-z0-9].*?</script>', '', $string);
+		$string = RegEx::replace('<noscript[^a-z0-9].*?</noscript>', '', $string);
 		// remove inline styles
-		$string = RegEx::replace('(<style[^a-z0-9].*?</style>)', ' ', $string);
-		// remove other tags
-		$string = RegEx::replace('(</?[a-z][a-z0-9]?.*?>)', ' ', $string);
+		$string = RegEx::replace('<style[^a-z0-9].*?</style>', '', $string);
+		// remove inline html tags
+		$string = RegEx::replace(
+			'</?(' . implode('|', self::getInlineElements()) . ')( [^>]*)?>',
+			'',
+			$string
+		);
+		// replace other tags with a space
+		$string = RegEx::replace('</?[a-z].*?>', ' ', $string);
 		// remove double whitespace
 		$string = trim(RegEx::replace('(\s)[ ]+', '\1', $string));
 

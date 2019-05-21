@@ -1,11 +1,11 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         8.0.3
+ * @version         9.2.0
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -22,7 +22,7 @@ require_once JPATH_LIBRARIES . '/regularlabs/autoload.php';
  * Button Plugin that places Editor Buttons
  */
 class PlgButtonArticlesAnywhere
-	extends \RegularLabs\Library\EditorButton
+	extends \RegularLabs\Library\EditorButtonPlugin
 {
 	var $folder = __DIR__;
 }

@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*
  * @package Joomla
  * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
@@ -23,11 +23,11 @@ if ($this->tmpl['multibox_fixed_cols'] == 1) {
 	$wRightO 	= 'min-width: '.$wRight.'px';
 	$wLeftO 	= 'min-width: '.$wLeft.'px';
 	$wLeftOIE	= 'width: '.$wLeft.'px';
-	
+
 	// IE7
-	
+
 	$document = JFactory::getDocument();
-	$document->addCustomTag("<!--[if lt IE 8 ]>\n<style type=\"text/css\"> \n" 
+	$document->addCustomTag("<!--[if lt IE 8 ]>\n<style type=\"text/css\"> \n"
 			." #phocagallery.pg-detail-view-multibox table tr td.pg-multibox-lefttd {"
 			." ".$wLeftOIE."; "
 			."} \n"
@@ -105,14 +105,14 @@ if ($this->tmpl['mb_rating']) {
 
 //Thumbnails
 if ($this->tmpl['mb_thumbs']) {
-	
+
 
 	if (!empty($this->tmpl['mb_thumbs_data'])) {
 		echo '<div class="pg-multibox-thumbs-box" style="width: '.(int)$this->tmpl['multibox_thubms_box_width'].'px;">';
-		
+
 		foreach ($this->tmpl['mb_thumbs_data'] as $k => $v) {
 			$extImage = PhocaGalleryImage::isExtImage($v->extid);
-			
+
 			//$altValue	= PhocaGalleryRenderFront::getAltValue($this->tmpl['altvalue'], $v->title, $v->description, $v->metadesc);
 			$altValue = '';//Save resources - not necessary
 			if ($extImage) {
@@ -121,17 +121,17 @@ if ($this->tmpl['mb_thumbs']) {
 				$linkthumbnailpath	= PhocaGalleryImageFront::displayCategoryImageOrNoImage($v->filename, 'small');
 				$img = JHtml::_( 'image', $linkthumbnailpath, $altValue);
 			}
-			
+
 			if ($this->tmpl['detailwindow'] == 7) {
 				$tmplCom = '';
 			} else {
 				$tmplCom = '&tmpl=component';
 			}
-			
+
 			echo '<div class="pg-multibox-thumbs-item"><a href="'.JRoute::_('index.php?option=com_phocagallery&view=detail&catid='. $v->catslug.'&id='.$v->slug.$tmplCom.'&Itemid='. $this->itemId).'">';
 			echo $img;
 			echo '</a></div>';
-		
+
 		}
 		echo '<div style="clear:both"></div>';
 		echo '</div>';
@@ -168,7 +168,7 @@ if ($this->tmpl['mb_comments']) {
 	} else if ((int)$this->tmpl['externalcommentsystem'] == 1) {
 		if (JComponentHelper::isEnabled('com_jcomments', true)) {
 			include_once(JPATH_BASE.'/components/com_jcomments/jcomments.php');
-			echo JComments::showComments($this->item->id, 'com_phocagallery_images', JText::_('COM_PHOCAGALLERY_IMAGE') .' '. $this->item->title);	
+			echo JComments::showComments($this->item->id, 'com_phocagallery_images', JText::_('COM_PHOCAGALLERY_IMAGE') .' '. $this->item->title);
 		}
 	} else {
 		$src = JRoute::_('index.php?option=com_phocagallery&view=comment&catid='.$this->item->catid.'&id='.$this->item->id.'&tmpl=component&commentsi=1&Itemid='. $this->itemId );
@@ -188,6 +188,6 @@ echo '</div>'. "\n";
 
 if ($this->tmpl['detailwindow'] == 7) {
 	echo '<p>&nbsp;</p>';
-	echo '<div style="text-align:right;color:#ccc;display:block">Powered by <a href="https://www.phoca.cz/phocagallery">Phoca Gallery</a></div>';
+    echo PhocaGalleryUtils::getInfo();
 }
 ?>

@@ -7,10 +7,10 @@
  * @component Phoca Component
  * @copyright Copyright (C) Jan Pavelka www.phoca.cz
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- */ 
+ */
 defined('_JEXEC') or die();
 jimport( 'joomla.application.component.view' );
- 
+
 class phocaGalleryCpViewphocaGalleryLinkCats extends JViewLegacy
 {
 	function display($tpl = null) {
@@ -19,24 +19,24 @@ class phocaGalleryCpViewphocaGalleryLinkCats extends JViewLegacy
 		JHtml::_('behavior.formvalidation');
 		JHtml::_('behavior.keepalive');
 		JHtml::_('formbehavior.chosen', 'select');
-		
+
 		//Frontend Changes
 		$tUri = '';
 		if (!$app->isClient('administrator')) {
 			$tUri = JURI::base();
 			phocagalleryimport('phocagallery.render.renderadmin');
 		}
-		
-		
+
+
 		$document	=JFactory::getDocument();
-		$uri		= JFactory::getURI();
+		$uri		= \Joomla\CMS\Uri\Uri::getInstance();
 		JHTML::stylesheet( 'media/com_phocagallery/css/administrator/phocagallery.css' );
-		
+
 		$eName				= JFactory::getApplication()->input->get('e_name');
 		$tmpl['ename']		= preg_replace( '#[^A-Z0-9\-\_\[\]]#i', '', $eName );
 		$tmpl['backlink']	= $tUri.'index.php?option=com_phocagallery&amp;view=phocagallerylinks&amp;tmpl=component&amp;e_name='.$tmpl['ename'];
-		
-		
+
+
 		// Category Tree
 		$db = JFactory::getDBO();
 		$query = 'SELECT a.title AS text, a.id AS value, a.parent_id as parentid'
@@ -51,7 +51,7 @@ class phocaGalleryCpViewphocaGalleryLinkCats extends JViewLegacy
 		$text = '';
 		$tree = PhocaGalleryCategory::CategoryTreeOption($categories, $tree, 0, $text, -1);
 		//-----------------------------------------------------------------------
-		
+
 		// Multiple
 		$ctrl	= 'hidecategories';
 		$attribs	= ' ';
@@ -61,9 +61,9 @@ class phocaGalleryCpViewphocaGalleryLinkCats extends JViewLegacy
 		$attribs	.= ' multiple="multiple"';
 		$ctrl		.= '';
 		//$value		= implode( '|', )
-		
+
 		$categoriesOutput = JHTML::_('select.genericlist', $tree, $ctrl, $attribs, 'value', 'text', 0, 'hidecategories' );
-		
+
 		$this->assignRef('categoriesoutput',	$categoriesOutput);
 		$this->assignRef('tmpl',	$tmpl);
 		parent::display($tpl);

@@ -1,10 +1,10 @@
 /**
  * @package         Regular Labs Library
- * @version         18.7.10792
+ * @version         19.5.762
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -669,33 +669,27 @@ if (jQuery) (function($) {
 				rgb.r = t1;
 				rgb.b = t2;
 				rgb.g = t2 + t3;
-			}
-			else if (h < 120) {
+			} else if (h < 120) {
 				rgb.g = t1;
 				rgb.b = t2;
 				rgb.r = t1 - t3;
-			}
-			else if (h < 180) {
+			} else if (h < 180) {
 				rgb.g = t1;
 				rgb.r = t2;
 				rgb.b = t2 + t3;
-			}
-			else if (h < 240) {
+			} else if (h < 240) {
 				rgb.b = t1;
 				rgb.r = t2;
 				rgb.g = t1 - t3;
-			}
-			else if (h < 300) {
+			} else if (h < 300) {
 				rgb.b = t1;
 				rgb.g = t2;
 				rgb.r = t2 + t3;
-			}
-			else if (h < 360) {
+			} else if (h < 360) {
 				rgb.r = t1;
 				rgb.g = t2;
 				rgb.b = t1 - t3;
-			}
-			else {
+			} else {
 				rgb.r = 0;
 				rgb.g = 0;
 				rgb.b = 0;

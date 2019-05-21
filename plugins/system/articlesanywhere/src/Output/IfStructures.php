@@ -1,25 +1,26 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         8.0.3
+ * @version         9.2.0
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
 namespace RegularLabs\Plugin\System\ArticlesAnywhere\Output;
+
+defined('_JEXEC') or die;
 
 use RegularLabs\Library\Condition\Php;
 use RegularLabs\Library\RegEx as RL_RegEx;
 use RegularLabs\Library\StringHelper as RL_String;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Collection\Item;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Config;
+use RegularLabs\Plugin\System\ArticlesAnywhere\Helpers\ValueHelper;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Output\Data\Numbers;
 use RegularLabs\Plugin\System\ArticlesAnywhere\Params;
-
-defined('_JEXEC') or die;
 
 class IfStructures extends OutputObject
 {
@@ -143,7 +144,7 @@ class IfStructures extends OutputObject
 		* 'bar' !IN foo
 		* 'bar' NOT IN foo
 		*/
-		if (RL_RegEx::match('^[\'"]?(?<val>.*?)[\'"]?\s+(?<operator>(?:NOT\s+)?\!?IN)\s+(?<key>[a-zA-Z0-9-_:]+)$', $condition, $match))
+		if (RL_RegEx::match('^[\'"]?(?<val>.*?)[\'"]?\s+(?<operator>(?:NOT\s+)?\!?IN)\s+(?<key>[a-zA-Z0-9-_\:]+)$', $condition, $match))
 		{
 			$reverse = ($match['operator'] == 'NOT IN' || $match['operator'] == '!NOT');
 
@@ -159,7 +160,7 @@ class IfStructures extends OutputObject
 		* foo = 'bar'
 		* foo != 'bar'
 		*/
-		if (RL_RegEx::match('^(?<key>[a-z0-9-_]+)\s*(?<operator>\!?=)=*\s*[\'"]?(?<val>.*?)[\'"]?$', $condition, $match))
+		if (RL_RegEx::match('^(?<key>[a-z0-9-_\:]+)\s*(?<operator>\!?=)=*\s*[\'"]?(?<val>.*?)[\'"]?$', $condition, $match))
 		{
 			$reverse = ($match['operator'] == '!=');
 
@@ -177,13 +178,12 @@ class IfStructures extends OutputObject
 		* foo <= bar
 		* foo >= bar
 		*/
-		if (RL_RegEx::match('^(?<key>[a-z0-9-_]+)\s*(?<operator>>=?|<=?)=*\s*[\'"]?(?<val>.*?)[\'"]?$', $condition, $match))
+		if (RL_RegEx::match('^(?<key>[a-z0-9-_\:]+)\s*(?<operator>>=?|<=?)=*\s*[\'"]?(?<val>.*?)[\'"]?$', $condition, $match))
 		{
-			return $this->passCompare(
-				$this->values->get($match['key'], null, (object) ['output' => 'raw']),
-				$this->values->get($match['val'], $match['val'], (object) ['output' => 'raw']),
-				$match['operator']
-			);
+			$key   = $this->values->get($match['key'], null, (object) ['output' => 'raw']);
+			$value = $this->getCalculatedValue($match['val']);
+
+			return $this->passCompare($key, $value, $match['operator']);
 		}
 
 		/*
@@ -191,7 +191,7 @@ class IfStructures extends OutputObject
 		* foo (= not empty)
 		* !foo (= empty)
 		*/
-		if (RL_RegEx::match('^(?<operator>\!?)(?<key>[a-z0-9-_]+)$', $condition, $match))
+		if (RL_RegEx::match('^(?<operator>\!?)(?<key>[a-z0-9-_\:]+)$', $condition, $match))
 		{
 			$reverse = ($match['operator'] == '!');
 
@@ -234,6 +234,59 @@ class IfStructures extends OutputObject
 		}
 
 		return false;
+	}
+
+	protected function getCalculatedValue($string)
+	{
+		if ($date = ValueHelper::placeholderToDate($string))
+		{
+			return $date;
+		}
+
+		if (RL_RegEx::match('^[a-z0-9_\-]+\:[a-z0-9_\-\:]+$', $string))
+		{
+			return $this->values->get($string, '', (object) ['output' => 'raw']);
+		}
+
+		if (strpos($string, ' ') === false)
+		{
+			return $string;
+		}
+
+		$values = explode(' ', $string);
+
+		if (count($values) < 3)
+		{
+			return $string;
+		}
+
+		foreach ($values as &$value)
+		{
+			if ( ! RL_String::is_key($value))
+			{
+				continue;
+			}
+
+			$value = $this->values->get($value, $value, (object) ['output' => 'raw']);
+		}
+
+		$value = implode(' ', $values);
+
+		return $this->calculate($value);
+	}
+
+	protected function calculate($string)
+	{
+		if ( ! RL_RegEx::match('[0-9]+\s*[\-\+\/\*\%]', $string))
+		{
+			return $string;
+		}
+
+		ob_start();
+		$result = (new Php)->execute('return ' . $string);
+		ob_end_clean();
+
+		return 0 + $result;
 	}
 
 	protected function passArray($haystack, $needle, $reverse = 0)

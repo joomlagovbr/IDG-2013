@@ -9,9 +9,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License version 2 or later;
  */
 defined('_JEXEC') or die;
-if (!defined('DS')) {
-	define('DS', DIRECTORY_SEPARATOR);
-}
+
 
 spl_autoload_register(array('JLoader','load'));
 
@@ -23,7 +21,7 @@ class PhocaGalleryLoader extends JLoader
 	public static function import($filePath, $base = null, $key = 'libraries.') {
 
 		$keyPath = $key ? $key . $filePath : $filePath;
-		
+
 		if (!isset($paths[$keyPath])) {
 			if ( !$base ) {
 				$base =  JPATH_ADMINISTRATOR.'/components/com_phocagallery/libraries';
@@ -32,8 +30,8 @@ class PhocaGalleryLoader extends JLoader
 			$parts = explode( '.', $filePath );
 
 			$className = array_pop( $parts );
-			
-			
+
+
 			switch($className) {
 				case 'helper' :
 					$className = ucfirst(array_pop( $parts )).ucfirst($className);
@@ -44,8 +42,8 @@ class PhocaGalleryLoader extends JLoader
 					break;
 			}
 
-			$path  = str_replace( '.', DS, $filePath );
-			
+			$path  = str_replace( '.', '/', $filePath );
+
 			if (strpos($filePath, 'phocagallery') === 0) {
 				$className	= 'PhocaGallery'.$className;
 				$classes	= JLoader::register($className, $base. '/'. $path.'.php');
@@ -72,7 +70,7 @@ class PhocaGalleryLoader extends JLoader
 
 			PhocaGalleryLoader::$paths[$keyPath] = $rs;
 		}
-		
+
 		return PhocaGalleryLoader::$paths[$keyPath];
 	}
 }

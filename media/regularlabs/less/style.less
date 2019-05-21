@@ -1,28 +1,24 @@
 /**
  * @package         Regular Labs Library
- * @version         18.7.10792
+ * @version         19.5.762
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 @import "init.less";
 @import "font.less";
-@import "form.less";
 
 .rl_tablelist {
 	td {
 		height: 22px;
 		color:  @gray;
 	}
+
 	td.has-context {
 		height: 23px;
 	}
-}
-
-fieldset.rl_plaintext {
-	margin-top: 5px;
 }
 
 .rl_code {
@@ -38,6 +34,7 @@ fieldset.rl_plaintext {
 
 div.rl_well {
 	padding-bottom: 0;
+
 	h4 {
 		margin-top: 6px;
 	}
@@ -46,19 +43,28 @@ div.rl_well {
 	&.alert-error {
 		color: @grayDark;
 	}
+
+	.controls .btn-group > .btn {
+		min-width: auto;
+	}
 }
 
 .well-striped:nth-child(even) {
 	background-color: lighten(@wellBackground, 3%);
 }
 
-.alert-inline {
+.alert.alert-inline {
 	margin: 14px 0 0;
+}
+
+.alert.alert-noclose {
+	padding: 8px 14px;
 }
 
 .rl_btn-ignore.btn-danger.active {
 	background-color: @grayLight;
 	border:           1px solid rgba(0, 0, 0, 0.2);
+
 	&:hover,
 	&:focus {
 		background-color: darken(@grayLight, 15%);
@@ -68,22 +74,11 @@ div.rl_well {
 .rl_btn-exclude.btn-success.active {
 	background-color: @btnDangerBackground;
 	border:           1px solid rgba(0, 0, 0, 0.2);
+
 	&:hover,
 	&:focus {
 		background-color: darken(@btnDangerBackground, 15%);
 	}
-}
-
-.rl_textarea {
-	.box-sizing(border-box);
-}
-
-.header .icon-nonumber:before {
-	font-size: 20px !important;
-}
-
-.header .status .icon-nonumber:before {
-	font-size: 16px !important;
 }
 
 .icon-back:before {
@@ -140,9 +135,6 @@ div.rl_well {
 	}
 }
 
-.inlist .simplecolors-swatch span {
-	position: relative;
-}
 
 /* Dropdown and dropup fixes */
 .btn-toolbar .modal,
@@ -218,6 +210,7 @@ div.rl_well {
 
 			&:hover {
 				text-decoration: none;
+
 				.icon-star {
 					.rotate(216deg);
 				}

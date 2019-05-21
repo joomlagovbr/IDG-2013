@@ -1,11 +1,11 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.7.10792
+ * @version         19.5.762
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -13,7 +13,7 @@ namespace RegularLabs\Library;
 
 defined('_JEXEC') or die;
 
-use JFactory;
+use Joomla\CMS\Factory as JFactory;
 
 /**
  * Class DB
@@ -59,6 +59,36 @@ class DB
 	}
 
 	/**
+	 * Concatenate conditions using AND or OR
+	 *
+	 * @param string $glue
+	 * @param array  $conditions
+	 *
+	 * @return string
+	 */
+	public static function combine($conditions = [], $glue = 'OR')
+	{
+		if (empty($conditions))
+		{
+			return '';
+		}
+
+		if ( ! is_array($conditions))
+		{
+			return (string) $conditions;
+		}
+
+		if (count($conditions) < 2)
+		{
+			return $conditions[0];
+		}
+
+		$glue = strtoupper($glue) == 'AND' ? 'AND' : 'OR';
+
+		return '(' . implode(' ' . $glue . ' ', $conditions) . ')';
+	}
+
+	/**
 	 * Create an IN statement
 	 * Reverts to a simple equals statement if array just has 1 value
 	 *
@@ -66,7 +96,7 @@ class DB
 	 *
 	 * @return string
 	 */
-	public static function in($value)
+	public static function in($value, $handle_now = false)
 	{
 		if (empty($value) && ! is_array($value))
 		{
@@ -74,8 +104,7 @@ class DB
 		}
 
 		$operator = self::getOperator($value);
-
-		$value = JFactory::getDbo()->quote($value);
+		$value    = self::prepareValue($value, $handle_now);
 
 		if ( ! is_array($value))
 		{
@@ -92,6 +121,23 @@ class DB
 		$values = empty($value) ? "''" : implode(',', $value);
 
 		return ' ' . $operator . ' (' . $values . ')';
+	}
+
+	public static function prepareValue($value, $handle_now = false)
+	{
+		$dates = ['now', 'now()', 'date()', 'jfactory::getdate()'];
+
+		if ($handle_now && ! is_array($value) && in_array(strtolower($value), $dates))
+		{
+			return 'NOW()';
+		}
+
+		if (is_numeric($value))
+		{
+			return $value;
+		}
+
+		return JFactory::getDbo()->quote($value);
 	}
 
 	public static function getOperator(&$value, $default = '=')
@@ -168,8 +214,11 @@ class DB
 	 */
 	public static function like($value)
 	{
-		$db = JFactory::getDbo();
+		$operator = self::getOperator($value);
+		$value    = str_replace('*', '%', self::prepareValue($value));
 
-		return ' LIKE ' . $db->quote($value);
+		$operator = $operator == '!=' ? 'NOT LIKE' : 'LIKE';
+
+		return ' ' . $operator . ' ' . $value;
 	}
 }

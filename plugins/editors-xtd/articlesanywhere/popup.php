@@ -1,20 +1,26 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         8.0.3
+ * @version         9.2.0
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Access\Exception\NotAllowed as JAccessExceptionNotallowed;
+use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\HTML\HTMLHelper as JHtml;
+use Joomla\CMS\Language\Text as JText;
+use Joomla\CMS\Pagination\Pagination as JPagination;
 use RegularLabs\Library\Document as RL_Document;
 use RegularLabs\Library\Extension as RL_Extension;
 use RegularLabs\Library\Language as RL_Language;
 use RegularLabs\Library\Parameters as RL_Parameters;
+use RegularLabs\Library\RegEx as RL_RegEx;
 use RegularLabs\Library\StringHelper as RL_String;
 
 $user = JFactory::getUser();
@@ -39,8 +45,7 @@ if (RL_Document::isClient('site'))
 	}
 }
 
-$class = new PlgButtonArticlesAnywherePopup;
-$class->render($params);
+(new PlgButtonArticlesAnywherePopup)->render($params);
 
 class PlgButtonArticlesAnywherePopup
 {
@@ -55,8 +60,7 @@ class PlgButtonArticlesAnywherePopup
 		RL_Language::load('plg_system_articlesanywhere');
 		RL_Language::load('com_content', JPATH_ADMINISTRATOR);
 
-		RL_Document::style('regularlabs/popup.min.css');
-		RL_Document::style('regularlabs/style.min.css');
+		RL_Document::loadPopupDependencies();
 
 		require_once JPATH_ADMINISTRATOR . '/components/com_content/helpers/content.php';
 
@@ -253,6 +257,10 @@ class PlgButtonArticlesAnywherePopup
 		list($tag_start, $tag_end) = explode('.', $params->tag_characters);
 		// Data tag character start and end
 		list($tag_data_start, $tag_data_end) = explode('.', $params->tag_characters_data);
+
+		$editor = JFactory::getApplication()->input->getString('name', 'text');
+		// Remove any dangerous character to prevent cross site scripting
+		$editor = RL_RegEx::replace('[\'\";\s]', '', $editor);
 		?>
 		<div class="header">
 			<h1 class="page-title">
@@ -318,8 +326,7 @@ class PlgButtonArticlesAnywherePopup
 					$this->outputTableCore($rows, $page, $lists, $params);
 				?>
 
-				<input type="hidden" name="name"
-				       value="<?php echo JFactory::getApplication()->input->getString('name', 'text'); ?>">
+				<input type="hidden" name="name" value="<?php echo $editor; ?>">
 				<input type="hidden" name="filter_order" value="<?php echo $lists['order']; ?>">
 				<input type="hidden" name="filter_order_Dir" value="<?php echo $lists['order_Dir']; ?>">
 			</form>
@@ -331,8 +338,6 @@ class PlgButtonArticlesAnywherePopup
 				articlesanywhere_jInsertEditorText = function(id) {
 					var t_start      = '<?php echo addslashes($tag_start); ?>';
 					var t_end        = '<?php echo addslashes($tag_end); ?>';
-					var td_start     = '<?php echo addslashes($tag_data_start); ?>';
-					var td_end       = '<?php echo addslashes($tag_data_end); ?>';
 					var content_type = '<?php echo addslashes($content_type); ?>';
 
 					if (content_type == 'k2') {
@@ -343,32 +348,13 @@ class PlgButtonArticlesAnywherePopup
 
 					var str = getDataTags().trim();
 
-					if ($('input[name="enable_div"]:checked').val() == 1) {
-						var params = [];
-						if ($('input[name="div_width"]').val()) {
-							params[params.length] = 'width="' + $('input[name="div_width"]').val() + '"';
-						}
-						if ($('input[name="div_height"]').val()) {
-							params[params.length] = 'height="' + $('input[name="div_height"]').val() + '"';
-						}
-						if ($('input[name="div_float"]:checked').val() != 0) {
-							params[params.length] = 'float="' + $('input[name="div_float"]:checked').val() + '"';
-						}
-						if ($('input[name="div_class"]').val()) {
-							params[params.length] = 'class="' + $('input[name="div_class"]').val() + '"';
-						}
-						str = td_start + ('div ' + params.join(' ')).trim() + td_end
-							+ str
-							+ td_start + '/div' + td_end;
-					}
-
 					str = t_start + '<?php echo $plugin_tag; ?> ' + id + t_end
 						+ str
 						+ t_start + '/<?php echo $plugin_tag; ?>' + t_end;
 
-					window.parent.jInsertEditorText(str, '<?php echo JFactory::getApplication()->input->getString('name', 'text'); ?>');
+					window.parent.jInsertEditorText(str, '<?php echo $editor; ?>');
 					window.parent.SqueezeBox.close();
-				}
+				};
 
 				function getDataTags() {
 					var start = '<?php echo addslashes($tag_data_start); ?>';
@@ -389,19 +375,27 @@ class PlgButtonArticlesAnywherePopup
 					if ($('input[name="data_title_enable"]:checked').val() == 1) {
 						var title_heading = $('select[name="data_title_heading"]').val();
 
-						var heading_start = '';
-						var heading_end   = ' ';
+						var title = start + 'title' + end;
+
+						if ($('input[name="data_title_add_link"]:checked').val() == 1) {
+							title = start + 'link' + end
+								+ title
+								+ start + '/link' + end;
+						}
 
 						if (title_heading) {
-							heading_start = '</p><' + title_heading + '>';
-							heading_end   = '</' + title_heading + '><p>';
-
+							title = '</p><' + title_heading + '>'
+								+ title
+								+ '</' + title_heading + '><p>';
+						} else {
+							title = title + '<br>';
 						}
-						str += heading_start + start + 'title' + end + heading_end;
+
+						str += title;
 					}
 
 					if ($('input[name="data_intro_image_enable"]:checked').val() == 1) {
-						str += start + 'image-intro' + end + ' ';
+						str += start + 'image-intro' + end + '<br>';
 					}
 
 					if ($('input[name="data_text_enable"]:checked').val() == 1) {
@@ -416,7 +410,7 @@ class PlgButtonArticlesAnywherePopup
 							tag += ' strip="1"';
 						}
 
-						str += start + tag + end + ' ';
+						str += start + tag + end + '<br>';
 					}
 
 					if ($('input[name="data_readmore_enable"]:checked').val() == 1) {
@@ -432,8 +426,10 @@ class PlgButtonArticlesAnywherePopup
 							tag += ' class="' + readmore_class + '"';
 						}
 
-						str += start + tag + end + ' ';
+						str += start + tag + end + '<br>';
 					}
+
+					str = str.replace(/<br>$/, '');
 
 					return str;
 				}
@@ -451,15 +447,14 @@ class PlgButtonArticlesAnywherePopup
 
 				function toggleDivs() {
 					$('div.toggle_div').each(function(i, el) {
-						var el    = $(el);
-						var value = el.hasClass('reverse') ? 0 : 1;
+						var value = $(el).hasClass('reverse') ? 0 : 1;
 
-						if ($('input[name="' + el.attr('rel') + '"]:checked').val() == value) {
-							el.slideDown();
+						if ($('input[name="' + $(el).attr('rel') + '"]:checked').val() == value) {
+							$(el).slideDown();
 							return true;
 						}
 
-						el.slideUp();
+						$(el).slideUp();
 					});
 				}
 

@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*
  * @package Joomla
  * @copyright Copyright (C) 2005 Open Source Matters. All rights reserved.
@@ -8,7 +8,7 @@
  * @copyright Copyright (C) Jan Pavelka www.phoca.cz
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
-defined('_JEXEC') or die('Restricted access'); 
+defined('_JEXEC') or die('Restricted access');
 
 JHtml::_('jquery.framework', false);
 $document	= JFactory::getDocument();
@@ -36,14 +36,14 @@ if ($this->tmpl['showpageheading'] != 0) {
 	    echo '<h1>'
 	        .$this->escape($heading)
 			.'</h1>';
-	} 
+	}
 }
 $tab = 0;
 switch ($this->tmpl['tab']) {
 	case 'up':
 		$tab = 1;
 	break;
-	
+
 	case 'cc':
 	default:
 		$tab = 0;
@@ -71,6 +71,6 @@ if ($this->tmpl['displaytabs'] > 0) {
 	echo '</div>';
 }
 echo '<div>&nbsp;</div>';
-echo '<div style="text-align:right;color:#ccc;display:block">Powered by <a href="https://www.phoca.cz/phocagallery">Phoca Gallery</a></div>';
+echo PhocaGalleryUtils::getInfo();
 echo '</div>';
 ?>

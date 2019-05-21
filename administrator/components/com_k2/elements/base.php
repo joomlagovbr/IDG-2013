@@ -1,9 +1,9 @@
 <?php
 /**
- * @version     2.8.x
+ * @version     2.9.x
  * @package     K2
- * @author      JoomlaWorks http://www.joomlaworks.net
- * @copyright   Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @author      JoomlaWorks https://www.joomlaworks.net
+ * @copyright   Copyright (c) 2006 - 2018 JoomlaWorks Ltd. All rights reserved.
  * @license     GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -28,11 +28,14 @@ else
 		{
 		    function getInput()
 		    {
+			    /*
 			    if (method_exists($this,'fetchElement')) // BC
 			    {
 				   return $this->fetchElement($this->name, $this->value, $this->element, $this->options['control']);
 			    }
 		        return $this->fetchElementValue($this->name, $this->value, $this->element, $this->options['control']);
+		        */
+		        return $this->fetchElement($this->name, $this->value, $this->element, $this->options['control']);
 		    }
 		    function getLabel()
 		    {
@@ -40,10 +43,12 @@ else
 		        {
 		        	return $this->fetchTooltip($this->element['label'], $this->description, $this->element, $this->options['control'], $this->element['name'] = '');
 		        }
+		        /*
 		        if (method_exists($this, 'fetchElementName'))
 		        {
 		        	return $this->fetchElementName($this->element['label'], $this->description, $this->element, $this->options['control'], $this->element['name'] = '');
 		        }
+		        */
 		        return parent::getLabel();
 		    }
 		    function render($layoutId, $data = array())
@@ -58,11 +63,14 @@ else
 		{
 		    function getInput()
 		    {
+			    /*
 		        if (method_exists($this, 'fetchElement')) // BC
 		        {
 			        return $this->fetchElement($this->name, $this->value, $this->element, $this->options['control']);
 			    }
 		        return $this->fetchElementValue($this->name, $this->value, $this->element, $this->options['control']);
+		        */
+		        return $this->fetchElement($this->name, $this->value, $this->element, $this->options['control']);
 		    }
 		    function getLabel()
 		    {
@@ -70,10 +78,12 @@ else
 		        {
 			        return $this->fetchTooltip($this->element['label'], $this->description, $this->element, $this->options['control'], $this->element['name'] = '');
 			    }
+			    /*
 		        if (method_exists($this, 'fetchElementName'))
 		        {
 		            return $this->fetchElementName($this->element['label'], $this->description, $this->element, $this->options['control'], $this->element['name'] = '');
 		        }
+		        */
 		        return parent::getLabel();
 		    }
 		    function render()

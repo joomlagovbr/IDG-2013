@@ -1,11 +1,11 @@
 <?php
 /**
  * @package         Regular Labs Library
- * @version         18.7.10792
+ * @version         19.5.762
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
@@ -13,14 +13,14 @@ namespace RegularLabs\Library;
 
 defined('_JEXEC') or die;
 
-use JClientFtp;
-use JClientHelper;
-use JFactory;
-use JFilesystemWrapperPath;
-use JFolder;
-use JLog;
-use JText;
-use JUri;
+use Joomla\CMS\Filesystem\Path as JPath;
+use Joomla\CMS\Filesystem\Folder as JFolder;
+use Joomla\CMS\Client\ClientHelper as JClientHelper;
+use Joomla\CMS\Client\FtpClient as JFtpClient;
+use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\Language\Text as JText;
+use Joomla\CMS\Log\Log as JLog;
+use Joomla\CMS\Uri\Uri as JUri;
 
 /**
  * Class File
@@ -151,24 +151,25 @@ class File
 	/**
 	 * Delete a file or array of files
 	 *
-	 * @param   mixed   $file          The file name or an array of file names
-	 * @param   boolean $show_messages Whether or not to show error messages
+	 * @param   mixed   $file               The file name or an array of file names
+	 * @param   boolean $show_messages      Whether or not to show error messages
+	 * @param   int     $min_age_in_minutes Minimum last modified age in minutes
 	 *
 	 * @return  boolean  True on success
 	 *
 	 * @since   11.1
 	 */
-	public static function delete($file, $show_messages = false)
+	public static function delete($file, $show_messages = false, $min_age_in_minutes = 0)
 	{
 		$FTPOptions = JClientHelper::getCredentials('ftp');
-		$pathObject = new JFilesystemWrapperPath;
+		$pathObject = new JPath;
 
 		$files = is_array($file) ? $file : [$file];
 
 		if ($FTPOptions['enabled'] == 1)
 		{
 			// Connect the FTP client
-			$ftp = JClientFtp::getInstance($FTPOptions['host'], $FTPOptions['port'], [], $FTPOptions['user'], $FTPOptions['pass']);
+			$ftp = JFtpClient::getInstance($FTPOptions['host'], $FTPOptions['port'], [], $FTPOptions['user'], $FTPOptions['pass']);
 		}
 
 		foreach ($files as $file)
@@ -176,6 +177,11 @@ class File
 			$file = $pathObject->clean($file);
 
 			if ( ! is_file($file))
+			{
+				continue;
+			}
+
+			if ($min_age_in_minutes && floor((time() - filemtime($file)) / 60) < $min_age_in_minutes)
 			{
 				continue;
 			}
@@ -210,15 +216,16 @@ class File
 	/**
 	 * Delete a folder.
 	 *
-	 * @param   string  $path          The path to the folder to delete.
-	 * @param   boolean $show_messages Whether or not to show error messages
+	 * @param   string  $path               The path to the folder to delete.
+	 * @param   boolean $show_messages      Whether or not to show error messages
+	 * @param   int     $min_age_in_minutes Minimum last modified age in minutes
 	 *
 	 * @return  boolean  True on success.
 	 */
-	public static function deleteFolder($path, $show_messages = false)
+	public static function deleteFolder($path, $show_messages = false, $min_age_in_minutes = 0)
 	{
 		@set_time_limit(ini_get('max_execution_time'));
-		$pathObject = new JFilesystemWrapperPath;
+		$pathObject = new JPath;
 
 		if ( ! $path)
 		{
@@ -226,8 +233,6 @@ class File
 
 			return false;
 		}
-
-		$FTPOptions = JClientHelper::getCredentials('ftp');
 
 		// Check to make sure the path valid and clean
 		$path = $pathObject->clean($path);
@@ -244,7 +249,7 @@ class File
 
 		if ( ! empty($files))
 		{
-			if (self::delete($files, $show_messages) !== true)
+			if (self::delete($files, $show_messages, $min_age_in_minutes) !== true)
 			{
 				// JFile::delete throws an error
 				return false;
@@ -260,7 +265,7 @@ class File
 			{
 				// Don't descend into linked directories, just delete the link.
 
-				if (self::delete($folder, $show_messages) !== true)
+				if (self::delete($folder, $show_messages, $min_age_in_minutes) !== true)
 				{
 					return false;
 				}
@@ -268,10 +273,17 @@ class File
 				continue;
 			}
 
-			if ( ! self::deleteFolder($folder, $show_messages))
+			if ( ! self::deleteFolder($folder, $show_messages, $min_age_in_minutes))
 			{
 				return false;
 			}
+		}
+
+		// Skip if folder is not empty yet
+		if ( ! empty(JFolder::files($path, '.', false, true, [], []))
+			|| ! empty(JFolder::folders($path, '.', false, true, [], [])))
+		{
+			return true;
 		}
 
 		if (@rmdir($path))
@@ -279,10 +291,12 @@ class File
 			return true;
 		}
 
+		$FTPOptions = JClientHelper::getCredentials('ftp');
+
 		if ($FTPOptions['enabled'] == 1)
 		{
 			// Connect the FTP client
-			$ftp = JClientFtp::getInstance($FTPOptions['host'], $FTPOptions['port'], [], $FTPOptions['user'], $FTPOptions['pass']);
+			$ftp = JFtpClient::getInstance($FTPOptions['host'], $FTPOptions['port'], [], $FTPOptions['user'], $FTPOptions['pass']);
 
 			// Translate path and delete
 			$path = $pathObject->clean(str_replace(JPATH_ROOT, $FTPOptions['root'], $path), '/');
@@ -299,5 +313,262 @@ class File
 		}
 
 		return true;
+	}
+
+	public static function trimFolder($folder)
+	{
+		return trim(str_replace(['\\', '//'], '/', $folder), '/');
+	}
+
+	public static function isInternal($url)
+	{
+		return ! self::isExternal($url);
+	}
+
+	public static function isExternal($url)
+	{
+		if (strpos($url, '://') === false)
+		{
+			return false;
+		}
+
+		// hostname: give preference to SERVER_NAME, because this includes subdomains
+		$hostname = ($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : $_SERVER['HTTP_HOST'];
+
+		return ! (strpos(RegEx::replace('^.*?://', '', $url), $hostname) === 0);
+	}
+
+
+	// some/url/to/a/file.ext
+	// > some/url/to/a
+	public static function getDirName($url)
+	{
+		return rtrim(dirname($url), '/');
+	}
+
+	// some/url/to/a/file.ext
+	// > file.ext
+	public static function getBaseName($url, $lowercase = false)
+	{
+		$basename = ltrim(basename($url), '/');
+
+		$parts = explode('?', $basename);
+
+		$basename = $parts[0];
+
+		if ($lowercase)
+		{
+			$basename = strtolower($basename);
+		}
+
+		return $basename;
+	}
+
+	// some/url/to/a/file.ext
+	// > file
+	public static function getFileName($url, $lowercase = false)
+	{
+		$info = pathinfo($url);
+
+		$filename = isset($info['filename']) ? $info['filename'] : $url;
+
+		if ($lowercase)
+		{
+			$filename = strtolower($filename);
+		}
+
+		return $filename;
+	}
+
+	// some/url/to/a/file.ext
+	// > ext
+	public static function getExtension($url)
+	{
+		$info = pathinfo($url);
+
+		if ( ! isset($info['extension']))
+		{
+			return '';
+		}
+
+		$ext = explode('?', $info['extension']);
+
+		return strtolower($ext[0]);
+	}
+
+	public static function isImage($url)
+	{
+		return self::isMedia($url, self::getFileTypes('images'));
+	}
+
+	public static function isVideo($url)
+	{
+		return self::isMedia($url, self::getFileTypes('videos'));
+	}
+
+	public static function isExternalVideo($url)
+	{
+		return (strpos($url, 'youtu.be') !== false
+			|| strpos($url, 'youtube.com') !== false
+			|| strpos($url, 'vimeo.com') !== false
+		);
+	}
+
+	public static function isDocument($url)
+	{
+		return self::isMedia($url, self::getFileTypes('documents'));
+	}
+
+	public static function isMedia($url, $filetypes = [])
+	{
+		$filetype = self::getExtension($url);
+
+		if ( ! $filetype)
+		{
+			return false;
+		}
+
+		if ( ! is_array($filetypes))
+		{
+			$filetypes = [$filetypes];
+		}
+
+		if (count($filetypes) == 1 && strpos($filetypes[0], ',') !== false)
+		{
+			$filetypes = ArrayHelper::toArray($filetypes[0]);
+		}
+
+		$filetypes = ! empty($filetypes) ? $filetypes : self::getFileTypes();
+
+		return in_array($filetype, $filetypes);
+	}
+
+	public static function getFileTypes($type = 'images')
+	{
+		switch ($type)
+		{
+			case 'image':
+			case 'images':
+				return [
+					'bmp',
+					'flif',
+					'gif',
+					'jpe',
+					'jpeg',
+					'jpg',
+					'png',
+					'tiff',
+					'eps',
+				];
+
+			case 'audio':
+				return [
+					'aif',
+					'aiff',
+					'mp3',
+					'wav',
+				];
+
+			case 'video':
+			case 'videos':
+				return [
+					'3g2',
+					'3gp',
+					'avi',
+					'divx',
+					'f4v',
+					'flv',
+					'm4v',
+					'mov',
+					'mp4',
+					'mpe',
+					'mpeg',
+					'mpg',
+					'ogv',
+					'swf',
+					'webm',
+					'wmv',
+				];
+
+			case 'document':
+			case 'documents':
+				return [
+					'doc',
+					'docm',
+					'docx',
+					'dotm',
+					'dotx',
+					'odb',
+					'odc',
+					'odf',
+					'odg',
+					'odi',
+					'odm',
+					'odp',
+					'ods',
+					'odt',
+					'onepkg',
+					'onetmp',
+					'onetoc',
+					'onetoc2',
+					'otg',
+					'oth',
+					'otp',
+					'ots',
+					'ott',
+					'oxt',
+					'pdf',
+					'potm',
+					'potx',
+					'ppam',
+					'pps',
+					'ppsm',
+					'ppsx',
+					'ppt',
+					'pptm',
+					'pptx',
+					'rtf',
+					'sldm',
+					'sldx',
+					'thmx',
+					'xla',
+					'xlam',
+					'xlc',
+					'xld',
+					'xll',
+					'xlm',
+					'xls',
+					'xlsb',
+					'xlsm',
+					'xlsx',
+					'xlt',
+					'xltm',
+					'xltx',
+					'xlw',
+				];
+
+			case 'other':
+			case 'others':
+				return [
+					'css',
+					'csv',
+					'js',
+					'json',
+					'tar',
+					'txt',
+					'xml',
+					'zip',
+				];
+
+			default:
+			case 'all':
+				return array_merge(
+					self::getFileTypes('images'),
+					self::getFileTypes('audio'),
+					self::getFileTypes('videos'),
+					self::getFileTypes('documents'),
+					self::getFileTypes('other')
+				);
+		}
 	}
 }

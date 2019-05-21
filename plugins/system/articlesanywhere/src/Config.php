@@ -1,21 +1,21 @@
 <?php
 /**
  * @package         Articles Anywhere
- * @version         8.0.3
+ * @version         9.2.0
  * 
  * @author          Peter van Westen <info@regularlabs.com>
  * @link            http://www.regularlabs.com
- * @copyright       Copyright © 2018 Regular Labs All Rights Reserved
+ * @copyright       Copyright © 2019 Regular Labs All Rights Reserved
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
 namespace RegularLabs\Plugin\System\ArticlesAnywhere;
 
-use JDatabaseDriver;
-use JFactory;
-use Symfony\Component\Yaml\Parser;
-
 defined('_JEXEC') or die;
+
+use JDatabaseDriver;
+use Joomla\CMS\Factory as JFactory;
+use Symfony\Component\Yaml\Parser;
 
 class Config
 {
@@ -38,6 +38,11 @@ class Config
 
 	public function getComponentName()
 	{
+		if ($this->component == 'default')
+		{
+			return '';
+		}
+
 		return ucfirst($this->component);
 	}
 
@@ -169,6 +174,11 @@ class Config
 	public function getTableItems($quote = true)
 	{
 		return $this->getTableValue('items_table', $quote);
+	}
+
+	public function getTableFeatured($quote = true)
+	{
+		return $this->getTableValue('featured_table', $quote);
 	}
 
 	public function getTableCategories($quote = true)

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="3.4" type="plugin" group="editors-xtd" method="upgrade">
+<extension version="3.9" type="plugin" group="editors-xtd" method="upgrade">
 	<name>plg_editors-xtd_articlesanywhere</name>
 	<description>PLG_EDITORS-XTD_ARTICLESANYWHERE_DESC</description>
-	<version>8.0.3</version>
-	<creationDate>July 2018</creationDate>
+	<version>9.2.0</version>
+	<creationDate>May 2019</creationDate>
 	<author>Regular Labs (Peter van Westen)</author>
 	<authorEmail>info@regularlabs.com</authorEmail>
 	<authorUrl>https://www.regularlabs.com</authorUrl>
@@ -23,7 +23,7 @@
 
 	<config>
 		<fields name="params" addfieldpath="/libraries/regularlabs/fields">
-			<fieldset name="description">
+			<fieldset name="basic">
 				<field name="@loadlanguage_regularlabs" type="rl_loadlanguage" extension="plg_system_regularlabs" />
 				<field name="@loadlanguage" type="rl_loadlanguage" extension="plg_editors-xtd_articlesanywhere" />
 				<field name="@license" type="rl_license" extension="ARTICLES_ANYWHERE" />
@@ -36,7 +36,7 @@
 					   description="ARTICLES_ANYWHERE_DESC"
 					   url="https://www.regularlabs.com/articlesanywhere" />
 
-				<field name="@notice_settings" type="rl_plaintext"
+				<field name="@notice_settings" type="note" class="alert alert-info"
 					   description="AA_SETTINGS,&lt;a href=&quot;index.php?option=com_plugins&amp;filter_folder=system&amp;filter_search=articles anywhere&quot; target=&quot;_blank&quot;&gt;,&lt;/a&gt;" />
 			</fieldset>
 		</fields>
