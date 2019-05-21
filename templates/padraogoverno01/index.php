@@ -45,8 +45,45 @@ $active_item = TmplPadraoGoverno01Helper::getActiveItemid();
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <?php if(TmplPadraoGoverno01Helper::afterHead('local_mainscript', $this)) TmplPadraoGoverno01Helper::getTemplateMainScripts( $this ); ?>
     <?php TmplPadraoGoverno01Helper::getFontStyle( $this ); ?>
+<!--Inicio Script Aumentar/Diminuir Fonte dos artigos -->
+	<script language="javascript">
+	function sizeFont(elem,acao){
+	// tamanho inicial da fonte (em px)
+	var tamInic = 12;
+	// tamanho minímo da [b]fonte (em px)
+	var tamMin = 4;
+	// tamanho máximo da fonte (em px)
+	var tamMax = 40;
+	// pega o tamanho da fonte. Se não foi setada ainda (primeira vez que a função é executada) terá como tamanho padrão "tamInic"
+	if ( document.getElementById(elem).style.fontSize=="" )
+		{	var tamFonte = tamInic; }
+			else{	var tamFonte = parseInt(document.getElementById(elem).style.fontSize );
+		}
+		switch(acao){
+		// aumenta o tamanho, enquanto for menor que 'tamMax'
+		case '+':
+		if(tamFonte < tamMax)
+				document.getElementById(elem).style.fontSize = (tamFonte + 2) + "px";
+					break;
+				// diminui o tamanho, enquanto for maior que 'tamMin'
+				case '-':
+				if(tamFonte > tamMin)
+					document.getElementById(elem).style.fontSize = (tamFonte - 2) + "px";
+						break;
+				//diminui o tamanho, enquanto for maior que 'tamMin'
+				case 'default':
+				document.getElementById(elem).style.fontSize = (tamFonte = 16) + "px";
+					break;
+		}	
+	}
 
+	</script>
+	
+<!-- FIM Script Aumentar/Diminuir Fonte dos artigos -->
 </head>
+<!-- adiciona esta div para que o script possa buscar os elementos para alterar a fonte -->
+<div id="conteudo">
+ 
 <body <?php echo TmplPadraoGoverno01Helper::getPageClass( $active_item, false, true ); ?>>
     <a class="hide" id="topo" href="#accessibility">Ir direto para menu de acessibilidade.</a>
     <noscript>
@@ -91,6 +128,21 @@ $active_item = TmplPadraoGoverno01Helper::getActiveItemid();
                     <!-- fim div.span6 -->
                     <div class="span6 language-and-actions-container">
                         <jdoc:include type="modules" name="header-topo-direita" style="hidden_titles" headerLevel="2" />
+                          <!-- alteração tamanho da fonte - início -->
+	<div style="text-align:right;">
+		<ul id="accessibility">
+			<li> 
+				<a href="#" onclick="sizeFont('conteudo','+');" title="Aumentar a fonte">A+</a>
+			</li>
+			<li> 
+				<a href="#" onclick="sizeFont('conteudo','default');" title="Voltar ao tamanho normal">A</a>
+			</li>
+			<li> 
+				<a href="#" onclick="sizeFont('conteudo','-');" title="Diminuir a fonte">A-</a>&nbsp;
+			</li>
+		</ul>
+	</div>
+<!-- alteração tamanho da fonte - fim -->
                     </div>
                     <!-- fim div.span6 -->
                 </div>
@@ -276,4 +328,5 @@ $active_item = TmplPadraoGoverno01Helper::getActiveItemid();
     <jdoc:include type="modules" name="debug" />
     <?php TmplPadraoGoverno01Helper::debug( @$preffix, @$active_item); ?>
 </body>
+    </div>
 </html>
