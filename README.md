@@ -1,10 +1,10 @@
-Portal padrão em CMS Joomla 3.8.x
+Portal padrão em CMS Joomla 3.9.6
 ================
 
 Sobre esta versão
 ---------------------
 
-O Joomla 3.8.x é recomendado para versões do PHP 5.3.10+. Melhor usando PHP 7.2.+
+O Joomla 3.9.6 é recomendado para versões do PHP 5.3.10+. Melhor usando PHP 7.2.+
 
 *Atualização somente do Thema* pode ser feito separadamente por esse outro repositorio do Bernado.
 https://github.com/dioubernardo/pip-joomla
