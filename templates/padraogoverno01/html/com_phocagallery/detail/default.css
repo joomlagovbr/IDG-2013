@@ -1,5 +1,0 @@
-body { margin:0; text-align: center }
-.pg-imgbgd { display: inline }
-.hide { display:none; }
-.prevButton { position: absolute; top:50%; margin-top:-20px; left:0; z-index:99; }
-.nextButton { position: absolute; top:50%; margin-top:-20px; right:0; z-index:99; }

@@ -1,1 +1,0 @@
-ALTER TABLE #__youtubegallery ADD COLUMN muteonplay tinyint(1) NOT NULL default 0;

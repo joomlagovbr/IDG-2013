@@ -1,1 +1,0 @@
-ALTER TABLE #__youtubegallery ADD COLUMN volume smallint(6) NOT NULL default -1;

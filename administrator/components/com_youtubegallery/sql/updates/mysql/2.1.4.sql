@@ -1,1 +1,0 @@
-ALTER TABLE #__youtubegallery_videos ADD COLUMN ordering int(11) NOT NULL default 0;

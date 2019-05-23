@@ -1,1 +1,0 @@
-ALTER TABLE #__youtubegallery_videos CHANGE rawdata rawdata MEDIUMTEXT NOT NULL;

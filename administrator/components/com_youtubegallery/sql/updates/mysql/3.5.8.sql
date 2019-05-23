@@ -1,1 +1,0 @@
-ALTER TABLE #__youtubegallery_videos ADD COLUMN alias varchar(255) NOT NULL;
