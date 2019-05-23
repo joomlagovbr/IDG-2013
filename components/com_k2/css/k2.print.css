@@ -1,0 +1,20 @@
+/**
+ * @version    2.9.x
+ * @package    K2
+ * @author     JoomlaWorks https://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2018 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ */
+
+/* Print-specific CSS for K2 */
+a.itemPrintThisPage,
+div.itemHeader h2.itemTitle span sup,
+div.itemToolbar,
+div.itemRatingBlock,
+div.itemLinks,
+div.itemSocialLinksBlock,
+div.itemAttachmentsBlock,
+div.itemRelated,
+div.itemAuthorLatest,
+div.itemVideoBlock,
+div.itemNavigation {display:none;}

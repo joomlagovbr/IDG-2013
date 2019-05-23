@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fields name="dates">
+       <field
+                name="data_inicial"
+                type="calendar"
+                format="%d/%m/%Y"
+                label="COM_AGENDADIRIGENTES_COMPROMISSOS_DATA_INICIAL_LABEL"
+                description="COM_AGENDADIRIGENTES_COMPROMISSOS_DATA_INICIAL_DESC"
+                default=""
+                hint="COM_AGENDADIRIGENTES_COMPROMISSOS_DATA_INICIAL_LABEL"
+        />
+        <field
+                name="data_final"
+                type="calendar"
+                format="%d/%m/%Y"
+                label="COM_AGENDADIRIGENTES_COMPROMISSOS_DATA_FINAL_LABEL"
+                description="COM_AGENDADIRIGENTES_COMPROMISSOS_DATA_FINAL_DESC"
+                default=""
+                hint="COM_AGENDADIRIGENTES_COMPROMISSOS_DATA_FINAL_LABEL"
+        />
+	</fields>
+	<fields name="filter" addfieldpath="/administrator/components/com_agendadirigentes/models/fields">
+		<field
+			name="search"
+			type="text"
+			label="titulo compromisso"
+			hint="JSEARCH_FILTER"
+			class="js-stools-search-string"
+		/>
+		<field
+			name="state"
+			type="status"
+			label="JOPTION_SELECT_PUBLISHED"
+			statuses="*,0,1,2,-2"
+			description="JOPTION_SELECT_PUBLISHED_DESC"
+			onchange="this.form.submit();"
+			>
+			<option value="">JOPTION_SELECT_PUBLISHED</option>
+		</field>
+		<field
+			name="catid"
+			type="category"
+			label="JOPTION_FILTER_CATEGORY"
+			extension="com_agendadirigentes"
+			description="JOPTION_FILTER_CATEGORY_DESC"
+			onchange="this.form.submit();"
+			>
+			<option value="">JOPTION_SELECT_CATEGORY</option>
+		</field>
+        <field
+                name="cargo_id"
+                type="cargo"
+                label="COM_AGENDADIRIGENTES_DIRIGENTES_CARGO_ID_LABEL"
+                description="COM_AGENDADIRIGENTES_DIRIGENTES_CARGO_ID_DESC"
+                onchange="this.form.submit();"
+        />
+        <field
+                name="dirigente_id"
+                type="dirigente"
+                label="COM_AGENDADIRIGENTES_DIRIGENTES_DIRIGENTE_ID_LABEL"
+                description="COM_AGENDADIRIGENTES_DIRIGENTES_DIRIGENTE_ID_DESC"
+                onchange="this.form.submit();"
+                showcategory="0"
+                alt_item_0="COM_AGENDADIRIGENTES_SELECT_DIRIGENTE_OWNER"
+        />
+        <field
+                name="participante_id"
+                type="dirigente"
+                label="COM_AGENDADIRIGENTES_DIRIGENTES_PARTICIPANTE_ID_LABEL"
+                description="COM_AGENDADIRIGENTES_DIRIGENTES_PARTICIPANTE_ID_DESC"
+                onchange="this.form.submit();"
+                showcategory="0"
+                alt_item_0="COM_AGENDADIRIGENTES_SELECT_DIRIGENTE_PARTICIPANTE"
+        />
+        <field
+            name="dia_todo"
+            type="list"
+            label="COM_AGENDADIRIGENTES_COMPROMISSOS_DIATODO_LABEL"
+            description="COM_AGENDADIRIGENTES_COMPROMISSOS_DIATODO_DESC"
+            onchange="this.form.submit();"
+            default=""
+            >
+            <option value="">COM_AGENDADIRIGENTES_COMPROMISSOS_DIATODO_TODOS</option>
+            <option value="1">COM_AGENDADIRIGENTES_COMPROMISSOS_DIATODO_SOMENTEDIATODO</option>
+            <option value="0">COM_AGENDADIRIGENTES_COMPROMISSOS_DIATODO_SOMENTENAODIATODO</option>
+        </field>
+        <field
+            name="duracao"
+            type="list"
+            label="COM_AGENDADIRIGENTES_COMPROMISSOS_DURACAO_LABEL"
+            description="COM_AGENDADIRIGENTES_COMPROMISSOS_DURACAO_DESC"
+            onchange="this.form.submit();"
+            default=""
+            >
+            <option value="">COM_AGENDADIRIGENTES_COMPROMISSOS_DURACAO_SELECT</option>
+            <option value="1">COM_AGENDADIRIGENTES_COMPROMISSOS_DURACAO_DIAUNICO</option>
+            <option value="2">COM_AGENDADIRIGENTES_COMPROMISSOS_DURACAO_MAISDEUMDIA</option>
+        </field>
+	</fields>
+	<fields name="list">
+		<field
+			name="status_dono_compromisso"
+			type="list"
+			label="COM_AGENDADIRIGENTES_DIRIGENTES_DONOCOMPROMISSO_LABEL"
+			description="COM_AGENDADIRIGENTES_DIRIGENTES_DONOCOMPROMISSO_DESC"
+			onchange="this.form.submit();"
+			default="1"
+			>
+			<option value="1">COM_AGENDADIRIGENTES_DIRIGENTES_DONOCOMPROMISSO_SOMENTEDONO</option>
+			<option value="0">COM_AGENDADIRIGENTES_DIRIGENTES_DONOCOMPROMISSO_TODOS</option>
+		</field>
+		<field
+			name="fullordering"
+			type="list"
+			label="JGLOBAL_SORT_BY"
+			statuses="*,0,1,2,-2"
+			description="JGLOBAL_SORT_BY"
+			onchange="this.form.submit();"
+			default="comp.id DESC"
+			>
+			<option value="">JGLOBAL_SORT_BY</option>
+            <option value="comp.id ASC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_ID_ASC</option>
+            <option value="comp.id DESC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_ID_DESC</option>
+            <option value="comp.title ASC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_TITLE_ASC</option>
+            <option value="comp.title DESC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_TITLE_DESC</option>            
+            <option value="dir.name ASC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_DIRIGENTE_ASC</option>
+            <option value="dir.name DESC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_DIRIGENTE_DESC</option>
+            <option value="comp.state ASC">JSTATUS_ASC</option>
+            <option value="comp.state DESC">JSTATUS_DESC</option>
+            <option value="comp.data_inicial ASC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_DATA_INICIAL_ASC</option>
+            <option value="comp.data_inicial DESC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_DATA_INICIAL_DESC</option>
+            <option value="comp.data_final ASC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_DATA_FINAL_ASC</option>
+            <option value="comp.data_final DESC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_DATA_FINAL_DESC</option>
+            <option value="comp.dia_todo ASC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_DIA_TODO_ASC</option>
+            <option value="comp.dia_todo DESC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_DIA_TODO_DESC</option>
+            <option value="comp.horario_inicio ASC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_HORARIO_INICIO_ASC</option>
+            <option value="comp.horario_inicio DESC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_HORARIO_INICIO_DESC</option>
+            <option value="comp.horario_fim ASC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_HORARIO_FIM_ASC</option>
+            <option value="comp.horario_fim DESC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_HORARIO_FIM_DESC</option>
+            <option value="comp.local ASC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_LOCAL_ASC</option>
+            <option value="comp.local DESC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_LOCAL_DESC</option>
+            <option value="car.name ASC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_OWNER_CARGO_ASC</option>
+            <option value="car.name DESC">COM_AGENDADIRIGENTES_COMPROMISSOS_HEADING_OWNER_CARGO_DESC</option>
+		</field>
+		<field
+			name="limit"
+			type="limitbox"
+			class="input-mini"
+			default="20"
+			label="COM_AGENDADIRIGENTES_LIST_LIMIT"
+			description="COM_AGENDADIRIGENTES_LIST_LIMIT_DESC"
+			onchange="this.form.submit();"
+		/>
+	</fields>
+</form>

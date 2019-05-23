@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<access component="com_agendadirigentes">
+	<section name="component">
+		<action name="core.admin" title="JACTION_ADMIN" description="JACTION_ADMIN_COMPONENT_DESC"/>
+		<action name="core.manage" title="JACTION_MANAGE" description="JACTION_MANAGE_COMPONENT_DESC"/>
+		<action name="core.create" title="JACTION_CREATE" description="JACTION_CREATE_COMPONENT_DESC"/>
+		<action name="core.delete" title="JACTION_DELETE" description="JACTION_DELETE_COMPONENT_DESC"/>
+		<action name="core.edit" title="JACTION_EDIT" description="JACTION_EDIT_COMPONENT_DESC"/>
+		<action name="core.edit.state" title="JACTION_EDITSTATE" description="JACTION_EDITSTATE_COMPONENT_DESC"/>
+        <action name="core.edit.own" title="JACTION_EDITOWN" description="JACTION_EDITOWN_COMPONENT_DESC"/>
+		<action name="categories.list" title="COM_AGENDADIRIGENTES_PERMS_CMP_CATEGORIES_LIST_LABEL" description="COM_AGENDADIRIGENTES_PERMS_CMP_CATEGORIES_LIST_DESC" />
+		<action name="cargos.list" title="COM_AGENDADIRIGENTES_PERMS_CMP_CARGOS_LIST_LABEL" description="COM_AGENDADIRIGENTES_PERMS_CMP_CARGOS_LIST_DESC" />
+		<action name="cargos.create" title="COM_AGENDADIRIGENTES_PERMS_CMP_CARGOS_CREATE_LABEL" description="COM_AGENDADIRIGENTES_PERMS_CMP_CARGOS_CREATE_DESC" />
+		<action name="cargos.delete" title="COM_AGENDADIRIGENTES_PERMS_CMP_CARGOS_DELETE_LABEL" description="COM_AGENDADIRIGENTES_PERMS_CMP_CARGOS_DELETE_DESC" />
+		<action name="cargos.edit" title="COM_AGENDADIRIGENTES_PERMS_CMP_CARGOS_EDIT_LABEL" description="COM_AGENDADIRIGENTES_PERMS_CMP_CARGOS_EDIT_DESC" />
+		<action name="cargos.edit.state" title="COM_AGENDADIRIGENTES_PERMS_CMP_CARGOS_EDITSTATE_LABEL" description="COM_AGENDADIRIGENTES_PERMS_CMP_CARGOS_EDITSTATE_DESC" />
+		<action name="dirigentes.list" title="COM_AGENDADIRIGENTES_PERMS_CMP_DIRIGENTES_LIST_LABEL" description="COM_AGENDADIRIGENTES_PERMS_CMP_DIRIGENTES_LIST_DESC" />
+		<action name="dirigentes.create" title="COM_AGENDADIRIGENTES_PERMS_CMP_DIRIGENTES_CREATE_LABEL" description="COM_AGENDADIRIGENTES_PERMS_CMP_DIRIGENTES_CREATE_DESC" />
+		<action name="dirigentes.delete" title="COM_AGENDADIRIGENTES_PERMS_CMP_DIRIGENTES_DELETE_LABEL" description="COM_AGENDADIRIGENTES_PERMS_CMP_DIRIGENTES_DELETE_DESC" />
+		<action name="dirigentes.edit" title="COM_AGENDADIRIGENTES_PERMS_CMP_DIRIGENTES_EDIT_LABEL" description="COM_AGENDADIRIGENTES_PERMS_CMP_DIRIGENTES_EDIT_DESC" />
+		<action name="dirigentes.edit.state" title="COM_AGENDADIRIGENTES_PERMS_CMP_DIRIGENTES_EDITSTATE_LABEL" description="COM_AGENDADIRIGENTES_PERMS_CMP_DIRIGENTES_EDITSTATE_DESC" />
+	</section>
+	<section name="category">
+		<action name="core.create" title="JACTION_CREATE" description="COM_CATEGORIES_ACCESS_CREATE_DESC" />
+		<action name="core.delete" title="JACTION_DELETE" description="COM_CATEGORIES_ACCESS_DELETE_DESC" />
+		<action name="core.edit" title="JACTION_EDIT" description="COM_CATEGORIES_ACCESS_EDIT_DESC" />
+		<action name="core.edit.state" title="JACTION_EDITSTATE" description="COM_CATEGORIES_ACCESS_EDITSTATE_DESC" />
+		<action name="core.edit.own" title="JACTION_EDITOWN" description="JACTION_EDITOWN_COMPONENT_DESC"/>
+		<action name="cargos.create" title="COM_AGENDADIRIGENTES_PERMS_CAT_CARGOS_CREATE_LABEL" description="COM_AGENDADIRIGENTES_PERMS_CAT_CARGOS_CREATE_DESC" />
+		<action name="cargos.delete" title="COM_AGENDADIRIGENTES_PERMS_CAT_CARGOS_DELETE_LABEL" description="COM_AGENDADIRIGENTES_PERMS_CAT_CARGOS_DELETE_DESC" />
+		<action name="cargos.edit" title="COM_AGENDADIRIGENTES_PERMS_CAT_CARGOS_EDIT_LABEL" description="COM_AGENDADIRIGENTES_PERMS_CAT_CARGOS_EDIT_DESC" />
+		<action name="cargos.edit.state" title="COM_AGENDADIRIGENTES_PERMS_CAT_CARGOS_EDITSTATE_LABEL" description="COM_AGENDADIRIGENTES_PERMS_CAT_CARGOS_EDITSTATE_DESC" />
+		<action name="dirigentes.create" title="COM_AGENDADIRIGENTES_PERMS_CAT_DIRIGENTES_CREATE_LABEL" description="COM_AGENDADIRIGENTES_PERMS_CAT_DIRIGENTES_CREATE_DESC" />
+		<action name="dirigentes.delete" title="COM_AGENDADIRIGENTES_PERMS_CAT_DIRIGENTES_DELETE_LABEL" description="COM_AGENDADIRIGENTES_PERMS_CAT_DIRIGENTES_DELETE_DESC" />
+		<action name="dirigentes.edit" title="COM_AGENDADIRIGENTES_PERMS_CAT_DIRIGENTES_EDIT_LABEL" description="COM_AGENDADIRIGENTES_PERMS_CAT_DIRIGENTES_EDIT_DESC" />
+		<action name="dirigentes.edit.state" title="COM_AGENDADIRIGENTES_PERMS_CAT_DIRIGENTES_EDITSTATE_LABEL" description="COM_AGENDADIRIGENTES_PERMS_CAT_DIRIGENTES_EDITSTATE_DESC" />
+	</section>
+</access>

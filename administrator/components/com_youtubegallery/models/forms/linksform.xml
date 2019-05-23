@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form
+        addrulepath="administrator/components/com_youtubegallery/models/rules"
+         
+      >
+
+        <fieldset addfieldpath="administrator/components/com_youtubegallery/models/fields">
+                <field
+                        name="id"
+                        type="hidden"
+                />
+                
+                <field
+                        name="listname"
+                        type="text"
+                        label="COM_YOUTUBEGALLERY_FIELD_LISTNAME_LABEL"
+                        description="COM_YOUTUBEGALLERY_FIELD_LISTNAME_DESC"
+                        size="40"
+                        class="inputbox validate-greeting"
+                        validate="listname"
+                        required="true"
+                        default=""
+                />
+                
+                <field
+                        name="catid"
+                        type="ygcategory"
+                        label="COM_YOUTUBEGALLERY_FIELD_CATEGORY_LABEL"
+                        description="COM_YOUTUBEGALLERY_FIELD_CATEGORY_DESC"
+                        class="inputbox"
+                        required="false"
+                        default=""
+                />
+                
+                <field
+                        name="videolist"
+                        type="textarea"
+                        label="COM_YOUTUBEGALLERY_FIELD_VIDEOLIST_LABEL"
+                        description="COM_YOUTUBEGALLERY_FIELD_VIDEOLIST_DESC"
+                        class="inputbox"
+                        default=""
+                        cols="50"
+                        rows="28"
+                />
+                
+                
+                
+                <field
+                        name="updateperiod"
+                        type="list"
+                        label="COM_YOUTUBEGALLERY_FIELD_UPDATEPERIOD_LABEL"
+                        description="COM_YOUTUBEGALLERY_FIELD_UPDATEPERIOD_DESC"
+                        class="inputbox"
+			cols="150"
+                        default="7"
+                >
+                        <option value="0.041">Check for New Videos Every Hour</option>
+                        <option value="0.125">Check for New Videos Every 3 Hours</option>
+                        <option value="0.25">Check for New Videos Every 6 Hours</option>
+                        <option value="0.33">Check for New Videos Every 8 Hours</option>
+                        <option value="0.5">Check for New Videos Every 12 Hours</option>
+                        <option value="1">Check for New Videos Every Day</option>
+                        <option value="3">Check for New Videos Every 3 Days</option>
+                        <option value="7">Check for New Videos Every Week</option>
+                        <option value="10">Check for New Videos Every 10 Days</option>
+                        <option value="30">Check for New Videos Every Month</option>
+                        <option value="365">Check for New Videos Every Year</option>
+                  
+                        <option value="-0.041">Refresh Video List Every Hour</option>
+                        <option value="-0.125">Refresh Video List Every 3 Hours</option>
+                        <option value="-0.25">Refresh Video List Every 6 Hours</option>
+                        <option value="-0.33">Every 8 Hours</option>
+                        <option value="-0.5">Refresh Video List Every 12 Hours</option>
+                        <option value="-1">Refresh Video List Every Day</option>
+                        <option value="-3">Refresh Video List Every 3 Days</option>
+                        <option value="-7">Refresh Video List Every Week</option>
+                        <option value="-10">Every 10 Days</option>
+                        <option value="-30">Refresh Video List Every Month</option>
+                        <option value="-365">Refresh Video List Every Year</option>
+
+                </field>
+                
+                
+                <field
+                        name="description"
+                        type="textarea"
+                        label="COM_YOUTUBEGALLERY_FIELD_DESCRIPTION_LABEL"
+                        description="COM_YOUTUBEGALLERY_FIELD_DESCRIPTION_DESC"
+                        class="inputbox"
+                        default=""
+                        cols="150"
+                        rows="7"
+                />
+                
+                <field
+			cols="150"
+                        name="author"
+                        type="text"
+                        label="COM_YOUTUBEGALLERY_FIELD_AUTHOR_LABEL"
+                        description="COM_YOUTUBEGALLERY_FIELD_AUTHOR_DESC"
+                        size="40"
+                        class="inputbox"
+                        default=""
+                />
+		
+		<field
+			cols="150"
+                        name="authorurl"
+                        type="text"
+                        label="COM_YOUTUBEGALLERY_FIELD_AUTHORURL_LABEL"
+                        description="COM_YOUTUBEGALLERY_FIELD_AUTHORURL_DESC"
+                        size="40"
+                        class="inputbox"
+                        default=""
+                />
+		
+		<field
+			cols="150"
+                        name="image"
+                        type="text"
+                        label="COM_YOUTUBEGALLERY_FIELD_IMAGE_LABEL"
+                        description="COM_YOUTUBEGALLERY_FIELD_IMAGE_DESC"
+                        size="40"
+                        class="inputbox"
+                        default=""
+                />
+		
+		<field
+			cols="150"
+                        name="note"
+                        type="text"
+                        label="COM_YOUTUBEGALLERY_FIELD_NOTE_LABEL"
+                        description="COM_YOUTUBEGALLERY_FIELD_NOTE_DESC"
+                        size="40"
+                        class="inputbox"
+                        default=""
+                />
+                
+                <field name="watchusergroup" type="usergroup" default="" label="COM_YOUTUBEGALLERY_FIELD_USERGROUP_LABEL" description="COM_YOUTUBEGALLERY_FIELD_USERGROUP_DESC" />
+
+        </fieldset>
+
+</form>

@@ -1,0 +1,956 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension
+	type="module"
+	version="3.1"
+	client="site"
+	method="upgrade">
+	<name>mod_chamadas</name>
+	<author>Roberson Pinheiro</author>
+	<creationDate>Outubro 2013</creationDate>
+	<copyright>Copyright (C) 2005 - 2013 Open Source Matters. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<authorEmail>roberson.augusto@gmail.com</authorEmail>
+	<version>3.0.0</version>
+	<description>MOD_CHAMADA_XML_DESCRICAO</description>
+	<files>
+		<filename module="mod_chamadas">mod_chamadas.php</filename>
+		<folder>tmpl</folder>
+		<folder>modelos</folder>
+		<folder>fields</folder>
+		<filename>helper.php</filename>
+		<filename>index.html</filename>
+		<filename>mod_chamadas.xml</filename>
+	</files>
+	<languages>
+		<language tag="pt-BR">pt-BR.mod_chamadas.ini</language>
+		<language tag="pt-BR">pt-BR.mod_chamadas.sys.ini</language>
+	</languages>
+	<config>
+		<fields name="params">
+			<fieldset name="basic" addfieldpath="/modules/mod_chamadas/fields/">
+				<field
+					name="layout"
+					type="modulelayout"
+					label="JFIELD_ALT_LAYOUT_LABEL"
+					description="JFIELD_ALT_MODULE_LAYOUT_DESC"
+				/>
+				<field
+					name="variacao"
+					type="integer"
+					label="MOD_CHAMADA_FIELD_VARIACAO_LAYOUT_LABEL"
+					description="MOD_CHAMADA_FIELD_VARIACAO_LAYOUT_DESC"
+					first="0"
+					default="0"
+					last="10"
+					step="1"
+				/>
+				<field
+					name="modelo"
+					type="folderlist"
+					default="article_content"
+					label="MOD_CHAMADA_FIELD_MODELO_LABEL"
+					description="MOD_CHAMADA_FIELD_MODELO_DESC"
+					directory="modules/mod_chamadas/modelos/"
+					filter=""
+					exclude=""
+					stripext=""
+				/>
+
+				<field
+					name="quantidade"
+					type="integer"
+					label="MOD_CHAMADA_FIELD_QUANTIDADE_DESTAQUES_LABEL"
+					description="MOD_CHAMADA_FIELD_QUANTIDADE_DESTAQUES_DESC"
+					first="1"
+					default="1"
+					last="20"
+					step="1"
+				/>
+
+				<field
+					name="sizeImage"
+					type="list"
+					default="Original"
+					label="Tamanho da Imagem"
+					description="Selecionar tamanho da imagem"
+				>
+					<option value="Original">Original</option>
+					<option value="l">Grande</option>
+					<option value="m">Media</option>
+					<option value="s">Pequena</option>
+				</field>
+
+				<field
+		           	name="id_article_unico"
+		           	type="modal_article"
+		           	label="MOD_CHAMADA_FIELD_ID_ARTICLE_UNICO_LABEL"
+		           	description="MOD_CHAMADA_FIELD_ID_ARTICLE_UNICO_DESC"
+		        />
+
+				<field
+					name="id_item_unico"
+					type="text"
+					label="MOD_CHAMADA_FIELD_ID_ITEM_UNICO_LABEL"
+					description="MOD_CHAMADA_FIELD_ID_ITEM_UNICO_DESC"
+					filter="integer"
+				/>
+
+				<field
+					type="spacer"
+					hr="true"
+				/>
+
+				<field
+					name="titulo_alternativo"
+					type="text"
+					label="MOD_CHAMADA_FIELD_TITULO_ALTERNATIVO_LABEL"
+					description="MOD_CHAMADA_FIELD_TITULO_ALTERNATIVO_DESC"
+					size="50"
+				/>
+
+				<field
+					name="link_saiba_mais"
+					type="text"
+					label="MOD_CHAMADA_FIELD_LINK_SAIBA_MAIS_LABEL"
+					description="MOD_CHAMADA_FIELD_LINK_SAIBA_MAIS_DESC"
+					size="50"
+				/>
+
+				<field
+					name="link_saiba_mais_menu"
+					type="menuitem"
+					default=""
+					label="MOD_CHAMADA_FIELD_LINK_SAIBA_MAIS_MENU_LABEL"
+					description="MOD_CHAMADA_FIELD_LINK_SAIBA_MAIS_MENU_DESC"
+				>
+					<option value="">JNONE</option>
+				</field>
+			    <field
+		           name="link_saiba_mais_article"
+		           type="modal_article"
+		           label="MOD_CHAMADA_FIELD_LINK_SAIBA_MAIS_ARTICLE_LABEL"
+		           description="MOD_CHAMADA_FIELD_LINK_SAIBA_MAIS_ARTICLE_DESC"
+		        />
+
+				<field
+					name="texto_saiba_mais"
+					type="text"
+					label="MOD_CHAMADA_FIELD_TEXTO_SAIBA_MAIS_LABEL"
+					description="MOD_CHAMADA_FIELD_TEXTO_SAIBA_MAIS_DESC"
+					size="50"
+				/>
+				<field
+					type="spacer"
+					hr="true"
+				/>
+
+
+				<!-- Acrescentando campos para opção de agenda das autoridades como link secundario do rodapé				 -->
+
+				<field
+					name="link_secundario"
+					type="text"
+					label="MOD_CHAMADA_FIELD_LINK_SECUNDARIO_LABEL"
+					description="MOD_CHAMADA_FIELD_LINK_SECUNDARIO_DESC"
+					size="50"
+				/>
+
+				<field
+					name="link_secundario_menu"
+					type="menuitem"
+					default=""
+					label="MOD_CHAMADA_FIELD_LINK_SECUNDARIO_MENU_LABEL"
+					description="MOD_CHAMADA_FIELD_LINK_SECUNDARIO_MENU_DESC"
+				>
+					<option value="">JNONE</option>
+				</field>
+			    <field
+		           name="link_secundario_article"
+		           type="modal_article"
+		           label="MOD_CHAMADA_FIELD_LINK_SECUNDARIO_ARTICLE_LABEL"
+		           description="MOD_CHAMADA_FIELD_LINK_SECUNDARIO_ARTICLE_DESC"
+		        />
+
+				<field
+					name="texto_secundario"
+					type="text"
+					label="MOD_CHAMADA_FIELD_TEXTO_SECUNDARIO_LABEL"
+					description="MOD_CHAMADA_FIELD_TEXTO_SECUNDARIO_DESC"
+					size="50"
+				/>
+				<field
+					type="spacer"
+					hr="true"
+				/>
+
+				<!-- FIM Acrescentando campos para opção de agenda das autoridades como link secundario do rodapé				 -->
+
+				<field
+					name="habilitar_mensagem_vazia"
+					class="btn-group"
+					type="radio"
+					default="0"
+					label="MOD_CHAMADA_FIELD_HABILITAR_MENSAGEM_VAZIA_LABEL"
+					description="MOD_CHAMADA_FIELD_HABILITAR_MENSAGEM_VAZIA_DESC"
+				>
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+
+				<field
+					name="mensagem_vazia"
+					type="textarea"
+					label="MOD_CHAMADA_FIELD_MENSAGEM_VAZIA_LABEL"
+					description="MOD_CHAMADA_FIELD_MENSAGEM_VAZIA_DESC"
+					cols="35"
+					rows="4"
+					filter="raw"
+				/>
+				<field
+					type="spacer"
+					hr="true"
+				/>
+				<field
+					name="chapeu"
+					type="text"
+					default="cont.xreference"
+					label="MOD_CHAMADA_FIELD_CHAPEU_LABEL"
+					description="MOD_CHAMADA_FIELD_CHAPEU_DESC"
+					size="30"
+				/>
+				<field
+					name="largura_px"
+					type="text"
+					label="Largura em pixels"
+					description="Informar a largura que o item deverá conter em pixels. Considerar responsividade para a regra. Caso não seja informado altura ou largura, o padrão será 705x150"
+					filter="integer"
+				/>
+				<field
+					name="altura_px"
+					type="text"
+					label="Altura em pixels. Ex: 150"
+					description="Informar a altura que o item deverá conter em pixels. Considerar responsividade para a regra. Caso não seja informado altura ou largura, o padrão será 705x150"
+					filter="integer"
+				/>
+			</fieldset>
+
+			<fieldset name="multiplos_itens" label="MOD_CHAMADA_FIELDSET_MULTIPLOS_ITENS_LABEL">
+
+
+				<field
+					name="destaque"
+					type="list"
+					default="show"
+					label="MOD_CHAMADA_FIELD_DESTAQUE_LABEL"
+					description="MOD_CHAMADA_FIELD_DESTAQUE_DESC"
+				>
+					<option value="0">MOD_CHAMADA_OPTION_TODOS_VALUE</option>
+					<option value="1">MOD_CHAMADA_OPTION_EXCETO_DESTAQUE_VALUE</option>
+					<option value="2">MOD_CHAMADA_OPTION_SOMENTE_DESTAQUE_VALUE</option>
+				</field>
+
+				<field
+					name="somente_imagem"
+					class="btn-group"
+					type="radio"
+					default="0"
+					label="MOD_CHAMADA_FIELD_SOMENTE_IMAGEM_LABEL"
+					description="MOD_CHAMADA_FIELD_SOMENTE_IMAGEM_DESC"
+				>
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+				<field
+					type="spacer"
+					hr="true"
+				/>
+				<field
+					name="buscar_cat_tag"
+					class="btn-group"
+					type="radio"
+					default="1"
+					label="MOD_CHAMADA_FIELD_BUSCAR_CAT_TAG_LABEL"
+					description="MOD_CHAMADA_FIELD_BUSCAR_CAT_TAG_DESC"
+				>
+					<option value="1">MOD_CHAMADA_OPTION_SOMENTE_CATEGORIA_VALUE</option>
+					<option value="2">MOD_CHAMADA_OPTION_SOMENTE_TAG_VALUE</option>
+					<option value="3">MOD_CHAMADA_OPTION_AMBOS_VALUE</option>
+				</field>
+
+				<field
+					name="tags"
+					type="tag"
+					label="JTAG"
+					description="JTAG_DESC"
+					multiple="true"
+				/>
+
+				<field
+					name="catid"
+					type="category"
+					extension="com_content"
+					size="5"
+					label="JCATEGORY_CONTENT"
+					description="MOD_CHAMADA_FIELD_CATEGORY_DESC"
+					multiple="true"
+				>
+				</field>
+
+				<field
+					name="catid_components"
+					type="text"
+					size="40"
+					label="JCATEGORY_COMPONENTS"
+					description="MOD_CHAMADA_FIELD_CATEGORY_DESC_COMPONENTS"
+				>
+				</field>
+
+				<field
+					name="visualizar_filho"
+					class="btn-group"
+					type="radio"
+					default="0"
+					label="MOD_CHAMADA_FIELD_VISUALIZAR_FILHO_LABEL"
+					description="MOD_CHAMADA_FIELD_VISUALIZAR_FILHO_DESC"
+				>
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+
+				<field
+					name="nivel"
+					type="integer"
+					label="MOD_CHAMADA_FIELD_NIVEL_LABEL"
+					description="MOD_CHAMADA_FIELD_NIVEL_DESC"
+					default="10"
+					first="1"
+					last="10"
+					step="1"
+				/>
+				<field
+					type="spacer"
+					hr="true"
+				/>
+				<field
+					name="ordem"
+					type="list"
+					default="title"
+					label="MOD_CHAMADA_FIELD_ORDEM_LABEL"
+					description="MOD_CHAMADA_FIELD_ORDEM_DESC"
+				>
+					<option value="title">MOD_CHAMADA_OPTION_TITULO_VALUE</option>
+					<option value="publish_up">MOD_CHAMADA_OPTION_DATA_PUBLISH_UP_VALUE</option>
+					<option value="created">MOD_CHAMADA_OPTION_DATA_CREATED_VALUE</option>
+					<option value="modified">MOD_CHAMADA_OPTION_DATA_MODIFIED_VALUE</option>
+					<option value="ordering">MOD_CHAMADA_OPTION_ORDEM_VALUE</option>
+					<option value="hits">MOD_CHAMADA_OPTION_HITS_VALUE</option>
+				</field>
+
+				<field
+					name="ordem_direction"
+					type="list"
+					default="ASC"
+					label="MOD_CHAMADA_FIELD_ORDEMDIRECTION_LABEL"
+					description="MOD_CHAMADA_FIELD_ORDEMDIRECTION_DESC"
+				>
+					<option value="DESC">MOD_CHAMADA_OPTION_DESC_VALUE</option>
+					<option value="ASC">MOD_CHAMADA_OPTION_ASC_VALUE</option>
+				</field>
+			</fieldset>
+			<fieldset name="configuracoes_manuais_item1" label="MOD_CHAMADA_FIELDSET_CONF_MANUAIS_ITEM01_LABEL" addfieldpath="/modules/mod_chamadas/fields/">
+				<field
+					name="chapeu_item1"
+					type="text"
+					label="MOD_CHAMADA_FIELD_MANUAL_CHAPEU01_LABEL"
+					description="MOD_CHAMADA_FIELD_MANUAL_CHAPEU01_DESC"
+					size="40"
+				/>
+				<field
+					name="title_item1"
+					type="text"
+					label="MOD_CHAMADA_FIELD_MANUAL_TITLE01_LABEL"
+					description="MOD_CHAMADA_FIELD_MANUAL_TITLE01_DESC"
+					size="60"
+				/>
+				<field
+					type="spacer"
+					hr="true"
+				/>
+				<field
+					name="desc_item1"
+					type="editor"
+					label="MOD_CHAMADA_FIELD_MANUAL_DESC01_LABEL"
+					description="MOD_CHAMADA_FIELD_MANUAL_DESC01_DESC"
+					width="500"
+					hide="readmore"
+					filter="raw"
+				/>
+				<field
+					type="spacer"
+					hr="true"
+				/>
+				<field
+					name="show_image_item1"
+					class="btn-group"
+					type="list"
+					default=""
+					label="MOD_CHAMADA_FIELD_MANUAL_SHOWIMAGE01_LABEL"
+					description="MOD_CHAMADA_FIELD_MANUAL_SHOWIMAGE01_DESC"
+				>
+					<option value="">JOPTION_USE_DEFAULT</option>
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+				<field
+					name="image_item1"
+					type="media"
+					label="MOD_CHAMADA_FIELD_MANUAL_IMAGE01_LABEL"
+					description="MOD_CHAMADA_FIELD_MANUAL_IMAGE01_DESC"
+				/>
+				<field
+					name="image_item1_align"
+					type="list"
+					default=""
+					label="MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN01_LABEL"
+					description="MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN01_DESC"
+				>
+					<option value="">MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN_NONE</option>
+					<option value="left">MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN_LEFT</option>
+					<option value="right">MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN_RIGHT</option>
+				</field>
+				<field
+					name="image_item1_alt"
+					type="text"
+					size="40"
+					label="MOD_CHAMADA_FIELD_MANUAL_IMAGEALT01_LABEL"
+					description="MOD_CHAMADA_FIELD_MANUAL_IMAGEALT01_DESC"
+				/>
+				<field
+					type="spacer"
+					hr="true"
+				/>
+				<field
+					name="url_simple_item1"
+					type="URL"
+					default=""
+					size="50"
+					label="MOD_CHAMADA_FIELD_MANUAL_URL01_LABEL"
+					description="MOD_CHAMADA_FIELD_MANUAL_URL01_DESC"
+				/>
+				<field
+					name="url_menu_item1"
+					type="menuitem"
+					default=""
+					label="MOD_CHAMADA_FIELD_MANUAL_MENU01_LABEL"
+					description="MOD_CHAMADA_FIELD_MANUAL_MENU01_DESC"
+				>
+					<option value="">JNONE</option>
+				</field>
+			    <field
+		           name="url_article_item1"
+		           type="modal_article"
+		           label="MOD_CHAMADA_FIELD_MANUAL_ARTICLE01_LABEL"
+		           description="MOD_CHAMADA_FIELD_MANUAL_ARTICLE01_DESC"
+		        />
+		        <field
+					type="spacer"
+					hr="true"
+				/>
+
+			    <field
+		           	name="ordering_item1"
+		           	type="integer"
+					first="1"
+					default="1"
+					last="4"
+					step="1"
+		           	label="MOD_CHAMADA_FIELD_MANUAL_ORDERING01_LABEL"
+		           	description="MOD_CHAMADA_FIELD_MANUAL_ORDERING01_DESC"
+		        />
+
+				<field
+					name="variacao_item1"
+					type="integer"
+					label="MOD_CHAMADA_FIELD_VARIACAO_LAYOUT01_LABEL"
+					description="MOD_CHAMADA_FIELD_VARIACAO_LAYOUT_DESC"
+					first="0"
+					default="0"
+					last="10"
+					step="1"
+				/>
+			</fieldset>
+			<fieldset name="configuracoes_manuais_item2" label="MOD_CHAMADA_FIELDSET_CONF_MANUAIS_ITEM02_LABEL" addfieldpath="/modules/mod_chamadas/fields/">
+				<field
+					name="chapeu_item2"
+					type="text"
+					label="MOD_CHAMADA_FIELD_MANUAL_CHAPEU02_LABEL"
+					description="MOD_CHAMADA_FIELD_MANUAL_CHAPEU02_DESC"
+					size="40"
+				/>
+				<field
+					name="title_item2"
+					type="text"
+					label="MOD_CHAMADA_FIELD_MANUAL_TITLE02_LABEL"
+					description="MOD_CHAMADA_FIELD_MANUAL_TITLE02_DESC"
+					size="60"
+				/>
+				<field
+					type="spacer"
+					hr="true"
+				/>
+				<field
+					name="desc_item2"
+					type="editor"
+					label="MOD_CHAMADA_FIELD_MANUAL_DESC02_LABEL"
+					description="MOD_CHAMADA_FIELD_MANUAL_DESC02_DESC"
+					width="500"
+				/>
+				<field
+					type="spacer"
+					hr="true"
+				/>
+				<field
+					name="show_image_item2"
+					class="btn-group"
+					type="list"
+					default=""
+					label="MOD_CHAMADA_FIELD_MANUAL_SHOWIMAGE02_LABEL"
+					description="MOD_CHAMADA_FIELD_MANUAL_SHOWIMAGE02_DESC"
+				>
+					<option value="">JOPTION_USE_DEFAULT</option>
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+				<field
+					name="image_item2"
+					type="media"
+					label="MOD_CHAMADA_FIELD_MANUAL_IMAGE02_LABEL"
+					description="MOD_CHAMADA_FIELD_MANUAL_IMAGE02_DESC"
+				/>
+				<field
+					name="image_item2_align"
+					type="list"
+					default=""
+					label="MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN02_LABEL"
+					description="MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN02_DESC"
+				>
+					<option value="">MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN_NONE</option>
+					<option value="left">MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN_LEFT</option>
+					<option value="right">MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN_RIGHT</option>
+				</field>
+				<field
+					name="image_item2_alt"
+					type="text"
+					size="40"
+					label="MOD_CHAMADA_FIELD_MANUAL_IMAGEALT02_LABEL"
+					description="MOD_CHAMADA_FIELD_MANUAL_IMAGEALT02_DESC"
+				/>
+				<field
+					type="spacer"
+					hr="true"
+				/>
+				<field
+					name="url_simple_item2"
+					type="URL"
+					default=""
+					size="50"
+					label="MOD_CHAMADA_FIELD_MANUAL_URL02_LABEL"
+					description="MOD_CHAMADA_FIELD_MANUAL_URL02_DESC"
+				/>
+				<field
+					name="url_menu_item2"
+					type="menuitem"
+					default=""
+					label="MOD_CHAMADA_FIELD_MANUAL_MENU02_LABEL"
+					description="MOD_CHAMADA_FIELD_MANUAL_MENU02_DESC"
+				>
+					<option value="">JNONE</option>
+				</field>
+			    <field
+		           name="url_article_item2"
+		           type="modal_article"
+		           label="MOD_CHAMADA_FIELD_MANUAL_ARTICLE02_LABEL"
+		           description="MOD_CHAMADA_FIELD_MANUAL_ARTICLE02_DESC"
+		        />
+		        <field
+					type="spacer"
+					hr="true"
+				/>
+			    <field
+		           	name="ordering_item2"
+		           	type="integer"
+					first="1"
+					default="2"
+					last="4"
+					step="1"
+		           	label="MOD_CHAMADA_FIELD_MANUAL_ORDERING02_LABEL"
+		           	description="MOD_CHAMADA_FIELD_MANUAL_ORDERING02_DESC"
+		        />
+				<field
+					name="variacao_item2"
+					type="integer"
+					label="MOD_CHAMADA_FIELD_VARIACAO_LAYOUT02_LABEL"
+					description="MOD_CHAMADA_FIELD_VARIACAO_LAYOUT_DESC"
+					first="0"
+					default="0"
+					last="10"
+					step="1"
+				/>
+			</fieldset>
+			<fieldset name="configuracoes_manuais_item3" label="MOD_CHAMADA_FIELDSET_CONF_MANUAIS_ITEM03_LABEL" addfieldpath="/modules/mod_chamadas/fields/">
+				<field
+					name="chapeu_item3"
+					type="text"
+					label="MOD_CHAMADA_FIELD_MANUAL_CHAPEU03_LABEL"
+					description="MOD_CHAMADA_FIELD_MANUAL_CHAPEU03_DESC"
+					size="40"
+				/>
+				<field
+					name="title_item3"
+					type="text"
+					label="MOD_CHAMADA_FIELD_MANUAL_TITLE03_LABEL"
+					description="MOD_CHAMADA_FIELD_MANUAL_TITLE03_DESC"
+					size="60"
+				/>
+				<field
+					type="spacer"
+					hr="true"
+				/>
+				<field
+					name="desc_item3"
+					type="editor"
+					label="MOD_CHAMADA_FIELD_MANUAL_DESC03_LABEL"
+					description="MOD_CHAMADA_FIELD_MANUAL_DESC03_DESC"
+					width="500"
+				/>
+				<field
+					type="spacer"
+					hr="true"
+				/>
+				<field
+					name="show_image_item3"
+					class="btn-group"
+					type="list"
+					default=""
+					label="MOD_CHAMADA_FIELD_MANUAL_SHOWIMAGE03_LABEL"
+					description="MOD_CHAMADA_FIELD_MANUAL_SHOWIMAGE03_DESC"
+				>
+					<option value="">JOPTION_USE_DEFAULT</option>
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+				<field
+					name="image_item3"
+					type="media"
+					label="MOD_CHAMADA_FIELD_MANUAL_IMAGE03_LABEL"
+					description="MOD_CHAMADA_FIELD_MANUAL_IMAGE03_DESC"
+				/>
+				<field
+					name="image_item3_align"
+					type="list"
+					default=""
+					label="MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN03_LABEL"
+					description="MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN03_DESC"
+				>
+					<option value="">MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN_NONE</option>
+					<option value="left">MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN_LEFT</option>
+					<option value="right">MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN_RIGHT</option>
+				</field>
+				<field
+					name="image_item3_alt"
+					type="text"
+					size="40"
+					label="MOD_CHAMADA_FIELD_MANUAL_IMAGEALT03_LABEL"
+					description="MOD_CHAMADA_FIELD_MANUAL_IMAGEALT03_DESC"
+				/>
+				<field
+					type="spacer"
+					hr="true"
+				/>
+				<field
+					name="url_simple_item3"
+					type="URL"
+					default=""
+					size="50"
+					label="MOD_CHAMADA_FIELD_MANUAL_URL03_LABEL"
+					description="MOD_CHAMADA_FIELD_MANUAL_URL03_DESC"
+				/>
+				<field
+					name="url_menu_item3"
+					type="menuitem"
+					default=""
+					label="MOD_CHAMADA_FIELD_MANUAL_MENU03_LABEL"
+					description="MOD_CHAMADA_FIELD_MANUAL_MENU03_DESC"
+				>
+					<option value="">JNONE</option>
+				</field>
+			    <field
+		           name="url_article_item3"
+		           type="modal_article"
+		           label="MOD_CHAMADA_FIELD_MANUAL_ARTICLE03_LABEL"
+		           description="MOD_CHAMADA_FIELD_MANUAL_ARTICLE03_DESC"
+		        />
+		        <field
+					type="spacer"
+					hr="true"
+				/>
+			    <field
+		           	name="ordering_item3"
+		           	type="integer"
+					first="1"
+					default="3"
+					last="4"
+					step="1"
+		           	label="MOD_CHAMADA_FIELD_MANUAL_ORDERING03_LABEL"
+		           	description="MOD_CHAMADA_FIELD_MANUAL_ORDERING03_DESC"
+		        />
+		        <field
+					name="variacao_item3"
+					type="integer"
+					label="MOD_CHAMADA_FIELD_VARIACAO_LAYOUT03_LABEL"
+					description="MOD_CHAMADA_FIELD_VARIACAO_LAYOUT_DESC"
+					first="0"
+					default="0"
+					last="10"
+					step="1"
+				/>
+			</fieldset>
+			<fieldset name="configuracoes_manuais_item4" label="MOD_CHAMADA_FIELDSET_CONF_MANUAIS_ITEM04_LABEL" addfieldpath="/modules/mod_chamadas/fields/">
+				<field
+					name="chapeu_item4"
+					type="text"
+					label="MOD_CHAMADA_FIELD_MANUAL_CHAPEU04_LABEL"
+					description="MOD_CHAMADA_FIELD_MANUAL_CHAPEU04_DESC"
+					size="40"
+				/>
+				<field
+					name="title_item4"
+					type="text"
+					label="MOD_CHAMADA_FIELD_MANUAL_TITLE04_LABEL"
+					description="MOD_CHAMADA_FIELD_MANUAL_TITLE04_DESC"
+					size="60"
+				/>
+				<field
+					type="spacer"
+					hr="true"
+				/>
+				<field
+					name="desc_item4"
+					type="editor"
+					label="MOD_CHAMADA_FIELD_MANUAL_DESC04_LABEL"
+					description="MOD_CHAMADA_FIELD_MANUAL_DESC04_DESC"
+					width="500"
+				/>
+				<field
+					type="spacer"
+					hr="true"
+				/>
+				<field
+					name="show_image_item4"
+					class="btn-group"
+					type="list"
+					default=""
+					label="MOD_CHAMADA_FIELD_MANUAL_SHOWIMAGE04_LABEL"
+					description="MOD_CHAMADA_FIELD_MANUAL_SHOWIMAGE04_DESC"
+				>
+					<option value="">JOPTION_USE_DEFAULT</option>
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+				<field
+					name="image_item4"
+					type="media"
+					label="MOD_CHAMADA_FIELD_MANUAL_IMAGE04_LABEL"
+					description="MOD_CHAMADA_FIELD_MANUAL_IMAGE04_DESC"
+				/>
+				<field
+					name="image_item4_align"
+					type="list"
+					default=""
+					label="MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN04_LABEL"
+					description="MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN04_DESC"
+				>
+					<option value="">MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN_NONE</option>
+					<option value="left">MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN_LEFT</option>
+					<option value="right">MOD_CHAMADA_FIELD_MANUAL_IMAGEALIGN_RIGHT</option>
+				</field>
+				<field
+					name="image_item4_alt"
+					type="text"
+					size="40"
+					label="MOD_CHAMADA_FIELD_MANUAL_IMAGEALT04_LABEL"
+					description="MOD_CHAMADA_FIELD_MANUAL_IMAGEALT04_DESC"
+				/>
+				<field
+					type="spacer"
+					hr="true"
+				/>
+				<field
+					name="url_simple_item4"
+					type="URL"
+					default=""
+					size="50"
+					label="MOD_CHAMADA_FIELD_MANUAL_URL04_LABEL"
+					description="MOD_CHAMADA_FIELD_MANUAL_URL04_DESC"
+				/>
+				<field
+					name="url_menu_item4"
+					type="menuitem"
+					default=""
+					label="MOD_CHAMADA_FIELD_MANUAL_MENU04_LABEL"
+					description="MOD_CHAMADA_FIELD_MANUAL_MENU04_DESC"
+				>
+					<option value="">JNONE</option>
+				</field>
+			    <field
+		           name="url_article_item4"
+		           type="modal_article"
+		           label="MOD_CHAMADA_FIELD_MANUAL_ARTICLE04_LABEL"
+		           description="MOD_CHAMADA_FIELD_MANUAL_ARTICLE04_DESC"
+		        />
+		        <field
+					type="spacer"
+					hr="true"
+				/>
+			    <field
+		           	name="ordering_item4"
+		           	type="integer"
+					first="1"
+					default="4"
+					last="4"
+					step="1"
+		           	label="MOD_CHAMADA_FIELD_MANUAL_ORDERING04_LABEL"
+		           	description="MOD_CHAMADA_FIELD_MANUAL_ORDERING04_DESC"
+		        />
+		        <field
+					name="variacao_item4"
+					type="integer"
+					label="MOD_CHAMADA_FIELD_VARIACAO_LAYOUT04_LABEL"
+					description="MOD_CHAMADA_FIELD_VARIACAO_LAYOUT_DESC"
+					first="0"
+					default="0"
+					last="10"
+					step="1"
+				/>
+			</fieldset>
+			<fieldset name="opcoes_exibicao" label="MOD_CHAMADA_FIELDSET_EXIBICAO_LABEL">
+
+				<field
+					name="limitar_caractere"
+					class="btn-group"
+					type="radio"
+					default="0"
+					label="MOD_CHAMADA_FIELD_LIMITAR_CARACTERE_LABEL"
+					description="MOD_CHAMADA_FIELD_LIMITAR_CARACTERE_DESC"
+				>
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+
+				<field
+					name="limite_caractere"
+					type="text"
+					default=""
+					label="MOD_CHAMADA_FIELD_LIMITE_CARACTERE_LABEL"
+					description="MOD_CHAMADA_FIELD_LIMITE_CARACTERE_DESC"
+				/>
+
+				<field
+					name="exibir_imagem"
+					class="btn-group"
+					type="radio"
+					default="1"
+					label="MOD_CHAMADA_FIELD_EXIBIR_IMAGEM_LABEL"
+					description="MOD_CHAMADA_FIELD_EXIBIR_IMAGEM_DESC"
+				>
+					<option value="1">JSHOW</option>
+					<option value="0">JHIDE</option>
+				</field>
+
+				<field
+					name="exibir_introtext"
+					class="btn-group"
+					type="radio"
+					default="1"
+					label="MOD_CHAMADA_FIELD_EXIBIR_INTROTEXT_LABEL"
+					description="MOD_CHAMADA_FIELD_EXIBIR_INTROTEXT_DESC"
+				>
+					<option value="1">JSHOW</option>
+					<option value="0">JHIDE</option>
+				</field>
+
+				<field
+					name="exibir_title"
+					class="btn-group"
+					type="radio"
+					default="1"
+					label="MOD_CHAMADA_FIELD_EXIBIR_TITLE_LABEL"
+					description="MOD_CHAMADA_FIELD_EXIBIR_TITLE_DESC"
+				>
+					<option value="1">JSHOW</option>
+					<option value="0">JHIDE</option>
+				</field>
+
+				<field
+					name="subitem_class"
+					type="list"
+					default=""
+					label="MOD_CHAMADA_FIELD_SUBITEM_CLASS_LABEL"
+					description="MOD_CHAMADA_FIELD_SUBITEM_CLASS_DESC"
+				>
+					<option value="">JNONE</option>
+					<option value="span1">span1</option>
+					<option value="span2">span2</option>
+					<option value="span3">span3</option>
+					<option value="span4">span4</option>
+					<option value="span5">span5</option>
+					<option value="span6">span6</option>
+					<option value="span7">span7</option>
+					<option value="span8">span8</option>
+					<option value="span9">span9</option>
+					<option value="span10">span10</option>
+					<option value="span11">span11</option>
+					<option value="span12">span12</option>
+				</field>
+
+			</fieldset>
+			<fieldset name="advanced">
+				<field
+					name="header_tag"
+					type="list"
+					default="h3"
+					label="HEADERTAG"
+					description="HEADERTAG"
+				>
+					<option value="h1">h1</option>
+					<option value="h2">h2</option>
+					<option value="h3">h3</option>
+					<option value="h4">h4</option>
+					<option value="h5">h5</option>
+					<option value="h6">h6</option>
+					<option value="p">p</option>
+				</field>
+
+				<field name="moduleclass_sfx" type="textarea" rows="3"
+					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
+					description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
+
+				<field name="owncache" type="list" default="1"
+					label="COM_MODULES_FIELD_CACHING_LABEL" description="COM_MODULES_FIELD_CACHING_DESC" >
+					<option value="1">JGLOBAL_USE_GLOBAL</option>
+					<option value="0">COM_MODULES_FIELD_VALUE_NOCACHING
+					</option>
+				</field>
+
+				<field name="cache_time" type="text" default="900"
+					label="COM_MODULES_FIELD_CACHE_TIME_LABEL" description="COM_MODULES_FIELD_CACHE_TIME_DESC" />
+
+				<field
+					name="limite_campos_preenchimento_manual"
+					type="hidden"
+					value="3"
+				/>
+			</fieldset>
+		</fields>
+	</config>
+</extension>

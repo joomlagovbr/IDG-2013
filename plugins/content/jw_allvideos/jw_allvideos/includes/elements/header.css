@@ -1,0 +1,20 @@
+/**
+ * @version    4.8.0
+ * @package    AllVideos (plugin)
+ * @author     JoomlaWorks - http://www.joomlaworks.net
+ * @copyright  Copyright (c) 2006 - 2017 JoomlaWorks Ltd. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ */
+
+.jwHeaderClr { line-height: 0; float: none; clear: both; height: 0; margin: 0; padding: 0; border: none; background: none; }
+.jwHeaderContainer { font-size: 12px; font-weight: bold; clear: both; width: auto; margin: 12px 0 4px; padding: 0; color: #369; border-bottom: 2px solid #96b0cb; background: #d5e7fa; }
+.jwHeaderContainer15 { font-size: 12px; font-weight: bold; float: left; clear: both; width: 100%; margin: 0; padding: 0; color: #369; border-bottom: 2px solid #96b0cb; background: #d5e7fa; }
+.jwHeaderContent { padding: 6px 8px; }
+@media all and (min-width:771px) {
+ .form-horizontal .span9 .control-label { width: 30% !important; }
+ .form-horizontal .span9 .controls { margin-left: 32% !important; }
+}
+@media all and (min-width:481px) and (max-width:770px) {
+ .form-horizontal .span9 .control-label { width: 45% !important; }
+ .form-horizontal .span9 .controls { margin-left: 47% !important; }
+}

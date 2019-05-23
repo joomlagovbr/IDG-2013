@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+        <layout title="COM_YOUTUBEGALLERY_YOUTUBEGALLERY_VIEW_DEFAULT_TITLE">
+                <message>COM_YOUTUBEGALLERY_YOUTUBEGALLERY_VIEW_DEFAULT_DESC</message>
+        </layout>
+        
+        <fields
+                name="params"
+               
+        >
+                <fieldset name="basic" addfieldpath="administrator/components/com_youtubegallery/models/fields/">
+
+                        <field
+                                name="listid"
+                                type="videolists"
+                                label="COM_YOUTUBEGALLERY_LISTNAME_LABEL"
+                                description="COM_YOUTUBEGALLERY_LISTNAME_DESC"
+                        />
+                        <field
+                                name="themeid"
+                                type="themes"
+                                label="COM_YOUTUBEGALLERY_THEMENAME_LABEL"
+                                description="COM_YOUTUBEGALLERY_THEMENAME_DESC"
+                        />
+                        
+                        <field
+                                name="mobilethemeid"
+                                type="themesoptional"
+                                label="COM_YOUTUBEGALLERY_MOBILETHEMENAME_LABEL"
+                                description="COM_YOUTUBEGALLERY_MOBILETHEMENAME_DESC"
+                        />
+                        
+                        <field
+                                name="align"
+                                type="list"
+                                label="COM_YOUTUBEGALLERY_ALIGN_LABEL"
+                                description="COM_YOUTUBEGALLERY_ALIGN_DESC"
+                        >
+                                <option value="">COM_YOUTUBEGALLERY_ALIGN_UNSET</option>
+                                <option value="left">COM_YOUTUBEGALLERY_ALIGN_LEFT</option>
+                                <option value="center">COM_YOUTUBEGALLERY_ALIGN_CENTER</option>
+                                <option value="right">COM_YOUTUBEGALLERY_ALIGN_RIGHT</option>
+                        </field>
+                        
+                        <field type="list" name="allowcontentplugins" default="0" label="Allow Content Plugins" description="" >
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                        </field>
+                </fieldset>
+        </fields>
+</metadata>

@@ -1,0 +1,74 @@
+/* reset */
+* {
+    list-style: none;
+	vertical-align: baseline;
+}
+@media screen {
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    * *:link, *:visited {
+        text-decoration: none;
+    }
+    * ul, ol {
+        list-style: none outside none;
+    }
+    * li {
+        display: inline;
+    }
+    * h1, h2, h3, h4, h5, h6, pre, code {
+        font-size: 1em;
+    }
+    * a img, *:link img, *:visited img {
+        border: medium none;
+    }
+    a {
+        outline: medium none;
+        &:hover { text-decoration:none }
+    }
+    table {
+        border-spacing: 0;
+    }
+    img {
+        vertical-align: text-bottom;
+    }
+    iframe {
+        border-style: none;
+        border-width: 0;
+    }
+}
+
+/****************** Estilos basicos ******************/
+
+@basic-font-family: Arial,Helvetica,sans-serif;
+@font-family: "open_sansregular", 'Open Sans', @basic-font-family;
+@font-family-light: "open_sanslight", 'Open Sans', @basic-font-family;
+@font-family-semibold: "open_sanssemibold", 'Open Sans', @basic-font-family;
+@font-family-bold: "open_sansbold", 'Open Sans', @basic-font-family;
+@font-family-extrabold: "open_sansextrabold", 'Open Sans', @basic-font-family;
+
+body {
+	background-color: @cor-background;
+	color: @cor-preto;
+	font-family: @font-family;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: @font-family-semibold; font-weight:700; margin:0;
+}
+
+#content h1 {
+	margin-top: 0 !important;
+}
+
+a {
+    color:@cor-link-padrao;
+   // &:focus { border:1px solid yellow }
+}
+
+/********** Classes de apoio ***********************/
+.debug { .debug() }
+.no-margin { margin:0 !important }
+.error { background-color: #FFFFE3; border: 1px solid #999966; clear: both; margin: 1em 0; padding:10px; }
+.minor-font { font-size:0.75em; }

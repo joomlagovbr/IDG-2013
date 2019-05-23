@@ -1,0 +1,32 @@
+context:                com_content.article
+
+items_table:            content
+items_state:            state
+
+featured_table:         content_frontpage
+
+categories_table:       categories
+categories_title:       title
+categories_alias:       alias
+categories_description: description
+categories_parent_id:   parent_id
+categories_extension:   com_content
+
+tags_table:             tags
+tags_title:             title
+tags_alias:             alias
+
+fields_table:           fields
+fields_state:           state
+fields_id:              id
+fields_name:            name
+fields_label:           label
+fields_type:            type
+fields_params:          params
+fields_field_params:    fieldparams
+fields_default:         default_value
+
+fields_values_table:    fields_values
+fields_values_id:       field_id
+fields_values_item_id:  item_id
+fields_values_value:    value

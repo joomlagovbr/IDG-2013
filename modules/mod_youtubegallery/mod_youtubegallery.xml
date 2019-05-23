@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" version="3.0" client="site"  method="upgrade">
+	
+    <name>Youtube Gallery Module</name>
+    <author>Ivan Komlev</author>
+    <creationDate>June 2018</creationDate>
+    <copyright>Copyright (C) 2009-2018 Ivan Komlev. All rights reserved.</copyright>
+    <license>GNU General Public License</license>
+    <authorEmail>support@joomlaboat.com</authorEmail>
+    <authorUrl>http://www.joomlaboat.com/</authorUrl>
+    <version>4.4.5</version>
+    <description><![CDATA[<p>YoutubeGallery Module to show Video Gallery (Video List with Theme) already created in Components/YoutubeGallery.</p>
+    ]]></description>
+    <files>
+        <filename module="mod_youtubegallery">mod_youtubegallery.php</filename>
+	<filename>index.html</filename>
+	<filename>fields/ygmenu.php</filename>
+    </files>
+    
+	<config>
+	<fields name="params">
+		<fieldset name="basic" addfieldpath="administrator/components/com_youtubegallery/models/fields/">
+		
+                <field
+                                name="listid"
+                                type="videolists"
+                                label="MOD_YOUTUBEGALLERY_LISTNAME_LABEL"
+                                description="MOD_YOUTUBEGALLERY_LISTNAME_DESC"
+                />
+                <field
+                                name="themeid"
+                                type="themes"
+                                label="MOD_YOUTUBEGALLERY_THEMENAME_LABEL"
+                                description="MOD_YOUTUBEGALLERY_THEMENAME_DESC"
+                />
+		
+		<field
+                                name="mobilethemeid"
+                                type="themesoptional"
+                                label="MOD_YOUTUBEGALLERY_MOBILETHEMENAME_LABEL"
+                                description="MOD_YOUTUBEGALLERY_MOBILETHEMENAME_DESC"
+                />
+		
+		<field
+                            name="galleryalign"
+                            type="list"
+                            label="MOD_YOUTUBEGALLERY_ALIGN_LABEL"
+                            description="MOD_YOUTUBEGALLERY_ALIGN_DESC"
+                        >
+                            <option value="">MOD_YOUTUBEGALLERY_ALIGN_UNSET</option>
+                            <option value="left">MOD_YOUTUBEGALLERY_ALIGN_LEFT</option>
+                            <option value="center">MOD_YOUTUBEGALLERY_ALIGN_CENTER</option>
+                            <option value="right">MOD_YOUTUBEGALLERY_ALIGN_RIGHT</option>
+        </field>
+
+
+
+		<field
+				addfieldpath="modules/mod_youtubegallery/fields/"
+					name="customitemid"
+					type="ygmenu"
+					default=""
+					label="MOD_YOUTUBEGALLERY_ITEMID_LABEL"
+					description="MOD_YOUTUBEGALLERY_ITEMID_DESC" />
+
+
+
+
+		
+		<field
+					name="moduleclass_sfx"
+					type="textarea" rows="3"
+					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
+					description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
+		
+		<field
+					name="cache"
+					type="list"
+					default="0"
+					label="COM_MODULES_FIELD_CACHING_LABEL"
+					description="COM_MODULES_FIELD_CACHING_DESC">
+					<option
+						value="1">JGLOBAL_USE_GLOBAL</option>
+					<option
+						value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+		</field>
+
+		<field
+					name="cache_time"
+					type="text"
+					default="900"
+					label="COM_MODULES_FIELD_CACHE_TIME_LABEL"
+					description="COM_MODULES_FIELD_CACHE_TIME_DESC" />
+		<field
+					name="cachemode"
+					type="hidden"
+					default="static">
+					<option
+						value="static"></option>
+		</field>
+		
+		<field type="list" name="allowcontentplugins" default="0" label="MOD_ALLOW_CONTENT_PLUGINS_LABEL" description="MOD_ALLOW_CONTENT_PLUGINS_DESC" >
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                </field>
+		
+		</fieldset>
+
+
+
+
+	
+	
+	</fields>
+	
+	</config>
+	<languages>
+        <language tag="en-GB">language/en-GB.mod_youtubegallery.ini</language>
+    </languages>
+</extension>

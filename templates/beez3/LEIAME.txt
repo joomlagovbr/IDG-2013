@@ -1,0 +1,10 @@
+ATENÇÃO
+
+Inclusão parcial do diretório devido à requisição do arquivo templateDetails.xml deste
+diretório.
+
+Os demais arquivos foram removidos por não serem necessários ao projeto e o template em
+questão não estar nem mesmo instalado.
+
+O diretório com todos os arquivos do template pode ser obtido a partir da instalação padrão
+do CMS Joomla.

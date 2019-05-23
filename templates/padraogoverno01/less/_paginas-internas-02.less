@@ -1,0 +1,56 @@
+//layout de paginas bem especificas
+//classes definidas de acordo com as classes informadas nos itens de menu
+// "pagina-" é um prefixo automatico
+
+.pagina-mapa-do-site {
+    .module .menu li { 
+        a { font-size: 0.9em !important; line-height: 20px !important; }
+        ul {
+            margin-bottom:20px; margin-top:10px;
+            a { font-size:0.9em !important; line-height: 20px !important; }
+        }
+    }
+}
+
+//phocagallery
+#phocagallery.pg-category-view {	
+	.tile-list-1 {
+		.tileHeader .subtitle {
+			padding-bottom:0 !important;
+		}
+		.tileContent {
+			border:none !important;
+			float:none !important;
+			.metadesc {
+				position: absolute; bottom:8px; left:20px; font-size:0.75em; font-style: italic;
+			}
+		}
+		.detail i {
+			//color: @cor-tileinfo-icons;
+		}
+	}
+	#fulltext-modal .modal-body {
+		height:500px;
+		.close { position: absolute; top:6px; right:12px; top:99; }
+	}
+}
+
+//k2
+#k2Container {
+	.tile-list-1 {
+		.tileItem {
+			.jp-audio {
+				// width:100%
+			}
+			.catItemAttachments {
+
+				li { display:block; float:right; list-style:none !important; margin-left:10px; margin-bottom:10px }
+			}
+		}
+	}
+	.itemVideoBlock .itemVideo {
+		.jp-audio { 
+			// width:100%
+		}
+	}
+}

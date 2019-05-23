@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="2.5" type="plugin" group="search">
+	<name>plg_search_contenttags</name>
+	<author>Comunidade Joomla Calango e Grupo de Trabalho de Ministérios</author>
+	<creationDate>Novembro 2013</creationDate>
+	<copyright>Copyright (C) 2013 Comunidade Joomla Calango e Grupo de Trabalho de Ministérios</copyright>
+	<license>GNU General Public License version 2</license>
+	<authorEmail>joomlagovbr@gmail.com</authorEmail>
+	<authorUrl>https://github.com/joomlagovbr</authorUrl>
+	<version>2.5.0</version>
+	<description>Plugin baseado no plugin nativo de conteúdo, com a função de realizar buscas somente nas palavras-chave de conteúdo.</description>
+	<files>
+		<filename plugin="contenttags">contenttags.php</filename>
+		<filename>index.html</filename>
+	</files>
+	<config>
+		<fields name="params">
+
+			<fieldset name="basic">
+				<field name="search_limit" type="text"
+					default="50"
+					description="PLG_SEARCH_CONTENT_FIELD_SEARCHLIMIT_DESC"
+					label="PLG_SEARCH_CONTENT_FIELD_SEARCHLIMIT_LABEL"
+					size="5"
+				/>
+
+				<field name="search_content" type="radio"
+					default="0"
+					description="PLG_SEARCH_CONTENT_FIELD_CONTENT_DESC"
+					label="PLG_SEARCH_CONTENT_FIELD_CONTENT_LABEL"
+				>
+					<option value="0">JOFF</option>
+					<option value="1">JON</option>
+				</field>
+
+				<field name="search_archived" type="radio"
+					default="0"
+					description="PLG_SEARCH_CONTENT_FIELD_ARCHIVED_DESC"
+					label="PLG_SEARCH_CONTENT_FIELD_ARCHIVED_LABEL"
+				>
+					<option value="0">JOFF</option>
+					<option value="1">JON</option>
+				</field>
+			</fieldset>
+
+		</fields>
+	</config>
+</extension>

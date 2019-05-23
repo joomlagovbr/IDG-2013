@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+
+	<fieldset addfieldpath="/administrator/components/com_phocagallery/models/fields">
+
+<field name="id" type="text" default="0" label="JGLOBAL_FIELD_ID_LABEL" required="true" readonly="true" class="readonly" />
+
+<field name="name" type="text" class="inputbox" size="60" label="COM_PHOCAGALLERY_FIELD_FB_NAME_LABEL" description="COM_PHOCAGALLERY_FIELD_FB_NAME_DESC"  />
+
+<field name="appid" type="text" class="inputbox" size="60" label="COM_PHOCAGALLERY_FIELD_FB_APPID_LABEL" description="COM_PHOCAGALLERY_FIELD_FB_APPID_DESC" required="true" />
+
+<field name="appsid" type="text" class="inputbox" size="60" label="COM_PHOCAGALLERY_FIELD_FB_APPSID_LABEL" description="COM_PHOCAGALLERY_FIELD_FB_APPSID_DESC" required="true" />
+
+<field name="ordering" type="PhocaGalleryOrdering" table="fbuser" class="inputbox" label="COM_PHOCAGALLERY_FIELD_ORDERING_LABEL" description="COM_PHOCAGALLERY_FIELD_ORDERING_DESC" />
+
+
+
+<field name="uid" type="text" class="inputbox" size="60" label="COM_PHOCAGALLERY_FIELD_FB_UID_LABEL" description="COM_PHOCAGALLERY_FIELD_FB_UID_DESC" />
+
+<field name="base_domain" type="text" class="inputbox" size="60" label="COM_PHOCAGALLERY_FIELD_FB_BASE_DOMAIN_LABEL" description="COM_PHOCAGALLERY_FIELD_FB_BASE_DOMAIN_DESC" />
+
+<field name="secret" type="text" class="inputbox" size="60" label="COM_PHOCAGALLERY_FIELD_FB_SECRET_LABEL" description="COM_PHOCAGALLERY_FIELD_FB_SECRET_DESC" />
+
+<field name="session_key" type="text" class="inputbox" size="60" label="COM_PHOCAGALLERY_FIELD_FB_SESSION_KEY_LABEL" description="COM_PHOCAGALLERY_FIELD_FB_SESSION_KEY_DESC" />
+<field name="access_token" type="text" class="inputbox" size="60" label="COM_PHOCAGALLERY_FIELD_FB_ACCESS_TOKEN_LABEL" description="COM_PHOCAGALLERY_FIELD_FB_ACCESS_TOKEN_DESC" />
+
+<field name="sig" type="text" class="inputbox" size="60" label="COM_PHOCAGALLERY_FIELD_FB_SIG_LABEL" description="COM_PHOCAGALLERY_FIELD_FB_SIG_DESC" />
+
+<field name="expires" type="hidden" class="inputbox" size="60" label="COM_PHOCAGALLERY_FIELD_FB_EXPIRES_LABEL" description="COM_PHOCAGALLERY_FIELD_FB_EXPIRES_DESC" />
+
+<field name="fanpageid" type="text" class="inputbox" size="60" label="COM_PHOCAGALLERY_FIELD_FB_FANPAGEID_LABEL" description="COM_PHOCAGALLERY_FIELD_FB_FANPAGEID_DESC" />
+
+
+	</fieldset>
+	
+	
+	<fieldset name="publish" label="COM_PHOCAGALLERY_GROUP_LABEL_PUBLISHING_DETAILS" >
+<field name="published" type="list" label="COM_PHOCAGALLERY_FIELD_PUBLISHED_LABEL" description="COM_PHOCAGALLERY_FIELD_PUBLISHED_DESC" class="inputbox" size="1" default="1">
+	<option value="1">JPUBLISHED</option>
+	<option	value="0">JUNPUBLISHED</option>
+</field>
+	</fieldset>
+	
+<fields name="comments">
+<fieldset name="comments" label="COM_PHOCAGALLERY_FACEBOOK_COMMENTS">
+
+	<field name="fb_comment_width" default="550" size="6" type="phocatext" label="COM_PHOCAGALLERY_FACEBOOK_COMMENTS_WIDTH_LABEL" description="COM_PHOCAGALLERY_FACEBOOK_COMMENTS_WIDTH_DESC" />
+	<field name="fb_comment_lang" type="text" size="30" default="en_US" label="COM_PHOCAGALLERY_FACEBOOK_FIELD_COMMENT_LANG_LABEL" description="COM_PHOCAGALLERY_FACEBOOK_FIELD_COMMENT_LANG_DESC" />
+	<field name="fb_comment_count" type="text" size="30" default="" label="COM_PHOCAGALLERY_FACEBOOK_FIELD_COMMENT_COUNT_LABEL" description="COM_PHOCAGALLERY_FACEBOOK_FIELD_COMMENT_COUNT_DESC" />
+</fieldset>
+</fields>
+	
+	
+</form>

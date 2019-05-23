@@ -1,0 +1,22 @@
+/*padrao: preto*/
+body { margin:0 }
+#barra-brasil { position:relative; clear:both; overflow:hidden; height:28px; background:#000 url(../img/barra-brasil-v3-bgx.png) center bottom no-repeat }		
+#barra-brasil-container { position:relative; height:28px; width:970px; margin:0 auto; overflow:hidden; text-indent:-99999px; background:transparent url(../img/barra-brasil-v3-preto.png) right bottom no-repeat }
+#barra-brasil-marca-link { position:absolute; bottom:0; right:0; display:block; width:100px; height:23px }
+#barra-brasil-acesso-a-informacao-link { display:block; position:absolute; right:123px; bottom:0; height: 24px; text-indent: -10000px; width: 161px; background:transparent url(../img/ai-preto.png) no-repeat 0 0; }
+#marca-brasil-separador { display:none; }
+/*variacoes site a site*/
+.barraGovernoEsquerda { background-image:none !important }
+.barraGovernoEsquerda #barra-brasil-container { margin:0 !important }
+.barraGovernoVerde { background-color:#00500f !important }
+.barraGovernoVerde #barra-brasil-container { background-image:url(../img/barra-brasil-v3-verde.png) !important }
+.barraGovernoVerde #barra-brasil-acesso-a-informacao-link { background-image:url(../img/ai-verde.png) !important }
+.barraGovernoAzul { background-color:#004b82 !important }
+.barraGovernoAzul #barra-brasil-container { background-image:url(../img/barra-brasil-v3-azul.png) !important }
+.barraGovernoAzul #barra-brasil-acesso-a-informacao-link { background-image:url(../img/ai-azul.png) !important }
+.barraGovernoCinza { background-color:#7f7f7f !important }
+.barraGovernoCinza #barra-brasil-container { background-image:url(../img/barra-brasil-v3-cinza.png) !important }
+.barraGovernoCinza #barra-brasil-acesso-a-informacao-link { background-image:url(../img/ai-cinza.png) !important }
+.barraGovernoPreto { background-color:#000 !important }
+.barraGovernoPreto #barra-brasil-container { background-image:url(../img/barra-brasil-v3-preto.png) !important }
+.barraGovernoPreto #barra-brasil-acesso-a-informacao-link { background-image:url(../img/ai-preto.png) !important }

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form
+        addrulepath="administrator/components/com_youtubegallery/models/rules"
+      >
+        <fieldset addfieldpath="administrator/components/com_youtubegallery/models/fields">
+                <field
+                        name="id"
+                        type="hidden"
+                />
+                
+                <field
+                        name="categoryname"
+                        type="text"
+                        label="COM_YOUTUBEGALLERY_FIELD_CATEGORYNAME_LABEL"
+                        description="COM_YOUTUBEGALLERY_FIELD_CATEGORYNAME_DESC"
+                        size="40"
+                        class="inputbox validate-greeting"
+                        validate="categoryname"
+                        required="true"
+                        default=""
+                />
+                
+                <field
+                        name="parentid"
+                        type="categoryparent"
+                        label="COM_YOUTUBEGALLERY_FIELD_CATEGORYPARENT_LABEL"
+                        description="COM_YOUTUBEGALLERY_FIELD_CATEGORYPARENT_DESC"
+                        class="inputbox"
+                        required="false"
+                        default=""
+                />
+
+		<field
+                        name="description"
+                        type="textarea"
+                        label="COM_YOUTUBEGALLERY_FIELD_DESCRIPTION_LABEL"
+                        description="COM_YOUTUBEGALLERY_FIELD_DESCRIPTION_DESC"
+                        class="inputbox"
+                        default=""
+                        cols="150"
+                        rows="7"
+                />
+                
+                <field
+			cols="150"
+                        name="image"
+                        type="text"
+                        label="COM_YOUTUBEGALLERY_FIELD_IMAGE_LABEL"
+                        description="COM_YOUTUBEGALLERY_FIELD_IMAGE_DESC"
+                        size="40"
+                        class="inputbox"
+                        default=""
+                />
+
+        </fieldset>
+
+</form>

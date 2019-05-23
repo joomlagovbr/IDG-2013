@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fields name="filter">
+		<field
+			name="search"
+			type="text"
+			label="nome cargo"
+			hint="JSEARCH_FILTER"
+			class="js-stools-search-string"
+		/>
+		<field
+			name="published"
+			type="list"
+			label="JOPTION_SELECT_PUBLISHED"
+			description="JOPTION_SELECT_PUBLISHED_DESC"
+			onchange="this.form.submit();"
+			validate="boolean"
+            filter="integer">
+				<option value="">JOPTION_SELECT_PUBLISHED</option>
+                <option value="1">JPUBLISHED</option>
+                <option value="0">JUNPUBLISHED</option>
+		</field>
+		<field
+			name="catid"
+			type="category"
+			label="JOPTION_FILTER_CATEGORY"
+			extension="com_agendadirigentes"
+			description="JOPTION_FILTER_CATEGORY_DESC"
+			onchange="this.form.submit();"
+			>
+			<option value="">JOPTION_SELECT_CATEGORY</option>
+		</field>
+	</fields>
+	<fields name="list">
+		<field
+			name="fullordering"
+			type="list"
+			label="JGLOBAL_SORT_BY"
+			statuses="0,1"
+			description="JGLOBAL_SORT_BY"
+			onchange="this.form.submit();"
+			default="a.id DESC"
+			>
+			<option value="">JGLOBAL_SORT_BY</option>
+			<option value="a.id ASC">COM_AGENDADIRIGENTES_CARGOS_HEADING_ID_ASC</option>
+			<option value="a.id DESC">COM_AGENDADIRIGENTES_CARGOS_HEADING_ID_DESC</option>
+			<option value="a.published ASC">COM_AGENDADIRIGENTES_CARGOS_HEADING_PUBLISHED_ASC</option>
+			<option value="a.published DESC">COM_AGENDADIRIGENTES_CARGOS_HEADING_PUBLISHED_DESC</option>
+			<option value="a.name ASC">COM_AGENDADIRIGENTES_CARGOS_HEADING_CARGO_ASC</option>
+			<option value="a.name DESC">COM_AGENDADIRIGENTES_CARGOS_HEADING_CARGO_DESC</option>
+			<option value="a.ordering ASC">COM_AGENDADIRIGENTES_CARGOS_HEADING_ORDERING_ASC</option>
+			<option value="a.ordering DESC">COM_AGENDADIRIGENTES_CARGOS_HEADING_ORDERING_DESC</option>
+			<option value="b.title ASC">COM_AGENDADIRIGENTES_CARGOS_HEADING_CATEGORIA_ASC</option>
+			<option value="b.title DESC">COM_AGENDADIRIGENTES_CARGOS_HEADING_CATEGORIA_DESC</option>
+		</field>
+		<field
+			name="limit"
+			type="limitbox"
+			class="input-mini"
+			default="20"
+			label="COM_AGENDADIRIGENTES_LIST_LIMIT"
+			description="COM_AGENDADIRIGENTES_LIST_LIMIT_DESC"
+			onchange="this.form.submit();"
+		/>
+	</fields>
+</form>
