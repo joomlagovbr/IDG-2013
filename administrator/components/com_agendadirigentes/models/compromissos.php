@@ -331,4 +331,15 @@ class AgendaDirigentesModelCompromissos extends JModelList
         $array = array_keys($objList);
         return $array;
     }
+ 
+    public function getItems()
+    {
+        $catid = $this->getState('filter.catid');
+        if (!is_numeric($catid))
+        {
+            JFactory::getApplication()->enqueueMessage('Selecione uma categoria para exibir compromissos. Para tanto, clique abaixo em &quot;Filtros&quot; e depois em &quot;Selecionar categoria&quot;.');
+            return array();
+        }
+        return parent::getItems();
+    }
 }
