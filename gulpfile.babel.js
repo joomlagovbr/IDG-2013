@@ -3,6 +3,12 @@ import del from 'del';
 import gulp from 'gulp';
 import cleanCSS from 'gulp-clean-css';
 import less from 'gulp-less';
+import yargs from 'yargs';
+
+const argv = yargs.option('app', {
+	description: 'Application name',
+	default: 'joomla-3.x'
+}).argv;
 
 const paths = {
 	styles: {
@@ -11,8 +17,6 @@ const paths = {
 	}
 };
 
-const appName = 'joomlagov';
-
 const reload = done => {
 	browserSync.reload();
 	done();
@@ -20,7 +24,7 @@ const reload = done => {
 
 const serve = done => {
 	browserSync.init({
-		proxy: `http://localhost/${appName}`,
+		proxy: `http://localhost/${argv.app}`,
 		open: false
 	});
 
