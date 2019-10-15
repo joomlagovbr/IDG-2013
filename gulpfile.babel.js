@@ -52,4 +52,5 @@ const watchFiles = () => {
 };
 
 export const dev = gulp.series(clean, styles, serve, watchFiles);
+export const build = gulp.series(clean, styles);
 export default dev;
