@@ -1,13 +1,30 @@
-import gulp from 'gulp';
-import less from 'gulp-less';
-import cleanCSS from 'gulp-clean-css';
+import browserSync from 'browser-sync';
 import del from 'del';
+import gulp from 'gulp';
+import cleanCSS from 'gulp-clean-css';
+import less from 'gulp-less';
 
 const paths = {
 	styles: {
 		src: ['./templates/padraogoverno01/less/*.less', '!./templates/padraogoverno01/less/_*.less'],
 		dest: './templates/padraogoverno01/css/'
 	}
+};
+
+const appName = 'joomlagov';
+
+const reload = done => {
+	browserSync.reload();
+	done();
+};
+
+const serve = done => {
+	browserSync.init({
+		proxy: `http://localhost/${appName}`,
+		open: false
+	});
+
+	done();
 };
 
 /**
@@ -31,7 +48,8 @@ export const styles = () => {
  * Usado para desenvolvimento
  */
 const watchFiles = () => {
-	gulp.watch(paths.styles.src, styles);
+	gulp.watch(paths.styles.src, gulp.series(styles, reload));
 };
 
-export const dev = gulp.series(clean, styles, watchFiles);
+export const dev = gulp.series(clean, styles, serve, watchFiles);
+export default dev;
