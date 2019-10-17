@@ -1,20 +1,24 @@
 {
-  "name": "joomla-3.x",
-  "version": "1.2.0",
-  "description": "Portal padr�o em CMS Joomla 3.x",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/joomlagovbr/joomla-3.x.git"
-  },
-  "bugs": {
-    "url": "https://github.com/joomlagovbr/joomla-3.x/issues"
-  },
-  "homepage": "https://github.com/joomlagovbr/joomla-3.x#readme",
-  "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-clean": "^0.3.2",
-    "gulp-clean-css": "^3.9.0",
-    "gulp-less": "^3.3.2",
-    "gulp-watch-less": "^1.0.1"
-  }
+	"name": "joomla-3.x",
+	"version": "1.2.0",
+	"description": "Portal padrão em CMS Joomla 3.x",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/joomlagovbr/joomla-3.x.git"
+	},
+	"bugs": {
+		"url": "https://github.com/joomlagovbr/joomla-3.x/issues"
+	},
+	"homepage": "https://github.com/joomlagovbr/joomla-3.x#readme",
+	"devDependencies": {
+		"@babel/core": "^7.6.4",
+		"@babel/preset-env": "^7.6.3",
+		"@babel/register": "^7.6.2",
+		"browser-sync": "^2.26.7",
+		"del": "^5.1.0",
+		"gulp": "^4.0.2",
+		"gulp-clean-css": "^3.10.0",
+		"gulp-less": "^3.5.0",
+		"yargs": "^14.2.0"
+	}
 }
