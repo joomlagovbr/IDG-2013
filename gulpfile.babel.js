@@ -11,6 +11,7 @@ const argv = yargs.option('app', {
 }).argv;
 
 const paths = {
+	php: './templates/padraogoverno01/**.*php',
 	styles: {
 		src: ['./templates/padraogoverno01/less/*.less', '!./templates/padraogoverno01/less/_*.less'],
 		dest: './templates/padraogoverno01/css/'
@@ -52,6 +53,7 @@ export const styles = () => {
  * Usado para desenvolvimento
  */
 const watchFiles = () => {
+	gulp.watch(paths.php, reload);
 	gulp.watch(paths.styles.src, gulp.series(styles, reload));
 };
 
