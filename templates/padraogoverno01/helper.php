@@ -116,7 +116,7 @@ class TmplPadraoGoverno01Helper
 		?>
 		<script src="<?php echo $tmpl->baseurl; ?>/templates/<?php echo $tmpl->template; ?>/js/jquery.min.js" type="text/javascript"></script><noscript>&nbsp;
 			<!-- item para fins de acessibilidade --></noscript>
-		<script src="<?php echo $tmpl->baseurl; ?>/templates/<?php echo $tmpl->template; ?>/js/jquery-noconflict.js" type="text/javascript"></script><noscript>&nbsp;
+		<script src="<?php echo $tmpl->baseurl; ?>/templates/<?php echo $tmpl->template; ?>/js/jquery-noconflict.min.js" type="text/javascript"></script><noscript>&nbsp;
 			<!-- item para fins de acessibilidade --></noscript>
 	<?php
 		}
@@ -126,9 +126,9 @@ class TmplPadraoGoverno01Helper
 			?>
 		<script src="<?php echo $tmpl->baseurl; ?>/templates/<?php echo $tmpl->template; ?>/bootstrap/js/bootstrap.min.js" type="text/javascript"></script><noscript>&nbsp;
 			<!-- item para fins de acessibilidade --></noscript>
-		<script src="<?php echo $tmpl->baseurl; ?>/templates/<?php echo $tmpl->template; ?>/js/jquery.cookie.js" type="text/javascript"></script><noscript>&nbsp;
+		<script src="<?php echo $tmpl->baseurl; ?>/templates/<?php echo $tmpl->template; ?>/js/jquery.cookie.min.js" type="text/javascript"></script><noscript>&nbsp;
 			<!-- item para fins de acessibilidade --></noscript>
-		<script src="<?php echo $tmpl->baseurl; ?>/templates/<?php echo $tmpl->template; ?>/js/template.js" type="text/javascript"></script><noscript>&nbsp;
+		<script src="<?php echo $tmpl->baseurl; ?>/templates/<?php echo $tmpl->template; ?>/js/template.min.js" type="text/javascript"></script><noscript>&nbsp;
 			<!-- item para fins de acessibilidade --></noscript>
 	<?php
 		}
