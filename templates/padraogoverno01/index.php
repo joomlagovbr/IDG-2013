@@ -107,22 +107,6 @@ $active_item = TmplPadraoGoverno01Helper::getActiveItemid();
 						<!-- fim div.span6 -->
 						<div class="span6 language-and-actions-container">
 							<jdoc:include type="modules" name="header-topo-direita" style="hidden_titles" headerLevel="2" />
-							<!-- alteração tamanho da fonte - início -->
-
-							<div style="text-align:right;">
-								<ul id="accessibilityFonts">
-									<li>
-										<a href="#" onclick="sizeFont('conteudo','+');" title="Aumentar a fonte">A+</a>
-									</li>
-									<li>
-										<a href="#" onclick="sizeFont('conteudo','default');" title="Voltar ao tamanho normal">A</a>
-									</li>
-									<li>
-										<a href="#" onclick="sizeFont('conteudo','-');" title="Diminuir a fonte">A-</a>&nbsp;
-									</li>
-								</ul>
-							</div>
-							<!-- alteração tamanho da fonte - fim -->
 						</div>
 						<!-- fim div.span6 -->
 					</div>
