@@ -14,9 +14,9 @@ const argv = yargs.option('app', {
 }).argv;
 
 const paths = {
-	php: './templates/padraogoverno01/**.*php',
+	php: './templates/padraogoverno01/**/*.php',
 	styles: {
-		src: ['./templates/padraogoverno01/less/*.less', '!./templates/padraogoverno01/less/_*.less'],
+		src: './templates/padraogoverno01/less/*.less',
 		dest: './templates/padraogoverno01/css/'
 	},
 	scripts: {
@@ -49,7 +49,7 @@ export const clean = () => del([paths.styles.dest, '!./templates/padraogoverno01
  */
 export const styles = () => {
 	return gulp
-		.src(paths.styles.src)
+		.src([paths.styles.src, '!./templates/padraogoverno01/less/_*.less'])
 		.pipe(less())
 		.pipe(cleanCSS({ compatibility: 'ie7' }))
 		.pipe(gulp.dest(paths.styles.dest));
