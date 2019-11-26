@@ -1,18 +1,64 @@
-@import "_cores-fixas.less";
+@import '_cores-fixas.less';
+
 //workaround da barra de governo
-#barra-brasil { display:block !important; height:28px; overflow:hidden; background:@cor-cinza-claro;
-    .brasil-flag { float:left !important; margin:2px 10px; font-weight:bold !important; text-transform:uppercase }
-    .acesso-info { float:right !important; margin:2px 10px }
-    .list { float:right !important; margin:2px 10px;
-        li { margin:2px 10px; font-size:11px }
+#barra-brasil {
+  display: block !important;
+  overflow: hidden;
+
+  height: 28px;
+
+  background: @cor-cinza-claro;
+
+  .brasil-flag {
+    font-weight: bold !important;
+
+    float: left !important;
+
+    margin: 2px 10px;
+
+    text-transform: uppercase;
+  }
+
+  .acesso-info {
+    float: right !important;
+
+    margin: 2px 10px;
+  }
+
+  .list {
+    float: right !important;
+
+    margin: 2px 10px;
+
+    li {
+      font-size: 11px;
+
+      margin: 2px 10px;
     }
+  }
 }
-#social-icons { 
-    li { float:left; padding-left:4px }
+
+#social-icons {
+  li {
+    float: left;
+
+    padding-left: 4px;
+  }
 }
-#em-destaque { 
-    h2 { display:block !important; padding:0 !important;
-        span { position:relative; top:7px }
+
+#em-destaque {
+  h2 {
+    display: block !important;
+
+    padding: 0 !important;
+
+    span {
+      position: relative;
+      top: 7px;
     }
-    ul { width:800px }
+  }
+
+  ul {
+    width: 800px;
+  }
 }

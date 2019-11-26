@@ -1,54 +1,124 @@
-@import "_cores-fixas.less"; 
-@import "_mixins.less";
-@import "fontes.less";
+@import '_cores-fixas.less';
+
+@import '_mixins.less';
+
+@import 'fontes.less';
 
 //conteudo copiado do arquivo _etilos-basicos:
 /****************** Estilos basicos ******************/
-@basic-font-family: Arial,Helvetica,sans-serif;
-@font-family: "open_sansregular", 'Open Sans', @basic-font-family;
-@font-family-light: "open_sanslight", 'Open Sans', @basic-font-family;
-@font-family-semibold: "open_sanssemibold", 'Open Sans', @basic-font-family;
-@font-family-bold: "open_sansbold", 'Open Sans', @basic-font-family;
-@font-family-extrabold: "open_sansextrabold", 'Open Sans', @basic-font-family;
+@basic-font-family: Arial, Helvetica, sans-serif;
+@font-family: 'open_sansregular', 'Open Sans', @basic-font-family;
+@font-family-light: 'open_sanslight', 'Open Sans', @basic-font-family;
+@font-family-semibold: 'open_sanssemibold', 'Open Sans', @basic-font-family;
+@font-family-bold: 'open_sansbold', 'Open Sans', @basic-font-family;
+@font-family-extrabold: 'open_sansextrabold', 'Open Sans', @basic-font-family;
 
 body {
-	background-color: @cor-background;
-	color: @cor-preto;
-	font-family: @font-family;
+  font-family: @font-family;
+
+  color: @cor-preto;
+  background-color: @cor-background;
 }
 
-h1, h2, h3, h4, h5, h6 {
-	font-family: @font-family-semibold; font-weight:700; margin:0;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: @font-family-semibold;
+  font-weight: 700;
+
+  margin: 0;
 }
 
 #content h1 {
-	margin-top: 0 !important;
+  margin-top: 0 !important;
 }
 
 a {
-    color:@cor-link-padrao;
-   // &:focus { border:1px solid yellow }
+  color: @cor-link-padrao;
+  // &:focus { border:1px solid yellow }
 }
 
 //conteudo copiado do arquivo _paginas-internas-01.less
 // a partir do conteudo da classe #content.internas
 // classes de layout devem ser retiradas
-    
-h2, h3, h4, h5, h6 { font-size: 1.6em; font-weight: 700; margin-bottom: 0.8em; margin-top: 0.8em; }
-p { font-size: 1.0em !important; line-height: 1.75em }
-ul li { display: list-item !important; list-style: square outside !important; line-height: 1.5em !important; font-size: 0.9em; margin-bottom: 0.25em; }
-ol li { display: list-item !important; list-style: decimal outside !important; line-height: 1.5em !important; font-size: 0.9em; margin-bottom: 0.25em; }
-// caixa lateral de texto, para noticias e outras paginas de conteudo
-blockquote {
-    float: right; clear: right; border-bottom: 1px solid @cor-cinza-escuro; border-top: 4px solid @cor-preto-detalhes-conteudo; border-left:none; border-right:none;
-    border-left: none !important; color: @cor-blockquote-right; font-size: 1.4em; font-weight: bold;  letter-spacing: -0.03em !important;
-    line-height: 1.25em; margin: 0 1em 0.5em 0.5em; width: 35%; padding: 1em 0 !important;
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 1.6em;
+  font-weight: 700;
+
+  margin-top: .8em;
+  margin-bottom: .8em;
 }
 
+p {
+  font-size: 1em !important;
+  line-height: 1.75em;
+}
+
+ul li {
+  font-size: .9em;
+  line-height: 1.5em !important;
+
+  display: list-item !important;
+
+  margin-bottom: .25em;
+
+  list-style: square outside !important;
+}
+
+ol li {
+  font-size: .9em;
+  line-height: 1.5em !important;
+
+  display: list-item !important;
+
+  margin-bottom: .25em;
+
+  list-style: decimal outside !important;
+}
+
+// caixa lateral de texto, para noticias e outras paginas de conteudo
+blockquote {
+  font-size: 1.4em;
+  font-weight: bold;
+  line-height: 1.25em;
+
+  float: right;
+  clear: right;
+
+  width: 35%;
+  margin: 0 1em .5em .5em;
+  padding: 1em 0 !important;
+
+  letter-spacing: -.03em !important;
+
+  color: @cor-blockquote-right;
+  border-top: 4px solid @cor-preto-detalhes-conteudo;
+  border-right: none;
+  border-bottom: 1px solid @cor-cinza-escuro;
+  border-left: none;
+  border-left: none !important;
+}
 
 ///estilos proprios deste arquivo
-body { font-size:14px }
+body {
+  font-size: 14px;
+}
 
 /* STYLES FOR JOOMLA! EDITOR */
-hr#system-readmore  { border: red dashed 1px; color: red; }
-hr.system-pagebreak { border: gray dashed 1px; color: gray; }
+hr#system-readmore {
+  color: red;
+  border: red dashed 1px;
+}
+
+hr.system-pagebreak {
+  color: gray;
+  border: gray dashed 1px;
+}
