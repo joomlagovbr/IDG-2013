@@ -8318,8 +8318,8 @@ CREATE TABLE `#__users` (
 -- ----------------------------
 -- Records of #__users
 -- ----------------------------
-INSERT INTO `#__users` VALUES ('164', 'Super User', 'Tiago', 'tiagovtg@gmail.com', '$2y$10$8avThIjL.oDPkf.Nr4yTjemsgkD5wh2asZZSEywDCRPVV8SGIGDWG', '0', '1', '2019-05-21 00:34:37', '2019-05-22 00:26:39', '0', '', '0000-00-00 00:00:00', '0', '', '', '0');
-INSERT INTO `#__users` VALUES ('436', 'Super User', 'admin', 'tiagovtg@gmail.com', '$2y$10$GL.Vh2gD.pLAO.VsjjGdG.OfAdqgwXqXeOkGsz9LihoEjufkvW3Ai', '0', '1', '2019-05-21 00:34:37', '2019-05-21 00:34:37', '0', '{\"admin_style\":\"\",\"admin_language\":\"\",\"language\":\"\",\"editor\":\"\",\"helpsite\":\"\",\"timezone\":\"\"}', '0000-00-00 00:00:00', '0', '', '', '0');
+INSERT INTO `#__users` VALUES ('164', 'Super User', 'Tiago', 'generico_gov@gmail.com', '$2y$10$8avThIjL.oDPkf.Nr4yTjemsgkD5wh2asZZSEywDCRPVV8SGIGDWG', '0', '1', '2019-05-21 00:34:37', '2019-05-22 00:26:39', '0', '', '0000-00-00 00:00:00', '0', '', '', '0');
+INSERT INTO `#__users` VALUES ('436', 'Super User', 'admin', 'generico_gov@gmail.com', '$2y$10$GL.Vh2gD.pLAO.VsjjGdG.OfAdqgwXqXeOkGsz9LihoEjufkvW3Ai', '0', '1', '2019-05-21 00:34:37', '2019-05-21 00:34:37', '0', '{\"admin_style\":\"\",\"admin_language\":\"\",\"language\":\"\",\"editor\":\"\",\"helpsite\":\"\",\"timezone\":\"\"}', '0000-00-00 00:00:00', '0', '', '', '0');
 INSERT INTO `#__users` VALUES ('578', 'agendadirigentes', 'agendadirigentes', 'agendadirigentes@exemplo.com', '$2y$10$fLJUnrkMVps7TWO23gwhtOWlfl21DusleSBOzB2X60n9.fgdSsXpi', '1', '1', '2019-05-21 00:34:37', '2019-05-21 00:34:37', '', '{\"admin_style\":\"\",\"admin_language\":\"\",\"language\":\"\",\"editor\":\"\",\"helpsite\":\"\",\"timezone\":\"America\\/Sao_Paulo\"}', '0000-00-00 00:00:00', '0', '', '', '0');
 
 -- ----------------------------
