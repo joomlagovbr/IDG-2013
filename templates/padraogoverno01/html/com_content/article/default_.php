@@ -1,14 +1,17 @@
 <?php
 
 /**
- * @package
- * @subpackage
- * @copyright
- * @license
+ * @package     Joomla.Site
+ * @subpackage  Components.Content
+ *
+ * @author      JoomlaGovBR
+ * @copyright   Copyright (C) 2013-2019 JoomlaGovBR Team. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE
+ * @link        https://github.com/joomlagovbr
  */
 
-// no direct access
-defined('_JEXEC') or die;
+// No direct access.
+defined('_JEXEC') or die('Restricted access!');
 
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers');
 
@@ -18,30 +21,28 @@ $images  = json_decode($this->item->images);
 $urls    = json_decode($this->item->urls);
 $canEdit = $this->item->params->get('access-edit');
 $user    = JFactory::getUser();
+$info    = $params->get('info_block_position', 0);
+
+// Check if associations are implemented. If they are, define the parameter.
+$assocParam = (JLanguageAssociations::isEnabled() && $params->get('show_associations'));
 
 if ($this->item->catid <= 2)
 	$params->set('show_category', 0);
 ?>
 <div class="item-page<?php echo $this->pageclass_sfx ?>">
-	<?php if (@$this->item->xreference != '') : ?>
+	<?php if ($this->item->xreference) : ?>
 		<span class="documentCategory"><?php echo $this->escape($this->item->xreference); ?></span>
 	<?php elseif ($this->params->get('show_page_heading')) : ?>
 		<span class="documentCategory"><?php echo $this->escape($this->params->get('page_heading')); ?></span>
 	<?php endif; ?>
 
-
 	<?php if ($params->get('show_title')) : ?>
 		<h1 class="documentFirstHeading">
-			<?php if ($params->get('link_titles') && !empty($this->item->readmore_link)) : ?>
-				<a href="<?php echo $this->item->readmore_link; ?>">
-					<?php echo $this->escape($this->item->title); ?></a>
-			<?php else : ?>
-				<?php echo $this->escape($this->item->title); ?>
-			<?php endif; ?>
+			<?php echo $this->escape($this->item->title); ?>
 		</h1>
 	<?php endif; ?>
 
-	<?php if ($canEdit ||  $params->get('show_print_icon') || $params->get('show_email_icon')) : ?>
+	<?php if ($canEdit || $params->get('show_print_icon') || $params->get('show_email_icon')) : ?>
 		<ul class="actions">
 			<?php if (!$this->print) : ?>
 				<?php if ($canEdit) : ?>
