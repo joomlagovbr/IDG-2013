@@ -4,8 +4,8 @@
  * @package     Joomla.Site
  * @subpackage  Layouts.Field
  *
- * @author      JoomlaGovBR
- * @copyright   Copyright (C) 2013-2019 JoomlaGovBR Team. All rights reserved.
+ * @author      JoomlaGovBR <joomlagovbr@gmail.com>
+ * @copyright   Copyright (C) 2013 - 2019 JoomlaGovBR Team. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  * @link        https://github.com/joomlagovbr
  */
