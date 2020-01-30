@@ -13,17 +13,16 @@ defined('_JEXEC') or die();
 
 JLoader::register('BirthdaysHelper', __DIR__ . '/_helper.php');
 
-$fieldName = 'birthdate';
-$list = BirthdaysHelper::filterByBirthdate($list, $fieldName);
+$list = BirthdaysHelper::filterByBirthdate($list);
 ?>
 <ul class="birthdays<?php echo $moduleclass_sfx; ?>">
 
 <?php foreach ($list as &$item): ?>
 	<li>
-	<?php if (isset($item->fields[$fieldName])): ?>
-		<time datetime="<?php echo $item->fields[$fieldName]->value; ?>">
+	<?php if (isset($item->fields['birthdate'])): ?>
+		<time datetime="<?php echo $item->fields['birthdate']->value; ?>">
 			<span>
-				<?php echo JHtml::_('date', $item->fields[$fieldName]->value, 'd', null); ?>
+				<?php echo JHtml::_('date', $item->fields['birthdate']->value, 'd', null); ?>
 			</span>
 		</time>
 	<?php endif; ?>

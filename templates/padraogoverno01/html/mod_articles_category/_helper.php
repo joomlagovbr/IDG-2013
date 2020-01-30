@@ -27,14 +27,13 @@ class BirthdaysHelper
 	/**
 	 * Filter items by birthdate
 	 *
-	 * @param   array  $list      list of items
-	 * @param   string $fieldName name of field that is used for filtering
+	 * @param   array  $list  list of items
 	 *
 	 * @return  array
 	 *
 	 * @since   3.2.5
 	 */
-	public static function filterByBirthdate(&$list, $fieldName = 'birthdate')
+	public static function filterByBirthdate(&$list)
 	{
 		$today = new JDate('today');
 
@@ -51,7 +50,7 @@ class BirthdaysHelper
 				}
 			}
 
-			$bday = new JDate($item->fields[$fieldName]->value);
+			$bday = new JDate($item->fields['birthdate']->value);
 			$interval = $today->diff($bday);
 
 			if ($interval->days > 7 || $interval->invert == 1) {
@@ -59,13 +58,15 @@ class BirthdaysHelper
 			}
 		}
 
+		self::orderByBirthdate($list);
+
 		return $list;
 	}
 
 	/**
 	 * Prepare name to show
 	 *
-	 * @param   string $item The item value
+	 * @param   string $item  The item value
 	 *
 	 * @return  string
 	 *
@@ -104,5 +105,22 @@ class BirthdaysHelper
 		}
 
 		return $output;
+	}
+
+	/**
+	 * Sort items by birthdate
+	 *
+	 * @param array $list  list of items
+	 *
+	 * @return void
+	 *
+	 * @since   3.2.5
+	 */
+	private static function orderByBirthdate(&$list)
+	{
+		uasort($list, function ($a, $b) {
+			return $a->fields['birthdate']->value >
+				$b->fields['birthdate']->value;
+		});
 	}
 }
