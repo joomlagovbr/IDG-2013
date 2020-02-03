@@ -1,5 +1,43 @@
+.period {
+  font-size: 1em !important;
+  font-weight: bold;
+
+  text-align: center;
+}
+
 .birthdays {
-  li {
-    display: list-item !important;
+  margin: 0;
+
+  > li {
+    display: list-item;
+
+    width: 100%;
+    min-height: 40px;
+    margin-bottom: 5px;
   }
+}
+
+.date-block {
+  display: block;
+  float: left;
+
+  width: 40px;
+  margin-right: 5px;
+
+  text-align: center;
+
+  color: @cor-titulo-principal;
+  background-color: @cor-principal;
+
+  > .day {
+    font-size: 1.2em;
+    font-weight: 600;
+
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.person {
+  font-size: 1em !important;
 }
