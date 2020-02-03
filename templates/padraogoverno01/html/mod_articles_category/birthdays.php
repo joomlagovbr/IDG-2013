@@ -29,9 +29,9 @@ $list = BirthdaysHelper::filterByBirthday($list, $startDate, $endDate);
 	<li>
 	<?php if (isset($item->fields['birthday'])): ?>
 		<div class="date-block">
-			<h5 class="day">
+			<span class="day">
 				<?php echo JHtml::_('date', $item->fields['birthday']->value, 'd'); ?>
-			</h5>
+			</span>
 			<span class="month">
 				<?php echo JHtml::_('date', $item->fields['birthday']->value, 'M'); ?>
 			</span>
