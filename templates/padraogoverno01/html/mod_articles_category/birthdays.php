@@ -16,7 +16,9 @@ JLoader::register('BirthdaysHelper', __DIR__ . '/_helper.php');
 $startDate = new JDate('today');
 $endDate = clone $startDate;
 $endDate->add(new DateInterval('P7D'));
-$list = BirthdaysHelper::filterByBirthday($list, $startDate, $endDate);
+
+BirthdaysHelper::addCustomFields($list);
+BirthdaysHelper::filterByBirthday($list, $startDate, $endDate);
 
 ?>
 <p class="period">

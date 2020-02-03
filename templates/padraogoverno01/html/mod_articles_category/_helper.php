@@ -25,18 +25,16 @@ JLoader::register(
 class BirthdaysHelper
 {
 	/**
-	 * Filter items by birthday period
+	 * Add Joomla Custom fields to elements
 	 *
-	 * @param   array  $list       list of items
-	 * @param   JDate  $startDate  initial day
-	 * @param   JDate  $endDate    last day
+	 * @param   array  $list  list of articles
 	 *
-	 * @return  array
+	 * @return  void
 	 *
-	 * @since   3.2.5
+	 * @since 3.2.5
 	 */
-	public static function filterByBirthday(&$list, $startDate, $endDate)
-	{
+	public static function addCustomFields(&$list){
+
 		foreach ($list as $key => $item) {
 			$fields = FieldsHelper::getFields(
 				'com_content.article',
@@ -49,7 +47,23 @@ class BirthdaysHelper
 					$item->fields[$field->name] = $field;
 				}
 			}
+		}
+	}
 
+	/**
+	 * Filter items by birthday period
+	 *
+	 * @param   array  $list       list of items
+	 * @param   JDate  $startDate  initial day
+	 * @param   JDate  $endDate    last day
+	 *
+	 * @return  void
+	 *
+	 * @since   3.2.5
+	 */
+	public static function filterByBirthday(&$list, $startDate, $endDate)
+	{
+		foreach ($list as $key => $item) {
 			$birthday = new JDate($item->fields['birthday']->value);
 
 			if ($birthday < $startDate || $birthday > $endDate) {
@@ -58,8 +72,6 @@ class BirthdaysHelper
 		}
 
 		self::orderByBirthday($list);
-
-		return $list;
 	}
 
 	/**
