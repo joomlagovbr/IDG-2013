@@ -25,18 +25,18 @@ JLoader::register(
 class BirthdaysHelper
 {
 	/**
-	 * Filter items by birthdate
+	 * Filter items by birthday period
 	 *
-	 * @param   array  $list  list of items
+	 * @param   array  $list       list of items
+	 * @param   JDate  $startDate  initial day
+	 * @param   JDate  $endDate    last day
 	 *
 	 * @return  array
 	 *
 	 * @since   3.2.5
 	 */
-	public static function filterByBirthdate(&$list)
+	public static function filterByBirthday(&$list, $startDate, $endDate)
 	{
-		$today = new JDate('today');
-
 		foreach ($list as $key => $item) {
 			$fields = FieldsHelper::getFields(
 				'com_content.article',
@@ -50,15 +50,14 @@ class BirthdaysHelper
 				}
 			}
 
-			$bday = new JDate($item->fields['birthdate']->value);
-			$interval = $today->diff($bday);
+			$birthday = new JDate($item->fields['birthday']->value);
 
-			if ($interval->days > 7 || $interval->invert == 1) {
+			if ($birthday < $startDate || $birthday > $endDate) {
 				unset($list[$key]);
 			}
 		}
 
-		self::orderByBirthdate($list);
+		self::orderByBirthday($list);
 
 		return $list;
 	}
@@ -108,7 +107,7 @@ class BirthdaysHelper
 	}
 
 	/**
-	 * Sort items by birthdate
+	 * Sort items by birthday
 	 *
 	 * @param array $list  list of items
 	 *
@@ -116,11 +115,11 @@ class BirthdaysHelper
 	 *
 	 * @since   3.2.5
 	 */
-	private static function orderByBirthdate(&$list)
+	private static function orderByBirthday(&$list)
 	{
 		uasort($list, function ($a, $b) {
-			return $a->fields['birthdate']->value >
-				$b->fields['birthdate']->value;
+			return $a->fields['birthday']->value >
+				$b->fields['birthday']->value;
 		});
 	}
 }
