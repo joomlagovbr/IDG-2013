@@ -28,19 +28,14 @@ $list = BirthdaysHelper::filterByBirthday($list, $startDate, $endDate);
 <?php foreach ($list as &$item): ?>
 	<li>
 	<?php if (isset($item->fields['birthday'])): ?>
-		<div class="date-block">
-			<span class="day">
-				<?php echo JHtml::_('date', $item->fields['birthday']->value, 'd'); ?>
-			</span>
-			<span class="month">
-				<?php echo JHtml::_('date', $item->fields['birthday']->value, 'M'); ?>
-			</span>
-		</div>
+		<span class="date">
+			<?php echo JHtml::_('date', $item->fields['birthday']->value, 'd M'); ?>
+		</span>
 	<?php endif; ?>
 
-		<p class="person">
+		<span class="person">
 			<?php echo BirthdaysHelper::prepareName($item); ?>
-		</p>
+		</span>
 	</li>
 <?php endforeach; ?>
 </ul>
