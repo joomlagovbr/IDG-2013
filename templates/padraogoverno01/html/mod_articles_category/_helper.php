@@ -8,7 +8,7 @@
  * @copyright   Copyright (C) 2013 - 2020 JoomlaGovBR Team. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  * @link        https://github.com/joomlagovbr
- * @since       3.2.5
+ * @since       3.3.0
  */
 
 // No direct access.
@@ -31,7 +31,7 @@ class BirthdaysHelper
 	 *
 	 * @return  void
 	 *
-	 * @since 3.2.5
+	 * @since 3.3.0
 	 */
 	public static function addCustomFields(&$list){
 
@@ -59,7 +59,7 @@ class BirthdaysHelper
 	 *
 	 * @return  void
 	 *
-	 * @since   3.2.5
+	 * @since   3.3.0
 	 */
 	public static function filterByBirthday(&$list, $startDate, $endDate)
 	{
@@ -81,7 +81,7 @@ class BirthdaysHelper
 	 *
 	 * @return  string
 	 *
-	 * @since   3.2.5
+	 * @since   3.3.0
 	 */
 	public static function prepareName($item)
 	{
@@ -125,7 +125,7 @@ class BirthdaysHelper
 	 *
 	 * @return void
 	 *
-	 * @since   3.2.5
+	 * @since   3.3.0
 	 */
 	private static function orderByBirthday(&$list)
 	{
