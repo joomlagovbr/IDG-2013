@@ -9,7 +9,7 @@
 	<copyright>Copyright (C) 2013 - 2020 Comunidade Joomla Calango e Grupo de Trabalho de Ministérios.</copyright>
 	<license>GNU General Public License version 2</license>
 	<version>3.3.0</version>
-	<description>Mais informacoes na URL do github.</description>
+	<description>TPL_PADRAOGOVERNO01_XML_DESCRIPTION</description>
 
 	<files>
 		<folder>bootstrap</folder>
@@ -50,6 +50,11 @@
 		<position>pagina-interna-capa</position>
 		<position>topo-main</position>
 	</positions>
+
+	<languages folder="language">
+		<language tag="pt-BR">pt-BR/pt-BR.tpl_padraogoverno01.ini</language>
+		<language tag="pt-BR">pt-BR/pt-BR.tpl_padraogoverno01.sys.ini</language>
+	</languages>
 
 	<config>
 		<fields name="params">
@@ -142,10 +147,10 @@
 				<field name="anexar_js_barra2014" type="list" default="0" label="Anexar arquivo JS da barra do governo 2014" description="Anexa arquivo JS, se disponível para a versão da barra.">
 					<option value="1">SIM</option>
 					<option value="0">NÃO</option>
-		  		</field>
-		  		<field name="endereco_js_barra2014" type="text" default="http://barra.brasil.gov.br/barra.js?cor=verde" label="Endereço do script externo" description="Dados provenientes de externamente." size="45" />
-		  		<field type="spacer" hr="true" />
-		  		<field name="google_analytics_id" type="text" default=""
+				</field>
+				<field name="endereco_js_barra2014" type="text" default="http://barra.brasil.gov.br/barra.js?cor=verde" label="Endereço do script externo" description="Dados provenientes de externamente." size="45" />
+				<field type="spacer" hr="true" />
+				<field name="google_analytics_id" type="text" default=""
 					label="ID do google analytics"
 					description="Informe ID para acompanhamento no google analytics."
 					filter="raw" size="30" />
