@@ -57,27 +57,35 @@
 	<config>
 		<fields name="params">
 			<fieldset name="advanced">
-				<field name="cor" type="list" default="verde"
-					label="Padrão de cores"
-					description="Padrão de cores utilizado."
-					filter="word"
+				<field
+					name="cor"
+					type="list"
+					label="TPL_PADRAOGOVERNO01_PARAMETER_FIELD_COR_LABEL"
+					description="TPL_PADRAOGOVERNO01_PARAMETER_FIELD_COR_DESC"
+					default="verde"
 				>
-					<option value="amarelo">amarelo</option>
-					<option value="azul">azul</option>
-					<option value="branco">branco</option>
-					<option value="verde">verde</option>
+					<option value="amarelo">TPL_PADRAOGOVERNO01_PARAMETER_FIELD_COR_VALUE_AMARELO</option>
+					<option value="azul">TPL_PADRAOGOVERNO01_PARAMETER_FIELD_COR_VALUE_AZUL</option>
+					<option value="branco">TPL_PADRAOGOVERNO01_PARAMETER_FIELD_COR_VALUE_BRANCO</option>
+					<option value="verde">TPL_PADRAOGOVERNO01_PARAMETER_FIELD_COR_VALUE_VERDE</option>
 				</field>
-				<field name="font_style_url" type="text" default="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600,800,700"
-					label="URL de estilo de fonte"
-					description="URL interna ou externa onde se encontra o estilo de fonte utilizado. Para não utilizar, informar 'NENHUM'. Para utilizar as fontes locais que fazem parte do padrão e já estão instaladas e configuradas para este template, informe simplesmente {LOCALFONT}. Para utilizar outra referência de endereço local, utilize {SITE} para indicar o endereço raiz deste site, a partir do qual o arquivo css deverá estar refernciado."
-					filter="string" size="70" />
-				<field name="icon_style" type="list" default="bitmap-portal-brasil"
-					label="Estilo de ícones"
-					description="Determine se os ícones da central de conteúdo e de redes sociais serão no padrão font-awesome, utilizando vetores, ou no padrão do guia do portal Brasil de 24/02/3014, em bitmap formato png"
+				<field
+					name="font_style_url"
+					type="text"
+					label="TPL_PADRAOGOVERNO01_PARAMETER_FIELD_FONT_STYLE_URL_LABEL"
+					description="TPL_PADRAOGOVERNO01_PARAMETER_FIELD_FONT_STYLE_URL_DESC"
+					default="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600,800,700"
 					filter="string"
+				/>
+				<field
+					name="icon_style"
+					type="list"
+					label="TPL_PADRAOGOVERNO01_PARAMETER_FIELD_ICON_STYLE_LABEL"
+					description="TPL_PADRAOGOVERNO01_PARAMETER_FIELD_ICON_STYLE_DESC"
+					default="bitmap-portal-brasil"
 				>
-					<option value="bitmap-portal-brasil">portal Brasil (bitmap .png)</option>
-					<option value="font-awesome">font-awesome (vetor .svg)</option>
+					<option value="bitmap-portal-brasil">TPL_PADRAOGOVERNO01_PARAMETER_FIELD_ICON_STYLE_VALUE_BITMAP-PORTAL-BRASIL</option>
+					<option value="font-awesome">TPL_PADRAOGOVERNO01_PARAMETER_FIELD_ICON_STYLE_VALUE_FONT-AWESOME</option>
 				</field>
 				<field name="denominacao" type="text" default=""
 					label="Denominação do órgão"
