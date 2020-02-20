@@ -50,12 +50,10 @@
 		<position>pagina-interna-capa</position>
 		<position>topo-main</position>
 	</positions>
-
 	<languages folder="language">
 		<language tag="pt-BR">pt-BR/pt-BR.tpl_padraogoverno01.ini</language>
 		<language tag="pt-BR">pt-BR/pt-BR.tpl_padraogoverno01.sys.ini</language>
 	</languages>
-
 	<config>
 		<fields name="params">
 			<fieldset name="advanced">
