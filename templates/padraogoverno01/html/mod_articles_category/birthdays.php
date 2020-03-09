@@ -25,19 +25,24 @@ BirthdaysHelper::filterByBirthday($list, $startDate, $endDate);
 	<?php echo JHtml::_('date', $startDate, JText::_('DATE_FORMAT_LC3')); ?> -
 	<?php echo JHtml::_('date', $endDate, JText::_('DATE_FORMAT_LC3')); ?>
 </p>
-<ul class="birthdays<?php echo $moduleclass_sfx; ?>">
 
-<?php foreach ($list as &$item): ?>
-	<li>
-	<?php if (isset($item->fields['birthday'])): ?>
-		<span class="date">
-			<?php echo JHtml::_('date', $item->fields['birthday']->value, 'd M'); ?>
-		</span>
-	<?php endif; ?>
+<?php if (count($list) == 0) : ?>
+	<p>Sem aniversariantes no período</p>
+<?php else : ?>
+	<ul class="birthdays<?php echo $moduleclass_sfx; ?>">
 
-		<span class="person">
-			<?php echo BirthdaysHelper::prepareName($item); ?>
-		</span>
-	</li>
-<?php endforeach; ?>
-</ul>
+	<?php foreach ($list as &$item): ?>
+		<li>
+		<?php if (isset($item->fields['birthday'])): ?>
+			<span class="date">
+				<?php echo JHtml::_('date', $item->fields['birthday']->value, 'd M'); ?>
+			</span>
+		<?php endif; ?>
+
+			<span class="person">
+				<?php echo BirthdaysHelper::prepareName($item); ?>
+			</span>
+		</li>
+	<?php endforeach; ?>
+	</ul>
+<?php endif;

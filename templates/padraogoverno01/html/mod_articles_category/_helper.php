@@ -14,11 +14,6 @@
 // No direct access.
 defined('_JEXEC') or die('Restricted access!');
 
-JLoader::register(
-	'FieldsHelper',
-	JPATH_ADMINISTRATOR . '/components/com_fields/helpers/fields.php'
-);
-
 /**
  * Helper for Birthdays layout
  */
@@ -33,8 +28,8 @@ class BirthdaysHelper
 	 *
 	 * @since 3.3.0
 	 */
-	public static function addCustomFields(&$list){
-
+	public static function addCustomFields(&$list)
+	{
 		foreach ($list as $key => $item) {
 			$fields = FieldsHelper::getFields(
 				'com_content.article',
@@ -64,11 +59,14 @@ class BirthdaysHelper
 	public static function filterByBirthday(&$list, $startDate, $endDate)
 	{
 		foreach ($list as $key => $item) {
-			$birthday = new JDate($item->fields['birthday']->value);
+			if (isset($item->fields['birthday'])) {
+				$birthday = new JDate($item->fields['birthday']->rawvalue);
 
-			if ($birthday < $startDate || $birthday > $endDate) {
-				unset($list[$key]);
+				if ($birthday < $startDate || $birthday > $endDate) {
+					unset($list[$key]);
+				}
 			}
+
 		}
 
 		self::orderByBirthday($list);
@@ -121,9 +119,9 @@ class BirthdaysHelper
 	/**
 	 * Sort items by birthday
 	 *
-	 * @param array $list  list of items
+	 * @param   array $list  list of items
 	 *
-	 * @return void
+	 * @return  void
 	 *
 	 * @since   3.3.0
 	 */
