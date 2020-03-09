@@ -29,7 +29,7 @@ BirthdaysHelper::filterByBirthday($list, $startDate, $endDate);
 <?php if (count($list) == 0) : ?>
 	<p>Sem aniversariantes no período</p>
 <?php else : ?>
-	<ul class="birthdays<?php echo $moduleclass_sfx; ?>">
+	<ul class="birthdays<?php echo preg_replace('/span\d/', '', $moduleclass_sfx); ?>">
 
 	<?php foreach ($list as &$item): ?>
 		<li>
@@ -38,9 +38,8 @@ BirthdaysHelper::filterByBirthday($list, $startDate, $endDate);
 				<?php echo JHtml::_('date', $item->fields['birthday']->value, 'd M'); ?>
 			</span>
 		<?php endif; ?>
-
 			<span class="person">
-				<?php echo BirthdaysHelper::prepareName($item); ?>
+				<?php echo $item->fields['rank']->rawvalue[0] . ' ' . BirthdaysHelper::prepareName($item); ?>
 			</span>
 		</li>
 	<?php endforeach; ?>
