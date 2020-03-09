@@ -79,7 +79,7 @@ if (empty($output))
 }
 
 ?>
-<div class="row">
+<div class="row-fluid">
 	<?php echo implode("\n", $output); ?>
 </div>
 
