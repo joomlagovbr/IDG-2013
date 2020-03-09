@@ -43,7 +43,7 @@ if (empty($values)) {
 					<?php endif; ?>
 
 					<span class="options">
-						<a href="<?php echo JUri::root() . $value['Foto/Imagem']; ?>" download title="Salvar imagem">
+						<a href="<?php echo JUri::root() . $value['Foto']; ?>" download title="Salvar imagem">
 							<i class="icon-long-arrow-down"></i>
 						</a>
 					</span>
