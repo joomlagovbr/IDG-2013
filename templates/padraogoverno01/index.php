@@ -57,8 +57,6 @@ $active_item = TmplPadraoGoverno01Helper::getActiveItemid();
 	<?php TmplPadraoGoverno01Helper::getFontStyle($this); ?>
 
 	<noscript>Essa pagina depende do javascript para abrir, favor habilitar o javascript do seu browser!</noscript>
-
-	<!-- FIM Script Aumentar/Diminuir Fonte dos artigos -->
 </head>
 
 
