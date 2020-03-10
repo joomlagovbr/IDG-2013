@@ -38,11 +38,9 @@ $active_item = TmplPadraoGoverno01Helper::getActiveItemid();
 	<!--[if lt IE 10]><link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/css/ie.css" /><![endif]-->
 	<!--[if lt IE 9]><link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/css/ie8.css" /><![endif]-->
 	<!--[if lt IE 8]><link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/css/ie7.css" /><link rel="stylesheet" href="font-awesome/css/font-awesome-ie7.min.css" /><![endif]-->
-	<?php if (TmplPadraoGoverno01Helper::beforeHead('local_jquery', $this)) TmplPadraoGoverno01Helper::getJqueryScripts($this); ?>
 	<?php if (TmplPadraoGoverno01Helper::beforeHead('local_mainscript', $this)) TmplPadraoGoverno01Helper::getTemplateMainScripts($this); ?>
 	<title>Erro <?php echo $this->error->getCode(); ?> - <?php echo $this->error->getMessage(); ?></title>
 	<link href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
-	<?php if (TmplPadraoGoverno01Helper::afterHead('local_jquery', $this)) TmplPadraoGoverno01Helper::getJqueryScripts($this); ?>
 	<?php if (TmplPadraoGoverno01Helper::afterHead('local_mainscript', $this)) TmplPadraoGoverno01Helper::getTemplateMainScripts($this); ?>
 	<?php TmplPadraoGoverno01Helper::getFontStyle($this); ?>
 </head>
@@ -233,7 +231,6 @@ $active_item = TmplPadraoGoverno01Helper::getActiveItemid();
 		</footer>
 	</div>
 	<!-- scripts principais do template -->
-	<?php if (TmplPadraoGoverno01Helper::inFooter('local_jquery', $this)) TmplPadraoGoverno01Helper::getJqueryScripts($this); ?>
 	<?php if (TmplPadraoGoverno01Helper::inFooter('local_mainscript', $this)) TmplPadraoGoverno01Helper::getTemplateMainScripts($this); ?>
 	<?php if (count($module_barra_do_governo) && $this->params->get('anexar_js_barra2014')) TmplPadraoGoverno01Helper::getBarra2014Script($this); ?>
 	<?php if ($this->params->get('google_analytics_id', '') != '') : ?>
