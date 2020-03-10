@@ -227,7 +227,8 @@ jQuery(function($) {
 	//ajustes de tamanho dos itens para .module-box-01
 	function module_box_adjust() {
 		$(".module-box-01 .lista li").each(function(key) {
-			limit = 3 * parseInt($(".module-box-01 .lista li").size() / 3);
+			var limit = 3 * parseInt($(".module-box-01 .lista li").size() / 3);
+			var elm1, elm2, elm3, padding_vertical, height;
 
 			if ((key + 1) % 3 == 0 && key + 1 <= limit) {
 				elm1 = $(".module-box-01 .lista li").eq(key - 2);
