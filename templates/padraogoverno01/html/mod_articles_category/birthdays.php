@@ -36,7 +36,7 @@ BirthdaysHelper::filterByBirthday($list, $startDate, $endDate);
 		<li>
 		<?php if (isset($item->fields['birthday'])): ?>
 			<span class="date">
-				<?php echo JHtml::_('date', $item->fields['birthday']->value, 'd M'); ?>
+				<?php echo JHtml::_('date', $item->fields['birthday']->rawvalue, 'd M'); ?>
 			</span>
 		<?php endif; ?>
 			<span class="person">
