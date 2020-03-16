@@ -40,7 +40,10 @@ BirthdaysHelper::filterByBirthday($list, $startDate, $endDate);
 			</span>
 		<?php endif; ?>
 			<span class="person">
-				<?php echo $item->fields['rank']->rawvalue[0] . ' ' . BirthdaysHelper::prepareName($item); ?>
+			<?php if (isset($item->fields['rank'])) : ?>
+				<?php echo $item->fields['rank']->rawvalue[0] . ' '; ?>
+			<?php endif; ?>
+				<?php echo BirthdaysHelper::prepareName($item); ?>
 			</span>
 		</li>
 	<?php endforeach; ?>
