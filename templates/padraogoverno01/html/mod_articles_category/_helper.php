@@ -16,6 +16,8 @@ defined('_JEXEC') or die('Restricted access!');
 
 /**
  * Helper for Birthdays layout
+ *
+ * @since 3.3.0
  */
 class BirthdaysHelper
 {
@@ -62,11 +64,11 @@ class BirthdaysHelper
 			if (isset($item->fields['birthday'])) {
 				$birthday = new JDate($item->fields['birthday']->rawvalue);
 
-				if ($birthday < $startDate || $birthday > $endDate) {
+				if (($birthday->month < $startDate->month || $birthday->month > $endDate->month)
+					|| ($birthday->day < $startDate->day || $birthday->day > $endDate->day)) {
 					unset($list[$key]);
 				}
 			}
-
 		}
 
 		self::orderByBirthday($list);
