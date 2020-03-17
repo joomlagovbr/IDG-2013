@@ -20,7 +20,10 @@ const paths = {
 		dest: './templates/padraogoverno01/css/'
 	},
 	scripts: {
-		src: ['./templates/padraogoverno01/js/*.js', '!./templates/padraogoverno01/js/*.min.js'],
+		src: [
+			'./templates/padraogoverno01/js/*.js',
+			'!./templates/padraogoverno01/js/*.min.js'
+		],
 		dest: './templates/padraogoverno01/js/'
 	}
 };
@@ -42,7 +45,11 @@ const serve = done => {
 /**
  * Limpa a pasta de destino dos css
  */
-export const clean = () => del([paths.styles.dest, '!./templates/padraogoverno01/css/custom.css']);
+export const clean = () =>
+	del([
+		`${paths.styles.dest}*.css`,
+		'!./templates/padraogoverno01/css/custom.css'
+	]);
 
 /**
  * Processa os arquivos LESS e comprime o CSS
@@ -76,6 +83,11 @@ const watchFiles = () => {
 	gulp.watch(paths.scripts.src, gulp.series(scripts, reload));
 };
 
-export const dev = gulp.series(clean, gulp.parallel(styles, scripts), serve, watchFiles);
+export const dev = gulp.series(
+	clean,
+	gulp.parallel(styles, scripts),
+	serve,
+	watchFiles
+);
 export const build = gulp.series(clean, gulp.parallel(styles, scripts));
 export default dev;
