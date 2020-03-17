@@ -14,8 +14,8 @@ defined('_JEXEC') or die();
 JLoader::register('BirthdaysHelper', __DIR__ . '/_helper.php');
 
 $periodToAdd = new DateInterval('P7D');
-$startDate = new JDate('today');
-$endDate = clone $startDate;
+$startDate   = new JDate('today');
+$endDate     = clone $startDate;
 $endDate->add($periodToAdd);
 
 BirthdaysHelper::addCustomFields($list);
