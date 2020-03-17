@@ -130,8 +130,10 @@ class BirthdaysHelper
 	private static function orderByBirthday(&$list)
 	{
 		uasort($list, function ($a, $b) {
-			return $a->fields['birthday']->value >
-				$b->fields['birthday']->value;
+			$bdayA = new JDate($a->fields['birthday']->rawvalue);
+			$bdayB = new JDate($b->fields['birthday']->rawvalue);
+
+			return $bdayA->format('m-d') > $bdayB->format('m-d');
 		});
 	}
 }
