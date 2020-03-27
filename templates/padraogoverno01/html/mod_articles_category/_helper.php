@@ -64,8 +64,8 @@ class BirthdaysHelper
 			if (isset($item->fields['birthday'])) {
 				$birthday = new JDate($item->fields['birthday']->rawvalue);
 
-				if (($birthday->month < $startDate->month || $birthday->month > $endDate->month)
-					|| ($birthday->day < $startDate->day || $birthday->day > $endDate->day)) {
+				if (strcmp($birthday->format('md'), $startDate->format('md')) < 0 
+					|| strcmp($birthday->format('md'), $endDate->format('md')) > 0) {                   
 					unset($list[$key]);
 				}
 			}
