@@ -1,5 +1,7 @@
 # Portal padrão em CMS Joomla 3.9.6
 
+Se tiverem dificuldades, podem entrar em contato: tiagovtg@gmail.com
+
 ## Sobre esta versão
 
 O Joomla 3.9.6 é recomendado para versões do PHP 5.3.10+. Melhor usando PHP 7.2.+
