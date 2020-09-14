@@ -29,6 +29,27 @@ Não é mais necessário alterar o arquivo configuration.php manualmente.
 
 O instalador padrão do CMS Joomla! 3.x foi customizado para configurar uma instalação padrão do CMS Joomla! com componentes, módulos, template e conteúdo de exemplo do Portal Padrão.
 
+## Problemas na instalação
+Se tiver problemas na instalação e travar no meio, tente alterar as variaveis de ambiente do PHP
+Arquivo:
+php.ini
+
+Alterações:
+max_execution_time=600
+;(valor padrão 30, alterado para 600)
+
+max_input_time=1200
+;(valor padrão 60, alterado para 1200)
+
+max_input_vars = 6000
+;padrão linha comentada, descomentar esta linha
+;(valor padrão 1000, alterado para 6000)
+
+memory_limit=1280M
+;(valor padrão 128M, alterado para 1280M)
+
+Não precisa de aumentar tanto, mas pode ir testando se quiser, exemplo, memoria padrão é 128M, pode ir subindo 256M,512M, 1024M
+
 ## Documentação
 
 Confira a documentação disponível até o momento no repositório provisório [https://github.com/joomlagovbr/documentacao](https://github.com/joomlagovbr/documentacao).
