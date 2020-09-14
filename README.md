@@ -50,6 +50,8 @@ memory_limit=1280M
 
 Não precisa de aumentar tanto, mas pode ir testando se quiser, exemplo, memoria padrão é 128M, pode ir subindo 256M,512M, 1024M
 
+Se tiverem dificuldades, podem entrar em contato: tiagovtg@gmail.com
+
 ## Documentação
 
 Confira a documentação disponível até o momento no repositório provisório [https://github.com/joomlagovbr/documentacao](https://github.com/joomlagovbr/documentacao).
