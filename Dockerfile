@@ -1,6 +1,6 @@
 FROM php:7-apache
 
-LABEL Author: Rene Bentes Pinto <github.com/renebentes> Name=joomlagov Version=0.2.0
+LABEL author="Rene Bentes Pinto <github.com/renebentes>"
 
 # Enable Apache Rewrite Module
 RUN a2enmod rewrite
@@ -27,27 +27,27 @@ RUN set -ex; \
 	debMultiarch="$(dpkg-architecture --query DEB_BUILD_MULTIARCH)"; \
 	docker-php-ext-configure ldap --with-libdir="lib/$debMultiarch"; \
 	docker-php-ext-install -j "$(nproc)" \
-		bz2 \
-		gd \
-		gmp \
-		ldap \
-		mysqli \
-		pdo_mysql \
-		pdo_pgsql \
-		pgsql \
-		zip \
+	bz2 \
+	gd \
+	gmp \
+	ldap \
+	mysqli \
+	pdo_mysql \
+	pdo_pgsql \
+	pgsql \
+	zip \
 	; \
 	\
 	# pecl will claim success even if one install fails, so we need to perform each install separately
-	# pecl install APCu-5.1.9; \
-	# pecl install memcached-3.1.5; \
-	# pecl install redis-4.3.0; \
-	# \
-	# docker-php-ext-enable \
-	# 	apcu \
-	# 	memcached \
-	# 	redis \
-	# ; \
+	pecl install APCu-5.1.19; \
+	pecl install memcached-3.1.5; \
+	pecl install redis-4.3.0; \
+	\
+	docker-php-ext-enable \
+	apcu \
+	memcached \
+	redis \
+	; \
 	\
 	# reset apt-mark's "manual" list so that "purge --auto-remove" will remove all build dependencies
 	apt-mark auto '.*' > /dev/null; \
