@@ -1,16 +1,9 @@
-version: "3.8"
+version: '3.9'
 
 services:
   joomlagov-web:
     build: .
     ports:
-      - "80:80"
+      - '80:80'
     volumes:
-      - ./:/var/www/html
-
-  # joomlagovdb:
-  #   image: mysql:5.7
-  #   container_name: joomlagov-db
-  #   restart: always
-  #   ports:
-  #     - "3306:3306"
+      - .:/var/www/html
