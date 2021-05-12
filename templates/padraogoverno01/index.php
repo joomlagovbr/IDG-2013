@@ -70,7 +70,16 @@ $active_item = TmplPadraoGoverno01Helper::getActiveItemid();
 		</div>
 	</noscript>
 	<!--[if lt IE 7]><center><strong>Atenção, a versão de seu navegador não é compatível com este sítio. Atualize seu navegador.</strong></center><![endif]-->
-	<jdoc:include type="modules" name="barra-do-governo" />
+	<div id="barra-brasil" style="background:#7F7F7F; height: 20px; padding:0 0 0 10px;display:block;">
+  <ul id="menu-barra-temp" style="list-style:none;">
+    <li style="display:inline; float:left;padding-right:10px; margin-right:10px; border-right:1px solid #EDEDED">
+        <a href="http://brasil.gov.br" style="font-family:sans,sans-serif; text-decoration:none; color:white;">Portal do Governo Brasileiro</a>
+    </li>
+    <li>
+       <a style="font-family:sans,sans-serif; text-decoration:none; color:white;" href="http://epwg.governoeletronico.gov.br/barra/atualize.html">Atualize sua Barra de Governo</a>
+    </li>
+  </ul>
+</div>
 	<div class="layout">
 		<header>
 			<div class="container">
@@ -242,22 +251,7 @@ $active_item = TmplPadraoGoverno01Helper::getActiveItemid();
 				<!-- fim .row -->
 			</div>
 			<!-- fim .container -->
-			<div class="footer-logos">
-				<div class="container">
-					<?php if ($this->params->get('rodape_acesso_informacao', 1) == 1) : ?>
-						<a href="http://www.acessoainformacao.gov.br/" class="logo-acesso pull-left"><img src="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/images/acesso-a-informacao.png" alt="Acesso a Informação"></a>
-					<?php endif; ?>
-					<?php if ($this->params->get('rodape_logo_brasil', 1) == 1) : ?>
-						<!-- separador para fins de acessibilidade --><span class="hide">&nbsp;</span><!-- fim separador para fins de acessibilidade -->
-						<a href="http://www.brasil.gov.br/" class="brasil pull-right"><img src="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/images/brasil.png" alt="Brasil - Governo Federal"></a>
-					<?php endif; ?>
-				</div>
-			</div>
-			<div class="footer-ferramenta">
-				<div class="container">
-					<?php echo $this->params->get('mensagem_final_ferramenta', '<p>Desenvolvido com o CMS de c&oacute;digo aberto <a aria-label="Desenvolvido por Comunidade Joomla" style="color:#0041b2;font-weight: 700;" href="http://www.joomla.org">Joomla</a></p>'); ?>
-				</div>
-			</div>
+
 			<div class="footer-atalhos visible-phone">
 				<div class="container">
 					<span class="hide">Fim do conteúdo da página</span>
@@ -265,6 +259,7 @@ $active_item = TmplPadraoGoverno01Helper::getActiveItemid();
 				</div>
 			</div>
 		</footer>
+		<div id="footer-brasil"></div>
 	</div>
 	<!-- fim div#wrapper -->
 	<!-- scripts principais do template -->
@@ -292,6 +287,7 @@ $active_item = TmplPadraoGoverno01Helper::getActiveItemid();
 		</script><noscript>&nbsp;
 			<!-- item para fins de acessibilidade --></noscript>
 	<?php endif; ?>
+	<script defer="defer" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>
 	<!-- debug -->
 	<jdoc:include type="modules" name="debug" />
 	<?php TmplPadraoGoverno01Helper::debug(@$preffix, @$active_item); ?>
