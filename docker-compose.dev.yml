@@ -1,0 +1,33 @@
+version: '3.9'
+
+services:
+  builder:
+    container_name: joomlagov_builder
+    build:
+      context: .
+      dockerfile: ./.docker/node/Dockerfile
+    ports:
+      - '3000:3000'
+      - '3001:3001'
+    volumes:
+      - .:/usr/src/joomlagov
+    command: gulp default --host web
+
+  php:
+    container_name: joomlagov_php
+    build:
+      context: .
+      dockerfile: ./.docker/php/Dockerfile
+    ports:
+      - '80:80'
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      - db
+
+  db:
+    container_name: joomlagov_db
+    image: mariadb:10
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: brasil
