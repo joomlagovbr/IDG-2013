@@ -227,3 +227,5 @@ composer.phar
 # Build related
 RoboFile.ini
 
+# Environments
+.env
