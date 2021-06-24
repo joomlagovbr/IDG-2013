@@ -158,17 +158,23 @@ if (!$mysql->query('USE `' . $mysql->real_escape_string($database) . '`'))
 }
 
 $queries = splitQueries($sampleContent);
+$error   = '';
 
 foreach ($queries as $query)
 {
-	if (!$mysql->query($query))
+	$result = $mysql->query($query);
+	if (!$result)
 	{
-		message("MySQL 'POPULATE DATABASE' Error: " . $mysql->error);
-		$mysql->close();
-		exit(1);
+		$error .= $mysql->error . "\n";
 	}
 }
 
-message('Populate database sample complete.');
+if ($error)
+{
+	message("MySQL 'POPULATE DATABASE' Error: " . $error);
+} else
+{
+	message('Populate database sample complete.');
+}
 
 $mysql->close();
