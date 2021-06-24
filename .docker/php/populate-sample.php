@@ -136,7 +136,14 @@ do
 }
 while ($mysql->connect_error);
 
-if (!$mysql->query('CREATE DATABASE IF NOT EXISTS `' . $mysql->real_escape_string($database) . '`'))
+if (!$mysql->query('DROP DATABASE IF EXISTS `' . $mysql->real_escape_string($database) . '`'))
+{
+	message("MySQL 'DROP DATABASE' Error: " . $mysql->error);
+	$mysql->close();
+	exit(1);
+}
+
+if (!$mysql->query('CREATE DATABASE `' . $mysql->real_escape_string($database) . '`'))
 {
 	message("MySQL 'CREATE DATABASE' Error: " . $mysql->error);
 	$mysql->close();
