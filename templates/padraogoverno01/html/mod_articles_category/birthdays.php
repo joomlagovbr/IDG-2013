@@ -11,7 +11,7 @@
 
 defined('_JEXEC') or die();
 
-JLoader::register('BirthdaysHelper', __DIR__ . '/_helper.php');
+JLoader::register('BirthdaysHelper', __DIR__ . '/helpers/_birthdays_helper.php');
 
 $periodToAdd = new DateInterval('P7D');
 $startDate   = new JDate('today');
@@ -30,7 +30,7 @@ BirthdaysHelper::filterByBirthday($list, $startDate, $endDate);
 <?php if (count($list) == 0) : ?>
 	<p>Sem aniversariantes no período</p>
 <?php else : ?>
-	<ul class="birthdays<?php echo preg_replace('/span\d/', '', $moduleclass_sfx); ?>">
+	<ul class="birthdays<?php echo $moduleclass_sfx ? ' ' . preg_replace('/span\d/', '', $moduleclass_sfx) : ''; ?>">
 
 	<?php foreach ($list as &$item): ?>
 		<li>
@@ -39,12 +39,10 @@ BirthdaysHelper::filterByBirthday($list, $startDate, $endDate);
 				<?php echo JHtml::_('date', $item->fields['birthday']->rawvalue, 'd M'); ?>
 			</span>
 		<?php endif; ?>
-			<span class="person">
 			<?php if (isset($item->fields['rank'])) : ?>
 				<?php echo $item->fields['rank']->rawvalue[0] . ' '; ?>
 			<?php endif; ?>
-				<?php echo BirthdaysHelper::prepareName($item); ?>
-			</span>
+			<?php echo BirthdaysHelper::prepareName($item); ?>
 		</li>
 	<?php endforeach; ?>
 	</ul>

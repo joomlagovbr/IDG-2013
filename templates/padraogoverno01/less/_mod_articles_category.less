@@ -1,0 +1,69 @@
+@background-color-default: @cor-principal;
+@background-color-variacao-01: @cor-module-title-variacao-01;
+@background-color-variacao-02: @cor-module-title-variacao-02;
+@background-color-variacao-03: @cor-module-title-variacao-03;
+@background-color-variacao-04: @cor-module-title-variacao-04;
+@text-color-default: @cor-titulo-principal;
+@text-color-white: @cor-branco;
+
+.period {
+  font-size: 1em !important;
+  font-weight: bold;
+
+  text-align: center;
+}
+
+.birthdays {
+  margin: 0;
+
+  > li {
+    display: list-item;
+
+    min-height: 30px;
+    margin-bottom: 5px;
+  }
+}
+
+.date {
+  margin-right: 5px;
+  padding: 5px;
+
+  text-align: center;
+
+  color: @text-color-default;
+  border-radius: 2px;
+  background-color: @background-color-default;
+}
+
+.variacao-module-01,
+.variacao-module-02,
+.variacao-module-03,
+.variacao-module-04 {
+  .date {
+    color: @text-color-white;
+  }
+}
+
+.variacao-module-01 {
+  .date {
+    background-color: @background-color-variacao-01;
+  }
+}
+
+.variacao-module-02 {
+  .date {
+    background-color: @background-color-variacao-02;
+  }
+}
+
+.variacao-module-03 {
+  .date {
+    background-color: @background-color-variacao-02;
+  }
+}
+
+.variacao-module-04 {
+  .date {
+    background-color: @background-color-variacao-02;
+  }
+}

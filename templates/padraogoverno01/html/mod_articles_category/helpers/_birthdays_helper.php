@@ -14,39 +14,15 @@
 // No direct access.
 defined('_JEXEC') or die('Restricted access!');
 
+JLoader::register('CustomFieldsHelper', JPATH_THEMES . '/padraogoverno01/helpers/custom_fields_helper.php');
+
 /**
  * Helper for Birthdays layout
  *
  * @since 3.3.0
  */
-class BirthdaysHelper
+class BirthdaysHelper extends CustomFieldsHelper
 {
-	/**
-	 * Add Joomla Custom fields to elements
-	 *
-	 * @param   array  $list  list of articles
-	 *
-	 * @return  void
-	 *
-	 * @since 3.3.0
-	 */
-	public static function addCustomFields(&$list)
-	{
-		foreach ($list as $key => $item) {
-			$fields = FieldsHelper::getFields(
-				'com_content.article',
-				$item,
-				true
-			);
-
-			foreach ($fields as $field) {
-				if ($field->value) {
-					$item->fields[$field->name] = $field;
-				}
-			}
-		}
-	}
-
 	/**
 	 * Filter items by birthday period
 	 *
@@ -64,8 +40,8 @@ class BirthdaysHelper
 			if (isset($item->fields['birthday'])) {
 				$birthday = new JDate($item->fields['birthday']->rawvalue);
 
-				if (strcmp($birthday->format('md'), $startDate->format('md')) < 0 
-					|| strcmp($birthday->format('md'), $endDate->format('md')) > 0) {                   
+				if (strcmp($birthday->format('md'), $startDate->format('md')) < 0
+					|| strcmp($birthday->format('md'), $endDate->format('md')) > 0) {
 					unset($list[$key]);
 				}
 			}
@@ -130,10 +106,10 @@ class BirthdaysHelper
 	private static function orderByBirthday(&$list)
 	{
 		uasort($list, function ($a, $b) {
-			$bdayA = new JDate($a->fields['birthday']->rawvalue);
-			$bdayB = new JDate($b->fields['birthday']->rawvalue);
+			$birthdayA = new JDate($a->fields['birthday']->rawvalue);
+			$birthdayB = new JDate($b->fields['birthday']->rawvalue);
 
-			return $bdayA->format('m-d') > $bdayB->format('m-d');
+			return $birthdayA->format('md') > $birthdayB->format('md');
 		});
 	}
 }
