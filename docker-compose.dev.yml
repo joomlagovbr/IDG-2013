@@ -31,10 +31,17 @@ services:
       JOOMLA_DB_PASSWORD: ${MYSQL_PASSWORD}
       JOOMLA_DB_NAME: ${MYSQL_DATABASE}
       JOOMLA_DB_PREFIX: ${MYSQL_TABLE_PREFIX}
+    networks:
+      - network
 
   db:
     container_name: joomlagov_db
     image: mariadb:10
     environment:
-      environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+    networks:
+      - network
+
+networks:
+  network:
+    driver: bridge
