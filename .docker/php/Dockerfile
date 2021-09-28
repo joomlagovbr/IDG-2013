@@ -1,8 +1,6 @@
 FROM php:7-apache
 
 LABEL author="Rene Bentes Pinto <github.com/renebentes>"
-LABEL name=joomlagov/php
-LABEL version=0.2.0
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -34,26 +32,20 @@ RUN set -eux; \
         libbz2-dev \
         libgmp-dev \
         libjpeg-dev \
-        libldap2-dev \
         libmcrypt-dev \
         libmemcached-dev \
         libpng-dev \
-        libpq-dev \
         libzip-dev \
     ; \
     \
     docker-php-ext-configure gd --with-jpeg; \
     debMultiarch="$(dpkg-architecture --query DEB_BUILD_MULTIARCH)"; \
-    docker-php-ext-configure ldap --with-libdir="lib/$debMultiarch"; \
     docker-php-ext-install -j "$(nproc)" \
         bz2 \
         gd \
         gmp \
-        ldap \
         mysqli \
         pdo_mysql \
-        pdo_pgsql \
-        pgsql \
         zip \
     ; \
     \
