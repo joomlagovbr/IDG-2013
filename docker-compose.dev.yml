@@ -35,7 +35,6 @@ services:
   db:
     container_name: joomlagov_db
     image: mariadb:10
-    restart: always
     environment:
       environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
