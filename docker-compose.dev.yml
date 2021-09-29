@@ -26,11 +26,11 @@ services:
     depends_on:
       - db
     environment:
-      JOOMLA_DB_HOST: ${MYSQL_HOST}
-      JOOMLA_DB_USER: ${MYSQL_USER}
-      JOOMLA_DB_PASSWORD: ${MYSQL_PASSWORD}
-      JOOMLA_DB_NAME: ${MYSQL_DATABASE}
-      JOOMLA_DB_PREFIX: ${MYSQL_TABLE_PREFIX}
+      JOOMLA_DB_HOST: ${JOOMLA_DB_HOST}
+      JOOMLA_DB_USER: ${JOOMLA_DB_USER}
+      JOOMLA_DB_PASSWORD: ${JOOMLA_DB_PASSWORD}
+      JOOMLA_DB_NAME: ${JOOMLA_DB_NAME}
+      JOOMLA_DB_PREFIX: ${JOOMLA_DB_PREFIX}
     networks:
       - network
 
@@ -38,7 +38,7 @@ services:
     container_name: joomlagov_db
     image: mariadb:10
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${JOOMLA_DB_PASSWORD}
     networks:
       - network
 

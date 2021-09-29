@@ -16,4 +16,4 @@ services:
     image: mariadb:10
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${JOOMLA_DB_PASSWORD}
