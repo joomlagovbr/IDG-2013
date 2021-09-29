@@ -114,6 +114,8 @@ populate_sample() {
 
 set_default_envs 'JOOMLA_DB_NAME' 'joomlagovdb'
 set_default_envs 'JOOMLA_DB_PREFIX' 'xmx0n_'
+set_default_envs 'JOOMLA_ROOT_USER' 'joomlagov'
+set_default_envs 'JOOMLA_ROOT_PASSWORD' 'brasil'
 
 docker_process_init_files
 set_owner

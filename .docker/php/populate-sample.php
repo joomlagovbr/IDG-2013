@@ -88,11 +88,11 @@ function splitQueries($query)
 	return $queries;
 }
 
-function addCreateRootUserQuery()
+function addCreateRootUserQuery($username, $password)
 {
-	$password = password_hash('brasil', PASSWORD_BCRYPT);
+	$password = password_hash($password, PASSWORD_BCRYPT);
 	$query    = "INSERT INTO `#__users` (`name`, `username`, `email`, `password`, `params`, `registerDate`, `lastvisitDate`, `lastResetTime`)";
-	$query   .= "VALUES ('JoomlaGovBR', 'joomlagov', 'admin@joomlagov.br', '" . $password . "', '', NOW(), NOW(), NOW());";
+	$query   .= "VALUES ('" . $username . "', '" . $username . "', '" . $username . "@joomlagov.br', '" . $password . "', '', NOW(), NOW(), NOW());";
 	$query   .= "INSERT INTO `#__user_usergroup_map` (`user_id`,`group_id`) VALUES (LAST_INSERT_ID(), '8');";
 
 	return $query;
@@ -116,13 +116,15 @@ else
 	list($host, $port) = explode(':', getenv('JOOMLA_DB_HOST', true), 2);
 }
 
-$database    = getenv('JOOMLA_DB_NAME', true);
-$user        = getenv('JOOMLA_DB_USER', true);
-$password    = getenv('JOOMLA_DB_PASSWORD', true);
-$prefixTable = getenv('JOOMLA_DB_PREFIX', true);
+$database     = getenv('JOOMLA_DB_NAME', true);
+$user         = getenv('JOOMLA_DB_USER', true);
+$password     = getenv('JOOMLA_DB_PASSWORD', true);
+$prefixTable  = getenv('JOOMLA_DB_PREFIX', true);
+$rootUsername = getenv('JOOMLA_ROOT_USERNAME', true);
+$rootPassword = getenv('JOOMLA_ROOT_PASSWORD', true);
 
 $sampleContent  = file_get_contents($sampleSqlFile);
-$sampleContent .= addCreateRootUserQuery();
+$sampleContent .= addCreateRootUserQuery($rootUsername, $rootPassword);
 $sampleContent  = replacePrefixTable($sampleContent, $prefixTable);
 
 $maxTries = 10;
