@@ -88,6 +88,16 @@ function splitQueries($query)
 	return $queries;
 }
 
+function addCreateRootUserQuery()
+{
+	$password = password_hash('brasil', PASSWORD_BCRYPT);
+	$query    = "INSERT INTO `#__users` (`name`, `username`, `email`, `password`, `params`, `registerDate`, `lastvisitDate`, `lastResetTime`)";
+	$query   .= "VALUES ('JoomlaGovBR', 'joomlagov', 'admin@joomlagov.br', '" . $password . "', '', NOW(), NOW(), NOW());";
+	$query   .= "INSERT INTO `#__user_usergroup_map` (`user_id`,`group_id`) VALUES (LAST_INSERT_ID(), '8');";
+
+	return $query;
+}
+
 $sampleSqlFile = $argv['1'];
 
 if (!file_exists($sampleSqlFile) || empty($sampleSqlFile))
@@ -111,8 +121,9 @@ $user        = getenv('JOOMLA_DB_USER', true);
 $password    = getenv('JOOMLA_DB_PASSWORD', true);
 $prefixTable = getenv('JOOMLA_DB_PREFIX', true);
 
-$sampleContent = file_get_contents($sampleSqlFile);
-$sampleContent = replacePrefixTable($sampleContent, $prefixTable);
+$sampleContent  = file_get_contents($sampleSqlFile);
+$sampleContent .= addCreateRootUserQuery();
+$sampleContent  = replacePrefixTable($sampleContent, $prefixTable);
 
 $maxTries = 10;
 
