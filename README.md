@@ -30,6 +30,7 @@ Não é mais necessário alterar o arquivo configuration.php manualmente.
 O instalador padrão do CMS Joomla! 3.x foi customizado para configurar uma instalação padrão do CMS Joomla! com componentes, módulos, template e conteúdo de exemplo do Portal Padrão.
 
 ## Problemas na instalação
+
 Se tiver problemas na instalação e travar no meio, tente alterar as variaveis de ambiente do PHP
 Arquivo:
 php.ini
@@ -51,6 +52,74 @@ memory_limit=1280M
 Não precisa de aumentar tanto, mas pode ir testando se quiser, exemplo, memoria padrão é 128M, pode ir subindo 256M,512M, 1024M
 
 Se tiverem dificuldades, podem entrar em contato: tiagovtg@gmail.com
+
+## Usando Docker
+
+É possível utilizar Docker para servir o portal, para isso foram incluídos exemplos de configuração.
+
+### Preparando o ambiente
+
+Instale as ferramentas necessárias:
+
+- [Docker](https://docs.docker.com/get-docker/)
+- [Docker Compose](https://docs.docker.com/compose/install/).
+
+Para Windows 10 versão 2004 ou superior e Windows 11
+
+- [WSL](https://docs.microsoft.com/pt-br/windows/wsl/install)
+
+### Arquivos de configuração
+
+Crie um arquivo .env na raiz do projeto e informe as variáveis de ambiente para que os serviços sejam ativados corretamente. São elas:
+
+- JOOMLA_DB_HOST: Host da base de dados.
+- JOOMLA_DB_USER: Usuário para acesso à base de dados.
+- JOOMLA_DB_PASSWORD: Senha de acesso à base de dados. **Obrigatória**
+- JOOMLA_DB_NAME: Nome da base de dados.
+- JOOMLA_DB_PREFIX: Prefixo de tabela na base de dados.
+- JOOMLA_ROOT_USERNAME: Super usuário do Joomla.
+- JOOMLA_ROOT_PASSWORD: Senha do super usuário do Joomla.
+
+Veja um exemplo:
+
+```env
+JOOMLA_DB_HOST=db
+JOOMLA_DB_USER=root
+JOOMLA_DB_PASSWORD=brasil
+JOOMLA_DB_NAME=joomlagovdb
+JOOMLA_DB_PREFIX=xmx0n_
+JOOMLA_ROOT_USERNAME=joomlagov
+JOOMLA_ROOT_PASSWORD=brasil
+```
+
+**ATENÇÃO:** Sempre deve ser fornecida uma senha para o usuário root do banco de dados, caso contrário não será possível acessar o serviço.
+
+### Como rodar?
+
+Utiliza-se o `docker-compose` para orquestrar os serviços da aplicação.
+
+Existem dois arquivos de exemplos de configuração:
+
+- docker-compose.yml: Utilize este arquivo para instalação de um portal padrão Joomla, com a configuração inicial sendo realizada pela plataforma.
+- docker-compose.dev.yml: Utilize este arquivo apenas em localhost, para desenvolvimento. Ele configura um portal com dados preexistentes.
+
+```bash
+docker-compose up --build -d
+```
+
+Para servir localmente, acrescente `-f docker-compose.dev.yml` ao comando como em:
+
+```bash
+docker-compose -f docker-compose.dev.yml up --build -d
+```
+
+**ATENÇÃO:** Os arquivos disponibilizados são exemplos, avaliem sempre segurança, melhores práticas e configurações específicas sempre que forem ser utilizados em produção.
+
+### Serviços disponíveis
+
+- app: página web - acesse com <http://localhost>
+- db: servidor de banco de dados - não utilize dessa forma em produção, há sérios riscos de perda dados
+- phpmyadmin: gerenciador do banco de dados - acesse com <http://localhost:8080>
 
 ## Documentação
 
