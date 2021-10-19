@@ -112,6 +112,9 @@ populate_sample() {
 	php /populate-sample.php $sample
 }
 
+set_default_envs 'JOOMLA_DB_HOST' 'db'
+set_default_envs 'JOOMLA_DB_USER' 'root'
+set_default_envs 'JOOMLA_DB_PASSWORD' 'brasil'
 set_default_envs 'JOOMLA_DB_NAME' 'joomlagovdb'
 set_default_envs 'JOOMLA_DB_PREFIX' 'xmx0n_'
 set_default_envs 'JOOMLA_ROOT_USER' 'joomlagov'
