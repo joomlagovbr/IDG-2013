@@ -10,12 +10,6 @@ RUN a2enmod rewrite
 RUN set -eux; \
     \
     apt-get update; \
-    apt-get upgrade -y; \
-    apt-get dist-upgrade -y
-
-RUN set -eux; \
-    \
-    apt-get update; \
     apt-get install -y --no-install-recommends \
         gettext-base; \
     \
