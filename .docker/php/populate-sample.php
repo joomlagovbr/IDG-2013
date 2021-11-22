@@ -1,3 +1,4 @@
+#!/usr/bin/php
 <?php
 /**
  * Script used to build a sample site on Docker container.
