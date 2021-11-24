@@ -113,10 +113,17 @@ Para servir localmente, acrescente `-f docker-compose.dev.yml` ao comando como e
 docker-compose -f docker-compose.dev.yml up --build -d
 ```
 
-**ATENÇÃO:** Os arquivos disponibilizados são exemplos, avaliem sempre segurança, melhores práticas e configurações específicas sempre que forem ser utilizados em produção.
+Se você estiver usando um sistema operacional Unix-like (Linux, Mac OS, WSL), você vai precisar ajustar as permissões dos arquivos. Para isso, abra o terminal e digite o comando abaixo, trocando **usuario** pelo seu usuário do sistema, dentro da pasta do projeto JoomlaGov:
+
+```bash
+sudo chown -R usuario:usuario ./
+```
+
+**ATENÇÃO:** Os arquivos disponibilizados são exemplos, avalie sempre segurança, melhores práticas e configurações específicas sempre que forem ser utilizados em produção.
 
 ### Serviços disponíveis
 
+- gulp: task runner - acesse com <http://localhost:3000> - disponível apenas em ambiente de desenvolvimento
 - app: página web - acesse com <http://localhost>
 - db: servidor de banco de dados - não utilize dessa forma em produção, há sérios riscos de perda dados
 - phpmyadmin: gerenciador do banco de dados - acesse com <http://localhost:8080>
