@@ -1,17 +1,21 @@
 version: '3.9'
 
 services:
-  # builder:
-  #   container_name: joomlagov_builder
-  #   build:
-  #     context: .
-  #     dockerfile: ./.docker/node/Dockerfile
-  #   ports:
-  #     - '3000:3000'
-  #     - '3001:3001'
-  #   volumes:
-  #     - .:/usr/src/joomlagov
-  #   command: gulp default --host web
+  gulp:
+    container_name: joomlagov_gulp
+    build:
+      context: .
+      dockerfile: ./.docker/node/Dockerfile
+    ports:
+      - '3000:3000'
+      - '3001:3001'
+    volumes:
+      - ./:/usr/src/joomlagov
+    command: gulp default --host php
+    depends_on:
+      - php
+    networks:
+      - network
 
   php:
     container_name: joomlagov_php

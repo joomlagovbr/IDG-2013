@@ -1,13 +1,15 @@
-FROM node:slim
+FROM node:lts-slim
 
 LABEL author="Rene Bentes Pinto <github.com/renebentes>"
-LABEL name=joomlagov/gulp
-LABEL version=0.1.0
+
+ENV DEBIAN_FRONTEND noninteractive
 
 WORKDIR /usr/src/joomlagov
 
-# Installing latest npm, gulp-cli and dependencies
-RUN npm i -g npm@latest gulp-cli; \
-	npm i
+COPY ./package*.json ./gulpfile.babel.js ./.babelrc ./
 
-CMD [ "bash" ]
+# Installing latest npm, gulp-cli and dependencies
+RUN set -eux; \
+    \
+    npm i -g gulp-cli --silent; \
+    npm i --silent
