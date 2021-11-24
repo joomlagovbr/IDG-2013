@@ -11,14 +11,14 @@ services:
       - '3001:3001'
     volumes:
       - ./:/usr/src/joomlagov
-    command: gulp default --host php
+    command: gulp default --host app
     depends_on:
-      - php
+      - app
     networks:
       - network
 
-  php:
-    container_name: joomlagov_php
+  app:
+    container_name: joomlagov_app
     build:
       context: .
       dockerfile: ./.docker/php/Dockerfile
