@@ -98,12 +98,12 @@ function addCreateRootUserQuery($username, $password)
 	return $query;
 }
 
-$sampleSqlFile = $argv['1'];
-
-if (!file_exists($sampleSqlFile) || isset($argv['1']))
+if (!isset($argv['1']) || !file_exists($sampleSqlFile))
 {
 	usage($argv[0]);
 }
+
+$sampleSqlFile = $argv['1'];
 
 if (strpos(getenv('JOOMLA_DB_HOST', true), ':') === false)
 {
