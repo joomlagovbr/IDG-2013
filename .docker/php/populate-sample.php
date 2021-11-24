@@ -1,4 +1,4 @@
-#!/usr/bin/php
+#!/usr/bin/env php
 <?php
 /**
  * Script used to build a sample site on Docker container.
@@ -17,9 +17,8 @@
 
 function usage($command)
 {
-	echo PHP_EOL;
-	echo 'Usage: php ' . $command . ' /path/to/file.sql' . PHP_EOL;
-	echo PHP_EOL;
+	message('Usage: php ' . $command . ' /path/to/file.sql');
+	die();
 }
 
 function message($message)
@@ -101,10 +100,9 @@ function addCreateRootUserQuery($username, $password)
 
 $sampleSqlFile = $argv['1'];
 
-if (!file_exists($sampleSqlFile) || empty($sampleSqlFile))
+if (!file_exists($sampleSqlFile) || isset($argv['1']))
 {
 	usage($argv[0]);
-	die();
 }
 
 if (strpos(getenv('JOOMLA_DB_HOST', true), ':') === false)
