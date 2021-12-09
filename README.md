@@ -53,7 +53,9 @@ Não precisa de aumentar tanto, mas pode ir testando se quiser, exemplo, memoria
 
 Se tiverem dificuldades, podem entrar em contato: tiagovtg@gmail.com
 
-## Usando Docker
+## Utilizando Docker
+
+> **ATENÇÃO:** Essa abordagem tem a finalidade de demonstração e desenvolvimento. Os arquivos disponibilizados são exemplos, avalie segurança, melhores práticas e configurações específicas sempre que forem ser utilizados em produção.
 
 É possível utilizar Docker para servir o portal, para isso foram incluídos exemplos de configuração.
 
@@ -74,7 +76,7 @@ Crie um arquivo .env na raiz do projeto e informe as variáveis de ambiente para
 
 - JOOMLA_DB_HOST: Host da base de dados.
 - JOOMLA_DB_USER: Usuário para acesso à base de dados.
-- JOOMLA_DB_PASSWORD: Senha de acesso à base de dados. **Obrigatória**
+- JOOMLA_DB_PASSWORD: Senha de acesso à base de dados. Sem esta senha não será possível acessar o serviço. **Obrigatória**
 - JOOMLA_DB_NAME: Nome da base de dados.
 - JOOMLA_DB_PREFIX: Prefixo de tabela na base de dados.
 - JOOMLA_ROOT_USERNAME: Super usuário do Joomla.
@@ -91,8 +93,6 @@ JOOMLA_DB_PREFIX=xmx0n_
 JOOMLA_ROOT_USERNAME=joomlagov
 JOOMLA_ROOT_PASSWORD=brasil
 ```
-
-**ATENÇÃO:** Sempre deve ser fornecida uma senha para o usuário root do banco de dados, caso contrário não será possível acessar o serviço.
 
 ### Como rodar?
 
@@ -118,8 +118,6 @@ Se você estiver usando um sistema operacional Unix-like (Linux, Mac OS, WSL), v
 ```bash
 sudo chown -R usuario:usuario ./
 ```
-
-**ATENÇÃO:** Os arquivos disponibilizados são exemplos, avalie sempre segurança, melhores práticas e configurações específicas sempre que forem ser utilizados em produção.
 
 ### Serviços disponíveis
 
