@@ -4,23 +4,16 @@ LABEL author="Rene Bentes Pinto <github.com/renebentes>"
 
 ENV DEBIAN_FRONTEND noninteractive
 
-# Enable Apache Rewrite Module
-RUN a2enmod rewrite
-
 RUN set -eux; \
     \
+    a2enmod rewrite; \
+    \
     apt-get update; \
+    \
     apt-get install -y --no-install-recommends \
     gettext-base; \
     \
-    rm -rf /var/lib/apt/lists/*
-
-# Install PHP extensions
-RUN set -eux; \
-    \
     savedAptMark="$(apt-mark showmanual)"; \
-    \
-    apt-get update; \
     \
     apt-get install -y --no-install-recommends \
     libbz2-dev \
