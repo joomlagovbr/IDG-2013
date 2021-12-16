@@ -4,7 +4,6 @@
 .settings
 .DS_Store
 .idea
-.vscode
 
 # Local System Files (i.e. cache, logs, etc.) #
 /administrator/cache
@@ -229,3 +228,16 @@ RoboFile.ini
 
 # Environments
 .env
+
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+# Local History for Visual Studio Code
+.history/
+
+# Built Visual Studio Code Extensions
+*.vsix
