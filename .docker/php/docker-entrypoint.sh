@@ -88,21 +88,6 @@ remove_folder() {
 	rm -rf $1
 }
 
-set_owner() {
-	uid="$(id -u)"
-	gid="$(id -g)"
-
-	if [ "$uid" = '0' ]; then
-		user='www-data'
-		group='www-data'
-	else
-		user="$uid"
-		group="$gid"
-	fi
-
-	chown -R "$user:$group" .
-}
-
 populate_sample() {
 	local sample="$(pwd)/installation/sql/mysql/sample_padrao_egov.sql"
 	note "$0: Populate database sample for $(basename $sample)"
@@ -121,6 +106,5 @@ set_default_envs 'JOOMLA_ROOT_USER' 'joomlagov'
 set_default_envs 'JOOMLA_ROOT_PASSWORD' 'brasil'
 
 docker_process_init_files
-set_owner
 
 exec "$@"
