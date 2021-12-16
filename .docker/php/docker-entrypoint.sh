@@ -94,7 +94,7 @@ populate_sample() {
 
 	[ -f $sample ] || return 0
 
-	php /populate-sample.php $sample
+	populate-sample.php $sample
 }
 
 set_default_envs 'JOOMLA_DB_HOST' 'db'
