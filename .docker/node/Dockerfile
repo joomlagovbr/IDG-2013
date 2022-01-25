@@ -4,8 +4,6 @@ LABEL author="Rene Bentes Pinto <github.com/renebentes>"
 
 ENV DEBIAN_FRONTEND noninteractive
 
-WORKDIR /usr/src/joomlagov
-
 COPY ./package*.json ./gulpfile.babel.js ./.babelrc ./
 
 # Installing latest npm, gulp-cli and dependencies
