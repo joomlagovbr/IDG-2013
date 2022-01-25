@@ -113,10 +113,22 @@ Para servir localmente, acrescente `-f docker-compose.dev.yml` ao comando como e
 docker-compose -f docker-compose.dev.yml up --build -d
 ```
 
-Se você estiver usando um sistema operacional Unix-like (Linux, Mac OS, WSL), você vai precisar ajustar as permissões dos arquivos. Para isso, abra o terminal e digite o comando abaixo, trocando **usuario** pelo seu usuário do sistema, dentro da pasta do projeto JoomlaGov:
+Se você estiver usando um sistema operacional Unix-like (Linux, Mac OS, WSL), talvez você precise ajustar as permissões dos arquivos. Para tanto, siga a orientação a seguir:
 
-```bash
-sudo chown -R usuario:usuario ./
+Por padrão, o id do usuário dentro da imagem **Docker** é definido para `1000`. Você pode alterar esse comportamento através de argumentos de build definidos no arquivo de configuração do **docker-composer**. Para isso, abra o terminal e identifique o seu `id` de usuário com o comando `id -u`. Em seguida, edite ou crie um arquivo de configuração do docker-compose conforme o exemplo abaixo:
+
+```yaml
+version: '3.9'
+
+services:
+  app:
+    container_name: joomlagov_app
+    build:
+      context: .
+      dockerfile: ./.docker/php/Dockerfile
+      args:
+        UID: 1000
+   ...
 ```
 
 ### Serviços disponíveis

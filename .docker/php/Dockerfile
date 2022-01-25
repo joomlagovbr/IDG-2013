@@ -67,6 +67,9 @@ COPY .docker/php/docker-entrypoint.sh .docker/php/populate-sample.php /usr/local
 
 COPY . .
 
+ARG UID=1000
+RUN useradd -G www-data,root -u $UID -d /home/joomlagov joomlagov
+
 ENTRYPOINT [ "docker-entrypoint.sh" ]
 
 CMD [ "apache2-foreground" ]
