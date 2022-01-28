@@ -10,7 +10,8 @@ services:
       - '3000:3000'
       - '3001:3001'
     volumes:
-      - ./:/usr/src/joomlagov
+      - ./:/joomlagov
+      - /joomlagov/node_modules
     command: gulp default --host app
     depends_on:
       - app
