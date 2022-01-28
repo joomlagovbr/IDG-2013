@@ -4,10 +4,20 @@ LABEL author="Rene Bentes Pinto <github.com/renebentes>"
 
 ENV DEBIAN_FRONTEND noninteractive
 
-COPY ./package*.json ./gulpfile.babel.js ./.babelrc ./
+ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
 
-# Installing latest npm, gulp-cli and dependencies
+ENV PATH=$PATH:/home/node/.npm-global/bin
+
+WORKDIR /joomlagov
+
+COPY --chown=node:node ./package*.json ./
+
 RUN set -eux; \
     \
-    npm i -g gulp-cli --silent; \
-    npm i --silent
+    npm i -g gulp-cli; \
+    npm i; \
+    chown -R node:node node_modules
+
+USER node
+
+CMD [ "bash" ]
