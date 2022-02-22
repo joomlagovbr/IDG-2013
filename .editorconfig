@@ -19,3 +19,6 @@ indent_style = space
 indent_size = 4
 indent_style = space
 
+[*.{js,less,css}]
+indent_style = space
+indent_size = 2

@@ -50,6 +50,8 @@ $active_item = TmplPadraoGoverno01Helper::getActiveItemid();
     <link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/css/ie7.css" />
     <link rel="stylesheet" href="font-awesome/css/font-awesome-ie7.min.css" />
     <![endif]-->
+	<link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/css/custom.css" type='text/css' />
+
 	<?php if (TmplPadraoGoverno01Helper::beforeHead('local_mainscript', $this)) TmplPadraoGoverno01Helper::getTemplateMainScripts($this); ?>
 	<jdoc:include type="head" />
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -57,8 +59,6 @@ $active_item = TmplPadraoGoverno01Helper::getActiveItemid();
 	<?php TmplPadraoGoverno01Helper::getFontStyle($this); ?>
 
 	<noscript>Essa pagina depende do javascript para abrir, favor habilitar o javascript do seu browser!</noscript>
-
-	<!-- FIM Script Aumentar/Diminuir Fonte dos artigos -->
 </head>
 
 

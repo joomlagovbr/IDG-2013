@@ -1,0 +1,103 @@
+.showHere {
+  color: #333;
+}
+
+/* Corrige a opacidade de todos os icones das redes sociais, na home, topo.*/
+#social-icons a:hover {
+  opacity: 1;
+}
+
+#social-icons a {
+  opacity: .5;
+}
+
+/* Melhoria no layout da Busca Principal */
+span.highlight {
+  background: #ff0;
+}
+
+#content.internas .busca-geral h2.tileHeadline {
+  font-size: 1.2em !important;
+}
+
+#content.internas h2.tileHeadline {
+  font-size: 1.2em !important;
+}
+
+.internas .row-busca-f .acao-busca.button.btn.btn-primary {
+  margin-left: 10px;
+}
+
+.internas .row-busca-f .acao-busca {
+  padding: 9px 0 !important;
+}
+
+.phrases .chzn-container {
+  width: 150px !important;
+}
+
+/* fim alterações Busca Principal */
+
+/* Slideshow de artigos */
+.articles-slideshow .carousel-indicators {
+  top: unset;
+  right: 5px;
+  bottom: 5px;
+
+  cursor: pointer;
+}
+
+.articles-slideshow .carousel-indicators li {
+  font-size: 2em;
+
+  width: 20px;
+  height: 20px;
+  margin: 0;
+
+  text-align: center;
+  text-indent: unset;
+
+  color: #fff;
+  border-radius: 0;
+  background-color: #0e561f;
+}
+
+.articles-slideshow .carousel-indicators li::after {
+  content: '\2022';
+}
+
+.articles-slideshow .carousel-indicators li:first-child {
+  border-radius: 5px 0 0 5px;
+}
+
+.articles-slideshow .carousel-indicators li:last-child {
+  border-radius: 0 5px 5px 0;
+}
+
+.articles-slideshow .carousel-indicators li:hover,
+.articles-slideshow .carousel-indicators .active {
+  color: #0e561f;
+  background-color: #ffb400;
+}
+
+.articles-slideshow .carousel-caption {
+  border-radius: 0 0 6px 6px;
+}
+
+.articles-slideshow .carousel-caption a {
+  color: #fff;
+}
+
+.contraste .articles-slideshow .carousel-indicators li {
+  background-color: #000;
+}
+
+.contraste .articles-slideshow .carousel-indicators li:hover,
+.contraste .articles-slideshow .carousel-indicators .active {
+  background-color: #fff !important;
+}
+
+.contraste .active .carousel-caption {
+  background: #333 !important;
+  background: rgba(0, 0, 0, .75) !important;
+}
