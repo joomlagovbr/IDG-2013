@@ -1,0 +1,19 @@
+version: '3.9'
+
+services:
+  app:
+    container_name: joomlagov_app
+    build:
+      context: .
+      dockerfile: ./.docker/php/Dockerfile
+    ports:
+      - '80:80'
+    depends_on:
+      - db
+
+  db:
+    container_name: joomlagov_db
+    image: mariadb:10
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${JOOMLA_DB_PASSWORD}
