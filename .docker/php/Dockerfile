@@ -67,4 +67,7 @@ RUN set -eux; \
 
 COPY . .
 
+ARG UID=1000
+RUN useradd -G www-data,root -u $UID -d /home/joomlagov joomlagov
+
 CMD [ "apache2-foreground" ]
