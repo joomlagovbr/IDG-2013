@@ -63,11 +63,16 @@ RUN set -eux; \
     ; \
     \
     apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/*; \
+    mkdir /docker-entrypoint.d
+
+COPY .docker/php/docker-entrypoint.sh /usr/local/bin/
 
 COPY . .
 
 ARG UID=1000
 RUN useradd -G www-data,root -u $UID -d /home/joomlagov joomlagov
+
+ENTRYPOINT [ "docker-entrypoint.sh" ]
 
 CMD [ "apache2-foreground" ]
