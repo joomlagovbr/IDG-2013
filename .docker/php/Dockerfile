@@ -66,7 +66,7 @@ RUN set -eux; \
     rm -rf /var/lib/apt/lists/*; \
     mkdir /docker-entrypoint.d
 
-COPY .docker/php/docker-entrypoint.sh /usr/local/bin/
+COPY .docker/php/docker-entrypoint.sh .docker/php/populate-sample.php /usr/local/bin/
 
 COPY . .
 
