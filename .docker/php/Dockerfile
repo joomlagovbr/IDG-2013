@@ -12,6 +12,9 @@ RUN set -eux; \
     \
     apt-get update; \
     \
+    apt-get install -y --no-install-recommends \
+        gettext-base; \
+    \
     savedAptMark="$(apt-mark showmanual)"; \
     \
     apt-get install -y --no-install-recommends \
