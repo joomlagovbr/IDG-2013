@@ -75,9 +75,11 @@ export const scripts = () => {
  * Usado para desenvolvimento
  */
 const watchFiles = () => {
-	gulp.watch(paths.php, reload);
-	gulp.watch(paths.styles.src, gulp.series(styles, reload));
-	gulp.watch(paths.scripts.src, gulp.series(scripts, reload));
+  const watchOptions = { usePolling: true };
+
+  gulp.watch(paths.php, watchOptions, reload);
+  gulp.watch(paths.styles.src, watchOptions, gulp.series(styles, reload));
+  gulp.watch(paths.scripts.src, watchOptions, gulp.series(scripts, reload));
 };
 
 export const dev = gulp.series(
