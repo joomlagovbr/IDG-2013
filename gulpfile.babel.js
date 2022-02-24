@@ -9,9 +9,8 @@ import rename from 'gulp-rename';
 import uglify from 'gulp-uglify';
 import yargs from 'yargs';
 
-const argv = yargs.option('app', {
-	description: 'Application name',
-	default: 'joomla-3.x'
+const argv = yargs.option('host', {
+  default: 'http://localhost'
 }).argv;
 
 const paths = {
@@ -34,11 +33,11 @@ const reload = (done) => {
   done();
 };
 
-const serve = done => {
-	browserSync.init({
-		proxy: `http://localhost/${argv.app}`,
-		open: false
-	});
+const serve = (done) => {
+  browserSync.init({
+    proxy: argv.host,
+    open: false
+  });
 
   done();
 };
