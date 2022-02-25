@@ -1,0 +1,64 @@
+version: '3.9'
+
+services:
+  gulp:
+    container_name: joomlagov_gulp
+    build:
+      context: .
+      dockerfile: ./.docker/node/Dockerfile
+    ports:
+      - '3000:3000'
+      - '3001:3001'
+    volumes:
+      - ./:/joomlagov
+      - /joomlagov/node_modules
+    command: gulp default --host app
+    depends_on:
+      - app
+    networks:
+      - network
+
+  app:
+    container_name: joomlagov_app
+    build:
+      context: .
+      dockerfile: ./.docker/php/Dockerfile
+    ports:
+      - '80:80'
+    volumes:
+      - .docker/php/configuration.php:/docker-entrypoint.d/configuration.php
+      - ./:/var/www/html
+    depends_on:
+      - db
+    environment:
+      JOOMLA_DB_HOST: ${JOOMLA_DB_HOST}
+      JOOMLA_DB_USER: ${JOOMLA_DB_USER}
+      JOOMLA_DB_PASSWORD: ${JOOMLA_DB_PASSWORD}
+      JOOMLA_DB_NAME: ${JOOMLA_DB_NAME}
+      JOOMLA_DB_PREFIX: ${JOOMLA_DB_PREFIX}
+      JOOMLA_ROOT_USERNAME: ${JOOMLA_ROOT_USERNAME}
+      JOOMLA_ROOT_PASSWORD: ${JOOMLA_ROOT_PASSWORD}
+    networks:
+      - network
+
+  db:
+    container_name: joomlagov_db
+    image: mariadb:10
+    environment:
+      MYSQL_ROOT_PASSWORD: ${JOOMLA_DB_PASSWORD}
+    networks:
+      - network
+
+  phpmyadmin:
+    container_name: joomlagov_phpmyadmin
+    image: phpmyadmin
+    ports:
+      - 8080:80
+    environment:
+      - PMA_ARBITRARY=1
+    networks:
+      - network
+
+networks:
+  network:
+    driver: bridge
