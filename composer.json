@@ -1,0 +1,25 @@
+{
+  "name": "joomlagovbr/idg-2013",
+  "description": "Portão padrão em CMS Joomla 3x para a Identidade Digital do Governo Brasileiro modelo 2013",
+  "type": "project",
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^3.16",
+    "squizlabs/php_codesniffer": "^3.7"
+  },
+  "license": "GPL-2.0-or-later",
+  "config": {
+    "vendor-dir": "tools/vendor"
+  },
+  "authors": [
+    {
+      "name": "Rene Bentes Pinto",
+      "email": "renebentes@yahoo.com.br"
+    }
+  ],
+  "require": {
+    "php": ">=7.1"
+  },
+  "scripts": {
+    "php-cs-fixer": "PHP_CS_FIXER_IGNORE_ENV=1 tools/vendor/bin/php-cs-fixer fix"
+  }
+}
