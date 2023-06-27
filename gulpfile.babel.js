@@ -7,11 +7,17 @@ import cleanCSS from 'gulp-clean-css';
 import less from 'gulp-less';
 import rename from 'gulp-rename';
 import uglify from 'gulp-uglify';
-import yargs from 'yargs';
+import * as dotenv from 'dotenv';
 
-const argv = yargs.option('host', {
-  default: 'http://localhost'
-}).argv;
+const result = dotenv.config();
+
+if (result.error) {
+  throw result.error;
+}
+
+const config = {
+  host: process.env?.GULP_HOST ?? 'http://localhost'
+};
 
 const paths = {
   php: './templates/padraogoverno01/**/*.php',
@@ -35,7 +41,7 @@ const reload = (done) => {
 
 const serve = (done) => {
   browserSync.init({
-    proxy: argv.host,
+    proxy: config.host,
     open: false
   });
 

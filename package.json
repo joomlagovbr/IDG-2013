@@ -2,6 +2,10 @@
   "name": "joomla-3.x",
   "version": "1.2.0",
   "description": "Portal padrão em CMS Joomla 3.x",
+  "scripts": {
+    "dev": "NODE_ENV=Development npm i && gulp",
+    "build": "NODE_ENV=Production npm ci && gulp build"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/joomlagovbr/joomla-3.x.git"
@@ -16,11 +20,11 @@
     "@babel/register": "^7.6.2",
     "browser-sync": "^2.26.7",
     "del": "^6.0.0",
+    "dotenv": "^16.0.2",
     "gulp": "^4.0.2",
     "gulp-clean-css": "^4.3.0",
     "gulp-less": "^5.0.0",
     "gulp-rename": "^2.0.0",
-    "gulp-uglify": "^3.0.2",
-    "yargs": "^17.2.1"
+    "gulp-uglify": "^3.0.2"
   }
 }
