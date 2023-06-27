@@ -68,6 +68,8 @@ RUN set -eux; \
 
 COPY .docker/php/docker-entrypoint.sh .docker/php/populate-sample.php /usr/local/bin/
 
+RUN chmod -R +x /usr/local/bin/docker-entrypoint.sh /usr/local/bin/populate-sample.php
+
 COPY . .
 
 ARG UID=1000
