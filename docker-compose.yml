@@ -1,8 +1,11 @@
 version: '3.9'
 
 services:
-  app:
-    container_name: joomlagov_app
+  webapp:
+    container_name: joomlagov-webapp
+    profiles:
+      - prod
+      - dev
     build:
       context: .
       dockerfile: ./.docker/php/Dockerfile
@@ -10,10 +13,35 @@ services:
       - '80:80'
     depends_on:
       - db
+    networks:
+      - webapp
 
   db:
-    container_name: joomlagov_db
-    image: mariadb:10
+    container_name: joomlagov-db
+    profiles:
+      - prod
+      - dev
+    image: mariadb:latest
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${JOOMLA_DB_PASSWORD}
+    networks:
+      - webapp
+
+  phpmyadmin:
+    profiles:
+      - prod
+      - dev
+    container_name: joomlagov-phpmyadmin
+    image: phpmyadmin
+    ports:
+      - 8080:80
+    depends_on:
+      - db
+    environment:
+      - PMA_ARBITRARY=1
+    networks:
+      - webapp
+
+networks:
+  webapp:
