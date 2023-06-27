@@ -1,6 +1,6 @@
 # Portal padrão em CMS Joomla 3.9.6
 
-Se tiverem dificuldades, podem entrar em contato: tiagovtg@gmail.com
+Se tiverem dificuldades, podem entrar em contato: <tiagovtg@gmail.com>
 
 ## Sobre esta versão
 
@@ -51,7 +51,7 @@ memory_limit=1280M
 
 Não precisa de aumentar tanto, mas pode ir testando se quiser, exemplo, memoria padrão é 128M, pode ir subindo 256M,512M, 1024M
 
-Se tiverem dificuldades, podem entrar em contato: tiagovtg@gmail.com
+Se tiverem dificuldades, podem entrar em contato: <tiagovtg@gmail.com>
 
 ## Utilizando Docker
 
@@ -96,33 +96,35 @@ JOOMLA_ROOT_PASSWORD=brasil
 
 ### Como rodar?
 
-Utiliza-se o `docker-compose` para orquestrar os serviços da aplicação.
+Utiliza-se o `docker compose` para orquestrar os serviços da aplicação.
 
 Existem dois arquivos de exemplos de configuração:
 
-- docker-compose.yml: Utilize este arquivo para instalação de um portal padrão Joomla, com a configuração inicial sendo realizada pela plataforma.
-- docker-compose.dev.yml: Utilize este arquivo apenas em localhost, para desenvolvimento. Ele configura um portal com dados preexistentes.
+- docker-compose.yml: Este arquivo contém instruções para instalação de um portal padrão Joomla, com a configuração inicial sendo realizada pela plataforma.
+- docker-compose.override.yml: Este arquivo contém instruções que sobrescrevem dados para uso em desenvolvimento. Ele configura um portal com dados preexistentes automaticamente, além de possuir um serviço com NPM para executar o Gulp.
 
 ```bash
-docker-compose up --build -d
+docker compose --profile prod up --build -d
 ```
 
-Para servir localmente, acrescente `-f docker-compose.dev.yml` ao comando como em:
+Rodar o comando acima, informando o profile `prod`, garante que apenas contêineres responsáveis por publicar nosso site estejam disponíveis.
+
+Para servir localmente, em ambiente de desenvolvimento e habilitando o HotReload através do task runner Gulp, execute:
 
 ```bash
-docker-compose -f docker-compose.dev.yml up --build -d
+docker compose --profile dev up --build
 ```
 
-Se você estiver usando um sistema operacional Unix-like (Linux, Mac OS, WSL), talvez você precise ajustar as permissões dos arquivos. Para tanto, siga a orientação a seguir:
+A opção `-d` ou `--detach` foi omitida propositalmente para acompanharmos as saídas do Gulp.
+
+Se você estiver usando um sistema operacional Unix-like (Linux, MacOS, WSL), talvez você precise ajustar as permissões dos arquivos. Para tanto, siga a orientação a seguir:
 
 Por padrão, o id do usuário dentro da imagem **Docker** é definido para `1000`. Você pode alterar esse comportamento através de argumentos de build definidos no arquivo de configuração do **docker-composer**. Para isso, abra o terminal e identifique o seu `id` de usuário com o comando `id -u`. Em seguida, edite ou crie um arquivo de configuração do docker-compose conforme o exemplo abaixo:
 
 ```yaml
-version: '3.9'
-
 services:
   app:
-    container_name: joomlagov_app
+    container_name: joomlagov-webapp
     build:
       context: .
       dockerfile: ./.docker/php/Dockerfile
@@ -133,10 +135,14 @@ services:
 
 ### Serviços disponíveis
 
-- gulp: task runner - acesse com <http://localhost:3000> - disponível apenas em ambiente de desenvolvimento
-- app: página web - acesse com <http://localhost>
-- db: servidor de banco de dados - não utilize dessa forma em produção, há sérios riscos de perda dados
-- phpmyadmin: gerenciador do banco de dados - acesse com <http://localhost:8080>
+| Serviço    | Descrição                            | Acesso                  | Disponibilidade (perfis) |
+| ---------- | ------------------------------------ | ----------------------- | ------------------------ |
+| webapp     | Portal Web                           | <http://localhost>      | prod, dev                |
+| db         | Servidor de banco de dados           |                         | prod, dev                |
+| phpmyadmin | Portal Gerenciador do banco de dados | <http://localhost:8080> | prod, dev                |
+| npm        | Task runner                          | <http://localhost:3000> | dev                      |
+
+**ATENÇÃO:** Utilize o banco de dados em contêiner em produção com cautela, há sérios riscos de perda dados.
 
 ## Documentação
 
