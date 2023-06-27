@@ -70,30 +70,6 @@ Para Windows 10 versão 2004 ou superior e Windows 11
 
 - [WSL](https://docs.microsoft.com/pt-br/windows/wsl/install)
 
-### Arquivos de configuração
-
-Crie um arquivo .env na raiz do projeto e informe as variáveis de ambiente para que os serviços sejam ativados corretamente. São elas:
-
-- JOOMLA_DB_HOST: Host da base de dados. Pode ser o serviço `db` disponível no docker-compose ou outro host. **Requerido**
-- JOOMLA_DB_USER: Usuário para acesso à base de dados. **Requerido**
-- JOOMLA_DB_PASSWORD: Senha de acesso à base de dados. Sem esta senha não será possível acessar o serviço. **Requerido**
-- JOOMLA_DB_NAME: Nome da base de dados. Usado apenas na publicação automática de exemplo.
-- JOOMLA_DB_PREFIX: Prefixo de tabela na base de dados. Usado apenas na publicação automática de exemplo.
-- JOOMLA_ROOT_USERNAME: Super usuário do Joomla. Usado apenas na publicação automática de exemplo.
-- JOOMLA_ROOT_PASSWORD: Senha do super usuário do Joomla. Usado apenas na publicação automática de exemplo.
-
-Veja um exemplo:
-
-```env
-JOOMLA_DB_HOST=db
-JOOMLA_DB_USER=root
-JOOMLA_DB_PASSWORD=brasil
-JOOMLA_DB_NAME=joomlagovdb
-JOOMLA_DB_PREFIX=xmx0n_
-JOOMLA_ROOT_USERNAME=joomlagov
-JOOMLA_ROOT_PASSWORD=brasil
-```
-
 ### Como rodar?
 
 Utiliza-se o `docker compose` para orquestrar os serviços da aplicação.
@@ -131,6 +107,32 @@ services:
       args:
         UID: 1000
    ...
+```
+
+### Arquivos de configuração
+
+Crie um arquivo .env na raiz do projeto e informe as variáveis de ambiente para que os serviços sejam ativados corretamente.
+
+| Variável             | Descrição                                                                                            |
+| -------------------- | ---------------------------------------------------------------------------------------------------- |
+| JOOMLA_DB_HOST       | Host da base de dados. Pode ser o serviço `db` disponível no docker-compose ou outro host.           |
+| JOOMLA_DB_USER       | Usuário para acesso à base de dados.                                                                 |
+| JOOMLA_DB_PASSWORD   | Trata-se da senha de root para acesso à base de dados. Sem esta não será possível acessar o serviço. |
+| JOOMLA_DB_NAME       | Nome da base de dados. Usado apenas na publicação automática de exemplo.                             |
+| JOOMLA_DB_PREFIX     | Prefixo de tabela na base de dados. Usado apenas na publicação automática de exemplo.                |
+| JOOMLA_ROOT_USERNAME | Super usuário do Joomla. Usado apenas na publicação automática de exemplo.                           |
+| JOOMLA_ROOT_PASSWORD | Senha do super usuário do Joomla. Usado apenas na publicação automática de exemplo.                  |
+
+Veja um exemplo:
+
+```env
+JOOMLA_DB_HOST=db
+JOOMLA_DB_USER=root
+JOOMLA_DB_PASSWORD=brasil
+JOOMLA_DB_NAME=joomlagovdb
+JOOMLA_DB_PREFIX=xmx0n_
+JOOMLA_ROOT_USERNAME=joomlagov
+JOOMLA_ROOT_PASSWORD=brasil
 ```
 
 ### Serviços disponíveis
