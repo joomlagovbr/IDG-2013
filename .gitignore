@@ -241,3 +241,6 @@ RoboFile.ini
 
 # Built Visual Studio Code Extensions
 *.vsix
+
+# Composer
+/tools/vendor/

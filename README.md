@@ -1,6 +1,6 @@
 # Portal padrão em CMS Joomla 3.9.6
 
-Se tiverem dificuldades, podem entrar em contato: tiagovtg@gmail.com
+Se tiverem dificuldades, podem entrar em contato: <tiagovtg@gmail.com>
 
 ## Sobre esta versão
 
@@ -51,7 +51,7 @@ memory_limit=1280M
 
 Não precisa de aumentar tanto, mas pode ir testando se quiser, exemplo, memoria padrão é 128M, pode ir subindo 256M,512M, 1024M
 
-Se tiverem dificuldades, podem entrar em contato: tiagovtg@gmail.com
+Se tiverem dificuldades, podem entrar em contato: <tiagovtg@gmail.com>
 
 ## Utilizando Docker
 
@@ -70,17 +70,58 @@ Para Windows 10 versão 2004 ou superior e Windows 11
 
 - [WSL](https://docs.microsoft.com/pt-br/windows/wsl/install)
 
+### Como rodar?
+
+Utiliza-se o `docker compose` para orquestrar os serviços da aplicação.
+
+Existem dois arquivos de exemplos de configuração:
+
+- docker-compose.yml: Este arquivo contém instruções para instalação de um portal padrão Joomla, com a configuração inicial sendo realizada pela plataforma.
+- docker-compose.override.yml: Este arquivo contém instruções que sobrescrevem dados para uso em desenvolvimento. Ele configura um portal com dados preexistentes automaticamente, além de possuir um serviço com NPM para executar o Gulp.
+
+```bash
+docker compose --profile prod up --build -d
+```
+
+Rodar o comando acima, informando o profile `prod`, garante que apenas contêineres responsáveis por publicar nosso site estejam disponíveis.
+
+Para servir localmente, em ambiente de desenvolvimento e habilitando o HotReload através do task runner Gulp, execute:
+
+```bash
+docker compose --profile dev up --build
+```
+
+A opção `-d` ou `--detach` foi omitida propositalmente para acompanharmos as saídas do Gulp.
+
+Se você estiver usando um sistema operacional Unix-like (Linux, MacOS, WSL), talvez você precise ajustar as permissões dos arquivos. Para tanto, siga a orientação a seguir:
+
+Por padrão, o id do usuário dentro da imagem **Docker** é definido para `1000`. Você pode alterar esse comportamento através de argumentos de build definidos no arquivo de configuração do **docker-composer**. Para isso, abra o terminal e identifique o seu `id` de usuário com o comando `id -u`. Em seguida, edite ou crie um arquivo de configuração do docker-compose conforme o exemplo abaixo:
+
+```yaml
+services:
+  app:
+    container_name: joomlagov-webapp
+    build:
+      context: .
+      dockerfile: ./.docker/php/Dockerfile
+      args:
+        UID: 1000
+   ...
+```
+
 ### Arquivos de configuração
 
-Crie um arquivo .env na raiz do projeto e informe as variáveis de ambiente para que os serviços sejam ativados corretamente. São elas:
+Crie um arquivo .env na raiz do projeto e informe as variáveis de ambiente para que os serviços sejam ativados corretamente.
 
-- JOOMLA_DB_HOST: Host da base de dados. Pode ser o serviço `db` disponível no docker-compose ou outro host. **Requerido**
-- JOOMLA_DB_USER: Usuário para acesso à base de dados. **Requerido**
-- JOOMLA_DB_PASSWORD: Senha de acesso à base de dados. Sem esta senha não será possível acessar o serviço. **Requerido**
-- JOOMLA_DB_NAME: Nome da base de dados. Usado apenas na publicação automática de exemplo.
-- JOOMLA_DB_PREFIX: Prefixo de tabela na base de dados. Usado apenas na publicação automática de exemplo.
-- JOOMLA_ROOT_USERNAME: Super usuário do Joomla. Usado apenas na publicação automática de exemplo.
-- JOOMLA_ROOT_PASSWORD: Senha do super usuário do Joomla. Usado apenas na publicação automática de exemplo.
+| Variável             | Descrição                                                                                            |
+| -------------------- | ---------------------------------------------------------------------------------------------------- |
+| JOOMLA_DB_HOST       | Host da base de dados. Pode ser o serviço `db` disponível no docker-compose ou outro host.           |
+| JOOMLA_DB_USER       | Usuário para acesso à base de dados.                                                                 |
+| JOOMLA_DB_PASSWORD   | Trata-se da senha de root para acesso à base de dados. Sem esta não será possível acessar o serviço. |
+| JOOMLA_DB_NAME       | Nome da base de dados. Usado apenas na publicação automática de exemplo.                             |
+| JOOMLA_DB_PREFIX     | Prefixo de tabela na base de dados. Usado apenas na publicação automática de exemplo.                |
+| JOOMLA_ROOT_USERNAME | Super usuário do Joomla. Usado apenas na publicação automática de exemplo.                           |
+| JOOMLA_ROOT_PASSWORD | Senha do super usuário do Joomla. Usado apenas na publicação automática de exemplo.                  |
 
 Veja um exemplo:
 
@@ -94,49 +135,16 @@ JOOMLA_ROOT_USERNAME=joomlagov
 JOOMLA_ROOT_PASSWORD=brasil
 ```
 
-### Como rodar?
-
-Utiliza-se o `docker-compose` para orquestrar os serviços da aplicação.
-
-Existem dois arquivos de exemplos de configuração:
-
-- docker-compose.yml: Utilize este arquivo para instalação de um portal padrão Joomla, com a configuração inicial sendo realizada pela plataforma.
-- docker-compose.dev.yml: Utilize este arquivo apenas em localhost, para desenvolvimento. Ele configura um portal com dados preexistentes.
-
-```bash
-docker-compose up --build -d
-```
-
-Para servir localmente, acrescente `-f docker-compose.dev.yml` ao comando como em:
-
-```bash
-docker-compose -f docker-compose.dev.yml up --build -d
-```
-
-Se você estiver usando um sistema operacional Unix-like (Linux, Mac OS, WSL), talvez você precise ajustar as permissões dos arquivos. Para tanto, siga a orientação a seguir:
-
-Por padrão, o id do usuário dentro da imagem **Docker** é definido para `1000`. Você pode alterar esse comportamento através de argumentos de build definidos no arquivo de configuração do **docker-composer**. Para isso, abra o terminal e identifique o seu `id` de usuário com o comando `id -u`. Em seguida, edite ou crie um arquivo de configuração do docker-compose conforme o exemplo abaixo:
-
-```yaml
-version: '3.9'
-
-services:
-  app:
-    container_name: joomlagov_app
-    build:
-      context: .
-      dockerfile: ./.docker/php/Dockerfile
-      args:
-        UID: 1000
-   ...
-```
-
 ### Serviços disponíveis
 
-- gulp: task runner - acesse com <http://localhost:3000> - disponível apenas em ambiente de desenvolvimento
-- app: página web - acesse com <http://localhost>
-- db: servidor de banco de dados - não utilize dessa forma em produção, há sérios riscos de perda dados
-- phpmyadmin: gerenciador do banco de dados - acesse com <http://localhost:8080>
+| Serviço    | Descrição                            | Acesso                  | Disponibilidade (perfis) |
+| ---------- | ------------------------------------ | ----------------------- | ------------------------ |
+| webapp     | Portal Web                           | <http://localhost>      | prod, dev                |
+| db         | Servidor de banco de dados           |                         | prod, dev                |
+| phpmyadmin | Portal Gerenciador do banco de dados | <http://localhost:8080> | prod, dev                |
+| npm        | Task runner                          | <http://localhost:3000> | dev                      |
+
+**ATENÇÃO:** Utilize o banco de dados em contêiner em produção com cautela, há sérios riscos de perda dados.
 
 ## Documentação
 
